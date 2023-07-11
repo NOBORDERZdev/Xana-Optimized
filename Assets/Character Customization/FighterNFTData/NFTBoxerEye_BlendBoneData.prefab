@@ -1,0 +1,1375 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2091655712649568439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091655712649568437}
+  - component: {fileID: 2091655712649568438}
+  m_Layer: 0
+  m_Name: NFTBoxerEye_BlendBoneData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091655712649568437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091655712649568439}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2361.5146, z: 422.35046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091655712649568438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091655712649568439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26555ebe002d72428bd4129f9d4940f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - styleName: 1.Normal_Default
+    blends: []
+    bones: []
+  - styleName: 2.NormalOpen
+    blends:
+    - index: 24
+      value: 82.42
+    - index: 25
+      value: 0
+    - index: 27
+      value: 17.578
+    - index: 28
+      value: 21.85
+    - index: 29
+      value: 0
+    - index: 31
+      value: 16.95
+    - index: 34
+      value: 8.67
+    - index: 35
+      value: 33.05
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.052, y: 0.11, z: 0.1219}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1.032, y: 1.032, z: 1.032}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.052, y: 0.11, z: 0.1219}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1.032, y: 1.032, z: 1.032}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.00059, y: 0.01456, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.00059, y: -0.01456, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 3.Smart
+    blends:
+    - index: 24
+      value: 40.36
+    - index: 25
+      value: 38.56
+    - index: 27
+      value: 59.63
+    - index: 28
+      value: 21.27
+    - index: 29
+      value: 11.436
+    - index: 31
+      value: 0
+    - index: 34
+      value: 30
+    - index: 35
+      value: 50
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.052, y: 0.12, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.052, y: 0.12, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.008, y: -0.007, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.008, y: 0.007, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0038, y: 0.0159, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0038, y: -0.0159, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 4.Flat
+    blends:
+    - index: 24
+      value: 18.085
+    - index: 25
+      value: 29.63
+    - index: 27
+      value: 81.91
+    - index: 28
+      value: 47.77986
+    - index: 29
+      value: 20.365
+    - index: 31
+      value: 34.29
+    - index: 34
+      value: 30
+    - index: 35
+      value: 15.71
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.047678, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.047, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.000295, y: -0.007, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.000295, y: 0.007, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: -0.0036, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0031, y: 0.0036, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 5.Focused
+    blends:
+    - index: 24
+      value: 18.085
+    - index: 25
+      value: 29.63
+    - index: 27
+      value: 81.91
+    - index: 28
+      value: 11.135
+    - index: 29
+      value: 20.365
+    - index: 31
+      value: 27.89
+    - index: 34
+      value: 30
+    - index: 35
+      value: 22.11
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.047678, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.047, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.000295, y: -0.007, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.000295, y: 0.007, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.00236, y: 0.00832, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.00236, y: -0.0082, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 6.RoundFlat
+    blends:
+    - index: 24
+      value: 21.27
+    - index: 25
+      value: 39.38
+    - index: 27
+      value: 78.73
+    - index: 28
+      value: 36.01
+    - index: 29
+      value: 10.62
+    - index: 31
+      value: 26
+    - index: 34
+      value: 21.66
+    - index: 35
+      value: 23.996
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.046, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.046, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: -0.0006, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0066, y: 0.0006, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: 0.0099, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: 0.0099, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 7.LowRounded
+    blends:
+    - index: 24
+      value: 50.609
+    - index: 25
+      value: 23.88
+    - index: 27
+      value: 49.39
+    - index: 28
+      value: 43.1
+    - index: 29
+      value: 26.116
+    - index: 31
+      value: 19.71
+    - index: 34
+      value: 10.72
+    - index: 35
+      value: 30.29
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.047, y: 0.121, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0469, y: 0.121, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0.0005, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: -0.0005, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 8.Sharp
+    blends:
+    - index: 24
+      value: 50.61
+    - index: 25
+      value: 23.88
+    - index: 27
+      value: 49.39
+    - index: 28
+      value: 43.1
+    - index: 29
+      value: 26.116
+    - index: 31
+      value: 19.71
+    - index: 34
+      value: 10.72
+    - index: 35
+      value: 30.29
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.047, y: 0.121, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0469, y: 0.121, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: -0.007, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: 0.007, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0033, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0033, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 9.Confident
+    blends:
+    - index: 24
+      value: 30.616
+    - index: 25
+      value: 8.238
+    - index: 27
+      value: 69.38
+    - index: 28
+      value: 20.194
+    - index: 29
+      value: 41.76
+    - index: 31
+      value: 29.12
+    - index: 34
+      value: 0
+    - index: 35
+      value: 20.88
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0.00278, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0039, y: -0.0028, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: -0.0016, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0.0016, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 10.Calm
+    blends:
+    - index: 24
+      value: 28.9588
+    - index: 25
+      value: 0
+    - index: 27
+      value: 71.0411
+    - index: 28
+      value: 42.01645
+    - index: 29
+      value: 0
+    - index: 31
+      value: 0
+    - index: 34
+      value: 30
+    - index: 35
+      value: 50
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0041, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0041456, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.003, y: 0.003, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: -0.003, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 11.WaveRounded
+    blends:
+    - index: 24
+      value: 78.86
+    - index: 25
+      value: 0
+    - index: 27
+      value: 21.1386
+    - index: 28
+      value: 100
+    - index: 29
+      value: 0
+    - index: 31
+      value: 50
+    - index: 34
+      value: 0
+    - index: 35
+      value: 0
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0443, y: 0.1106, z: 0.1219}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0443, y: 0.11, z: 0.1219}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0.0009, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: -0.0009, z: 0.0386}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 12.HighFlat
+    blends:
+    - index: 24
+      value: 0
+    - index: 25
+      value: 0
+    - index: 27
+      value: 100
+    - index: 28
+      value: 53.7685
+    - index: 29
+      value: 50
+    - index: 31
+      value: 19.4
+    - index: 34
+      value: 26.316
+    - index: 35
+      value: 30.6
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.1106, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1.068, y: 1.068, z: 1.068}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1.0678, y: 1.0678, z: 1.0678}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 13.LowFlat
+    blends:
+    - index: 24
+      value: 75.64
+    - index: 25
+      value: 0
+    - index: 27
+      value: 24.36
+    - index: 28
+      value: 42.86
+    - index: 29
+      value: 0
+    - index: 31
+      value: 33.33
+    - index: 34
+      value: 14.92
+    - index: 35
+      value: 16.67
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.1106, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.1106, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0038, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0038, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 14.ThickRounded
+    blends:
+    - index: 24
+      value: 31.77
+    - index: 25
+      value: 0
+    - index: 27
+      value: 68.23
+    - index: 28
+      value: 31.483
+    - index: 29
+      value: 0
+    - index: 31
+      value: 32.926
+    - index: 34
+      value: 30
+    - index: 35
+      value: 17.1
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.053, y: 0.1106, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.89, y: 0.89, z: 0.89}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.053, y: 0.1106, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.89, y: 0.89, z: 0.89}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0036, y: 0.00355, z: -0.0385}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0036, y: -0.00356, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 15.ThickAngled
+    blends:
+    - index: 24
+      value: 53.145
+    - index: 25
+      value: 0
+    - index: 27
+      value: 46.85
+    - index: 28
+      value: 0
+    - index: 29
+      value: 0
+    - index: 31
+      value: 34.9
+    - index: 34
+      value: 0
+    - index: 35
+      value: 15.09
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.053, y: 0.1106, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.053, y: 0.1106, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.005, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.005, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 16.ActionReady
+    blends:
+    - index: 24
+      value: 90.71
+    - index: 25
+      value: 0
+    - index: 27
+      value: 9.29
+    - index: 28
+      value: 45.51
+    - index: 29
+      value: 0
+    - index: 31
+      value: 50
+    - index: 34
+      value: 0
+    - index: 35
+      value: 0
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.051, y: 0.101, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.051, y: 0.105, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0038, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0038, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 18.ThinConfident
+    blends:
+    - index: 24
+      value: 79.237
+    - index: 25
+      value: 26.33
+    - index: 27
+      value: 20.726
+    - index: 28
+      value: 34.31
+    - index: 29
+      value: 23.67
+    - index: 31
+      value: 42.99
+    - index: 34
+      value: 30
+    - index: 35
+      value: 7.014
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.052, y: 0.111, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.96, y: 0.96, z: 0.96}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.052, y: 0.11, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.96, y: 0.96, z: 0.96}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.01, y: 0.0002, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.01, y: -0.0002, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 19.Wavy
+    blends:
+    - index: 24
+      value: 91.142
+    - index: 25
+      value: 0
+    - index: 27
+      value: 8.857
+    - index: 28
+      value: 81.31
+    - index: 29
+      value: 0
+    - index: 31
+      value: 41.7
+    - index: 34
+      value: 0
+    - index: 35
+      value: 8.299
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.111, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.11, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 20.Innocence
+    blends:
+    - index: 24
+      value: 94.96
+    - index: 25
+      value: 0
+    - index: 27
+      value: 5.042
+    - index: 28
+      value: 5.514
+    - index: 29
+      value: 0
+    - index: 31
+      value: 0
+    - index: 34
+      value: 19.237
+    - index: 35
+      value: 50
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.111, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.11, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.004, y: 0.006, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.004, y: -0.006, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.003, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 21.Nervous
+    blends:
+    - index: 24
+      value: 36.23
+    - index: 25
+      value: 11.7
+    - index: 27
+      value: 63.77
+    - index: 28
+      value: 100
+    - index: 29
+      value: 38.3
+    - index: 31
+      value: 50
+    - index: 34
+      value: 0
+    - index: 35
+      value: 0
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.053, y: 0.122, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 1.01, y: 1.01, z: 1.01}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0399, y: 0.122, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1.01, y: 1.01, z: 1.01}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0006, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0006, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 22.NormalState
+    blends:
+    - index: 24
+      value: 0
+    - index: 25
+      value: 0
+    - index: 27
+      value: 0
+    - index: 28
+      value: 0
+    - index: 29
+      value: 0
+    - index: 31
+      value: 0
+    - index: 34
+      value: 28.5
+    - index: 35
+      value: 0
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.06, y: 0.12, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.98, y: 0.98, z: 0.98}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.06, y: 0.115, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.98, y: 0.98, z: 0.98}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 23.ThinPointy
+    blends:
+    - index: 24
+      value: 37.49
+    - index: 25
+      value: 25.36
+    - index: 27
+      value: 62.51
+    - index: 28
+      value: 18.75
+    - index: 29
+      value: 24.64
+    - index: 31
+      value: 24.5
+    - index: 34
+      value: 30
+    - index: 35
+      value: 25.962
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.122, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.8, y: 0.8, z: 0.8}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0081, y: -0.007, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0081, y: 0.007, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 24.MidRounded
+    blends:
+    - index: 24
+      value: 10.82
+    - index: 25
+      value: 22.45
+    - index: 27
+      value: 89.18
+    - index: 28
+      value: 18.75
+    - index: 29
+      value: 27.55
+    - index: 31
+      value: 38.74
+    - index: 34
+      value: 22.596
+    - index: 35
+      value: 11.265
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0487, y: 0.1218, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.83, y: 0.83, z: 0.83}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.122, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.83, y: 0.83, z: 0.83}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: -0.0015, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0065, y: -0.0015, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0005, y: -0.0058, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0005, y: 0.0058, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 25.CalmFlat
+    blends:
+    - index: 24
+      value: 59.1
+    - index: 25
+      value: 0
+    - index: 27
+      value: 40.92
+    - index: 28
+      value: 46.61
+    - index: 29
+      value: 0
+    - index: 31
+      value: 8.58
+    - index: 34
+      value: 30
+    - index: 35
+      value: 41.42
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.052, y: 0.11, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.053, y: 0.111, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 26.WideFocused
+    blends:
+    - index: 24
+      value: 0
+    - index: 25
+      value: 26.33
+    - index: 27
+      value: 100
+    - index: 28
+      value: 0
+    - index: 29
+      value: 23.66
+    - index: 31
+      value: 11.71
+    - index: 34
+      value: 30
+    - index: 35
+      value: 38.22
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.052, y: 0.11, z: 0.122}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 0.96, y: 0.96, z: 0.96}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.053, y: 0.111, z: 0.122}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 0.96, y: 0.96, z: 0.96}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0099, y: 0.00018, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.00999, y: -0.00018, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 27.MidAngled
+    blends:
+    - index: 24
+      value: 98.91
+    - index: 25
+      value: 0
+    - index: 27
+      value: 1.09
+    - index: 28
+      value: 0
+    - index: 29
+      value: 0
+    - index: 31
+      value: 25.28
+    - index: 34
+      value: 0
+    - index: 35
+      value: 24.72
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.05, y: 0.1106, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0005, y: 0.00182, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.00048, y: -0.00182, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.00039, y: -0.000998, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.00039, y: 0.000998, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 30.Narrow
+    blends:
+    - index: 24
+      value: 32.87
+    - index: 25
+      value: 8.8
+    - index: 27
+      value: 67.13
+    - index: 28
+      value: 0
+    - index: 29
+      value: 41.1998
+    - index: 31
+      value: 34.32
+    - index: 34
+      value: 0
+    - index: 35
+      value: 15.68
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.05, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.0399, y: 0.1106, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 180}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.001, y: 0, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.0021, y: 0, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0165, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0165, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  - styleName: 31.Sleepy
+    blends:
+    - index: 24
+      value: 0
+    - index: 25
+      value: 20.433
+    - index: 27
+      value: 100
+    - index: 28
+      value: 49.73
+    - index: 29
+      value: 29.566
+    - index: 31
+      value: 0
+    - index: 34
+      value: 16.5
+    - index: 35
+      value: 50
+    bones:
+    - boneName: iScale_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: -0.04, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 0, z: 350}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: iScale_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.041, y: 0.11, z: 0.123}
+      boneRotation: {x: 0, y: 180, z: 170}
+      boneScale: {x: 0.93, y: 0.93, z: 0.93}
+    - boneName: eLineIn_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: 0.0086, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineIn_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0.001, y: -0.0086, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_L
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: 0.0011, z: -0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+    - boneName: eLineOut_R
+      boneObj: {fileID: 0}
+      bonePosition: {x: 0, y: -0.0011, z: 0.039}
+      boneRotation: {x: 0, y: 0, z: 0}
+      boneScale: {x: 1, y: 1, z: 1}
+  isBoneMissing: 0
+  boneIndex: 0

@@ -1,0 +1,283 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2043215551614635554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2043215551614635556}
+  - component: {fileID: 2043215551614635557}
+  - component: {fileID: 2043215551614635559}
+  - component: {fileID: 6960056357313043304}
+  m_Layer: 0
+  m_Name: '[APIManager]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2043215551614635556
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043215551614635554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2043215551614635557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043215551614635554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6bfa765f3549b418afc70411f98568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userAuthorizeToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM0LCJpYXQiOjE2NDk2NjgzMTcsImV4cCI6MTY0OTg0MTExN30.zqSQPM709NKyLg5Ob5qQ7fyEfqMlUpZLwcES9KSZBt4
+  userId: 134
+  isTestDefaultToken: 0
+  isLoginFromDifferentId: 0
+  r_isCreateMessage: 0
+  checkText: Newest
+  myProfileDataRoot:
+    success: 0
+    data:
+      id: 0
+      name: 
+      dob: 
+      phoneNumber: 
+      email: 
+      avatar: 
+      role: 0
+      coins: 
+      isVerified: 0
+      isRegister: 0
+      isDeleted: 0
+      userProfile:
+        id: 0
+        userId: 0
+        gender: 
+        job: 
+        country: 
+        website: 
+        bio: 
+        isDeleted: 0
+      followerCount: 0
+      followingCount: 0
+      feedCount: 0
+    msg: 
+  root:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  saveRootList: []
+  allUserRootList: []
+  savejsonList:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  AlluserData:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  userPostData:
+    id: 0
+    title: 
+    descriptions: 
+    image: 
+    video: 
+    likeCount: 0
+    isAllowComment: 0
+    isHide: 0
+    isDeleted: 0
+    createdBy: 0
+    feedComments: []
+    feedTags: []
+  allFeedWithUserIdRoot:
+    Success: 0
+    Data:
+      Count: 0
+      Rows: []
+    Msg: 
+  followingUserRoot:
+    Success: 0
+    Data:
+      Count: 0
+      Rows: []
+    Msg: 
+  followingUserRootList: []
+  allFollowingUserRootList: []
+  savejsonListFollowingUser:
+    Success: 0
+    Data:
+      Count: 0
+      Rows: []
+    Msg: 
+  taggedFeedsByUserIdRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  searchUserRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  AllFollowerRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  allFollowingRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  profileAllFollowerRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  profileAllFollowingRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  allChatGetConversationRoot:
+    success: 0
+    data: []
+    msg: 
+  allChatMessagesRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  ChatCreateGroupRoot:
+    success: 0
+    data:
+      id: 0
+      name: 
+      createdBy: 0
+      avatar: 
+    msg: 
+  AllChatCreateMessageRoot:
+    success: 0
+    data:
+      id: 0
+      senderId: 0
+      messageId: 0
+      receiverId: 0
+      receivedGroupId: 0
+      userId: 0
+      groupId: 0
+    msg: 
+  AllChatAttachmentsRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  unloadUnusedFileCount: 0
+--- !u!114 &2043215551614635559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043215551614635554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e94791a5dbe3074a94b3fe8eac32204, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followingFeedPrefab: {fileID: 7371509665562018385, guid: 07a5477ea7067c541be8ce99d2091d29,
+    type: 3}
+  forYouFeedPrefab: {fileID: 5346251587000727449, guid: b8c2baf862ce92f458c1e6e2b6bac28a,
+    type: 3}
+  hotFeedPrefab: {fileID: 1222112782269553975, guid: 4e5a36be60ca06040b6e917d1b8c657a,
+    type: 3}
+  hotItemPrefab: {fileID: 7417338058463261072, guid: 63a975afeecd3d949b4621081c55973e,
+    type: 3}
+  videofeedPrefab: {fileID: 1334521368937925212, guid: f2b19dd6f6c1b314da081b39d9957856,
+    type: 3}
+  FollowingUserVideoFeedPrefab: {fileID: 7190952419182998725, guid: de6e214c38c93f44c890e184464771d3,
+    type: 3}
+  PostVideoFeedPrefab: {fileID: 7190952419182998725, guid: 9a768f8030c507c42802c894a244871e,
+    type: 3}
+  findFriendFeedPrefab: {fileID: 4287619021890905807, guid: 0130217fb79fe8d478df55a09dc3cda8,
+    type: 3}
+  feedTopStoryFollowerPrefab: {fileID: 3692785889285877058, guid: 557bc8daab4c5fb498fadee7f08a9379,
+    type: 3}
+  feedFollowingIdList: 
+  feedForYouIdList: 
+  feedHotIdList: 
+  currentFeedRawItemController: {fileID: 0}
+  feedFollowingDataList: []
+  feedForYouDataList: []
+  followingUser: {fileID: 8966399588696665386, guid: df653bcc67bf40d41a73361b2e1f15bd,
+    type: 3}
+  conversationPrefab: {fileID: 8991224436307149792, guid: 7b6c019759c521f4f898d48966a66913,
+    type: 3}
+  selectedFriendItemPrefab: {fileID: 7448241163935256996, guid: ac6794fa0a6e0814091882eb737ac56f,
+    type: 3}
+  chatPrefabUser: {fileID: 275746875123076988, guid: ff6f7974098ea844eb831369e05ad63d,
+    type: 3}
+  chatPhotoPrefabUser: {fileID: 1710999945735412864, guid: f4edb6e714659814b80d55952c973afc,
+    type: 3}
+  chatPrefabOther: {fileID: 6003701415522292913, guid: 29bc812cd2e18cb4cb172c52a32cda72,
+    type: 3}
+  chatPhotoPrefabOther: {fileID: 1628743530390690470, guid: f84adf24ea586d2478eb5bf61ad0166a,
+    type: 3}
+  chatShareAttechmentPrefab: {fileID: 3162604707136824339, guid: 18f4ba34e040b294aaf1adbfbff4492c,
+    type: 3}
+  chooseAttechmentprefab: {fileID: 1660764517410990447, guid: 1f9cc265c2496e142b96e29ba52f354a,
+    type: 3}
+  chatMemberPrefab: {fileID: 6809703853927709311, guid: ed1950b8fdf20cf43a9a64d9867c3006,
+    type: 3}
+  chatTimePrefab: {fileID: 8482230306041523926, guid: a43123148a26a3f4bad34f23bf289153,
+    type: 3}
+  saveAttechmentPrefab: {fileID: 1503933828784554711, guid: 1ebe307f231bae04aa863c0acb21593b,
+    type: 3}
+  allFollowingUserList: []
+  allChatMemberList: []
+  allConversationList: []
+  chatTimeList: []
+  defaultAvatarSP: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
+  allChatMessageId: 
+--- !u!114 &6960056357313043304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043215551614635554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d902c192d6ecd948977203c1295330a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

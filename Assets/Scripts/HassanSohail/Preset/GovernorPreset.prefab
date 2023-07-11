@@ -1,0 +1,216 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3585639130444596679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3981993899284738178}
+  - component: {fileID: 4340186583131455694}
+  - component: {fileID: 1875738147135250826}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &3981993899284738178
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585639130444596679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1431972345967263000}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4340186583131455694
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585639130444596679}
+  m_CullTransparentMesh: 0
+--- !u!114 &1875738147135250826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585639130444596679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.05490196, g: 0.45882353, b: 0.85490197, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b38885f062a0837439ade651dda0e0a3, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8359136506409020388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431972345967263000}
+  - component: {fileID: 8720156360943575437}
+  - component: {fileID: 3443590470931912917}
+  - component: {fileID: 814569366679772584}
+  - component: {fileID: 1032428797000895018}
+  m_Layer: 5
+  m_Name: GovernorPreset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1431972345967263000
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359136506409020388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3981993899284738178}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8720156360943575437
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359136506409020388}
+  m_CullTransparentMesh: 0
+--- !u!114 &3443590470931912917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359136506409020388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: bf87f24157c5855448a491780711b4d4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &814569366679772584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359136506409020388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 3443590470931912917}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1032428797000895018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359136506409020388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbd110571754094bb4bac58b72c9e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JsonDataPreset: '{"id":"8230","name":"Preset 12","thumbnail":"https://cdn.xana.net/apitestxana/Defaults/1668097815849_file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1089,"ItemName":"BoyC3pants","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":892,"ItemName":"boyc21shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":987,"ItemName":"boyc6hair","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1085,"ItemName":"shoes13","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}],"EyeBrowPresets":{"_FaceMorphFeature":0,"f_BlendShapeOne":0,"f_BlendShapeTwo":0,"m_BlendTime":0.0,"m_AnimCurve":{"serializedVersion":"2","m_Curve":[],"m_PreInfinity":2,"m_PostInfinity":2,"m_RotationOrder":4}},"SavedBones":[{"Name":"iScale_L","Obj":{"instanceID":0},"Pos":{"x":-0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"iScale_R","Obj":{"instanceID":0},"Pos":{"x":0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":0.000005008956122765085,"y":180.0,"z":180.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_L","Obj":{"instanceID":0},"Pos":{"x":2.0337960482397222e-10,"y":-6.888029729923417e-11,"z":-0.039000000804662707},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_R","Obj":{"instanceID":0},"Pos":{"x":2.2963350665428096e-10,"y":-6.888029729923417e-11,"z":0.03859955072402954},"Rotation":{"x":-1.1848489636888766e-23,"y":-1.516606673521762e-21,"z":1.036692700100921e-28},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_L","Obj":{"instanceID":0},"Pos":{"x":-0.0010000000474974514,"y":0.0,"z":-0.039000000804662707},"Rotation":{"x":-7.231744163140116e-28,"y":1.516606673521762e-21,"z":-4.624457958956236e-33},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_R","Obj":{"instanceID":0},"Pos":{"x":2.2955938538959942e-10,"y":-6.887972830993405e-11,"z":0.03858547657728195},"Rotation":{"x":-1.1848489636888766e-23,"y":-1.516606673521762e-21,"z":1.036692700100921e-28},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_L","Obj":{"instanceID":0},"Pos":{"x":-0.04650000110268593,"y":0.008999999612569809,"z":-0.013700000010430813},"Rotation":{"x":8.26300048828125,"y":337.04998779296877,"z":352.2430114746094},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_R","Obj":{"instanceID":0},"Pos":{"x":0.03909999877214432,"y":0.008999999612569809,"z":-0.010200000368058682},"Rotation":{"x":351.73699951171877,"y":206.72500610351563,"z":172.2429962158203},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"jBone","Obj":{"instanceID":0},"Pos":{"x":-1.3552526853146218e-22,"y":-0.02754758484661579,"z":-3.0531133011755684e-18},"Rotation":{"x":-7.231744163140116e-28,"y":1.516606673521762e-21,"z":-4.624457958956236e-33},"Scale":{"x":1.0,"y":0.800000011920929,"z":1.0}},{"Name":"Xana_3_0_Head","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.0},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"nose","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.05000000074505806,"z":0.15000000596046449},"Rotation":{"x":-8.085336055274469e-28,"y":1.6956178678990963e-21,"z":-1.0597611674369352e-22},"Scale":{"x":0.800000011920929,"y":1.2000000476837159,"z":1.0}},{"Name":"mouth","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.013086539693176747,"z":0.13533389568328858},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.100000023841858,"y":0.75,"z":1.0}},{"Name":"foreHead","Obj":{"instanceID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129299e-16,"z":0.01407201960682869},"Rotation":{"x":-7.231744163140116e-28,"y":1.516606673521762e-21,"z":-1.8957583419022026e-22},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"hairAll","Obj":{"instanceID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":-7.231744163140116e-28,"y":1.516606673521762e-21,"z":-9.478791709511013e-23},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"Hips_Scale","Obj":{"instanceID":0},"Pos":{"x":3.10045195626215e-14,"y":-2.0904948883071485e-8,"z":0.0},"Rotation":{"x":-2.1695232970902835e-27,"y":1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftArm_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":-8.171241080076326e-16,"z":2.8421708795129299e-16},"Rotation":{"x":1.2739496501869264e-19,"y":1.5902773592947552e-15,"z":-6.066426694087048e-21},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":3.197442173277597e-16,"y":9.237055226068124e-16,"z":7.531752592481248e-15},"Rotation":{"x":-2.578231334889576e-20,"y":-2.5685800851073898e-42,"z":6.066426694087048e-21},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.2079226634976646e-15,"z":-2.220445916901415e-17},"Rotation":{"x":-3.975693398236888e-16,"y":3.882513239312076e-18,"z":-7.740760308174296e-18},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":-7.105427198782324e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":-1.42177624806451e-15,"y":-4.77862808382841e-33,"z":1.9257264939068957e-16},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.3980815637837489e-16,"y":-1.2789768693110388e-15,"z":-7.216449395365722e-18},"Rotation":{"x":4.96961674779611e-17,"y":-4.8531413552696385e-20,"z":-3.575703595591971e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Neck_Scale","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-1.4210854397564649e-16,"z":-2.220445916901415e-17},"Rotation":{"x":-7.231744163140116e-28,"y":3.033213347043524e-21,"z":8.566510675768915e-23},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightArm_Scale","Obj":{"instanceID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.0198066587441615e-16,"z":-3.6948220904272497e-15},"Rotation":{"x":1.560544533494527e-14,"y":-4.598259775134177e-31,"z":-1.688262236512251e-15},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.664535100281698e-16,"y":1.4210854397564649e-16,"z":-8.384403909274686e-15},"Rotation":{"x":2.996687370904888e-15,"y":0.0,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.4868995857482627e-16,"y":1.2079226634976646e-15,"z":4.44089183380283e-17},"Rotation":{"x":9.451484159995146e-37,"y":2.3295079022282149e-18,"z":-2.324654626779213e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":-3.1060104673725688e-18,"y":1.5902773592947552e-15,"z":3.7272126435651439e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":2.5757173430149805e-16,"y":-1.4210854397564649e-16,"z":-7.216449395365722e-18},"Rotation":{"x":-4.96961674779611e-17,"y":9.706282710539277e-20,"z":2.4083335410340575e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine1_Scale","Obj":{"instanceID":0},"Pos":{"x":2.382280061600802e-24,"y":-1.4210854397564649e-16,"z":0.0},"Rotation":{"x":0.0,"y":1.516606673521762e-21,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine2_Scale","Obj":{"instanceID":0},"Pos":{"x":6.468552137729187e-23,"y":-1.4210854397564649e-16,"z":-1.776356799695581e-17},"Rotation":{"x":0.0,"y":1.516606673521762e-21,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine_Scale","Obj":{"instanceID":0},"Pos":{"x":-6.670384409140517e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":7.951386796473776e-16,"y":1.516606673521762e-21,"z":3.791516683804405e-22},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}}],"SkinId":30,"Skin":{"r":0.8392156958580017,"g":0.7176470756530762,"b":0.658823549747467,"a":1.0},"LipColor":{"r":0.6784313917160034,"g":0.27843138575553896,"b":0.32549020648002627,"a":1.0},"isSkinColorChanged":false,"isLipColorChanged":false,"BodyFat":5,"FaceValue":8,"NoseValue":34,"EyeValue":28,"EyeBrowValue":60,"EyeLashesValue":0,"MakeupValue":0,"LipsValue":48,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"eyeTextureName":"Xana_Eye_Default","eyeLashesName":"MaleLashes","makeupName":"nomakeup","FaceBlendsShapes":[]}'
+  IsStartUp_Canvas: 0
+  eyeTex: {fileID: 2800000, guid: a715a20fdc5e5f248856acb9c32dff8d, type: 3}
