@@ -1,0 +1,779 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3920497077374596554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3920497077374596564}
+  - component: {fileID: 3920497077374596555}
+  m_Layer: 0
+  m_Name: BlendShapeController_Waqas_24Nov22
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3920497077374596564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920497077374596554}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3920497077374596555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3920497077374596554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f125633710eace44293fca3ad581fd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendHolder: {fileID: 0}
+  allBlendShapes:
+  - itemName: 0.Face - Blend Ind :36
+    AxisType: 0
+    blendShapeName: 1
+    index: 36
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 1.Face - Blend Ind :37
+    AxisType: 0
+    blendShapeName: 1
+    index: 37
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 2.Face - Blend Ind :38
+    AxisType: 1
+    blendShapeName: 1
+    index: 38
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 3.Face - Blend Ind :39
+    AxisType: 0
+    blendShapeName: 1
+    index: 39
+    minValue: 0
+    maxValue: 30
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 4.Face - Blend Ind :40
+    AxisType: 0
+    blendShapeName: 1
+    index: 40
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 5.Face - Blend Ind :41
+    AxisType: 1
+    blendShapeName: 1
+    index: 41
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 6.Face - Blend Ind :42
+    AxisType: 1
+    blendShapeName: 1
+    index: 42
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 7.Face - Blend Ind :43
+    AxisType: 0
+    blendShapeName: 1
+    index: 43
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 8.Face - Blend Ind :44
+    AxisType: 0
+    blendShapeName: 1
+    index: 44
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 9.Face - Blend Ind :45
+    AxisType: 1
+    blendShapeName: 1
+    index: 45
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 10.HeadBone 1
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 2
+      minValue: 0.9
+      maxValue: 1.1
+      reverseMyvalue: 0
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 1
+      minValue: 0.9
+      maxValue: 1.1
+      reverseMyvalue: 0
+  - itemName: 11.HeadBone 2
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 2
+      minValue: 0.9
+      maxValue: 1
+      reverseMyvalue: 0
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 1
+      minValue: 0.9
+      maxValue: 1.1
+      reverseMyvalue: 0
+  - itemName: 12.EyesBone Scale L
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 4
+      minValue: 0.8
+      maxValue: 1.2
+      reverseMyvalue: 0
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 4
+      minValue: 0.8
+      maxValue: 1.2
+      reverseMyvalue: 0
+  - itemName: 13.EyesBone Scale R
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 4
+      minValue: 0.8
+      maxValue: 1.2
+      reverseMyvalue: 0
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 4
+      minValue: 0.8
+      maxValue: 1.2
+      reverseMyvalue: 0
+  - itemName: 14.Eyes - Blend Ind :34
+    AxisType: 1
+    blendShapeName: 2
+    index: 34
+    minValue: 0
+    maxValue: 30
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 15.EyeBone eLineOut_L
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: -0.0038
+      maxValue: 0.003
+      reverseMyvalue: 0
+  - itemName: 16.EyeBone eLineOut_R
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: -0.0038
+      maxValue: 0.003
+      reverseMyvalue: 1
+  - itemName: 17.EyeBone eLineOut_L Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: -0.01
+      maxValue: 0.0165
+      reverseMyvalue: 0
+  - itemName: 18.EyeBone eLineOut_R Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: -0.01
+      maxValue: 0.0165
+      reverseMyvalue: 1
+  - itemName: 19.Eyes - Blend Ind :28
+    AxisType: 1
+    blendShapeName: 2
+    index: 28
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 20.Eyes - Blend Ind :31
+    AxisType: 0
+    blendShapeName: 2
+    index: 31
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 21.Eyes - Blend Ind :35
+    AxisType: 0
+    blendShapeName: 2
+    index: 35
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 22.Eyes - Blend Ind :25
+    AxisType: 0
+    blendShapeName: 2
+    index: 25
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 23.Eyes - Blend Ind :29
+    AxisType: 0
+    blendShapeName: 2
+    index: 29
+    minValue: 0
+    maxValue: 50
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 24.Eyes - Blend Ind :24
+    AxisType: 1
+    blendShapeName: 2
+    index: 24
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 25.Eyes - Blend Ind :27
+    AxisType: 1
+    blendShapeName: 2
+    index: 27
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 26.EyeBone eLineIn_L
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: -0.001
+      maxValue: 0.01
+      reverseMyvalue: 0
+  - itemName: 27.EyeBone eLineIn_R
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: -0.001
+      maxValue: 0.01
+      reverseMyvalue: 1
+  - itemName: 28.EyeBone eLineIn_L Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: -0.007
+      maxValue: 0.0165
+      reverseMyvalue: 0
+  - itemName: 29.EyeBone eLineIn_R Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: -0.007
+      maxValue: 0.0165
+      reverseMyvalue: 1
+  - itemName: 30.EyeBone iScale_R
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: 0.04
+      maxValue: 0.06
+      reverseMyvalue: 0
+  - itemName: 31.EyeBone iScale_L
+    AxisType: 0
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 1
+      minValue: 0.04
+      maxValue: 0.06
+      reverseMyvalue: 1
+  - itemName: 32.EyeBone iScale_L Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: 0.095
+      maxValue: 0.1218
+      reverseMyvalue: 0
+  - itemName: 33.EyeBone iScale_R Y Axis
+    AxisType: 1
+    blendShapeName: 2
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: 0.095
+      maxValue: 0.1218
+      reverseMyvalue: 0
+  - itemName: 34.LipBone Scale X
+    AxisType: 0
+    blendShapeName: 4
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 1
+      minValue: 0.9
+      maxValue: 1.1
+      reverseMyvalue: 0
+  - itemName: 35.Lips - Blend Ind :11
+    AxisType: 1
+    blendShapeName: 4
+    index: 11
+    minValue: -80
+    maxValue: 80
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 36.Lips - Blend Ind :0
+    AxisType: 0
+    blendShapeName: 4
+    index: 0
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 37.Lips - Blend Ind :1
+    AxisType: 1
+    blendShapeName: 4
+    index: 1
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 38.Lips - Blend Ind :2
+    AxisType: 0
+    blendShapeName: 4
+    index: 2
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 39.Lips - Blend Ind :3
+    AxisType: 0
+    blendShapeName: 4
+    index: 3
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 40.Lips - Blend Ind :4
+    AxisType: 1
+    blendShapeName: 4
+    index: 4
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 41.Lips - Blend Ind :5
+    AxisType: 1
+    blendShapeName: 4
+    index: 5
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 42.Lips - Blend Ind :6
+    AxisType: 0
+    blendShapeName: 4
+    index: 6
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 43.LipBone PosZ
+    AxisType: 0
+    blendShapeName: 4
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 3
+      minValue: 0.13
+      maxValue: 0.15
+      reverseMyvalue: 0
+  - itemName: 44.LipBone PosY
+    AxisType: 1
+    blendShapeName: 4
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: 0
+      maxValue: 0.02
+      reverseMyvalue: 0
+  - itemName: 45.EyeBrow - Blend Ind :22
+    AxisType: 0
+    blendShapeName: 5
+    index: 22
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 46.EyeBrow - Blend Ind :16
+    AxisType: 1
+    blendShapeName: 5
+    index: 16
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 47.EyeBrow - Blend Ind :17
+    AxisType: 1
+    blendShapeName: 5
+    index: 17
+    minValue: 0
+    maxValue: 70
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 48.EyeBrow - Blend Ind :18
+    AxisType: 1
+    blendShapeName: 5
+    index: 18
+    minValue: 0
+    maxValue: 70
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 49.EyeBrow - Blend Ind :19
+    AxisType: 1
+    blendShapeName: 5
+    index: 19
+    minValue: 0
+    maxValue: 70
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 50.EyeBrow - Blend Ind :21
+    AxisType: 1
+    blendShapeName: 5
+    index: 21
+    minValue: 0
+    maxValue: 60
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 51.Nose - Blend Ind :46
+    AxisType: 0
+    blendShapeName: 6
+    index: 46
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 52.Nose - Blend Ind :51
+    AxisType: 1
+    blendShapeName: 6
+    index: 51
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 53.Nose - Blend Ind :48
+    AxisType: 1
+    blendShapeName: 6
+    index: 48
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 54.Nose - Blend Ind :49
+    AxisType: 1
+    blendShapeName: 6
+    index: 49
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 1
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  - itemName: 55.NoseBone_Scale_Z
+    AxisType: 0
+    blendShapeName: 6
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: SCALE
+      workingTransform: 1
+      workingAxes: 3
+      minValue: 0.8
+      maxValue: 1.2
+      reverseMyvalue: 0
+  - itemName: 56.NoseBone_Position_y
+    AxisType: 1
+    blendShapeName: 6
+    index: 0
+    minValue: 0
+    maxValue: 0
+    reverseMyValue: 0
+    boneAvailable: 1
+    boneObj: {fileID: 0}
+    boneData:
+    - boneName: POSTION
+      workingTransform: 3
+      workingAxes: 2
+      minValue: 0.04
+      maxValue: 0.07
+      reverseMyvalue: 0
+  - itemName: 57.Lips - Blend Ind :52
+    AxisType: 1
+    blendShapeName: 4
+    index: 52
+    minValue: 0
+    maxValue: 100
+    reverseMyValue: 0
+    boneAvailable: 0
+    boneObj: {fileID: 0}
+    boneData: []
+  updateName: 0

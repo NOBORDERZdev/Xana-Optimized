@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &200906070580497446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 200906070580497444}
+  - component: {fileID: 200906070580497447}
+  m_Layer: 0
+  m_Name: '[AvatarManager]potrait'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &200906070580497444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200906070580497446}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 30.903807, y: 144.49753, z: 310.8865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &200906070580497447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200906070580497446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93cb85c0fbecdfe4faca243119952468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InternetLost: {fileID: 0}
+  GameCanvas: {fileID: 0}
+  MenuCanvas: {fileID: 0}
+  Defaultanimator: {fileID: 0}
+  PrefabObject: {fileID: 5241757998442564520, guid: bea40b17c82471d4494580d7bf568dab,
+    type: 3}
+  contentPanel: {fileID: 0}
+  spawnPoint: {fileID: 0}
+  avatarPreview: {fileID: 0}
+  AvatarList:
+  - prefab: {fileID: 0}
+    Controller: {fileID: 0}
+    ModelNumber: 0
+    avatarImage: {fileID: 0}
+    isHost: 0
+  selectAvatarBtn: {fileID: 0}
+  currentselected: {fileID: 0}
+  avatarRefs: []
+  isMainScene: 0
+  clientMat: {fileID: 2100000, guid: 0b8875029ccf2ad43a6e77f268567244, type: 2}
+  arrow: {fileID: 919132149155446097, guid: fce02d4c98c39ab489bf35a9eb06c7d4, type: 3}
+  Currentplayer: {fileID: 0}
+  parentobjPlayer: {fileID: 0}
+  currentDummyPlayer: {fileID: 0}
+  dummyPlayerParent: {fileID: 0}
+  main_AnimatorController: {fileID: 9100000, guid: d72f727cbdf6ccf45b29ed094be5670d,
+    type: 2}
+  fordummy: {fileID: 9100000, guid: 5771aaf5c23be154a957c37cab41d23e, type: 2}
+  value: 0
+  PlayerPrefab: {fileID: 6636531596179502979, guid: b02c2862a1946de4982bd324e287c542,
+    type: 3}
+  reconnectAndRejoin: 0
+  clone_dummy: {fileID: 0}
+  clonPlayer: {fileID: 0}
+  temp1: {fileID: 0}
+  temp2: {fileID: 0}
+  JoinCurrentRoomPanel: {fileID: 4120509113057873630, guid: 28c03ba16483c8b4fa7f317fc3bfb8a4,
+    type: 3}
+  FavouriteAnimationSprite: {fileID: 21300000, guid: 9c02e031495570447adf13c1b2267188,
+    type: 3}
+  NormalAnimationSprite: {fileID: 21300000, guid: 29bf006f4afa71e41a9a7fa53622b8b5,
+    type: 3}
