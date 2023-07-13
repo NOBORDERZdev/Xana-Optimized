@@ -60,10 +60,11 @@ public class ItemData
     public bool throwThingsComponent;
     public bool ninjaComponent;
     public bool spawnComponent;
-
+    public bool warpFunctionComponent;
+    public bool blindComponent;
     public bool healthComponent;
     public bool addForceComponent;
-
+    public bool hasValidItemComponentData;
     public int collectiblePoints;
     public int healthPoints;
 
@@ -81,22 +82,27 @@ public class ItemData
     public RotateComponentData rotateComponentData;
     public LadderComponentData ladderComponentData;
     public EnemyNPCComponentData enemyNPCComponentData;
+    public BlindfoldedDisplayComponentData blindfoldedDisplayComponentData;
     public ThrowThingsComponentData throwThingsComponentData;
     public AddForceComponentData addForceComponentData;
     public NarrationComponentData narrationComponentData;
     public TimerCountdownComponentData timerCountdownComponentData;
     public PowerProviderComponentData powerProviderComponentData;
+    public AudioComponentData audioComponentData;
     public AvatarChangerComponentData avatarChangerComponentData;
     public DoorKeyComponentData doorKeyComponentData;
     public ChestKeyComponentData chestKeyComponentData;
     public ElapsedTimeComponentData elapsedTimeComponentData;
     public HelpButtonComponentData helpButtonComponentData;
+    public HyperLinkComponentData hyperLinkComponentData;
     public SituationChangerComponentData situationChangerComponentData;
     public SpecialItemComponentData speicalItemComponentData;
     public NinjaComponentData ninjaComponentData;
     public SpawnerItemComponentData spawnerComponentData;
     public DisplayMessageComponentData displayMessageComponentData;
     public QuizComponentData quizComponentData;
+    public WarpFunctionComponentData warpFunctionComponentData;
+    public BlindComponentData blindComponentData;
     #endregion
 
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
@@ -129,6 +135,8 @@ public class ItemData
         this.ninjaComponent = false;
         this.collectiblePoints = 0;
         this.healthPoints = 0;
+        this.warpFunctionComponent = false;
+        this.blindComponent = false;
 
 
         this.rotatorComponentData = new RotatorComponentData();
@@ -139,6 +147,7 @@ public class ItemData
         this.scalerComponentData = new ScalerComponentData();
         this.rotateComponentData = new RotateComponentData();
         this.enemyNPCComponentData = new EnemyNPCComponentData();
+        this.blindfoldedDisplayComponentData = new BlindfoldedDisplayComponentData();
         this.ladderComponentData = new LadderComponentData();
         this.addForceComponentData = new AddForceComponentData();
         this.timerComponentData = new TimerComponentData();
@@ -147,11 +156,13 @@ public class ItemData
         this.narrationComponentData = new NarrationComponentData();
         this.timerCountdownComponentData = new TimerCountdownComponentData();
         this.powerProviderComponentData = new PowerProviderComponentData();
+        this.audioComponentData = new AudioComponentData();
         this.avatarChangerComponentData = new AvatarChangerComponentData();
         this.doorKeyComponentData = new DoorKeyComponentData();
         this.chestKeyComponentData = new ChestKeyComponentData();
         this.elapsedTimeComponentData = new ElapsedTimeComponentData();
         this.helpButtonComponentData = new HelpButtonComponentData();
+        this.hyperLinkComponentData = new HyperLinkComponentData();
         this.throwThingsComponentData = new ThrowThingsComponentData();
         this.situationChangerComponentData = new SituationChangerComponentData();
         this.speicalItemComponentData = new SpecialItemComponentData();
@@ -159,6 +170,8 @@ public class ItemData
         this.spawnerComponentData = new SpawnerItemComponentData();
         this.displayMessageComponentData = new DisplayMessageComponentData();
         this.quizComponentData = new QuizComponentData();
+        this.warpFunctionComponentData = new WarpFunctionComponentData();
+        this.blindComponentData = new BlindComponentData();
     }
 
     public ItemData(ItemData itemData)
@@ -190,6 +203,7 @@ public class ItemData
         this.narratorComponent = itemData.narratorComponent;
         this.throwThingsComponent = itemData.throwThingsComponent;
         this.ninjaComponent = itemData.ninjaComponent;
+        this.warpFunctionComponent = itemData.warpFunctionComponent;
         // this.spawnComponent = itemData.spawnComponent;
 
 
@@ -208,13 +222,16 @@ public class ItemData
         this.narrationComponentData = new NarrationComponentData(itemData.narrationComponentData);
         this.timerCountdownComponentData = new TimerCountdownComponentData(itemData.timerCountdownComponentData);
         this.powerProviderComponentData = new PowerProviderComponentData(itemData.powerProviderComponentData);
+        this.audioComponentData = new AudioComponentData(itemData.audioComponentData);
         this.avatarChangerComponentData = new AvatarChangerComponentData(itemData.avatarChangerComponentData);
         this.enemyNPCComponentData = new EnemyNPCComponentData(itemData.enemyNPCComponentData);
+        this.blindfoldedDisplayComponentData = new BlindfoldedDisplayComponentData(itemData.blindfoldedDisplayComponentData);
         this.ladderComponentData = new LadderComponentData(itemData.ladderComponentData);
         this.elapsedTimeComponentData = new ElapsedTimeComponentData(itemData.elapsedTimeComponentData);
         this.doorKeyComponentData = new DoorKeyComponentData(itemData.doorKeyComponentData);
         this.chestKeyComponentData = new ChestKeyComponentData(itemData.chestKeyComponentData);
         this.helpButtonComponentData = new HelpButtonComponentData(itemData.helpButtonComponentData);
+        this.hyperLinkComponentData = new HyperLinkComponentData(itemData.hyperLinkComponentData);
         this.throwThingsComponentData = new ThrowThingsComponentData(itemData.throwThingsComponentData);
         this.situationChangerComponentData = new SituationChangerComponentData(itemData.situationChangerComponentData);
         this.speicalItemComponentData = new SpecialItemComponentData(itemData.speicalItemComponentData);
@@ -222,6 +239,8 @@ public class ItemData
         this.spawnerComponentData = new SpawnerItemComponentData(itemData.spawnerComponentData);
         this.displayMessageComponentData = new DisplayMessageComponentData(itemData.displayMessageComponentData);
         this.quizComponentData = new QuizComponentData(itemData.quizComponentData);
+        this.warpFunctionComponentData = new WarpFunctionComponentData(itemData.warpFunctionComponentData);
+        this.blindComponentData = new BlindComponentData(itemData.blindComponentData);
     }
 }
 
@@ -285,13 +304,12 @@ namespace Models
         }
     }
 
-
-
     [System.Serializable]
     public class TranslateComponentData
     {
         public bool IsActive;
         public bool IsFacing;
+        public bool isLoop;
         public float translateSpeed;
         public List<GameObject> flagIns;
         public List<Vector3> translatePoints;
@@ -299,6 +317,7 @@ namespace Models
         {
             IsActive = false;
             IsFacing = false;
+            isLoop = false;
             translateSpeed = 10f;
             flagIns = new List<GameObject>();
             translatePoints = new List<Vector3>();
@@ -307,6 +326,7 @@ namespace Models
         {
             IsActive = false;
             IsFacing = false;
+            isLoop = false;
             translateSpeed = 10f;
             flagIns = new List<GameObject>();
             translatePoints = new List<Vector3>();
@@ -315,6 +335,7 @@ namespace Models
         {
             IsActive = translateComponentData.IsActive;
             IsFacing = translateComponentData.IsFacing;
+            isLoop = translateComponentData.isLoop;
             translateSpeed = translateComponentData.translateSpeed;
             flagIns = translateComponentData.flagIns;
             translatePoints = translateComponentData.translatePoints;
@@ -341,7 +362,7 @@ namespace Models
             IsActive = false;
             //xyz_Axis = axis.x_Axis;
             //distanceToCover = 5f;
-            shallLoop = false;
+            shallLoop = true;
             defaultValue = new Vector3(1, 1, 1);
             maxValue = new Vector3(3, 3, 3);
             timeToAnimate = 1;
@@ -350,7 +371,7 @@ namespace Models
         public void Reset()
         {
             IsActive = false;
-            shallLoop = false;
+            shallLoop = true;
             defaultValue = new Vector3(1, 1, 1);
             maxValue = new Vector3(3, 3, 3);
             timeToAnimate = 1;
@@ -378,7 +399,7 @@ namespace Models
         public ScalerComponentData()
         {
             IsActive = false;
-            shallLoop = false;
+            shallLoop = true;
             defaultScaleValue = new Vector3(1, 1, 1);
             maxScaleValue = new Vector3(3, 3, 3);
             timeToAnimate = 5;
@@ -387,7 +408,7 @@ namespace Models
         public void Reset()
         {
             IsActive = false;
-            shallLoop = false;
+            shallLoop = true;
             defaultScaleValue = new Vector3(1, 1, 1);
             maxScaleValue = new Vector3(3, 3, 3);
             timeToAnimate = 5;
@@ -415,7 +436,7 @@ namespace Models
         public RotateComponentData()
         {
             IsActive = false;
-            shallLoop = false;
+            shallLoop = true;
             defaultValue = new Vector3(1, 1, 1);
             maxValue = new Vector3(3, 3, 3);
             timeToAnimate = 1;
@@ -424,7 +445,7 @@ namespace Models
         public void Reset()
         {
             IsActive = false;
-            shallLoop = false;
+            shallLoop = true;
             defaultValue = new Vector3(1, 1, 1);
             maxValue = new Vector3(3, 3, 3);
             timeToAnimate = 1;
@@ -473,41 +494,84 @@ namespace Models
     public class EnemyNPCComponentData
     {
         public bool IsActive;
+        public float maxHealth;
         public float EnemyNPChealthValue;
-        public float damageTaken;
+        public float damageTakenMinimum;
+        public float damageTakenMaximum;
+        //public float damageTaken;
         public string addTag = "Player";
         public EnemyNPCComponentData()
         {
             IsActive = false;
+            maxHealth = 1000;
             EnemyNPChealthValue = 100;
-            damageTaken = 50;
+            damageTakenMinimum = 10;
+            damageTakenMaximum = 30;
+            //damageTaken = 50;
             addTag = "Player";
         }
         public void Reset()
         {
             IsActive = false;
+            maxHealth = 1000;
             EnemyNPChealthValue = 100;
-            damageTaken = 50;
+            damageTakenMinimum = 10;
+            damageTakenMaximum = 30;
+            //damageTaken = 50;
             addTag = "Player";
         }
 
         public EnemyNPCComponentData(EnemyNPCComponentData data)
         {
             IsActive = data.IsActive;
+            maxHealth = data.maxHealth;
             EnemyNPChealthValue = data.EnemyNPChealthValue;
-            damageTaken = data.damageTaken;
+            damageTakenMinimum = data.damageTakenMinimum;
+            damageTakenMaximum = data.damageTakenMaximum;
+            //damageTaken = data.damageTaken;
             addTag = data.addTag;
         }
 
     }
 
+    [System.Serializable]
+    public class BlindfoldedDisplayComponentData
+    {
+        public bool IsActive;
+        public float blindfoldSliderValue;
+
+        public bool invisibleAvatar;
+        public bool footprintPaintAvatar;
+        public BlindfoldedDisplayComponentData()
+        {
+            IsActive = false;
+            blindfoldSliderValue = 5;
+            invisibleAvatar = true;
+            footprintPaintAvatar = false;
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            blindfoldSliderValue = 5;
+            invisibleAvatar = true;
+            footprintPaintAvatar = false;
+        }
+
+        public BlindfoldedDisplayComponentData(BlindfoldedDisplayComponentData data)
+        {
+            IsActive = data.IsActive;
+            blindfoldSliderValue = data.blindfoldSliderValue;
+            invisibleAvatar = data.invisibleAvatar;
+            footprintPaintAvatar = data.footprintPaintAvatar;
+        }
+
+    }
 
     [System.Serializable]
     public class NarrationComponentData
     {
         public bool IsActive;
         public string narrationsData;
-        public List<TMPro.TMP_InputField> informationDataRewriting;
         public bool onTriggerNarration;
         public bool onStoryNarration;
 
@@ -518,7 +582,6 @@ namespace Models
             onTriggerNarration = false;
             onStoryNarration = false;
             narrationsData = "";
-            informationDataRewriting = new List<TMPro.TMP_InputField>();
             timeBwNarrations = 1f;
         }
         public void Reset()
@@ -527,7 +590,6 @@ namespace Models
             onTriggerNarration = false;
             onStoryNarration = false;
             narrationsData = "";
-            informationDataRewriting = new List<TMPro.TMP_InputField>();
             timeBwNarrations = 1f;
         }
 
@@ -535,7 +597,6 @@ namespace Models
         {
             IsActive = data.IsActive;
             narrationsData = data.narrationsData;
-            informationDataRewriting = data.informationDataRewriting;
             onTriggerNarration = data.onTriggerNarration;
             onStoryNarration = data.onStoryNarration;
             timeBwNarrations = data.timeBwNarrations;
@@ -546,12 +607,14 @@ namespace Models
     public class HelpButtonComponentData
     {
         public bool IsActive;
+        public bool IsAlwaysOn;
         public string titleHelpButtonText;
         public string helpButtonData;
         public List<TMPro.TMP_InputField> informationDataRewriting;
         public HelpButtonComponentData()
         {
             IsActive = false;
+            IsAlwaysOn = true;
             titleHelpButtonText = "";
             helpButtonData = "";
             informationDataRewriting = new List<TMPro.TMP_InputField>();
@@ -561,13 +624,49 @@ namespace Models
             IsActive = false;
             titleHelpButtonText = "";
             helpButtonData = "";
+            IsAlwaysOn = true;
             informationDataRewriting = new List<TMPro.TMP_InputField>();
         }
         public HelpButtonComponentData(HelpButtonComponentData data)
         {
             IsActive = data.IsActive;
             titleHelpButtonText = data.titleHelpButtonText;
+            IsAlwaysOn = data.IsAlwaysOn;
             helpButtonData = data.helpButtonData;
+            informationDataRewriting = data.informationDataRewriting;
+        }
+    }
+
+    [System.Serializable]
+    public class HyperLinkComponentData
+    {
+        public bool IsActive;
+        public string titleHelpButtonText;
+        public string helpButtonData;
+        public string urlData;
+        public List<TMPro.TMP_InputField> informationDataRewriting;
+        public HyperLinkComponentData()
+        {
+            IsActive = false;
+            titleHelpButtonText = "";
+            helpButtonData = "";
+            urlData = "";
+            informationDataRewriting = new List<TMPro.TMP_InputField>();
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            titleHelpButtonText = "";
+            helpButtonData = "";
+            urlData = "";
+            informationDataRewriting = new List<TMPro.TMP_InputField>();
+        }
+        public HyperLinkComponentData(HyperLinkComponentData data)
+        {
+            IsActive = data.IsActive;
+            titleHelpButtonText = data.titleHelpButtonText;
+            helpButtonData = data.helpButtonData;
+            urlData = data.urlData;
             informationDataRewriting = data.informationDataRewriting;
         }
     }
@@ -615,6 +714,7 @@ namespace Models
 
         public void Reset()
         {
+            Debug.Log("Reset");
             isActive = false;
             forceAmountValue = 50;
             forceDirection = new Vector3(0f, 0f, -1f);
@@ -717,48 +817,38 @@ namespace Models
     public class DoorKeyComponentData
     {
         public bool IsActive;
-        public static List<string> dropdownListing = new List<string>();
         public bool isKey;
         public bool isDoor;
-        public List<string> doorValue = new List<string>();
-        public string keyValue = "";
-        public List<int> selectedOption = new List<int>();
-        public int extraFields = 0;
-        public List<TMPro.TMP_Dropdown> _extraValues = new List<TMPro.TMP_Dropdown>();
+        public List<string> allKeys;
+        public string selectedKey;
+        public string selectedDoorKey;
 
         public DoorKeyComponentData()
         {
             IsActive = false;
-            isDoor = false;
             isKey = false;
-            //  doorValue = "";
-            doorValue.Clear();
-            keyValue = "";
-            selectedOption.Clear();
-            extraFields = 0;
-            //  dropdownListing.Clear();
+            isDoor = false;
+            allKeys = new List<string>();
+            selectedKey = string.Empty;
+            selectedDoorKey = string.Empty;
         }
         public void Reset()
         {
             IsActive = false;
-            isDoor = false;
             isKey = false;
-            //  doorValue = "";
-            doorValue.Clear();
-            keyValue = "";
-            selectedOption.Clear();
-            extraFields = 0;
-            //dropdownListing.Clear();
+            isDoor = false;
+            allKeys = new List<string>();
+            selectedKey = string.Empty;
+            selectedDoorKey = string.Empty;
         }
         public DoorKeyComponentData(DoorKeyComponentData data)
         {
             IsActive = data.IsActive;
             isDoor = data.isDoor;
             isKey = data.isKey;
-            doorValue = data.doorValue;
-            keyValue = data.keyValue;
-            selectedOption = data.selectedOption;
-            extraFields = data.extraFields;
+            allKeys = data.allKeys;
+            selectedKey = data.selectedKey;
+            selectedDoorKey = data.selectedDoorKey;
         }
     }
     [System.Serializable]
@@ -898,6 +988,35 @@ namespace Models
     }
 
     [System.Serializable]
+    public class AudioComponentData
+    {
+        public bool IsActive;
+        public string audioPath;
+        public bool loop;
+
+        public AudioComponentData()
+        {
+            IsActive = false;
+            audioPath = "";
+            loop = false;
+        }
+
+        public void Reset()
+        {
+            IsActive = false;
+            audioPath = "";
+            loop = false;
+        }
+
+        public AudioComponentData(AudioComponentData data)
+        {
+            IsActive = data.IsActive;
+            audioPath = data.audioPath;
+            loop = false;
+        }
+    }
+
+    [System.Serializable]
     public class AvatarChangerComponentData
     {
         public bool IsActive;
@@ -907,14 +1026,14 @@ namespace Models
         public AvatarChangerComponentData()
         {
             IsActive = false;
-            setTimer = 5;
+            setTimer = 15;
             avatarIndex = 0;
         }
 
         public void Reset()
         {
             IsActive = false;
-            setTimer = 5;
+            setTimer = 15;
             avatarIndex = 0;
         }
         public AvatarChangerComponentData(AvatarChangerComponentData data)
@@ -952,23 +1071,27 @@ namespace Models
     {
         public bool IsActive;
         public float Timer;
+        public bool isOff;
 
         public SituationChangerComponentData()
         {
             IsActive = false;
             Timer = 0f;
+            isOff = false;
         }
 
         public void Reset()
         {
             IsActive = false;
             Timer = 0f;
+            isOff = false;
         }
 
         public SituationChangerComponentData(SituationChangerComponentData data)
         {
             IsActive = data.IsActive;
             Timer = data.Timer;
+            isOff = data.isOff;
         }
     }
 
@@ -984,16 +1107,16 @@ namespace Models
         {
             IsActive = false;
             setTimer = 10;
-            playerSpeed = 2;
-            playerHeight = 1.5f;
+            playerSpeed = 9;
+            playerHeight = 6;
         }
 
         public void Reset()
         {
             IsActive = false;
             setTimer = 10;
-            playerSpeed = 2;
-            playerHeight = 1.5f;
+            playerSpeed = 9;
+            playerHeight = 6;
         }
 
         public SpecialItemComponentData(SpecialItemComponentData data)
@@ -1008,27 +1131,29 @@ namespace Models
     public class NinjaComponentData
     {
         public bool IsActive;
-        public float ninjaSpeed;
+        public float ninjaSpeedVar;
+        public float ninjaJumpVar;
         public float setTimerNinjaEffect;
 
         public NinjaComponentData()
         {
             IsActive = false;
-            ninjaSpeed = 1f;
-            setTimerNinjaEffect = 15;
+            ninjaSpeedVar = 1f;
+            setTimerNinjaEffect = 10f;
+            ninjaJumpVar = 4;
         }
 
         public void Reset()
         {
             IsActive = false;
-            ninjaSpeed = 1f;
-            setTimerNinjaEffect = 15;
+            ninjaSpeedVar = 1f;
+            setTimerNinjaEffect = 10f;
         }
 
         public NinjaComponentData(NinjaComponentData data)
         {
             IsActive = data.IsActive;
-            ninjaSpeed = data.ninjaSpeed;
+            ninjaSpeedVar = data.ninjaSpeedVar;
             setTimerNinjaEffect = data.setTimerNinjaEffect;
         }
     }
@@ -1060,36 +1185,6 @@ namespace Models
     [System.Serializable]
     public class DisplayMessageComponentData
     {
-        //public bool IsActive;
-        //public string titleDisplayMessage;
-        //public float messageDisplayTimeData;
-        //public List<string> displayMessageData;
-        //public List<TMPro.TMP_InputField> informationDataRewriting;
-
-        //public DisplayMessageComponentData()
-        //{
-        //    IsActive = false;
-        //    titleDisplayMessage = "";
-        //    messageDisplayTimeData = 5f;
-        //    displayMessageData = new List<string>();
-        //    informationDataRewriting = new List<TMPro.TMP_InputField>();
-        //}
-        //public void Reset()
-        //{
-        //    IsActive = false;
-        //    titleDisplayMessage = "";
-        //    messageDisplayTimeData = 5f;
-        //    displayMessageData = new List<string>();
-        //    informationDataRewriting = new List<TMPro.TMP_InputField>();
-        //}
-        //public DisplayMessageComponentData(DisplayMessageComponentData data)
-        //{
-        //    IsActive = data.IsActive;
-        //    titleDisplayMessage = data.titleDisplayMessage;
-        //    messageDisplayTimeData = data.messageDisplayTimeData;
-        //    displayMessageData = data.displayMessageData;
-        //    informationDataRewriting = data.informationDataRewriting;
-        //}
         public bool IsActive;
 
         public bool isStart;
@@ -1144,38 +1239,163 @@ namespace Models
     public class QuizComponentData
     {
         public bool IsActive;
+        public bool isOptionSelected;
         public List<TMPro.TMP_InputField> rewritingInputList;
         public List<string> rewritingStringList;
         public List<int> answers;
         public List<int> charLimit;
+        public float correctAnswerRate;
 
         public QuizComponentData()
         {
             IsActive = false;
+            isOptionSelected = false;
             rewritingInputList = new List<TMPro.TMP_InputField>();
             rewritingStringList = new List<string>();
             answers = new List<int>();
             charLimit = new List<int>();
+            correctAnswerRate = 0;
+
         }
         public void Reset()
         {
             IsActive = false;
+            isOptionSelected = false;
             rewritingInputList = new List<TMPro.TMP_InputField>();
             rewritingStringList = new List<string>();
             answers = new List<int>();
             charLimit = new List<int>();
+            correctAnswerRate = 0;
 
         }
         public QuizComponentData(QuizComponentData data)
         {
             IsActive = data.IsActive;
+            isOptionSelected = data.isOptionSelected;
             rewritingInputList = data.rewritingInputList;
             rewritingStringList = data.rewritingStringList;
             answers = data.answers;
             charLimit = data.charLimit;
+            correctAnswerRate = data.correctAnswerRate;
+        }
+    }
+    [System.Serializable]
+    public class WarpFunctionComponentData
+    {
+        public bool IsActive;
+        public bool isWarpPortalStart;
+        public bool isWarpPortalEnd;
+        public bool isReversible;
+        public string warpPortalStartKeyValue;
+        public string warpPortalEndKeyValue;
+
+        public List<PortalSystemStartPoint> warpPortalDataStartPoint;
+        public List<PortalSystemEndPoint> warpPortalDataEndPoint;
+        public List<string> portalStartDropdownListing;
+        public List<string> portalStartKeyValuesChosenAndAddition;
+        public List<string> portalEndKeyValuesChosenAndAddition;
+        public WarpFunctionComponentData()
+        {
+            IsActive = false;
+            isWarpPortalStart = false;
+            isWarpPortalEnd = false;
+            isReversible = true;
+            warpPortalEndKeyValue = string.Empty;
+            warpPortalStartKeyValue = string.Empty;
+
+            portalStartDropdownListing = new List<string>();
+            portalStartKeyValuesChosenAndAddition = new List<string>();
+            portalEndKeyValuesChosenAndAddition = new List<string>();
+            warpPortalDataStartPoint = new List<PortalSystemStartPoint>();
+            warpPortalDataEndPoint = new List<PortalSystemEndPoint>();
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            isWarpPortalStart = false;
+            isWarpPortalEnd = false;
+            isReversible = true;
+            warpPortalEndKeyValue = string.Empty;
+            warpPortalStartKeyValue = string.Empty;
+
+            portalStartDropdownListing = new List<string>();
+            portalStartKeyValuesChosenAndAddition = new List<string>();
+            portalEndKeyValuesChosenAndAddition = new List<string>();
+            warpPortalDataStartPoint = new List<PortalSystemStartPoint>();
+            warpPortalDataEndPoint = new List<PortalSystemEndPoint>();
+        }
+        public WarpFunctionComponentData(WarpFunctionComponentData data)
+        {
+            IsActive = data.IsActive;
+            isWarpPortalStart = data.isWarpPortalStart;
+            isWarpPortalEnd = data.isWarpPortalEnd;
+            isReversible = data.isReversible;
+            warpPortalEndKeyValue = data.warpPortalEndKeyValue;
+            warpPortalStartKeyValue = data.warpPortalStartKeyValue;
+
+            portalStartDropdownListing = data.portalStartDropdownListing;
+            portalStartKeyValuesChosenAndAddition = data.portalStartKeyValuesChosenAndAddition;
+            portalEndKeyValuesChosenAndAddition = data.portalEndKeyValuesChosenAndAddition;
+            warpPortalDataStartPoint = data.warpPortalDataStartPoint;
+            warpPortalDataEndPoint = data.warpPortalDataEndPoint;
         }
     }
 
+    [System.Serializable]
+    public class PortalSystemStartPoint
+    {
+        public string indexPortalStartKey;
+        public Vector3 portalStartLocation;
+
+        public PortalSystemStartPoint(string _indexPortal, Vector3 _portalLocation)
+        {
+            indexPortalStartKey = _indexPortal;
+            portalStartLocation = _portalLocation;
+        }
+    }
+    [System.Serializable]
+    public class PortalSystemEndPoint
+    {
+        public string indexPortalEndKey;
+        public Vector3 portalEndLocation;
+        public PortalSystemEndPoint(string _indexPortal, Vector3 _portalLocation)
+        {
+            indexPortalEndKey = _indexPortal;
+            portalEndLocation = _portalLocation;
+        }
+    }
+
+
+    [System.Serializable]
+    public class BlindComponentData
+    {
+        public bool IsActive;
+        public int time;
+        public int radius;
+        public bool isOff;
+
+        public BlindComponentData()
+        {
+            IsActive = false;
+            time = 5;
+            radius = 1;
+            isOff = false;
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            time = 5;
+            radius = 1;
+            isOff = false;
+        }
+        public BlindComponentData(BlindComponentData data)
+        {
+            IsActive = data.IsActive;
+            time = data.time;
+            radius = data.radius;
+            isOff = data.isOff;
+        }
+    }
 
     #endregion
 }

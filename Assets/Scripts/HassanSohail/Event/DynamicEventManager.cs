@@ -39,7 +39,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;
-    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTU3OCwiaWF0IjoxNjg2MDU4MDk1LCJleHAiOjE2ODYyMzA4OTV9.MfgqIxpKQP-YKlKGgWUMUit35Z2x2IGyFxquz7s_GMU";
+    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTU3OCwiaWF0IjoxNjg3MTczMDg2LCJleHAiOjE2ODczNDU4ODZ9.YFnOGdpkSY10EBKeWLSRd3Wu8tt9g3_TFJ7LTCmyJkc";
 
     /// </IRFAN Scripts end here>
      #endregion  
@@ -60,7 +60,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private void Start()
     {
         //For testing
-        //EventArguments = "547";
+        //EventArguments = "665";
         EventArguments = "";
         PauseCount = 0;
         FocusCount = 0;
@@ -369,7 +369,16 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
             else
             {
-                SetEventPopUpDialog("Event Time not started yet", "Will Start After:", timeFormat, true);
+                if (_eventStartSystemDateTimediff > 0 && _eventStartSystemDateTimediff <= 30)
+                {
+                    print("-------------Event can be started");
+                    StartCoroutine(DelayLoadRemainingSceneData());
+                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
+                }
+                else
+                {
+                    SetEventPopUpDialog("Event Time not started yet", "Will Start After:", timeFormat, true);
+                }
             }
             print("not started yet");
         }
@@ -398,7 +407,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //Loading scene for event after checking date time and event data
     public void SetSceneData()
     {
-        XanaConstants.xanaConstants.userLimit = "10";
+        if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
+        {
+            XanaConstants.xanaConstants.userLimit = "16";
+        }
+        else
+        {
+            XanaConstants.xanaConstants.userLimit = "15";
+        }
         //Set These Settings after loading Json Data
         LoadingHandler.Instance.ShowLoading();
         Screen.orientation = ScreenOrientation.LandscapeLeft;

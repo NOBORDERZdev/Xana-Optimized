@@ -25,7 +25,7 @@ public class LoadingSavingAvatar : MonoBehaviour
         print("app version====" + Application.version);
         StartCoroutine(getVersion());
         versionText.text = "Ver." + Application.version;
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
         {
             tabBG.SetActive(true);
         }

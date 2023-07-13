@@ -31,11 +31,6 @@ public class ElapsedTimeComponent : ItemComponent
     private void OnCollisionEnter(Collision _other)
     {
 
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-        //Debug.Log("Elapsed Time Trigger " + _other.gameObject.name + "Activated: " + isActivated + "  " + elapsedTimeComponentData.IsStart + " IsEnd " + elapsedTimeComponentData.IsEnd);
-
         if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
         {
             if (isActivated && elapsedTimeComponentData.IsStart)
@@ -43,14 +38,14 @@ public class ElapsedTimeComponent : ItemComponent
 
                 // Debug.Log("Elapse Time start");
                 //TimeStats.canRun = false;
-                TimeStats._timeStop?.Invoke(0,()=> { TimeStats._timeStart?.Invoke(); });
-                
-                
+                TimeStats._timeStop?.Invoke(0, () => { TimeStats._timeStart?.Invoke(); });
+
+
             }
             if (isActivated && elapsedTimeComponentData.IsEnd)
             {
                 //Debug.Log("Elapse Time end");
-                TimeStats._timeStop?.Invoke(5,()=>{ });
+                TimeStats._timeStop?.Invoke(5, () => { });
             }
         }
     }

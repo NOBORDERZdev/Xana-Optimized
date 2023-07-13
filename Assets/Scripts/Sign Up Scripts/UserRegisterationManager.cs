@@ -2920,7 +2920,9 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         print(Jsondata);
-        var request = new UnityWebRequest(url, "POST");
+         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
+         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
+         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();

@@ -207,7 +207,7 @@ public class ConstantsGod
     #endregion
 
     #region XANABuilder Api's
-    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v2/get-xana-universe/";
+    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v3/get-xana-universe/";
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount

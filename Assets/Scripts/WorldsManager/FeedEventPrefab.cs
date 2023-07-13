@@ -73,7 +73,7 @@ public class FeedEventPrefab : MonoBehaviour
     bool isNotLoaded = true;
     public LoginPageManager loginPageManager;
     UserAnalyticsHandler userAnalyticsHandler;
-
+    bool isBannerLoaded =false; 
     private void Awake()
     {
         loginPageManager = GetComponent<LoginPageManager>();
@@ -100,6 +100,13 @@ public class FeedEventPrefab : MonoBehaviour
 
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
+        if (m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            if (!isBannerLoaded)
+            {
+                StartCoroutine(DownloadAndLoadBanner());
+            }
+        }
     }
 
     int cnt = 0;
@@ -344,7 +351,10 @@ public class FeedEventPrefab : MonoBehaviour
 
     public void DownloadPrefabSprite()
     {
-        StartCoroutine(DownloadImage(m_ThumbnailDownloadURL));
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(DownloadImage(m_ThumbnailDownloadURL));
+        }
 
         if (isBuilderScene)
             m_JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinBuilderWorld());
@@ -510,7 +520,18 @@ public class FeedEventPrefab : MonoBehaviour
 
     public void UpdateWorldPanel()
     {
-        m_BannerSprite[0].sprite = m_FadeImage.sprite;
+        if (!m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            m_BannerSprite[0].sprite = m_FadeImage.sprite;
+            //if (!isBannerLoaded)
+            //{
+            //    StartCoroutine(DownloadAndLoadBanner());
+            //}
+        }
+        else
+        {
+            
+        }
         m_BannerSprite[1].sprite = m_FadeImage.sprite;
         m_BannerSprite[2].sprite = m_FadeImage.sprite;
     }
@@ -573,7 +594,7 @@ public class FeedEventPrefab : MonoBehaviour
             XanaConstants.xanaConstants.userLimit = userLimit;
         }
         //tempWorldName = m_WorldName.text.ToString();
-
+        XanaConstants.xanaConstants.MuseumID = idOfObject;
         //SetStringSize();
 
         //if (m_EnvName.Contains("GOZ : Animator Haruna Gouzu Gallery 2021"))
@@ -638,4 +659,25 @@ public class FeedEventPrefab : MonoBehaviour
     //{
     //    UpdeteUserCount();
     //}
+
+    Sprite BannerSprite;
+    IEnumerator DownloadAndLoadBanner()
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(m_BannerLink);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.LogError(www.error);
+        }
+        else
+        {
+            Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2());
+            m_BannerSprite[0].sprite = sprite;
+            isBannerLoaded= true;
+        }
+
+    }
+
 }

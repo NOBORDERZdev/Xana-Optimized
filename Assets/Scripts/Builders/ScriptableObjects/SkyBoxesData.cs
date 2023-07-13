@@ -27,13 +27,14 @@ public class SkyBoxItem
     public int skyId;
     public string skyName;
     //public Sprite icon;
-    public Material skyMaterial;
+   public Material skyMaterial;
     //public float lightIntensity = 1f;
     //public Color directionLightColor;
     //public float directionLightShadowStrength;
     //public float character_directionLightIntensity;
     public DirectionalLightData directionalLightData;
     public VolumeProfile ppVolumeProfile;
+    //public bool HideInUI;
 }
 
 [System.Serializable]

@@ -25,9 +25,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnHelpButtonCollisionEnter += EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit += DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
+        BuilderEventManager.OnQuizComponentCollisionEnter += EnableQuizComponentUI;
+        BuilderEventManager.OnSpecialItemComponentCollisionEnter += EnableSpecialItemUI;
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter += EnableAvatarInvisibilityUI;
+        BuilderEventManager.OnNinjaMotionComponentCollisionEnter += EnableNinjaMotionUI;
+        BuilderEventManager.OnThrowThingsComponentCollisionEnter += EnableThrowThingsUI;
+        BuilderEventManager.OnHyperLinkPopupCollisionEnter += EnableHyperLinkPopupUI;
+        BuilderEventManager.OnHyperLinkPopupCollisionExit += DisableHyperLinkPopupUI;
+
         BuilderEventManager.ResetComponentUI += DisableAllComponentUIObject;
 
-
+        DisableThrowThingUI();
         DisableAllComponentUIObject(ComponentType.None);
     }
     private void OnDisable()
@@ -46,11 +54,14 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnHelpButtonCollisionEnter -= EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit -= DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
+        BuilderEventManager.OnQuizComponentCollisionEnter -= EnableQuizComponentUI;
+        BuilderEventManager.OnSpecialItemComponentCollisionEnter -= EnableSpecialItemUI;
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter -= EnableAvatarInvisibilityUI;
+        BuilderEventManager.OnNinjaMotionComponentCollisionEnter -= EnableNinjaMotionUI;
+        BuilderEventManager.OnThrowThingsComponentCollisionEnter -= EnableThrowThingsUI;
 
         BuilderEventManager.ResetComponentUI -= DisableAllComponentUIObject;
     }
-
-
 
     //Narration Comopnent 
     public GameObject narrationUIParent;
@@ -87,6 +98,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     //Help Button Component
     public GameObject HelpButtonParentUI;
+    public HelpButtonComponentResizer helpButtonComponentResizer;
     public TextMeshProUGUI HelpButtonTitleText;
     public TextMeshProUGUI HelpText;
     public ScrollRect helpButtonScroll;
@@ -176,7 +188,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         DisableAllComponentUIObject(ComponentType.RandomNumberGenerator);
         RandomNumberUIParent.SetActive(true);
-        RandomNumberText.text = "Generated Number On This : " + r.ToString();
+        string s = TextLocalization.GetLocaliseTextByKey("Generated Number On This");
+        RandomNumberText.text = s + " : " + r.ToString();
     }
     public void DisableRandomNumberUI()
     {
@@ -190,7 +203,6 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         DisableAllComponentUIObject(ComponentType.TimeLimit);
         TimeLimitUIParent.SetActive(true);
-
         if (TimeCoroutine == null)
         {
             TimeCoroutine = StartCoroutine(nameof(IETimeLimit), time);
@@ -359,9 +371,10 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisplayMessageTimeText.text = "00:00";
     }
 
-    public void EnableHelpButtonUI(string helpButtonTitle, string HelpTexts)
+    public void EnableHelpButtonUI(string helpButtonTitle, string HelpTexts, GameObject obj)
     {
         DisableAllComponentUIObject(ComponentType.HelpButton);
+        helpButtonComponentResizer.target = obj.transform;
         HelpButtonTitleText.text = helpButtonTitle;
         HelpText.text = "";
         if (HelpTexts.Length == 0)
@@ -391,6 +404,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public void DisableHelpButtonUI()
     {
+        helpButtonComponentResizer.target = null;
         HelpButtonParentUI.SetActive(false);
         HelpText.text = "";
     }
@@ -441,6 +455,547 @@ public class GamificationComponentUIManager : MonoBehaviour
         SituationChangerTimeText.text = "";
     }
 
+    #region Quiz Component
+
+    public TMP_Text quizButtonTextInformation;
+    public TMP_Text numberOfQuestions;
+    public TMP_Text correctText;
+    public TMP_Text wrongText;
+    public TMP_Text scorePercentage;
+
+    public GameObject[] correctWrongImageObjects;
+    public GameObject quizParentReference;
+    public GameObject scoreCanvas;
+    public GameObject quizComponentUI;
+    public Button[] options = new Button[4];
+    public Button nextButton;
+
+    public Sprite wrongImage;
+    public Sprite correctImage;
+
+    int questionIndex;
+    int numOfQuestions;
+    int correct, wrong;
+    int currentAnswer;
+    readonly int inputFieldsPerQuestion = 5; //one question and four options
+
+    Outline currentOutline;
+
+    bool isOptionSelected = false;
+    bool isFirstQuestion = true;
+    public bool isDissapearing = false;
+
+    private QuizComponentData quizComponentData = new();
+    private TMP_Text nextButtonText;
+
+    string confirm = "Confirm";
+    string result = "Result";
+    string next = "Next";
+    QuizComponent quizComponent;
+
+    void EnableQuizComponentUI(QuizComponent quizComponent, QuizComponentData quizComponentData)
+    {
+        confirm = "Confirm";
+        result = "Result";
+        next = "Next";
+        DisableAllComponentUIObject(ComponentType.Quiz);
+        quizComponentUI.SetActive(true);
+        this.quizComponent = quizComponent;
+        StartQuiz(quizComponentData);
+    }
+    public void QuizResultPopupClose()
+    {
+        if (quizComponent != null)
+            CheckScorePercentage();
+    }
+
+    public void StartQuiz(QuizComponentData data)
+    {
+        for (int i = 0; i < options.Length; i++)
+        {
+            options[i].onClick.RemoveAllListeners();
+        }
+
+        nextButton.onClick.RemoveAllListeners();
+        for (int i = 0; i < options.Length; i++)
+        {
+            int c = i;
+            options[c].onClick.AddListener(delegate { OnSelectOption(c); });
+            options[c].GetComponent<Outline>().enabled = false;
+            correctWrongImageObjects[c].SetActive(false);
+        }
+
+        nextButton.onClick.AddListener(delegate { DisplayNextQuestion(); });
+
+        this.quizComponentData = null;
+        quizParentReference.SetActive(false);
+        this.quizComponentData = data;
+
+        SetInitialValues();
+
+        if (scoreCanvas.activeInHierarchy)
+            scoreCanvas.SetActive(false);
+
+        DisplayNextQuestion();
+        quizParentReference.SetActive(true);
+    }
+
+    private void SetInitialValues()
+    {
+        numOfQuestions = quizComponentData.answers.Count;
+
+        questionIndex = 0;
+        correct = 0;
+        wrong = 0;
+
+        nextButtonText = nextButton.GetComponentInChildren<TMP_Text>();
+        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+        nextButtonText.text = confirm;
+
+        isFirstQuestion = true;
+        isOptionSelected = false;
+    }
+
+    private void CheckAnswer()
+    {
+        if (quizComponentData.answers[questionIndex] == currentAnswer)
+        {
+            UpdateQuizData(0);
+        }
+        else
+        {
+            currentOutline.enabled = false;
+            UpdateQuizData(1);
+        }
+
+        questionIndex += 1;
+        next = TextLocalization.GetLocaliseTextByKey("Next");
+        result = TextLocalization.GetLocaliseTextByKey("Result");
+        Debug.LogError("TextLocalization==>" + next + " " + result);
+
+        nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
+        SetButtonInteractability(true, false);
+    }
+
+
+    void OnSelectOption(int answer)
+    {
+        currentAnswer = answer;
+        SetButtonInteractability(true, true);
+        UpdateQuizData(2);
+
+        if (!isOptionSelected)
+        {
+            isOptionSelected = true;
+            confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+            Debug.LogError("TextLocalization==>" + confirm);
+
+            nextButtonText.text = confirm;
+        }
+    }
+
+    private void DisplayNextQuestion()
+    {
+        if (nextButtonText.text == confirm)
+        {
+            if (!isOptionSelected)
+            {
+                if (isFirstQuestion)
+                    ShowQuestion();
+                else
+                    Debug.Log("Please Select an Option First");
+
+                isFirstQuestion = false;
+            }
+            else
+            {
+                CheckAnswer();
+            }
+
+            return;
+        }
+
+        if (nextButtonText.text == next)
+        {
+            ShowQuestion();
+            return;
+        }
+
+        if (nextButtonText.text == result)
+        {
+            quizParentReference.SetActive(false);
+            ShowScoreCanvasRoutine();
+        }
+    }
+
+    void ShowQuestion()
+    {
+        SetButtonInteractability(true, true);
+        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+        Debug.LogError("Confirm Localise " + confirm);
+
+        nextButtonText.text = confirm;
+
+        if (questionIndex < numOfQuestions)
+        {
+            string s = TextLocalization.GetLocaliseTextByKey("Question");
+            string s2 = TextLocalization.GetLocaliseTextByKey("of");
+            string s3 = TextLocalization.GetLocaliseTextByKey("Q");
+            Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3);
+            Debug.LogError("Gautam");
+
+            numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
+            quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
+
+            for (int i = 1; i < inputFieldsPerQuestion; i++)
+            {
+                options[i - 1].GetComponentInChildren<TMP_Text>().text =
+                    quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
+            }
+        }
+
+        isOptionSelected = false;
+    }
+
+    void UpdateQuizData(int option)
+    {
+        string colorString = "";
+        Sprite image = correctImage;
+
+        //0 if the answer is correct, 1 if wrong, 2 is for selecting only (answer not yet confirmed)
+        switch (option)
+        {
+            case 0:
+                correct++;
+                image = correctImage;
+                colorString = "#36C34E";
+                break;
+
+            case 1:
+                wrong++;
+                image = wrongImage;
+                break;
+
+            case 2:
+                colorString = "#008FFF";
+                break;
+        }
+
+        if (option == 0 || option == 1)
+        {
+            correctWrongImageObjects[currentAnswer].SetActive(true);
+        }
+
+        correctWrongImageObjects[currentAnswer].GetComponent<Image>().sprite = image;
+
+        Outline thisButtonOutine = options[currentAnswer].GetComponent<Outline>();
+
+        if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+        {
+            thisButtonOutine.effectColor = color;
+        }
+
+        if (option == 0 || option == 2)
+        {
+            thisButtonOutine.enabled = true;
+            currentOutline = thisButtonOutine;
+        }
+
+        if (option == 1)
+        {
+            WrongAnswerUIAdjustments(correctImage, "#36C34E");
+        }
+    }
+
+    private void WrongAnswerUIAdjustments(Sprite image, string colorString)
+    {
+        correctWrongImageObjects[quizComponentData.answers[questionIndex]].SetActive(true);
+        correctWrongImageObjects[quizComponentData.answers[questionIndex]].GetComponent<Image>().sprite = image;
+
+        Outline thisButtonOutine = options[quizComponentData.answers[questionIndex]].GetComponent<Outline>();
+
+        if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+        {
+            thisButtonOutine.effectColor = color;
+        }
+
+        thisButtonOutine.enabled = true;
+        currentOutline = thisButtonOutine;
+
+    }
+
+    private void SetButtonInteractability(bool isOptions, bool isInteractable)
+    {
+        if (isOptions)
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                options[i].transition = Selectable.Transition.None;
+                options[i].interactable = isInteractable;
+                if (isInteractable)
+                {
+                    options[i].GetComponent<Outline>().enabled = false;
+                    correctWrongImageObjects[i].SetActive(false);
+                }
+            }
+        }
+    }
+
+    private void ShowScoreCanvasRoutine()
+    {
+        scoreCanvas.SetActive(true);
+        string s = TextLocalization.GetLocaliseTextByKey("Correct");
+        string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
+        string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
+        string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
+        Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
+        correctText.text = s + ": " + correct;
+        wrongText.text = s2 + ": " + wrong;
+        float percentage = (((float)correct / numOfQuestions) * 100);
+        scorePercentage.text = s3 + " " + percentage.ToString("0.#") + "%";
+
+        isFirstQuestion = true;
+        isOptionSelected = false;
+
+        nextButtonText.text = s4;
+    }
+
+    public void CheckScorePercentage()
+    {
+        StartCoroutine(CheckScorePercentageRoutine());
+    }
+
+    IEnumerator CheckScorePercentageRoutine()
+    {
+        float division = (((float)correct / numOfQuestions) * 100);
+
+        if (division >= quizComponentData.correctAnswerRate)
+        {
+            isDissapearing = true;
+            yield return new WaitForSeconds(0);
+            isDissapearing = false;
+            quizComponent.gameObject.SetActive(false);
+        }
+        quizComponent = null;
+        ResetCredentials();
+    }
+
+    void ResetCredentials()
+    {
+        correct = 0;
+        wrong = 0;
+        questionIndex = 0;
+        DisableQuizComponentUI();
+    }
+
+    void DisableQuizComponentUI()
+    {
+        quizComponentUI.SetActive(false);
+    }
+    #endregion
+
+    #region Special Item Component
+    public GameObject SpecialItemUIParent;
+    public TextMeshProUGUI SpecialItemText;
+    Coroutine SpecialItemCoroutine;
+
+    public void EnableSpecialItemUI(float time)
+    {
+        DisableAllComponentUIObject(ComponentType.SpecialItem);
+        SpecialItemUIParent.SetActive(true);
+
+        if (SpecialItemCoroutine == null)
+        {
+            SpecialItemCoroutine = StartCoroutine(nameof(IESpecialItem), time);
+        }
+        else
+        {
+            if (SpecialItemCoroutine != null)
+                StopCoroutine(SpecialItemCoroutine);
+            SpecialItemCoroutine = StartCoroutine(nameof(IESpecialItem), time);
+        }
+    }
+
+    public IEnumerator IESpecialItem(float time)
+    {
+        while (time > 0)
+        {
+            time--;
+            SpecialItemText.text = ConvertTimetoSecondsandMinute(time);
+            yield return new WaitForSeconds(1);
+        }
+        DisableSpecialItemUI();
+    }
+
+    public void DisableSpecialItemUI()
+    {
+        SpecialItemUIParent.SetActive(false);
+        SpecialItemText.text = "";
+        if (SpecialItemCoroutine != null)
+            StopCoroutine(SpecialItemCoroutine);
+    }
+    #endregion
+
+    #region Avatar Invisibility Component
+    public GameObject AvatarInvisibilityUIParent;
+    public TextMeshProUGUI AvatarInvisibilityText;
+    Coroutine AvatarInvisibilityCoroutine;
+
+    public void EnableAvatarInvisibilityUI(float time)
+    {
+        DisableAllComponentUIObject(ComponentType.AvatarInvisibility);
+        AvatarInvisibilityUIParent.SetActive(true);
+
+        if (AvatarInvisibilityCoroutine == null)
+        {
+            AvatarInvisibilityCoroutine = StartCoroutine(nameof(IEAvatarInvisibility), time);
+        }
+        else
+        {
+            if (AvatarInvisibilityCoroutine != null)
+                StopCoroutine(AvatarInvisibilityCoroutine);
+            AvatarInvisibilityCoroutine = StartCoroutine(nameof(IEAvatarInvisibility), time);
+        }
+    }
+
+    public IEnumerator IEAvatarInvisibility(float time)
+    {
+        while (time > 0)
+        {
+            time--;
+            AvatarInvisibilityText.text = ConvertTimetoSecondsandMinute(time);
+            yield return new WaitForSeconds(1);
+        }
+        DisableAvatarInvisibilityUI();
+    }
+
+    public void DisableAvatarInvisibilityUI()
+    {
+        AvatarInvisibilityUIParent.SetActive(false);
+        AvatarInvisibilityText.text = "";
+        if (AvatarInvisibilityCoroutine != null)
+            StopCoroutine(AvatarInvisibilityCoroutine);
+    }
+    #endregion
+
+    #region Ninja Motion Component
+    public GameObject NinjaMotionUIParent;
+    public TextMeshProUGUI NinjaMotionText;
+    Coroutine NinjaMotionCoroutine;
+
+    public void EnableNinjaMotionUI(float time)
+    {
+        DisableAllComponentUIObject(ComponentType.NinjaMotion);
+        DisableThrowThingUI();
+        NinjaMotionUIParent.SetActive(true);
+
+        if (NinjaMotionCoroutine == null)
+        {
+            NinjaMotionCoroutine = StartCoroutine(nameof(IENinjaMotion), time);
+        }
+        else
+        {
+            if (NinjaMotionCoroutine != null)
+                StopCoroutine(NinjaMotionCoroutine);
+            NinjaMotionCoroutine = StartCoroutine(nameof(IENinjaMotion), time);
+        }
+    }
+
+    public void AttackwithSword()
+    {
+        BuilderEventManager.OnAttackwithSword?.Invoke();
+    }
+    public void HideOpenSword()
+    {
+        BuilderEventManager.OnHideOpenSword?.Invoke();
+    }
+    public void AttckwithShuriken()
+    {
+        BuilderEventManager.OnAttackwithShuriken?.Invoke();
+    }
+
+    public IEnumerator IENinjaMotion(float time)
+    {
+        while (time > 0)
+        {
+            time--;
+            NinjaMotionText.text = ConvertTimetoSecondsandMinute(time);
+            yield return new WaitForSeconds(1);
+        }
+        DisableNinjaMotionUI();
+    }
+
+    public void DisableNinjaMotionUI()
+    {
+        NinjaMotionUIParent.SetActive(false);
+        NinjaMotionText.text = "";
+        if (NinjaMotionCoroutine != null)
+            StopCoroutine(NinjaMotionCoroutine);
+    }
+    #endregion
+
+    #region Throw Things Component
+    public GameObject ThrowThingsUIParent;
+
+    public void EnableThrowThingsUI()
+    {
+        DisableAllComponentUIObject(ComponentType.ThrowThings);
+        ThrowThingsUIParent.SetActive(true);
+    }
+
+    public void OnBallPositionSet()
+    {
+        BuilderEventManager.OnThowThingsPositionSet?.Invoke();
+    }
+    public void OnThrowBall()
+    {
+        BuilderEventManager.OnThrowBall?.Invoke();
+    }
+
+    public void DisableThrowThingUI()
+    {
+        ThrowThingsUIParent.SetActive(false);
+    }
+    #endregion
+
+    #region HyperLink Popup
+    public GameObject HyperLinkPopupUIParent;
+    public HyperlinkPanelResizer hyperlinkPanelResizer;
+    public TextMeshProUGUI hyperLinkPopupTitleText;
+    public TextMeshProUGUI hyperLinkPopupText;
+    string url;
+    public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, GameObject obj)
+    {
+        DisableAllComponentUIObject(ComponentType.HyperLinkPopup);
+        hyperLinkPopupTitleText.text = hyperLinkPopupTitle;
+        hyperLinkPopupText.text = "";
+        hyperlinkPanelResizer.target = obj.transform;
+        url = hyperLinkPopupURL;
+        if (hyperLinkPopupTexts.Length == 0)
+        {
+            hyperLinkPopupText.text = "Define Rules here !";
+        }
+        else
+        {
+            hyperLinkPopupText.text = hyperLinkPopupTexts + "\n";
+        }
+        //HelpButtonUILinesCount();
+        HyperLinkPopupUIParent.SetActive(true);
+    }
+
+    public void OnClickHyperLinkButton()
+    {
+        Application.OpenURL(url);
+    }
+
+    public void DisableHyperLinkPopupUI()
+    {
+        hyperlinkPanelResizer.target = null;
+        HyperLinkPopupUIParent.SetActive(false);
+    }
+
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -469,6 +1024,18 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableTimeLimitUI();
         if (componentType != ComponentType.TimerCountDown)
             DisableTimerCounDownUI();
+        if (componentType != ComponentType.Quiz)
+            DisableQuizComponentUI();
+        if (componentType != ComponentType.SpecialItem)
+            DisableSpecialItemUI();
+        if (componentType != ComponentType.NinjaMotion)
+            DisableNinjaMotionUI();
+        if (componentType != ComponentType.AvatarInvisibility)
+            DisableAvatarInvisibilityUI();
+        if (componentType != ComponentType.ThrowThings)
+            DisableThrowThingUI();
+        if (componentType != ComponentType.HyperLinkPopup)
+            DisableHyperLinkPopupUI();
     }
 }
 
@@ -482,5 +1049,11 @@ public enum ComponentType
     TimerCountDown,
     SituationChanger,
     HelpButton,
-    DisplayMessage
+    DisplayMessage,
+    SpecialItem,
+    Quiz,
+    NinjaMotion,
+    AvatarInvisibility,
+    ThrowThings,
+    HyperLinkPopup
 }

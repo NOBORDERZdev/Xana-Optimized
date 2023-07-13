@@ -90,7 +90,7 @@ public class Toast : MonoBehaviour
         {
             localizedMsg = TextLocalization.GetLocaliseTextByKey(msg);
         }
-        if (localizedMsg.IsNullOrEmpty()) localizedMsg = msg;
+        if(localizedMsg.IsNullOrEmpty()) localizedMsg = msg;
 
         var spriteIndex = _spriteIndex.Equals(0) ? successOrFailuerThumbnail.sprite = successFailureSprites[0] :
         successOrFailuerThumbnail.sprite = successFailureSprites[1];
