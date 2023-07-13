@@ -67,6 +67,9 @@ public class XanaConstants : MonoBehaviour
     public bool isCameraMan ;
     public bool isCameraManInRoom = false;
 
+
+    public String MuseumID;
+  
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
@@ -90,6 +93,7 @@ public class XanaConstants : MonoBehaviour
     public bool isBuilderScene;
     public int builderMapID;
     public bool JjWorldSceneChange=false;
+    public bool isFromXanaLobby =false;
 
     public string r_EmoteStoragePersistentPath
     {

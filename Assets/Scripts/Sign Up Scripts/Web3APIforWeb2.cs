@@ -1,8 +1,8 @@
-using Cysharp.Threading.Tasks;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 public class Web3APIforWeb2 : MonoBehaviour
 {
@@ -145,7 +145,9 @@ public class Web3APIforWeb2 : MonoBehaviour
         var request = new UnityWebRequest(url, "GET");
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
+
         await request.SendWebRequest();
+
         print("return " + request.downloadHandler.text);
         return request;
     }

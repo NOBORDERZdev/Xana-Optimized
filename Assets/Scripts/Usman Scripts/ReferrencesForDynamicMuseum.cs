@@ -11,8 +11,8 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public GameObject[] overlayPanels;
     public GameObject workingCanvas, PlayerParent, MainPlayerParent;
     public GameObject[] disableObjects;
-    public GameObject[] potraitHiddenBtnObjects;
-    public GameObject[] hiddenBtnObjects;
+    public GameObject[] potraitHiddenBtnObjects , potraitdissableBtnObjects;
+    public GameObject[] hiddenBtnObjects , disableBtnObjects;
     public static ReferrencesForDynamicMuseum instance;
     public Camera randerCamera;
     public List<GameObject> disableObjectsInMuseums;
@@ -95,13 +95,18 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
             }
         }
+        //else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+        //{
+        //    //PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
+        //    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
+        //}
         else
         {
             RoomMaxPlayerCount = Convert.ToInt32(XanaConstants.xanaConstants.userLimit);
             if (PhotonNetwork.CurrentRoom != null)
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         }
-        if (instance != null && instance != this)
+        if (instance != null && instance != this/* && !FeedEventPrefab.m_EnvName.Contains("XANA Lobby")*/)
         {
             if (instance.totalCounter != null)
             {
@@ -164,16 +169,30 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateCanvasForMuseum(true);
     }
-    public void hiddenButtonDisable()
+    
+    
+    /// Added by Abdullah Rashid 23/07/05           
+  public void hiddenButtonDisable()
     {
+        //To Hide Buttons
         foreach (GameObject go in hiddenBtnObjects)
+        {
+            if (!go.GetComponent<CanvasGroup>())
+            {
+                go.AddComponent<CanvasGroup>();
+            }
+            go.GetComponent<CanvasGroup>().alpha = 0;
+        }
+       
+      //To disable Buttons  
+        foreach (GameObject go in disableBtnObjects)
         {
             go.SetActive(false);
         }
-       
     }
     public void hiddenButtonEnable()
     {
+        //To Visible Hide Buttons
         foreach (GameObject go in hiddenBtnObjects)
         {
             //go.SetActive(true);
@@ -184,14 +203,38 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             }
             else
             {
-                go.SetActive(true);
+                if (!go.GetComponent<CanvasGroup>())
+                {
+                    go.AddComponent<CanvasGroup>();
+                }
+                go.GetComponent<CanvasGroup>().alpha = 1;
             }
+        }
+
+        //To enable disable Buttons
+        foreach (GameObject go in disableBtnObjects)
+        {
+           
+                go.SetActive(true);
+           
         }
 
     }
     public void potraithiddenButtonDisable()
     {
+        //To Hide potrait Buttons
         foreach (GameObject go in potraitHiddenBtnObjects)
+        {
+
+            if (!go.GetComponent<CanvasGroup>())
+            {
+                go.AddComponent<CanvasGroup>();
+            }
+            go.GetComponent<CanvasGroup>().alpha = 0;
+        }
+
+        //To disable potrait Buttons
+        foreach (GameObject go in potraitdissableBtnObjects)
         {
             go.SetActive(false);
         }
@@ -199,6 +242,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     }
     public void potraithiddenButtonEnable()
     {
+        //To Visible Hide potrait Buttons
         foreach (GameObject go in potraitHiddenBtnObjects)
         {
             //go.SetActive(true);
@@ -209,13 +253,29 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             }
             else
             {
-                go.SetActive(true);
+                if (!go.GetComponent<CanvasGroup>())
+                {
+                    go.AddComponent<CanvasGroup>();
+                }
+                go.GetComponent<CanvasGroup>().alpha = 1;
             }
+        }
+        //To enable disable potrait Buttons
+        foreach (GameObject go in potraitdissableBtnObjects)
+        {
+           
+                go.SetActive(true);
+           
         }
 
     }
-
+    ////////////////////////////////////
+   
     private void Start()
+
+
+
+
     {
         StartCoroutine(SetPlayerCounter());
     }
@@ -237,6 +297,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
+                totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstants.xanaConstants.userLimit*/;
                     
                     //if (XanaConstants.xanaConstants.isCameraMan)
                     //{
@@ -257,13 +318,17 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     //}
                     print("!!! PlayerCount"+ PlayerCount);
                 }
+                else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+                {
+                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount)+ XanaAi.AiManager.instance.SpwanedAiCount;
+                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
+                }
                 else
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                    print("!!! else" );
+                    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount;
                 }
                 //        Debug.LogError("Player count====" + PhotonNetwork.CurrentRoom.PlayerCount+"------"+XanaConstants.xanaConstants.userLimit);
-                totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstants.xanaConstants.userLimit*/;
             }
         }
         catch (Exception e)

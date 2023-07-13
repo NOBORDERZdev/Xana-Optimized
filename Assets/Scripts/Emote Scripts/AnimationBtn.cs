@@ -11,7 +11,7 @@ public class AnimationBtn : MonoBehaviour
     public GameObject JyosticksObject;
     public GameObject JumpObject;
     public GameObject BottomObject;
-    public GameObject XanaChatObject;
+  
 
     Button btn;
     public bool isClose;
@@ -88,7 +88,7 @@ public class AnimationBtn : MonoBehaviour
                 //    ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
                 // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
                 BottomObject.SetActive(false);
-                XanaChatObject.SetActive(false);
+              
                 m_EmotePanel.SetActive(true);
                 if (m_EmotePanel != null)
                     m_EmotePanel.transform.DOLocalMoveY(-108f, 0.1f);

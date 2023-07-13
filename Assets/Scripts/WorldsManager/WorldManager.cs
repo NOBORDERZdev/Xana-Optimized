@@ -9,11 +9,13 @@ using UnityEditor;
 using AdvancedInputFieldPlugin;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
+using UnityEngine.UI;
 
 public class WorldManager : MonoBehaviour
 {
     [Header("Main prefab")]
     public GameObject eventPrefab;
+    public GameObject eventPrefabLobby;
     public GameObject eventPrefabTab;
     [Header("Home Page Scrollviews")]
     public Transform listParentHotSection;
@@ -237,14 +239,30 @@ public class WorldManager : MonoBehaviour
         }
     }
     public string worldstr;
-
+    bool isLobbyActive=false; 
     void InstantiateWorlds()
     {
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
-            GameObject TempObject = Instantiate(eventPrefab);
-            TempObject.transform.SetParent(listParent);
+             GameObject TempObject;
+            if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
+            {
+                 isLobbyActive=true;
+                 TempObject  = eventPrefabLobby;
+                 TempObject.transform.SetParent(listParent.transform.parent);
+                 //TempObject.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.00012207f,344.261f);
+                 TempObject.transform.SetAsFirstSibling();
+                 //TempObject.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                 //TempObject.transform.GetComponent<RectTransform>().localPosition = new Vector3(-6.65151f,1493.0f,0);
+                 //TempObject.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0,283.57f);
+            }
+            else
+            {
+                TempObject = Instantiate(eventPrefab);
+                TempObject.transform.SetParent(listParent);
+            }
             FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
+            
             _event.idOfObject = _WorldInfo.data.rows[i].id;
             _event.m_EnvironmentName = _WorldInfo.data.rows[i].name;
             try
@@ -255,7 +273,7 @@ public class WorldManager : MonoBehaviour
             {
                 _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail;
             }
-            _event.m_BannerLink = _WorldInfo.data.rows[i].thumbnail;
+            _event.m_BannerLink = _WorldInfo.data.rows[i].banner;
             _event.m_WorldDescription = _WorldInfo.data.rows[i].description;
             _event.entityType = _WorldInfo.data.rows[i].entityType;
             _event.m_PressedIndex = int.Parse(_WorldInfo.data.rows[i].id);
@@ -308,12 +326,19 @@ public class WorldManager : MonoBehaviour
 
             TempObject.transform.localScale = new Vector3(1, 1, 1);
             _event.Init();
-            if (aPIURLGlobal == APIURL.Hot)
-                hotWorldList.Add(TempObject);
-            else if (aPIURLGlobal == APIURL.AllWorld)
-                newWorldList.Add(TempObject);
-            else if (aPIURLGlobal == APIURL.MyWorld)
-                myworldWorldList.Add(TempObject);
+             if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby")){ 
+                if (aPIURLGlobal == APIURL.Hot)
+                    hotWorldList.Add(TempObject);
+                else if (aPIURLGlobal == APIURL.AllWorld)
+                    newWorldList.Add(TempObject);
+                else if (aPIURLGlobal == APIURL.MyWorld)
+                    myworldWorldList.Add(TempObject);
+            }
+        }
+        if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
+        {
+            eventPrefabLobby.SetActive(false);
+            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=12;
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -498,7 +523,8 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            if (!XanaConstants.xanaConstants.JjWorldSceneChange )
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 #if UNITY_EDITOR
             LoadingHandler.Instance.ShowLoading();
@@ -629,8 +655,8 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
-            FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName; ;
-            Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName; ;
+            FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
+            Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName; 
             PlayWorld();
         }
     }

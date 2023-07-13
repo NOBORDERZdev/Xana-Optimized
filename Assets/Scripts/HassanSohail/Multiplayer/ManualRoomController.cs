@@ -30,6 +30,7 @@ public class ManualRoomController : MonoBehaviour
         {
             for (int i = RoomsView.transform.childCount-1; i >= 0; i--)
             {
+                Debug.Log("manual room controller :- HideRoomList function ");
                 UnityEngine.Object.Destroy(RoomsView.transform.GetChild(i).gameObject);
             }
         }
@@ -38,11 +39,14 @@ public class ManualRoomController : MonoBehaviour
 
     public void UpdateRoomBtn(string name, string count) {
 
+        Debug.Log("manual room controller :- UpdateRoomBtn function ");
         GameObject tempBtn = roomBtnList.Find(p => p.RoomName.Equals(name)).BtnObj;
         tempBtn.GetComponent<ManualRoomJoin>().Int(name, count);
     }
 
-    public void DeleteRoomBtn(string name) {
+    public void DeleteRoomBtn(string name) 
+    {
+        Debug.Log("manual room controller :- DeleteRoomBtn function ");
         RoomBtn tempBtn = roomBtnList.Find(p => p.RoomName.Equals(name));
         Destroy(tempBtn.BtnObj);
         roomBtnList.Remove(tempBtn);

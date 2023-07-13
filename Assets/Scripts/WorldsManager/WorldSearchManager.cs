@@ -24,7 +24,8 @@ public class WorldSearchManager : MonoBehaviour
     public GameObject FindWorldScreen;
 
     public static WorldSearchManager Instance;
-
+    [SerializeField] GameObject XanaLobbySearchPrefab;
+    bool isXanaLobbyFound = false;
     private void Awake()
     {
         if (Instance == null)
@@ -40,6 +41,8 @@ public class WorldSearchManager : MonoBehaviour
     public void OnClickBackButton()
     {
         FindWorldScreen.SetActive(false);
+        XanaLobbySearchPrefab.SetActive(false);
+        SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
         foreach (Transform world in SearchWorldParent)
         {
             Destroy(world.gameObject);
@@ -107,9 +110,23 @@ public class WorldSearchManager : MonoBehaviour
                     {
                         for (int i = 0; i < searchworldRoot.data.rows.Count; i++)
                         {
-                            GameObject TempObject = Instantiate(eventPrefab);
-                            TempObject.transform.SetParent(SearchWorldParent);
-                            TempObject.transform.localScale = Vector3.one;
+                            GameObject TempObject;
+                            if (searchworldRoot.data.rows[i].name.Contains("XANA Lobby"))
+                            {
+                                isXanaLobbyFound= true;
+                                print("IN IF ");
+                                XanaLobbySearchPrefab.SetActive(true);
+                                SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=310;
+                                TempObject = XanaLobbySearchPrefab;
+                            }
+                            else
+                            {
+                                TempObject = Instantiate(eventPrefab);
+                                TempObject.transform.SetParent(SearchWorldParent);
+                                TempObject.transform.localScale = Vector3.one;
+                            }
+                           
+                            
                             FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
                             _event.idOfObject = searchworldRoot.data.rows[i].id.ToString();
                             _event.m_EnvironmentName = searchworldRoot.data.rows[i].name;
@@ -121,7 +138,7 @@ public class WorldSearchManager : MonoBehaviour
                             {
                                 _event.m_ThumbnailDownloadURL = searchworldRoot.data.rows[i].thumbnail;
                             }
-                            _event.m_BannerLink = searchworldRoot.data.rows[i].thumbnail;
+                            _event.m_BannerLink = searchworldRoot.data.rows[i].banner;
                             _event.m_WorldDescription = searchworldRoot.data.rows[i].description;
                             _event.entityType = searchworldRoot.data.rows[i].entityType;
                             _event.m_PressedIndex = searchworldRoot.data.rows[i].id;
@@ -180,6 +197,8 @@ public class WorldSearchManager : MonoBehaviour
         {
             Destroy(world.gameObject);
         }
+        XanaLobbySearchPrefab.SetActive(false);
+        SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
         Debug.LogError("SearchWorld");
         pageNumb = 1;
         pageSize = 15;

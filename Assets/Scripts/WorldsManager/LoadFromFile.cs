@@ -139,7 +139,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void LoadFile()
     {
         mainPlayer.SetActive(false);
-        Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
+        //Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
         //if (!setLightOnce)
         //{
         //    LoadLightSettings(FeedEventPrefab.m_EnvName);
@@ -341,9 +341,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             RaycastHit hit;
         CheckAgain:
             // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(spawnPoint, spawnPoint.y * Vector3.down, out hit, Mathf.Infinity))
+            if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer")
+                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     goto CheckAgain;
@@ -361,14 +361,27 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+            else if (FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage") )
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
-            else if(FeedEventPrefab.m_EnvName.Contains("Koto") || FeedEventPrefab.m_EnvName.Contains("Tottori") || FeedEventPrefab.m_EnvName.Contains("DEEMO"))
+            else if(FeedEventPrefab.m_EnvName.Contains("Koto") || FeedEventPrefab.m_EnvName.Contains("Tottori") || FeedEventPrefab.m_EnvName.Contains("DEEMO") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
                 //Invoke(nameof(SetKotoAngle), 0.5f);
+                if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+                {
+                     StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+                }
+                else
+                {
+                StartCoroutine(setPlayerCamAngle(0, 0.75f));
+
+                }
+            }
+            else if (FeedEventPrefab.m_EnvName.Contains("Genesis"))
+            {
+                // No Need TO Rotate Player
                 StartCoroutine(setPlayerCamAngle(0, 0.75f));
             }
             else if (FeedEventPrefab.m_EnvName.Contains("ZONE X") || FeedEventPrefab.m_EnvName.Contains("FIVE ELEMENTS"))
@@ -404,7 +417,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LoadingHandler.Instance.HideLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");
-//<<<<<<< HEAD
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
@@ -414,11 +426,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
         }
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
-
+       
         updatedSpawnpoint.transform.localPosition = spawnPoint;
-//=======
-//        updatedSpawnpoint.transform.localPosition = spawnPoint;
-//>>>>>>> origin/release-23.06.12
+
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
+            XanaConstants.xanaConstants.isFromXanaLobby =false;
+        }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
@@ -453,7 +467,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         RaycastHit hit;
     CheckAgain:
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(spawnPoint, spawnPoint.y * Vector3.down, out hit, Mathf.Infinity))
+        if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
             if (hit.collider.gameObject.tag == "PhotonLocalPlayer")
             {
@@ -479,14 +493,26 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
             playerRB.isKinematic = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
-            //playerRB.constraints = RigidbodyConstraints.FreezeAll;
+            player.AddComponent<KeyValues>();
+            GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
+            GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             player.GetComponent<CapsuleCollider>().isTrigger = false;
-            //mainController.GetComponent<CapsuleCollider>().radius = 0.3f;
-            //mainController.GetComponent<CapsuleCollider>().isTrigger = false;
-            //Rigidbody mainControllerRB = mainController.AddComponent<Rigidbody>();
-            //mainControllerRB.isKinematic = true;
-            //mainControllerRB.constraints = RigidbodyConstraints.FreezeRotation;
-            //mainControllerRB.constraints = RigidbodyConstraints.FreezeAll;
+            RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
+            GamificationComponentData.instance.playerControllerNew = ReferrencesForDynamicMuseum.instance.playerControllerNew;
+            GamificationComponentData.instance.playerControllerNew.controllerCamera.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
+            GamificationComponentData.instance.playerControllerNew.firstPersonCameraObj.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
+
+            GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
+            GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.53f;
+            GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
+
+            GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
+            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
+            GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
+        }
+        if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        {
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -649,6 +675,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     void SetupEnvirnmentForBuidlerScene()
     {
+        if (XanaConstants.xanaConstants.orientationchanged && XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
+        }
         Transform tempSpawnPoint = null;
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
         if (BuilderData.spawnPoint.Count == 1)

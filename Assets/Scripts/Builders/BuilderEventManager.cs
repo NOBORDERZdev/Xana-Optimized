@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Models;
 using UnityEngine;
 
 public static class BuilderEventManager
@@ -15,7 +16,10 @@ public static class BuilderEventManager
     public static Action<float, float> ApplyPlayerProperties;
 
     public static Action AfterPlayerInstantiated;
+    public static Action ReSpawnPlayer;
 
+    //Orientation Changer
+    public static Action<bool> BuilderSceneOrientationChange;
     //Gamification Module Events
 
     //Narration Component
@@ -42,15 +46,39 @@ public static class BuilderEventManager
     public static Action<string, float, bool> OnDisplayMessageCollisionEnter;
 
     //Help Button Component
-    public static Action<string, string> OnHelpButtonCollisionEnter;
+    public static Action<string, string, GameObject> OnHelpButtonCollisionEnter;
     public static Action OnHelpButtonCollisionExit;
 
     //Situation Changer Component
     public static Action<float> OnSituationChangerTriggerEnter;
 
-    //Orientation Changer
-    public static Action<bool> BuilderSceneOrientationChange;
+    //Quiz Component
+    public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
 
+    //Special Item Component
+    public static Action<float> OnSpecialItemComponentCollisionEnter;
+    public static Action<float, float> SpecialItemPlayerPropertiesUpdate;
+
+    //Avatar Invisibility Component
+    public static Action<float> OnAvatarInvisibilityComponentCollisionEnter;
+    public static Action ActivateAvatarInivisibility;
+    public static Action DeactivateAvatarInivisibility;
+
+    //Ninja Motion Component
+    public static Action<float> OnNinjaMotionComponentCollisionEnter;
+    public static Action OnAttackwithSword;
+    public static Action OnAttackwithShuriken;
+    public static Action OnHideOpenSword;
+
+    //Throw Things Component
+    public static Action OnThrowThingsComponentCollisionEnter;
+    public static Action OnThrowThingsComponentDisable;
+    public static Action OnThowThingsPositionSet;
+    public static Action OnThrowBall;
+
+    //HyperLinkPopup Component
+    public static Action<string, string, string, GameObject> OnHyperLinkPopupCollisionEnter;
+    public static Action OnHyperLinkPopupCollisionExit;
 
     public static Action<ComponentType> ResetComponentUI;
 }

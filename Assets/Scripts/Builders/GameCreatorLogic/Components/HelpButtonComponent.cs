@@ -12,46 +12,42 @@ public class HelpButtonComponent : ItemComponent
     [SerializeField]
     private HelpButtonComponentData helpButtonComponentData;
 
-    string collectingAllTheStrings;
     public void Init(HelpButtonComponentData helpButtonComponentData)
     {
         Debug.Log(JsonUtility.ToJson(helpButtonComponentData));
 
         this.helpButtonComponentData = helpButtonComponentData;
-        //GetComponent<Rigidbody>().isKinematic = true;
-        //GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
+        //this.helpButtonComponentData.IsAlwaysOn = false;
+        if (this.helpButtonComponentData.IsAlwaysOn)
+        {
+            GameObject go;
+            HelpButtonComponentResizer infoPopup;
+            go = Instantiate(GamificationComponentData.instance.helpParentReference, this.transform.position, new Quaternion(0, 0, 0, 0), GamificationComponentData.instance.worldSpaceCanvas.transform);
+            go.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+            infoPopup = go.GetComponent<HelpButtonComponentResizer>();
+            infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
+            infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
+
+            infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
+            go.SetActive(true);
+        }
     }
-
-    void SetHelpButtonNarration()
-    {
-        Debug.Log("SetHelpButtonNarration");
-
-        //TimeStats.canRun = false;
-        BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData);
-
-    }
-
 
     private void OnCollisionEnter(Collision _other)
     {
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
         Debug.Log("Help Button Collision Enter: " + _other.gameObject.name);
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
         {
-            //if (CanvasComponenetsManager._instance != null)
             {
-                BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData);
+                BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
             }
-            //StartTriggerEvent?.Invoke();
         }
     }
 
     private void OnCollisionExit(Collision _other)
     {
         Debug.Log("Help Button Collision Exit: " + _other.gameObject.name);
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }

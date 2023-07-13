@@ -37,7 +37,7 @@ public class EmoteFilterManager : MonoBehaviour
     //hardik changes animation
     public GameObject JyosticksObject;
     public GameObject BottomObject;
-    public GameObject XanaChatObject;
+   
     public GameObject JumpObject;
     //end hardik
     private void OnEnable()
@@ -300,7 +300,8 @@ public class EmoteFilterManager : MonoBehaviour
         {
            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomObject.SetActive(true);
-            XanaChatObject.SetActive(true);
+            
+
             if (panel == this.gameObject)
                 panel.transform.DOLocalMoveY(-1500f, 0.1f);
 
@@ -348,109 +349,119 @@ public class EmoteFilterManager : MonoBehaviour
           //  Invoke("callobjects", 1f);
         }
     }
+    private string animName = null;
+    private GameObject animationObject;
     private void callobjects()
     {
         for (int i = 0; i < ContentPanel.transform.childCount; i++)
         {
-
+            animName = ContentPanel.transform.GetChild(i).transform.name;
+            animationObject = ContentPanel.transform.GetChild(i).transform.gameObject;
             if (animationTabNameLang.Equals("Dance"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("Full"))
+                if (animName.Contains("Full") || animName.Contains("Jazz") || animName.Contains("Foot"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
-            else if (animationTabNameLang.Equals("Etc"))
+            else if (animationTabNameLang.Equals("Sit & lying"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("Laydown") ||
-                    ContentPanel.transform.GetChild(i).transform.name.Contains("Sit"))
+                if (animName.Contains("Laydown") || animName.Contains("Sit"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
             else if (animationTabNameLang.Equals("Idle"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("Idle"))
+                if (animName.Contains("Idle"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
             else if (animationTabNameLang.Equals("Jump"))
             {
-                if (!ContentPanel.transform.GetChild(i).transform.name.Contains("Jump"))
+                if (!animName.Contains("Jump"))
                 {
 
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                     NoDataFound.SetActive(true);
                 }
 
             }
             else if (animationTabNameLang.Equals("Kick"))
             {
-                if (!ContentPanel.transform.GetChild(i).transform.name.Contains("Kick"))
+                if (!animName.Contains("Kick"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                     NoDataFound.SetActive(true);
                 }
 
             }
             else if (animationTabNameLang.Equals("Reaction"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("React"))
+                if (animName.Contains("React"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
+                    NoDataFound.SetActive(false);
+                }
+                else if (animName.Contains("Idle"))
+                {
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
             else if (animationTabNameLang.Equals("Run"))
             {
-                if (!ContentPanel.transform.GetChild(i).transform.name.Contains("Run"))
+                if (!animName.Contains("Run"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                     NoDataFound.SetActive(true);
                 }
             }
             else if (animationTabNameLang.Equals("Walk"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("Walk"))
+                if (animName.Contains("Walk"))
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
             else if (animationTabNameLang.Equals("Moves"))
             {
-                if (ContentPanel.transform.GetChild(i).transform.name.Contains("Break"))
+                if (animName.Contains("Break") || animName.Contains("Clapping")
+                    || animName.Contains("Hand") || animName.Contains("Club"))
+
+
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(true);
+                    animationObject.SetActive(true);
                     NoDataFound.SetActive(false);
                 }
                 else
                 {
-                    ContentPanel.transform.GetChild(i).transform.gameObject.SetActive(false);
+                    animationObject.SetActive(false);
                 }
             }
 

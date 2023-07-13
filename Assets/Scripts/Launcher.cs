@@ -72,7 +72,7 @@ namespace Photon.Pun.Demo.PunBasics
 		/// <summary>
 		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
 		/// </summary>
-		string gameVersion = "4";
+		string gameVersion = "5";
 		private int count;
 
 
@@ -305,6 +305,7 @@ namespace Photon.Pun.Demo.PunBasics
             bool joinedRoom = false;
             foreach (RoomInfo info in roomList)
             {
+                Debug.Log("Max player :- "+info.Name+"--"+info.MaxPlayers+"--"+info.PlayerCount);
                // print("Max Players can Join " + info.MaxPlayers);
                 int maxPlayer;
                 //if (info.PlayerCount < info.MaxPlayers) {
@@ -322,6 +323,7 @@ namespace Photon.Pun.Demo.PunBasics
                     lastRoomName = info.Name;
                     if (!XanaConstants.xanaConstants.isCameraMan)
                     {
+                        Debug.Log("joining room here-----");
                         PhotonNetwork.JoinRoom(lastRoomName);
                         joinedRoom = true;
                         break;
@@ -330,8 +332,10 @@ namespace Photon.Pun.Demo.PunBasics
                
                 if (XanaConstants.xanaConstants.isCameraMan)
                 {
+                    Debug.Log("Is cameraman :--" + XanaConstants.xanaConstants.isCameraMan);
                     if (!roomNames.Contains(info.Name)) // create new room btn
                     {
+                        Debug.Log("Initiate Room");
                         LoadingHandler.Instance.GetComponent<ManualRoomController>().InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
                     }
                     else// update previous room data
@@ -350,6 +354,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (joinedRoom == false)
             {
+                Debug.Log("Player has not joined any room "+ XanaConstants.xanaConstants.isCameraMan);
                 string temp;
                 do
                 {

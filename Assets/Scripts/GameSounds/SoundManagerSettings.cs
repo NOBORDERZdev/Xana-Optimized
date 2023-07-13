@@ -59,9 +59,19 @@ public class SoundManagerSettings : MonoBehaviour
         OldSliderRange = (OldSliderMax - OldSliderMin);
         NewSliderRange = (NewSliderMax - NewSliderMin);
 
-        PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
-        PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
-        PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
+        
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
+            PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME,  0.015f);
+            PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
+        }
+        else{
+            PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
+            PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
+        }
+       // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
+        //PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
         PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
     }
     IEnumerator LiveVideoInstancs(float value)
@@ -179,7 +189,7 @@ public class SoundManagerSettings : MonoBehaviour
         {
             SetBgmVolume(vol);
         });
-
+       
         //totalVolumeSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
         //bgmSlider.value = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
         //videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
