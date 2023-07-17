@@ -88,7 +88,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     void OnOrientationChanged()
     {
-        Debug.LogError("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+        Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         //bgmSlider.value = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
         //videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);

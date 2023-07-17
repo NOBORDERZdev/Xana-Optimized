@@ -75,7 +75,7 @@ public class ReactItem : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Download Failed");
+                    Debug.Log("Download Failed");
                 }
             });
         }
@@ -127,7 +127,7 @@ public class ReactItem : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Download Failed");
+                    Debug.Log("Download Failed");
                 }
             });
 

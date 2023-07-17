@@ -18,7 +18,7 @@ public class SpecialItemComponent : ItemComponent
             TimeStats._intensityChangerStop?.Invoke();
             // Ninja Component Stops
             PlayerControllerNew pc = GamificationComponentData.instance.playerControllerNew;
-            //pc.NinjaComponentTimerStart(0);
+            pc.NinjaComponentTimerStart(0);
             BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(0);
             // Ninja Component Stops
 

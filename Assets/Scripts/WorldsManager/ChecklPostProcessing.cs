@@ -57,7 +57,7 @@ public class ChecklPostProcessing : MonoBehaviour
     }
     void OnSelfieOpen()
     {
-        Debug.LogError("on selfie open ");
+        Debug.Log("on selfie open ");
         if (ReferrencesForDynamicMuseum.instance.m_34player != null)
         {
             SetPostProcessing();

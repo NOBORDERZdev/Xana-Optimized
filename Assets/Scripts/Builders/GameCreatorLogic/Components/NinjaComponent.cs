@@ -22,8 +22,8 @@ public class NinjaComponent : MonoBehaviour
             // Special Item Component Stops
 
             PlayerControllerNew pc = GamificationComponentData.instance.playerControllerNew;
-            //pc.Ninja_Throw(true);
-            //pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);
+            pc.Ninja_Throw(true);
+            pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);
             BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(ninjaComponentData.setTimerNinjaEffect);
 
             pc.movementSpeed = ninjaComponentData.ninjaSpeedVar;

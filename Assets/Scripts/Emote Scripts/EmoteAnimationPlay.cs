@@ -576,7 +576,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //}
 
 
-        Debug.LogError("LoadAssetBundleFromStorageRemote:" + bundlePath);
+        Debug.Log("LoadAssetBundleFromStorageRemote:" + bundlePath);
         //  currentButton.transform.GetChild(2).gameObject.SetActive(true);
         animatorremote = PlayerAvatar.gameObject.GetComponent<Animator>();
 
@@ -600,7 +600,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             }
             if (newRequest.isDone)
             {
-                Debug.LogError("Success load bundle from storage");
+                Debug.Log("Success load bundle from storage");
 
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)

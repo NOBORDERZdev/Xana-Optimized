@@ -958,7 +958,7 @@ public class AvatarController : MonoBehaviour
                 string temp = _NFTData.Eyebrows.Replace(" - ", "_").Split('_')[0];
 
                 string tempKey = GetUpdatedKey(temp, "Eyebrows_");
-                Debug.LogError(tempKey);
+                Debug.Log(tempKey);
                 _CharacterData1.eyebrrowTexture = tempKey;
             }
 
@@ -985,7 +985,7 @@ public class AvatarController : MonoBehaviour
             if (!string.IsNullOrEmpty(_NFTData.Hairs))
             {
                 string tempKey = GetColorCodeFromNFTKey(_NFTData.Hairs);
-                Debug.LogError(tempKey);
+                Debug.Log(tempKey);
                 _CharacterData1.HairColor = GetColorCode(tempKey);
             }
         }
@@ -1064,7 +1064,7 @@ public class AvatarController : MonoBehaviour
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
         float _size = 1f + ((float)bodyFat / 100f);
-        Debug.LogError("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size);
+        Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size);
 
         if (bodyparts._scaleBodyParts.Count > 0)
         {

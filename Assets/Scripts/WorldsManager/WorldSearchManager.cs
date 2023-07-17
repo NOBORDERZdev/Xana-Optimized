@@ -152,7 +152,15 @@ public class WorldSearchManager : MonoBehaviour
                             }
                             else
                             {
-                                _event.creatorName = "XANA";
+                                if (!string.IsNullOrEmpty(searchworldRoot.data.rows[i].creator))
+                                {
+                                    _event.creatorName = searchworldRoot.data.rows[i].creator;
+                                }
+                                else
+                                {
+                                     _event.creatorName = "XANA";
+                                }
+                               
                                 _event.userLimit = searchworldRoot.data.rows[i].user_limit.ToString();
                             }
                             _event.Init();
@@ -199,12 +207,12 @@ public class WorldSearchManager : MonoBehaviour
         }
         XanaLobbySearchPrefab.SetActive(false);
         SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
-        Debug.LogError("SearchWorld");
+        Debug.Log("SearchWorld");
         pageNumb = 1;
         pageSize = 15;
         if (searchworldCoroutine == null)
         {
-            Debug.LogError("SearchWorld coroutine");
+            Debug.Log("SearchWorld coroutine");
             //StopCoroutine(IESearchWorld());
             searchWorldSTR = searchWorldInput.Text;
             searchworldCoroutine = StartCoroutine(IESearchWorld());

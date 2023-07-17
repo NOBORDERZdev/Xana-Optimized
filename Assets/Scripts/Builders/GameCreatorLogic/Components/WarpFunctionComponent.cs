@@ -53,7 +53,7 @@ public class WarpFunctionComponent : ItemComponent
                     if ((warpFunctionComponentData.warpPortalStartKeyValue == warpFunctionComponentData.warpPortalDataEndPoint[i].indexPortalEndKey) && warpFunctionComponentData.warpPortalStartKeyValue != "Select Key")
                     {
                         characterControllerNew.enabled = false;
-                        GamificationComponentData.instance.buildingDetect.CameraEffect();
+                        //GamificationComponentData.instance.buildingDetect.CameraEffect();
                         GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataEndPoint[i].portalEndLocation;
                         //Debug.LogError(warpFunctionComponentData.warpPortalDataEndPoint[i].portalEndLocation);
                         characterControllerNew.enabled = true;
@@ -64,7 +64,7 @@ public class WarpFunctionComponent : ItemComponent
             }
 
 
-            else if (warpFunctionComponentData.isWarpPortalEnd && !isPortalUsed)
+            else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
             {
                 isPortalUsed = true;
                 for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)
@@ -72,7 +72,7 @@ public class WarpFunctionComponent : ItemComponent
                     if ((warpFunctionComponentData.warpPortalEndKeyValue == warpFunctionComponentData.warpPortalDataStartPoint[i].indexPortalStartKey) && warpFunctionComponentData.warpPortalEndKeyValue != "Select Key")
                     {
                         characterControllerNew.enabled = false;
-                        GamificationComponentData.instance.buildingDetect.CameraEffect();
+                        //GamificationComponentData.instance.buildingDetect.CameraEffect();
                         GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataStartPoint[i].portalStartLocation;
                         characterControllerNew.enabled = true;
                         Debug.Log(" End portal");
@@ -91,7 +91,6 @@ public class WarpFunctionComponent : ItemComponent
         yield return new WaitForSeconds(4);
 
         isPortalUsed = false;
-
     }
 
 }

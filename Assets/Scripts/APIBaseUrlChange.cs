@@ -123,7 +123,7 @@ public class APIBaseUrlChange : MonoBehaviour
             }
         }
     }
-    [System.Serializable]
+
     public class Data
     {
         public int id;
@@ -131,7 +131,7 @@ public class APIBaseUrlChange : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-    [System.Serializable]
+
     public class GetServerDetils
     {
         public bool success;

@@ -67,7 +67,7 @@ public class EmoteSelectionBtn : MonoBehaviour
         if (!data.IsNullOrEmpty())
         {
             AnimationData d = JsonUtility.FromJson<AnimationData>(data);
-            Debug.LogError("top top :--- " + d.bgColor);
+            Debug.Log("top top :--- " + d.bgColor);
             bgImg.color = d.bgColor;
             if (animData != null && animData.animationName.Equals(d.animationName)) return;
             animData = d;

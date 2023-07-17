@@ -257,7 +257,7 @@ public class EmoteFilterManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Download Failed");
+                        Debug.Log("Download Failed");
                     }
                 });
               //  StartCoroutine(LoadSpriteEnv(EmoteAnimationPlay.Instance.emoteAnim[i].thumbnail, animObject.transform.GetChild(1).gameObject, i));
@@ -307,7 +307,13 @@ public class EmoteFilterManager : MonoBehaviour
 
             JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
             JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            
+               BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
          //   ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+        }
+        else
+        {
+            BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
         }
         // }
         StartCoroutine(DelayToClose(panel));
@@ -522,7 +528,7 @@ public class EmoteFilterManager : MonoBehaviour
 
 
     //GetAllAnimations
-    [System.Serializable]
+    [Serializable]
     public class AnimationList
     {
         public int id;
@@ -535,12 +541,12 @@ public class EmoteFilterManager : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-    [System.Serializable]
+
     public class Data
     {
         public List<AnimationList> animationList;
     }
-    [System.Serializable]
+
     public class AnimationDetails
     {
         public bool success;

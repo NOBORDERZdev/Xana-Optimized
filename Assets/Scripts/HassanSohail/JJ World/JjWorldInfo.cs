@@ -35,11 +35,11 @@ public class JjWorldInfo : MonoBehaviour
     public void OpenWorldInfo() {
         if (JjInfoManager.Instance != null)
         {
-            if (GameManager.currentLanguage.Contains("en"))
+            if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese )
             {
                 JjInfoManager.Instance.SetInfo(NftRatio,JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].WorldImage, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink);
             }
-            else
+            else if(CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 if (!JjInfoManager.Instance.worldInfos[id].Title[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Aurthor[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Des[1].IsNullOrEmpty())
                 {

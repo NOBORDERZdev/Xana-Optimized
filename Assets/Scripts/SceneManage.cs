@@ -151,7 +151,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
         PhotonNetwork.DestroyAll(true);
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
-        Debug.LogError("Exit: Api Called");
+        Debug.Log("Exit: Api Called");
         StartSceneLoading();
     }
 
