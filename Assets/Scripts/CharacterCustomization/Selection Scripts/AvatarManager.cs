@@ -70,7 +70,7 @@ namespace Metaverse
 
         private void Awake()
         {
-            //print("AvatarManager " + "Awake");
+            print("AvatarManager " + "Awake");
             Instance = this;
             Scene scene = SceneManager.GetActiveScene();
             if (scene.buildIndex == 0)
@@ -90,7 +90,7 @@ namespace Metaverse
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
 
-            //Debug.LogError(" ######     Quit    #########");
+            Debug.LogError(" ######     Quit    #########");
         }
 
 
@@ -114,7 +114,7 @@ namespace Metaverse
 
         public void ShowJoinRoomPanel()
         {
-           // print("AvatarManager " + "ShowJoinRoomPanel");
+            print("AvatarManager " + "ShowJoinRoomPanel");
             //InternetLost = null;
             if (InternetLost == null)
             {
@@ -137,13 +137,13 @@ namespace Metaverse
         }
         public void InstantiatePlayerAgain()
         {
-            //print("AvatarManager " + "InstantiatePlayerAgain");
+            print("AvatarManager " + "InstantiatePlayerAgain");
             StartCoroutine(MainReconnect());
         }
 
         public void InitCharacter()
         {
-            //print("AvatarManager " + "InitCharacter");
+            print("AvatarManager " + "InitCharacter");
             avatarRefs.Clear();//clear ref before assigning
             if (Instance == null)
             {
@@ -215,14 +215,14 @@ namespace Metaverse
 
         IEnumerator checkPlayerInorOut(float waittime)
         {
-            //print("AvatarManager " + "checkPlayerInorOut");
+            print("AvatarManager " + "checkPlayerInorOut");
             yield return new WaitForSeconds(waittime);
             LoadingManager.Instance.ShowLoading();
             StartCoroutine(LoadingManager.Instance.LoadAsncScene("Main"));
         }
         public void initStates()
         {
-            //print("AvatarManager " + "initStates");
+            print("AvatarManager " + "initStates");
             if (SceneManager.GetActiveScene().name.Equals("MuseumSceneLatest"))
             {
                 avatarID = PlayerPrefs.GetInt("SelectedAvatarID", 0);
@@ -252,7 +252,7 @@ namespace Metaverse
 
         public void AssignAvatarModel()
         {
-            //print("AvatarManager " + "AssignAvatarModel");
+            print("AvatarManager " + "AssignAvatarModel");
 
             StartCoroutine(WaitForAssignModel());
 
@@ -296,14 +296,14 @@ namespace Metaverse
 
         private IEnumerator MainReconnect()
         {
-           // print("AvatarManager " + "MainReconnect");
+            print("AvatarManager " + "MainReconnect");
             while (PhotonNetwork.NetworkingClient.LoadBalancingPeer.PeerState != ExitGames.Client.Photon.PeerStateValue.Disconnected)
             {
                 //Debug.Log("Waiting for client to be fully disconnected..", this);
 
                 yield return new WaitForSeconds(0.2f);
             }
-            //Debug.Log("Client is disconnected!", this);
+            Debug.Log("Client is disconnected!", this);
 
             string lastRoomName = PlayerPrefs.GetString("roomname");
             if (!PhotonNetwork.ReconnectAndRejoin())
@@ -315,7 +315,7 @@ namespace Metaverse
             }
             else
             {
-                //Debug.Log("Successful reconnected and joined!", this);
+                Debug.Log("Successful reconnected and joined!", this);
                 PhotonNetwork.AutomaticallySyncScene = true;
                 roomOptions = new RoomOptions();
                 roomOptions.MaxPlayers = 20;
@@ -332,6 +332,7 @@ namespace Metaverse
         public override void OnDisconnected(DisconnectCause cause)
         {
             //InternetLost = null;
+            print("AvatarManager " + "OnDisconnected");
             if (OninternetDisconnect != null)
                 OninternetDisconnect.Invoke();
             ShowJoinRoomPanel();
@@ -370,6 +371,7 @@ namespace Metaverse
                 Scene scene = SceneManager.GetActiveScene();
                 if (scene.name != "AddressableScene" || !scene.name.Contains("Museum"))
                 {
+
                     //if (PlayerControllerPhoton.LocalPlayerInstance == null)
                     //{
 
@@ -386,13 +388,13 @@ namespace Metaverse
 
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
                     currentDummyPlayer.transform.parent = spawnPoint.transform;
-                    
+                    Debug.LogError("1");
                     if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
                     {
-                    
+                        Debug.LogError("2");
                         for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
                         {
-                    
+                            Debug.LogError("3" + IdolVillaRooms.instance.villaRooms[i].name + "-----" + ChracterPosition.currSpwanPos);
                             if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
                             {
                                 ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.localPosition = gameObject.GetComponent<ChracterPosition>().NewPos.transform.localPosition;
@@ -431,11 +433,13 @@ namespace Metaverse
         }
         IEnumerator WaitAndDeactiveSelfie()
         {
+            print("AvatarManager " + "WaitAndDeactiveSelfie");
             yield return new WaitForSeconds(1.5f);
             SelfieController.Instance.SwitchFromSelfieControl();
         }
         IEnumerator OverLapTime()
         {
+            print("AvatarManager " + "OverLapTime");
             yield return new WaitForSeconds(3f);
             if (MenuCanvas != null && GameCanvas != null)
             {
@@ -450,6 +454,7 @@ namespace Metaverse
 
         void OnApplicationPause(bool isGamePause)
         {
+            print("AvatarManager " + "OnApplicationPause");
             if (isGamePause)
             {
                 lastMinimize = DateTime.Now;
@@ -488,6 +493,7 @@ namespace Metaverse
 
         private void SetLayerRecursively(GameObject Parent, int Layer)
         {
+            print("AvatarManager " + "SetLayerRecursively");
             Parent.layer = Layer;
 
             foreach (Transform child in Parent.transform)
@@ -498,6 +504,7 @@ namespace Metaverse
 
         public void HighLighter()
         {
+            print("AvatarManager " + "HighLighter");
             foreach (var item in avatarRefs)
             {
                 if (item.GetComponent<AssignAvatar>()._characterIndex == avatarID)
@@ -531,12 +538,12 @@ namespace Metaverse
                 Instantiate(_character, avatarPreview.transform.position, avatarPreview.transform.rotation, avatarPreview.transform);
                 currentDummyPlayer = PhotonNetwork.Instantiate(_character.name, spawnPoint.transform.position, spawnPoint.transform.rotation);
                 currentDummyPlayer.tag = "PhotonLocalPlayer";
-                
+                Debug.Log("nick name 2 ==" + PhotonNetwork.NickName);
                 currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
                 currentDummyPlayer.transform.parent = spawnPoint.transform;
                 currentDummyPlayer.transform.localPosition = new Vector3(0, -0.081f, 0);
                 // Defaultanimator = GameObject.FindGameObjectWithTag("PhotonLocalPlayer").transform.GetComponent<Animator>().runtimeAnimatorController;
-                
+                print("SpawningHere");
             }
             else
             {

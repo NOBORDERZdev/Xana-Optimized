@@ -85,11 +85,21 @@ public class UserAnalyticsHandler : MonoBehaviour
     }
     void Call_UpdateWorldRelatedStats_Courtine(bool isJoined, bool nftClicked, bool urlClicked, bool isExit)
     {
+#if UNITY_EDITOR
+        return;
+#else
         StartCoroutine(UpdateWorldRelatedStats(isJoined, nftClicked, urlClicked, isExit));
+
+#endif
     }
     void Call_UpdateWorldRelatedStats_Courtine(bool isJoined, bool isExit)
     {
+#if UNITY_EDITOR
+        return;
+#else
         StartCoroutine(UpdateWorldRelatedStats(isJoined, isExit));
+
+#endif
     }
 
 
@@ -307,30 +317,30 @@ public class UserAnalyticsHandler : MonoBehaviour
 
         return modifyAmount;
     }
-    #endregion
+#endregion
 
-    #region Socket Calls Handling
+#region Socket Calls Handling
 
     void OnConnected(ConnectResponse resp)
     {
         //Debug.LogError("Analatics -- Socket Connect :");
-        Debug.Log("<color=green> Analatics -- Socket Connect" + "</color>");
+        //Debug.Log("<color=green> Analatics -- Socket Connect" + "</color>");
         Manager.Socket.Emit("get_all_world_data");
         Manager.Socket.Emit("enter_world");
 
         if (!SceneManager.GetActiveScene().name.Contains("Main"))
         {
-            Debug.Log("<color=green> Analatics -- Again Sending Call " + "</color>");
+            //Debug.Log("<color=green> Analatics -- Again Sending Call " + "</color>");
             Call_UpdateWorldRelatedStats_Courtine(true, false);
         }
     }
     void OnError(CustomError args)
     {
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
     }
     void Onresult(CustomError args)
     {
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
     }
 
 
@@ -349,14 +359,14 @@ public class UserAnalyticsHandler : MonoBehaviour
     {
         _data = jsonPrefix + _data + "}";
         //Debug.LogError("Analytics -- Data : " + _data);
-        Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
+        //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         userDataString = _data;
         onChangeJoinUserStats?.Invoke(_data);
     }
     void UserCountUpdate(string _data)
     {
         //Debug.LogError("Analytics -- Data : " + _data);
-        Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
+        //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         _data = jsonPrefix + _data + "}";
         userDataString = _data;
         onChangeJoinUserStats?.Invoke(_data);
@@ -364,10 +374,10 @@ public class UserAnalyticsHandler : MonoBehaviour
 
     void PlayerSocketID(string socketId)
     {
-        Debug.Log("<color=green> Analytics-- SocketId: " + socketId + "</color>");
+        //Debug.Log("<color=green> Analytics-- SocketId: " + socketId + "</color>");
         XanaConstants.xanaConstants.playerSocketID = socketId;
     }
-    #endregion
+#endregion
 }
 
 [Serializable]

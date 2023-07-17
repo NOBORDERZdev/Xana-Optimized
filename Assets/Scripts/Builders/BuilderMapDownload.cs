@@ -30,16 +30,18 @@ public class BuilderMapDownload : MonoBehaviour
     public Light characterLight;
 
     public Volume postProcessVol;
+    public VolumeProfile defaultPostProcessVolProfile;
 
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
     #endregion
-    public string response;
+    internal string response;
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
+
     #region UNITY_METHOD
     private void OnEnable()
     {
@@ -72,6 +74,8 @@ public class BuilderMapDownload : MonoBehaviour
         //serverData = JsonUtility.FromJson<ServerData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/Builder.json"));
         //BuilderData.mapData = serverData;
         //PopulateLevel();
+
+        terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
     }
 
 
@@ -96,15 +100,15 @@ public class BuilderMapDownload : MonoBehaviour
         potraitCanvas.alpha = 0;
         potraitCanvas.blocksRaycasts = false;
         potraitCanvas.interactable = false;
-        potraitCanvas.gameObject.SetActive(true);
-        landscapeCanvas.gameObject.SetActive(true);
+        //potraitCanvas.gameObject.SetActive(true);
+        //landscapeCanvas.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         if (isPotrait)
         {
             potraitCanvas.DOFade(1, 0.5f);
             potraitCanvas.blocksRaycasts = true;
             potraitCanvas.interactable = true;
-            landscapeCanvas.gameObject.SetActive(false);
+            //landscapeCanvas.gameObject.SetActive(false);
             Screen.orientation = ScreenOrientation.Portrait;
         }
         else
@@ -112,8 +116,12 @@ public class BuilderMapDownload : MonoBehaviour
             landscapeCanvas.DOFade(1, 0.5f);
             landscapeCanvas.blocksRaycasts = true;
             landscapeCanvas.interactable = true;
-            potraitCanvas.gameObject.SetActive(false);
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //potraitCanvas.gameObject.SetActive(false);
+            if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+            }
+            
         }
     }
     #endregion
@@ -334,6 +342,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetPlaneScaleAndPosition(Vector3 scale, Vector3 pos)
     {
+        Debug.Log(scale + "  " + pos);
         terrainPlane.transform.localScale = scale;
         terrainPlane.transform.position = pos;
     }
@@ -345,10 +354,10 @@ public class BuilderMapDownload : MonoBehaviour
         if (skyProperties.skyId != -1)
         {
             SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-            string skyboxMatKey = skyBoxItem.skyName.Replace(" ","");
-            AsyncOperationHandle<Material> loadSkyBox=Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            loadSkyBox.Completed += LoadSkyBox_Completed;
-            //RenderSettings.skybox = skyBoxItem.skyMaterial;
+            //string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+            //AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+            //loadSkyBox.Completed += LoadSkyBox_Completed;
+            RenderSettings.skybox = skyBoxItem.skyMaterial;
             directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
             characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
             directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
@@ -357,6 +366,8 @@ public class BuilderMapDownload : MonoBehaviour
 
             if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
                 SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+
+            DynamicGI.UpdateEnvironment();
         }
         else
         {
@@ -370,6 +381,7 @@ public class BuilderMapDownload : MonoBehaviour
             mat.SetColor("_TopColor", topColor);
             mat.SetColor("_MiddleColor", middleColor);
             mat.SetColor("_BottomColor", bottomColor);
+            SetPostProcessProperties(defaultPostProcessVolProfile);
             RenderSettings.skybox = mat;
             directionalLight.color = skyBoxColor;
             directionalLight.intensity = 1f;
@@ -377,13 +389,13 @@ public class BuilderMapDownload : MonoBehaviour
             characterLight.intensity = .15f;
             DynamicGI.UpdateEnvironment();
         }
-        
+
     }
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
 
     }
 
@@ -440,7 +452,6 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
-
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
         Rigidbody rb = newObj.AddComponent<Rigidbody>();
         rb.isKinematic = true;

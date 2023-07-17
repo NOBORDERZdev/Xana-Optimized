@@ -34,7 +34,7 @@ public class PowerProviderComponent : ItemComponent
         Debug.Log("Power Provider Trigger: " + other.gameObject.name);
         if (/*other.gameObject.CompareTag("Player") || */(other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
         {
-            other.gameObject.GetComponent<BuildingDetect>().OnPowerProviderEnter(componentData.setTimer, componentData.playerSpeed, componentData.playerHeight);
+            GamificationComponentData.instance.buildingDetect.OnPowerProviderEnter(componentData.setTimer, componentData.playerSpeed, componentData.playerHeight);
             Destroy(this.gameObject);
         }
     }

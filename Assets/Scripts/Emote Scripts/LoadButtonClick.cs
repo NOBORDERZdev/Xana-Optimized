@@ -85,13 +85,11 @@ public class LoadButtonClick : MonoBehaviour
 
     public void OnButtonClick()
     {
-        if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationPlay.Instance.lastAnimClickButton)
-        {
-            //EmoteAnimationPlay.Instance.animatorremote.SetBool("Stand", true);
-            if(EmoteAnimationPlay.Instance.animatorremote.GetBool("EtcAnimStart"))
-                EmoteAnimationPlay.Instance.waitForStandUp = true;
+        //if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationPlay.Instance.lastAnimClickButton)
+        if (EmoteAnimationPlay.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationPlay.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown"))
+            return;
+        else if (EmoteAnimationPlay.Instance.lastAnimClickButton != null)
             EmoteAnimationPlay.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
-        }
         //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
         //foreach (Transform obj in ContentPanel.transform)
         //{
@@ -107,12 +105,6 @@ public class LoadButtonClick : MonoBehaviour
 
         if (EmoteAnimationPlay.Instance.alreadyRuning)
         {
-            if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.animatorremote.GetBool("EtcAnimStart"))//EtcAnimStart
-            {
-                EmoteAnimationPlay.Instance.animatorremote.SetBool("Stand", true);
-                EmoteAnimationPlay.Instance.animatorremote.SetBool("EtcAnimStart", false);
-            }
-
             //LoadFromFile.animClick = true;
             EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
             EmoteAnimationPlay.remoteUrlAnimationName = animationName;

@@ -92,7 +92,7 @@ public class ReactScreen : MonoBehaviour
                     jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                     reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                     BottomBtnParent.SetActive(false);
-                    XanaChatObject.SetActive(false);
+                  //  XanaChatObject.SetActive(false);
                     // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
                 }
             }
@@ -127,7 +127,7 @@ public class ReactScreen : MonoBehaviour
                     jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                     reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                     BottomBtnParent.SetActive(false);
-                    XanaChatObject.SetActive(false);
+                   // XanaChatObject.SetActive(false);
                 // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
                 CheckForInstantiation();
                 reactImage.sprite = react_enable;
@@ -155,7 +155,7 @@ public class ReactScreen : MonoBehaviour
         {
            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-            XanaChatObject.SetActive(true);
+           // XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
@@ -177,7 +177,7 @@ public class ReactScreen : MonoBehaviour
         {
           //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-            XanaChatObject.SetActive(true);
+          //  XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             emoteAnimationScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
@@ -287,7 +287,6 @@ public class ReactScreen : MonoBehaviour
         catch (Exception e1)
         {
         }
-
         yield return uwr.SendWebRequest();
 
         if (uwr.isNetworkError)
@@ -387,7 +386,7 @@ public class ReactScreen : MonoBehaviour
         public int id;
         public string name;
         public object android_bundle;
-        public object ios_bundle; 
+        public object ios_bundle;
         public string thumbnail;
         public int version;
         public string group;

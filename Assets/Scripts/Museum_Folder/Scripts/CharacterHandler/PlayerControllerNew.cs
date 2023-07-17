@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 public class PlayerControllerNew : MonoBehaviour
 {
-   
+
 
     public delegate void CameraChangeDelegate(Camera camera);
     public static event CameraChangeDelegate CameraChangeDelegateEvent;
@@ -96,11 +96,45 @@ public class PlayerControllerNew : MonoBehaviour
     #endregion
     bool allowFpsJump = true;
 
+    #region Player Properties Update
+
+    float originalSprintSpeed = 1;
+    float originalJumpSpeed = 1;
+    float speedMultiplier = 1;
+    float jumpMultiplier = 1;
+    #endregion
+
+    private void OnEnable()
+    {
+        //BuilderEventManager.OnHideOpenSword += HideorOpenSword;
+        //BuilderEventManager.OnAttackwithSword += AttackwithSword;
+        //BuilderEventManager.OnAttackwithShuriken += AttackwithShuriken;
+        //BuilderEventManager.OnThowThingsPositionSet += BallPositionSet;
+        //BuilderEventManager.OnThrowBall += ThrowBall;
+
+        //Update jump height according to builder
+        BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
+    }
+    private void OnDisable()
+    {
+        //BuilderEventManager.OnHideOpenSword -= HideorOpenSword;
+        //BuilderEventManager.OnAttackwithSword -= AttackwithSword;
+        //BuilderEventManager.OnAttackwithShuriken -= AttackwithShuriken;
+        //BuilderEventManager.OnThowThingsPositionSet -= BallPositionSet;
+        //BuilderEventManager.OnThrowBall -= ThrowBall;
+
+        //Update jump height according to builder
+        BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
+
+    }
 
     void Start()
     {
 
-      
+        originalSprintSpeed = sprintSpeed;
+        originalJumpSpeed = JumpVelocity;
 
         Debug.Log("Player Controller New Start");
         gyroButton.SetActive(false);
@@ -133,7 +167,7 @@ public class PlayerControllerNew : MonoBehaviour
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
 
-       
+
 
     }
 
@@ -373,8 +407,8 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (m_IsMovementActive)
         {
-            if  (isFirstPerson && !m_FreeFloatCam)
-                {
+            if (isFirstPerson && !m_FreeFloatCam)
+            {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
                     EmoteAnimationPlay.Instance.StopAnimation();
@@ -680,7 +714,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     private void ResetCamPos()
     {
-        Vector3 newPos = new Vector3(transform.position.x, transform.position.y+2f, transform.position.z); 
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z);
 
         FreeFloatCamCharacterController.transform.SetPositionAndRotation(newPos, transform.rotation);
     }
@@ -729,12 +763,12 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else
         {
-           
+
             GetPlayerTransform();
             //RPC call
             animator.GetComponent<IKMuseum>().RPCForFreeCamEnable();
         }
-       
+
 
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
@@ -742,8 +776,25 @@ public class PlayerControllerNew : MonoBehaviour
 
     void Move()
     {
+
+        //if (isNinjaMotion)
+        //{
+        //    if (!animator.GetBool("isNinjaMotion"))
+        //        animator.SetBool("isNinjaMotion", true);
+
+        //    //AnimationBehaviourNinjaMode();
+        //    if (isMovementAllowed)
+        //        NinjaMove();
+        //    return;
+        //}
+
+        //if (!isMovementAllowed)
+        //    return;
+
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
+
+        SpecialItemDoubleJump();
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
         {
@@ -752,6 +803,9 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         _IsGrounded = characterController.isGrounded;
+        if (_IsGrounded)
+            canDoubleJump = false;
+
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
         {
@@ -992,10 +1046,18 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Jump()
     {
+        jumpforSitLayAnim();
         if (_IsGrounded)
         {
             IsJumpButtonPress = true;
         }
+        else if (!_IsGrounded && specialItem && !canDoubleJump)
+        {
+            canDoubleJump = true;
+            gravityVector.y = JumpVelocity * 2;
+        }
+       
+
     }
 
     public void JumpAllowed()
@@ -1006,6 +1068,7 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 jumpNow = true;
                 IsJumping = true;
+               
                 //tpsJumpAnim();
                 //Debug.LogError("JumpAllowed");
                 //jump camera start...
@@ -1050,6 +1113,7 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAnimation();
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
+        
     }
 
     public void JumpNotAllowed()
@@ -1155,6 +1219,19 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
     }
+  
+    public void jumpforSitLayAnim()
+    {
+        if (EmoteAnimationPlay.Instance.animatorremote.GetBool("EtcAnimStart"))
+
+        {
+            if (!animator.GetBool("Stand"))
+            {
+                animator.SetBool("Stand", true);
+            }
+        }
+
+    }
 
     public void UpdateVelocity()
     {
@@ -1167,5 +1244,556 @@ public class PlayerControllerNew : MonoBehaviour
     {
         JumpVelocity += (jumpValue - 1);
         sprintSpeed += (playerSpeed - 1);
+        speedMultiplier = playerSpeed;
+        jumpMultiplier = jumpValue;
     }
+
+    void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)
+    {
+        JumpVelocity = jumpValue;
+        sprintSpeed = playerSpeed;
+    }
+
+    /// <SpecialItemDoubleJump>
+    public bool specialItem = false;
+    bool canDoubleJump = false;
+    void SpecialItemDoubleJump()
+    {
+        if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
+        {
+            canDoubleJump = true;
+            Debug.Log("Double jump testing ");
+            gravityVector.y = JumpVelocity * 2;
+        }
+    }
+    /// </summary>
+
+
+    //public bool isNinjaMotion = false;
+    //public bool isMovementAllowed = true;
+    //public bool isThrow = false;
+    /////////////////////////////////////////////
+    /////Ninja Move
+    ////////////////////////////////////////////
+    /////
+    //[SerializeField] private GameObject _shurikenPrefab, swordModel;
+    //[SerializeField] private Transform _ballSpawn;
+    //[SerializeField] private Transform swordHook, swordhandHook;
+
+    //bool isDrawSword = false;
+    //float timeToWalk = 0;
+    //void NinjaMove()
+    //{
+    //    if (isFirstPerson /*|| animator.GetBool("standJump")*/)
+    //        return;
+
+    //    _IsGrounded = characterController.isGrounded;
+    //    animator.SetBool("NinjaJump", _IsGrounded);
+    //    animator.SetBool("IsGrounded", _IsGrounded);
+    //    Vector2 movementInput = new Vector2(horizontal, vertical);
+    //    Vector3 forward = controllerCamera.transform.forward;
+    //    Vector3 right = controllerCamera.transform.right;
+    //    forward.y = 0;
+    //    right.y = 0;
+
+
+    //    Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+
+
+    //    if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && (Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded))
+    //    {
+    //        allowJump = false;
+    //        IsJumpButtonPress = false;
+    //        print("Jump Key Press");
+    //        if (animator != null)
+    //        {
+    //            animator.SetFloat("BlendNX", 0.5f, 0.25f, Time.deltaTime);
+    //            animator.SetFloat("BlendNY", 0.5f, 0.25f, Time.deltaTime);
+    //            tpsJumpAnim();
+    //            IsJumping = true;
+    //        }
+    //        jumpNow = false;
+    //        if (!isFirstPerson)
+    //        {
+    //            if (horizontal != 0.0f || vertical != 0.0f) // is runing 
+    //            {
+    //                Invoke(nameof(JumpNotAllowed), runingJumpResetInterval);
+    //            }
+    //            else // is idel jump
+    //            {
+    //                Invoke(nameof(JumpNotAllowed), idelJumpResetInterval);
+    //            }
+    //        }
+    //    }
+
+    //    if ((Input.GetKeyDown(KeyCode.LeftShift) || sprint_Button) && !sprint)
+    //    {
+    //        sprint = true;
+    //        movementSpeed = sprintSpeed + 2;
+    //    }
+
+    //    if ((Input.GetKeyUp(KeyCode.LeftShift) || !sprint_Button) && sprint)
+    //    {
+    //        sprint = false;
+    //        movementSpeed = sprintSpeed;
+    //    }
+
+    //    if (desiredMoveDirection != Vector3.zero && movementInput.sqrMagnitude >= inputThershold)
+    //    {
+    //        if (!isFirstPerson)
+    //        {
+    //            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), rotationSpeed);
+    //        }
+    //    }
+
+    //    float targetSpeed = movementSpeed * movementInput.magnitude;
+    //    currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
+
+
+
+
+    //    //running condition
+    //    if (movementInput.sqrMagnitude /*!=0.0f*/ >= inputThershold)
+    //    {
+
+    //        if (movementInput.sqrMagnitude >= sprintThresold && sprint)
+    //        {
+    //            //throw
+    //            AnimationBehaviourNinjaMode();
+    //            characterController.Move(desiredMoveDirection * movementSpeed * Time.deltaTime);
+
+    //            gravityVector.y += gravityValue * Time.deltaTime;
+    //            characterController.Move(gravityVector * Time.deltaTime);
+
+    //            if (animator != null)
+    //            {
+    //                animator.SetFloat("BlendNX", 0.8f, 0.25f, Time.deltaTime);
+    //                animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime);
+    //            }
+
+    //        }
+    //        else// player is walking
+    //        {
+
+    //            PlayerIsWalking?.Invoke();
+
+    //            if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
+    //            {
+    //                timeToWalk += Time.deltaTime;
+
+    //                if (animator != null)
+    //                {
+    //                    float walkSpeed = 0.2f * currentSpeed; // Smoothing animator.
+    //                    if (walkSpeed >= 0.2f && walkSpeed <= 0.45f) // changing walk speed to fix blend between walk and run.
+    //                    {
+    //                        walkSpeed = 0.15f;
+    //                    }
+    //                    if (timeToWalk <= 3)
+    //                    {
+    //                        //movementSpeed = finalWalkSpeed;
+    //                        animator.SetFloat("BlendNX", 0.6f, 0.25f, Time.deltaTime); // applying values to animator.
+    //                        animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime);
+    //                    }
+    //                    if (timeToWalk > 3)
+    //                    {
+    //                        //movementSpeed = finalWalkSpeed + 1;
+    //                        animator.SetFloat("BlendNX", 0.6f, 0.25f, Time.deltaTime); // applying values to animator.
+    //                        animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime); // applying values to animator.
+    //                    }
+
+
+    //                }
+    //                //throw
+    //                AnimationBehaviourNinjaMode();
+    //                characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+
+
+    //                gravityVector.y += gravityValue * Time.deltaTime;
+    //                characterController.Move(gravityVector * Time.deltaTime);
+    //            }
+    //            else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
+    //            {
+    //                //standing jump
+
+    //                if (!_IsGrounded) // is in jump
+    //                {
+    //                    characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+    //                    gravityVector.y += gravityValue * Time.deltaTime;
+    //                    characterController.Move(gravityVector * Time.deltaTime);
+    //                }
+    //                else // walk start state
+    //                {
+    //                    animator.SetFloat("BlendNX", 0.001f, 0.2f, Time.deltaTime);
+    //                    animator.SetFloat("BlendNY", 0.001f, 0.2f, Time.deltaTime);
+    //                    characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+    //                    gravityVector.y += gravityValue * Time.deltaTime;
+    //                    characterController.Move(gravityVector * Time.deltaTime);
+    //                }
+    //            }
+    //        }
+    //    }
+    //    else // Reseating animator to idel when joystick is not moving.
+    //    {
+    //        PlayerIsIdle?.Invoke();
+    //        AnimationBehaviourNinjaMode();
+    //        characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
+    //        gravityVector.y += gravityValue * Time.deltaTime;
+    //        characterController.Move(gravityVector * Time.deltaTime);
+    //        timeToWalk = 0;
+    //        animator.SetFloat("animationSpeedMultiplier", 1);
+    //        animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
+    //        animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
+    //    }
+    //}
+
+    //void AnimationBehaviourNinjaMode()
+    //{
+    //    if ((Input.GetKeyDown(KeyCode.E) || attackwithSword) && animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && isNinjaMotion && isDrawSword)
+    //    {
+    //        StartCoroutine(NinjaAttack());
+    //    }
+
+    //    if ((Input.GetKeyDown(KeyCode.E) || attackwithSword) && animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaAttack") && isNinjaMotion && isDrawSword)
+    //    {
+    //        StopCoroutine(NinjaAttack());
+    //        StartCoroutine(NinjaAttack2());
+    //    }
+
+    //    if ((Input.GetKeyDown(KeyCode.E) || attackwithSword) && animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaAmimationSlash3") && isNinjaMotion && isDrawSword)
+    //    {
+    //        StopCoroutine(NinjaAttack2());
+    //        StartCoroutine(NinjaAttack3());
+    //    }
+
+    //    if ((Input.GetKeyDown(KeyCode.Q) || hideoropenSword) && animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && isNinjaMotion)
+    //    {
+
+    //        isDrawSword = !isDrawSword;
+    //        StartCoroutine(DrawNinjaSword());
+
+    //    }
+
+    //    if ((Input.GetMouseButtonDown(1) || attackwithShuriken) && animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && isNinjaMotion)
+    //    {
+    //        animator.SetBool("NinjaThrow", true);
+    //        StartCoroutine(ThrowFalse());
+    //    }
+    //    attackwithSword = false;
+    //    attackwithShuriken = false;
+    //    hideoropenSword = false;
+    //}
+
+    //IEnumerator NinjaAttack()
+    //{
+    //    //StopCoroutine(NinjaAttack());
+    //    isMovementAllowed = false;
+    //    animator.CrossFade("NinjaAttack", 0.1f);
+    //    yield return new WaitForSecondsRealtime(0.8f);
+    //    isMovementAllowed = true;
+    //}
+    //IEnumerator NinjaAttack2()
+    //{
+    //    //StopCoroutine(NinjaAttack());
+    //    isMovementAllowed = false;
+    //    animator.CrossFade("NinjaAmimationSlash3", 0.1f);
+    //    yield return new WaitForSecondsRealtime(1f);
+    //    isMovementAllowed = true;
+
+
+    //}
+    //IEnumerator NinjaAttack3()
+    //{
+    //    //StopCoroutine(NinjaAttack());
+    //    isMovementAllowed = false;
+    //    animator.CrossFade("Sword And Shield Attack", 0.1f);
+    //    yield return new WaitForSecondsRealtime(1.5f);
+    //    isMovementAllowed = true;
+
+
+    //}
+
+    //IEnumerator DrawNinjaSword()
+    //{
+    //    if (isDrawSword)
+    //    {
+    //        isMovementAllowed = false;
+    //        animator.CrossFade("SheathingSword", 0.2f);
+    //        yield return new WaitForSecondsRealtime(0.8f);
+    //        swordModel.transform.SetParent(swordhandHook, false);
+    //        yield return new WaitForSecondsRealtime(0.1f);
+    //        swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
+    //        swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+    //        isMovementAllowed = true;
+
+
+    //    }
+    //    if (!isDrawSword)
+    //    {
+    //        isMovementAllowed = false;
+    //        animator.CrossFade("Withdrawing", 0.2f);
+    //        yield return new WaitForSecondsRealtime(1.3f);
+    //        swordModel.transform.SetParent(swordHook, false);
+    //        swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+    //        swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+    //        isMovementAllowed = true;
+    //    }
+    //}
+    //IEnumerator ThrowFalse()
+    //{
+    //    isMovementAllowed = false;
+    //    yield return new WaitForSeconds(0.6f);
+    //    GameObject spawned = Instantiate(_shurikenPrefab, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+    //    spawned.GetComponent<Rigidbody>().AddForce((transform.forward * 3000f) * FindObjectOfType<Cinemachine.CinemachineFreeLook>().m_YAxis.Value);
+    //    animator.SetBool("NinjaThrow", false);
+    //    yield return new WaitForSeconds(0.4f);
+    //    isMovementAllowed = true;
+    //    Destroy(spawned, 5f);
+    //}
+
+    //Coroutine NinjaCo;
+    //public void NinjaComponentTimerStart(float time)
+    //{
+    //    if (NinjaCo != null)
+    //    {
+    //        StopCoroutine(NinjaCo);
+    //        NinjaCo = null;
+    //    }
+    //    //else
+    //    //    return;
+    //    isThrow = false;
+    //    isThrowModeActive = false;
+    //    if (throwMainCo != null)
+    //        throwMainCo = null;
+    //    NinjaCo = StartCoroutine(NinjaComponentTimer(time));
+    //}
+    //public IEnumerator NinjaComponentTimer(float time)
+    //{
+    //    isDrawSword = false;
+    //    if (swordModel)
+    //    {
+    //        swordModel.transform.SetParent(swordHook, false);
+    //        swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+    //        swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+    //        swordModel.SetActive(true);
+    //    }
+    //    yield return new WaitForSecondsRealtime(time);
+    //    isNinjaMotion = false;
+    //    if (swordModel)
+    //    {
+    //        swordModel.SetActive(false);
+    //    }
+    //    animator.SetBool("NinjaJump", true);
+    //    animator.SetBool("isNinjaMotion", false);
+
+    //    //Ninja_Throw(false);
+    //    isDrawSword = false;
+    //    JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
+    //    sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
+    //}
+    //bool attackwithSword, attackwithShuriken, hideoropenSword;
+    //void AttackwithSword() => attackwithSword = true;
+    //void AttackwithShuriken() => attackwithShuriken = true;
+    //void HideorOpenSword() => hideoropenSword = true;
+
+
+    ///// <summary>
+    ///// Throw Mode
+    ///// </summary>
+    ///// 
+    //[SerializeField] private LineRenderer throwLineRenderer;
+    //[SerializeField] private GameObject handBall;
+    //[SerializeField] private TrajectoryController trajectoryController;
+    //[SerializeField] private float _force = 20;
+    //Coroutine throwCo;
+    //public LayerMask hitMask;
+    //public float raycastDistance = 100f;
+    //private Coroutine throwMainCo;
+    //public bool isThrowModeActive = false;
+
+    //public void ThrowMotion()
+    //{
+    //    trajectoryController = this.GetComponent<TrajectoryController>();
+    //    throwLineRenderer = this.GetComponent<LineRenderer>();
+    //    NinjaComponentTimerStart(0);
+    //    isNinjaMotion = false;
+    //    animator.SetBool("isNinjaMotion", false);
+    //    isThrow = true;
+    //    isThrowModeActive = true;
+    //    if (throwMainCo == null)
+    //        throwMainCo = StartCoroutine(Throw());
+    //}
+    //Vector3 tempRotation, tempPostion;
+    //public float timeToStartAimLineRenderer, timeToStopAimLineRenderer;
+    //private Coroutine throwStart, throwEnd, throwAction;
+    //bool isThrowReady = false;
+    //public Vector3 curveOffset;
+    //bool isThrowPose = true;
+    //IEnumerator Throw()
+    //{
+    //    while (isThrowModeActive)
+    //    {
+    //        yield return new WaitForSeconds(0f);
+    //        if (!isNinjaMotion && characterController.isGrounded)
+    //        {
+    //            if (!isNinjaMotion && characterController.isGrounded && isThrow && isThrowReady)
+    //            {
+    //                tempRotation = ActiveCamera.transform.eulerAngles;
+    //                tempRotation.x = this.transform.eulerAngles.x;
+    //                tempRotation.z = this.transform.eulerAngles.z;
+    //                this.transform.eulerAngles = tempRotation;
+    //                Debug.Log("Throw Pose Active");
+    //                trajectoryController.UpdateTrajectory(_ballSpawn.position, ((ActiveCamera.transform.forward + curveOffset) * _force));
+    //            }
+    //            Debug.Log("Throw Mode Active");
+    //            if ((Input.GetKeyDown(KeyCode.Q) || throwBallPositionSet) && !animator.GetCurrentAnimatorStateInfo(0).IsName("throwing") && throwAction == null)
+    //            {
+    //                if (isThrowPose && throwEnd == null && (animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle")))
+    //                {
+    //                    isThrowPose = !isThrowPose;
+    //                    if (throwStart == null)
+    //                    {
+    //                        throwStart = StartCoroutine(ThrowStart());
+    //                    }
+    //                }
+    //                if (!isThrowPose && animator.GetCurrentAnimatorStateInfo(0).IsName("throw") && throwStart == null && throwAction == null)
+    //                {
+    //                    isThrowPose = !isThrowPose;
+    //                    if (throwEnd == null)
+    //                    {
+    //                        throwEnd = StartCoroutine(ThrowEnd());
+    //                    }
+    //                }
+    //                throwBallPositionSet = false;
+    //            }
+    //            if ((Input.GetKeyDown(KeyCode.E) || throwBall) && isThrowReady && throwStart == null && throwEnd == null)
+    //            {
+    //                if (throwAction == null && animator.GetCurrentAnimatorStateInfo(0).IsName("throw"))
+    //                {
+    //                    throwAction = StartCoroutine(ThrowAction());
+    //                }
+    //                throwBall = false;
+    //            }
+    //        }
+    //    }
+    //}
+    //IEnumerator ThrowStart()
+    //{
+    //    Debug.Log("Throw Start Co");
+    //    animator.SetFloat("Blend", 0f, 0.2f, Time.deltaTime); // applying values to animator.
+    //    animator.SetFloat("BlendY", 3f, 0.2f, Time.deltaTime);
+    //    animator.SetBool("throw", true);
+    //    isMovementAllowed = false;
+    //    //DOTween.To(() => cameraController.tpCamera._camera.fieldOfView, x => cameraController.tpCamera._camera.fieldOfView = x, 45, 1).SetUpdate(true);
+    //    yield return new WaitForSeconds(0.7f);
+    //    throwLineRenderer.enabled = true;
+    //    handBall.SetActive(true);
+    //    trajectoryController.colliderAim.SetActive(true);
+    //    isThrowReady = true;
+    //    StopCoroutine(throwStart);
+    //    throwStart = null;
+    //}
+    //IEnumerator ThrowAction()
+    //{
+    //    throwLineRenderer.enabled = false;
+    //    handBall.SetActive(false);
+    //    trajectoryController.colliderAim.SetActive(false);
+    //    animator.SetBool("throw", false);
+    //    animator.SetBool("throwing", true);
+    //    Debug.Log("Throw Action Co");
+    //    if (isThrowReady)
+    //    {
+    //        var spawned = Instantiate(GamificationComponentData.instance.ThrowBall, handBall.transform.position, handBall.transform.rotation);
+    //        spawned.Init(((ActiveCamera.transform.forward + curveOffset) * _force), false);
+    //        Destroy(spawned.gameObject, 10);
+    //    }
+    //    isThrowReady = false;
+    //    yield return new WaitForSeconds(1f);
+    //    animator.SetBool("throw", true);
+    //    animator.SetBool("throwing", false);
+    //    yield return new WaitForSeconds(0.7f);
+    //    throwLineRenderer.enabled = true;
+    //    handBall.SetActive(true);
+    //    trajectoryController.colliderAim.SetActive(true);
+    //    isThrowReady = true;
+    //    StopCoroutine(throwAction);
+    //    throwAction = null;
+    //}
+    //IEnumerator ThrowEnd()
+    //{
+    //    Debug.Log("Throw End Co");
+    //    yield return new WaitForSeconds(0f);
+    //    throwLineRenderer.enabled = false;
+    //    handBall.SetActive(false);
+    //    trajectoryController.colliderAim.SetActive(false);
+    //    animator.SetBool("throw", false);
+    //    animator.SetBool("throwFalse", false);
+    //    animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
+    //    animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
+    //    isThrowReady = false;
+
+    //    yield return new WaitForSeconds(01.3f);
+    //    isMovementAllowed = true;
+    //    StopCoroutine(throwEnd);
+    //    throwEnd = null;
+    //}
+
+    //bool throwBallPositionSet, throwBall;
+    //void BallPositionSet() => throwBallPositionSet = true;
+    //void ThrowBall() => throwBall = true;
+
+    //public void Ninja_Throw(bool state, int index = 0)
+    //{
+    //    //if (state)
+    //    //    animator.runtimeAnimatorController = GamificationComponentData.instance.ninjaMotion;
+    //    //else
+    //    //{
+    //    //    animator.runtimeAnimatorController = GamificationComponentData.instance.defaultAnimation;
+    //    //    return;
+    //    //}
+
+    //    if (swordModel == null)
+    //    {
+    //        swordModel = Instantiate(GamificationComponentData.instance.katanaPrefab, transform.parent);
+    //        swordModel.transform.localPosition = Vector3.zero;
+    //        swordModel.transform.localScale = Vector3.one;
+    //        swordModel.SetActive(false);
+    //    }
+
+    //    _shurikenPrefab = GamificationComponentData.instance.shurikenPrefab;
+    //    swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
+    //    swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
+    //    _ballSpawn = swordhandHook;
+    //    if (trajectoryController == null)
+    //        trajectoryController = gameObject.AddComponent<TrajectoryController>();
+    //    trajectoryController.resolution = 300;
+    //    trajectoryController.distance = 4;
+    //    trajectoryController.aimCollsion = GamificationComponentData.instance.throwAimPrefab;
+    //    trajectoryController.colliderAim = GamificationComponentData.instance.throwAimPrefab;
+
+    //    LineRenderer lr = GetComponent<LineRenderer>();
+    //    lr.enabled = false;
+    //    lr.widthMultiplier = 0.05f;
+    //    lr.material = GamificationComponentData.instance.lineMaterial;
+    //    lr.numCornerVertices = 30;
+    //    lr.numCapVertices = 31;
+    //    curveOffset = Vector3.up * 0.7f;
+
+    //    if (handBall == null)
+    //    {
+    //        handBall = Instantiate(GamificationComponentData.instance.handBall, swordhandHook);
+    //        handBall.transform.localPosition = new Vector3(0.08f, -0.088f, -0.006f);
+    //        handBall.transform.localRotation = Quaternion.Euler(0, -25.06f, 0);
+    //        handBall.SetActive(false);
+    //    }
+
+    //    _force = 15f;
+
+    //    if (index == 0)
+    //    {
+    //        isNinjaMotion = true;
+    //        animator.SetBool("isNinjaMotion", true);
+    //    }
+    //    else
+    //        ThrowMotion();
+    //}
 }

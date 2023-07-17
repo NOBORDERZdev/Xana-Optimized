@@ -28,6 +28,8 @@ public class AskForJoining : MonoBehaviour
 
     void LoadMain()
     {
+        XanaConstants.xanaConstants.isFromXanaLobby =false;
+        XanaConstants.xanaConstants.JjWorldSceneChange = false;
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");

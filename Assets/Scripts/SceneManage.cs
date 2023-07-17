@@ -69,33 +69,55 @@ public class SceneManage : MonoBehaviourPunCallbacks
             exitOnce = false;
             //if ( !XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             //    Screen.orientation = ScreenOrientation.LandscapeLeft;
+            if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+            {
+               StartCoroutine( LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+            }
+            else
+            {
+                
+                if (changeOritentationChange)
+                {
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    XanaConstants.xanaConstants.JjWorldSceneChange = false;
+                    XanaConstants.xanaConstants.orientationchanged = false;
+                    XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                }
+                if (GameManager.currentLanguage == "ja")
+                {
+                    LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
+                }
+                else if (GameManager.currentLanguage == "en")
+                {
+                    LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+                }
+                Debug.Log("~~~~~~ LoadMain call");
 
-            if (changeOritentationChange)
-            {
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-                XanaConstants.xanaConstants.JjWorldSceneChange = false;
-                XanaConstants.xanaConstants.orientationchanged = false;
-                XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                LoadingHandler.Instance.ShowLoading();
+                AssetBundle.UnloadAllAssetBundles(false);
+                Resources.UnloadUnusedAssets();
+             //   Caching.ClearCache();
+                StartCoroutine(LoadMainEnumerator());
             }
-            if (GameManager.currentLanguage == "ja")
-            {
-                LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
-            }
-            else if (GameManager.currentLanguage == "en")
-            {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
-            }
-            Debug.Log("~~~~~~ LoadMain call");
-
-            LoadingHandler.Instance.ShowLoading();
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
-         //   Caching.ClearCache();
-            StartCoroutine(LoadMainEnumerator());
+            
         }
 
     }
 
+     private IEnumerator LobbySceneSwitch()
+     {
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        
+        yield return new WaitForSeconds(1f);
+        XanaConstants.xanaConstants.isBuilderScene=false;
+        XanaConstants.xanaConstants.JjWorldSceneChange = true;
+        XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+        StartCoroutine(LoadMainEnumerator());
+       
+       
+    }
     
 
     IEnumerator LoadMainEnumerator()

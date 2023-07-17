@@ -4,12 +4,13 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun.Demo.PunBasics;
 
 public class RpcManager : MonoBehaviourPunCallbacks
 {
     public bool Publictest;
     private float timer;
-
+    public bool DifferentAnimClicked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,26 @@ public class RpcManager : MonoBehaviourPunCallbacks
             }
         
           
+        }
+    }
+
+    public void CheckIfDifferentAnimClicked(bool isEnable)
+    {
+        GetComponent<PhotonView>().RPC(nameof(UpdateStatsAnimClicked), RpcTarget.AllBuffered, GetComponent<PhotonView>().ViewID, isEnable);
+    }
+
+    [PunRPC]
+    public void UpdateStatsAnimClicked(int viewId, bool isEnable)
+    {
+        for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+        {
+            if (Launcher.instance.playerobjects[i] != null)
+            {
+                if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                {
+                    Launcher.instance.playerobjects[i].GetComponent<RpcManager>().DifferentAnimClicked = isEnable;
+                }
+            }
         }
     }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Models;
 using Photon.Pun;
@@ -14,24 +12,18 @@ public class AvatarChangerComponent : ItemComponent
         this.componentData = componentData;
     }
 
-    //OnCollisionEnter Convert OnTriggerEnter
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        if (*//*collision.gameObject.CompareTag("Player") || *//*(collision.gameObject.tag == "PhotonLocalPlayer" && collision.gameObject.GetComponent<PhotonView>().IsMine))
-        {
-            collision.gameObject.GetComponent<BuildingDetect>().OnAvatarChangerEnter(componentData.setTimer, componentData.avatarIndex);
-            Destroy(this.gameObject);
-        }
-    }*/
     private void OnCollisionEnter(Collision _other)
     {
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
         if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
         {
-            _other.gameObject.GetComponent<BuildingDetect>().OnAvatarChangerEnter(componentData.setTimer, componentData.avatarIndex);
-            Destroy(this.gameObject);
+
+            if (componentData.avatarIndex > 0)
+            {
+                GamificationComponentData.instance.buildingDetect.OnAvatarChangerEnter(componentData.setTimer, componentData.avatarIndex);
+                this.gameObject.SetActive(false);
+            }
+
+            //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         }
     }
 }

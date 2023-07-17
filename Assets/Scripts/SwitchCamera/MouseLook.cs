@@ -43,16 +43,16 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerController.isFirstPerson)
-            return;
+        _allowRotation = true;
         if (CameraLook.IsPointerOverUIObject())
         {
             _allowRotation = false;
-            return;
         }
-        _allowRotation = true;
+        if (!playerController.isFirstPerson)
+            return;
+        
 #if UNITY_EDITOR
-        if (!isGyroOn)
+        if (!isGyroOn && _allowRotation)
         {
             float mouseX;
             float mouseY;
@@ -70,7 +70,7 @@ public class MouseLook : MonoBehaviour
         }
 #endif
         // Gyro Rotation
-        if (isGyroOn)
+        if (isGyroOn && _allowRotation)
         {
             if (gyroEnabled)
             {
@@ -87,12 +87,13 @@ public class MouseLook : MonoBehaviour
             MoveCamera(delta);
         }
 
-        if (playerController.m_FreeFloatCam)
+        if (playerController.m_FreeFloatCam && _allowRotation)
         {
             MoveCameraFreeFloat();
         }
 #if UNITY_EDITOR
-        MouseMovement();
+        if(_allowRotation)
+            MouseMovement();
 
 #endif
 

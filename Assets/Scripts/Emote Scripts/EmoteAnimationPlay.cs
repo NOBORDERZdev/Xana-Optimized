@@ -102,7 +102,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             animator.SetBool("IsEmote", true);
         }
     }
-    int buttonClickCount = 0;
     public void Load(string url, GameObject prefabAnim)
     {
         //  Debug.Log("already run==="+alreadyRuning);
@@ -110,16 +109,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
         if (alreadyRuning)
         {
-
-            if (AnimObject != null && prefabAnim != null && AnimObject.GetInstanceID() == prefabAnim.GetInstanceID() && isAnimRunning)
-            { 
-                buttonClickCount++;
-                if (buttonClickCount != 2)
-                    return;
-                else
-                    buttonClickCount = 0;
-                    
-            }
             alreadyRuning = false;
 
             //if (AnimObject != null && prefabAnim != null && AnimObject.GetInstanceID() == prefabAnim.GetInstanceID() && isAnimRunning)
@@ -132,24 +121,18 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             isFetchingAnim = true;
             StartCoroutine(GetAssetBundleFromServerUrl(url, prefabAnim));
         }
-
-
-        //}
     }
     //Comment Step4 Load Assets Bundle Animator from URL
     public IEnumerator GetAssetBundleFromServerUrl(string BundleURL, GameObject prefabObject)
     {
-        if (waitForStandUp)
+        if (AnimObject != null && prefabObject != null)
         {
-            foreach (var clip in animatorremote.runtimeAnimatorController.animationClips)
+            if (AnimObject.GetInstanceID() != prefabObject.GetInstanceID())
             {
-                if (clip.name == "Stand")
-                {
-                    yield return new WaitForSeconds(clip.length);
-                    break;
-                }
-            }    
-            waitForStandUp = false;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().CheckIfDifferentAnimClicked(true);
+            }
+            else
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().CheckIfDifferentAnimClicked(false);
         }
         //if (prefabObject != null) AnimObjectHigh = prefabObject.transform.GetChild(2).gameObject;
 
@@ -242,20 +225,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
                                 if (assetBundle != null)
                                 {
-                                    if (currentAnimationTab.Equals("Etc"))
-                                    {
-                                        if (animatorremote.GetBool("EtcAnimStart"))
-                                        {
-                                            animatorremote.SetBool("EtcAnimStart", false);
-                                            //animatorremote.SetBool("moveToNextAnim", true);
-                                        }
-                                        else
-                                        {
-                                            //animatorremote.SetBool("moveToNextAnim", false);
-                                            animatorremote.SetBool("EtcAnimStart", true);
-                                            animatorremote.SetBool("Stand", false);
-                                        }
-                                    }
                                     GameObject[] animation = assetBundle.LoadAllAssets<GameObject>();
                                     var remotego = animation[0];
                                     /* foreach (var remotego in animation)*/
@@ -266,6 +235,18 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
                                             if (!SelfieController.Instance.selfiePanel.activeInHierarchy)
                                             {
+                                                if (animatorremote.GetBool("EtcAnimStart"))   // Added by Ali Hamza
+                                                {
+                                                    animatorremote.SetBool("Stand", true);
+                                                    animatorremote.SetBool("EtcAnimStart", false);
+                                                    foreach (var clip in animatorremote.runtimeAnimatorController.animationClips)
+                                                    {
+                                                        if (clip.name == "Stand")
+                                                        {
+                                                            yield return new WaitForSeconds(clip.length);
+                                                        }
+                                                    }
+                                                }
 
 
                                                 Debug.Log("animation call=====");
@@ -345,14 +326,39 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                         }
                                         else // For Etc Tab
                                         {
+                                            if (animatorremote != null)    //Added by Ali Hamza
+                                            {
+                                                animatorremote.SetBool("Stand", true);
+                                                animatorremote.SetBool("EtcAnimStart", false);
+
+                                                if (CheckSpecificAnimationPlaying("Sit") && animatorremote.GetComponent<RpcManager>().DifferentAnimClicked)
+                                                {
+                                                    animatorremote.GetComponent<RpcManager>().DifferentAnimClicked = false;
+                                                    foreach (var clip in animatorremote.runtimeAnimatorController.animationClips)
+                                                    {
+                                                        if (clip.name == "Stand")
+                                                        {
+                                                            yield return new WaitForSeconds(clip.length);
+                                                        }
+                                                    }
+                                                }
+                                                else if (CheckSpecificAnimationPlaying("Sit"))
+                                                {
+                                                    break;
+                                                }
+                                            }
+
+                                            if (animatorremote != null)
+                                                animatorremote.SetBool("Stand", false);
+
+                                            animatorremote.SetBool("EtcAnimStart", true);
+
                                             var overrideController = new AnimatorOverrideController();
                                             overrideController.runtimeAnimatorController = controller;
 
                                             List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                                             foreach (var clip in overrideController.animationClips)
                                             {
-                                                if (currentAnimationTab.Equals("Etc"))
-                                                {
                                                     if (animatorremote.GetBool("EtcAnimStart"))
                                                     {
                                                         if (clip.name == "crouchDefault")
@@ -387,7 +393,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                     animatorremote.SetBool("IsEmote", false);
                                                 }
                                             }
-                                        }
                                     }
                                     SaveAssetBundle(www.bytes, bundlePath, photonplayerObjects[i].gameObject);
 
@@ -597,26 +602,24 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             {
                 Debug.LogError("Success load bundle from storage");
 
-                if (currentAnimationTab.Equals("Etc"))
-                {
-                    if (animatorremote.GetBool("EtcAnimStart"))
-                    {
-                        animatorremote.SetBool("EtcAnimStart", false);
-                        //animatorremote.SetBool("moveToNextAnim", true);
-                    }
-                    else
-                    {
-                        //animatorremote.SetBool("moveToNextAnim", false);
-                        animatorremote.SetBool("EtcAnimStart", true);
-                        animatorremote.SetBool("Stand", false);
-                    }
-                }
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
                 {
                     GameObject go = (GameObject)anim;
                     if (go.name.Equals("Animation") || go.name.Equals("animation"))
                     {
+                        if (animatorremote.GetBool("EtcAnimStart"))   // Added by Ali Hamza
+                        {
+                            animatorremote.SetBool("Stand", true);
+                            animatorremote.SetBool("EtcAnimStart", false);
+                            foreach (var clip in animatorremote.runtimeAnimatorController.animationClips)
+                            {
+                                if (clip.name == "Stand")
+                                {
+                                    yield return new WaitForSeconds(clip.length);
+                                }
+                            }
+                        }
                         //PlayerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
                         //PlayerAvatar.GetComponent<Animator>().Play("Animation");
 
@@ -626,9 +629,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                         List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                         foreach (var clip in overrideController.animationClips)
                         {
-
-                            //else
-                            //{
                             if (clip.name == "emaotedefault")
                                 keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
                             else
@@ -639,19 +639,43 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                             animatorremote.runtimeAnimatorController = overrideController;
 
                             animatorremote.SetBool("IsEmote", true);
-                            //}
                         }
                     }
                     else
                     {
+                        if (animatorremote != null)    //Added by Ali Hamza
+                        {
+                            animatorremote.SetBool("Stand", true);
+                            animatorremote.SetBool("EtcAnimStart", false);
+
+                            if (CheckSpecificAnimationPlaying("Sit") && animatorremote.GetComponent<RpcManager>().DifferentAnimClicked)
+                            {
+                                animatorremote.GetComponent<RpcManager>().DifferentAnimClicked = false;
+                                foreach (var clip in animatorremote.runtimeAnimatorController.animationClips)
+                                {
+                                    if (clip.name == "Stand")
+                                    {
+                                        yield return new WaitForSeconds(clip.length);
+                                    }
+                                }
+                            }
+                            else if (CheckSpecificAnimationPlaying("Sit"))
+                            {
+                                break;
+                            }
+                        }
+
+                        if (animatorremote != null)
+                            animatorremote.SetBool("Stand", false);
+
+                        animatorremote.SetBool("EtcAnimStart", true);
+
                         var overrideController = new AnimatorOverrideController();
                         overrideController.runtimeAnimatorController = controller;
 
                         List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                         foreach (var clip in overrideController.animationClips)
                         {
-                            if (currentAnimationTab.Equals("Etc"))
-                            {
                                 if (animatorremote.GetBool("EtcAnimStart"))
                                 {
                                     if (clip.name == "crouchDefault")
@@ -684,7 +708,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                 }
                                 animatorremote.SetBool("IsEmote", false);
                             }
-                        }
                     }
                 }
             }
@@ -702,11 +725,17 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     }
 
+    bool CheckSpecificAnimationPlaying(string stateName)       //Added by Ali Hamza
+    {
+        return animatorremote.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
     public void SaveAssetBundle(byte[] data, string path, GameObject id)
     {
         //Create the Directory if it does not exist
         if (!Directory.Exists(Path.GetDirectoryName(path)))
         {
+            print("Player emote save path is "+ path);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
         }
 
@@ -937,7 +966,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
-                Debug.Log("Response===" + uwr.downloadHandler.text.ToString().Trim());
+                //Debug.Log("Response===" + uwr.downloadHandler.text.ToString().Trim());
                 bean = JsonUtility.FromJson<AnimationDetails>(uwr.downloadHandler.text.ToString().Trim());
                 if (!string.IsNullOrEmpty(bean.data.ToString()))
                 {
