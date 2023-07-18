@@ -67,7 +67,7 @@ public class MeshCombiner : MonoBehaviour
                 {
                     if (allRenderers[j] != null && allRenderers[j].material != null &&
                         targetMaterial[i].name == allRenderers[j].material.name &&
-                        targetMaterial[i].color == allRenderers[j].material.color)
+                        targetMaterial[i].HasProperty("_Color") && targetMaterial[i].color == allRenderers[j].material.color)
                     {
                         MeshFilter meshFilter = allRenderers[j].GetComponent<MeshFilter>();
                         if (meshFilter != null && meshFilter.mesh != null)

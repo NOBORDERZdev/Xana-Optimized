@@ -343,9 +343,9 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				//
 
 			#if PASS_SHADOW_CASTER
-				return frag(i, vpos, particleColor, particleAlpha, dissolveTex, dissolveTime);
+				return frag(i, vpos, particleColor, particleAlpha, dissolveTex, dissolveTime, 0.0);
 			#else
-				return frag(i, particleColor, particleAlpha, dissolveTex, dissolveTime);
+				return frag(i, particleColor, particleAlpha, dissolveTex, dissolveTime, 0.0);
 			#endif
 			}
 
@@ -369,7 +369,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				
 				#pragma target 2.0
 				
-				#pragma multi_compile_instancing
+				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 
 				#pragma multi_compile CFXR_URP
@@ -402,7 +402,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				
 				#pragma target 2.0
 				
-				#pragma multi_compile_instancing
+				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 
 				#pragma multi_compile CFXR_URP
@@ -437,6 +437,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 			
 				CGPROGRAM
 
+				#pragma multi_compile CFXR_URP
 				#pragma multi_compile PASS_SHADOW_CASTER
 
 				#pragma vertex vertex_program
@@ -479,7 +480,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				#pragma target 2.0
 				
 				#pragma multi_compile_particles
-				#pragma multi_compile_instancing
+				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 				
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL

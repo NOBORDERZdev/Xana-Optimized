@@ -23,7 +23,8 @@ public class HyperlinkPanelResizer : MonoBehaviour
         if (target == null)
             return;
 
-        cam = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Camera>();
+        if (cam == null)
+            cam = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Camera>();
 
         pos = transform.position;
         pos.x = cam.WorldToScreenPoint(target.position).x;
