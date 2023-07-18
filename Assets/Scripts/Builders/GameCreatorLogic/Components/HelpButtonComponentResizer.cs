@@ -12,6 +12,11 @@ public class HelpButtonComponentResizer : MonoBehaviour
     public ScrollRect scrollView;
     public GameObject scrollbar;
     float val;
+    private void OnDisable()
+    {
+        cam = null;
+    }
+
     void Update()
     {
         if (GamificationComponentData.instance.playerControllerNew == null)
@@ -21,7 +26,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
         {
             if (target == null)
                 return;
-
+            if(cam==null)
             cam = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Camera>();
 
             pos = transform.position;

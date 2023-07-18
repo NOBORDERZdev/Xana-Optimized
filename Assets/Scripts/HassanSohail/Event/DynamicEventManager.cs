@@ -40,7 +40,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;
-    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjI1MDcsImlhdCI6MTY4OTU5MDM0OCwiZXhwIjoxNjg5NzYzMTQ4fQ.HyEElihTpmpZ7DNwwNYMGvll7XcmiXdX2_SnN9h7U6U";
+    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTU3OCwiaWF0IjoxNjg5MjUyMzcxLCJleHAiOjE2ODk0MjUxNzF9.rMcqZpl3B1_tUvCxV-gscPb9pjOjoEKnkeYHpgbjG0k";
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -65,7 +65,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         //For testing
         //EventArguments = "765";
-        EventArguments = "106";
+        EventArguments = "";
         PauseCount = 0;
         FocusCount = 0;
         StartFocusCounter = 1;
@@ -210,8 +210,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
-            //request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            request.SetRequestHeader("Authorization", Auth);
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            //request.SetRequestHeader("Authorization", Auth);
             yield return request.SendWebRequest();
             Debug.Log("Event data is here :  " + request.downloadHandler.text);
             EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(request.downloadHandler.text);

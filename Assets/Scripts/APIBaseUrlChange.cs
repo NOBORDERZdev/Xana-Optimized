@@ -106,7 +106,7 @@ public class APIBaseUrlChange : MonoBehaviour
         {
             try
             {
-                Debug.Log("Response server===" + uwr.downloadHandler.text);
+                //Debug.Log("Response server===" + uwr.downloadHandler.text);
                 GetServerDetils bean = JsonUtility.FromJson<GetServerDetils>(uwr.downloadHandler.text.ToString().Trim());
                 if (bean.success)
                 {
