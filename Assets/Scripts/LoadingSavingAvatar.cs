@@ -85,7 +85,7 @@ public class LoadingSavingAvatar : MonoBehaviour
             }
         }
     }
-    [System.Serializable]
+
     public class VersionData
     {
         public int id;
@@ -93,7 +93,7 @@ public class LoadingSavingAvatar : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-    [System.Serializable]
+
     public class VersionDetails
     {
         public bool success;

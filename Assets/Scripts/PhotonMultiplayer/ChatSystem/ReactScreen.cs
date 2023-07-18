@@ -23,7 +23,7 @@ public class ReactScreen : MonoBehaviour
     public Transform exPressionparent;
     public Transform othersparent;
     public GameObject reactPrefab;
-    
+
     public GameObject emoteAnimationHighlightButton;
 
     public Image reactImage;
@@ -33,7 +33,7 @@ public class ReactScreen : MonoBehaviour
     public List<ReactEmote> reactDataClass = new List<ReactEmote>();
     public List<ReactGestures> reactDataClassGestures = new List<ReactGestures>();
     public List<ReactOthers> reactDataClassOthers = new List<ReactOthers>();
-    
+
     public bool isOpen = false;
 
 
@@ -42,7 +42,7 @@ public class ReactScreen : MonoBehaviour
     public GameObject jumpBtn;
     public GameObject BottomBtnParent;
     public GameObject XanaChatObject;
-    
+
     //end hardik
     //private Canvas reactScreenCanvas;//riken
     //private GraphicRaycaster graphicRaycaster;//riken
@@ -62,12 +62,12 @@ public class ReactScreen : MonoBehaviour
         if (Instance != null && Instance != this)
             Instance = this;
 
-       
+
     }
     public void OpenPanel()
     {
-        Debug.Log("check value of reaction panel==="+isOpen);
-        Debug.Log("check value of reaction panel 1==="+ reactionScreenParent.activeInHierarchy);
+        Debug.Log("check value of reaction panel===" + isOpen);
+        Debug.Log("check value of reaction panel 1===" + reactionScreenParent.activeInHierarchy);
         EmoteAnimationPlay.Instance.isEmoteActive = false;
         if (isOpen || reactionScreenParent.activeInHierarchy)
         {
@@ -78,7 +78,8 @@ public class ReactScreen : MonoBehaviour
                 HideReactionScreen();
                 isOpen = false;
             }
-            else{
+            else
+            {
                 reactionScreenParent.SetActive(false);
                 HideReactionScreen();
                 if (ChangeOrientation_waqas._instance.isPotrait)
@@ -92,11 +93,11 @@ public class ReactScreen : MonoBehaviour
                     jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                     reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                     BottomBtnParent.SetActive(false);
-                  //  XanaChatObject.SetActive(false);
+                    //  XanaChatObject.SetActive(false);
                     // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
                 }
             }
-         
+
         }
         else
         {
@@ -116,19 +117,20 @@ public class ReactScreen : MonoBehaviour
             //    //if (Input.deviceOrientation == DeviceOrientation.Portrait)
             //    //{
 
-                if (ChangeOrientation_waqas._instance.isPotrait)
-                {
+            if (ChangeOrientation_waqas._instance.isPotrait)
+            {
                 ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                 //if (ChangeOrientation_waqas._instance.isPotrait)
                 //    ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                 //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
                 reactionScreenParent.SetActive(true);
-                     jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
-                    jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
-                    reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
-                    BottomBtnParent.SetActive(false);
-                   // XanaChatObject.SetActive(false);
+                jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
+                jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
+                reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
+                BottomBtnParent.SetActive(false);
+                // XanaChatObject.SetActive(false);
                 // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225, true);
                 CheckForInstantiation();
                 reactImage.sprite = react_enable;
                 isOpen = true;
@@ -143,19 +145,20 @@ public class ReactScreen : MonoBehaviour
                 reactImage.sprite = react_enable;
                 isOpen = true;
                 HideEmoteScreen();
+                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-165, false);
             }
 
         }
-        
+
     }
 
     public void ClosePanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait) 
+        if (ChangeOrientation_waqas._instance.isPotrait)
         {
-           // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-           // XanaChatObject.SetActive(true);
+            // XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
@@ -175,14 +178,19 @@ public class ReactScreen : MonoBehaviour
         reactImage.sprite = react_disable;
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
-          //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
-          //  XanaChatObject.SetActive(true);
+            //  XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             emoteAnimationScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-           // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
+        }
+        else
+        {
+            BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165, false);
         }
         reactionScreenParent.SetActive(false);
     }
@@ -191,7 +199,7 @@ public class ReactScreen : MonoBehaviour
 
     public void ReactButtonClick()
     {
-       
+
 
         //isOpen = !isOpen;
         //if (isOpen)
@@ -287,6 +295,7 @@ public class ReactScreen : MonoBehaviour
         catch (Exception e1)
         {
         }
+
         yield return uwr.SendWebRequest();
 
         if (uwr.isNetworkError)
@@ -298,7 +307,7 @@ public class ReactScreen : MonoBehaviour
             try
             {
                 ReactionDetails bean = JsonUtility.FromJson<ReactionDetails>(uwr.downloadHandler.text.ToString().Trim());
-                Debug.Log("ReactionClass : "+ uwr.downloadHandler.text.ToString().Trim());
+                Debug.Log("ReactionClass : " + uwr.downloadHandler.text.ToString().Trim());
                 if (bean.success)
                 {
                     reactDataClass.Clear();
@@ -338,18 +347,18 @@ public class ReactScreen : MonoBehaviour
                 for (int i = 0; i < reactDataClass.Count; i++)
                 {
                     GameObject newItem = Instantiate(reactPrefab, Vector3.zero, Quaternion.identity, emoteParent);
-                    newItem.GetComponent<ReactItem>().SetData(reactDataClass[i].thumb + "?width=50&height=50", reactDataClass[i].mainImage, i,reactDataClass[i].imageName);
+                    newItem.GetComponent<ReactItem>().SetData(reactDataClass[i].thumb + "?width=50&height=50", reactDataClass[i].mainImage, i, reactDataClass[i].imageName);
                 }
 
                 for (int j = 0; j < reactDataClassGestures.Count; j++)
                 {
                     GameObject newItem = Instantiate(reactPrefab, Vector3.zero, Quaternion.identity, exPressionparent);
-                    newItem.GetComponent<ReactItem>().SetData(reactDataClassGestures[j].thumb + "?width=50&height=50", reactDataClassGestures[j].mainImage, j,reactDataClassGestures[j].imageName);
+                    newItem.GetComponent<ReactItem>().SetData(reactDataClassGestures[j].thumb + "?width=50&height=50", reactDataClassGestures[j].mainImage, j, reactDataClassGestures[j].imageName);
                 }
                 for (int j = 0; j < reactDataClassOthers.Count; j++)
                 {
                     GameObject newItem = Instantiate(reactPrefab, Vector3.zero, Quaternion.identity, othersparent);
-                    newItem.GetComponent<ReactItem>().SetData(reactDataClassOthers[j].thumb + "?width=50&height=50", reactDataClassOthers[j].mainImage, j,reactDataClassOthers[j].imageName);
+                    newItem.GetComponent<ReactItem>().SetData(reactDataClassOthers[j].thumb + "?width=50&height=50", reactDataClassOthers[j].mainImage, j, reactDataClassOthers[j].imageName);
                 }
             }
             catch
@@ -359,28 +368,27 @@ public class ReactScreen : MonoBehaviour
         }
     }
     #region DATA
-    [System.Serializable]
+
     public class ReactEmote
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
-    [System.Serializable]
+
     public class ReactGestures
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
-    [System.Serializable]
     public class ReactOthers
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
-    [System.Serializable]
+
     public class ReactionList
     {
         public int id;
@@ -394,12 +402,12 @@ public class ReactScreen : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-    [System.Serializable]
+
     public class Data
     {
         public List<ReactionList> reactionList;
     }
-    [System.Serializable]
+
     public class ReactionDetails
     {
         public bool success;

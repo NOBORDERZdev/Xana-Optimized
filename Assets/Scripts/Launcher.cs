@@ -72,7 +72,7 @@ namespace Photon.Pun.Demo.PunBasics
 		/// <summary>
 		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
 		/// </summary>
-		string gameVersion = "5";
+		string gameVersion = "6";
 		private int count;
 
 
@@ -404,7 +404,7 @@ namespace Photon.Pun.Demo.PunBasics
             playerobjects.Clear();
             print("Launcher " + "OnDisconnected");
             LogFeedback("<Color=Red>OnDisconnected</Color> " + cause);
-            Debug.LogError("PUN Basics Tutorial/Launcher:Disconnected");
+            Debug.Log("PUN Basics Tutorial/Launcher:Disconnected");
             PlayerPrefs.SetInt("leftRoom", 1);
             // #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
             isConnecting = false;
@@ -458,7 +458,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public void Disconnect()
         {
-            Debug.LogError("Launcher Disconnect...");
+            Debug.Log("Launcher Disconnect...");
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);

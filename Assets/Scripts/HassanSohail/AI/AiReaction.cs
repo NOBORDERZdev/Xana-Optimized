@@ -38,7 +38,7 @@ namespace XanaAi
                             }
                             else
                             {
-                                Debug.LogError("Download Failed");
+                                Debug.Log("Download Failed");
                             }
                         });
                     }

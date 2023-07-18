@@ -63,7 +63,7 @@ public class WorldManager : MonoBehaviour
 
         if (!System.IO.Directory.Exists(Application.persistentDataPath + "/MainMenuData"))
         {
-            //Debug.LogError("start creating directory");
+            //Debug.Log("start creating directory");
             System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/MainMenuData");
             if (!System.IO.Directory.Exists(Application.persistentDataPath + "/MainMenuData/MuseumData"))
             {
@@ -225,7 +225,7 @@ public class WorldManager : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-            //Debug.LogError(www.downloadHandler.text);
+            //Debug.Log(www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);
@@ -414,7 +414,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            Debug.LogError("loading scene");
+            Debug.Log("loading scene");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
@@ -735,7 +735,7 @@ public class SearchWorld
     public DateTime updatedAt;
     public string entityType;
     public string status;
-    public int? createdBy;
+    public string? creator;
     public object users;
     public string map_json_link;
     public string map_code;

@@ -20,14 +20,15 @@ public class HelpButtonComponent : ItemComponent
         //this.helpButtonComponentData.IsAlwaysOn = false;
         if (this.helpButtonComponentData.IsAlwaysOn)
         {
+            GamificationComponentData.instance.worldCameraEnable = true;
             GameObject go;
             HelpButtonComponentResizer infoPopup;
             go = Instantiate(GamificationComponentData.instance.helpParentReference, this.transform.position, new Quaternion(0, 0, 0, 0), GamificationComponentData.instance.worldSpaceCanvas.transform);
+            //go.transform.position = go.transform.position + (Vector3.up);
             go.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             infoPopup = go.GetComponent<HelpButtonComponentResizer>();
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
-
             infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
             go.SetActive(true);
         }

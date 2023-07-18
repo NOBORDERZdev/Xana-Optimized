@@ -37,16 +37,30 @@ public class SituationChangerComponent : ItemComponent
 
         isActivated = true;
     }
-
+    Coroutine situationCo;
     private void OnCollisionEnter(Collision _other)
     {
 
         Debug.Log("Situation changer collision" + _other.gameObject.name);
         if (/*_other.gameObject.tag == "Player" || */(_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
         {
+            if (situationChangerComponentData.Timer == 0 && !situationChangerComponentData.isOff)
+                return;
+
+            if (situationCo == null && situationChangerComponentData.Timer>0)
+                situationCo = StartCoroutine(nameof(SituationChange));
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
-            //TimeStats._intensityChangerStop?.Invoke();
             TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
+        }
+    }
+
+    IEnumerator SituationChange()
+    {
+
+        while (situationChangerComponentData.Timer > 0)
+        {
+            situationChangerComponentData.Timer--;
+            yield return new WaitForSeconds(1f);
         }
     }
 

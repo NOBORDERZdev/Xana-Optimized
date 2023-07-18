@@ -1,11 +1,7 @@
 using Models;
 using Photon.Pun;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class QuizComponent : MonoBehaviour
 {
     private QuizComponentData quizComponentData;
@@ -13,6 +9,9 @@ public class QuizComponent : MonoBehaviour
     public void Init(QuizComponentData quizComponentData)
     {
         this.quizComponentData = quizComponentData;
+
+        if (this.quizComponentData.correctAnswerRate == 0)
+            this.quizComponentData.correctAnswerRate = 100;
     }
 
     private void OnCollisionEnter(Collision _other)

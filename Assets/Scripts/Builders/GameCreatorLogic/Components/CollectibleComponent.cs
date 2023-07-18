@@ -20,7 +20,7 @@ public class CollectibleComponent : ItemComponent
             if (activateComponent)
             {
                 activateComponent = false;
-                Toast.Show(XanaConstants.collectibleMsg);
+                //Toast.Show(XanaConstants.collectibleMsg);
             }
            // Debug.LogError("Here we need to show message to user for collectible object");
         }

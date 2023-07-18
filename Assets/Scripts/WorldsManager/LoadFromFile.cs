@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Collections;
@@ -39,7 +39,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     private GameObject player;
 
-    System.DateTime eventUnivEndDateTime, eventlocalEndDateTime;
+    System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
 
     [HideInInspector]
     public GameObject leftJoyStick;
@@ -56,6 +56,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public double eventRemainingTime;
 
     public SceneManage _uiReferences;
+
+    //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
+    //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
     private void Awake()
     {
@@ -101,8 +104,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public void StartEventTimer()
     {
-        eventUnivEndDateTime = System.DateTime.Parse(XanaEventDetails.eventDetails.endTime);
-        eventlocalEndDateTime = eventUnivEndDateTime.ToLocalTime();
+        eventUnivStartDateTime = DateTime.Parse(XanaEventDetails.eventDetails.startTime);
+        eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
+        eventlocalEndDateTime = eventLocalStartDateTime.Add(TimeSpan.FromSeconds(XanaEventDetails.eventDetails.duration));
 
         //eventRemainingTime = eventTimeInSeconds;
         InvokeRepeating("CalculateEventTime", 0, 1);
@@ -110,13 +114,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public void CalculateEventTime()
     {
+        //univStartDateTime = DateTime.Parse(OrdinaryUTCdateOfSystem);
+        //OrdinarySystemDateTime = univStartDateTime.ToLocalTime();
         int _eventEndSystemDateTimediff = (int)(eventlocalEndDateTime - System.DateTime.Now).TotalMinutes;
 
-        print("===================DIFFEND : " + _eventEndSystemDateTimediff);
+        //print("===================DIFFEND : " + _eventEndSystemDateTimediff);
 
         if (_eventEndSystemDateTimediff <= 0)
         {
-            print("Event Ended");
+            //print("Event Ended");
             _uiReferences.EventEndedPanel.SetActive(true);
             CancelInvoke("CalculateEventTime");
         }
@@ -361,7 +367,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage") )
+            else if (FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
@@ -371,11 +377,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 //Invoke(nameof(SetKotoAngle), 0.5f);
                 if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
                 {
-                     StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+                    StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
                 }
                 else
                 {
-                StartCoroutine(setPlayerCamAngle(0, 0.75f));
+                    StartCoroutine(setPlayerCamAngle(0, 0.75f));
 
                 }
             }
@@ -426,12 +432,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
         }
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
-       
-        updatedSpawnpoint.transform.localPosition = spawnPoint;
 
+        updatedSpawnpoint.transform.localPosition = spawnPoint;
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby =false;
+            XanaConstants.xanaConstants.isFromXanaLobby = false;
         }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
@@ -498,14 +503,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             player.GetComponent<CapsuleCollider>().isTrigger = false;
             RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
-            GamificationComponentData.instance.playerControllerNew = ReferrencesForDynamicMuseum.instance.playerControllerNew;
+            GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
             GamificationComponentData.instance.playerControllerNew.controllerCamera.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
             GamificationComponentData.instance.playerControllerNew.firstPersonCameraObj.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
 
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
             GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.53f;
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
-
+            if(GamificationComponentData.instance.worldCameraEnable)
+                BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
             GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();

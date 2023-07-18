@@ -168,7 +168,7 @@ public class ItemDatabase : MonoBehaviour
 //                    //}
 //                    //catch (Exception e)
 //                    //{
-//                    //    Debug.LogError(e.ToString());
+//                    //    Debug.Log(e.ToString());
 //                    //}
 //                }
 //                //  }  
@@ -217,7 +217,7 @@ public class ItemDatabase : MonoBehaviour
             }
             catch (Exception e)
             {
-                Debug.LogError("Exception here............................");
+                Debug.Log("Exception here............................");
             }
 
             LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);

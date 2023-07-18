@@ -31,7 +31,7 @@ public class MaintenanceScreenHandler : MonoBehaviour
 
     public IEnumerator CheckForMaintenanceScreen(string type, string platform, string version)
     {
-        Debug.LogError("CheckForMaintenanceScreen  " + version);
+        Debug.Log("CheckForMaintenanceScreen  " + version);
         UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.MaintenanceAPI + type + "/" + platform + "/" + version);
 
         uwr.SendWebRequest();
@@ -40,7 +40,7 @@ public class MaintenanceScreenHandler : MonoBehaviour
             yield return null;
         }
 
-        //Debug.LogError(uwr.downloadHandler.text);
+        //Debug.Log(uwr.downloadHandler.text);
 
         if (uwr.isNetworkError)
         {

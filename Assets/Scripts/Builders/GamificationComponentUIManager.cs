@@ -35,6 +35,10 @@ public class GamificationComponentUIManager : MonoBehaviour
 
         BuilderEventManager.ResetComponentUI += DisableAllComponentUIObject;
 
+        BuilderEventManager.ChangeNinja_ThrowUIPosition += ChangeNinja_ThrowUIPosition;
+        BuilderEventManager.PositionUpdateOnOrientationChange += PositionUpdateOnOrientationChange;
+
+
         DisableThrowThingUI();
         DisableAllComponentUIObject(ComponentType.None);
     }
@@ -60,7 +64,30 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter -= EnableNinjaMotionUI;
         BuilderEventManager.OnThrowThingsComponentCollisionEnter -= EnableThrowThingsUI;
 
+        BuilderEventManager.OnHyperLinkPopupCollisionEnter -= EnableHyperLinkPopupUI;
+        BuilderEventManager.OnHyperLinkPopupCollisionExit -= DisableHyperLinkPopupUI;
+        BuilderEventManager.ChangeNinja_ThrowUIPosition -= ChangeNinja_ThrowUIPosition;
+        BuilderEventManager.PositionUpdateOnOrientationChange -= PositionUpdateOnOrientationChange;
+
+
         BuilderEventManager.ResetComponentUI -= DisableAllComponentUIObject;
+    }
+
+    public bool isPotrait;
+    private void PositionUpdateOnOrientationChange()
+    {
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        NinjaMotionUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
+        ThowThingsUIButtonPanel2.transform.position = new Vector3(screenWidth, 0, 0);
+        NinjaMotionUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
+        ThowThingsUIButtonPanel.transform.position = new Vector3(screenWidth, 0, 0);
+
+        if (isPotrait)
+            GamificationComponentData.instance.Ninja_Throw_InitPosY = NinjaMotionUIButtonPanel2.transform.localPosition;
+        else
+            GamificationComponentData.instance.Ninja_Throw_InitPosX = NinjaMotionUIButtonPanel.transform.localPosition;
     }
 
     //Narration Comopnent 
@@ -375,6 +402,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         DisableAllComponentUIObject(ComponentType.HelpButton);
         helpButtonComponentResizer.target = obj.transform;
+        helpButtonComponentResizer.isAlwaysOn = false;
         HelpButtonTitleText.text = helpButtonTitle;
         HelpText.text = "";
         if (HelpTexts.Length == 0)
@@ -571,7 +599,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         questionIndex += 1;
         next = TextLocalization.GetLocaliseTextByKey("Next");
         result = TextLocalization.GetLocaliseTextByKey("Result");
-        Debug.LogError("TextLocalization==>" + next + " " + result);
+        //Debug.LogError("TextLocalization==>" + next + " " + result);
 
         nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
         SetButtonInteractability(true, false);
@@ -588,7 +616,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         {
             isOptionSelected = true;
             confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-            Debug.LogError("TextLocalization==>" + confirm);
+            //Debug.LogError("TextLocalization==>" + confirm);
 
             nextButtonText.text = confirm;
         }
@@ -632,7 +660,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         SetButtonInteractability(true, true);
         confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-        Debug.LogError("Confirm Localise " + confirm);
+        //Debug.LogError("Confirm Localise " + confirm);
 
         nextButtonText.text = confirm;
 
@@ -641,8 +669,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             string s = TextLocalization.GetLocaliseTextByKey("Question");
             string s2 = TextLocalization.GetLocaliseTextByKey("of");
             string s3 = TextLocalization.GetLocaliseTextByKey("Q");
-            Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3);
-            Debug.LogError("Gautam");
+            //Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3);
 
             numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
             quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
@@ -748,7 +775,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
         string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
         string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
-        Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
+        //Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
         correctText.text = s + ": " + correct;
         wrongText.text = s2 + ": " + wrong;
         float percentage = (((float)correct / numOfQuestions) * 100);
@@ -880,6 +907,9 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     #region Ninja Motion Component
     public GameObject NinjaMotionUIParent;
+
+    public GameObject NinjaMotionUIButtonPanel;
+    public GameObject NinjaMotionUIButtonPanel2;
     public TextMeshProUGUI NinjaMotionText;
     Coroutine NinjaMotionCoroutine;
 
@@ -936,6 +966,8 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     #region Throw Things Component
     public GameObject ThrowThingsUIParent;
+    public GameObject ThowThingsUIButtonPanel;
+    public GameObject ThowThingsUIButtonPanel2;
 
     public void EnableThrowThingsUI()
     {
@@ -958,18 +990,56 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     #endregion
 
+    void ChangeNinja_ThrowUIPosition(float value, bool state)
+    {
+        NinjaMotionUIButtonPanel.transform.DOKill();
+        ThowThingsUIButtonPanel.transform.DOKill();
+        NinjaMotionUIButtonPanel2.transform.DOKill();
+        ThowThingsUIButtonPanel2.transform.DOKill();
+        if (isPotrait && state)
+        {
+            //Portrait code here
+            Vector3 position = NinjaMotionUIButtonPanel2.transform.localPosition;
+            if (value > 0)
+            {
+                 position = GamificationComponentData.instance.Ninja_Throw_InitPosY;
+                NinjaMotionUIButtonPanel2.transform.localPosition = position;
+                ThowThingsUIButtonPanel2.transform.localPosition = position;
+            }
+            else
+            {
+                position.y = value;
+                NinjaMotionUIButtonPanel2.transform.DOLocalMove(position, 0);
+                ThowThingsUIButtonPanel2.transform.DOLocalMove(position, 0);
+            }
+        }
+        else
+        {
+            //LandscapeLeft code here
+            if (value > 0)
+                value = 0;
+
+            Vector3 position = GamificationComponentData.instance.Ninja_Throw_InitPosX;
+            value = GamificationComponentData.instance.Ninja_Throw_InitPosX.x + value;
+            position.x = value;
+            NinjaMotionUIButtonPanel.transform.localPosition = position;
+            ThowThingsUIButtonPanel.transform.localPosition = position;
+        }
+    }
+
     #region HyperLink Popup
     public GameObject HyperLinkPopupUIParent;
     public HyperlinkPanelResizer hyperlinkPanelResizer;
     public TextMeshProUGUI hyperLinkPopupTitleText;
     public TextMeshProUGUI hyperLinkPopupText;
     string url;
-    public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, GameObject obj)
+    public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, Transform obj)
     {
+        HyperLinkPopupUIParent.SetActive(true);
         DisableAllComponentUIObject(ComponentType.HyperLinkPopup);
         hyperLinkPopupTitleText.text = hyperLinkPopupTitle;
         hyperLinkPopupText.text = "";
-        hyperlinkPanelResizer.target = obj.transform;
+        hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
         if (hyperLinkPopupTexts.Length == 0)
         {
@@ -980,7 +1050,6 @@ public class GamificationComponentUIManager : MonoBehaviour
             hyperLinkPopupText.text = hyperLinkPopupTexts + "\n";
         }
         //HelpButtonUILinesCount();
-        HyperLinkPopupUIParent.SetActive(true);
     }
 
     public void OnClickHyperLinkButton()
@@ -990,7 +1059,6 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void DisableHyperLinkPopupUI()
     {
-        hyperlinkPanelResizer.target = null;
         HyperLinkPopupUIParent.SetActive(false);
     }
 

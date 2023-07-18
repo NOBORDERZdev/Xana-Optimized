@@ -19,6 +19,8 @@ public class EyesBlinking : MonoBehaviour
     public float blinkingSpeed;
     public bool isBlinking = true;
 
+    public bool isCoroutineRunning = true;
+
     private void Awake()
     {
         instance = this;
@@ -76,8 +78,10 @@ public class EyesBlinking : MonoBehaviour
                     counter = 0;
                 }
             }
+            isCoroutineRunning = true;
             yield return new WaitForSeconds(waitTime);
             StartCoroutine(BlinkingStartRoutine());
         }
+        isCoroutineRunning = false;
     }
 }

@@ -18,6 +18,9 @@ public static class BuilderEventManager
     public static Action AfterPlayerInstantiated;
     public static Action ReSpawnPlayer;
 
+    //Mesh Combiner
+    public static Action CombineMeshes;
+
     //Orientation Changer
     public static Action<bool> BuilderSceneOrientationChange;
     //Gamification Module Events
@@ -77,8 +80,15 @@ public static class BuilderEventManager
     public static Action OnThrowBall;
 
     //HyperLinkPopup Component
-    public static Action<string, string, string, GameObject> OnHyperLinkPopupCollisionEnter;
+    public static Action<string, string, string, Transform> OnHyperLinkPopupCollisionEnter;
     public static Action OnHyperLinkPopupCollisionExit;
 
     public static Action<ComponentType> ResetComponentUI;
+
+    //ChangeNinja_ThrowUIPosition
+    public static Action<float,bool> ChangeNinja_ThrowUIPosition;
+    public static Action PositionUpdateOnOrientationChange;
+    public static Action<bool> SelfiActive;
+
+    public static Action EnableWorldCanvasCamera;
 }

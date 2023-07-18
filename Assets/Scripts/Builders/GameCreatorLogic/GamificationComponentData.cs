@@ -37,6 +37,9 @@ public class GamificationComponentData : MonoBehaviour
 
     public AudioSource audioSource;
 
+    internal Vector3 Ninja_Throw_InitPosY;
+    internal Vector3 Ninja_Throw_InitPosX;
+    internal bool worldCameraEnable;
     private void Awake()
     {
         instance = this;

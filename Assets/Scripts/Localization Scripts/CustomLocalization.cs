@@ -52,7 +52,7 @@ public class CustomLocalization : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isHttpError || www.isNetworkError) 
         {
-            Debug.LogError(www.error);
+            Debug.Log(www.error);
             StopAllCoroutines();
             StartCoroutine(CheckIfSheetUpdated());
             //Awake();
@@ -84,7 +84,7 @@ public class CustomLocalization : MonoBehaviour
        yield return www.SendWebRequest();
        if (www.isHttpError || www.isNetworkError)
        {
-           Debug.LogError(www.error);
+           Debug.Log(www.error);
            IsReady = false;
            
            Coroutine current = StartCoroutine(GetLocalizationDataFromSheet());
@@ -112,7 +112,7 @@ public class CustomLocalization : MonoBehaviour
            }
            else
            {
-               Debug.LogError("Json is empty");
+               Debug.Log("Json is empty");
            }
        }
     }

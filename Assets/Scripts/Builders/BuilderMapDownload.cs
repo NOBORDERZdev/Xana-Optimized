@@ -31,6 +31,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     public Volume postProcessVol;
     public VolumeProfile defaultPostProcessVolProfile;
+    public MeshCombiner meshCombiner;
 
     #region PRIVATE_VAR
     private ServerData serverData;
@@ -52,6 +53,9 @@ public class BuilderMapDownload : MonoBehaviour
         //ChangeOrientation
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
 
+        //OnSelfiActive
+        BuilderEventManager.SelfiActive += SelfiActive;
+
         OrientationChange(false);
     }
 
@@ -63,6 +67,8 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderData.spawnPoint.Clear();
 
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
+        BuilderEventManager.SelfiActive -= SelfiActive;
+
 
     }
 
@@ -109,7 +115,7 @@ public class BuilderMapDownload : MonoBehaviour
             potraitCanvas.blocksRaycasts = true;
             potraitCanvas.interactable = true;
             //landscapeCanvas.gameObject.SetActive(false);
-            Screen.orientation = ScreenOrientation.Portrait;
+            //Screen.orientation = ScreenOrientation.Portrait;
         }
         else
         {
@@ -117,14 +123,31 @@ public class BuilderMapDownload : MonoBehaviour
             landscapeCanvas.blocksRaycasts = true;
             landscapeCanvas.interactable = true;
             //potraitCanvas.gameObject.SetActive(false);
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
-            {
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-            }
-            
+            //Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
+
+        yield return new WaitForSeconds(0.5f);
+        BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
+    }
+
+    void SelfiActive(bool state)
+    {
+        if (state)
+        {
+            landscapeCanvas.DOKill();
+            landscapeCanvas.alpha = 0;
+            landscapeCanvas.blocksRaycasts = false;
+            landscapeCanvas.interactable = false;
+            potraitCanvas.DOKill();
+            potraitCanvas.alpha = 0;
+            potraitCanvas.blocksRaycasts = false;
+            potraitCanvas.interactable = false;
+        }
+        else
+            StartCoroutine(ChangeOrientation(isPotrait));
     }
     #endregion
+
 
     void OnBuilderDataFetch(int id, string token)
     {
@@ -241,7 +264,7 @@ public class BuilderMapDownload : MonoBehaviour
 
             LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
         }
-
+        BuilderEventManager.CombineMeshes?.Invoke();
         CallBack();
     }
 
@@ -453,7 +476,10 @@ public class BuilderMapDownload : MonoBehaviour
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
-        Rigidbody rb = newObj.AddComponent<Rigidbody>();
+        Rigidbody rb = null;
+        newObj.TryGetComponent(out rb);
+        if (rb == null)
+            rb = newObj.AddComponent<Rigidbody>();
         rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
@@ -466,6 +492,12 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
+        meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+
+        foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
+        {
+            childTransform.tag = "Item";
+        }
         //int count = levelData.otherItems.Count;
         //for (int i = 0; i < count; i++)
         //{
@@ -532,7 +564,7 @@ public class Data
     public string description;
     public string map_json_link;
     public User user;
-    
+
     // Count Variable Added by WaqasAhmad
     // Same Class used in Analytics Script
     public string count;

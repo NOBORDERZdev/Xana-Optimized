@@ -36,17 +36,17 @@ public class TrajectoryController : MonoBehaviour
                 if (Physics.Linecast(points[i], points[i + 1], out hitInfo))
                 {
                     if (colliderAim == null)
-                    {
+                    //{
                         colliderAim = Instantiate(aimCollsion);
-                        colliderAim.SetActive(false);
-                    }
+                    //    colliderAim.SetActive(false);
+                    //}
                     if (hitInfo.collider.CompareTag("Item"))
                     {
                         colliderAim.transform.position = hitInfo.point;
                         //print("Hit items" + hitInfo.collider.tag);
                         break;
                     }
-                    if (hitInfo.collider.CompareTag("Ground"))
+                    else if (hitInfo.collider.CompareTag("Ground"))
                     {
                         colliderAim.transform.position = hitInfo.point;
                         //print("Hit items" + hitInfo.collider.tag);
@@ -69,9 +69,7 @@ public class TrajectoryController : MonoBehaviour
     public void CheckCollision()
     {
         if (colliderAim == null)
-        {
             colliderAim = Instantiate(aimCollsion);
-        }
         colliderAim.transform.position = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
     }
 }

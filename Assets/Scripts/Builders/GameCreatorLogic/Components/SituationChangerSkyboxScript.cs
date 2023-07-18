@@ -123,6 +123,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.lensFlareData = null;
             sceneLensFlare.scale = 1;
         }
-        DynamicGI.UpdateEnvironment();
+        //DynamicGI.UpdateEnvironment();
     }
 }

@@ -38,7 +38,7 @@ public class DialoguesManagerVoice : MonoBehaviour
 
         num = 0;   
         dialogues = instance.characterDialogue;
-        Debug.LogError(instance.Chracter.name);
+        Debug.Log(instance.Chracter.name);
         num = int.Parse(instance.Chracter.name);
         print("My number for chracter" + num);
         SoundToPlay(num);

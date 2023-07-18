@@ -29,6 +29,7 @@ public class SelfieButton : MonoBehaviour
     private void OnSelfieClick()
     {
         GamePlayButtonEvents.inst.OnSelfieClick();
+        BuilderEventManager.SelfiActive?.Invoke(true);
     }
 
     private void SelfieBtnUpdated(bool canClick)

@@ -194,7 +194,10 @@ public class CameraLook : MonoBehaviour
             else if (isJoystickPressed)
             {
                 Touch t = Input.GetTouch(0);
-                Touch t1 = Input.GetTouch(1);
+                Touch t1 = new Touch();
+                if(Input.touchCount > 1)
+                    t1 = Input.GetTouch(1);
+
                 if (isRotatingScreen)     // screen is already rotation before joystick down
                 {
                     // ignore 2nd touch that will be joystick touch

@@ -46,7 +46,7 @@ public class EmoteBtnItemView : MonoBehaviour
         actionImgPotrait.gameObject.SetActive(false);
         string data = PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + index);
         Debug.Log(ConstantsGod.ANIMATION_DATA + index);
-        Debug.LogError("Data :" + data);
+        Debug.Log("Data :" + data);
         if (!data.IsNullOrEmpty())
         {
             AnimationData d = JsonUtility.FromJson<AnimationData>(data);

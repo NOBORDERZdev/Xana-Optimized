@@ -122,8 +122,11 @@ public class XanaVoiceChat : MonoBehaviour
         else
         {
             //#if UNITY_ANDROID
-            recorder.AutoStart = true;
-            recorder.Init(voiceConnection);
+            if (recorder != null)
+            {
+                recorder.AutoStart = true;
+                recorder.Init(voiceConnection);
+            }
             //#endif
             MicToggleOff = TurnOnMic;
             MicToggleOn = TurnOffMic;
@@ -152,7 +155,7 @@ public class XanaVoiceChat : MonoBehaviour
     {
         for (int i = 0; i < Microphone.devices.Length; i++)
         {
-            Debug.LogError(i + " Microphone " + Microphone.devices[i]);
+            Debug.Log(i + " Microphone " + Microphone.devices[i]);
         }
         Debug.Log("MicroPhoneDevice" + MicroPhoneDevice);
         Debug.Log("Recorder MicroPhone Name" + recorder.MicrophoneDevice.Name);
@@ -172,17 +175,21 @@ public class XanaVoiceChat : MonoBehaviour
         micOffBtnPotrait.SetActive(false);
         micOnBtn.SetActive(true);
         micOnBtnPotrait.SetActive(true);
-        recorder.TransmitEnabled = true;
+        if (recorder != null)
+            recorder.TransmitEnabled = true;
 
 
     }
 
     public void StopRecorder()
     {
-        Debug.LogError("StopRecorder");
-        recorder.AutoStart = recorder.TransmitEnabled = false;
-        recorder.StopRecording();
-        recorder.Init(voiceConnection);
+        Debug.Log("StopRecorder");
+        if (recorder != null)
+        {
+            recorder.AutoStart = recorder.TransmitEnabled = false;
+            recorder.StopRecording();
+            recorder.Init(voiceConnection);
+        }
     }
 
     public void TurnOffMic()
@@ -192,6 +199,7 @@ public class XanaVoiceChat : MonoBehaviour
         micOffBtnPotrait.SetActive(true);
         micOnBtn.SetActive(false);
         micOnBtnPotrait.SetActive(false);
+        if(recorder != null)
         recorder.TransmitEnabled = false;
     }
 

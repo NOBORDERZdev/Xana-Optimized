@@ -90,7 +90,7 @@ namespace Metaverse
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
 
-            Debug.LogError(" ######     Quit    #########");
+            Debug.Log(" ######     Quit    #########");
         }
 
 
@@ -371,58 +371,56 @@ namespace Metaverse
                 Scene scene = SceneManager.GetActiveScene();
                 if (scene.name != "AddressableScene" || !scene.name.Contains("Museum"))
                 {
-
                     //if (PlayerControllerPhoton.LocalPlayerInstance == null)
                     //{
 
-                    Quaternion rot = Quaternion.Euler(0, 180, 0);
-                    if (currentDummyPlayer != null)
-                    {
-                        Destroy(currentDummyPlayer);
-                    }
-
-                    currentDummyPlayer = PhotonNetwork.Instantiate(AvatarList[avatarID].prefab.name, spawnPoint.transform.position, rot, 0);
-
-
-
-
-                    currentDummyPlayer.tag = "PhotonLocalPlayer";
-                    currentDummyPlayer.transform.parent = spawnPoint.transform;
-                    Debug.LogError("1");
-                    if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
-                    {
-                        Debug.LogError("2");
-                        for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
+                        Quaternion rot = Quaternion.Euler(0, 180, 0);
+                        if (currentDummyPlayer != null)
                         {
-                            Debug.LogError("3" + IdolVillaRooms.instance.villaRooms[i].name + "-----" + ChracterPosition.currSpwanPos);
-                            if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
+                            Destroy(currentDummyPlayer);
+                        }
+
+                        currentDummyPlayer = PhotonNetwork.Instantiate(AvatarList[avatarID].prefab.name, spawnPoint.transform.position, rot, 0);
+
+
+
+
+                        currentDummyPlayer.tag = "PhotonLocalPlayer";
+                        currentDummyPlayer.transform.parent = spawnPoint.transform;
+                        Debug.Log("1");
+                        if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
+                        {
+                            Debug.Log("2");
+                            for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
                             {
-                                ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.localPosition = gameObject.GetComponent<ChracterPosition>().NewPos.transform.localPosition;
-                                ReferrencesForDynamicMuseum.instance.PlayerParent.transform.SetParent(IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().NewPos.transform);
-                                ReferrencesForDynamicMuseum.instance.PlayerParent.transform.localPosition = new Vector3(0, 0, 0);
-                                break;
+                                Debug.Log("3" + IdolVillaRooms.instance.villaRooms[i].name + "-----" + ChracterPosition.currSpwanPos);
+                                if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
+                                {
+                                    ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.localPosition = gameObject.GetComponent<ChracterPosition>().NewPos.transform.localPosition;
+                                    ReferrencesForDynamicMuseum.instance.PlayerParent.transform.SetParent(IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().NewPos.transform);
+                                    ReferrencesForDynamicMuseum.instance.PlayerParent.transform.localPosition = new Vector3(0, 0, 0);
+                                    break;
+                                }
                             }
                         }
-                    }
-                    currentDummyPlayer.transform.localPosition = new Vector3(0, -0.081f, 0);
-                    currentDummyPlayer.transform.localEulerAngles = new Vector3(0, 0, 0);
+                        currentDummyPlayer.transform.localPosition = new Vector3(0, -0.081f, 0);
+                        currentDummyPlayer.transform.localEulerAngles = new Vector3(0, 0, 0);
 
-                    currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
-                    spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
-                    // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
+                        currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
+                        spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
+                        // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
 
-                    currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
-                    //Defaultanimator  = currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                        currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+                        //Defaultanimator  = currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
 
-                    if (SceneManager.GetActiveScene().name.Equals("MuseumSceneLatest"))
-                    {
-                        SelfieController.Instance.SetIkValues(0);
-                    }
-                    StartCoroutine(WaitAndDeactiveSelfie());
-                    StartCoroutine(OverLapTime());
+                        if (SceneManager.GetActiveScene().name.Equals("MuseumSceneLatest"))
+                        {
+                            SelfieController.Instance.SetIkValues(0);
+                        }
+                        StartCoroutine(WaitAndDeactiveSelfie());
+                        StartCoroutine(OverLapTime());
                     //}
                 }
-
             }
             else
             {
@@ -521,7 +519,7 @@ namespace Metaverse
         public void SelectedAvatarPreview(GameObject _character, int _characterIndex)
         {
             print("AvatarManager " + "SelectedAvatarPreview");
-            Debug.LogError("Testing " + _characterIndex);
+            Debug.Log("Testing " + _characterIndex);
             if (currentDummyPlayer != null)
             {
                 if (PhotonNetwork.IsConnected)

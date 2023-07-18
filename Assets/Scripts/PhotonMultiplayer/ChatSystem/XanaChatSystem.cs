@@ -164,7 +164,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
         if (!appIdPresent)
         {
-            Debug.LogError("You need to set the chat app ID in the PhotonServerSettings file in order to continue.");
+            Debug.Log("You need to set the chat app ID in the PhotonServerSettings file in order to continue.");
         }
 
         Connect();
@@ -411,7 +411,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
     {
         if (level == ExitGames.Client.Photon.DebugLevel.ERROR)
         {
-            Debug.LogError(message);
+            Debug.Log(message);
         }
         else if (level == ExitGames.Client.Photon.DebugLevel.WARNING)
         {
@@ -438,7 +438,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
                 this.ChannelsToJoinOnConnect = SceneManager.GetActiveScene().name;// FeedEventPrefab
             }
             this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
-            //Debug.LogError(this.ChannelsToJoinOnConnect);
+            //Debug.Log(this.ChannelsToJoinOnConnect);
         }
 
         //this.ConnectingLabel.SetActive(false);
@@ -752,7 +752,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
     {
         yield return new WaitForSeconds(.3f);
         ChatScrollRect.verticalNormalizedPosition = 1f;
-        //Debug.LogError("================"+ ChatScrollRect.verticalNormalizedPosition);
+        //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
     public void OnPrivateMessage(string sender, object message, string channelName)
@@ -873,7 +873,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
             temp = "ゲスト";
             string[] GuestIDs = Regex.Split(UserID, @"\D+");
-            Debug.LogError(GuestIDs.Length);
+            Debug.Log(GuestIDs.Length);
             if (!GuestIDs[0].IsNullOrEmpty())
             {
                 temp += GuestIDs[0] + " : ";
@@ -930,7 +930,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
             temp = "ゲスト";
             string[] GuestIDs = Regex.Split(UserID, @"\D+");
-            Debug.LogError(GuestIDs.Length);
+            Debug.Log(GuestIDs.Length);
             if (!GuestIDs[0].IsNullOrEmpty())
             {
                 temp += GuestIDs[0] + " : ";

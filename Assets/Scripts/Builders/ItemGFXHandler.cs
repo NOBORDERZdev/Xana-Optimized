@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemGFXHandler : ItemComponent
 {
-    Renderer[] _renderers;
+    internal Renderer[] _renderers;
 
     private void Awake()
     {
@@ -15,6 +15,8 @@ public class ItemGFXHandler : ItemComponent
 
     public void SetMaterialColorFromItemData(Color color)
     {
+        if (color.Equals(Color.white)) return;
+
         for (int i = 0; i < _renderers.Length; i++)
         {
             _renderers[i].materials.ForEachItem((d) =>
