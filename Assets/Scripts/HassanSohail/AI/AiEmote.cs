@@ -47,7 +47,7 @@ namespace XanaAi
                 #elif UNITY_IOS
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].ios_file;
                 #elif UNITY_EDITOR
-                    BundleURL = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
+                    BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
                 #endif
                     string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
                     if (EmoteAnimationPlay.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d"))){

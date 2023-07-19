@@ -169,8 +169,10 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateCanvasForMuseum(true);
     }
+
     
-    
+    public bool isHidebtn = false;
+
     /// Added by Abdullah Rashid 23/07/05           
   public void hiddenButtonDisable()
     {

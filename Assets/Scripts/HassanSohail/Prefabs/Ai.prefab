@@ -2042,8 +2042,8 @@ GameObject:
   - component: {fileID: 3366106883604412402}
   - component: {fileID: 1381041545485684458}
   - component: {fileID: 1902365783454280086}
-  - component: {fileID: 7148168396534770252}
   - component: {fileID: 7004637441520404397}
+  - component: {fileID: 4253056770154373530}
   m_Layer: 22
   m_Name: ReactImage
   m_TagString: Untagged
@@ -2109,22 +2109,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7148168396534770252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3945296847367558840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfieStick: {fileID: 0}
-  selfieCam: {fileID: 0}
-  selfieCamOther: {fileID: 0}
-  oneTimeCall: 0
 --- !u!114 &7004637441520404397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,6 +2122,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactImage: {fileID: 1902365783454280086}
+--- !u!114 &4253056770154373530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3945296847367558840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f830894bee0fc724a886f011512fbc15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneTimeCall: 0
+  selfieCamOther: {fileID: 0}
 --- !u!1 &3961951752906798179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,9 +2382,9 @@ GameObject:
   - component: {fileID: 5872238462090954428}
   - component: {fileID: 4111710192344135114}
   - component: {fileID: 4302340526031818715}
-  - component: {fileID: 2529351361635837819}
   - component: {fileID: 1288876157509598375}
   - component: {fileID: 3154023511086680390}
+  - component: {fileID: 8211799189128365967}
   m_Layer: 22
   m_Name: ChatShow
   m_TagString: Untagged
@@ -2479,22 +2477,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &2529351361635837819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4569827984499806353}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfieStick: {fileID: 0}
-  selfieCam: {fileID: 0}
-  selfieCamOther: {fileID: 0}
-  oneTimeCall: 0
 --- !u!114 &1288876157509598375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2522,6 +2504,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatText: {fileID: 775624042581686380}
+--- !u!114 &8211799189128365967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4569827984499806353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f830894bee0fc724a886f011512fbc15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneTimeCall: 0
+  selfieCamOther: {fileID: 0}
 --- !u!1 &4805707450576005668
 GameObject:
   m_ObjectHideFlags: 0
@@ -3155,6 +3151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Publictest: 0
+  DifferentAnimClicked: 0
 --- !u!114 &4445782357590088189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3315,6 +3312,7 @@ MonoBehaviour:
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
+  isCoroutineRunning: 1
 --- !u!114 &4230903593944954457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3895,8 +3893,8 @@ GameObject:
   - component: {fileID: 321717204832129714}
   - component: {fileID: 183717782511672289}
   - component: {fileID: 5688686876049866538}
-  - component: {fileID: 6935651556997923638}
   - component: {fileID: 8800050779028207663}
+  - component: {fileID: 5379949701800082119}
   m_Layer: 22
   m_Name: ChatShow
   m_TagString: Untagged
@@ -3963,22 +3961,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6935651556997923638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5727354372933594713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfieStick: {fileID: 0}
-  selfieCam: {fileID: 0}
-  selfieCamOther: {fileID: 0}
-  oneTimeCall: 0
 --- !u!114 &8800050779028207663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4005,6 +3987,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5379949701800082119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5727354372933594713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f830894bee0fc724a886f011512fbc15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oneTimeCall: 0
+  selfieCamOther: {fileID: 0}
 --- !u!1 &5750117183251961781
 GameObject:
   m_ObjectHideFlags: 0
@@ -5410,7 +5406,7 @@ GameObject:
   - component: {fileID: 6359507506137318345}
   - component: {fileID: 4648621048255636455}
   - component: {fileID: 6022822566796730227}
-  - component: {fileID: 7827329715139078275}
+  - component: {fileID: 3252735240947663819}
   m_Layer: 22
   m_Name: Text (TMP) 1
   m_TagString: Untagged
@@ -5551,7 +5547,7 @@ MonoBehaviour:
   key: 
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 4648621048255636455}
---- !u!114 &7827329715139078275
+--- !u!114 &3252735240947663819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5560,13 +5556,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 9014384153066199017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
+  m_Script: {fileID: 11500000, guid: f830894bee0fc724a886f011512fbc15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfieStick: {fileID: 0}
-  selfieCam: {fileID: 0}
-  selfieCamOther: {fileID: 0}
   oneTimeCall: 0
+  selfieCamOther: {fileID: 0}
 --- !u!1 &9025182746015068514
 GameObject:
   m_ObjectHideFlags: 0
