@@ -26,8 +26,18 @@ public class TMPFontAssigner : EditorWindow
     private void AssignFont()
     {
         TextMeshProUGUI[] textComponents = FindObjectsOfType<TextMeshProUGUI>(true);
+        TextMeshPro[] textComponents1 = FindObjectsOfType<TextMeshPro>(true);
+
 
         foreach (TextMeshProUGUI textComponent in textComponents)
+        {
+            Undo.RecordObject(textComponent, "Assign Font");
+            textComponent.font = selectedFont;
+            EditorUtility.SetDirty(textComponent);
+        }
+
+
+        foreach (TextMeshPro textComponent in textComponents1)
         {
             Undo.RecordObject(textComponent, "Assign Font");
             textComponent.font = selectedFont;

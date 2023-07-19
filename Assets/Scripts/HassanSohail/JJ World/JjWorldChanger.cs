@@ -54,7 +54,6 @@ public class JjWorldChanger : MonoBehaviour
     {
         
 
-        Debug.LogError("SWTICH SCENE CALL");
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             XanaConstants.xanaConstants.isFromXanaLobby =true;
