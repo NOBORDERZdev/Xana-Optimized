@@ -474,7 +474,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.tag == "PhotonLocalPlayer")
+            if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
             {
                 spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                 goto CheckAgain;
@@ -710,7 +710,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             newobject.transform.position = new Vector3(0, 2500, 0);
             tempSpawnPoint = newobject.transform;
             RaycastHit hit;
-            if (Physics.Raycast(newobject.transform.position, newobject.transform.TransformDirection(Vector3.down), out hit, 3000))
+            if (Physics.Raycast(newobject.transform.position, -transform.up, out hit, 3000))
             {
                 newobject.transform.position = new Vector3(0, hit.point.y, 0);
             }
