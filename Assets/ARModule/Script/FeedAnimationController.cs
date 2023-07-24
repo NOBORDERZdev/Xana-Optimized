@@ -20,7 +20,8 @@ public class FeedAnimationController : MonoBehaviour
 
     public List<string> animationGroup = new List<string>();
     // Start is called before the first frame update
-
+    public GameObject lastFeedAnimBtnClicked;
+    private GameObject runtimeAnimatorGameObject;
     IEnumerator Start()
     {
         StartCoroutine(FindPlayerAvatar());
@@ -116,7 +117,7 @@ public class FeedAnimationController : MonoBehaviour
         {
             try
             {
-                Debug.Log("Response call===" + uwr.downloadHandler.text.ToString().Trim());
+                //Debug.Log("Response call===" + uwr.downloadHandler.text.ToString().Trim());
                 bean = JsonUtility.FromJson<AnimationDetails>(uwr.downloadHandler.text.ToString().Trim());
                 if (!bean.Equals("") || !bean.Equals(null) || bean.msg.Equals("Animations get successfully"))
                 {
@@ -223,8 +224,13 @@ public class FeedAnimationController : MonoBehaviour
     }
 
     bool alreadyRuning = true;
+    bool waitForStandUp = false;
     public void Load(string url, string bundleName, GameObject _gameObject)
     {
+        if (lastFeedAnimBtnClicked != null && _gameObject == lastFeedAnimBtnClicked && !bundleName.Contains("Sit") && !bundleName.Contains("Laydown"))
+            return;
+        else
+            waitForStandUp = true;
         if (alreadyRuning)
         {
             alreadyRuning = false;
@@ -242,12 +248,20 @@ public class FeedAnimationController : MonoBehaviour
             //StartCoroutine(GetAssetBundleFromServerUrl(url, _gameObject));
             SetAnimationHighlight(_gameObject);
         }
+        lastFeedAnimBtnClicked = _gameObject;
     }
 
     int counter = 0;
+    int counterForEtc = 0;
     //Comment Step4 Load Assets Bundle Animator from URL
     IEnumerator GetAssetBundleFromServerUrl(string BundleURL, string bundlePath, GameObject currentButton)
     {
+        if (waitForStandUp && runtimeAnimatorGameObject != null && (BundleURL.Contains("sit") || BundleURL.Contains("laydown")))
+        {
+            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+            yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+            waitForStandUp = false;
+        }
         if (counter > 4)
         {
             //AssetBundle.UnloadAllAssetBundles(true);
@@ -283,6 +297,13 @@ public class FeedAnimationController : MonoBehaviour
                             playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
                             playerAvatar.GetComponent<Animator>().Play("Animation");
                         }
+                        else
+                        {
+                            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController;
+                            //counterForEtc++;
+                            runtimeAnimatorGameObject = go;
+                            //playerAvatar.GetComponent<Animator>().Play("Animation");
+                        }
                     }
                     Debug.LogError("bundle success download save to storage");
                     SaveAssetBundle(www.bytes, bundlePath);
@@ -297,18 +318,25 @@ public class FeedAnimationController : MonoBehaviour
     //load asset bundle from storage.......#Riken
     public IEnumerator LoadAssetBundleFromStorage(string url,string bundlePath, GameObject currentButton)
     {
+        if (waitForStandUp && runtimeAnimatorGameObject!=null && (url.Contains("sit") || url.Contains("laydown")))
+        {
+            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+            counterForEtc = 0;
+            yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+            waitForStandUp = false;
+        }
         if (counter > 4)
         {
             //AssetBundle.UnloadAllAssetBundles(true);
             //Resources.UnloadUnusedAssets();
             Debug.LogError("Clear Cache Before");
             //Caching.ClearCache();
-            Debug.LogError("Clear Cache after");
+            Debug.Log("Clear Cache after");
             GC.Collect();
             counter = 0;
         }
 
-        Debug.LogError("LoadAssetBundleFromStorage:" + bundlePath);
+        Debug.Log("LoadAssetBundleFromStorage:" + bundlePath);
         currentButton.transform.GetChild(2).gameObject.SetActive(true);
 
         AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
@@ -340,6 +368,24 @@ public class FeedAnimationController : MonoBehaviour
                     {
                         playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
                         playerAvatar.GetComponent<Animator>().Play("Animation");
+                    }
+                    else
+                    {
+                        //playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController;
+                        
+                        //Instantiate(go);
+                        if (counterForEtc > 0)
+                        {
+                            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                            //yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+                            counterForEtc = 0;
+                        }
+                        else
+                        {
+                            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController;
+                            counterForEtc++;
+                        }
+                        runtimeAnimatorGameObject = go;
                     }
                 }
             }
