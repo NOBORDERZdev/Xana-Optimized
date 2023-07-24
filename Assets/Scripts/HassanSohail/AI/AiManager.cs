@@ -18,7 +18,7 @@ namespace XanaAi
         #endregion
         #region private
         [SerializeField] int AiCountToSpwaned;
-        [SerializeField] GameObject aiPrefab;
+        /*[SerializeField]*/ private GameObject aiPrefab;
         [SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<Transform> SpwanPoints;
@@ -30,6 +30,7 @@ namespace XanaAi
 
         private void Awake()
         {
+            aiPrefab= Resources.Load("Ai") as GameObject;
              if (instance == null)
              instance = this;
            else if (instance != this)
@@ -53,7 +54,7 @@ namespace XanaAi
                 rand = Random.Range(0, aiNames.Count);
                 aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
                 SpwanedAiCount++;
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(7f);
             }
            
         }
@@ -109,10 +110,27 @@ namespace XanaAi
                 {
                     loadObj = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
                 }
-                catch (System.Exception)
+                catch (System.Exception e)
                 {
                     // wear default 
-                    throw;
+                    if (ObjectType.Contains("EyeTexture"))
+                    {
+                        charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture,ai.gameObject);
+                    }
+                    else if (ObjectType.Contains("EyeBrrow"))
+                    {
+                        charcterBody.ApplyEyeBrowTexture(charcterBody.defaultEyebrow, ai.gameObject);
+                    }
+                    else if (ObjectType.Contains("Makeup"))
+                    {
+                        charcterBody.ApplyMakeup(charcterBody.defaultMakeup, ai.gameObject);
+                    }
+                    else if (ObjectType.Contains("EyeLashes"))
+                    {
+                        charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
+                    }
+                   
+                     throw;
                 }
 
                 while (!loadObj.IsDone /*|| loadTex.IsDone*/)

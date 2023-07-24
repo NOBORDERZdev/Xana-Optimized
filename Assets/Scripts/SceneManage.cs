@@ -94,9 +94,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 Debug.Log("~~~~~~ LoadMain call");
 
                 LoadingHandler.Instance.ShowLoading();
+
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
-             //   Caching.ClearCache();
+
+                // Added By WaqasAhmad [20 July 23]
+                //Caching.ClearCache();
+                GC.Collect();
+                //
+
+                //   Caching.ClearCache();
                 StartCoroutine(LoadMainEnumerator());
             }
             

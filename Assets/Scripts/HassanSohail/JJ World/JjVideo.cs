@@ -15,7 +15,11 @@ public class JjVideo : MonoBehaviour
         videoplayer.playOnAwake = false;
         videoplayer.errorReceived += ErrorOnVideo;
         //videoplayer.frameReady += SetSound;
-        SetPlayer(videoLink);
+        Invoke(nameof(WaitPlay),5);
+    }
+
+    void WaitPlay(){ 
+        SetPlayer(videoLink);    
     }
 
     void SetPlayer(string link) {

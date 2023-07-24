@@ -1127,7 +1127,8 @@ namespace Photon.Voice.Unity
             {
                 if (this.Logger.IsErrorEnabled)
                 {
-                    this.Logger.LogError("voiceConnection is null.");
+                    //this.Logger.LogError("voiceConnection is null.");
+                    Debug.Log("<color=red> voiceConnection is null.</color>");
                 }
                 return;
             }
@@ -2260,7 +2261,7 @@ namespace Photon.Voice.Unity
 
         internal void CheckAndAutoStart()
         {
-            Debug.LogError("CheckAndAutoStart called");
+            Debug.Log("CheckAndAutoStart called");
             if (this.IsInitialized && this.autoStart && 
                 !this.isRecording && !this.recordingStoppedExplicitly &&
                 (!this.recordOnlyWhenJoined || this.voiceConnection.Client == null || this.voiceConnection.Client.InRoom) &&
@@ -2270,7 +2271,7 @@ namespace Photon.Voice.Unity
                 {
                     this.Logger.LogDebug("AutoStart requirements met: going to auto start recording");
                 }
-            Debug.LogError("StartRecordingInternal called from CheckAndAutoStart");
+            Debug.Log("StartRecordingInternal called from CheckAndAutoStart");
                 this.StartRecordingInternal();
             }
         }

@@ -60,7 +60,7 @@ public class ReactItem : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("onenable call hua" + iconUrl);
+        //Debug.Log("onenable call hua" + iconUrl);
         ContentPanel = transform.parent.gameObject;
         if (iconUrl != "" && icon.sprite.name == "buttonLoading")
         {
@@ -84,7 +84,7 @@ public class ReactItem : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             string data = PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + i);
-            Debug.Log("URL:" + ConstantsGod.ANIMATION_DATA + i);
+            //Debug.Log("URL:" + ConstantsGod.ANIMATION_DATA + i);
             if (!data.IsNullOrEmpty())
             {
                 AnimationData d = JsonUtility.FromJson<AnimationData>(data);

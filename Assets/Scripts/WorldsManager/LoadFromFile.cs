@@ -390,11 +390,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 // No Need TO Rotate Player
                 StartCoroutine(setPlayerCamAngle(0, 0.75f));
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("ZONE X") || FeedEventPrefab.m_EnvName.Contains("FIVE ELEMENTS"))
+            else if (FeedEventPrefab.m_EnvName.Contains("ZONE X Musuem") || FeedEventPrefab.m_EnvName.Contains("FIVE ELEMENTS"))
             {
                 StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("JJ World"))
+            else if (FeedEventPrefab.m_EnvName.Contains("ZONE-X"))
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
@@ -474,7 +474,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+            if (hit.collider.gameObject.tag == "PhotonLocalPlayer")
             {
                 spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                 goto CheckAgain;
@@ -710,7 +710,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             newobject.transform.position = new Vector3(0, 2500, 0);
             tempSpawnPoint = newobject.transform;
             RaycastHit hit;
-            if (Physics.Raycast(newobject.transform.position, -transform.up, out hit, 3000))
+            if (Physics.Raycast(newobject.transform.position, newobject.transform.TransformDirection(Vector3.down), out hit, 3000))
             {
                 newobject.transform.position = new Vector3(0, hit.point.y, 0);
             }

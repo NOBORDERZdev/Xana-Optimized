@@ -307,7 +307,7 @@ public class ReactScreen : MonoBehaviour
             try
             {
                 ReactionDetails bean = JsonUtility.FromJson<ReactionDetails>(uwr.downloadHandler.text.ToString().Trim());
-                Debug.Log("ReactionClass : " + uwr.downloadHandler.text.ToString().Trim());
+                //Debug.Log("ReactionClass : " + uwr.downloadHandler.text.ToString().Trim());
                 if (bean.success)
                 {
                     reactDataClass.Clear();
@@ -368,27 +368,28 @@ public class ReactScreen : MonoBehaviour
         }
     }
     #region DATA
-
+    [System.Serializable]
     public class ReactEmote
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
-
+    [System.Serializable]
     public class ReactGestures
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
+    [System.Serializable]
     public class ReactOthers
     {
         public string imageName;
         public string thumb;
         public string mainImage;
     }
-
+    [System.Serializable]
     public class ReactionList
     {
         public int id;
@@ -402,12 +403,12 @@ public class ReactScreen : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-
+    [System.Serializable]
     public class Data
     {
         public List<ReactionList> reactionList;
     }
-
+    [System.Serializable]
     public class ReactionDetails
     {
         public bool success;

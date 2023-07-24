@@ -18,25 +18,37 @@ public class ButtonsOnOff : MonoBehaviour
         this.gameObject.SetActive(true);
         otherButton.SetActive(false);
         ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
-       
     }
+
+    
 
     public void HideButtonsForFreeCam(bool b)
     {
+        otherButton.GetComponent<Button>().interactable = !b;
+        if(GetComponent<Button>())
+            GetComponent<Button>().interactable = !b;
 
         if (b)
         {
-            otherButton.GetComponent<Button>().interactable = false;
-            ClickHidebtnOn();
+            // Getting Btn status
+            if (ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha > 0)
+                ReferrencesForDynamicMuseum.instance.isHidebtn = true;
+            else
+                ReferrencesForDynamicMuseum.instance.isHidebtn = false;
+
+           
+            //ClickHidebtnOn();
+            ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
             ReferrencesForDynamicMuseum.instance.JoyStick.SetActive(true);
             ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
-            ClickHidebtnOff();
-            otherButton.GetComponent<Button>().interactable = true;
-            ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
-
+            if (ReferrencesForDynamicMuseum.instance.isHidebtn) {
+                //ClickHidebtnOff();
+                ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
+                ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
+            }
         }
     }
 }

@@ -33,6 +33,8 @@ public class JjWorldInfo : MonoBehaviour
     }
 
     public void OpenWorldInfo() {
+        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+
         if (JjInfoManager.Instance != null)
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese )
