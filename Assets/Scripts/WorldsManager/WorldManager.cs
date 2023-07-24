@@ -406,7 +406,12 @@ public class WorldManager : MonoBehaviour
 
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
-            
+
+            // Added By WaqasAhmad [20 July 23]
+            //Caching.ClearCache();
+            GC.Collect();
+            //
+
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 #if UNITY_EDITOR
@@ -472,6 +477,17 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+
+
+            // Added By WaqasAhmad [20 July 23]
+            AssetBundle.UnloadAllAssetBundles(false);
+            Resources.UnloadUnusedAssets();
+
+            //Caching.ClearCache();
+            GC.Collect();
+            //
+
+
 #if UNITY_EDITOR
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -520,6 +536,12 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
     public void PlayWorld()
     {
+        // Added By WaqasAhmad [20 July 23]
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
+        //Caching.ClearCache();
+        GC.Collect();
+        //
 
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
@@ -656,6 +678,21 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
+            if (XanaConstants.xanaConstants.JjWorldTeleportSceneName=="Xana Festival")
+            {
+                XanaConstants.xanaConstants.userLimit ="16";
+            }
+            else
+            {
+                if(XanaConstants.xanaConstants.isBuilderScene)
+                {
+                    XanaConstants.xanaConstants.userLimit ="10";
+                }
+                else
+                {
+                    XanaConstants.xanaConstants.userLimit ="15";
+                }
+            }            
             Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName; 
             PlayWorld();
         }

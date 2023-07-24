@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 public class LoadingSavingAvatar : MonoBehaviour
 {
-    //public Image LoadingImg;
+    public Image LoadingImg;
     public GameObject tabBG;
     private bool Once;
     private float time;
@@ -19,7 +19,7 @@ public class LoadingSavingAvatar : MonoBehaviour
     void Start()
     {
         Once = false;
-        //LoadingImg.fillAmount = 0;
+        LoadingImg.fillAmount = 0;
         time = 0;
 
         print("app version====" + Application.version);
@@ -38,7 +38,7 @@ public class LoadingSavingAvatar : MonoBehaviour
         if (!Once)
         {
             time += Time.deltaTime;
-            //LoadingImg.fillAmount = time / TotalTimer;
+            LoadingImg.fillAmount = time / TotalTimer;
             if (time >= TotalTimer)
             {
                 Once = true;
@@ -85,7 +85,7 @@ public class LoadingSavingAvatar : MonoBehaviour
             }
         }
     }
-
+    [System.Serializable]
     public class VersionData
     {
         public int id;
@@ -93,7 +93,7 @@ public class LoadingSavingAvatar : MonoBehaviour
         public DateTime createdAt;
         public DateTime updatedAt;
     }
-
+    [System.Serializable]
     public class VersionDetails
     {
         public bool success;

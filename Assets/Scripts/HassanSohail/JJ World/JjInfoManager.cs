@@ -17,6 +17,8 @@ public class JjInfoManager : MonoBehaviour
 
     [NonReorderable]
     public List<JJWorldInfo> worldInfos;
+
+
     public static JjInfoManager Instance { get; private set; }
     
     [SerializeField] RenderTexture renderTexture;
@@ -127,8 +129,10 @@ public class JjInfoManager : MonoBehaviour
                 ratioReferences[ratioId].p_videoPlayer.Play();
             }
         }
-
-        CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        {
+            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+        }
         // infoParent.SetActive(true);
     }
 
@@ -140,7 +144,11 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_Loader.SetActive(false); 
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
-        CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        {
+             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+        }
+      
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)
@@ -162,7 +170,6 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_Loader.SetActive(false);
         videoRetry = 0;
     }
-
     private void OnDisable()
     {
         foreach (VideoPlayer player in VideoPlayers)

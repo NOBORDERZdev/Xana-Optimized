@@ -159,8 +159,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3672576434407337707}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3, y: 0, z: 0}
-  m_LocalScale: {x: 38.246513, y: 20.392302, z: 20.130604}
+  m_LocalPosition: {x: 4.162557, y: 0.035931, z: 0}
+  m_LocalScale: {x: 37.561806, y: 19.84413, z: 20.130604}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7636855817766926325}
@@ -208,7 +208,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: de1105b3b43c2e24291feaffd4a678ec, type: 2}
+  - {fileID: 2100000, guid: 0f981e8a5592afb459bf4062b5585310, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -393,6 +393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6814335508370223478}
+  - {fileID: 4076091511705109444}
   - {fileID: 4032823143510852674}
   - {fileID: 7636855817766926325}
   m_Father: {fileID: 0}
@@ -410,7 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd50903762eed0c49b6d6ae0b4d31f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LiveStreamPlayer: {fileID: 6814335508370223477}
+  LiveStreamPlayer: {fileID: 3736579280102709630}
   NormalPlayer: {fileID: 7633720079913867777}
   APIHandler: {fileID: 6843660047736162874}
   videoPlayerAudioSource: {fileID: 7554642414317677993}
@@ -426,6 +427,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa8746eae9dc4748adb2d40834068a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data:
+    URL: 
+    IsLive: 0
+    isPlaying: 0
 --- !u!1 &6814335508370223477
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,9 +460,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6814335508370223477}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 1, y: 17.8, z: -68.6}
-  m_LocalScale: {x: 35.03534, y: 20.740068, z: 20.740068}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09931, y: 11.7237, z: -25.38}
+  m_LocalScale: {x: 23.288334, y: 13.097309, z: 20.740068}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6814335506907189625}
@@ -491,7 +496,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 0f981e8a5592afb459bf4062b5585310, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -656,7 +661,7 @@ MonoBehaviour:
       overrideDecryptionKeyBase64: 
       overrideDecryptionKey: 
     textureFormat: 0
-    audioMode: 0
+    _audioMode: 0
     _flags: 0
     maximumPlaybackRate: 2
     _preferredPeakBitRate: 0
@@ -672,7 +677,7 @@ MonoBehaviour:
       overrideDecryptionKeyBase64: 
       overrideDecryptionKey: 
     textureFormat: 0
-    audioMode: 0
+    _audioMode: 0
     _flags: 0
     maximumPlaybackRate: 2
     _preferredPeakBitRate: 0
@@ -688,7 +693,7 @@ MonoBehaviour:
       overrideDecryptionKeyBase64: 
       overrideDecryptionKey: 
     textureFormat: 0
-    audioMode: 0
+    _audioMode: 0
     _flags: 0
     maximumPlaybackRate: 2
     _preferredPeakBitRate: 0
@@ -794,8 +799,355 @@ Transform:
   - {fileID: 4056728342083335664}
   - {fileID: 5426200171150326673}
   m_Father: {fileID: 6814335506907189625}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4547394134315787311
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6814335506907189625}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.09931
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.7237
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -25.38
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0f981e8a5592afb459bf4062b5585310, type: 2}
+    - target: {fileID: 919132149155446097, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_Name
+      value: LiveStreamPlayer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 01214fc075addcc4a85fcb8a6b039f99,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 01214fc075addcc4a85fcb8a6b039f99, type: 3}
+--- !u!23 &2943669150154029227 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 01214fc075addcc4a85fcb8a6b039f99,
+    type: 3}
+  m_PrefabInstance: {fileID: 4547394134315787311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3736579280102709630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 01214fc075addcc4a85fcb8a6b039f99,
+    type: 3}
+  m_PrefabInstance: {fileID: 4547394134315787311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &7173995194018507144
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736579280102709630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &451821922772538732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736579280102709630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _livestreamUrl: 
+  mPlayer: {fileID: 8858984708357456357}
+--- !u!114 &6935865108289900056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736579280102709630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d1977a52888584496b1acc7e998011, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _media: {fileID: 8858984708357456357}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _renderer: {fileID: 2943669150154029227}
+  _materialIndex: -1
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
+--- !u!114 &8858984708357456357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3736579280102709630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 638c870cac4da414fba921606d504407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mediaSource: 1
+  _mediaReference: {fileID: 0}
+  _mediaPath:
+    _pathType: 0
+    _path: https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1632745971/ei/k2VRYcfAAoKnxgKB3qvgDg/ip/103.125.70.203/id/J0hEg4Fym1I.1/itag/96/source/yt_live_broadcast/requiressl/yes/ratebypass/yes/live/1/sgoap/gir%3Dyes%3Bitag%3D140/sgovp/gir%3Dyes%3Bitag%3D137/hls_chunk_host/rr2---sn-fpugpcx23-aixl.googlevideo.com/vprv/1/playlist_type/LIVE/initcwndbps/1430/mh/8k/mm/44/mn/sn-fpugpcx23-aixl/ms/lva/mv/m/mvi/2/pl/24/dover/11/keepalive/yes/fexp/24001373,24007246/beids/9466585/mt/1632724105/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,live,sgoap,sgovp,vprv,playlist_type/sig/AOq0QJ8wRQIgHt4sFoyCnMwSXirGbv8-aSqYl4qLNXipiyX0DPhB7MECIQCoKcdoHaLBhSMxagg3c9mFB-Nied-1Bd4swmF7sXk1LA%3D%3D/lsparams/hls_chunk_host,initcwndbps,mh,mm,mn,ms,mv,mvi,pl/lsig/AG3C_xAwRgIhAOtXxnnQgTfw7Xd9m7pQix2dELMXbe2661D_GLl0fzc5AiEA_MnPTXRR75gMxyupl5LE8lODAdBoDzuUrCL9YAQ78z8%3D/playlist/index.m3u8
+  _fallbackMediaHints:
+    transparency: 0
+    alphaPacking: 0
+    stereoPacking: 0
+  _autoOpen: 1
+  _autoPlayOnStart: 1
+  _loop: 0
+  _audioVolume: 1
+  _audioBalance: 0
+  _audioMuted: 0
+  _playbackRate: 1
+  _useResampler: 0
+  _resampleMode: 0
+  _resampleBufferSize: 5
+  _videoMapping: 0
+  _textureFilterMode: 1
+  _textureWrapMode: 1
+  _textureAnisoLevel: 0
+  _useVideoResolve: 0
+  _videoResolveOptions:
+    applyHSBC: 0
+    hue: 0
+    saturation: 0.5
+    brightness: 0.5
+    contrast: 0.5
+    gamma: 1
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    generateMipmaps: 0
+  _sideloadSubtitles: 0
+  _subtitlePath:
+    _pathType: 2
+    _path: 
+  _audioHeadTransform: {fileID: 0}
+  _audioFocusEnabled: 0
+  _audioFocusTransform: {fileID: 0}
+  _audioFocusWidthDegrees: 90
+  _audioFocusOffLevelDB: 0
+  _httpHeaders:
+    httpHeaders: []
+  _keyAuth:
+    keyServerToken: 
+    overrideDecryptionKeyBase64: 
+    overrideDecryptionKey: 
+  _events:
+    m_PersistentCalls:
+      m_Calls: []
+  _eventMask: -1
+  _pauseMediaOnAppPause: 1
+  _playMediaOnAppUnpause: 1
+  _persistent: 0
+  _forceFileFormat: 0
+  _optionsWindows:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    videoApi: 0
+    useHardwareDecoding: 1
+    useTextureMips: 0
+    use10BitTextures: 0
+    hintAlphaChannel: 0
+    useLowLatency: 0
+    useCustomMovParser: 0
+    useHapNotchLC: 0
+    useStereoDetection: 1
+    useTextTrackSupport: 1
+    useFacebookAudio360Support: 1
+    useAudioDelay: 0
+    bufferedFrameSelection: 0
+    pauseOnPrerollComplete: 0
+    forceAudioOutputDeviceName: 
+    preferredFilters: []
+    audioOutput: 0
+    audio360ChannelMode: 0
+    startWithHighestBitrate: 0
+    useLowLiveLatency: 0
+    parallelFrameCount: 3
+    prerollFrameCount: 4
+    useUnityAudio: 0
+    enableAudio360: 0
+  _optionsMacOSX:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    textureFormat: 0
+    _audioMode: 0
+    _flags: 0
+    maximumPlaybackRate: 2
+    _preferredPeakBitRate: 0
+    _preferredPeakBitRateUnits: 1
+    _preferredForwardBufferDuration: 0
+    _preferredMaximumResolution: 0
+    _customPreferredMaximumResolution: {x: 0, y: 0}
+  _optionsIOS:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    textureFormat: 0
+    _audioMode: 0
+    _flags: 0
+    maximumPlaybackRate: 2
+    _preferredPeakBitRate: 0
+    _preferredPeakBitRateUnits: 1
+    _preferredForwardBufferDuration: 0
+    _preferredMaximumResolution: 0
+    _customPreferredMaximumResolution: {x: 0, y: 0}
+  _optionsTVOS:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    textureFormat: 0
+    _audioMode: 0
+    _flags: 0
+    maximumPlaybackRate: 2
+    _preferredPeakBitRate: 0
+    _preferredPeakBitRateUnits: 1
+    _preferredForwardBufferDuration: 0
+    _preferredMaximumResolution: 0
+    _customPreferredMaximumResolution: {x: 0, y: 0}
+  _optionsAndroid:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    _preferredMaximumResolution: 0
+    _customPreferredMaximumResolution: {x: 0, y: 0}
+    _preferredPeakBitRate: 0
+    _preferredPeakBitRateUnits: 1
+    videoApi: 2
+    useFastOesPath: 0
+    showPosterFrame: 0
+    audioOutput: 0
+    audio360ChannelMode: 0
+    preferSoftwareDecoder: 0
+    blitTextureFiltering: 0
+    fileOffset: 0
+    startWithHighestBitrate: 0
+    minBufferMs: 50000
+    maxBufferMs: 50000
+    bufferForPlaybackMs: 2500
+    bufferForPlaybackAfterRebufferMs: 5000
+    enableAudio360: 0
+  _optionsWindowsUWP:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    useHardwareDecoding: 1
+    useTextureMips: 0
+    use10BitTextures: 0
+    hintOutput10Bit: 0
+    useLowLatency: 0
+    videoApi: 1
+    audioOutput: 0
+    audio360ChannelMode: 0
+    startWithHighestBitrate: 0
+    useLowLiveLatency: 0
+  _optionsWebGL:
+    httpHeaders:
+      httpHeaders: []
+    keyAuth:
+      keyServerToken: 
+      overrideDecryptionKeyBase64: 
+      overrideDecryptionKey: 
+    externalLibrary: 0
+    useTextureMips: 0
+  m_VideoPath: 
+  m_VideoLocation: 2
+--- !u!4 &4076091511705109444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 01214fc075addcc4a85fcb8a6b039f99,
+    type: 3}
+  m_PrefabInstance: {fileID: 4547394134315787311}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7634907159544433279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -855,9 +1207,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1572396203552944, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4271034587217290, guid: f49b1865d907dca4a807588585397534, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4271034587217290, guid: f49b1865d907dca4a807588585397534, type: 3}
       propertyPath: m_LocalScale.x
@@ -911,6 +1267,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4909347236525692, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.824528
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909347236525692, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.039122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909347236525692, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.29987
+      objectReference: {fileID: 0}
+    - target: {fileID: 4909347236525692, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0001
+      objectReference: {fileID: 0}
     - target: {fileID: 82147416425015254, guid: f49b1865d907dca4a807588585397534,
         type: 3}
       propertyPath: m_Volume
@@ -936,10 +1308,20 @@ PrefabInstance:
       propertyPath: url
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114654752377565014, guid: f49b1865d907dca4a807588585397534,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 7522119216219870925}
+    - target: {fileID: 114654752377565014, guid: f49b1865d907dca4a807588585397534,
+        type: 3}
+      propertyPath: videoPlayer
+      value: 
+      objectReference: {fileID: 7882640723549374611}
     - target: {fileID: 328868761493553900, guid: f49b1865d907dca4a807588585397534,
         type: 3}
       propertyPath: m_TargetMaterialProperty
-      value: _BaseMap
+      value: _MainTex
       objectReference: {fileID: 0}
     - target: {fileID: 328868761493553900, guid: f49b1865d907dca4a807588585397534,
         type: 3}
@@ -948,6 +1330,18 @@ PrefabInstance:
       objectReference: {fileID: 1049743634915183135}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f49b1865d907dca4a807588585397534, type: 3}
+--- !u!114 &7522119216219870925 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114643942583524530, guid: f49b1865d907dca4a807588585397534,
+    type: 3}
+  m_PrefabInstance: {fileID: 7634907159544433279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &7554642414317677993 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 82147416425015254, guid: f49b1865d907dca4a807588585397534,

@@ -37,7 +37,7 @@ namespace XanaAi
                 Resources.UnloadUnusedAssets();
                 int rand;
                 rand= UnityEngine.Random.Range(0, EmoteAnimationPlay.Instance.emoteAnim.Count);
-                print("PLAYING EMOTE WITH RNAD "+ rand);
+                //print("PLAYING EMOTE WITH RNAD "+ rand);
                 if (EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Dance") ||EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Moves"))
                 {
                     string BundleUrl ;

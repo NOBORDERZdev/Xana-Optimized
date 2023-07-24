@@ -116,7 +116,7 @@ public class AnimationBtn : MonoBehaviour
             ReactScreen.Instance.HideEmoteScreen();
 
             EmoteAnimationPlay.Instance.isEmoteActive = false;         // AH working
-
+            EmoteAnimationPlay.Instance.lastAnimClickButton = null; // WaqasAhmad
             highlightButton.SetActive(false);
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
             EmoteAnimationPlay.Instance.StopAnimation(); // stoping animation is any action is performing.

@@ -281,8 +281,9 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            print("Launcher " + "OnJoinRoomFailed");
+            print("Launcher " + "OnJoinRoomFailed : Returining Main" );
             print(returnCode.ToString() + "	" + message);
+            LoadFromFile.instance._uiReferences.LoadMain(true);
         }
         public override void OnCreatedRoom()
         {

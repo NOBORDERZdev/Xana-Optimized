@@ -40,7 +40,8 @@ namespace LightShaft.Scripts
 
             if (!showPlayerControl)
             {
-                //controllerMainUI.SetActive(false);
+                if(controllerMainUI != null)
+                    controllerMainUI.SetActive(false);
                 return;
             }
             if (!_player.customPlaylist)

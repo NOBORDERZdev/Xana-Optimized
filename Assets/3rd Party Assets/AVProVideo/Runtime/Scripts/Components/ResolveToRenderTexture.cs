@@ -26,8 +26,14 @@ namespace RenderHeads.Media.AVProVideo
 
 		public MediaPlayer MediaPlayer
 		{
-			get { return _mediaPlayer; }
-			set { ChangeMediaPlayer(_mediaPlayer); }
+			get
+			{
+				return _mediaPlayer;
+			}
+			set
+			{
+				ChangeMediaPlayer(value);
+			}
 		}
 
 		public RenderTexture ExternalTexture
@@ -83,7 +89,7 @@ namespace RenderHeads.Media.AVProVideo
 
 		public void Resolve()
 		{
-			ITextureProducer textureProducer = _mediaPlayer.TextureProducer;
+			ITextureProducer textureProducer = _mediaPlayer != null ? _mediaPlayer.TextureProducer : null;
 			if (textureProducer != null && textureProducer.GetTexture())
 			{
 				// Check for a swap between OES and none-OES
