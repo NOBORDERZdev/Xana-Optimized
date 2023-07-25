@@ -43,6 +43,8 @@ public class BuilderMapDownload : MonoBehaviour
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
 
+    List<XanaItem> xanaItems = new List<XanaItem>();
+
     #region UNITY_METHOD
     private void OnEnable()
     {
@@ -247,16 +249,19 @@ public class BuilderMapDownload : MonoBehaviour
 
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
+        xanaItems.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue /= count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
         for (int i = 0; i < count; i++)
         {
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
-            while (!_async.IsDone)
-            {
-                yield return null;
-            }
+            //while (!_async.IsDone)
+            //{
+            //    yield return null;
+            //}
+            yield return _async;
+
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
@@ -265,7 +270,26 @@ public class BuilderMapDownload : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
         }
         BuilderEventManager.CombineMeshes?.Invoke();
+        //Set Hierarchy same as builder
+        SetObjectHirarchy();
         CallBack();
+    }
+
+    //Set Hierarchy same as builder
+    private void SetObjectHirarchy()
+    {
+        foreach (XanaItem xanaItem in xanaItems)
+        {
+            if (!xanaItem.itemData.ParentID.Equals(""))
+            {
+                string parentId = xanaItem.itemData.ParentID;
+                XanaItem parentItem = xanaItems.Find(x=>x.itemData.RuntimeItemID==parentId);
+                if (parentItem != null)
+                {
+                    xanaItem.transform.SetParent(parentItem.transform);
+                }
+            }
+        }
     }
 
     public string DecompressString(string compressedText)
@@ -498,6 +522,10 @@ public class BuilderMapDownload : MonoBehaviour
         {
             childTransform.tag = "Item";
         }
+
+        //Add game object into List for Hirarchy
+        xanaItems.Add(xanaItem);
+
         //int count = levelData.otherItems.Count;
         //for (int i = 0; i < count; i++)
         //{

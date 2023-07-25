@@ -23,6 +23,7 @@ public class XanaItem : MonoBehaviour
 
 
     ItemBase _itemBase;
+
     public ItemBase itemBase
     {
         get
@@ -32,6 +33,7 @@ public class XanaItem : MonoBehaviour
         }
     }
 
+    internal ItemData itemData;
     #endregion
 
     #region UNITY_METHOD
@@ -40,6 +42,7 @@ public class XanaItem : MonoBehaviour
     #region PUBLIC_METHODS
     public void SetData(ItemData itemData)
     {
+        this.itemData = itemData;
         transform.localScale = itemData.Scale;
         //transform.localRotation = itemData.Rotation;
 
