@@ -1,13 +1,18 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class JjInfoManager : MonoBehaviour
 {
+    [SerializeField] bool IsJjWorld;
     [NonReorderable]
     public List<RatioReferences> ratioReferences;
     [NonReorderable]
@@ -18,11 +23,13 @@ public class JjInfoManager : MonoBehaviour
     [NonReorderable]
     public List<JJWorldInfo> worldInfos;
 
-
+    [NonReorderable]
+    public List<GameObject> NftPlaceholder;
     public static JjInfoManager Instance { get; private set; }
     
     [SerializeField] RenderTexture renderTexture;
     [SerializeField] int RetryChances = 3;
+    [SerializeField] int JJMusuemId;
     int ratioId;
     int videoRetry=0;
 
@@ -56,6 +63,172 @@ public class JjInfoManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //if (IsJjWorld)
+        //{
+        //    IntJjInfoManager();
+        //}
+    }
+
+    /// <summary>
+    /// It will clear the worldInfos list and Set infos
+    /// </summary>
+    public async void IntJjInfoManager()
+    {
+        worldInfos.Clear();
+        StringBuilder apiUrl = new StringBuilder();
+        apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JJWORLDASSET+JJMusuemId);
+
+        try
+        {
+             using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()) ){ 
+                request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+                await request.SendWebRequest();
+                if (request.isNetworkError || request.isHttpError)
+                {
+                    Debug.Log("<color=red>" + request.error + " </color>");
+                }
+                else
+                {
+                    //Debug.Log("Get UnReadMessagesCount Success!");
+                    StringBuilder data = new StringBuilder();
+                    data.Append(request.downloadHandler.text);
+                    Debug.Log("JJ World Req" + data.ToString());
+                    JjJson json = JsonUtility.FromJson<JjJson>(data.ToString());
+                    InitData(json);
+
+                }
+            }
+
+        }
+        catch
+        {
+            Debug.Log("<color=red>jj APi not call in "+ XanaConstants.xanaConstants.EnviornmentName+"</color>");
+        }
+        //finally
+        //{
+
+        //}
+
+    }
+
+
+    void InitData(JjJson data)
+    {
+       
+        int nftPlaceHolder = NftPlaceholder.Count;
+        List<JjAsset> worldData = data.data;
+        for (int i = 0; i < nftPlaceHolder; i++)
+        {
+            Sprite tempSprite;
+            bool isWithDes=false; 
+             StartCoroutine(GetSprite(data.data[i].asset_link, (response) => {
+                 tempSprite = response;
+                 // Setting NFT type (Image / Video)
+                 if (worldData[i].media_type.Contains("IMAGE"))
+                 {
+                    worldInfos[i].Type = DataType.Image;
+                    NftPlaceholder[i].GetComponent<SpriteRenderer>().sprite = tempSprite;
+                    worldInfos[i].WorldImage = tempSprite;
+                 }
+                 else
+                 {
+                     // Video
+                     worldInfos[i].Type = DataType.Video;
+                     if (worldData[i].youtubeUrlCheck)
+                     {
+                         worldInfos[i].VideoLink= worldData[i].youtubeUrl;
+                     }
+                     else
+                     {
+                         worldInfos[i].VideoLink= worldData[i].asset_link;
+                     }
+                 }
+                 // Setting NFT type Content (Des/ WithoutDes)
+                 if (!string.IsNullOrEmpty(worldData[i].title[0]) && !string.IsNullOrEmpty(worldData[i].authorName[0]) && !string.IsNullOrEmpty(worldData[i].description[0] ) )
+                 {
+                    isWithDes = true;
+                    worldInfos[i].Title= worldData[i].title;
+                    worldInfos[i].Aurthor = worldData[i].authorName;
+                    worldInfos[i].Des = worldData[i].description;
+                    switch (worldData[i].ratio)
+                    {
+                        case "1:1":
+                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
+                            break;
+                        case "16:9":
+                            worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
+                            break;
+                    case "9:16":
+                        worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
+                            break;
+                    case "4:3":
+                        worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
+                            break;
+                        default:
+                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
+                            break;
+                    }
+                 }
+                 else
+                 {
+                    isWithDes = false;
+                    worldInfos[i].Title= null;
+                    worldInfos[i].Aurthor = null;
+                    worldInfos[i].Des =null;
+                    switch (worldData[i].ratio)
+                    {
+                        case "1:1":
+                            worldInfos[i].JjRatio = JjRatio.OneXOneWithoutDes;
+                            break;
+                        case "16:9":
+                            worldInfos[i].JjRatio = JjRatio.SixteenXNineWithoutDes;
+                            break;
+                    case "9:16":
+                        worldInfos[i].JjRatio = JjRatio.NineXSixteenWithoutDes;
+                            break;
+                    case "4:3":
+                        worldInfos[i].JjRatio = JjRatio.FourXThreeWithoutDes;
+                            break;
+                        default:
+                            worldInfos[i].JjRatio = JjRatio.OneXOneWithoutDes;
+                            break;
+                    }
+                 }
+             }));  
+        }
+        
+    }
+
+    IEnumerator GetSprite(string path , System.Action<Sprite> callback) {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture(path);
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success) {
+            Debug.Log(www.error);
+        }
+        else {
+             if (www.isDone)
+             {
+                var rect = new Rect(0, 0, 600f, 600f);
+                var tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                var sprite = Sprite.Create(tempTex,rect,new Vector2(0.5f,0.5f));
+                callback(sprite);
+             }
+        }
+    }
+
+    //Sprite DownloadSprite( string path)
+    //{
+    //    UnityWebRequest www = UnityWebRequest.Get(path);
+    //    yield return www.WaitForCompletion();
+
+    //     if (www.IsSuccess) {
+    //        Texture2D texture = www.GetTexture();
+    //        spriteImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
+    //    }
+    //}
 
     public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Sprite image, DataType type, string videoLink)
     {
@@ -188,6 +361,7 @@ public class JJWorldInfo {
     public DataType Type;
     public Sprite WorldImage;
     public string VideoLink;
+    public JjRatio JjRatio;
 }
 
 public enum DataType { 
@@ -235,4 +409,27 @@ public class RatioReferences
     public Image p_image;
     public VideoPlayer p_videoPlayer;
     public GameObject p_Loader;
+}
+
+
+public class JjJson{ 
+    public bool success;
+    public List<JjAsset> data;
+    public string msg;
+}
+
+public class JjAsset{ 
+    public int id;
+    public int museumId;
+    public int index;
+    public string asset_link;
+    public bool check;
+    public string[] authorName;
+    public string[] description;
+    public string[] title;
+    public string ratio;
+    public string thumbnail;
+    public string media_type;
+    public bool youtubeUrlCheck;
+    public string youtubeUrl;
 }
