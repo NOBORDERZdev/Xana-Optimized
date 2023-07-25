@@ -210,7 +210,28 @@ namespace RenderHeads.Media.AVProVideo
 			private readonly TextureFormat DefaultTextureFormat;
 			private readonly Flags DefaultFlags;
 			public TextureFormat textureFormat;
-			public AudioMode audioMode;
+			
+			private AudioMode _previousAudioMode = AudioMode.SystemDirect;
+			public AudioMode previousAudioMode
+			{
+				get { return _previousAudioMode; }
+			}
+
+			[SerializeField]
+			private AudioMode _audioMode;
+			public AudioMode audioMode
+			{
+				get { return _audioMode; }
+				set
+				{
+					if (_audioMode != value)
+					{
+						_previousAudioMode = _audioMode;
+						_audioMode = value;
+						_changed |= ChangeFlags.AudioMode;
+					}
+				}
+			}
 
 			[SerializeField]
 			private Flags _flags;
@@ -226,6 +247,10 @@ namespace RenderHeads.Media.AVProVideo
 						{
 							_changed |= ChangeFlags.PlayWithoutBuffering;
 						}
+						if ((changed & Flags.ResumeMediaPlaybackAfterAudioSessionRouteChange) == Flags.ResumeMediaPlaybackAfterAudioSessionRouteChange)
+						{
+							_changed |= ChangeFlags.ResumeMediaPlaybackAfterAudioSessionRouteChange;
+						}
 						_flags = value;
 					}
 				}
@@ -236,11 +261,13 @@ namespace RenderHeads.Media.AVProVideo
 			[Flags]
 			public enum ChangeFlags: int
 			{
-				None = 0,
-				PreferredPeakBitRate = 1 << 1,
-				PreferredForwardBufferDuration = 1 << 2,
-				PlayWithoutBuffering = 1 << 3,
-				PreferredMaximumResolution = 1 << 4,
+				None                                            = 0,
+				PreferredPeakBitRate                            = 1 << 1,
+				PreferredForwardBufferDuration                  = 1 << 2,
+				PlayWithoutBuffering                            = 1 << 3,
+				PreferredMaximumResolution                      = 1 << 4,
+				AudioMode                                       = 1 << 5,
+				ResumeMediaPlaybackAfterAudioSessionRouteChange = 1 << 6,
 				All = -1
 			}
 
@@ -282,7 +309,6 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				get
 				{
-					_changed &= ~ChangeFlags.PreferredForwardBufferDuration;
 					return _preferredForwardBufferDuration;
 				}
 				set
@@ -301,7 +327,6 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				get
 				{
-					_changed &= ~ChangeFlags.PreferredMaximumResolution;
 					return _preferredMaximumResolution;
 				}
 				set
@@ -321,7 +346,6 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				get
 				{
-					_changed &= ~ChangeFlags.PreferredMaximumResolution;
 					return _customPreferredMaximumResolution;
 				}
 				set
@@ -352,7 +376,6 @@ namespace RenderHeads.Media.AVProVideo
 
 			public double GetPreferredPeakBitRateInBitsPerSecond()
 			{
-				_changed &= ~ChangeFlags.PreferredPeakBitRate;
 				return BitRateInBitsPerSecond(preferredPeakBitRate, preferredPeakBitRateUnits);
 			}
 
@@ -379,6 +402,11 @@ namespace RenderHeads.Media.AVProVideo
 			public bool HasChanged(ChangeFlags flags = ChangeFlags.All)
 			{
 				return (_changed & flags) != ChangeFlags.None;
+			}
+
+			public void ClearChanges()
+			{
+				_changed = ChangeFlags.None;
 			}
 		}
 

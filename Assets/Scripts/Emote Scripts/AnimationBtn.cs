@@ -99,6 +99,11 @@ public class AnimationBtn : MonoBehaviour
                 JumpObject.transform.DOKill();
                 JumpObject.transform.DOLocalMoveY(-30f, 0.1f);
                 //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225,true);
+            }
+            else
+            {
+                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-165,false);
             }
         }
         else
@@ -106,12 +111,12 @@ public class AnimationBtn : MonoBehaviour
             if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
                 ReactScreen.Instance.HideReactionScreen();
             //ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
-            Debug.LogError("this is else close  :----");
+            Debug.Log("this is else close  :----");
             ReactScreen.Instance.ClosePanel();
             ReactScreen.Instance.HideEmoteScreen();
 
             EmoteAnimationPlay.Instance.isEmoteActive = false;         // AH working
-
+            EmoteAnimationPlay.Instance.lastAnimClickButton = null; // WaqasAhmad
             highlightButton.SetActive(false);
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
             EmoteAnimationPlay.Instance.StopAnimation(); // stoping animation is any action is performing.
@@ -120,6 +125,11 @@ public class AnimationBtn : MonoBehaviour
             {
                 JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
                 JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+                //BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-475);
+            }
+            else
+            {
+                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
             }
             //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
         }

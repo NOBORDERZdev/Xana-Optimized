@@ -11,7 +11,7 @@ public class DataCleanupScript : MonoBehaviour
 
         string completeVer = Application.version + "-" + buildScriptableObject.BuildNumber;
 
-        Debug.LogError("version :- "+completeVer);
+        Debug.Log("version :- "+completeVer);
 
         if (PlayerPrefs.HasKey("AppVer"))
         {

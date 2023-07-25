@@ -149,8 +149,8 @@ public class EmoteFilterManager : MonoBehaviour
     {
        // EmoteAnimationPlay.Instance.alreadyRuning = true;
         //Caching.ClearCache();
-        Debug.Log("text btn===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn===="+ GestureBtn.GetComponent<Text>().text);
-        Debug.Log("text btn2===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn 2===="+ PoseBtn.GetComponent<Text>().text);
+        //Debug.Log("text btn===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn===="+ GestureBtn.GetComponent<Text>().text);
+        //Debug.Log("text btn2===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn 2===="+ PoseBtn.GetComponent<Text>().text);
 
         // Commented By WaqasAhmad
         // Reason > NOt Selected first 2 items form All item tab
@@ -224,13 +224,13 @@ public class EmoteFilterManager : MonoBehaviour
             if (EmoteAnimationPlay.Instance.emoteAnim.Count > 0)
             {
                 for (int i = 0; i < EmoteAnimationPlay.Instance.emoteAnim.Count; i++)
-                {
-                    Debug.Log("GROUP NAME====" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
-                    Debug.Log("GROUP NAME MY====" + animationTabNameLang);
-                        valueget = true;
-                        Debug.Log("data for load==" + animationTabNameLang + "group name===" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
+            {
+                //    Debug.Log("GROUP NAME====" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
+                //    Debug.Log("GROUP NAME MY====" + animationTabNameLang);
+                valueget = true;
+                        //Debug.Log("data for load==" + animationTabNameLang + "group name===" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
 
-                        Debug.Log("animation count===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
+                        //Debug.Log("animation count===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
 
                         animObject = Instantiate(ListItemPrefab);
                         animObject.transform.SetParent(ContentPanel.transform);
@@ -257,7 +257,7 @@ public class EmoteFilterManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Download Failed");
+                        Debug.Log("Download Failed");
                     }
                 });
               //  StartCoroutine(LoadSpriteEnv(EmoteAnimationPlay.Instance.emoteAnim[i].thumbnail, animObject.transform.GetChild(1).gameObject, i));
@@ -307,7 +307,13 @@ public class EmoteFilterManager : MonoBehaviour
 
             JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
             JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            
+               BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
          //   ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+        }
+        else
+        {
+            BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
         }
         // }
         StartCoroutine(DelayToClose(panel));

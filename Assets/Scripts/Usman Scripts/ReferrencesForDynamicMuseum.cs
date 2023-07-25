@@ -83,7 +83,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         playerControllerNew = MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
-
+    IEnumerator counterCoroutine;
     private void OnEnable()
     {
        
@@ -124,11 +124,24 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
 
+
         if (ReferenceObjectPotrait.activeInHierarchy)
         {
             Debug.Log("call hua texture potriat");
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
+        }
+
+
+        if (counterCoroutine == null)
+        {
+            counterCoroutine = SetPlayerCounter();
+            StartCoroutine(counterCoroutine);
+        }
+        else
+        {
+            StopCoroutine(counterCoroutine);
+            StartCoroutine(counterCoroutine);
         }
 
         if (FeedEventPrefab.m_EnvName.Contains("AfterParty") || XanaConstants.xanaConstants.IsMuseum)
@@ -149,7 +162,6 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             else
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
         }
-
     }
 
 
@@ -169,8 +181,10 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateCanvasForMuseum(true);
     }
+
     
-    
+    public bool isHidebtn = false;
+
     /// Added by Abdullah Rashid 23/07/05           
   public void hiddenButtonDisable()
     {
@@ -271,14 +285,10 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     }
     ////////////////////////////////////
    
-    private void Start()
-
-
-
-
-    {
-        StartCoroutine(SetPlayerCounter());
-    }
+    //private void Start()
+    //{
+    //    StartCoroutine(SetPlayerCounter());
+    //}
 
     IEnumerator SetPlayerCounter()
     {

@@ -11969,18 +11969,36 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: IsFalling
+  - Type: 1
+    SynchronizeType: 0
+    Name: BlendNY
+  - Type: 1
+    SynchronizeType: 0
+    Name: BlendNX
   - Type: 4
     SynchronizeType: 0
-    Name: freecam
+    Name: throw
   - Type: 4
     SynchronizeType: 0
-    Name: EtcAnimStart
+    Name: throwfalse
   - Type: 4
     SynchronizeType: 0
-    Name: moveToNextAnim
+    Name: throwing
   - Type: 4
     SynchronizeType: 0
-    Name: Stand
+    Name: isNinjaMotion
+  - Type: 4
+    SynchronizeType: 0
+    Name: idleNinjaAnimation3
+  - Type: 4
+    SynchronizeType: 0
+    Name: idleNinjaAnimation2
+  - Type: 4
+    SynchronizeType: 0
+    Name: NinjaJump
+  - Type: 4
+    SynchronizeType: 0
+    Name: NinjaThrow
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -12036,6 +12054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Publictest: 0
+  DifferentAnimClicked: 0
 --- !u!114 &4415842163769060762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12278,6 +12297,7 @@ MonoBehaviour:
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
+  isCoroutineRunning: 1
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0

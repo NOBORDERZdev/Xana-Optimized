@@ -18,7 +18,7 @@ public class ThrowThingsComponent : MonoBehaviour
         if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
         {
             BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
-            //GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);
+            GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);
             Destroy(gameObject);
         }
     }

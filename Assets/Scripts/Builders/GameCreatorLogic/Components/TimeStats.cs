@@ -73,32 +73,37 @@ public class TimeStats : MonoBehaviour
         yield return new WaitForSeconds(.2f);
         callBack();
     }
-
+    GameObject _situationChangeObject;
     public void SituationStarter(bool _isOff, Light[] _lights, float[] _intensities, float _value, GameObject _obj)
     {
-
+        
         if (isRuninig)
         {
+            if (_situationChangeObject == _obj)
+            {
+                isNight ^= true;
+                if (isNight)
+                    SetNightMode();
+                else
+                    SetDayMode(_lights, _intensities);
 
-            isNight ^= true;
-            if (isNight)
-                SetNightMode();
+                return;
+            }
             else
-                SetDayMode(_lights, _intensities);
-
-            return;
+                SituationStoper();
         }
         lights = _lights;
         Intensity = _intensities;
         dimmerCoroutine = DimLights(_isOff, _lights, _intensities, _value, _obj);
         canRun = true;
         isRuninig = true;
-
+        this._situationChangeObject = _obj;
         Debug.LogError("EnableSituationChangerUI  " + _value);
-        if(!_isOff)
-        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
+        if (!_isOff)
+            BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
         StartCoroutine(dimmerCoroutine);
     }
+
     public void SituationStoper()
     {
         canRun = false;

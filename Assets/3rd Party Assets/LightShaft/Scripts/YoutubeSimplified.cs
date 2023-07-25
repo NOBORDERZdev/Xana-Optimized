@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public class YoutubeSimplified : MonoBehaviour
 {
-    private YoutubePlayer player;
+    public YoutubePlayer player;
 
     public string url;
     public bool autoPlay = true;
@@ -40,12 +40,15 @@ public class YoutubeSimplified : MonoBehaviour
         }
         if (fullscreen)
         {
-            videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+            /*videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+            videoPlayer.aspectRatio = VideoAspectRatio.FitInside;
+            videoPlayer.targetCamera = player.mainCamera;*/
+            
         }
         player.autoPlayOnStart = autoPlay;
         player.videoQuality = YoutubePlayer.YoutubeVideoQuality.FULLHD;
 
-        if (autoPlay)
+        if(autoPlay)
             player.Play(url);
     }
     public void OnInternetDisconnect()

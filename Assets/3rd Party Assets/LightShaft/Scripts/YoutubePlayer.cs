@@ -23,7 +23,8 @@ namespace LightShaft.Scripts
 
         void OnVideoStartedChangeMat()
         {
-            Debug.LogError("Video is started ....");
+            Debug.Log("Video is started ....");
+
             thumbnailObject.material.color = Color.white;
             videoPlayer.targetMaterialRenderer.material.color = Color.white;
         }
@@ -78,7 +79,6 @@ namespace LightShaft.Scripts
             startFromSecondTime = startTime;
             DisableThumbnailObject();
             pauseCalled = false;
-            Debug.LogError("onvideostarted Play startTime");
             _events.OnVideoStarted.Invoke();
             if (videoQuality == YoutubeVideoQuality.STANDARD)
             {
@@ -129,7 +129,6 @@ namespace LightShaft.Scripts
         public override void Play()
         {
             base.Play();
-            Debug.LogError("onvideostarted Play the loaded video");
             _events.OnVideoStarted.Invoke();
             DisableThumbnailObject();
             pauseCalled = false;
@@ -140,6 +139,11 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
+                if (_controller.volumeSlider != null)
+                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                else
+                    audioPlayer.GetTargetAudioSource(0).volume = 1;
+
                 if (!noAudioAtacched)
                 {
                     audioPlayer.Play(); //TODO check other unity versions
@@ -172,7 +176,6 @@ namespace LightShaft.Scripts
                 {
                     //resume
                     _events.OnVideoResumed.Invoke();
-                    Debug.LogError("resume");
                     Play();
                 }
             }
@@ -185,11 +188,11 @@ namespace LightShaft.Scripts
 
             if (!fullscreenModeEnabled)
             {
-                videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+                /*videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
                 if (videoPlayer.targetCamera == null)
                 {
                     videoPlayer.targetCamera = mainCamera;
-                }
+                }*/
             }
             else
             {
@@ -213,15 +216,16 @@ namespace LightShaft.Scripts
                             Debug.Log("Finished");
                         if (videoPlayer.isLooping)
                         {
-                            //Done by Riken
-                            //videoPlayer.time = 0;
-                            //videoPlayer.frame = 0;
-                            //audioPlayer.time = 0;
-                            //audioPlayer.frame = 0;
-                            //videoPlayer.Play();
-                            //if (!noAudioAtacched)
-                            //    audioPlayer.Play();
-                            StartPlayback();
+                            //Riken
+                            /*videoPlayer.time = 0;
+                            videoPlayer.frame = 0;
+                            audioPlayer.time = 0;
+                            audioPlayer.frame = 0;
+                            videoPlayer.Play();
+                            if (!noAudioAtacched)
+                                audioPlayer.Play();*/
+                            gameObject.SetActive(false);
+                            gameObject.SetActive(true);
                         }
                         CancelInvoke("CheckIfIsSync");
                         _events.OnVideoFinished.Invoke();
@@ -242,14 +246,12 @@ namespace LightShaft.Scripts
                     }
                 }
             }
-            videoPlayer.targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
-            thumbnailObject.material.color = new Color32(57, 57, 57, 255);
         }
 
         ///<summary>Just a simple callback function to know when the video is loaded and ready to hit play(), you can use the unity events too.</summary>
         private void OnVideoLoaded()
         {
-            /*if (_controller.useSliderToProgressVideo)
+            if (_controller.useSliderToProgressVideo)
             {
                 if (_controller.playbackSlider == null)
                 {
@@ -277,7 +279,7 @@ namespace LightShaft.Scripts
                         ev.Called = false; //reset timed events if we have it.
                     }
                 }
-            }*/
+            }
             Debug.Log("The video is ready to play");
         }
 
@@ -317,7 +319,7 @@ namespace LightShaft.Scripts
         //A workaround for mobile bugs.
         private void OnApplicationPause(bool pause)
         {
-            /*if (!playUsingInternalDevicePlayer && !loadYoutubeUrlsOnly)
+            if (!playUsingInternalDevicePlayer && !loadYoutubeUrlsOnly)
             {
                 if (videoPlayer.isPrepared)
                 {
@@ -326,11 +328,18 @@ namespace LightShaft.Scripts
 
                     videoPlayer.Pause();
                 }
-            }*/
+            }
         }
 
         private void OnApplicationQuit()
         {
+            if(videoPlayer != null)
+            {
+                if (videoPlayer.targetTexture != null)
+                    videoPlayer.targetTexture.Release();
+            }
+            
+
             if (!playUsingInternalDevicePlayer)
             {
                 _events.OnYoutubeUrlAreReady.RemoveListener(UrlReadyToUse);
@@ -372,7 +381,6 @@ namespace LightShaft.Scripts
             yield return new WaitForSeconds(1);
             if (youtubeUrlReady && videoPlayer.isPrepared)
             {
-                Debug.LogError("youtubeUrlReady && videoPlayer.isPrepared");
                 Play();
             }
             else
@@ -384,5 +392,5 @@ namespace LightShaft.Scripts
 
         }
     }
-
+    
 }

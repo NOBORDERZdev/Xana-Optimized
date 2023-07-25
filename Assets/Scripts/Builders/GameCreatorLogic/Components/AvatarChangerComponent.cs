@@ -23,7 +23,7 @@ public class AvatarChangerComponent : ItemComponent
                 this.gameObject.SetActive(false);
             }
 
-            //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
+            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         }
     }
 }

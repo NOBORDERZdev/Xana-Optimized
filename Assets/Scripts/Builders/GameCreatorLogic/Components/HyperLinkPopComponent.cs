@@ -23,7 +23,7 @@ public class HyperLinkPopComponent : ItemComponent
         {
             buttonData = "Enter Help message to display";
         }
-        BuilderEventManager.OnHyperLinkPopupCollisionEnter?.Invoke(titleText, buttonData, hyperLinkComponentData.urlData, this.gameObject);
+        BuilderEventManager.OnHyperLinkPopupCollisionEnter?.Invoke(titleText, buttonData, hyperLinkComponentData.urlData, this.transform);
     }
 
     private void OnCollisionEnter(Collision _other)

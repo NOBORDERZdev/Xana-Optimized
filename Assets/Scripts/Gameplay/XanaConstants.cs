@@ -74,6 +74,8 @@ public class XanaConstants : MonoBehaviour
     public int worldIdFromApi;
     public string playerSocketID;
 
+    // For Firebase
+    public bool isFirebaseInit = false;
 
     public JJMussuemEntry mussuemEntry = JJMussuemEntry.Null;
     public string JjWorldTeleportSceneName;

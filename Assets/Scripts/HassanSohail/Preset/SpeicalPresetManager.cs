@@ -59,7 +59,7 @@ public class SpeicalPresetManager : MonoBehaviour
                     print("API DATA IS " + apiData.data.presets);
                     if (apiData == null)
                     {
-                        Debug.LogError(" NO data get from API");
+                        Debug.Log(" NO data get from API");
                     }
                     else
                     {

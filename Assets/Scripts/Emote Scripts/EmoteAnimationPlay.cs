@@ -44,7 +44,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     private bool callOnce;
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
-    private List<EventData> data = new List<EventData>();
+
     public bool isEmoteActive = false;
     public bool MyAnimLoader = false;
     internal bool isFetchingAnim = false;
@@ -160,12 +160,13 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     IEnumerator GetAssetBundleFromServerRemotePlayerUrl(string BundleURL, int id)
     {
+
         //if (counter > 4)
         //{
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
-            //Caching.ClearCache();
-            //GC.Collect();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
+        //Caching.ClearCache();
+        //GC.Collect();
         //    counter = 0;
         //}
 
@@ -175,9 +176,9 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //  StartCoroutine(GetAssetBundleFromServerUrl(url, bundlePath, _gameObject));
 
 
-        Debug.Log("List===" + bean.data.animationList.Count);
+        //Debug.Log("List===" + bean.data.animationList.Count);
 #if UNITY_ANDROID
-
+        //Debug.Log("Bundle name to be find :- " + BundleURL);
         BundleURL = bean.data.animationList.Find(x => x.name == BundleURL).android_file;
 
 #elif UNITY_IOS
@@ -249,7 +250,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                 }
 
 
-                                                Debug.Log("animation call=====");
+                                                //Debug.Log("animation call=====");
 
                                                 spawnCharacterObjectRemote = remotego.transform.gameObject;
                                                 //if (photonplayerObjects[i].IsMine && AnimObject != null && isAnimRunning)
@@ -359,40 +360,40 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                             List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                                             foreach (var clip in overrideController.animationClips)
                                             {
-                                                    if (animatorremote.GetBool("EtcAnimStart"))
+                                                if (animatorremote.GetBool("EtcAnimStart"))
+                                                {
+                                                    if (clip.name == "crouchDefault")
                                                     {
-                                                        if (clip.name == "crouchDefault")
-                                                        {
-                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(0).GetComponent<Animation>().clip));
-                                                            //currentEtcAnimName = go.name;
-                                                        }
-                                                        else if (clip.name == "standDefault")
-                                                        {
-                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(1).GetComponent<Animation>().clip));
-                                                            //currentEtcAnimName = go.name;
-                                                        }
-                                                        else
-                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
-
-                                                        overrideController.ApplyOverrides(keyValuePairs);
-
-                                                        animatorremote.runtimeAnimatorController = overrideController;
-
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(0).GetComponent<Animation>().clip));
+                                                        //currentEtcAnimName = go.name;
+                                                    }
+                                                    else if (clip.name == "standDefault")
+                                                    {
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(1).GetComponent<Animation>().clip));
+                                                        //currentEtcAnimName = go.name;
                                                     }
                                                     else
-                                                    {
-                                                        if (clip.name == "Sit")
-                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetComponent<Animation>().GetClip("Stand")));
-                                                        else
-                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
 
-                                                        overrideController.ApplyOverrides(keyValuePairs);
+                                                    overrideController.ApplyOverrides(keyValuePairs);
 
-                                                        animatorremote.runtimeAnimatorController = overrideController;
-                                                    }
-                                                    animatorremote.SetBool("IsEmote", false);
+                                                    animatorremote.runtimeAnimatorController = overrideController;
+
                                                 }
+                                                else
+                                                {
+                                                    if (clip.name == "Sit")
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetComponent<Animation>().GetClip("Stand")));
+                                                    else
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                    overrideController.ApplyOverrides(keyValuePairs);
+
+                                                    animatorremote.runtimeAnimatorController = overrideController;
+                                                }
+                                                animatorremote.SetBool("IsEmote", false);
                                             }
+                                        }
                                     }
                                     SaveAssetBundle(www.bytes, bundlePath, photonplayerObjects[i].gameObject);
 
@@ -420,7 +421,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                 }
             }
             alreadyRuning = true;
-         //   counter++;
+            //   counter++;
 
         }
     }
@@ -480,7 +481,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             // animator.SetBool("IsEmote", false);
 
             AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
-         //   if (AnimHighlight != null) AnimHighlight.SetActive(false);
+            //   if (AnimHighlight != null) AnimHighlight.SetActive(false);
             PlayerPrefsUtility.SetEncryptedString(ConstantsGod.SELECTED_ANIMATION_NAME, "");
             LoadEmoteAnimations.animClick = false;
         }
@@ -504,7 +505,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public void sendDataAnimationUrl(string url)
     {
-      //  AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = false;
+        //  AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = false;
         AnimHighlight.SetActive(true);
         // LoadFromFile.animClick = true;
 
@@ -568,19 +569,19 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     {
         //if (counter > 4)
         //{
-           AssetBundle.UnloadAllAssetBundles(false);
-              Resources.UnloadUnusedAssets();
-            //Caching.ClearCache();
-            //GC.Collect();
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
+        //Caching.ClearCache();
+        //GC.Collect();
         //    counter = 0;
         //}
 
 
-        Debug.LogError("LoadAssetBundleFromStorageRemote:" + bundlePath);
+        //Debug.Log("LoadAssetBundleFromStorageRemote:" + bundlePath);
         //  currentButton.transform.GetChild(2).gameObject.SetActive(true);
         animatorremote = PlayerAvatar.gameObject.GetComponent<Animator>();
 
-        Debug.Log("photon objects====" + PlayerAvatar);
+        //Debug.Log("photon objects====" + PlayerAvatar);
         AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
         yield return bundle;
 
@@ -600,7 +601,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             }
             if (newRequest.isDone)
             {
-                Debug.LogError("Success load bundle from storage");
+                Debug.Log("Success load bundle from storage");
 
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
@@ -676,38 +677,39 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                         List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                         foreach (var clip in overrideController.animationClips)
                         {
-                                if (animatorremote.GetBool("EtcAnimStart"))
+                            if (animatorremote.GetBool("EtcAnimStart"))
+                            {
+                                if (clip.name == "crouchDefault")
                                 {
-                                    if (clip.name == "crouchDefault")
-                                    {
-                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
-                                        //currentEtcAnimName = go.name;
-                                    }else if (clip.name == "standDefault")
-                                    {
-                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(1).GetComponent<Animation>().clip));
-                                        //currentEtcAnimName = go.name;
-                                    }
-                                    else
-                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
-
-                                    overrideController.ApplyOverrides(keyValuePairs);
-
-                                    animatorremote.runtimeAnimatorController = overrideController;
-
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
+                                    //currentEtcAnimName = go.name;
+                                }
+                                else if (clip.name == "standDefault")
+                                {
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(1).GetComponent<Animation>().clip));
+                                    //currentEtcAnimName = go.name;
                                 }
                                 else
-                                {
-                                    if (clip.name == "Sit")
-                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().GetClip("Stand")));
-                                    else
-                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
 
-                                    overrideController.ApplyOverrides(keyValuePairs);
+                                overrideController.ApplyOverrides(keyValuePairs);
 
-                                    animatorremote.runtimeAnimatorController = overrideController;
-                                }
-                                animatorremote.SetBool("IsEmote", false);
+                                animatorremote.runtimeAnimatorController = overrideController;
+
                             }
+                            else
+                            {
+                                if (clip.name == "Sit")
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().GetClip("Stand")));
+                                else
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                overrideController.ApplyOverrides(keyValuePairs);
+
+                                animatorremote.runtimeAnimatorController = overrideController;
+                            }
+                            animatorremote.SetBool("IsEmote", false);
+                        }
                     }
                 }
             }
@@ -715,7 +717,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             {
                 assetBundle.Unload(false);
             }
-         //   counter++;
+            //   counter++;
             alreadyRuning = true;
 
         }
@@ -735,14 +737,14 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //Create the Directory if it does not exist
         if (!Directory.Exists(Path.GetDirectoryName(path)))
         {
-            print("Player emote save path is "+ path);
+            //print("Player emote save path is " + path);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
         }
 
         try
         {
             File.WriteAllBytes(path, data);
-            Debug.Log("Saved Data to: " + path.Replace("/", "\\"));
+            //Debug.Log("Saved Data to: " + path.Replace("/", "\\"));
             if (id.GetComponent<PhotonView>().IsMine)
             {
                 MyAnimLoader = false;
@@ -777,6 +779,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     public IEnumerator waittostart(EventData obj)
     {
         ///Debug.Log("data count==="+data.Count);
+        List<EventData> data = new List<EventData>();
         data.Clear();
         if (data.Count > 0)
         {
@@ -788,12 +791,12 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
         while (data.Count > 0)
         {
-            Debug.Log("get data 12===" + data[0].CustomData);
+            //Debug.Log("get data 12===" + data[0].CustomData);
 
             Dictionary<object, object> clothsDic2 = new Dictionary<object, object>();
 
             clothsDic2 = (Dictionary<object, object>)data[0].CustomData;
-            Debug.Log("get 12===" + clothsDic2.Count);
+            //Debug.Log("get 12===" + clothsDic2.Count);
 
             foreach (KeyValuePair<object, object> keyValue in clothsDic2)
             {
@@ -801,9 +804,9 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                 remotePlayerId = int.Parse(s);
                 //object[] ob = (object[])clothsDic2[s];
                 //string vlaue = .ToString();
-                Debug.Log("get send data====" + clothsDic2[s]);
-
-                yield return StartCoroutine(GetAssetBundleFromServerRemotePlayerUrl(clothsDic2[s].ToString(), int.Parse(s)));
+                //Debug.Log("get send data====" + clothsDic2[s]);
+                if (!string.IsNullOrEmpty(clothsDic2[s].ToString()))
+                    yield return StartCoroutine(GetAssetBundleFromServerRemotePlayerUrl(clothsDic2[s].ToString(), int.Parse(s)));
 
                 // yield return null;
             }

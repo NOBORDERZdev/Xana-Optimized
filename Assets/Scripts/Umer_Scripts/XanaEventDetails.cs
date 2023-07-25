@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class XanaEventDetails
@@ -34,13 +35,13 @@ public class XanaEventDetails
     public string rpt_freq;
     public string occurrences;
     public string occurence_dates;
-    public string recurrence;
-    public string recurrence_dates;
-    public string recurrence_count;
+    public bool recurrence;
+    public string[] recurrence_dates;
+    public int recurrence_count;
     public string recurrence_until;
     public string recurrence_frequency;
-    public string recurrence_interval;
-    public string duration;
+    public int recurrence_interval;
+    public double duration;
     public string xana_world_id;
     public string env_class;
     public bool youtubeUrl_isActive;

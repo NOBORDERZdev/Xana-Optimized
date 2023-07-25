@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using Firebase.DynamicLinks;
+using Firebase.Crashlytics;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
@@ -27,9 +28,9 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     public string[] eventEndDateTime;
     /// <Irfan script>
     string[] vec2 = null;
-     private string EventURl = "/userCustomEvent/get-event-json/";
+    private string EventURl = "/userCustomEvent/get-event-json/";
 
-   // TestEvent  "https://api-test.xana.net/userCustomEvent/get-event-json/"
+    // TestEvent  "https://api-test.xana.net/userCustomEvent/get-event-json/"
     //MainEvent https://app-api.xana.net/userCustomEvent/get-event-json/45
 
     //    ConstantsGod.API_BASEURL = "https://app-api.xana.net";
@@ -39,7 +40,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;
-    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTU3OCwiaWF0IjoxNjg3MTczMDg2LCJleHAiOjE2ODczNDU4ODZ9.YFnOGdpkSY10EBKeWLSRd3Wu8tt9g3_TFJ7LTCmyJkc";
+    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjI1MDcsImlhdCI6MTY5MDAyMTA3NywiZXhwIjoxNjkwMTkzODc3fQ.8zu0-c4ciwV9uNfifZKo4KMCOCopo6_qv4x6Sngrw_U";
+
+    //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
+    //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
     /// </IRFAN Scripts end here>
      #endregion  
@@ -48,7 +52,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void OnEnable()
     {
-    
+
     }
 
     private void Awake()
@@ -60,14 +64,45 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private void Start()
     {
         //For testing
-        //EventArguments = "665";
+        //EventArguments = "36";
         EventArguments = "";
         PauseCount = 0;
         FocusCount = 0;
         StartFocusCounter = 1;
+
+        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+            var dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            {
+                // Create and hold a reference to your FirebaseApp,
+                // where app is a Firebase.FirebaseApp property of your application class.
+                // Crashlytics will use the DefaultInstance, as well;
+                // this ensures that Crashlytics is initialized.
+                Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
+
+                // When this property is set to true, Crashlytics will report all
+                // uncaught exceptions as fatal events. This is the recommended behavior.
+                Crashlytics.ReportUncaughtExceptionsAsFatal = true;
+                Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
+                // Set a flag here for indicating that your project is ready to use Firebase.
+                
+                BindAfterInitilization();
+                XanaConstants.xanaConstants.isFirebaseInit = true;
+                InvokeDeepLink("focus");
+            }
+            else
+            {
+                UnityEngine.Debug.Log(System.String.Format(
+                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                // Firebase Unity SDK is not safe to use here.
+            }
+        });
+    }
+
+    public void BindAfterInitilization()
+    {
         DynamicLinks.DynamicLinkReceived += OnDynamicLink;
         DynamicEventManager.deepLink += InvokeDeepLink;
-
     }
 
     private void OnDisable()
@@ -76,7 +111,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     }
     private void OnApplicationPause(bool pause)
     {
-        //print("Come to on Pause : " + pause);
+        ////print("Come to on Pause : " + pause);
         if (pause)
         {
             EventArguments = "";
@@ -86,7 +121,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     }
     private void OnApplicationFocus(bool focus)
     {
-        //print("Come to on focus : " + focus);
+        ////print("Come to on focus : " + focus);
         if (focus && PauseCount > 0)
         {
             StartFocusCounter = 2;
@@ -102,7 +137,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void OnDynamicLink(object sender, EventArgs args)
     {
-        if (StartFocusCounter == 0)
+        if (StartFocusCounter == 0 && XanaConstants.xanaConstants.isFirebaseInit)
         {
             return;
         }
@@ -129,7 +164,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             if (vec2[1] == word)
             {
 
-                print("Argument are :" + word);
+                //print("Argument are :" + word);
                 EventArguments = word;
                 DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
                 if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
@@ -155,8 +190,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //Deeplink related calls
     public void InvokeDeepLink(string _ArgData)
     {
-        print("call dynamic link 33");
-        print("come from:  " + _ArgData);
+        //print("call dynamic link 33");
+        //print("come from:  " + _ArgData);
         //  receivingn.Instance._text.text = _ArgData;   
         if (EventArguments == "")
         {
@@ -164,11 +199,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         }
         string EventURl1WithID = "";
 
-        EventURl1WithID = ConstantsGod.API_BASEURL+ EventURl  + EventArguments;
+        EventURl1WithID = ConstantsGod.API_BASEURL + EventURl + EventArguments;
 
-        print("Event API is : " + EventURl1WithID);
-             StartCoroutine(HitGetEventJson(EventURl1WithID));
-     }   
+        //print("Event API is : " + EventURl1WithID);
+        StartCoroutine(HitGetEventJson(EventURl1WithID));
+    }
 
     //Fetching event data from server
     IEnumerator HitGetEventJson(string url)
@@ -200,23 +235,23 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     {
                         //  GetEventJsonData(request.downloadHandler.text);
 
-                        print("~~~~~~~~~ json" + request.downloadHandler.text);
+                        //print("~~~~~~~~~ json" + request.downloadHandler.text);
                         XanaEventDetails.eventDetails.DataIsInitialized = true;
                         yield return new WaitForEndOfFrame();
                         if (!XanaEventDetails.eventDetails.name.Equals(""))
                         {
-                            print("===============Checking event date time");
+                            //print("===============Checking event date time");
                             CheckEventDateTime();
                             //XanaEventDetails.eventDetails.eventType = "dj";
                         }
                         else
                         {
                             LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
-                            print("===============Event Name is null");
+                            //print("===============Event Name is null");
                         }
 
 
-                        print(eventDetails.data.id);
+                        //print(eventDetails.data.id);
                     }
                 }
             }
@@ -227,7 +262,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 {
                     LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
                     yield return StartCoroutine(HitGetEventJson(url));
-                    print("===============Network Error");
+                    //print("===============Network Error");
                 }
                 else
                 {
@@ -239,13 +274,13 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                             yield return StartCoroutine(HitGetEventJson(url));
                             if (!XanaEventDetails.eventDetails.name.Equals(""))
                             {
-                                print("==============Checking JSON data");
+                                //print("==============Checking JSON data");
                             }
                         }
                     }
                     else
                     {
-                        print("==============Getting Error in request");
+                        //print("==============Getting Error in request");
                     }
                 }
             }
@@ -291,18 +326,18 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                             GetAllEnvData(request.downloadHandler.text, _museumdata);
                             if (!_museumdata)
                             {
-                                print("=============== Environments data fetched: " + XanaEnvironmentsList._xanaenvlist.data.Count);
+                                //print("=============== Environments data fetched: " + XanaEnvironmentsList._xanaenvlist.data.Count);
                                 for (int i = 0; i < XanaEnvironmentsList._xanaenvlist.data.Count; i++)
                                 {
-                                    print("============Environment data: " + XanaEnvironmentsList._xanaenvlist.data[i].environment_name);
+                                    //print("============Environment data: " + XanaEnvironmentsList._xanaenvlist.data[i].environment_name);
                                 }
                             }
                             else if (_museumdata)
                             {
-                                print("=============== Museum data fetched: " + XanaMuseumList._xanamuslist.data.Count);
+                                //print("=============== Museum data fetched: " + XanaMuseumList._xanamuslist.data.Count);
                                 for (int i = 0; i < XanaMuseumList._xanamuslist.data.Count; i++)
                                 {
-                                    print("============Museum data: " + XanaMuseumList._xanamuslist.data[i].name);
+                                    //print("============Museum data: " + XanaMuseumList._xanamuslist.data[i].name);
                                 }
                             }
                             else
@@ -339,61 +374,129 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //Checking event Date Time if its ended or not conditions
     public void CheckEventDateTime()
     {
+        //univStartDateTime = DateTime.Parse(OrdinaryUTCdateOfSystem);
+        //OrdinarySystemDateTime = univStartDateTime.ToLocalTime();
         //Getting Event and System Date Time
-        string EventStartDateTime = XanaEventDetails.eventDetails.startTime;
-        string EventEndDateTime = XanaEventDetails.eventDetails.endTime;
+        if (XanaEventDetails.eventDetails.recurrence)
+        {
+            for (int i = 0; i < XanaEventDetails.eventDetails.recurrence_dates.Length; i++)
+            {
+                if (ConvertStringToDateFormate(XanaEventDetails.eventDetails.recurrence_dates[i]))
+                {
+                    ////print("Actuall date found at index " + i /*+ XanaEventDetails.eventDetails.recurrence_dates[i]*/);
+                    XanaEventDetails.eventDetails.startTime = XanaEventDetails.eventDetails.recurrence_dates[i];
+                    break;
+                }
+            }
+            //EventStartDateTime = XanaEventDetails.eventDetails.startTime;
+            //EventEndDateTime = XanaEventDetails.eventDetails.endTime;
+            //eventLocalStartDateTime = ConvertStringToDateFormate(XanaEventDetails.eventDetails.startTime);
+            //eventlocalEndDateTime = ConvertStringToDateFormate(XanaEventDetails.eventDetails.endTime);
+        }
+        else
+        {
+            //EventStartDateTime = XanaEventDetails.eventDetails.startTime;
+            //EventEndDateTime = XanaEventDetails.eventDetails.endTime;
+            ConvertStringToDateFormate(XanaEventDetails.eventDetails.startTime);
+            //ConvertStringToDateFormate(XanaEventDetails.eventDetails.endTime);
+        }
 
-        eventUnivStartDateTime = DateTime.Parse(EventStartDateTime);
-        eventUnivEndDateTime = DateTime.Parse(EventEndDateTime);
-        eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
-        eventlocalEndDateTime = eventUnivEndDateTime.ToLocalTime();
+        //eventUnivStartDateTime = DateTime.Parse(EventStartDateTime);
+        //eventUnivEndDateTime = DateTime.Parse(EventEndDateTime);
+        //eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
+        //eventlocalEndDateTime = eventUnivEndDateTime.ToLocalTime();
+
+        ////print("===================Event Start date time : " + eventLocalStartDateTime);
+        ////print("===================Event End date time : " + eventlocalEndDateTime);
+        ////print("===================System date time : " + System.DateTime.Now);
+
+        ////print("===================Ordinary created System date time : " + OrdinarySystemDateTime);
 
         int _eventStartSystemDateTimediff = (int)(eventLocalStartDateTime - System.DateTime.Now).TotalMinutes;
         int _eventEndSystemDateTimediff = (int)(eventlocalEndDateTime - System.DateTime.Now).TotalMinutes;
 
-        print("===================DIFF : " + _eventStartSystemDateTimediff);
-        print("===================DIFFEND : " + _eventEndSystemDateTimediff);
+        ////print("===================DIFF : " + _eventStartSystemDateTimediff);
+        ////print("===================DIFFEND : " + _eventEndSystemDateTimediff);
 
         TimeSpan t = TimeSpan.FromMinutes(_eventStartSystemDateTimediff);
-        string timeFormat = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+        string dayTimeFormat = string.Format("{0:D2}d:{1:D2}h:{2:D2}m",
+                      t.Days,
                       t.Hours,
-                      t.Minutes,
-                      t.Seconds);
-        print(timeFormat);
+                      t.Minutes);
+        string hourTimeFormat = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+              t.Hours,
+              t.Minutes,
+              t.Seconds);
+        ////print(dayTimeFormat);
 
         if (_eventStartSystemDateTimediff > 0)
         {
             if (TimeSpan.FromMinutes(_eventStartSystemDateTimediff).Days > 0)
             {
-                SetEventPopUpDialog("Not Event Day yet", "Will Start After:", timeFormat, true);
+                XanaEventDetails.eventDetails.DataIsInitialized = false;
+                SetEventPopUpDialog("Not Event Day yet", "Will Start After:", dayTimeFormat, true);
             }
             else
             {
                 if (_eventStartSystemDateTimediff > 0 && _eventStartSystemDateTimediff <= 30)
                 {
-                    print("-------------Event can be started");
+                    ////print("-------------Event can be started");
                     StartCoroutine(DelayLoadRemainingSceneData());
                     LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
                 }
                 else
                 {
-                    SetEventPopUpDialog("Event Time not started yet", "Will Start After:", timeFormat, true);
+                    XanaEventDetails.eventDetails.DataIsInitialized = false;
+                    SetEventPopUpDialog("Event Time not started yet", "Will Start After:", hourTimeFormat, true);
                 }
             }
-            print("not started yet");
+            ////print("not started yet");
         }
 
         if (_eventStartSystemDateTimediff <= 0 && _eventEndSystemDateTimediff >= 0)
         {
             StartCoroutine(DelayLoadRemainingSceneData());
             LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
-             print("On going Event");
+            ////print("On going Event");
         }
 
         if (_eventEndSystemDateTimediff < 0)
         {
-            print("Event Ended");
+            ////print("Event Ended");
+            XanaEventDetails.eventDetails.DataIsInitialized = false;
             SetEventPopUpDialog("Event is Ended", "", "", true);
+        }
+    }
+
+    public bool ConvertStringToDateFormate(string _eventDatetime)
+    {
+        ////print("Event start time in new function" + _eventDatetime);
+        eventUnivStartDateTime = DateTime.Parse(_eventDatetime);
+        eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
+        eventlocalEndDateTime = eventLocalStartDateTime.Add(TimeSpan.FromSeconds(XanaEventDetails.eventDetails.duration));
+        ////print("Event start local time in new function" + eventLocalStartDateTime);
+        ////print("Event end local time in new function" + eventlocalEndDateTime);
+        ////print("System date here is" + OrdinarySystemDateTime);
+        if (System.DateTime.Now.Date.Equals(eventLocalStartDateTime.Date))
+        {
+            if (System.DateTime.Now.Date >= eventLocalStartDateTime.Date && System.DateTime.Now.Date <= eventlocalEndDateTime.Date)
+            {
+                ////print("Date found");
+                //print("Start date turns out to be " + eventLocalStartDateTime);
+                //print("End date turns out to be " + eventlocalEndDateTime);
+                XanaEventDetails.eventDetails.startTime = _eventDatetime;
+                return true;
+            }
+            else
+            {
+                //print("Date not found");
+                return false;
+            }
+        }
+        else
+        {
+            //print("Date not found");
+            return false;
         }
     }
 
@@ -423,7 +526,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             FeedEventPrefab.m_EnvName = "Builder";
             XanaConstants.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
             XanaConstants.xanaConstants.isBuilderScene = true;
-            print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
+            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             //SceneManager.LoadScene("AddressableScene");
             LoadingHandler.Instance.LoadSceneByIndex("Builder");
@@ -448,11 +551,11 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
-            print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
+            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             SceneManager.LoadScene("AddressableScene");
         }
-     
+
     }
 
     //UI related calls

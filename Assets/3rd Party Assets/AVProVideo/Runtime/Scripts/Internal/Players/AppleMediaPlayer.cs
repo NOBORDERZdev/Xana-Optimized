@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace RenderHeads.Media.AVProVideo
 {
-	public sealed partial class AppleMediaPlayer: BaseMediaPlayer
+	public sealed partial class AppleMediaPlayer : BaseMediaPlayer
 	{
 		private static Regex RxSupportedSchema = new Regex("^(https?|file)://", RegexOptions.None);
 		private static DateTime Epoch = new DateTime(2001, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -312,16 +312,19 @@ namespace RenderHeads.Media.AVProVideo
 				{
 					_playerSettings.preferredPeakBitRate = _options.GetPreferredPeakBitRateInBitsPerSecond();
 				}
+				
 				if (_options.HasChanged(MediaPlayer.OptionsApple.ChangeFlags.PreferredForwardBufferDuration))
 				{
 					_playerSettings.preferredForwardBufferDuration = _options.preferredForwardBufferDuration;
 				}
+				
 				if (_options.HasChanged(MediaPlayer.OptionsApple.ChangeFlags.PlayWithoutBuffering))
 				{
 					bool enabled = (_options.flags & MediaPlayer.OptionsApple.Flags.PlayWithoutBuffering) == MediaPlayer.OptionsApple.Flags.PlayWithoutBuffering;
-					_playerSettings.networkFlags = enabled ? _playerSettings.networkFlags | Native.AVPPlayerNetworkSettingsFlags.PlayWithoutBuffering
+					_playerSettings.networkFlags = enabled ? _playerSettings.networkFlags |  Native.AVPPlayerNetworkSettingsFlags.PlayWithoutBuffering
 														   : _playerSettings.networkFlags & ~Native.AVPPlayerNetworkSettingsFlags.PlayWithoutBuffering;
 				}
+				
 				if (_options.HasChanged(MediaPlayer.OptionsApple.ChangeFlags.PreferredMaximumResolution))
 				{
 					GetWidthHeightFromResolution(
@@ -330,8 +333,29 @@ namespace RenderHeads.Media.AVProVideo
 						out _playerSettings.preferredMaximumResolution_width,
 						out _playerSettings.preferredMaximumResolution_height);
 				}
+				
+				if (_options.HasChanged(MediaPlayer.OptionsApple.ChangeFlags.AudioMode))
+				{
+					if (_state.status.IsReadyToPlay() == false)
+					{
+						_playerSettings.audioOutputMode = (Native.AVPPlayerAudioOutputMode)_options.audioMode;
+						if (_options.audioMode == MediaPlayer.OptionsApple.AudioMode.Unity)
+						{
+							_playerSettings.sampleRate = AudioSettings.outputSampleRate;
+							int numBuffers;
+							AudioSettings.GetDSPBufferSize(out _playerSettings.bufferLength, out numBuffers);
+						}
+					}
+					else
+					{
+						Debug.LogWarning("[AVProVideo] Unable to change audio mode after media has been loaded and is ready to play");
+						_options.audioMode = _options.previousAudioMode;
+					}
+				}
 
 				Native.AVPPlayerSetPlayerSettings(_player, _playerSettings);
+				
+				_options.ClearChanges();
 			}
 
 			/*BaseMediaPlayer.*/UpdateDisplayFrameRate();
@@ -615,6 +639,16 @@ namespace RenderHeads.Media.AVProVideo
 				return _audioTrackInfo[_state.selectedAudioTrack].channelBitmap;
 			}
 			return AudioChannelMaskFlags.Unspecified;
+		}
+
+		public override void AudioConfigurationChanged(bool deviceChanged)
+		{
+			if (_playerSettings.audioOutputMode == Native.AVPPlayerAudioOutputMode.SystemDirect)
+				return;
+			_playerSettings.sampleRate = AudioSettings.outputSampleRate;
+			int numBuffers;
+			AudioSettings.GetDSPBufferSize(out _playerSettings.bufferLength, out numBuffers);
+			Native.AVPPlayerSetPlayerSettings(_player, _playerSettings);
 		}
 
 		public override int GrabAudio(float[] buffer, int sampleCount, int channelCount)

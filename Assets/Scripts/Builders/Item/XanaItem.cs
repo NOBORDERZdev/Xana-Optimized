@@ -169,12 +169,12 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(doorKeyComponentData);
         }
 
-        //WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
-        //if (warpFunctionComponentData.IsActive)
-        //{
-        //    WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
-        //    itemComponent.Init(warpFunctionComponentData);
-        //}
+        WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
+        if (warpFunctionComponentData.IsActive)
+        {
+            WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
+            itemComponent.Init(warpFunctionComponentData);
+        }
 
         SpecialItemComponentData specialItemComponentData = itemData.speicalItemComponentData;
         if (specialItemComponentData.IsActive)
@@ -190,19 +190,19 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(blindfoldedDisplayComponentData);
         }
 
-        //NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
-        //if (ninjaComponentData.IsActive)
-        //{
-        //    NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
-        //    itemComponent.Init(ninjaComponentData);
-        //}
+        NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
+        if (ninjaComponentData.IsActive)
+        {
+            NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
+            itemComponent.Init(ninjaComponentData);
+        }
 
-        //ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
-        //if (throwThingsComponentData.IsActive)
-        //{
-        //    ThrowThingsComponent itemComponent = gameObject.AddComponent<ThrowThingsComponent>();
-        //    itemComponent.Init(throwThingsComponentData);
-        //}
+        ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
+        if (throwThingsComponentData.IsActive)
+        {
+            ThrowThingsComponent itemComponent = gameObject.AddComponent<ThrowThingsComponent>();
+            itemComponent.Init(throwThingsComponentData);
+        }
 
         //AudioComponentData audioComponentData = itemData.audioComponentData;
         //if (audioComponentData.IsActive)
@@ -210,12 +210,12 @@ public class XanaItem : MonoBehaviour
         //    AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
         //    itemComponent.Init(audioComponentData);
         //}
-        //HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
-        //if (hyperLinkComponentData.IsActive)
-        //{
-        //    HyperLinkPopComponent itemComponent = gameObject.AddComponent<HyperLinkPopComponent>();
-        //    itemComponent.Init(hyperLinkComponentData);
-        //}
+        HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
+        if (hyperLinkComponentData.IsActive)
+        {
+            HyperLinkPopComponent itemComponent = gameObject.AddComponent<HyperLinkPopComponent>();
+            itemComponent.Init(hyperLinkComponentData);
+        }
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);

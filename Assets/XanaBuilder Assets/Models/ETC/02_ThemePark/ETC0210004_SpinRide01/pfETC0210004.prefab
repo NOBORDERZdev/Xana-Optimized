@@ -384,8 +384,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 11.261639, y: 2.9242373, z: 11.453489}
-  m_Center: {x: 0.13677025, y: 1.4367781, z: 0.04594612}
+  m_Size: {x: 11.261639, y: 2.2893, z: 11.453489}
+  m_Center: {x: 0.13677025, y: 1.1193094, z: 0.04594612}
 --- !u!1 &6393254381777123676
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,9 +532,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -546,6 +548,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   highlightObject: {fileID: 0}
   itemMode: 0
+  m_explorerItemHandler: {fileID: 0}
+  indentationCount: 0
+  isSelected: 0
+  shrinkHierarchy: 0
 --- !u!114 &365524415242664351
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -178,8 +178,11 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         BlendShapeImporter.Instance.TurnOffAllObjects();
 
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        EyesBlinking.instance.isBlinking = true;
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        if (!EyesBlinking.instance.isCoroutineRunning)
+        {
+            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        }
+
         //  SavaCharacterProperties.instance.AssignCustomsliderNewData();
     }
 

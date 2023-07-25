@@ -20,14 +20,15 @@ public class HelpButtonComponent : ItemComponent
         //this.helpButtonComponentData.IsAlwaysOn = false;
         if (this.helpButtonComponentData.IsAlwaysOn)
         {
+            GamificationComponentData.instance.worldCameraEnable = true;
             GameObject go;
             HelpButtonComponentResizer infoPopup;
             go = Instantiate(GamificationComponentData.instance.helpParentReference, this.transform.position, new Quaternion(0, 0, 0, 0), GamificationComponentData.instance.worldSpaceCanvas.transform);
+            go.transform.position += Vector3.up;
             go.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             infoPopup = go.GetComponent<HelpButtonComponentResizer>();
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
-
             infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
             go.SetActive(true);
         }
@@ -35,7 +36,7 @@ public class HelpButtonComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        Debug.Log("Help Button Collision Enter: " + _other.gameObject.name);
+        //Debug.Log("Help Button Collision Enter: " + _other.gameObject.name);
         if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             {
@@ -46,7 +47,7 @@ public class HelpButtonComponent : ItemComponent
 
     private void OnCollisionExit(Collision _other)
     {
-        Debug.Log("Help Button Collision Exit: " + _other.gameObject.name);
+        //Debug.Log("Help Button Collision Exit: " + _other.gameObject.name);
         if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();

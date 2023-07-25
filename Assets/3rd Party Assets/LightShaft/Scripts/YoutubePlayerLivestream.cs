@@ -8,11 +8,15 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using YoutubeLight;
+//AVPRO
+//using RenderHeads.Media.AVProVideo;
 
 public class YoutubePlayerLivestream : MonoBehaviour
 {
 
     public string _livestreamUrl;
+
+    //AVPRO
     public MediaPlayer mPlayer;
 
     void Start()
@@ -26,10 +30,6 @@ public class YoutubePlayerLivestream : MonoBehaviour
 #endif
     }
 
-    public void GetLivestreamUrl(string url)
-    {
-        StartProcess(OnLiveUrlLoaded, url);
-    }
 
     private void OnApplicationFocus(bool focus)
     {
@@ -38,6 +38,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
             mPlayer.Play();
         }
     }
+    public void GetLivestreamUrl(string url)
+    {
+        _livestreamUrl = url;
+        StartProcess(OnLiveUrlLoaded, url);
+    }
+
     public void StartProcess(System.Action<string> callback, string url)
     {
         StartCoroutine(DownloadYoutubeUrl(url, callback));
@@ -51,10 +57,6 @@ public class YoutubePlayerLivestream : MonoBehaviour
         //If you are using some of that players you can uncomment the player part.
 
         //AVPRO Part
-        //MediaPlayer mplayer = GetComponent<MediaPlayer>();
-        //mplayer.m_VideoLocation = MediaPlayer.FileLocation.AbsolutePathOrURL;
-        //mplayer.m_VideoPath = url;
-        //mplayer.OpenVideoFromFile(mplayer.m_VideoLocation, mplayer.m_VideoPath, mplayer.m_AutoStart);
         MediaPathType check = MediaPathType.AbsolutePathOrURL;
         if (mPlayer.OpenMedia(check, url, true))
         {
@@ -63,6 +65,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
             mPlayer.transform.rotation = Quaternion.identity;
 #endif
         }
+
         //Easy Movie Texture (Good for mobile only[sometimes stuck in editor])
         //MediaPlayerCtrl easyPlayer = GetComponent<MediaPlayerCtrl>();
         //easyPlayer.m_strFileName = url;
@@ -88,8 +91,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
         request.SetRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)");
         yield return request.SendWebRequest();
         downloadYoutubeUrlResponse.httpCode = request.responseCode;
-        if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-        else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+        if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+        else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
         else if (request.responseCode == 200)
         {
 
@@ -116,8 +119,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
         //string extractedJson = dataRegex.Match(downloadYoutubeUrlResponse.data).Result("$1");
 
         var videoId = _videoID;
-        /*videoId = videoId.Replace("https://www.youtube.com/watch?v=", "");
-        videoId = videoId.Replace("https://youtube.com/watch?v=", "");*/
+        videoId = videoId.Replace("https://www.youtube.com/watch?v=", "");
+        videoId = videoId.Replace("https://youtube.com/watch?v=", "");
         //jsonforHtml
         var player_response = string.Empty;
         bool tempfix = false;
@@ -129,8 +132,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
             UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("User-Agent", pageSource);
             yield return request.SendWebRequest();
-            if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-            else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+            if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+            else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
             else if (request.responseCode == 200)
             {
                 //ok;
@@ -177,24 +180,30 @@ public class YoutubePlayerLivestream : MonoBehaviour
             }
         }
 
-        JObject json = JObject.Parse(player_response);
-        //string playerResponseRaw = json["args"]["player_response"].ToString();
-        //JObject playerResponseJson = JObject.Parse(playerResponseRaw);
-        bool isLive = json["videoDetails"]["isLive"].Value<bool>();
-
-        if (isLive)
+        if(string.IsNullOrEmpty(player_response))
         {
-            //WriteLog("kelvin", player_response);
-            string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
-            callback.Invoke(liveUrl);
+            Debug.Log("<color=red> Player Json is Null .</color>");
         }
         else
         {
-            Debug.Log("This is not a livestream url");
+            JObject json = JObject.Parse(player_response);
+            //string playerResponseRaw = json["args"]["player_response"].ToString();
+            //JObject playerResponseJson = JObject.Parse(playerResponseRaw);
+            bool isLive = json["videoDetails"]["isLiveContent"].Value<bool>();
+
+            if (isLive)
+            {
+                //WriteLog("kelvin", player_response);
+                string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
+                Debug.Log(liveUrl);
+                callback.Invoke(liveUrl);
+            }
+            else
+            {
+                Debug.Log("NO");
+                Debug.Log("This is not a livestream url");
+            }
         }
-
-
-
     }
 
     public static void WriteLog(string filename, string c)

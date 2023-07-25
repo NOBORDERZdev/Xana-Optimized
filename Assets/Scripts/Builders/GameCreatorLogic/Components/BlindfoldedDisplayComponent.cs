@@ -34,8 +34,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
         if (other.gameObject.CompareTag("Player") || (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
         {
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
-            //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
-            //GamificationComponentData.instance.playerControllerNew.isThrow = false;
+            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
+            GamificationComponentData.instance.playerControllerNew.isThrow = false;
             BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
             raycast = GamificationComponentData.instance.raycast;
 

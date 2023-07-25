@@ -198,6 +198,9 @@ namespace RenderHeads.Media.AVProVideo
 		/// <inheritdoc/>
 		public virtual int	 					GetAudioBufferedSampleCount() { return 0; }
 
+		/// <inheritdoc/>
+		public virtual void AudioConfigurationChanged(bool deviceChanged) { }
+
 		// 360 Audio
 		/// <inheritdoc/>
 		public virtual void			SetAudioHeadRotation(Quaternion q) { }
@@ -258,6 +261,8 @@ namespace RenderHeads.Media.AVProVideo
 		// General
 		/// <inheritdoc/>
 		public abstract void		Update();
+		/// <inheritdoc/>
+		public /*abstract*/virtual void	BeginRender() { }
 		/// <inheritdoc/>
 		public abstract void		Render();
 		/// <inheritdoc/>
@@ -550,11 +555,11 @@ namespace RenderHeads.Media.AVProVideo
 		public int GetCurrentTimeFrames(float overrideFrameRate = 0f)
 		{
 			int result = 0;
-			float frameRate = (overrideFrameRate > 0f)?overrideFrameRate:GetVideoFrameRate();
+			float frameRate = (overrideFrameRate > 0f) ? overrideFrameRate : GetVideoFrameRate();
 			if (frameRate > 0f)
 			{
 				result = Helper.ConvertTimeSecondsToFrame(GetCurrentTime(), frameRate);
-				result = Mathf.Min(result, GetMaxFrameNumber());
+				result = Mathf.Min(result, GetMaxFrameNumber(overrideFrameRate));
 			}
 			return result;
 		}
@@ -563,7 +568,7 @@ namespace RenderHeads.Media.AVProVideo
 		public int GetDurationFrames(float overrideFrameRate = 0f)
 		{
 			int result = 0;
-			float frameRate = (overrideFrameRate > 0f)?overrideFrameRate:GetVideoFrameRate();
+			float frameRate = (overrideFrameRate > 0f) ? overrideFrameRate : GetVideoFrameRate();
 			if (frameRate > 0f)
 			{
 				result = Helper.ConvertTimeSecondsToFrame(GetDuration(), frameRate);
@@ -574,7 +579,7 @@ namespace RenderHeads.Media.AVProVideo
 		/// <inheritdoc/>
 		public int GetMaxFrameNumber(float overrideFrameRate = 0f)
 		{
-			int result = GetDurationFrames();
+			int result = GetDurationFrames(overrideFrameRate);
 			result = Mathf.Max(0, result - 1);
 			return result;
 		}

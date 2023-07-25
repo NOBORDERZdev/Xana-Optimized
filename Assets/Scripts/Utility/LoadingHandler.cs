@@ -76,18 +76,23 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
+
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+                Debug.unityLogger.filterLogType = LogType.Error;
+#endif
     }
 
     private void Start()
     {
 
         StartCoroutine(StartBGChange());
-
-#if UNITY_EDITOR
-        Debug.unityLogger.logEnabled = true;
-#else
-                Debug.unityLogger.logEnabled = false;
-#endif
+//#if UNITY_EDITOR
+//        Debug.unityLogger.logEnabled = true;
+//#else
+//                        Debug.unityLogger.logEnabled = false;
+//#endif
     }
 
     //private void Update()
@@ -198,7 +203,7 @@ public class LoadingHandler : MonoBehaviour
     bool isScreenRefresh = false;
     IEnumerator IEGameplayLoadingScreenUIRefresh()
     {
-        //Debug.LogError("RefreshLoading screen");
+        //Debug.Log("RefreshLoading screen");
         ChangeHelpScreenUI(isScreenRefresh);
         isScreenRefresh = !isScreenRefresh;
         yield return new WaitForSeconds(UnityEngine.Random.Range(5, 7));
@@ -286,19 +291,21 @@ public class LoadingHandler : MonoBehaviour
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
     }
 
-    public IEnumerator TeleportFader(FadeAction action) {
-       // teleportFeader.gameObject.SetActive(true);
+    public IEnumerator TeleportFader(FadeAction action)
+    {
+        // teleportFeader.gameObject.SetActive(true);
         switch (action)
         {
             case FadeAction.Out:
-                teleportFeader.DOFade(0,0.5f).OnComplete(()=>{
+                teleportFeader.DOFade(0, 0.5f).OnComplete(() =>
+                {
                     teleportFeader.gameObject.SetActive(false);
                     teleportFeaderLandscape.SetActive(false);
                     teleportFeaderPotraite.SetActive(false);
                 });
                 break;
             case FadeAction.In:
-                if (XanaConstants.xanaConstants!=null)
+                if (XanaConstants.xanaConstants != null)
                 {
                     teleportFeaderLandscape.SetActive(!XanaConstants.xanaConstants.orientationchanged);
                     teleportFeaderPotraite.SetActive(XanaConstants.xanaConstants.orientationchanged);
@@ -323,7 +330,7 @@ public class LoadingHandler : MonoBehaviour
 
 
 public enum FadeAction
-{ 
-  Out,
-  In
+{
+    Out,
+    In
 }

@@ -14,12 +14,21 @@ public class JjVideo : MonoBehaviour
     {
         videoplayer.playOnAwake = false;
         videoplayer.errorReceived += ErrorOnVideo;
-        SetPlayer(videoLink);
+        //videoplayer.frameReady += SetSound;
+        Invoke(nameof(WaitPlay),5);
+    }
+
+    void WaitPlay(){ 
+        SetPlayer(videoLink);    
     }
 
     void SetPlayer(string link) {
         videoplayer.url = link;
         videoplayer.Play();
+    }
+
+    void SetSound(VideoPlayer source, string message){ 
+            
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)

@@ -57,6 +57,34 @@ public class RpcManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void BackToIdleAnimBeforeJump()                  //Added by Ali Hamza
+    {
+        GetComponent<PhotonView>().RPC(nameof(JumpAnimSitLying), RpcTarget.AllBuffered, GetComponent<PhotonView>().ViewID);
+    }
+
+    [PunRPC]
+    void JumpAnimSitLying(int viewId)                       //Added by Ali Hamza
+    {
+        for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+        {
+            if (Launcher.instance.playerobjects[i] != null)
+            {
+                if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                {
+                    if (Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("EtcAnimStart"))
+                    {
+                        if (!Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("Stand")) 
+                        {
+                            Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
+                            Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -75,10 +103,10 @@ public class RpcManager : MonoBehaviourPunCallbacks
         if (i == this.GetComponent<PhotonView>().ViewID)
         {
             PhotonNetwork.RemoveBufferedRPCs(i);
-            //Debug.LogError("value rpc===" + i);
+            //Debug.Log("value rpc===" + i);
             if (this.GetComponent<PhotonView>().IsMine)
             {
-                //Debug.LogError("this.GetComponent<PhotonView>().IsMine"+ this.GetComponent<PhotonView>().IsMine);
+                //Debug.Log("this.GetComponent<PhotonView>().IsMine"+ this.GetComponent<PhotonView>().IsMine);
 
                 PhotonNetwork.Destroy(this.gameObject);
                 PhotonNetwork.SendAllOutgoingCommands();
@@ -87,7 +115,7 @@ public class RpcManager : MonoBehaviourPunCallbacks
             }
             else
             {
-                //Debug.LogError("this" + this.GetComponent<PhotonView>().IsMine);
+                //Debug.Log("this" + this.GetComponent<PhotonView>().IsMine);
                 this.GetComponent<PhotonView>().TransferOwnership(this.GetComponent<PhotonView>().ViewID);
                 PhotonNetwork.DestroyPlayerObjects(this.GetComponent<PhotonView>().ViewID,false);
                 PhotonNetwork.SendAllOutgoingCommands();
@@ -103,7 +131,7 @@ public class RpcManager : MonoBehaviourPunCallbacks
 
     private void OnApplicationQuit()
     {
-        Debug.LogError("App quit call");
+        Debug.Log("App quit call");
         AvatarManager.sendDataValue = false;
         if (this.GetComponent<PhotonView>().IsMine)
         {

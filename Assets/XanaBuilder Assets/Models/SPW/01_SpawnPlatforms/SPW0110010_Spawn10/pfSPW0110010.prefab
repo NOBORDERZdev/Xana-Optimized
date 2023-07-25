@@ -169,6 +169,8 @@ GameObject:
   - component: {fileID: 16859782474118556}
   - component: {fileID: 5172129992333265530}
   - component: {fileID: 8241849863305741773}
+  - component: {fileID: 1914410892984899661}
+  - component: {fileID: 8574337109459743790}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -202,8 +204,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.961739, y: 0.17433992, z: 1.5679036}
-  m_Center: {x: -0.013878882, y: 0.08716978, z: -0.039420664}
+  m_Size: {x: 1.961739, y: 0.056797825, z: 1.7791572}
+  m_Center: {x: -0.013878882, y: 0.028398734, z: -0.13634062}
 --- !u!65 &16859782474118556
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -243,6 +245,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.46243596, y: 0.48035482, z: 0.7491368}
   m_Center: {x: -0.6128231, y: 0.41750813, z: 0.36195976}
+--- !u!65 &1914410892984899661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370551902862038399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6885623, y: 0.056797802, z: 1.4826362}
+  m_Center: {x: 0.0007556081, y: 0.08292647, z: 0.011919856}
+--- !u!65 &8574337109459743790
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370551902862038399}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4682574, y: 0.056797802, z: 1.3870001}
+  m_Center: {x: -0.0035139024, y: 0.13975328, z: 0.05973792}
 --- !u!1 &3617227107198438815
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,9 +395,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0

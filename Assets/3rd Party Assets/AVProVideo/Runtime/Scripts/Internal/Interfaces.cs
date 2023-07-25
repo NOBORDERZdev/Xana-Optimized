@@ -14,6 +14,7 @@ namespace RenderHeads.Media.AVProVideo
 		void OnEnable();
 		void Update();
 		void EndUpdate();
+		void BeginRender();
 		void Render();
 		IntPtr GetNativePlayerHandle();
 	}
@@ -206,6 +207,8 @@ namespace RenderHeads.Media.AVProVideo
 		int							GetAudioBufferedSampleCount();
 		int							GetAudioChannelCount();
 		AudioChannelMaskFlags		GetAudioChannelMask();
+
+		void AudioConfigurationChanged(bool deviceChanged);
 
 		// Audio 360
 
@@ -929,6 +932,11 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return _ranges[index];
 			}
+		}
+
+		public override string ToString()
+		{
+			return $"TimeRanges: {{ MinTime: {MinTime}, MaxTime: {MaxTime}, Duration: {Duration}, Count: {Count} }}";
 		}
 
 		internal TimeRanges(TimeRange[] ranges)
