@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,10 +66,10 @@ public class JjInfoManager : MonoBehaviour
 
     private void Start()
     {
-        //if (IsJjWorld)
-        //{
-        //    IntJjInfoManager();
-        //}
+        if (IsJjWorld)
+        {
+            IntJjInfoManager();
+        }
     }
 
     /// <summary>
@@ -76,7 +77,11 @@ public class JjInfoManager : MonoBehaviour
     /// </summary>
     public async void IntJjInfoManager()
     {
-        worldInfos.Clear();
+        //worldInfos.Clear();
+        //for (int i = 0; i < NftPlaceholder.Count; i++)
+        //{
+        //    worldInfos.Add(null);
+        //}
         StringBuilder apiUrl = new StringBuilder();
         apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JJWORLDASSET+JJMusuemId);
 
@@ -95,7 +100,7 @@ public class JjInfoManager : MonoBehaviour
                     StringBuilder data = new StringBuilder();
                     data.Append(request.downloadHandler.text);
                     Debug.Log("JJ World Req" + data.ToString());
-                    JjJson json = JsonUtility.FromJson<JjJson>(data.ToString());
+                    JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
                     InitData(json);
 
                 }
@@ -121,101 +126,149 @@ public class JjInfoManager : MonoBehaviour
         List<JjAsset> worldData = data.data;
         for (int i = 0; i < nftPlaceHolder; i++)
         {
-            Sprite tempSprite;
+            //worldInfos.Add(null);
+            //Sprite tempSprite;
             bool isWithDes=false; 
-             StartCoroutine(GetSprite(data.data[i].asset_link, (response) => {
-                 tempSprite = response;
-                 // Setting NFT type (Image / Video)
-                 if (worldData[i].media_type.Contains("IMAGE"))
-                 {
-                    worldInfos[i].Type = DataType.Image;
-                    NftPlaceholder[i].GetComponent<SpriteRenderer>().sprite = tempSprite;
-                    worldInfos[i].WorldImage = tempSprite;
-                 }
-                 else
-                 {
-                     // Video
-                     worldInfos[i].Type = DataType.Video;
-                     if (worldData[i].youtubeUrlCheck)
-                     {
-                         worldInfos[i].VideoLink= worldData[i].youtubeUrl;
-                     }
-                     else
-                     {
-                         worldInfos[i].VideoLink= worldData[i].asset_link;
-                     }
-                 }
-                 // Setting NFT type Content (Des/ WithoutDes)
-                 if (!string.IsNullOrEmpty(worldData[i].title[0]) && !string.IsNullOrEmpty(worldData[i].authorName[0]) && !string.IsNullOrEmpty(worldData[i].description[0] ) )
-                 {
-                    isWithDes = true;
-                    worldInfos[i].Title= worldData[i].title;
-                    worldInfos[i].Aurthor = worldData[i].authorName;
-                    worldInfos[i].Des = worldData[i].description;
-                    switch (worldData[i].ratio)
-                    {
-                        case "1:1":
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            break;
-                        case "16:9":
-                            worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
-                            break;
+            string compersionPrfex = "";
+            if (/*worldData[i].check*/ true)
+            {
+                switch (worldData[i].ratio)
+                {
+                    case "1:1":
+                        compersionPrfex = "?width=512&height=512";
+                        break;
+                    case "16:9":
+                        compersionPrfex = "?width=500&height=600";
+                        break;
                     case "9:16":
-                        worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
-                            break;
+                        compersionPrfex = "?width=700&height=500";
+                        break;
                     case "4:3":
-                        worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
-                            break;
-                        default:
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            break;
-                    }
-                 }
-                 else
-                 {
-                    isWithDes = false;
-                    worldInfos[i].Title= null;
-                    worldInfos[i].Aurthor = null;
-                    worldInfos[i].Des =null;
-                    switch (worldData[i].ratio)
-                    {
-                        case "1:1":
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithoutDes;
-                            break;
-                        case "16:9":
-                            worldInfos[i].JjRatio = JjRatio.SixteenXNineWithoutDes;
-                            break;
-                    case "9:16":
-                        worldInfos[i].JjRatio = JjRatio.NineXSixteenWithoutDes;
-                            break;
-                    case "4:3":
-                        worldInfos[i].JjRatio = JjRatio.FourXThreeWithoutDes;
-                            break;
-                        default:
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithoutDes;
-                            break;
-                    }
-                 }
-             }));  
+                        //compersionPrfex = "?width=640&height=480";
+                         compersionPrfex = "?width=512&height=512";
+                        break;
+                    default:
+                        compersionPrfex = "?width=512&height=512";
+                        break;
+                }
+                StartCoroutine(GetSprite(data.data[i].asset_link + compersionPrfex, i, (response, Index) =>
+              {
+                  print("Response is " + response);
+                //tempSprite = response;
+
+                // Setting NFT type (Image / Video)
+                if (worldData[Index].media_type.Contains("IMAGE"))
+                  {
+                      print("in image if " + Index);
+                      NftPlaceholder[Index].GetComponent<SpriteRenderer>().sprite = response;
+                      if (NftPlaceholder[Index].GetComponent<BoxCollider>())
+                      {
+                         Destroy( NftPlaceholder[Index].GetComponent<BoxCollider>() );
+                      }
+                      NftPlaceholder[Index].AddComponent<BoxCollider>();
+                    //worldInfos[Index].Type = DataType.Image;
+                    worldInfos[Index].WorldImage = response;
+                  }
+                  else
+                  {
+                    // Video
+                    worldInfos[Index].Type = DataType.Video;
+                      if (worldData[Index].youtubeUrlCheck)
+                      {
+                          worldInfos[Index].VideoLink = worldData[Index].youtubeUrl;
+                      }
+                      else
+                      {
+                          worldInfos[Index].VideoLink = worldData[Index].asset_link;
+                      }
+                  }
+                // Setting NFT type Content (Des/ WithoutDes)
+                if (!string.IsNullOrEmpty(worldData[Index].title[0]) && !string.IsNullOrEmpty(worldData[Index].authorName[0]) && !string.IsNullOrEmpty(worldData[Index].description[0]))
+                  {
+                      isWithDes = true;
+                      worldInfos[Index].Title = worldData[Index].title;
+                      worldInfos[Index].Aurthor = worldData[Index].authorName;
+                      worldInfos[Index].Des = worldData[Index].description;
+                      switch (worldData[Index].ratio)
+                      {
+                          case "1:1":
+                              worldInfos[Index].JjRatio = JjRatio.OneXOneWithDes;
+                              break;
+                          case "16:9":
+                              worldInfos[Index].JjRatio = JjRatio.SixteenXNineWithDes;
+                              break;
+                          case "9:16":
+                              worldInfos[Index].JjRatio = JjRatio.NineXSixteenWithDes;
+                              break;
+                          case "4:3":
+                              worldInfos[Index].JjRatio = JjRatio.FourXThreeWithDes;
+                              break;
+                          default:
+                              worldInfos[Index].JjRatio = JjRatio.OneXOneWithDes;
+                              break;
+                      }
+                  }
+                  else
+                  {
+                      isWithDes = false;
+                      worldInfos[Index].Title = null;
+                      worldInfos[Index].Aurthor = null;
+                      worldInfos[Index].Des = null;
+                      switch (worldData[Index].ratio)
+                      {
+                          case "1:1":
+                              worldInfos[Index].JjRatio = JjRatio.OneXOneWithoutDes;
+                              break;
+                          case "16:9":
+                              worldInfos[Index].JjRatio = JjRatio.SixteenXNineWithoutDes;
+                              break;
+                          case "9:16":
+                              worldInfos[Index].JjRatio = JjRatio.NineXSixteenWithoutDes;
+                              break;
+                          case "4:3":
+                              worldInfos[Index].JjRatio = JjRatio.FourXThreeWithoutDes;
+                              break;
+                          default:
+                              worldInfos[Index].JjRatio = JjRatio.OneXOneWithoutDes;
+                              break;
+                      }
+                  }
+              }));
+            }
+            else
+            {
+                NftPlaceholder[i].SetActive(false);
+            }
         }
-        
+
     }
 
-    IEnumerator GetSprite(string path , System.Action<Sprite> callback) {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture(path);
-        yield return www.SendWebRequest();
-
-        if (www.result != UnityWebRequest.Result.Success) {
-            Debug.Log(www.error);
+    IEnumerator GetSprite(string path , int index, System.Action<Sprite, int> callback) {
+        while (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            yield return new WaitForEndOfFrame();
+            print("Internet Not Reachable");
         }
-        else {
-             if (www.isDone)
-             {
-                var rect = new Rect(0, 0, 600f, 600f);
-                var tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                var sprite = Sprite.Create(tempTex,rect,new Vector2(0.5f,0.5f));
-                callback(sprite);
-             }
+
+        using ( UnityWebRequest www = UnityWebRequestTexture.GetTexture(path))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success) {
+                Debug.Log("ERror in loading sprite"+www.error);
+            }
+            else {
+                 if (www.isDone)
+                 {
+                    Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
+                    var rect = new Rect(1, 1, 1, 1);
+                    //thunbNailImage = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
+                    var tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
+                    Sprite sprite = /*Sprite.Create(tempTex, rect, new Vector2(0.5f, 0.5f))*/ Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
+                    print("Texture is "+sprite);
+                    callback(sprite, index);
+                 }
+            }
         }
     }
 
@@ -430,6 +483,13 @@ public class JjAsset{
     public string ratio;
     public string thumbnail;
     public string media_type;
+    public string env_class;
+    public string user_id;
+    public string event_id;
+    public string category;
     public bool youtubeUrlCheck;
     public string youtubeUrl;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public string event_env_class;
 }
