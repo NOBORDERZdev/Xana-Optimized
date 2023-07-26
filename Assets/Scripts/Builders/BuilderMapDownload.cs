@@ -256,11 +256,11 @@ public class BuilderMapDownload : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
-            //while (!_async.IsDone)
-            //{
-            //    yield return null;
-            //}
-            yield return _async;
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            //yield return _async;
 
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
@@ -271,7 +271,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
         BuilderEventManager.CombineMeshes?.Invoke();
         //Set Hierarchy same as builder
-        SetObjectHirarchy();
+        //SetObjectHirarchy();
         CallBack();
     }
 
@@ -448,17 +448,17 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetLensFlareData(LensFlareDataSRP lensFlareData, float lensFlareScale)
     {
-        if (directionalLight.gameObject.GetComponent<LensFlareComponentSRP>() != null)
+
+        LensFlareComponentSRP lensFlareComponent = directionalLight.gameObject.GetComponent<LensFlareComponentSRP>();
+
+        if (lensFlareComponent == null)
         {
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
+            lensFlareComponent = directionalLight.gameObject.AddComponent<LensFlareComponentSRP>();
+            lensFlareComponent.occlusionRadius = 0.35f;
         }
-        else
-        {
-            directionalLight.gameObject.AddComponent<LensFlareComponentSRP>().occlusionRadius = 0.35f;
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
-        }
+
+        lensFlareComponent.lensFlareData = lensFlareData;
+        lensFlareComponent.scale = lensFlareScale;
 
     }
 
