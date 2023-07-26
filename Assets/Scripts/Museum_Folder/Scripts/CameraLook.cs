@@ -136,7 +136,7 @@ public class CameraLook : MonoBehaviour
         {
             if (_allowRotation)
             {
-                if (!lockRotation)
+                if (!lockRotation && Input.GetMouseButton(0))
                 {
                     CameraControls_Editor();
                 }
