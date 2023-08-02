@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class HelpButtonComponent : ItemComponent
 {
     [SerializeField]
@@ -14,10 +9,7 @@ public class HelpButtonComponent : ItemComponent
 
     public void Init(HelpButtonComponentData helpButtonComponentData)
     {
-        Debug.Log(JsonUtility.ToJson(helpButtonComponentData));
-
         this.helpButtonComponentData = helpButtonComponentData;
-        //this.helpButtonComponentData.IsAlwaysOn = false;
         if (this.helpButtonComponentData.IsAlwaysOn)
         {
             GamificationComponentData.instance.worldCameraEnable = true;
@@ -36,8 +28,7 @@ public class HelpButtonComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        //Debug.Log("Help Button Collision Enter: " + _other.gameObject.name);
-        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
@@ -47,8 +38,7 @@ public class HelpButtonComponent : ItemComponent
 
     private void OnCollisionExit(Collision _other)
     {
-        //Debug.Log("Help Button Collision Exit: " + _other.gameObject.name);
-        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }

@@ -1,11 +1,10 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
-using System;
 using UnityEngine.UI;
 using DG.Tweening;
 using Models;
+using System.Globalization;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -530,6 +529,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         quizComponentUI.SetActive(true);
         this.quizComponent = quizComponent;
         StartQuiz(quizComponentData);
+
+
     }
     public void QuizResultPopupClose()
     {
@@ -676,13 +677,35 @@ public class GamificationComponentUIManager : MonoBehaviour
 
             for (int i = 1; i < inputFieldsPerQuestion; i++)
             {
+                string sb = quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
                 options[i - 1].GetComponentInChildren<TMP_Text>().text =
-                    quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
+                    sb;
+                if (!isPotrait)
+                {
+                    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
+                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 11.3f;
+                    else
+                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 12;
+                }
             }
         }
 
         isOptionSelected = false;
     }
+    bool ContainsJapaneseText(string input)
+    {
+        foreach (char c in input)
+        {
+            // Check if the character belongs to the Unicode category of Japanese scripts
+            UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
+            if (category == UnicodeCategory.OtherLetter || category == UnicodeCategory.LetterNumber)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     void UpdateQuizData(int option)
     {
@@ -1002,7 +1025,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             Vector3 position = NinjaMotionUIButtonPanel2.transform.localPosition;
             if (value > 0)
             {
-                 position = GamificationComponentData.instance.Ninja_Throw_InitPosY;
+                position = GamificationComponentData.instance.Ninja_Throw_InitPosY;
                 NinjaMotionUIButtonPanel2.transform.localPosition = position;
                 ThowThingsUIButtonPanel2.transform.localPosition = position;
             }

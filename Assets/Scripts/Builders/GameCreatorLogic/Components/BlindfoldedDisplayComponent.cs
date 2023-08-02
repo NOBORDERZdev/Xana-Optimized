@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using Models;
 using Photon.Pun;
-using WalletConnectSharp.Core.Events;
 
 public class BlindfoldedDisplayComponent : ItemComponent
 {
@@ -31,7 +30,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player") || (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
             GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
@@ -83,7 +82,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
                     ringbufferFootSteps[0].enabled = true;
                     ringbufferFootSteps[0].transform.GetChild(0).gameObject.SetActive(true);
                 }
-                Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
+                //Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
                 StartCoroutine(BackToVisible(ringbufferFootSteps));
 
             }
@@ -114,7 +113,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         {
             if (hit.collider.CompareTag("Item"))
             {
-                Debug.Log("Not Null");
+                //Debug.Log("Not Null");
                 BuilderEventManager.ReSpawnPlayer?.Invoke();
                 notTriggerOther = true;
 
@@ -159,7 +158,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         {
             if (hit.collider.CompareTag("Item"))
             {
-                Debug.Log("Not Null");
+                //Debug.Log("Not Null");
                 BuilderEventManager.ReSpawnPlayer?.Invoke();
                 notTriggerOther = true;
                 Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");

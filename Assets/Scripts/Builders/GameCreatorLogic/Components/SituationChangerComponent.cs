@@ -1,21 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class SituationChangerComponent : ItemComponent
 {
     [SerializeField]
     private SituationChangerComponentData situationChangerComponentData;
-
     private bool isActivated = false;
-
     public Light[] _light;
-
     public float[] _lightsIntensity;
 
     // Start is called before the first frame update
@@ -31,24 +24,21 @@ public class SituationChangerComponent : ItemComponent
 
     public void Init(SituationChangerComponentData situationChangerComponentData)
     {
-        Debug.Log(JsonUtility.ToJson(situationChangerComponentData));
-
         this.situationChangerComponentData = situationChangerComponentData;
-
         isActivated = true;
     }
+
     Coroutine situationCo;
     private void OnCollisionEnter(Collision _other)
     {
-
-        Debug.Log("Situation changer collision" + _other.gameObject.name);
-        if (/*_other.gameObject.tag == "Player" || */(_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             if (situationChangerComponentData.Timer == 0 && !situationChangerComponentData.isOff)
                 return;
 
-            if (situationCo == null && situationChangerComponentData.Timer>0)
+            if (situationCo == null && situationChangerComponentData.Timer > 0)
                 situationCo = StartCoroutine(nameof(SituationChange));
+
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
             TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
         }
@@ -56,7 +46,6 @@ public class SituationChangerComponent : ItemComponent
 
     IEnumerator SituationChange()
     {
-
         while (situationChangerComponentData.Timer > 0)
         {
             situationChangerComponentData.Timer--;

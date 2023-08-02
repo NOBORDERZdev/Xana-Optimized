@@ -4,7 +4,6 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class NarrationComponent : ItemComponent
 {
     [SerializeField]
@@ -16,18 +15,12 @@ public class NarrationComponent : ItemComponent
 
     public void Init(NarrationComponentData narrationComponentData)
     {
-        Debug.Log(JsonUtility.ToJson(narrationComponentData));
         this.narrationComponentData = narrationComponentData;
     }
 
     private void OnCollisionEnter(Collision _other)
     {
-
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-        Debug.Log("Naration colliosion enter" + _other.gameObject.name);
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             string msg = "";
             if (narrationComponentData.narrationsData.Length == 0)
@@ -35,8 +28,6 @@ public class NarrationComponent : ItemComponent
             else
                 msg = narrationComponentData.narrationsData;
 
-
-            //TimeStats.canRun = false;
             if (narrationComponentData.onStoryNarration)
             {
                 BuilderEventManager.OnNarrationCollisionEnter?.Invoke(msg, true);
