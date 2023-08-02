@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject faceMorphCam;
     public GameObject headCam;
     public GameObject bodyCam;
+    public GameObject RequiredNFTPopUP;
 
     public GameObject ShadowPlane;
     public SavaCharacterProperties SaveCharacterProperties;
