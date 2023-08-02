@@ -11,14 +11,12 @@ public class DoorKeyComponent : ItemComponent
     public void Init(DoorKeyComponentData _doorKeyComponentData)
     {
         this.doorKeyComponentData = _doorKeyComponentData;
-
         activateComponent = true;
     }
 
-
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             PlayerCanvas.Instance.transform.SetParent(_other.transform);
             PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
@@ -67,9 +65,6 @@ public class DoorKeyComponent : ItemComponent
                     PlayerCanvas.Instance.ToggleWrongKey();
 
             }
-
-
-
         }
     }
     private bool KeyValidation()
@@ -84,7 +79,4 @@ public class DoorKeyComponent : ItemComponent
         if (string.IsNullOrWhiteSpace(this.doorKeyComponentData.selectedDoorKey)) return false;
         return true;
     }
-
-
-
 }

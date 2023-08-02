@@ -207,12 +207,12 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(throwThingsComponentData);
         }
 
-        //AudioComponentData audioComponentData = itemData.audioComponentData;
-        //if (audioComponentData.IsActive)
-        //{
-        //    AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
-        //    itemComponent.Init(audioComponentData);
-        //}
+        AudioComponentData audioComponentData = itemData.audioComponentData;
+        if (audioComponentData.IsActive)
+        {
+            AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
+            itemComponent.Init(audioComponentData);
+        }
         HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
         if (hyperLinkComponentData.IsActive)
         {

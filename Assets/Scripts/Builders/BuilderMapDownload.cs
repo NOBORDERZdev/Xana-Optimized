@@ -271,7 +271,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
         BuilderEventManager.CombineMeshes?.Invoke();
         //Set Hierarchy same as builder
-        //SetObjectHirarchy();
+        SetObjectHirarchy();
         CallBack();
     }
 
@@ -526,6 +526,9 @@ public class BuilderMapDownload : MonoBehaviour
         //Add game object into List for Hirarchy
         xanaItems.Add(xanaItem);
 
+
+        if (!_itemData.isVisible)
+            newObj.SetActive(false);
         //int count = levelData.otherItems.Count;
         //for (int i = 0; i < count; i++)
         //{

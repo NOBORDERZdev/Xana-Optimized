@@ -28,7 +28,7 @@ public class HyperLinkPopComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             SetHelpButtonNarration();
         }
@@ -36,7 +36,7 @@ public class HyperLinkPopComponent : ItemComponent
 
     private void OnCollisionExit(Collision _other)
     {
-        if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.OnHyperLinkPopupCollisionExit?.Invoke();
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class DisplayMessagesComponent : MonoBehaviour
 {
     [SerializeField]
@@ -20,12 +19,7 @@ public class DisplayMessagesComponent : MonoBehaviour
     //oncollisionEnter to OnTriggerEnter
     private void OnCollisionEnter(Collision _other)
     {
-
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-        Debug.Log("Display Message Collision Enter " + _other.gameObject.name);
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             isCoroutineRunning = true;
 
