@@ -34,6 +34,11 @@ public class SNSSettingController : MonoBehaviour
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
 
+    [Space]
+    [Header("Simultaneous Connections Items")]
+    public Image btnImage;
+    public Sprite offBtn, onBtn;
+
     private void Awake()
     {
         if (Instance == null)
@@ -242,4 +247,79 @@ public class SNSSettingController : MonoBehaviour
         }
     }
 
+
+    public void SimultaneousConnectionButton()
+    {
+        int status = PlayerPrefs.GetInt("ShowLiveUserCounter");
+        if (status == 0)
+        {
+            // Currently Btn is OFF, enable Btn Here
+            btnImage.sprite = onBtn;
+            status = 1;
+            UserCounterStatus(true);
+        }
+        else
+        {
+            // Currently Btn is ON, disable Btn Here
+            status = 0;
+            btnImage.sprite = offBtn;
+            UserCounterStatus(false);
+        }
+        PlayerPrefs.SetInt("ShowLiveUserCounter", status);
+    }
+
+
+    void UserCounterStatus(bool _status)
+    {
+        // Lobby Prefab
+        WorldManager.instance.eventPrefabLobby.GetComponent<FeedEventPrefab>()
+            .joinedUserCount.transform.parent.gameObject.SetActive(_status);
+
+        // Home Page => Hot
+        foreach (var item in WorldManager.instance.listParentHotSection.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+
+        // Home Page => New
+        foreach (var item in WorldManager.instance.listParentAllWorlds.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+
+        // Home Page => My World
+        foreach (var item in WorldManager.instance.listParentMyWorlds.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+
+        // World Page => Hot
+        foreach (var item in WorldManager.instance.world_HotScroll.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+
+        // World Page => New
+        foreach (var item in WorldManager.instance.world_NewScroll.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+
+        // World Page => My World
+        foreach (var item in WorldManager.instance.world_myworldScroll.GetAllChildren())
+        {
+            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        }
+    }
+    void CheckBtnStatus(int status)
+    {
+        if (status == 0)
+            btnImage.sprite = offBtn;
+        else
+            btnImage.sprite = onBtn;
+    }
+    private void OnEnable()
+    {
+        CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
+    }
 }

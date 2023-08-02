@@ -146,6 +146,12 @@ public class FeedEventPrefab : MonoBehaviour
                 {
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     joinedUserCount.text = allWorldData.player_count[i].count.ToString();
+
+                    if (allWorldData.player_count[i].count >= 5)
+                        joinedUserCount.transform.parent.gameObject.SetActive(true);
+                    else if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) == 0)
+                        joinedUserCount.transform.parent.gameObject.SetActive(false);
+
                     break;
                 }
 
@@ -182,6 +188,12 @@ public class FeedEventPrefab : MonoBehaviour
                     //Debug.LogError("Yes Matched : " + m_EnvironmentName);
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     joinedUserCount.text = allWorldData.player_count[i].count.ToString();
+
+                    if (allWorldData.player_count[i].count >= 5)
+                        joinedUserCount.transform.parent.gameObject.SetActive(true);
+                    else if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) == 0)
+                        joinedUserCount.transform.parent.gameObject.SetActive(false);
+
                     break;
                 }
                 joinedUserCount.text = "0";
