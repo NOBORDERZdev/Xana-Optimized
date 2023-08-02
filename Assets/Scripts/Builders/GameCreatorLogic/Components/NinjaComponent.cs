@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Models;
 using Photon.Pun;
@@ -14,7 +12,7 @@ public class NinjaComponent : MonoBehaviour
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (/*_other.gameObject.CompareTag("Player") || */(_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             //return;
             // Special Item Component Stops

@@ -1,18 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class TimeLimitComponent : ItemComponent
 {
-
-    // public static Action TimerCompleted;
-
-
     [Tooltip("Set Total Time")]
     [SerializeField]
     private float m_TotalTime;
@@ -111,8 +105,6 @@ public class TimeLimitComponent : ItemComponent
 
     public void Init(TimeLimitComponentData timeLimitComponentData)
     {
-        //Debug.Log(JsonUtility.ToJson(timeLimitComponentData));
-
         this.timeLimitComponentData = timeLimitComponentData;
 
         isActivated = true;
@@ -121,13 +113,9 @@ public class TimeLimitComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-        Debug.Log("Timer Limit Trigger: " + _other.gameObject.name);
         if (isActivated)
         {
-            if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+            if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
             {
                 StartTimerEvent?.Invoke();
             }

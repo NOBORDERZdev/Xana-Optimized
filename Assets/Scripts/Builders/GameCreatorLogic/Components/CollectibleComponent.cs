@@ -14,7 +14,7 @@ public class CollectibleComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             gameObject.SetActive(false);
             if (activateComponent)
@@ -22,7 +22,6 @@ public class CollectibleComponent : ItemComponent
                 activateComponent = false;
                 //Toast.Show(XanaConstants.collectibleMsg);
             }
-           // Debug.LogError("Here we need to show message to user for collectible object");
         }
     }
 }
