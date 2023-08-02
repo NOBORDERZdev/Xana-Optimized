@@ -20,11 +20,12 @@ public class XanaConstants : MonoBehaviour
     public string EnviornmentName;
     public string userLimit;
     public AssetBundle museumAssetLoaded;
-   // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
+    // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
     public GameObject _curretClickedBtn;
     public bool IsMuseum = false;
+    public bool IsDeemoNFT = false;
     public string hair = "";
     public string hairColoPalette = "";
     public int faceIndex = 0;
@@ -57,19 +58,19 @@ public class XanaConstants : MonoBehaviour
     public GameObject[] colorSelection;
     public bool setIdolVillaPosition = true;
     public GameObject lastSelectedButton;
-    
+
     public bool orientationchanged = false;
     public bool SelfiMovement = true;
     public GameObject ConnectionPopUpPanel;
     public int presetItemsApplied = 0;
     public bool isSkinApplied = false;
     public bool isPresetHairColor = false;
-    public bool isCameraMan ;
+    public bool isCameraMan;
     public bool isCameraManInRoom = false;
 
 
     public String MuseumID;
-  
+
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
@@ -94,8 +95,8 @@ public class XanaConstants : MonoBehaviour
     /// 
     public bool isBuilderScene;
     public int builderMapID;
-    public bool JjWorldSceneChange=false;
-    public bool isFromXanaLobby =false;
+    public bool JjWorldSceneChange = false;
+    public bool isFromXanaLobby = false;
 
     public string r_EmoteStoragePersistentPath
     {
@@ -110,7 +111,7 @@ public class XanaConstants : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
-    
+
     public string r_EmoteReactionPersistentPath
     {
         get
@@ -189,7 +190,7 @@ public class XanaConstants : MonoBehaviour
     }
     private void Start()
     {
-      //  StartCoroutine(LoadAddressableDependenceies());
+        //  StartCoroutine(LoadAddressableDependenceies());
     }
 
     public void StopMic()
