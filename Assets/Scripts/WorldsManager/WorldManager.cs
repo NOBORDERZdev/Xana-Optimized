@@ -262,7 +262,12 @@ public class WorldManager : MonoBehaviour
                 TempObject.transform.SetParent(listParent);
             }
             FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
-            
+
+            if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
+            {
+                _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
+            }
+
             _event.idOfObject = _WorldInfo.data.rows[i].id;
             _event.m_EnvironmentName = _WorldInfo.data.rows[i].name;
             try
