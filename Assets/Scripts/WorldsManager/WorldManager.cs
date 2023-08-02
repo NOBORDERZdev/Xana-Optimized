@@ -376,8 +376,22 @@ public class WorldManager : MonoBehaviour
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            {
+                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            }
+            else
+            {
+                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                {
+                    Debug.Log("YOU DONT HAVE DEEMO NFT");
+                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                    return;
+                }
+
+            }
+            //////
         }
         else
         {
@@ -406,7 +420,16 @@ public class WorldManager : MonoBehaviour
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
-
+            if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            {
+                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                {
+                    Debug.Log("YOU DONT HAVE DEEMO NFT");
+                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                    return;
+                }
+            }
+            /////
 
 
             AssetBundle.UnloadAllAssetBundles(false);
@@ -449,9 +472,23 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            {
+                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            }
+            else
+            {
+                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                {
+                    Debug.Log("YOU DONT HAVE DEEMO NFT");
+                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                    return;
+                }
+
+            }
         }
+        //////
         else
         {
             print("play btnn here");
@@ -461,13 +498,13 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
                 bool _IsInOwnerShip = await task;
                 print("_IsInOwnerShip :: " + _IsInOwnerShip);
 
-                 if (!_IsInOwnerShip)
+                if (!_IsInOwnerShip)
                 {
                     print("Show UI NFT not available");
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke(); 
+                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
 
 
@@ -475,11 +512,23 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
                 }
                 else
                 {
- 
-                        print("NFT is in your OwnerShip Enjoy");
+
+                    print("NFT is in your OwnerShip Enjoy");
                 }
-            }       
+                if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+                {
+                    if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                    {
+                        Debug.Log("YOU DONT HAVE DEEMO NFT");
+                        GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                        return;
+                    }
+                }
+            }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
+
+           
+
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 
