@@ -34,32 +34,29 @@ public class ItemDetailBuyItem : MonoBehaviour
     public EnumClass.CategoryEnum CategoriesEnumVar;
 
      // Start is called before the first frame update
-    void Start()
-    {
-        this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
-        print("in start toggle value is " +btnToggle.isOn);
-    }
+    //void Start()
+    //{
+    //    this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
+    //    print("in start toggle value is " +btnToggle.isOn);
+    //}
      // Update is called once per frame
-    void Update()
-    {
-        
-    }  
-    void ItemBtnClicked()
-    {
-        print("Item Btn Clicked");
-    }
-   public void OnValueChanged(Toggle change)
-    {
-      print(  btnToggle.isOn);
-        if(btnToggle.isOn)
-        {
-            StoreManager.instance.AddItemsFromCheckOut(this.gameObject);
-        }  
-        else
-        {
-            StoreManager.instance.RemoveItemsFromCheckOut(this.gameObject);
-         }
-     }
+   
+    //void ItemBtnClicked()
+    //{
+    //    print("Item Btn Clicked");
+    //}
+   //public void OnValueChanged(Toggle change)
+   // {
+   //   print(  btnToggle.isOn);
+   //     if(btnToggle.isOn)
+   //     {
+   //         StoreManager.instance.AddItemsFromCheckOut(this.gameObject);
+   //     }  
+   //     else
+   //     {
+   //         StoreManager.instance.RemoveItemsFromCheckOut(this.gameObject);
+   //      }
+   //  }
 }
 
  
