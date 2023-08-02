@@ -1113,20 +1113,23 @@ public class MyProfileDataManager : MonoBehaviour
             NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
             NftDataScript.Instance.nftloading.SetActive(false);
             print("userRoleObj.NFTsURL: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL.Count);
-            print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);  
+            print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
             for (int i = 0; i < UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count; i++)
-            {  
-                     GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
+            {
+                if (!UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo"))
+                {
+                    GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
                     Debug.Log("L_ItemBtnObj");
-                     if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
+                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
                     {
-                         L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
+                        L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
                     }
                     int locali = i;
-                     L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
-                     L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
-                    L_ItemBtnObj.gameObject.name= "image_NFT "+UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString(); 
-             }
+                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
+                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
+                    L_ItemBtnObj.gameObject.name = "image_NFT " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
+                }
+            }
         }  
         else
         {
