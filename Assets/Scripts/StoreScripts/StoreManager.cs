@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using SuperStar.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 //using HSVPicker;
 
 
@@ -1360,7 +1362,7 @@ public class StoreManager : MonoBehaviour
         string totalCoins = PlayerPrefs.GetInt("TotalCoins").ToString();
         double coins = Double.Parse(totalCoins);
         totalCoins = String.Format("{0:n0}", coins);
-        TotalGameCoins.text = totalCoins;
+        //TotalGameCoins.text = totalCoins;
         CreditShopManager.instance.TotalCoins.text = totalCoins;
     }
     // Update is called once per frame
@@ -2454,9 +2456,63 @@ public class StoreManager : MonoBehaviour
 
 
     //  UserDetails Starts here ************************************************************************
-    private void SubmitUserDetailAPI()
+    private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
+    private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+    public void SubmitUserDetailAPI()
     {
-        StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
+        //StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
+        string localAPI = "";
+        if (!APIBaseUrlChange.instance.IsXanaLive)
+        {
+            //  localAPI = string.Format(TestNetOwnednftAPI, OwnedNFTPageNumb, OwnedNFTPageSize) + publicID + Postfix;
+            localAPI = TestNetXenyTokenAPI;
+        }
+        else
+        {
+            // Mainnet Api
+            localAPI = MainNetXenyTokenAPI;
+        }
+        StartCoroutine(XenyTokenUserAddrerss(localAPI));
+    }
+    private RequestedData requestData;
+
+    IEnumerator XenyTokenUserAddrerss(string url)
+    {
+
+        requestData = new RequestedData();
+        requestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+        string jsonData = JsonConvert.SerializeObject(requestData);
+        // Convert the JSON data to a byte array
+        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+        UnityWebRequest request = UnityWebRequest.Post(url, "POST");
+        request.uploadHandler = new UploadHandlerRaw(postData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        Debug.Log("hamara data v" + request.downloadHandler.text);
+
+        if (!request.isHttpError && !request.isNetworkError)
+        {
+            if (request.error == null)
+            {
+                JObject json = JObject.Parse(request.downloadHandler.text);
+                string token = json["userXenyTokens"].ToString();
+                TotalGameCoins.text = token;
+                print("xeny coins are = " + token);
+            }
+        }
+        else
+        {
+            if (request.isNetworkError)
+            {
+                print("Error Occured " + request.error.ToUpper());
+            }
+        }
+        request.Dispose();
     }
     // Submit GetUser Details        
     IEnumerator HitGetUserDetails(string url, string Jsondata)
@@ -4627,4 +4683,13 @@ public class StoreManager : MonoBehaviour
         XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.characterController.bodyFat;
         XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.characterController.makeupId;
     }
+}
+public class RequestedData
+{
+    public string userAddress;
+}
+public class XenyTokenData
+{
+    public double xenyToken;
+    public string address;
 }
