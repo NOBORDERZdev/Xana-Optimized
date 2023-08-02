@@ -3904,6 +3904,10 @@ public class StoreManager : MonoBehaviour
                             else
                                 childObject.GetComponent<Image>().enabled = false;
                         }
+
+                        // Activate Eyebrow Customization Btn
+                        if (ParentOfBtnsAvatarEyeBrows.childCount > 2)
+                            eyeBrowTapButton.SetActive(true);
                     }
 
                     //else
