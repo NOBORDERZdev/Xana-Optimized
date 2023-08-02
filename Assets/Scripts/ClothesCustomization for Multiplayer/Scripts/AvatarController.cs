@@ -241,11 +241,11 @@ public class AvatarController : MonoBehaviour
                                 //getHairColorFormFile = true;
                                 if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                 {
-                                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear ));
+                                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                 }
                                 else
                                 {
-                                    if (PlayerPrefs.HasKey("Equiped")|| XanaConstants.xanaConstants.isNFTEquiped)
+                                    if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
                                     {
                                         if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                         {
@@ -470,7 +470,7 @@ public class AvatarController : MonoBehaviour
                 }
                 SetItemIdsFromFile(_CharacterData);
                 bodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                
+
             }
             else // wolrd scence 
             {
@@ -713,7 +713,7 @@ public class AvatarController : MonoBehaviour
         if (XanaConstants.xanaConstants.isNFTEquiped)
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
     }
-   
+
     /// <summary>
     /// For Boxer NFT there is no modification in data
     /// We only need to save file each time
@@ -1019,9 +1019,9 @@ public class AvatarController : MonoBehaviour
                 break;
         }
     }
-    public void WearDefaultHair(GameObject applyOn , Color hairColor)
+    public void WearDefaultHair(GameObject applyOn, Color hairColor)
     {
-      StichItem(-1, ItemDatabase.instance.DefaultHair, "Hair", applyOn,hairColor);
+        StichItem(-1, ItemDatabase.instance.DefaultHair, "Hair", applyOn, hairColor);
     }
 
 
@@ -1159,7 +1159,7 @@ public class AvatarController : MonoBehaviour
         }
 
         item = this.stitcher.Stitch(item, applyOn);
-        if(type == "Hair")
+        if (type == "Hair")
         {
             if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
@@ -1177,8 +1177,8 @@ public class AvatarController : MonoBehaviour
                 presetHairColor = Color.clear;
             }
         }
-        
-       
+
+
         if (SceneManager.GetActiveScene().name != "Main")
         {
             item.layer = 22;
@@ -1188,10 +1188,19 @@ public class AvatarController : MonoBehaviour
 
             if (XanaConstants.xanaConstants.isNFTEquiped)
             {
-                if (type == "Hair")
-                    item.layer = 25;
-                else
-                    item.layer = 26;
+                if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 1)
+                {
+
+                    if (type == "Hair")
+                        item.layer = 25;
+                    else
+                        item.layer = 26;
+                }
+                if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 0)
+                {
+                    item.layer = 11;
+                }
+
             }
             else
             {
@@ -1283,8 +1292,8 @@ public class AvatarController : MonoBehaviour
         //}
 
     }
-   
-    
+
+
     // For Multiplayer Hairs Only
     public void StichItem(int itemId, GameObject item, string type, GameObject applyOn, Color hairColor)
     {
