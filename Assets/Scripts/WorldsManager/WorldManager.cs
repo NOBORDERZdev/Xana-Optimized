@@ -376,12 +376,24 @@ public class WorldManager : MonoBehaviour
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
-        }
-        else
-        {
-            print("play btnn here");
+            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            {
+                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            }
+            else
+            {
+                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                {
+                    Debug.Log("YOU DONT HAVE DEEMO NFT");
+                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                    return;
+                }
+
+            }
+            //////
+            {
+                print("play btnn here");
             if (PlayerPrefs.HasKey("Equiped"))
             {
                 Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
@@ -407,7 +419,16 @@ public class WorldManager : MonoBehaviour
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
 
-
+            if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            {
+                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                {
+                    Debug.Log("YOU DONT HAVE DEEMO NFT");
+                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                    return;
+                }
+            }
+            /////
 
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
