@@ -42,6 +42,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetenterUserNamePanal;
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
+    public GameObject BlackScreen;
     //hardik changes
     public string nftlist;
     //end

@@ -122,6 +122,7 @@ public class PresetData_Jsons : MonoBehaviour
                 if (PlayerPrefs.GetInt("WalletLogin") != 1)
                 {
                     UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
+                    UserRegisterationManager.instance.BlackScreen.SetActive(true);
                     //  StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                 }
                 if (UserRegisterationManager.instance.shownWelcome)
