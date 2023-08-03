@@ -13,6 +13,7 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Rendering.Universal;
 
 public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -515,6 +516,20 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
             GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
+
+            //Post Process enable for Builder Scene
+            firstPersonCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
+            environmentCameraRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
+            Camera freeCam = this.GetComponent<ChecklPostProcessing>().freeCam;
+            freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
+
+            //set Far & Near value same as builder for flickering assets testing
+            firstPersonCamera.nearClipPlane = 0.03f;
+            environmentCameraRender.nearClipPlane = 0.03f;
+            freeCam.nearClipPlane = 0.03f;
+            firstPersonCamera.farClipPlane = 1000;
+            environmentCameraRender.farClipPlane = 1000;
+            freeCam.farClipPlane = 1000;
         }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
