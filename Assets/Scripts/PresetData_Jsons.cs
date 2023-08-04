@@ -119,6 +119,14 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
+                if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                {
+                    UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
+                    UserRegisterationManager.instance.BlackScreen.SetActive(true);
+                    //  StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                }
+                if (UserRegisterationManager.instance.shownWelcome)
+                    UserRegisterationManager.instance.ShowWelcomeClosed();
 
                 if (PlayerPrefs.GetInt("iSignup") == 1)
                 {
@@ -130,10 +138,10 @@ public class PresetData_Jsons : MonoBehaviour
                     Invoke("abcd", 5f);
 
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                  //  UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                  //  UserRegisterationManager.instance.usernamePanal.SetActive(true);
                     // enable check so that it will know that index is comming from start of the game
-                    UserRegisterationManager.instance.checkbool_preser_start = false;
+                   // UserRegisterationManager.instance.checkbool_preser_start = false;
                 }
             }
             else
@@ -208,6 +216,8 @@ public class PresetData_Jsons : MonoBehaviour
     }
     void abcd()
     {
+       
+
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         print("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
