@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 721177378}
   - component: {fileID: 2125479937}
   - component: {fileID: 495568709}
+  - component: {fileID: 495568708}
   m_Layer: 0
   m_Name: SignUpManager
   m_TagString: Untagged
@@ -61,6 +62,7 @@ MonoBehaviour:
   ForgetenterUserNamePanal: {fileID: 0}
   ForgetEnterPasswordPanal: {fileID: 0}
   LogoutfromOtherDevicePanel: {fileID: 0}
+  BlackScreen: {fileID: 0}
   nftlist: 
   NormalColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   HighlightedColor: {r: 0.22352941, g: 0.58431375, b: 1, a: 1}
@@ -372,3 +374,20 @@ MonoBehaviour:
     - breaking down
     - HIROKO KOSHINO
     - deemo
+--- !u!114 &495568708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686378168569390519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d8a6130086727445b31e4716beaf574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  video_download_link: 
+  player: {fileID: 0}
+  button: {fileID: 0}
+  Image: {fileID: 0}
+  SplashvideoObj: {fileID: 0}
