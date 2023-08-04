@@ -22,7 +22,7 @@ public class SplashVideoPlay : MonoBehaviour
         video_download_link = SplashVideoDownloader.splashVideoDownloader.playbackDir;
 #endif
 #if UNITY_IPHONE
-       video_download_link= "file://" + SplashVideoDownloader.splashVideoDownloader.playbackDir;
+       video_download_link=SplashVideoDownloader.splashVideoDownloader.playbackDir;
 #endif
         player.url = video_download_link;
         player.loopPointReached += End;
