@@ -13,7 +13,7 @@ public class SpecialItemComponent : ItemComponent
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player") || (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             TimeStats._intensityChangerStop?.Invoke();
             // Ninja Component Stops

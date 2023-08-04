@@ -30,25 +30,25 @@ public class CreditShopManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        // PlayerPrefs.DeleteAll();
-        m_ItemList.Clear();
-        for (int i = 0; i < m_Bundles.Length; i++)
-        {
-            GameObject L_ItemBtnObj = Instantiate(m_ItemlistPrefab, m_StoreContainer.transform);
-            L_ItemBtnObj.GetComponent<ProductDetails>().ProductAmount.text = m_Bundles[i].m_Amount.ToString();
-            L_ItemBtnObj.GetComponent<ProductDetails>().ProductPrice.text = m_Bundles[i].m_Price.ToString() + "$";
-            L_ItemBtnObj.GetComponent<ProductDetails>().InAppKey = m_Bundles[i].InAppKey.ToString();
-       //   L_ItemBtnObj.gameObject.GetComponent<IAPButton>().enabled = false;
-            m_ItemList.Add(L_ItemBtnObj.GetComponent<ProductDetails>());
-        }   
-        if (PlayerPrefs.GetString("PaymentMethod") == "CreditCard")   
-        {
-            EnableAllInAppBtns();
-        }
-        UpdateCoinsAmount();
-    }
+    //void Start()
+    //{
+    //    // PlayerPrefs.DeleteAll();
+    //    m_ItemList.Clear();
+    //    for (int i = 0; i < m_Bundles.Length; i++)
+    //    {
+    //        GameObject L_ItemBtnObj = Instantiate(m_ItemlistPrefab, m_StoreContainer.transform);
+    //        L_ItemBtnObj.GetComponent<ProductDetails>().ProductAmount.text = m_Bundles[i].m_Amount.ToString();
+    //        L_ItemBtnObj.GetComponent<ProductDetails>().ProductPrice.text = m_Bundles[i].m_Price.ToString() + "$";
+    //        L_ItemBtnObj.GetComponent<ProductDetails>().InAppKey = m_Bundles[i].InAppKey.ToString();
+    //   //   L_ItemBtnObj.gameObject.GetComponent<IAPButton>().enabled = false;
+    //        m_ItemList.Add(L_ItemBtnObj.GetComponent<ProductDetails>());
+    //    }   
+    //    if (PlayerPrefs.GetString("PaymentMethod") == "CreditCard")   
+    //    {
+    //        EnableAllInAppBtns();
+    //    }
+    //    UpdateCoinsAmount();
+    //}
 
     void EnableAllInAppBtns()
     {

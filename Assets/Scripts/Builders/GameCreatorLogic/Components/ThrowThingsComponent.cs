@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Models;
 using Photon.Pun;
@@ -15,7 +13,7 @@ public class ThrowThingsComponent : MonoBehaviour
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
             GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);

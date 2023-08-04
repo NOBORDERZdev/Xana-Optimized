@@ -15,7 +15,8 @@ public class ItemGFXHandler : ItemComponent
 
     private void OnEnable()
     {
-        if ((ItemBase.categoryId.Value + ItemBase.subCategoryId.Value).Equals("EFT02")) UpdateMaterialShaders();
+        if (gameObject.name.Contains("pfEFT02"))
+            UpdateMaterialShaders();
     }
 
     public void SetMaterialColorFromItemData(Color color)
@@ -43,19 +44,14 @@ public class ItemGFXHandler : ItemComponent
                 {
                     _renderers[i].sharedMaterials.ForEachItem((d) =>
                     {
-                        if (d.shader.name.Contains("Procedural") || d.shader.name.Contains("Ubershader"))
+                        if (d.shader==GamificationComponentData.instance.proceduralRingShader || d.shader==GamificationComponentData.instance.uberShader)
                         {
-                            //Debug.LogFormat("{0}-{1}", _renderers[i].name, d.shader.name);
-                            //Debug.LogFormat("{0}-{1}", d.shader.isSupported, d.shader.subshaderCount);
                             if (s == null || !s.name.Equals(d.shader.name))
                             {
-                                //Debug.Log("finding shader: " + d.shader.name);
                                 s = Shader.Find(d.shader.name);
                             }
                             if (s != null)
                             {
-                                //Debug.Log("found shader: " + s.name);
-                                //Debug.LogFormat("{0}-{1}", s.isSupported, s.subshaderCount);
                                 d.shader = s;
                             }
                         }

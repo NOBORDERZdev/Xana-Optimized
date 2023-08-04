@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class MeshCombiner : MonoBehaviour
 {
@@ -34,7 +32,7 @@ public class MeshCombiner : MonoBehaviour
     bool CheckComponent(ItemData data)
     {
         print(data.rotatorComponent);
-        if (data.rotatorComponentData.IsActive || data.collectibleComponentData.IsActive || data.translateComponentData.IsActive || data.toFroComponentData.IsActive || data.scalerComponentData.IsActive || data.rotateComponentData.IsActive || data.enemyNPCComponentData.IsActive || data.quizComponentData.IsActive || data.blindfoldedDisplayComponentData.IsActive || data.addForceComponentData.isActive || data.avatarChangerComponentData.IsActive || data.doorKeyComponentData.IsActive || data.chestKeyComponentData.IsActive || data.speicalItemComponentData.IsActive || data.ninjaComponentData.IsActive)
+        if (data.rotatorComponentData.IsActive || data.collectibleComponentData.IsActive || data.translateComponentData.IsActive || data.toFroComponentData.IsActive || data.scalerComponentData.IsActive || data.rotateComponentData.IsActive || data.enemyNPCComponentData.IsActive || data.quizComponentData.IsActive || data.blindfoldedDisplayComponentData.IsActive || data.addForceComponentData.isActive || data.avatarChangerComponentData.IsActive || data.doorKeyComponentData.IsActive || data.chestKeyComponentData.IsActive || data.speicalItemComponentData.IsActive || data.ninjaComponentData.IsActive || data.throwThingsComponentData.IsActive)
             return true;
         else return false;
     }

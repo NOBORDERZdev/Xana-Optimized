@@ -43,6 +43,8 @@ public class BuilderMapDownload : MonoBehaviour
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
 
+    List<XanaItem> xanaItems = new List<XanaItem>();
+
     #region UNITY_METHOD
     private void OnEnable()
     {
@@ -247,6 +249,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
+        xanaItems.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue /= count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
@@ -257,6 +260,8 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 yield return null;
             }
+            //yield return _async;
+
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
@@ -264,8 +269,24 @@ public class BuilderMapDownload : MonoBehaviour
 
             LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
         CallBack();
+    }
+
+    //Set Hierarchy same as builder
+    private void SetObjectHirarchy()
+    {
+        foreach (XanaItem xanaItem in xanaItems)
+        {
+            if (!xanaItem.itemData.ParentID.Equals(""))
+            {
+                string parentId = xanaItem.itemData.ParentID;
+                XanaItem parentItem = xanaItems.Find(x=>x.itemData.RuntimeItemID==parentId);
+                if (parentItem != null)
+                {
+                    xanaItem.transform.SetParent(parentItem.transform);
+                }
+            }
+        }
     }
 
     public string DecompressString(string compressedText)
@@ -424,23 +445,35 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetLensFlareData(LensFlareDataSRP lensFlareData, float lensFlareScale)
     {
-        if (directionalLight.gameObject.GetComponent<LensFlareComponentSRP>() != null)
+
+        LensFlareComponentSRP lensFlareComponent = directionalLight.gameObject.GetComponent<LensFlareComponentSRP>();
+
+        if (lensFlareComponent == null)
         {
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
+            lensFlareComponent = directionalLight.gameObject.AddComponent<LensFlareComponentSRP>();
+            lensFlareComponent.occlusionRadius = 0.35f;
         }
-        else
-        {
-            directionalLight.gameObject.AddComponent<LensFlareComponentSRP>().occlusionRadius = 0.35f;
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
-        }
+
+        lensFlareComponent.lensFlareData = lensFlareData;
+        lensFlareComponent.scale = lensFlareScale;
 
     }
 
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
+        Invoke(nameof(XanaSetItemData),2.5f);
+    }
+
+    void XanaSetItemData()
+    {
+        foreach (XanaItem xanaItem in xanaItems)
+        {
+            xanaItem.SetData(xanaItem.itemData);
+        }
+        //BuilderEventManager.CombineMeshes?.Invoke();
+        //Set Hierarchy same as builder
+        SetObjectHirarchy();
     }
 
 
@@ -483,7 +516,8 @@ public class BuilderMapDownload : MonoBehaviour
         rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
-        xanaItem.SetData(_itemData);
+        xanaItem.itemData = _itemData;
+        newObj.transform.localScale = _itemData.Scale;
         if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
@@ -498,6 +532,13 @@ public class BuilderMapDownload : MonoBehaviour
         {
             childTransform.tag = "Item";
         }
+
+        //Add game object into List for Hirarchy
+        xanaItems.Add(xanaItem);
+
+
+        if (!_itemData.isVisible)
+            newObj.SetActive(false);
         //int count = levelData.otherItems.Count;
         //for (int i = 0; i < count; i++)
         //{

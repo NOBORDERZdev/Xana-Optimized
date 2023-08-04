@@ -8,6 +8,8 @@ using UnityEngine.Networking;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using SuperStar.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 //using HSVPicker;
 
 
@@ -17,10 +19,10 @@ public class StoreManager : MonoBehaviour
     public static StoreManager instance;
     [Header("Main Panels Store")]
     public GameObject StoreItemsPanel;
-    public GameObject CheckOutBuyItemPanel;
+    //public GameObject CheckOutBuyItemPanel;
     public GameObject ShowSignUpPanel;
-    public GameObject LowCoinsPanel;
-    public GameObject ShopBuyCoinsPanel;
+    //public GameObject LowCoinsPanel;
+    //public GameObject ShopBuyCoinsPanel;
     public EnumClass.CategoryEnum CategoriesEnumVar;
     public Text textskin;
 
@@ -104,16 +106,16 @@ public class StoreManager : MonoBehaviour
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
 
-    [Header("Buy Panel")]
-    public GameObject BuyItemPrefab;
-    public Transform BuyPanelParentOfBtns;
-    public List<GameObject> TotalObjectsInBuyPanel;
-    public List<GameObject> TotalSelectedInBuyPanel;
-    public Text TotalPriceBuyPanelTxt;
-    public Text TotalItemsBuyPanelTxt;
-    public GameObject BuyBtnCheckOut;
-    public string[] ArrayofBuyItems;
-    private int TotalItemPriceCheckOut;
+    //[Header("Buy Panel")]
+    //public GameObject BuyItemPrefab;
+    //public Transform BuyPanelParentOfBtns;
+    //public List<GameObject> TotalObjectsInBuyPanel;
+    //public List<GameObject> TotalSelectedInBuyPanel;
+    //public Text TotalPriceBuyPanelTxt;
+    //public Text TotalItemsBuyPanelTxt;
+    //public GameObject BuyBtnCheckOut;
+    //public string[] ArrayofBuyItems;
+    //private int TotalItemPriceCheckOut;
 
 
 
@@ -121,7 +123,7 @@ public class StoreManager : MonoBehaviour
     public bool colorMode = false;
     public GameObject colorBtn;
     public BodyColorCustomization bodyColorCustomization;
-    public CustomFakeStore fakeStore;
+    //public CustomFakeStore fakeStore;
     public SliderColorPicker skinColorSlider;
     // Get Data FromJsonFiles
     [HideInInspector]
@@ -1059,7 +1061,7 @@ public class StoreManager : MonoBehaviour
         //Debug.Log("Store hair data call====");
         SelectPanel(1);
         PlayerPrefs.SetInt("TotalCoins", 0);
-        UpdateUserCoins();
+        //UpdateUserCoins();
         if (!GameManager.Instance.OnceGuestBool)
         {
             RefreshDefault();
@@ -1136,10 +1138,10 @@ public class StoreManager : MonoBehaviour
     public void OpenMainPanel(string TakePanel)
     {
         StoreItemsPanel.SetActive(false);
-        CheckOutBuyItemPanel.SetActive(false);
+        //CheckOutBuyItemPanel.SetActive(false);
         ShowSignUpPanel.SetActive(false);
-        LowCoinsPanel.SetActive(false);
-        ShopBuyCoinsPanel.SetActive(false);
+        //LowCoinsPanel.SetActive(false);
+        //ShopBuyCoinsPanel.SetActive(false);
         switch (TakePanel)
         {
             case "StoreItemsPanel":
@@ -1150,7 +1152,7 @@ public class StoreManager : MonoBehaviour
                 }
             case "CheckOutBuyItemPanel":
                 {
-                    CheckOutBuyItemPanel.SetActive(true);
+                    //CheckOutBuyItemPanel.SetActive(true);
                     break;
                 }
             case "ShowSignUpPanel":
@@ -1161,13 +1163,13 @@ public class StoreManager : MonoBehaviour
                 }
             case "LowCoinsPanel":
                 {
-                    CheckOutBuyItemPanel.SetActive(true);
-                    LowCoinsPanel.SetActive(true);
+                    //CheckOutBuyItemPanel.SetActive(true);
+                    //LowCoinsPanel.SetActive(true);
                     break;
                 }
             case "ShopBuyCoinsPanel":
                 {
-                    ShopBuyCoinsPanel.SetActive(true);
+                    //ShopBuyCoinsPanel.SetActive(true);
                     break;
                 }
         }
@@ -1355,14 +1357,14 @@ public class StoreManager : MonoBehaviour
     }
 
 
-    public void UpdateUserCoins()
-    {
-        string totalCoins = PlayerPrefs.GetInt("TotalCoins").ToString();
-        double coins = Double.Parse(totalCoins);
-        totalCoins = String.Format("{0:n0}", coins);
-        TotalGameCoins.text = totalCoins;
-        CreditShopManager.instance.TotalCoins.text = totalCoins;
-    }
+    //public void UpdateUserCoins()
+    //{
+    //    string totalCoins = PlayerPrefs.GetInt("TotalCoins").ToString();
+    //    double coins = Double.Parse(totalCoins);
+    //    totalCoins = String.Format("{0:n0}", coins);
+    //    //TotalGameCoins.text = totalCoins;
+    //    CreditShopManager.instance.TotalCoins.text = totalCoins;
+    //}
     // Update is called once per frame
 
     public void OpenClothContainerPanel(int m_GetIndex)
@@ -2028,188 +2030,188 @@ public class StoreManager : MonoBehaviour
         }
         BuyCountertxt.text = TotalBtnlist.Count.ToString();
     }
-    public void ClearParentFromObjs()
-    {
-        if (BuyPanelParentOfBtns.childCount > 0)
-        {
-            for (int i = 0; i < BuyPanelParentOfBtns.childCount; i++)
-            {
-                Destroy(BuyPanelParentOfBtns.GetChild(i).gameObject);
-            }
-        }
-    }
+    //public void ClearParentFromObjs()
+    //{
+    //    if (BuyPanelParentOfBtns.childCount > 0)
+    //    {
+    //        for (int i = 0; i < BuyPanelParentOfBtns.childCount; i++)
+    //        {
+    //            Destroy(BuyPanelParentOfBtns.GetChild(i).gameObject);
+    //        }
+    //    }
+    //}
 
 
 
-    public void GoToCheckOut()
-    {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+    //public void GoToCheckOut()
+    //{
+    //    AssetBundle.UnloadAllAssetBundles(false);
+    //    Resources.UnloadUnusedAssets();
 
-        int Counter = 0;
-        int TotalPrice = 0;
-        TotalObjectsInBuyPanel.Clear();
+    //    int Counter = 0;
+    //    int TotalPrice = 0;
+    //    TotalObjectsInBuyPanel.Clear();
 
-        if (BuyPanelParentOfBtns.childCount > 0)
-        {
-            ClearParentFromObjs();
-        }
-        for (int i = 0; i < TotalBtnlist.Count; i++)
-        {
-            if (TotalBtnlist[i].SelectedBool)
-            {
-                Counter += 1;
-                TotalPrice += int.Parse(TotalBtnlist[i].PriceTxt.text);
-                print(Counter);
-                TotalObjectsInBuyPanel.Add(TotalBtnlist[i].gameObject);
-            }
-        }
-        if (Counter > 0)
-        {
-            if (!UserRegisterationManager.instance.LoggedIn)
-            {
-                OpenMainPanel("ShowSignUpPanel");
-            }
-            else
-            {
-                TotalItemPriceCheckOut = 0;
-                TotalSelectedInBuyPanel.Clear();
+    //    if (BuyPanelParentOfBtns.childCount > 0)
+    //    {
+    //        ClearParentFromObjs();
+    //    }
+    //    for (int i = 0; i < TotalBtnlist.Count; i++)
+    //    {
+    //        if (TotalBtnlist[i].SelectedBool)
+    //        {
+    //            Counter += 1;
+    //            TotalPrice += int.Parse(TotalBtnlist[i].PriceTxt.text);
+    //            print(Counter);
+    //            TotalObjectsInBuyPanel.Add(TotalBtnlist[i].gameObject);
+    //        }
+    //    }
+    //    if (Counter > 0)
+    //    {
+    //        if (!UserRegisterationManager.instance.LoggedIn)
+    //        {
+    //            OpenMainPanel("ShowSignUpPanel");
+    //        }
+    //        else
+    //        {
+    //            TotalItemPriceCheckOut = 0;
+    //            TotalSelectedInBuyPanel.Clear();
 
-                StoreItemsPanel.SetActive(false);
-                CheckOutBuyItemPanel.SetActive(true);
-                for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
-                {
-                    GameObject L_ItemBtnObj = Instantiate(BuyItemPrefab, BuyPanelParentOfBtns.transform);
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().PriceTxt.text = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().PriceTxt.text;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().CategoryTxt.text = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar.ToString();
+    //            StoreItemsPanel.SetActive(false);
+    //            CheckOutBuyItemPanel.SetActive(true);
+    //            for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
+    //            {
+    //                GameObject L_ItemBtnObj = Instantiate(BuyItemPrefab, BuyPanelParentOfBtns.transform);
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().PriceTxt.text = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().PriceTxt.text;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().CategoryTxt.text = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar.ToString();
 
-                    // Add All Value from One Button to Buy Checkout Btn
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkAndroid = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkAndroid;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkIos = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkIos;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkWindows = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkWindows;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().createdAt = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().createdAt;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().createdBy = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().createdBy;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().iconLink = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().iconLink;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().id = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().id;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isFavourite = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isFavourite;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isOccupied = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isOccupied;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isPaid = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isPaid;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isPurchased = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isPurchased;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().name = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().name;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().price = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().price;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().categoryId = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().categoryId;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().subCategory = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().subCategory;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().updatedAt = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().updatedAt;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().itemTags = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().itemTags;
-                    L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().CategoriesEnumVar = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar;
-                    TotalSelectedInBuyPanel.Add(L_ItemBtnObj.gameObject);
-                    TotalItemPriceCheckOut += int.Parse(L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().PriceTxt.text);
-                }
-                TotalPriceBuyPanelTxt.text = TotalItemPriceCheckOut.ToString();
-                TotalItemsBuyPanelTxt.text = TotalObjectsInBuyPanel.Count.ToString();
-            }
-        }
-    }
-    public void BuyItems()
-    {
-        if (PlayerPrefs.GetInt("TotalCoins") < TotalItemPriceCheckOut)
-        {
-            print("Price is less than Selected Items");
-        }
-        else if (PlayerPrefs.GetInt("TotalCoins") >= TotalItemPriceCheckOut)
-        {
-            if (TotalObjectsInBuyPanel.Count > 0)
-            {
-                for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
-                {
-                    EnumClass.CategoryEnum selectedEnum = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar;
-                    switch (selectedEnum)
-                    {
-                        case EnumClass.CategoryEnum.Head:
-                            {
-                                if (CategorieslistHeads.Contains(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>()))
-                                {
-                                    int Getindex = CategorieslistHeads.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                    CategorieslistHeads[Getindex].price = "0";
-                                    CategorieslistHeads[Getindex].isPaid = "true";
-                                    CategorieslistHeads[Getindex].isPurchased = "true";
-                                }
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Face:
-                            {
-                                int Getindex = CategorieslistFace.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistFace[Getindex].price = "0";
-                                CategorieslistFace[Getindex].isPaid = "true";
-                                CategorieslistFace[Getindex].isPurchased = "true";
+    //                // Add All Value from One Button to Buy Checkout Btn
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkAndroid = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkAndroid;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkIos = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkIos;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().assetLinkWindows = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().assetLinkWindows;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().createdAt = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().createdAt;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().createdBy = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().createdBy;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().iconLink = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().iconLink;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().id = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().id;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isFavourite = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isFavourite;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isOccupied = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isOccupied;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isPaid = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isPaid;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().isPurchased = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().isPurchased;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().name = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().name;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().price = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().price;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().categoryId = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().categoryId;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().subCategory = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().subCategory;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().updatedAt = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().updatedAt;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().itemTags = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().itemTags;
+    //                L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().CategoriesEnumVar = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar;
+    //                TotalSelectedInBuyPanel.Add(L_ItemBtnObj.gameObject);
+    //                TotalItemPriceCheckOut += int.Parse(L_ItemBtnObj.GetComponent<ItemDetailBuyItem>().PriceTxt.text);
+    //            }
+    //            TotalPriceBuyPanelTxt.text = TotalItemPriceCheckOut.ToString();
+    //            TotalItemsBuyPanelTxt.text = TotalObjectsInBuyPanel.Count.ToString();
+    //        }
+    //    }
+    //}
+    //public void BuyItems()
+    //{
+    //    if (PlayerPrefs.GetInt("TotalCoins") < TotalItemPriceCheckOut)
+    //    {
+    //        print("Price is less than Selected Items");
+    //    }
+    //    else if (PlayerPrefs.GetInt("TotalCoins") >= TotalItemPriceCheckOut)
+    //    {
+    //        if (TotalObjectsInBuyPanel.Count > 0)
+    //        {
+    //            for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
+    //            {
+    //                EnumClass.CategoryEnum selectedEnum = TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().CategoriesEnumVar;
+    //                switch (selectedEnum)
+    //                {
+    //                    case EnumClass.CategoryEnum.Head:
+    //                        {
+    //                            if (CategorieslistHeads.Contains(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>()))
+    //                            {
+    //                                int Getindex = CategorieslistHeads.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                                CategorieslistHeads[Getindex].price = "0";
+    //                                CategorieslistHeads[Getindex].isPaid = "true";
+    //                                CategorieslistHeads[Getindex].isPurchased = "true";
+    //                            }
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Face:
+    //                        {
+    //                            int Getindex = CategorieslistFace.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistFace[Getindex].price = "0";
+    //                            CategorieslistFace[Getindex].isPaid = "true";
+    //                            CategorieslistFace[Getindex].isPurchased = "true";
 
 
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Inner:
-                            {
-                                int Getindex = CategorieslistInner.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistInner[Getindex].price = "0";
-                                CategorieslistInner[Getindex].isPaid = "true";
-                                CategorieslistInner[Getindex].isPurchased = "true";
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Outer:
-                            {
-                                int Getindex = CategorieslistOuter.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistOuter[Getindex].price = "0";
-                                CategorieslistOuter[Getindex].isPaid = "true";
-                                CategorieslistOuter[Getindex].isPurchased = "true";
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Accesary:
-                            {
-                                int Getindex = CategorieslistAccesary.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistAccesary[Getindex].price = "0";
-                                CategorieslistAccesary[Getindex].isPaid = "true";
-                                CategorieslistAccesary[Getindex].isPurchased = "true";
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Bottom:
-                            {
-                                int Getindex = CategorieslistBottom.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistBottom[Getindex].price = "0";
-                                CategorieslistBottom[Getindex].isPaid = "true";
-                                CategorieslistBottom[Getindex].isPurchased = "true";
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Socks:
-                            {
-                                int Getindex = CategorieslistSocks.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistSocks[Getindex].price = "0";
-                                CategorieslistSocks[Getindex].isPaid = "true";
-                                CategorieslistSocks[Getindex].isPurchased = "true";
-                                break;
-                            }
-                        case EnumClass.CategoryEnum.Shoes:
-                            {
-                                int Getindex = CategorieslistShoes.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
-                                CategorieslistShoes[Getindex].price = "0";
-                                CategorieslistShoes[Getindex].isPaid = "true";
-                                CategorieslistShoes[Getindex].isPurchased = "true";
-                                break;
-                            }
-                    }
-                }
-                PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") - TotalItemPriceCheckOut);
-            }
-            UpdateItemsDetails();
-            CloseCheckOutPanel();
-        }
-    }
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Inner:
+    //                        {
+    //                            int Getindex = CategorieslistInner.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistInner[Getindex].price = "0";
+    //                            CategorieslistInner[Getindex].isPaid = "true";
+    //                            CategorieslistInner[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Outer:
+    //                        {
+    //                            int Getindex = CategorieslistOuter.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistOuter[Getindex].price = "0";
+    //                            CategorieslistOuter[Getindex].isPaid = "true";
+    //                            CategorieslistOuter[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Accesary:
+    //                        {
+    //                            int Getindex = CategorieslistAccesary.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistAccesary[Getindex].price = "0";
+    //                            CategorieslistAccesary[Getindex].isPaid = "true";
+    //                            CategorieslistAccesary[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Bottom:
+    //                        {
+    //                            int Getindex = CategorieslistBottom.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistBottom[Getindex].price = "0";
+    //                            CategorieslistBottom[Getindex].isPaid = "true";
+    //                            CategorieslistBottom[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Socks:
+    //                        {
+    //                            int Getindex = CategorieslistSocks.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistSocks[Getindex].price = "0";
+    //                            CategorieslistSocks[Getindex].isPaid = "true";
+    //                            CategorieslistSocks[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                    case EnumClass.CategoryEnum.Shoes:
+    //                        {
+    //                            int Getindex = CategorieslistShoes.IndexOf(TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>());
+    //                            CategorieslistShoes[Getindex].price = "0";
+    //                            CategorieslistShoes[Getindex].isPaid = "true";
+    //                            CategorieslistShoes[Getindex].isPurchased = "true";
+    //                            break;
+    //                        }
+    //                }
+    //            }
+    //            //PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") - TotalItemPriceCheckOut);
+    //        }
+    //        UpdateItemsDetails();
+    //        //CloseCheckOutPanel();
+    //    }
+    //}
     void UpdateItemsDetails()
     {
-        UpdateUserCoins();
-        for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
-        {
-            TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().DeSelectAfterBuying();
-        }
-        TotalObjectsInBuyPanel.Clear();
+        //UpdateUserCoins();
+        //for (int i = 0; i < TotalObjectsInBuyPanel.Count; i++)
+        //{
+        //    TotalObjectsInBuyPanel[i].GetComponent<ItemDetail>().DeSelectAfterBuying();
+        //}
+        //TotalObjectsInBuyPanel.Clear();
 
         // ShirtsSelection
         for (int i = 0; i < CategorieslistHeads.Count; i++)
@@ -2252,67 +2254,67 @@ public class StoreManager : MonoBehaviour
             CategorieslistShoes[i].UpdateValues();
         }
     }
-    public void RemoveItemsFromCheckOut(GameObject itemDetailsBtn)
-    {
-        if (TotalSelectedInBuyPanel.Contains(itemDetailsBtn))
-        {
-            TotalSelectedInBuyPanel.Remove(itemDetailsBtn);
-            UpdateCheckOutCash();
-        }
-        // TotalObjectsInBuyPanel
-    }
-    public void AddItemsFromCheckOut(GameObject itemDetailsBtn)
-    {
-        if (!TotalSelectedInBuyPanel.Contains(itemDetailsBtn))
-        {
-            TotalSelectedInBuyPanel.Add(itemDetailsBtn);
-            UpdateCheckOutCash();
-        }
-        // TotalObjectsInBuyPanel
-    }
-    public void BuyItemsbyPurchaseAPI()
-    {
-        List<string> purchaseItemsIDs = new List<string>();
-        if (PlayerPrefs.GetInt("TotalCoins") < TotalItemPriceCheckOut)
-        {
-            OpenMainPanel("LowCoinsPanel");
-        }
-        else if (PlayerPrefs.GetInt("TotalCoins") >= TotalItemPriceCheckOut)
-        {
-            if (TotalSelectedInBuyPanel.Count > 0)
-            {
-                for (int i = 0; i < TotalSelectedInBuyPanel.Count; i++)
-                {
-                    purchaseItemsIDs.Add(TotalSelectedInBuyPanel[i].GetComponent<ItemDetailBuyItem>().id.ToString());
-                }
-            }
-            ArrayofBuyItems = purchaseItemsIDs.ToArray();
-            SubmitPurchaseAPI(ArrayofBuyItems);
-        }
-    }
-    public void UpdateCheckOutCash()
-    {
-        TotalItemPriceCheckOut = 0;
-        if (TotalSelectedInBuyPanel.Count == 0)
-        {
-            TotalItemPriceCheckOut = 0;
-            BuyBtnCheckOut.GetComponent<Button>().interactable = false;
-        }
-        else
-        {
-            BuyBtnCheckOut.GetComponent<Button>().interactable = true;
-            for (int i = 0; i < TotalSelectedInBuyPanel.Count; i++)
-            {
-                TotalItemPriceCheckOut += int.Parse(TotalSelectedInBuyPanel[i].GetComponent<ItemDetailBuyItem>().PriceTxt.text);
-            }
-        }
-        TotalPriceBuyPanelTxt.text = TotalItemPriceCheckOut.ToString();
-        TotalItemsBuyPanelTxt.text = TotalSelectedInBuyPanel.Count.ToString();
-    }
-    public void CloseCheckOutPanel()
-    {
-        CheckOutBuyItemPanel.SetActive(false);
-    }
+    //public void RemoveItemsFromCheckOut(GameObject itemDetailsBtn)
+    //{
+    //    if (TotalSelectedInBuyPanel.Contains(itemDetailsBtn))
+    //    {
+    //        TotalSelectedInBuyPanel.Remove(itemDetailsBtn);
+    //        UpdateCheckOutCash();
+    //    }
+    //    // TotalObjectsInBuyPanel
+    //}
+    //public void AddItemsFromCheckOut(GameObject itemDetailsBtn)
+    //{
+    //    if (!TotalSelectedInBuyPanel.Contains(itemDetailsBtn))
+    //    {
+    //        TotalSelectedInBuyPanel.Add(itemDetailsBtn);
+    //        UpdateCheckOutCash();
+    //    }
+    //    // TotalObjectsInBuyPanel
+    //}
+    //public void BuyItemsbyPurchaseAPI()
+    //{
+    //    List<string> purchaseItemsIDs = new List<string>();
+    //    if (PlayerPrefs.GetInt("TotalCoins") < TotalItemPriceCheckOut)
+    //    {
+    //        OpenMainPanel("LowCoinsPanel");
+    //    }
+    //    else if (PlayerPrefs.GetInt("TotalCoins") >= TotalItemPriceCheckOut)
+    //    {
+    //        if (TotalSelectedInBuyPanel.Count > 0)
+    //        {
+    //            for (int i = 0; i < TotalSelectedInBuyPanel.Count; i++)
+    //            {
+    //                purchaseItemsIDs.Add(TotalSelectedInBuyPanel[i].GetComponent<ItemDetailBuyItem>().id.ToString());
+    //            }
+    //        }
+    //        ArrayofBuyItems = purchaseItemsIDs.ToArray();
+    //        SubmitPurchaseAPI(ArrayofBuyItems);
+    //    }
+    //}
+    //public void UpdateCheckOutCash()
+    //{
+    //    TotalItemPriceCheckOut = 0;
+    //    if (TotalSelectedInBuyPanel.Count == 0)
+    //    {
+    //        TotalItemPriceCheckOut = 0;
+    //        BuyBtnCheckOut.GetComponent<Button>().interactable = false;
+    //    }
+    //    else
+    //    {
+    //        BuyBtnCheckOut.GetComponent<Button>().interactable = true;
+    //        for (int i = 0; i < TotalSelectedInBuyPanel.Count; i++)
+    //        {
+    //            TotalItemPriceCheckOut += int.Parse(TotalSelectedInBuyPanel[i].GetComponent<ItemDetailBuyItem>().PriceTxt.text);
+    //        }
+    //    }
+    //    TotalPriceBuyPanelTxt.text = TotalItemPriceCheckOut.ToString();
+    //    TotalItemsBuyPanelTxt.text = TotalSelectedInBuyPanel.Count.ToString();
+    //}
+    //public void CloseCheckOutPanel()
+    //{
+    //    CheckOutBuyItemPanel.SetActive(false);
+    //}
     public class EnumClass : MonoBehaviour
     {
         public enum CategoryEnum
@@ -2425,7 +2427,7 @@ public class StoreManager : MonoBehaviour
         {
             temp.SetActive(false);
         }
-        CloseCheckOutPanel();
+        //CloseCheckOutPanel();
         BuyCountertxt.text = "0";
     }
     [System.Serializable]
@@ -2454,9 +2456,63 @@ public class StoreManager : MonoBehaviour
 
 
     //  UserDetails Starts here ************************************************************************
-    private void SubmitUserDetailAPI()
+    private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
+    private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+    public void SubmitUserDetailAPI()
     {
-        StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
+        //StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
+        string localAPI = "";
+        if (!APIBaseUrlChange.instance.IsXanaLive)
+        {
+            //  localAPI = string.Format(TestNetOwnednftAPI, OwnedNFTPageNumb, OwnedNFTPageSize) + publicID + Postfix;
+            localAPI = TestNetXenyTokenAPI;
+        }
+        else
+        {
+            // Mainnet Api
+            localAPI = MainNetXenyTokenAPI;
+        }
+        StartCoroutine(XenyTokenUserAddrerss(localAPI));
+    }
+    private RequestedData requestData;
+
+    IEnumerator XenyTokenUserAddrerss(string url)
+    {
+
+        requestData = new RequestedData();
+        requestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+        string jsonData = JsonConvert.SerializeObject(requestData);
+        // Convert the JSON data to a byte array
+        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+        UnityWebRequest request = UnityWebRequest.Post(url, "POST");
+        request.uploadHandler = new UploadHandlerRaw(postData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        Debug.Log("hamara data v" + request.downloadHandler.text);
+
+        if (!request.isHttpError && !request.isNetworkError)
+        {
+            if (request.error == null)
+            {
+                JObject json = JObject.Parse(request.downloadHandler.text);
+                string token = json["userXenyTokens"].ToString();
+                TotalGameCoins.text = token;
+                print("xeny coins are = " + token);
+            }
+        }
+        else
+        {
+            if (request.isNetworkError)
+            {
+                print("Error Occured " + request.error.ToUpper());
+            }
+        }
+        request.Dispose();
     }
     // Submit GetUser Details        
     IEnumerator HitGetUserDetails(string url, string Jsondata)
@@ -2489,7 +2545,7 @@ public class StoreManager : MonoBehaviour
                         decimal CoinsInDecimal = decimal.Parse(myObjectOfUserDetail.data.coins);
                         int Coinsint = (int)CoinsInDecimal;
                         PlayerPrefs.SetInt("TotalCoins", Coinsint);
-                        UpdateUserCoins();
+                        //UpdateUserCoins();
                     }
                 }
             }
@@ -3904,6 +3960,10 @@ public class StoreManager : MonoBehaviour
                             else
                                 childObject.GetComponent<Image>().enabled = false;
                         }
+
+                        // Activate Eyebrow Customization Btn
+                        if (ParentOfBtnsAvatarEyeBrows.childCount > 2)
+                            eyeBrowTapButton.SetActive(true);
                     }
 
                     //else
@@ -4627,4 +4687,13 @@ public class StoreManager : MonoBehaviour
         XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.characterController.bodyFat;
         XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.characterController.makeupId;
     }
+}
+public class RequestedData
+{
+    public string userAddress;
+}
+public class XenyTokenData
+{
+    public double xenyToken;
+    public string address;
 }

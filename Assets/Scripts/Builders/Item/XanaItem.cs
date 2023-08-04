@@ -23,6 +23,7 @@ public class XanaItem : MonoBehaviour
 
 
     ItemBase _itemBase;
+
     public ItemBase itemBase
     {
         get
@@ -32,6 +33,7 @@ public class XanaItem : MonoBehaviour
         }
     }
 
+    internal ItemData itemData;
     #endregion
 
     #region UNITY_METHOD
@@ -40,7 +42,6 @@ public class XanaItem : MonoBehaviour
     #region PUBLIC_METHODS
     public void SetData(ItemData itemData)
     {
-        transform.localScale = itemData.Scale;
         //transform.localRotation = itemData.Rotation;
 
         CollectibleComponentData collectibleComponentData = itemData.collectibleComponentData;
@@ -204,12 +205,12 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(throwThingsComponentData);
         }
 
-        //AudioComponentData audioComponentData = itemData.audioComponentData;
-        //if (audioComponentData.IsActive)
-        //{
-        //    AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
-        //    itemComponent.Init(audioComponentData);
-        //}
+        AudioComponentData audioComponentData = itemData.audioComponentData;
+        if (audioComponentData.IsActive)
+        {
+            AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
+            itemComponent.Init(audioComponentData);
+        }
         HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
         if (hyperLinkComponentData.IsActive)
         {
