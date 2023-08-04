@@ -166,8 +166,8 @@ public class PlayerControllerNew : MonoBehaviour
         ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
 
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
 
 
@@ -184,8 +184,8 @@ public class PlayerControllerNew : MonoBehaviour
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt -= JumpNotAllowed;
         }
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
     }
 
     private void OnTriggerEnter(Collider other)
