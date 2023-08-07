@@ -1078,7 +1078,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-                        Debug.LogError("show welcome");
+                        Debug.Log("show welcome");
                         PlayerPrefs.SetInt("shownWelcome", 1);
 
                         //ShowWelcomeClosed();
@@ -1086,7 +1086,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("show welcome else");
+                        Debug.Log("show welcome else");
                         LoggedIn = true;
                         GameManager.Instance.SignInSignUpCompleted();
                     }
@@ -1307,7 +1307,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.LogError(request.downloadHandler.text);
+        Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
         //  print(request.GetRequestHeader("Authorization"));
         //  print(request.isDone);
         MyClassNewApi myObject1 = new MyClassNewApi();
@@ -1381,9 +1381,12 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
 
+        int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
+
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
+        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
