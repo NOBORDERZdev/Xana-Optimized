@@ -40,6 +40,10 @@ public class GamificationComponentData : MonoBehaviour
     internal Vector3 Ninja_Throw_InitPosY;
     internal Vector3 Ninja_Throw_InitPosX;
     internal bool worldCameraEnable;
+
+    public Shader proceduralRingShader;
+    public Shader uberShader;
+
     private void Awake()
     {
         instance = this;
