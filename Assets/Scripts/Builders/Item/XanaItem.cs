@@ -42,8 +42,6 @@ public class XanaItem : MonoBehaviour
     #region PUBLIC_METHODS
     public void SetData(ItemData itemData)
     {
-        this.itemData = itemData;
-        transform.localScale = itemData.Scale;
         //transform.localRotation = itemData.Rotation;
 
         CollectibleComponentData collectibleComponentData = itemData.collectibleComponentData;
