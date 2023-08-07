@@ -14,7 +14,7 @@ public class SplashVideoPlay : MonoBehaviour
     public Image Image;
     public GameObject SplashvideoObj;
   
-    private void Start()
+    public void RefrenceDownloafVideo()
     {
         Image = UserRegisterationManager.instance.BlackScreen.GetComponent<Image>();
 
@@ -22,7 +22,7 @@ public class SplashVideoPlay : MonoBehaviour
         video_download_link = SplashVideoDownloader.splashVideoDownloader.playbackDir;
 #endif
 #if UNITY_IPHONE
-       video_download_link=SplashVideoDownloader.splashVideoDownloader.playbackDir;
+       video_download_link= SplashVideoDownloader.splashVideoDownloader.playbackDir;
 #endif
         player.url = video_download_link;
         player.loopPointReached += End;
