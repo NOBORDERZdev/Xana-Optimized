@@ -193,10 +193,22 @@ public class YoutubePlayerLivestream : MonoBehaviour
 
             if (isLive)
             {
-                //WriteLog("kelvin", player_response);
-                string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
-                Debug.Log(liveUrl);
-                callback.Invoke(liveUrl);
+
+                if (!json.ContainsKey("streamingData"))
+                {
+                    Debug.Log("<color=red> Key Not Found .</color>");
+                }
+                else if (json["streamingData"]["hlsManifestUrl"] == null)
+                {
+                    Debug.Log("<color=red> Key Not Found .</color>");
+                }
+                else
+                {
+                    //WriteLog("kelvin", player_response);
+                    string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
+                    Debug.Log(liveUrl);
+                    callback.Invoke(liveUrl);
+                }
             }
             else
             {
