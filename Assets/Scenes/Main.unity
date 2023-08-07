@@ -7582,6 +7582,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930996860}
   m_CullTransparentMesh: 1
+--- !u!1 &933479151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 933479153}
+  - component: {fileID: 933479152}
+  m_Layer: 0
+  m_Name: Firebase Analytics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &933479152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933479151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e9719e982846044791c0f82d136ecdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsLogEnabled: 1
+--- !u!4 &933479153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933479151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 90.524536, y: 28.024658, z: -45.737038}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 41
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &947416175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24075,10 +24120,18 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+    - target: {fileID: 1143142936957593935, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -155
+      objectReference: {fileID: 0}
     - target: {fileID: 1143142937027582226, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
+    - target: {fileID: 1143142937395358219, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -155
+      objectReference: {fileID: 0}
     - target: {fileID: 1143142937420309734, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -24579,6 +24632,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+    - target: {fileID: 4983741916084664094, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -155
+      objectReference: {fileID: 0}
     - target: {fileID: 5209795070282030535, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -24677,7 +24734,7 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 5566369984924412907, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 8.500122
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 5614259956952216725, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font

@@ -571,6 +571,7 @@ public class FeedEventPrefab : MonoBehaviour
     //}
 
     //string tempWorldName;
+    private static bool worldUniqueCount = false;
 
     public void OnClickPrefab()
     {
@@ -665,6 +666,17 @@ public class FeedEventPrefab : MonoBehaviour
         // For Analitics & User Count
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount);
+
+        if (m_EnvironmentName == "ZONE-X")
+        {
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_JJWorld");
+            if (!worldUniqueCount)
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("Num_of_UniqueClick_on_JJWorld");
+                worldUniqueCount = true;
+            }
+            Debug.Log("<color=red> Firebase Event Clicked </color>");
+        }
     }
 
     //private void OnValidate()
