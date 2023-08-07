@@ -42,6 +42,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetenterUserNamePanal;
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
+    public GameObject BlackScreen;
     //hardik changes
     public string nftlist;
     //end
@@ -214,7 +215,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
-                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+              //  StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
 
@@ -1137,14 +1138,14 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 13:
                 {
-
-                    if (PlayerPrefs.GetInt("WalletLogin") != 1)
-                    {
-                        RegistrationCompletePanal.SetActive(true);
-                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                    }
-                    if (shownWelcome)
-                        ShowWelcomeClosed();
+                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    //if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                    //{
+                    //    RegistrationCompletePanal.SetActive(true);
+                    //    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    //}
+                    //if (shownWelcome)
+                    //    ShowWelcomeClosed();
                     break;
                 }
             case 14:

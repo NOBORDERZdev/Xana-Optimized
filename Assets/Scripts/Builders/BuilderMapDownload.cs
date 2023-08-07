@@ -269,9 +269,6 @@ public class BuilderMapDownload : MonoBehaviour
 
             LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
-        //Set Hierarchy same as builder
-        SetObjectHirarchy();
         CallBack();
     }
 
@@ -465,6 +462,18 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
+        Invoke(nameof(XanaSetItemData),2.5f);
+    }
+
+    void XanaSetItemData()
+    {
+        foreach (XanaItem xanaItem in xanaItems)
+        {
+            xanaItem.SetData(xanaItem.itemData);
+        }
+        //BuilderEventManager.CombineMeshes?.Invoke();
+        //Set Hierarchy same as builder
+        SetObjectHirarchy();
     }
 
 
@@ -507,7 +516,8 @@ public class BuilderMapDownload : MonoBehaviour
         rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
-        xanaItem.SetData(_itemData);
+        xanaItem.itemData = _itemData;
+        newObj.transform.localScale = _itemData.Scale;
         if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
