@@ -33,6 +33,10 @@ public class WorldManager : MonoBehaviour
     private List<GameObject> newWorldList = new List<GameObject>();
     private List<GameObject> myworldWorldList = new List<GameObject>();
 
+    [Header("Fighting Module PopUp")]
+    public GameObject fightingModulePopUp;
+    public bool isCheckFightingModulePopUp;
+    public bool HaveFighterNFT;
 
     [HideInInspector]
     public bool orientationchanged = false;
@@ -371,27 +375,31 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void OnClickEnterAsParticipant()
+    {
+        CloseFightingModulePopUp();
+        Screen.orientation = ScreenOrientation.LandscapeRight;
+        FightingModuleManager.Instance.OnClickMainMenu();
+    }
 
+    public void OnClickEnterAsSpectator()
+    {
+        isCheckFightingModulePopUp = true;
+        CloseFightingModulePopUp();
+        FeedEventPrefab.m_EnvName = "BreakingDown Arena";
+        JoinEvent();
+    }
+
+    public void CloseFightingModulePopUp()
+    {
+        fightingModulePopUp.SetActive(false);
+    }
     public async void JoinEvent() 
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-            {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
-            }
-            else
-            {
-                if (!XanaConstants.xanaConstants.IsDeemoNFT)
-                {
-                    Debug.Log("YOU DONT HAVE DEEMO NFT");
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
-                }
-
-            }
-            //////
+            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+            UIManager.Instance.LoginRegisterScreen.SetActive(true);
         }
         else
         {
@@ -401,7 +409,8 @@ public class WorldManager : MonoBehaviour
                 Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 print("_IsInOwnerShip :: " + _IsInOwnerShip);
-                 if (!_IsInOwnerShip)
+                Debug.Log("PlayerPrefs" + PlayerPrefs.GetInt("Equiped"));
+                if (!_IsInOwnerShip)
                 {
                     print("Show UI NFT not available");
                     PlayerPrefs.DeleteKey("Equiped");
@@ -415,30 +424,31 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
+                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
 
+                    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
+
+                    if (list != null)
+                    {
+                        HaveFighterNFT = true;
+                    }
+                    else
+                    {
+                        HaveFighterNFT = false;
+                    }
+                    if (FeedEventPrefab.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                    {
+                        Debug.Log("Breaking down Arena World");
+                        fightingModulePopUp.SetActive(true);
+                        return;
+                    }
                     print("NFT is in your OwnerShip Enjoy");
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
-            if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-            {
-                if (!XanaConstants.xanaConstants.IsDeemoNFT)
-                {
-                    Debug.Log("YOU DONT HAVE DEEMO NFT");
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
-                }
-            }
-            /////
-
 
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
-
-            // Added By WaqasAhmad [20 July 23]
-            //Caching.ClearCache();
-            GC.Collect();
-            //
 
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
@@ -447,7 +457,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            Debug.Log("loading scene");
+            Debug.LogError("loading scene");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");

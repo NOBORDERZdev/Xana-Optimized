@@ -57,7 +57,7 @@ public class AvatarController : MonoBehaviour
         }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
-        if (!currScene.Contains("Main")) // call for worlds only
+        //if (!currScene.Contains("Main")) // call for worlds only
         {
             //Invoke(nameof(IntializeAvatar), 0.5f);
             Invoke(nameof(Custom_IntializeAvatar), 0.5f);
