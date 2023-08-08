@@ -26,8 +26,9 @@ public class SkyBoxItem
 {
     public int skyId;
     public string skyName;
+    public string shaderName;
     //public Sprite icon;
-   public Material skyMaterial;
+   //public Material skyMaterial;
     //public float lightIntensity = 1f;
     //public Color directionLightColor;
     //public float directionLightShadowStrength;
