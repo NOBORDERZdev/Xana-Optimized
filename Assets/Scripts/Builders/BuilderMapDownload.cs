@@ -70,6 +70,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.SelfiActive -= SelfiActive;
+        Addressables.Release(loadSkyBox);
 
 
     }
@@ -393,15 +394,27 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetSkyProperties()
     {
+        StartCoroutine(SetSkyPropertiesDelay());
+    }
+    AsyncOperationHandle<Material> loadSkyBox;
+    IEnumerator SetSkyPropertiesDelay()
+    {
         SkyProperties skyProperties = levelData.skyProperties;
         Camera.main.clearFlags = CameraClearFlags.Skybox;
         if (skyProperties.skyId != -1)
         {
             SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-            //string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-            //AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            //loadSkyBox.Completed += LoadSkyBox_Completed;
-            RenderSettings.skybox = skyBoxItem.skyMaterial;
+            string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+            loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+            while (!loadSkyBox.IsDone)
+            {
+                yield return null;
+            }
+               // Debug.LogError(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+
+            Material _mat = loadSkyBox.Result;
+            _mat.shader = Shader.Find(skyBoxItem.shaderName);
+            RenderSettings.skybox = _mat;
             directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
             characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
             directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
@@ -433,10 +446,11 @@ public class BuilderMapDownload : MonoBehaviour
             characterLight.intensity = .15f;
             DynamicGI.UpdateEnvironment();
         }
-
     }
+
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
+        Debug.LogError(obj.Result.shader.name+"-----"+ obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
