@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.Text.RegularExpressions;
 
 public class JjInfoManager : MonoBehaviour
 {
@@ -46,9 +47,8 @@ public class JjInfoManager : MonoBehaviour
     DataType _Type;
     string _VideoLink;
     VideoTypeRes _videoType;
-
+    [HideInInspector]
     public string nftTitle;
-
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class JjInfoManager : MonoBehaviour
 
     private void OnEnable()
     {
-        if (VideoPlayers.Count>0)
+        if (VideoPlayers.Count > 0)
         {
             foreach (VideoPlayer player in VideoPlayers)
             {
@@ -136,8 +136,9 @@ public class JjInfoManager : MonoBehaviour
         List<JjAsset> worldData = data.data;
         for (int i = 0; i < nftPlaceHolder; i++)
         {
-            if(worldData.Count > i ){
-                 int tempIndex = worldData[i].index-1;
+            if (worldData.Count > i)
+            {
+                int tempIndex = worldData[i].index - 1;
                 if (worldData[i].check && tempIndex == i)
                 {
                     //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
@@ -258,8 +259,8 @@ public class JjInfoManager : MonoBehaviour
             }
             else
             {
-                 NftPlaceholder[i].gameObject.SetActive(false);
-                 NftPlaceholder[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
+                NftPlaceholder[i].gameObject.SetActive(false);
+                NftPlaceholder[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
             }
         }
 
@@ -308,7 +309,7 @@ public class JjInfoManager : MonoBehaviour
     //    }
     //}
 
-    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType)
+    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType, int nftId = 0)
     {
         nftTitle = title;
         _Ratio = ratio;
@@ -447,7 +448,40 @@ public class JjInfoManager : MonoBehaviour
         {
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
         }
-        // infoParent.SetActive(true);
+
+        // for firebase analytics
+        if (type == DataType.Image)
+        {
+            if (title.IsNullOrEmpty())
+            {
+                string envName = FindObjectOfType<StayTimeTracker>().worldName;
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "_NFT_Img" + nftId + "_Clicked");
+                Debug.Log("<color=red>" + envName + "_NFT_Img" + nftId + "_Clicked </color>");
+                return;
+            }
+            int maxLength = 10;
+            string originalString = title;
+            originalString = Regex.Replace(originalString, @"\s", "");
+            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Img_" + trimmedString + "_Clicked");
+            Debug.Log("<color=red> NFT_Img_" + trimmedString + "_Clicked </color>");
+        }
+        else if (type == DataType.Video)
+        {
+            if (title.IsNullOrEmpty())
+            {
+                string envName = FindObjectOfType<StayTimeTracker>().worldName;
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "NFT_Video" + nftId + "_Clicked");
+                Debug.Log("<color=red>" + envName + "NFT_Video" + nftId + "_Clicked </color>");
+                return;
+            }
+            int maxLength = 10;
+            string originalString = title;
+            originalString = Regex.Replace(originalString, @"\s", "");
+            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Video_" + trimmedString + "_Clicked");
+            Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
+        }
     }
 
     public void CloseInfoPop()
@@ -486,7 +520,7 @@ public class JjInfoManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (VideoPlayers.Count>0)
+        if (VideoPlayers.Count > 0)
             foreach (VideoPlayer player in VideoPlayers)
             {
                 player.errorReceived -= ErrorOnVideo;
