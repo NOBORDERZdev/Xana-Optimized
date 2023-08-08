@@ -215,7 +215,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
-              //  StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
 
@@ -1078,7 +1078,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-                        Debug.LogError("show welcome");
+                        Debug.Log("show welcome");
                         PlayerPrefs.SetInt("shownWelcome", 1);
 
                         //ShowWelcomeClosed();
@@ -1086,7 +1086,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("show welcome else");
+                        Debug.Log("show welcome else");
                         LoggedIn = true;
                         GameManager.Instance.SignInSignUpCompleted();
                     }
@@ -1138,14 +1138,14 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 13:
                 {
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                    //if (PlayerPrefs.GetInt("WalletLogin") != 1)
-                    //{
-                    //    RegistrationCompletePanal.SetActive(true);
-                    //    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                    //}
-                    //if (shownWelcome)
-                    //    ShowWelcomeClosed();
+
+                    if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                    {
+                        RegistrationCompletePanal.SetActive(true);
+                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    }
+                    if (shownWelcome)
+                        ShowWelcomeClosed();
                     break;
                 }
             case 14:
@@ -1172,6 +1172,23 @@ public class UserRegisterationManager : MonoBehaviour
                     //    Password1_ForgetPasswrod.Text="";
                     //    Password2_ForgetPasswrod.Text="";
                     // Password1_ForgetPasswrod.SelectOtherField();
+                    break;
+                }
+            case 16:
+                {
+                    if (PlayerPrefs.GetInt("iSignup") == 1)
+                    {
+                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    }
+                    else {
+                        if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                        {
+                            RegistrationCompletePanal.SetActive(true);
+                            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        }
+                        if (shownWelcome)
+                            ShowWelcomeClosed();
+                     }
                     break;
                 }
         }
@@ -1307,7 +1324,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.LogError(request.downloadHandler.text);
+        Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
         //  print(request.GetRequestHeader("Authorization"));
         //  print(request.isDone);
         MyClassNewApi myObject1 = new MyClassNewApi();
@@ -1381,9 +1398,12 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
 
+        int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
+
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
+        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -1948,7 +1968,7 @@ public class UserRegisterationManager : MonoBehaviour
                     else
                     {
                         //   print("Registration With Name Completed ");
-                        OpenUIPanal(13);
+                        OpenUIPanal(16);
                         GameManager.Instance.SignInSignUpCompleted();
                         usernamePanal.SetActive(false);
                         LoggedIn = true;
@@ -3545,7 +3565,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("PlayerName", localUsername);
 
 
-                        OpenUIPanal(13);
+                        OpenUIPanal(16);
                         usernamePanal.SetActive(false);
                         LoggedIn = true;
                         //OpenUIPanal(6);  
