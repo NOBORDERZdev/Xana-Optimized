@@ -607,6 +607,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+    - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_Name
       value: LoadingHandler
@@ -843,8 +851,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330838597}
   - component: {fileID: 330838596}
-  - component: {fileID: 330838598}
-  - component: {fileID: 330838595}
   - component: {fileID: 330838599}
   m_Layer: 19
   m_Name: Camera-RenderTexture
@@ -853,18 +859,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &330838595
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330838594}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &330838596
 Camera:
   m_ObjectHideFlags: 0
@@ -923,18 +917,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 10.26, y: 0, z: 0}
---- !u!114 &330838598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330838594}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &330838599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1836,6 +1818,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7996957627358644502, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 881d1b001fb5b1249a1bea368ce7d469, type: 2}
+    - target: {fileID: 7996957627358644502, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 102763520
       objectReference: {fileID: 0}
@@ -1908,6 +1894,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7996957628341297422, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
+      propertyPath: m_RenderTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 881d1b001fb5b1249a1bea368ce7d469, type: 2}
+    - target: {fileID: 7996957628341297422, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
       propertyPath: m_CharacterAnimator
       value: 
       objectReference: {fileID: 3836157402595034107}
@@ -1915,7 +1905,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Avatar Selfie Manager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7996957627358644503, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
+    - {fileID: 7996957627358644500, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
 --- !u!4 &799881348 stripped
 Transform:
