@@ -281,7 +281,7 @@ public class BuilderMapDownload : MonoBehaviour
             if (!xanaItem.itemData.ParentID.Equals(""))
             {
                 string parentId = xanaItem.itemData.ParentID;
-                XanaItem parentItem = xanaItems.Find(x=>x.itemData.RuntimeItemID==parentId);
+                XanaItem parentItem = xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
                 if (parentItem != null)
                 {
                     xanaItem.transform.SetParent(parentItem.transform);
@@ -476,7 +476,7 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
-        Invoke(nameof(XanaSetItemData),2.5f);
+        Invoke(nameof(XanaSetItemData), 1.5f);
     }
 
     void XanaSetItemData()
@@ -485,9 +485,14 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
-        //BuilderEventManager.CombineMeshes?.Invoke();
+        BuilderEventManager.CombineMeshes?.Invoke();
         //Set Hierarchy same as builder
         SetObjectHirarchy();
+        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
+        mainPlayerCharacterController.center = Vector3.up * 0.5f;
+        mainPlayerCharacterController.height = 1f;
+        mainPlayerCharacterController.stepOffset = 1f;
     }
 
 
