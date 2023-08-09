@@ -6,39 +6,6 @@ using UnityEngine;
 
 public class SmoothPlane : MonoBehaviour
 {
-   /*  Mesh mesh;
-    // Start is called before the first frame update
-    void Start()
-    {
-        SmoothUpMesh().Forget();
-    }
-
-    private async UniTask SmoothUpMesh()
-    {
-        mesh = GetComponent<MeshFilter>().mesh;
-        Vector3[] vertices = mesh.vertices;
-
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            int count = 0;
-            float average = 0f;
-            for (int j = 0; j < vertices.Length; j++)
-            {
-                if (Vector3.Distance(vertices[i], vertices[j]) < 1f)
-                {
-                    count++;
-                    average += vertices[j].y;
-                }
-            }
-            average /= count;
-            vertices[i].y = average;
-        }
-
-        mesh.vertices = vertices;
-        mesh.RecalculateNormals();
-    } */
-
-
     // The mesh to be smoothed
     public Mesh mesh;
 
@@ -61,7 +28,7 @@ public class SmoothPlane : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            SmoothTerrain();
+            //SmoothTerrain();
         }
     }
 
