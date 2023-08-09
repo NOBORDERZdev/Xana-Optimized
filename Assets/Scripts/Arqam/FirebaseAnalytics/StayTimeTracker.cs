@@ -8,9 +8,16 @@ public class StayTimeTracker : MonoBehaviour
     private float startTime;
     private bool isTrackingTime = false;
 
+    //private bool isTimerRunning = false;
+    //private float elapsedTime = 0.0f;
+
     IEnumerator Start()
     {
         StartTrackingTime();
+
+        //isTimerRunning = true;
+        //StartCoroutine(Countdown());
+
         yield return new WaitForSeconds(1f);
         if (XanaConstants.xanaConstants.Equals(JJMussuemEntry.Astro))
             worldName = "JJWorld_Astro";
@@ -24,17 +31,6 @@ public class StayTimeTracker : MonoBehaviour
         isTrackingTime = true;
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Escape))
-    //        Application.Quit();
-    //}
-    //private void OnApplicationQuit()
-    //{
-    //    StopTrackingTime();
-    //    CalculateAndLogStayTime();
-    //}
-
     private void OnDisable()
     {
         if (isTrackingTime)
@@ -42,6 +38,8 @@ public class StayTimeTracker : MonoBehaviour
             StopTrackingTime();
             CalculateAndLogStayTime();
         }
+
+        //EndTimer();
     }
 
 
@@ -59,18 +57,46 @@ public class StayTimeTracker : MonoBehaviour
 
         if (minutes > 0)
         {
-            Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m:" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m:" + seconds.ToString() + "s");
+            Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
         }
         else
         {
             Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_"+ seconds.ToString() + "s");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
         }
-
 
     }
 
+
+    //private IEnumerator Countdown()
+    //{
+    //    while (isTimerRunning)
+    //    {
+    //        elapsedTime += Time.deltaTime;
+    //        yield return null; // Wait for the next frame
+    //    } 
+    //}
+
+    //private void EndTimer()
+    //{
+    //    Debug.Log("Timer ended");
+
+    //    isTimerRunning = false;
+    //    int minutes = Mathf.FloorToInt(elapsedTime / 60f);
+    //    int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+
+    //    if (minutes > 0)
+    //    {
+    //        Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
+    //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
+    //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
+    //    }
+    //}
 
 
 }
