@@ -513,7 +513,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (vignette) {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
-            GamificationComponentData.instance.buildingDetect.defaultSmoothvalue = (float)vignette.smoothness;
+            GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
         }
     }
 

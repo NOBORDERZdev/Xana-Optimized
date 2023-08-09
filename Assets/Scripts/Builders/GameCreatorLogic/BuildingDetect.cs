@@ -71,7 +71,7 @@ public class BuildingDetect : MonoBehaviour
     public SkinnedMeshRenderer[] skinMeshs;
 
     [Header("Set default value of ProstProcessProfile vol vignette")]
-    internal float defaultSmoothvalue;
+    internal float defaultSmootnesshvalue;
     internal float defaultIntensityvalue;
 
     private void Awake()
@@ -397,7 +397,7 @@ public class BuildingDetect : MonoBehaviour
 
         cameraAnimator.SetBool("BlurrEffect", false);
         vignette.intensity.value = defaultIntensityvalue;
-        vignette.smoothness.value = defaultSmoothvalue;
+        vignette.smoothness.value = defaultSmootnesshvalue;
         vignette.active = false;
         motionBlur.active = false;
     }
