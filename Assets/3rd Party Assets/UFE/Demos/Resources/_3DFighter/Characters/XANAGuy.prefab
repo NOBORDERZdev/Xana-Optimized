@@ -303,14 +303,13 @@ GameObject:
   - component: {fileID: 404528691285982512}
   - component: {fileID: 6015965119969765194}
   - component: {fileID: 6117915847255982304}
+  - component: {fileID: 1793706007728190866}
   - component: {fileID: 1865671492230002538}
   - component: {fileID: 8804878138316955839}
   - component: {fileID: 4557610571520970937}
-  - component: {fileID: 1793706007728190866}
   - component: {fileID: 4473015573232399775}
   - component: {fileID: 3462264592248454414}
   - component: {fileID: 2730640839742540173}
-  - component: {fileID: 7724632303258121029}
   m_Layer: 0
   m_Name: XANAGuy
   m_TagString: Untagged
@@ -1729,6 +1728,52 @@ MonoBehaviour:
   moveSetScript: {fileID: 0}
   previewAllBoxes: 0
   customHitBoxes: {fileID: 0}
+--- !u!114 &1793706007728190866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069319171809847178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staticPlayer: 1
+  wornHair: {fileID: 0}
+  wornPant: {fileID: 0}
+  wornShirt: {fileID: 0}
+  wornShose: {fileID: 0}
+  wornEyewearable: {fileID: 0}
+  wornGloves: {fileID: 0}
+  wornChain: {fileID: 0}
+  wornHairId: 0
+  hairColorPaletteId: 0
+  wornPantId: 0
+  wornShirtId: 0
+  wornShoesId: 0
+  wornEyewearableId: 0
+  skinId: 0
+  faceId: 0
+  eyeBrowId: 0
+  eyeBrowColorPaletteId: 0
+  eyesId: 0
+  eyesColorId: 0
+  eyesColorPaletteId: 0
+  noseId: 0
+  lipsId: 0
+  lipsColorId: 0
+  lipsColorPaletteId: 0
+  bodyFat: 0
+  makeupId: 0
+  eyeLashesId: 0
+  wornGlovesId: 0
+  wornChainId: 0
+  presetValue: 
+  masks: []
+  IsInit: 0
+  _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
 --- !u!114 &1865671492230002538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1748,9 +1793,32 @@ MonoBehaviour:
   TattooDefaultTexture: {fileID: 2800000, guid: b6756278f8b34034d9e31993cba515bb, type: 3}
   Eye_Mask_Texture: {fileID: 2800000, guid: f8c85a8099df0c342a5ec039dc357b37, type: 3}
   Eye_Color_Texture: {fileID: 2800000, guid: 48e51b582fd37b54aaa9560148594c31, type: 3}
+  faceTattoo_MaskPropertyName: 
+  chestTattoo_MaskPropertyName: 
+  legsTattoo_MaskPropertyName: 
+  armTattoo_MaskPropertyName: 
+  mustache_MaskPropertyName: 
+  eyeLid_MaskPropertyName: 
+  facetattooColorPropertyName: 
+  chesttattooColorPropertyName: 
+  legstattooColorPropertyName: 
+  armtattooColorPropertyName: 
+  mustacheColorPropertyName: 
+  eyeLidColorPropertyName: 
+  faceTattooContrastPropertyName: 
+  chestTattooContrastPropertyName: 
+  legsTattooContrastPropertyName: 
+  armTattooPropertyContrastName: 
+  mustacheTattooContrastPropertyName: 
+  eyeLidContrastPropertyName: 
   faceTattooColor: Black
   faceTattooColorDefault: Black
   foreheafTattooColor: BronzeBlack
+  chestTattooColor: Balck
+  legsTattooColor: BronzeBlack
+  armTattooColor: BronzeBlack
+  mustacheColor: Brown
+  eyeLidColor: OrangeBrown
   DefaultSkinColor: {r: 1, g: 0.9372549, b: 0.88235295, a: 1}
   DefaultEyebrowColor: {r: 0.30588236, g: 0.23529412, b: 0.19607843, a: 1}
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
@@ -2343,6 +2411,8 @@ MonoBehaviour:
   defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 0}
+  characterHeadMat: {fileID: 0}
+  characterBodyMat: {fileID: 0}
 --- !u!114 &8804878138316955839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,51 +2461,6 @@ MonoBehaviour:
   blinkingSpeed: 0.15
   isBlinking: 1
   isCoroutineRunning: 1
---- !u!114 &1793706007728190866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069319171809847178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wornHair: {fileID: 0}
-  wornPant: {fileID: 0}
-  wornShirt: {fileID: 0}
-  wornShose: {fileID: 0}
-  wornEyewearable: {fileID: 0}
-  wornGloves: {fileID: 0}
-  wornChain: {fileID: 0}
-  wornHairId: 0
-  hairColorPaletteId: 0
-  wornPantId: 0
-  wornShirtId: 0
-  wornShoesId: 0
-  wornEyewearableId: 0
-  skinId: 0
-  faceId: 0
-  eyeBrowId: 0
-  eyeBrowColorPaletteId: 0
-  eyesId: 0
-  eyesColorId: 0
-  eyesColorPaletteId: 0
-  noseId: 0
-  lipsId: 0
-  lipsColorId: 0
-  lipsColorPaletteId: 0
-  bodyFat: 0
-  makeupId: 0
-  eyeLashesId: 0
-  wornGlovesId: 0
-  wornChainId: 0
-  presetValue: 
-  masks: []
-  IsInit: 0
-  _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
 --- !u!114 &4473015573232399775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2481,32 +2506,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 7724632303258121029}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &7724632303258121029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069319171809847178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 2
-    Name: Mirror
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
 --- !u!1 &1097293561741775567
 GameObject:
   m_ObjectHideFlags: 0

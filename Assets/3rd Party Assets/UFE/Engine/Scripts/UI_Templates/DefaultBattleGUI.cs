@@ -417,7 +417,8 @@ public class DefaultBattleGUI : BattleGUI{
 		
 		// Set the character names
 		if (this.player1GUI != null && this.player1GUI.name != null){
-			this.player1GUI.name.text = cPlayer1.myInfo.characterName;
+			//this.player1GUI.name.text = cPlayer1.myInfo.characterName;
+			this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
 		}
 
 		if (this.player2GUI != null && this.player2GUI.name != null){

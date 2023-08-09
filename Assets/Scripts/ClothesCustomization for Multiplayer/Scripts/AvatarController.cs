@@ -19,6 +19,7 @@ public class AvatarController : MonoBehaviour
     // private AddressableAddressableDownloader.Instance AddressableDownloader.Instance;
     public Stitcher stitcher;
     private ItemDatabase itemDatabase;
+    public bool staticPlayer;
     //[HideInInspector]
     public GameObject wornHair, wornPant, wornShirt, wornShose, wornEyewearable, wornGloves, wornChain;
     [HideInInspector]
@@ -222,6 +223,7 @@ public class AvatarController : MonoBehaviour
     }
     void Custom_IntializeAvatar()
     {
+        Debug.LogError("Custom_IntializeAvatar");
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
@@ -229,6 +231,7 @@ public class AvatarController : MonoBehaviour
             //_CharData = _CharacterData;
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
+        Debug.LogError("Custom_IntializeAvatar: in if");
                 if (_CharacterData.myItemObj.Count > 0)
                 {
                     for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -474,8 +477,9 @@ public class AvatarController : MonoBehaviour
             }
             else // wolrd scence 
             {
-                if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine) // self
+                if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine|| staticPlayer) // self
                 {
+                    Debug.LogError("Custom_IntializeAvatar: in else");
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
