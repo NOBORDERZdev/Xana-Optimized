@@ -489,6 +489,10 @@ public class BuilderMapDownload : MonoBehaviour
         //Set Hierarchy same as builder
         SetObjectHirarchy();
         GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
+        mainPlayerCharacterController.center = Vector3.up * 0.5f;
+        mainPlayerCharacterController.height = 1f;
+        mainPlayerCharacterController.stepOffset = 1f;
     }
 
 
