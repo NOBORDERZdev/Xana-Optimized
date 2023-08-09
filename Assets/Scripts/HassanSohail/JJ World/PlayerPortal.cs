@@ -9,9 +9,13 @@ public class PlayerPortal : MonoBehaviour
     [SerializeField] bool isLocked;
     //[SerializeField] JjWorldMusuemManager manager;
     [SerializeField] Transform destinationPoint;
+
+    public enum PortalType { None, Enter, Exit, Teleport }
+    public PortalType currentPortal = PortalType.None;
+    public JJMuseumInfoManager ref_JJMuseumInfoManager;
     #endregion
     #region PrivateVar
-   // private PlayerControllerNew player;
+    // private PlayerControllerNew player;
     private ReferrencesForDynamicMuseum referrencesForDynamicMuseum;
     Collider colider;
     #endregion
@@ -52,6 +56,16 @@ public class PlayerPortal : MonoBehaviour
         {
             //manager.allowTeleportation = false;
             //player.allowTeleport = false;
+            if (currentPortal == PortalType.Enter)
+            {
+                UnloadPreviousData();
+                ref_JJMuseumInfoManager.InitJJMuseumInfoManager();
+            }
+            else if (currentPortal == PortalType.Exit)
+            {
+                UnloadPreviousData();
+                JjInfoManager.Instance.IntJjInfoManager();
+            }
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             yield return new WaitForSeconds(.5f);
@@ -99,7 +113,15 @@ public class PlayerPortal : MonoBehaviour
             yield return null;
         }
     }
-
+    void UnloadPreviousData()
+    {
+        foreach (Texture txt in JjInfoManager.Instance.NFTLoadedSprites)
+            Destroy(txt);
+        JjInfoManager.Instance.NFTLoadedSprites.Clear();
+        foreach (RenderTexture rnd in JjInfoManager.Instance.NFTLoadedVideos)
+            Destroy(rnd);
+        JjInfoManager.Instance.NFTLoadedVideos.Clear();
+    }
     #endregion
 
 }

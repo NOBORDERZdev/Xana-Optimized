@@ -49,6 +49,8 @@ public class JjInfoManager : MonoBehaviour
 
     public string nftTitle;
 
+    public List<Texture> NFTLoadedSprites = new List<Texture>();
+    public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
 
     private void Awake()
     {
@@ -112,7 +114,7 @@ public class JjInfoManager : MonoBehaviour
                 data.Append(request.downloadHandler.text);
                 //Debug.Log("JJ World Req" + data.ToString());
                 JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
-                InitData(json);
+                InitData(json, NftPlaceholder);
 
             }
         }
@@ -130,9 +132,9 @@ public class JjInfoManager : MonoBehaviour
     }
 
 
-    void InitData(JjJson data)
+    public void InitData(JjJson data, List<GameObject> NftPlaceholderList)
     {
-        int nftPlaceHolder = NftPlaceholder.Count;
+        int nftPlaceHolder = NftPlaceholderList.Count;
         List<JjAsset> worldData = data.data;
         for (int i = 0; i < nftPlaceHolder; i++)
         {
@@ -173,7 +175,7 @@ public class JjInfoManager : MonoBehaviour
                     {
 
                         worldInfos[i].Type = DataType.Image;
-                        NftPlaceholder[i].GetComponent<JJVideoAndImage>().InitData(worldData[i].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
+                        NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[i].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
 
                         if (!string.IsNullOrEmpty(worldData[i].title[0]) && !string.IsNullOrEmpty(worldData[i].authorName[0]) && !string.IsNullOrEmpty(worldData[i].description[0]))
                         {
@@ -201,7 +203,7 @@ public class JjInfoManager : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[i].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.islive;
-                                NftPlaceholder[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
+                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
@@ -212,7 +214,7 @@ public class JjInfoManager : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[i].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.prerecorded;
-                                NftPlaceholder[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
@@ -223,7 +225,7 @@ public class JjInfoManager : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[i].asset_link;
                                 worldInfos[i].videoType = VideoTypeRes.aws;
-                                NftPlaceholder[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
@@ -251,15 +253,15 @@ public class JjInfoManager : MonoBehaviour
                 }
                 else
                 {
-                    NftPlaceholder[i].gameObject.SetActive(false);
-                    NftPlaceholder[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
+                    NftPlaceholderList[i].gameObject.SetActive(false);
+                    NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
                     Debug.Log("INDEX is off!");
                 }
             }
             else
             {
-                 NftPlaceholder[i].gameObject.SetActive(false);
-                 NftPlaceholder[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
+                NftPlaceholderList[i].gameObject.SetActive(false);
+                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
             }
         }
 
