@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Collections.Generic;
 using UFE3D;
+using System.Collections;
 
 public class DefaultBattleGUI : BattleGUI{
 	#region public class definitions
@@ -75,6 +76,24 @@ public class DefaultBattleGUI : BattleGUI{
 	#region public instance methods
 	public void AddInput (InputReferences[] inputReferences, int player){
 		this.OnInput(inputReferences, player);
+	}
+
+	public void setPlayerIcon(string url, Image img)
+	{
+		Debug.LogError("setPlayerIcon: " + url);
+		StartCoroutine(IESetPlayerIcon(url, img));
+	}
+	public IEnumerator IESetPlayerIcon(string url, Image img)
+	{
+		//Texture2D texture = img.mainTexture as Texture2D;
+		Texture2D texture = new Texture2D(250, 250);
+		if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+		{
+			WWW www = new WWW(url);
+			yield return www;
+			Sprite profilePic = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.5f, 0.5f), 32);
+			img.sprite = profilePic;
+		}
 	}
 	#endregion
 
@@ -429,11 +448,12 @@ public class DefaultBattleGUI : BattleGUI{
 		if (this.player1GUI != null && this.player1GUI.portrait != null){
 			if (cPlayer1.myInfo.profilePictureSmall != null){
 				this.player1GUI.portrait.gameObject.SetActive(true);
-				this.player1GUI.portrait.sprite = Sprite.Create(
+				setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
+				/*this.player1GUI.portrait.sprite = Sprite.Create(
 					cPlayer1.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer1.myInfo.profilePictureSmall.width, cPlayer1.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer1.myInfo.profilePictureSmall.width, 0.5f * cPlayer1.myInfo.profilePictureSmall.height)
-				);
+				);*/
 			}else{
 				this.player1GUI.portrait.gameObject.SetActive(false);
 			}

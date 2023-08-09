@@ -16,6 +16,7 @@ public class XanaConstants : MonoBehaviour
     public int mic;
     public int minimap;
     public int userName;
+    public string NFTUrl;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;

@@ -374,6 +374,11 @@ public class UserRegisterationManager : MonoBehaviour
                      if (PlayerPrefs.HasKey("Equiped"))
                     {
                         XanaConstants.xanaConstants.isNFTEquiped = true;
+                        List l = _web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Find(o => o.nftId == PlayerPrefs.GetInt("nftID"));
+                        if (l != null)
+                        {
+                            XanaConstants.xanaConstants.NFTUrl = l.mediaUrl;
+                        }
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
                     }   
                 }

@@ -45,7 +45,8 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 			}
 
 			if (this.namePlayer1 != null){
-				this.namePlayer1.text = UFE.config.player1Character.characterName;
+				//this.namePlayer1.text = UFE.config.player1Character.characterName;
+				this.namePlayer1.text = PlayerPrefs.GetString("PlayerName");
 			}
 		}
 
