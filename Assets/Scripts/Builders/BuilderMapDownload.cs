@@ -498,6 +498,8 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
         mainPlayerCollider.height = 1f;
+
+        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
 
 

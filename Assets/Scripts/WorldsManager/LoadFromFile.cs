@@ -559,7 +559,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
 
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");

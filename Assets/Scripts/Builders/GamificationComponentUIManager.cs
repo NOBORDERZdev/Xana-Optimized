@@ -668,7 +668,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (questionIndex < numOfQuestions)
         {
             string s = TextLocalization.GetLocaliseTextByKey("Question");
-            string s2 = TextLocalization.GetLocaliseTextByKey("of");
+            string s2 = "/";// TextLocalization.GetLocaliseTextByKey("of");
             string s3 = TextLocalization.GetLocaliseTextByKey("Q");
             //Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3);
 
