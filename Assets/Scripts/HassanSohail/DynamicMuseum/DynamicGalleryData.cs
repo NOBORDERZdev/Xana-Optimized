@@ -328,8 +328,30 @@ public class DynamicGalleryData : MonoBehaviour
 
                         CreateFrame(detail.ratio);
 
-                        spriteObject.transform.localScale = new Vector3(0.44f, 0.44f, 0.44f);
+                        if (XanaEventDetails.eventDetails.DataIsInitialized)
+                        {
+                            if (detail.ratio == "1:1") // is sqaure 
+                            {
+                                //square
+                                spriteObject.transform.localScale = new Vector3(0.28f, 0.23f, 0.44f);
+                            }
+                            else if (detail.ratio == "9:16") // is potraite 
+                            {
+                                //potrate
+                                spriteObject.transform.localScale = new Vector3(0.23f, 0.155f, 0.2f);
+                            }
+                            else // is lanscape 
+                            {
+                                //landscape
+                                spriteObject.transform.localScale = new Vector3(0.3f, 0.39f, 0.44f);
+                            }
+                        }
 
+                        else
+                        {
+                            spriteObject.transform.localScale = new Vector3(0.44f, 0.44f, 0.44f);
+                        }
+                        
                         // upadte sprite position After Creating Frame
                         spriteObject.transform.localPosition = new Vector3(-0.04f, 0.04f, .01f);
                     }
