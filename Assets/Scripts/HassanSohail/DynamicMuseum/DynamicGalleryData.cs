@@ -143,6 +143,7 @@ public class DynamicGalleryData : MonoBehaviour
         templink = "";
         if (detail.asset_link.EndsWith(".jpg") || detail.asset_link.EndsWith(".png"))
         {
+            isVideo = false;
             templink = detail.asset_link;
             //templink = templink.Replace("https://cdn.xana.net/", "https://aydvewoyxq.cloudimg.io/_apitestxana_/");
             print("~~~~~~~~~~~~~~~~~"+ detail.ratio);
@@ -192,7 +193,7 @@ public class DynamicGalleryData : MonoBehaviour
                         spriteObject.AddComponent<SpriteRenderer>().sprite = thunbNailImage;
 
 
-                        isVideo = false;
+                      
 
 
 
@@ -330,12 +331,12 @@ public class DynamicGalleryData : MonoBehaviour
 
                         if (XanaEventDetails.eventDetails.DataIsInitialized)
                         {
-                            if (detail.ratio == "1:1") // is sqaure 
+                            if (detail.ratio == "1:1" ) // is sqaure 
                             {
                                 //square
                                 spriteObject.transform.localScale = new Vector3(0.28f, 0.23f, 0.44f);
                             }
-                            else if (detail.ratio == "9:16") // is potraite 
+                            else if (detail.ratio == "9:16" ) // is potraite 
                             {
                                 //potrate
                                 spriteObject.transform.localScale = new Vector3(0.23f, 0.155f, 0.2f);
@@ -351,7 +352,13 @@ public class DynamicGalleryData : MonoBehaviour
                         {
                             spriteObject.transform.localScale = new Vector3(0.50f, 0.42f, 0.44f);
                         }
-                        
+
+                        if((APIBaseUrlChange.instance.IsXanaLive && XanaEventDetails.eventDetails.DataIsInitialized) || (APIBaseUrlChange.instance.IsXanaLive && !XanaEventDetails.eventDetails.DataIsInitialized))
+                        {
+                            spriteObject.transform.localScale = new Vector3(0.44f, 0.44f, 0.44f);
+                        }
+                       
+
                         // upadte sprite position After Creating Frame
                         spriteObject.transform.localPosition = new Vector3(-0.04f, 0.04f, .01f);
                     }
