@@ -9,24 +9,25 @@ using System;
 using System.IO;
 
 public class SceneManage : MonoBehaviourPunCallbacks
-{ 
+{
     public static bool callRemove;
+    public bool isAddressableScene = true;
     public GameObject AnimHighlight;
     public GameObject popupPenal;
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
 
-    public string mainScene= "Main";
+    public string mainScene = "Main";
 
     private AsyncOperation asyncLoading;
 
     bool exitOnce = true;
-  
+
 
     private void OnEnable()
     {
-       
+
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
@@ -39,15 +40,15 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
     private void OnDisable()
     {
-       // AssetBundle.UnloadAllAssetBundles(false);
+        // AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-       // Caching.ClearCache();
+        // Caching.ClearCache();
     }
 
     private void OnDestroy()
     {
         Resources.UnloadUnusedAssets();
-      //  Caching.ClearCache();
+        //  Caching.ClearCache();
     }
 
 
@@ -71,11 +72,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
             //    Screen.orientation = ScreenOrientation.LandscapeLeft;
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
-               StartCoroutine( LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
             else
             {
-                
+
                 if (changeOritentationChange)
                 {
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -106,30 +107,29 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 //   Caching.ClearCache();
                 StartCoroutine(LoadMainEnumerator());
             }
-            
+
         }
 
     }
 
-     private IEnumerator LobbySceneSwitch()
-     {
+    private IEnumerator LobbySceneSwitch()
+    {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        
+
         yield return new WaitForSeconds(1f);
-        XanaConstants.xanaConstants.isBuilderScene=false;
+        XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
         StartCoroutine(LoadMainEnumerator());
-       
-       
+
+
     }
-    
+
 
     IEnumerator LoadMainEnumerator()
     {
-        
         LeaveRoom();
         yield return new WaitForSeconds(.5f);
         if (XanaConstants.xanaConstants.museumAssetLoaded != null)
@@ -152,13 +152,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LeaveRoom()
     {
-        callRemove = true;
-        Launcher.instance.working = ScenesList.MainMenu;
-        PhotonNetwork.LeaveRoom(false);
-        PhotonNetwork.LeaveLobby();
-        PhotonNetwork.DestroyAll(true);
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
-        Debug.Log("Exit: Api Called");
+        if (isAddressableScene)
+        {
+            callRemove = true;
+            Launcher.instance.working = ScenesList.MainMenu;
+            PhotonNetwork.LeaveRoom(false);
+            PhotonNetwork.LeaveLobby();
+            PhotonNetwork.DestroyAll(true);
+            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+            Debug.Log("Exit: Api Called");
+        }
         StartSceneLoading();
     }
 
@@ -177,7 +180,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
     /// To load main scene 
     /// </summary>
     /// <returns></returns>
-    IEnumerator LoadMianScene() {
+    IEnumerator LoadMianScene()
+    {
         yield return new WaitForSeconds(.2f);
         //yield return new WaitForSeconds(.4f);
         LoadingHandler.Instance.UpdateLoadingSlider(0.3f);
@@ -185,11 +189,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
         //yield return new WaitForSeconds(.6f);
         LoadingHandler.Instance.UpdateLoadingSlider(0.6f);
         print("loading mainmenu");
-      
+
         Resources.UnloadUnusedAssets();
         //  Caching.ClearCache();
         // GC.Collect();
-        print("mian scne "+mainScene);
+        print("mian scne " + mainScene);
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             SceneManager.LoadScene("Main");
