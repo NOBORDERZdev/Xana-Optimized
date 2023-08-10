@@ -24,6 +24,7 @@ public class EyesBlinking : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        StartCoroutine(BlinkingStartRoutine());
     }
     public void StoreBlendShapeValues()
     {
