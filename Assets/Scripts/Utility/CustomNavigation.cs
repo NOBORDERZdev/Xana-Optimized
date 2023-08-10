@@ -65,21 +65,21 @@ public class CustomNavigation : MonoBehaviour
         if (scriptInvoke)
         {
             scriptInvoke = false;
-          //  Debug.LogError("script invoke");
+          // Debug.Log("script invoke");
             return;
         }
-      //  Debug.LogError(data[currentindex].data.Count);
+      // Debug.Log(data[currentindex].data.Count);
         if (data[currentindex].data.Count <= data[currentindex].current+1) {
             data[currentindex].data.Add(obje);
             data[currentindex].current = data[currentindex].data.Count-1;
-        //    Debug.LogError("current" + data[currentindex].current);
+        //   Debug.Log("current" + data[currentindex].current);
         }
         else
         {
            
             data[currentindex].data[data[currentindex].current+1] =obje;
             data[currentindex].current += 1;
-            Debug.LogError(data[currentindex].current + "  ,  " + data[currentindex].current + 1);
+           Debug.Log(data[currentindex].current + "  ,  " + data[currentindex].current + 1);
             
 
         }
@@ -160,7 +160,7 @@ public class CustomNavigation : MonoBehaviour
 
         previous.GetComponent<Button>().interactable = true;
         data[currentindex].current += 1;
-        Debug.LogError("current next " + data[currentindex].current);
+       Debug.Log("current next " + data[currentindex].current);
         scriptInvoke = true;
         data[currentindex].data[data[currentindex].current].GetComponent<Button>().onClick.Invoke();
         BodyCustomizer.Instance.setprev();
@@ -222,14 +222,14 @@ public class CustomNavigation : MonoBehaviour
         //    //{
 
         //    //    FindObjectOfType<BodyMorphing>().HairSelection(PlayerPrefs.GetInt("player hair",0));
-        //    //    Debug.LogError("Hairsection");
+        //    //   Debug.Log("Hairsection");
         //    //}
         //        BodyCustomizer.Instance.apply_prev();
         //  //  data[currentindex].data[data[currentindex].current+1].transform.parent.gameObject.transform.GetChild(0).GetComponent<Button>().onClick.Invoke();
         // //   scriptInvoke = true;
         //    return;
         //}
-        //Debug.LogError("current previous " + data[currentindex].current);
+        //Debug.Log("current previous " + data[currentindex].current);
         //scriptInvoke = true;
         //data[currentindex].data[data[currentindex].current].GetComponent<Button>().onClick.Invoke();
         //BodyCustomizer.Instance.setprev();

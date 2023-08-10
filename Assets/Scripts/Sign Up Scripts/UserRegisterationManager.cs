@@ -394,7 +394,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-             Debug.LogError("not Logged in");
+            Debug.Log("not Logged in");
         }  
          /*
         if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
@@ -1275,7 +1275,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in set device token");
+               Debug.Log("Network error in set device token");
             }
             else
             {
@@ -1284,7 +1284,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        Debug.LogError("Success false in  in set device token");
+                       Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1494,7 +1494,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.LogError(request.downloadHandler.text);
+        Debug.Log("<color = red>" + request.downloadHandler.text + "</color>");
         DeleteApiRes myObject1 = new DeleteApiRes();
         myObject1 = JsonUtility.FromJson<DeleteApiRes>(request.downloadHandler.text);
 
@@ -3154,7 +3154,7 @@ public class UserRegisterationManager : MonoBehaviour
         Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            Debug.LogError("User Already loged in set name api call.......");
+           Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3311,7 +3311,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in logout from other device");
+               Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3319,7 +3319,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                        Debug.LogError("Success false in logout from other device  " + obj_LogOut.msg);
+                       Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
@@ -3372,7 +3372,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (www.isHttpError || www.isNetworkError)
             {
 
-                //  Debug.LogError("Network Error");
+                // Debug.Log("Network Error");
                 errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                 errorTextEmail.GetComponent<Text>().text = www.error.ToUpper();
@@ -3546,7 +3546,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    Debug.LogError(myObject1.msg);
+                   Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3641,7 +3641,7 @@ public class UserRegisterationManager : MonoBehaviour
                 Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    Debug.LogError(myObject1.msg);
+                   Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -4113,7 +4113,7 @@ public class UserRegisterationManager : MonoBehaviour
         //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        Debug.LogError("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
+       Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4122,7 +4122,7 @@ public class UserRegisterationManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.LogError("nft response :- " + url + request.downloadHandler.text);
+       Debug.Log("nft response :- " + url + request.downloadHandler.text);
 
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
@@ -4141,7 +4141,7 @@ public class UserRegisterationManager : MonoBehaviour
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                        Debug.LogError("---- " + s + "----" + ReturnNftRole(s));
+                       Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4193,7 +4193,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in set device token");
+                Debug.Log("<color = red> Network error in set device token </color>");
             }
             else
             {
@@ -4202,7 +4202,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                        Debug.LogError("Success false in  in set device token");
+                       Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -4264,7 +4264,7 @@ public class UserRegisterationManager : MonoBehaviour
         // }
         // else
         // {
-        //     Debug.LogError("NetWOrkerror DO Somethin");
+        //    Debug.Log("NetWOrkerror DO Somethin");
         ////     print(myObject1.msg + " | success: " + myObject1.success);
         // }
         yield return null;

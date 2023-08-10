@@ -226,7 +226,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.LogError("Failed to load json....");
+               Debug.Log("Failed to load json....");
             }));
         }
 
@@ -410,7 +410,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 yield return null;
             }
-               // Debug.LogError(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+               //Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
 
             Material _mat = loadSkyBox.Result;
             _mat.shader = Shader.Find(skyBoxItem.shaderName);
@@ -450,7 +450,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
-        Debug.LogError(obj.Result.shader.name+"-----"+ obj.Status);
+       Debug.Log(obj.Result.shader.name+"-----"+ obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
@@ -566,7 +566,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    xanaItem.SetData(levelData.otherItems[i]);
         //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
         //    {
-        //        Debug.LogError("local pos :- "+ levelData.otherItems[i].Position);
+        //       Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
         //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
         //    }
         //}

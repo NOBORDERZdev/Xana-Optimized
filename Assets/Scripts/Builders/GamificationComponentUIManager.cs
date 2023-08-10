@@ -306,7 +306,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine ElapsedTimerCoroutine;
     public void EnableElapseTimeCounDownUI(float time, bool isRunning)
     {
-        //Debug.LogError("EnableElapseTimeCounDownUI" + time);
+        //Debug.Log("EnableElapseTimeCounDownUI" + time);
         if (isRunning)
         {
             DisableAllComponentUIObject(ComponentType.ElapsedTime);
@@ -600,7 +600,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         questionIndex += 1;
         next = TextLocalization.GetLocaliseTextByKey("Next");
         result = TextLocalization.GetLocaliseTextByKey("Result");
-        //Debug.LogError("TextLocalization==>" + next + " " + result);
+        //Debug.Log("TextLocalization==>" + next + " " + result);
 
         nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
         SetButtonInteractability(true, false);
@@ -617,7 +617,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         {
             isOptionSelected = true;
             confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-            //Debug.LogError("TextLocalization==>" + confirm);
+            //Debug.Log("TextLocalization==>" + confirm);
 
             nextButtonText.text = confirm;
         }
@@ -661,7 +661,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         SetButtonInteractability(true, true);
         confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-        //Debug.LogError("Confirm Localise " + confirm);
+        //Debug.Log("Confirm Localise " + confirm);
 
         nextButtonText.text = confirm;
 
@@ -670,7 +670,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             string s = TextLocalization.GetLocaliseTextByKey("Question");
             string s2 = TextLocalization.GetLocaliseTextByKey("of");
             string s3 = TextLocalization.GetLocaliseTextByKey("Q");
-            //Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3);
+            //Debug.Log("TextLocalization==>" + s + " " + s2 + " " + s3);
 
             numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
             quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
@@ -798,7 +798,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
         string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
         string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
-        //Debug.LogError("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
+        //Debug.Log("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
         correctText.text = s + ": " + correct;
         wrongText.text = s2 + ": " + wrong;
         float percentage = (((float)correct / numOfQuestions) * 100);
