@@ -349,7 +349,7 @@ public class DynamicGalleryData : MonoBehaviour
 
                         else
                         {
-                            spriteObject.transform.localScale = new Vector3(0.44f, 0.44f, 0.44f);
+                            spriteObject.transform.localScale = new Vector3(0.50f, 0.42f, 0.44f);
                         }
                         
                         // upadte sprite position After Creating Frame
