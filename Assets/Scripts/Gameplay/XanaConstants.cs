@@ -8,6 +8,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class XanaConstants : MonoBehaviour
 {
+    public bool isSpawnBot = false;
+
     public static XanaConstants xanaConstants;
 
     public bool isHoldCharacterNFT;
