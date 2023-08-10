@@ -139,10 +139,6 @@ public class Web3APIforWeb2 : MonoBehaviour
                     {
                         XanaConstants.xanaConstants.IsDeemoNFT = true;
                     }
-                    else
-                    {
-                        XanaConstants.xanaConstants.IsDeemoNFT = false;
-                    }
                     if (NFTname.Contains("astroboy"))
                     {
                         print("Astroboy");
