@@ -199,10 +199,10 @@ public class FeedUIController : MonoBehaviour
     IEnumerator WaitToStartCallForFeedScene()
     {
         yield return new WaitForSeconds(0.2f);
-        Debug.LogError("FeedUIController isLoginFromDifferentId:" + APIManager.Instance.isLoginFromDifferentId);
+       Debug.Log("FeedUIController isLoginFromDifferentId:" + APIManager.Instance.isLoginFromDifferentId);
         if (APIManager.Instance.isLoginFromDifferentId)
         {
-            Debug.LogError("FeedUI Controller new user login and calling feed start function");
+           Debug.Log("FeedUI Controller new user login and calling feed start function");
             ResetAllFeedScreen(false);
             StartMethodCalling();//Start Function Calling.......
         }
@@ -216,8 +216,8 @@ public class FeedUIController : MonoBehaviour
     //this method calling start of the scene.......
     public void StartMethodCalling()
     {
-        //Debug.LogError("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
-        //Debug.LogError("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
+        //Debug.Log("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
 
         if (GlobalVeriableClass.callingScreen == "Feed")
         {
@@ -240,7 +240,7 @@ public class FeedUIController : MonoBehaviour
             AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
         }
 
-        //Debug.LogError("FeedUIController Start:" + Application.internetReachability);
+        //Debug.Log("FeedUIController Start:" + Application.internetReachability);
         //rik for start of the feed scene load data and default api calling....... 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
@@ -256,7 +256,7 @@ public class FeedUIController : MonoBehaviour
         }
         else
         {
-            // Debug.LogError("dfdfsd");
+            //Debug.Log("dfdfsd");
             OnFeedButtonTabBtnClick();
         }
     }
@@ -280,7 +280,7 @@ public class FeedUIController : MonoBehaviour
 
     public void OnFeedButtonTabBtnClick()
     {
-        Debug.LogError("OnFeedButtonTabBtnClick.......");
+       Debug.Log("OnFeedButtonTabBtnClick.......");
         APIManager.Instance.OnFeedAPiCalling();
         feedUiScreen.SetActive(true);
     }
@@ -315,7 +315,7 @@ public class FeedUIController : MonoBehaviour
     {
         if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
         {
-            Debug.LogError("Feed Data Load");
+           Debug.Log("Feed Data Load");
             StartCoroutine(WaitToSceneLoad());
         }
 
@@ -340,7 +340,7 @@ public class FeedUIController : MonoBehaviour
 
         if(isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
         {
-            Debug.LogError("Feed Data Load");
+           Debug.Log("Feed Data Load");
             StartCoroutine(WaitToSceneLoad());
         }
 
@@ -488,12 +488,12 @@ public class FeedUIController : MonoBehaviour
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
                     break;
                 case "HotTabScreen":
-                    //Debug.LogError("Comes from Hot or Discover tab full feed screen");
+                    //Debug.Log("Comes from Hot or Discover tab full feed screen");
                     //disable feed full screen after click on profile button and open other user profile.......
                     OnClickVideoItemBackButton();
                     break;
                 case "FollowingTabScreen":
-                    //Debug.LogError("Comes from Following tab full feed screen");
+                    //Debug.Log("Comes from Following tab full feed screen");
                     //disable feed full screen after click on profile button and open other user profile.......
                     OnClickVideoItemBackButton();
                     break;
@@ -535,7 +535,7 @@ public class FeedUIController : MonoBehaviour
 
     public void Swipe(Vector2 value)
     {
-        // Debug.LogError(" value " + value.y);
+        //Debug.Log(" value " + value.y);
     }
 
     public void OnSetSelectionLine()
@@ -675,14 +675,14 @@ public class FeedUIController : MonoBehaviour
     public float verticalNormalizedPosition;
     public void APiPagination()
     {
-        //Debug.LogError("y pos:" + feedUiScrollRectFasterEx.verticalEndPos);
+        //Debug.Log("y pos:" + feedUiScrollRectFasterEx.verticalEndPos);
 
         if (isChangeMainScrollRect)
         {
             return;
         }
         verticalNormalizedPosition = feedUiScrollRectFasterEx.verticalNormalizedPosition;
-        //Debug.LogError("verticalNormalizedPosition : " + feedUiScrollRectFasterEx.verticalNormalizedPosition + "    :verticalEndPos:" + feedUiScrollRectFasterEx.verticalEndPos + "    :isDataLoad:" + isDataLoad);
+        //Debug.Log("verticalNormalizedPosition : " + feedUiScrollRectFasterEx.verticalNormalizedPosition + "    :verticalEndPos:" + feedUiScrollRectFasterEx.verticalEndPos + "    :isDataLoad:" + isDataLoad);
         //if (feedUiScrollRectFasterEx.verticalEndPos <= 1 && isDataLoad)
         if (feedUiScrollRectFasterEx.verticalNormalizedPosition <= 0.01f && isDataLoad)
         {
@@ -690,21 +690,21 @@ public class FeedUIController : MonoBehaviour
             {
                 APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
             }
-            // Debug.LogError("scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition);
+            //Debug.Log("scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition);
             if (feedUiHorizontalSnap.CurrentPage == 1)
             {
-                //Debug.LogError("Feed Following scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.followingUserRoot.Data.Rows.Count);
+                //Debug.Log("Feed Following scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.followingUserRoot.Data.Rows.Count);
                 //if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 && followingFeedImageLoadedCount >= (followingFeedInitiateTotalCount - 1))
                 if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 /*&& followingFeedInitiateTotalCount < 2*/)
                 {
                     isDataLoad = false;
-                    Debug.LogError("isDataLoad False");
+                   Debug.Log("isDataLoad False");
                     APIManager.Instance.RequestGetFeedsByFollowingUser((followingUserCurrentpage + 1), 10);
                 }
             }
             else
             {
-                //Debug.LogError("Feed scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.root.data.rows.Count + " :current screen:" + feedUiHorizontalSnap.CurrentPage);
+                //Debug.Log("Feed scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.root.data.rows.Count + " :current screen:" + feedUiHorizontalSnap.CurrentPage);
                 //Riken
                 //if (APIManager.Instance.root.data.rows.Count > 0)
                 if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
@@ -718,16 +718,16 @@ public class FeedUIController : MonoBehaviour
                     {
                         isCallAPi = true;
                     }
-                    Debug.LogError("isCalling:" + isCallAPi);
+                   Debug.Log("isCalling:" + isCallAPi);
                     if (isCallAPi)
                     {
-                        Debug.LogError("isDataLoad False APiPagination currentPage :" + allFeedCurrentpage);
+                       Debug.Log("isDataLoad False APiPagination currentPage :" + allFeedCurrentpage);
                         isDataLoad = false;
                         APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
                     }
                 }
             }
-            //Debug.LogError("isDataLoad False");
+            //Debug.Log("isDataLoad False");
             //isDataLoad = false;
         }
         if (Input.GetKeyDown(KeyCode.A))
@@ -743,7 +743,7 @@ public class FeedUIController : MonoBehaviour
 
         TimeSpan timeDiff = (DateTime.Now - today);
 
-        //Debug.LogError("minuts : " + timeDiff.TotalMinutes + "  :days: " + timeDiff.Days + "    :Date:"+dateTime);
+        //Debug.Log("minuts : " + timeDiff.TotalMinutes + "  :days: " + timeDiff.Days + "    :Date:"+dateTime);
         string timestr = "";
 
         if (timeDiff.TotalMinutes < 1)
@@ -781,7 +781,7 @@ public class FeedUIController : MonoBehaviour
 
         TimeSpan timeDiff = (DateTime.Now - today);
 
-        //Debug.LogError("minuts : " + timeDiff.TotalMinutes + "  :days: " + timeDiff.Days + "    :Date:"+dateTime);
+        //Debug.Log("minuts : " + timeDiff.TotalMinutes + "  :days: " + timeDiff.Days + "    :Date:"+dateTime);
         string timestr = "";
 
         if (timeDiff.TotalMinutes < 1)
@@ -817,7 +817,7 @@ public class FeedUIController : MonoBehaviour
         switch (feedFullViewScreenCallingFrom)
         {
             case "MyProfile":
-                Debug.LogError("Full Video Screen back calling from MyProfile");
+               Debug.Log("Full Video Screen back calling from MyProfile");
                 MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
                 MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
                 MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
@@ -825,10 +825,10 @@ public class FeedUIController : MonoBehaviour
             case "OtherProfile":
                 OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
                 OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-                Debug.LogError("Full Video Screen back calling from OtherProfile");
+               Debug.Log("Full Video Screen back calling from OtherProfile");
                 break;
             case "FeedPage":
-                Debug.LogError("Full Video Screen back calling from MyPostFed");
+               Debug.Log("Full Video Screen back calling from MyPostFed");
                 break;
             default:
                 feedUiScreen.SetActive(true);
@@ -847,7 +847,7 @@ public class FeedUIController : MonoBehaviour
         switch (feedFullViewScreenCallingFrom)
         {
             case "MyProfile":
-                Debug.LogError("Full Video Screen back calling from MyProfile");
+               Debug.Log("Full Video Screen back calling from MyProfile");
                 MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
                 MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
                 MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
@@ -855,10 +855,10 @@ public class FeedUIController : MonoBehaviour
             case "OtherProfile":
                 OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
                 OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-                Debug.LogError("Full Video Screen back calling from OtherProfile");
+               Debug.Log("Full Video Screen back calling from OtherProfile");
                 break;
             case "FeedPage":
-                Debug.LogError("Full Video Screen back calling from MyPostFed");
+               Debug.Log("Full Video Screen back calling from MyPostFed");
                 if (!ComeFromBackButton)
                 {
                     bottomTabManager.OnClickProfileButton();
@@ -1069,7 +1069,7 @@ public class FeedUIController : MonoBehaviour
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
                 createFeedLastPickFileName = (Time.time + fileName);
-                Debug.LogError("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
+               Debug.Log("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
 
                 createFeedScreen.SetActive(true);
             }
@@ -1085,7 +1085,7 @@ public class FeedUIController : MonoBehaviour
                 //{
 
                 string fileExtention = Path.GetExtension(path);
-                //Debug.LogError("Path:" + path + "   :File extention:" + fileExtention + "    :MediaType:" + NativeGallery.GetMediaTypeOfFile(path));
+                //Debug.Log("Path:" + path + "   :File extention:" + fileExtention + "    :MediaType:" + NativeGallery.GetMediaTypeOfFile(path));
 
                 if (path != null)
                 {
@@ -1151,7 +1151,7 @@ public class FeedUIController : MonoBehaviour
                     //string fileName = pathArry[pathArry.Length - 1];
                     string fileName = Path.GetFileName(path);
                     createFeedLastPickFileName = (Time.time + fileName);
-                    Debug.LogError("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
+                   Debug.Log("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
 
                     //createFeedScreen.SetActive(true);
                 }
@@ -1164,7 +1164,7 @@ public class FeedUIController : MonoBehaviour
 
     public void FeedCreateVideoTimeGet()
     {
-        //Debug.LogError("Duration:" + createFeedMediaPlayer.Info.GetDuration() + "   :frame:" + createFeedMediaPlayer.Info.GetDurationFrames());
+        //Debug.Log("Duration:" + createFeedMediaPlayer.Info.GetDuration() + "   :frame:" + createFeedMediaPlayer.Info.GetDurationFrames());
         if (createFeedMediaPlayer.Info.GetDuration() > 15)
         {
             SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 15 seconds");
@@ -1181,19 +1181,19 @@ public class FeedUIController : MonoBehaviour
 
     public void OnFeedCreateMediaPlayerEvent(MediaPlayer mp, MediaPlayerEvent.EventType et, ErrorCode errorCode)
     {
-        //Debug.LogError("OnFeedCreateMediaPlayerEvent:" + et);
+        //Debug.Log("OnFeedCreateMediaPlayerEvent:" + et);
         switch (et)
         {
             case MediaPlayerEvent.EventType.MetaDataReady:
-                //Debug.LogError("MetaDataReady: " + createFeedMediaPlayer.Info.GetDuration());
+                //Debug.Log("MetaDataReady: " + createFeedMediaPlayer.Info.GetDuration());
                 FeedCreateVideoTimeGet();
                 break;
             case MediaPlayerEvent.EventType.FirstFrameReady:
-                //Debug.LogError("FirstFrameReady: " + createFeedMediaPlayer.Info.GetDuration());
+                //Debug.Log("FirstFrameReady: " + createFeedMediaPlayer.Info.GetDuration());
                 FeedCreateVideoTimeGet();
                 break;
             case MediaPlayerEvent.EventType.ReadyToPlay:
-                //Debug.LogError("ReadyToPlay: " + createFeedMediaPlayer.Info.GetDuration());
+                //Debug.Log("ReadyToPlay: " + createFeedMediaPlayer.Info.GetDuration());
                 FeedCreateVideoTimeGet();
                 break;
             case MediaPlayerEvent.EventType.Error:
@@ -1204,7 +1204,7 @@ public class FeedUIController : MonoBehaviour
 
     public void FeedCreateVideoError()
     {
-        Debug.LogError("Error to load feed seleted video");
+       Debug.Log("Error to load feed seleted video");
         SNSNotificationManager.Instance.ShowNotificationMsg("video can't load please try again");
         createFeedMediaPlayer.CloseMedia();
         imageOrVideo = "";
@@ -1253,7 +1253,7 @@ public class FeedUIController : MonoBehaviour
         createFeedVideoObj.SetActive(false);
         if (createFeedMediaPlayer.gameObject.activeSelf)
         {
-            Debug.LogError("Close media player");
+           Debug.Log("Close media player");
             createFeedMediaPlayer.CloseMedia();
             createFeedMediaPlayer.gameObject.SetActive(false);
         }
@@ -1319,7 +1319,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to Remove feed from following tab.......
     public void RemoveUnFollowedUserFromFollowingTab(string callingFrom = "")
     {
-        //Debug.LogError("RemoveUnFollowedUserFromFollowingTab.......:" + unFollowedUserListForFollowingTab.Count);
+        //Debug.Log("RemoveUnFollowedUserFromFollowingTab.......:" + unFollowedUserListForFollowingTab.Count);
         if (unFollowedUserListForFollowingTab.Count > 0)
         {
             APIManager.Instance.FeedFollowingSaveAndUpdateJson(unFollowedUserListForFollowingTab, callingFrom);
@@ -1402,7 +1402,7 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileGetAllFollower(int pageNum)
     {
-        //Debug.LogError("ProfileGetAllFollower:" + APIManager.Instance.profileAllFollowerRoot.data.rows.Count + "    :pageNum:" + pageNum);
+        //Debug.Log("ProfileGetAllFollower:" + APIManager.Instance.profileAllFollowerRoot.data.rows.Count + "    :pageNum:" + pageNum);
         for (int i = 0; i < APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
         {
             if (!profileFollowerLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id))
@@ -1434,7 +1434,7 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileGetAllFollowing(int pageNum)
     {
-        //Debug.LogError("ProfileGetAllFollowing:" + APIManager.Instance.profileAllFollowingRoot.data.rows.Count + "    :pageNum:" + pageNum);
+        //Debug.Log("ProfileGetAllFollowing:" + APIManager.Instance.profileAllFollowingRoot.data.rows.Count + "    :pageNum:" + pageNum);
         for (int i = 0; i < APIManager.Instance.profileAllFollowingRoot.data.rows.Count; i++)
         {
             if (!profileFollowingLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowingRoot.data.rows[i].following.id))
@@ -1488,12 +1488,12 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileFollowerPaginationAPICall()
     {
-        //Debug.LogError("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
+        //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
         if (profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition <= 0.01f && isProfileFollowerDataLoaded)
         {
             if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
             {
-                //Debug.LogError("ProfileFollowerFollowingPagination follower currentPage:" + profileFollowerPaginationPageNo);
+                //Debug.Log("ProfileFollowerFollowingPagination follower currentPage:" + profileFollowerPaginationPageNo);
                 isProfileFollowerDataLoaded = false;
                 APIManager.Instance.RequestGetAllFollowersFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowerPaginationPageNo + 1), 50);
             }
@@ -1502,12 +1502,12 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileFollowingPaginationAPICall()
     {
-        //Debug.LogError("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
+        //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
         if (profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition <= 0.01f && isProfileFollowingDataLoaded)
         {
             if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
             {
-                //Debug.LogError("ProfileFollowerFollowingPagination following currentPage:" + profileFollowingPaginationPageNo);
+                //Debug.Log("ProfileFollowerFollowingPagination following currentPage:" + profileFollowingPaginationPageNo);
                 isProfileFollowingDataLoaded = false;
                 APIManager.Instance.RequestGetAllFollowingFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowingPaginationPageNo + 1), 50);
             }
@@ -1569,7 +1569,7 @@ public class FeedUIController : MonoBehaviour
             DateTime today = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, TimeZoneInfo.Local);
 
             TimeSpan timeDiff = (DateTime.Now - today);
-            Debug.LogError("timeDiff:" + timeDiff + " :timeUtc:" + timeUtc.ToString("yyyy/MM/dd tt hh:MM"));
+           Debug.Log("timeDiff:" + timeDiff + " :timeUtc:" + timeUtc.ToString("yyyy/MM/dd tt hh:MM"));
 
             editDeleteFeedDateTimeText.text = timeUtc.ToString("yyyy/MM/dd tt hh:MM");
         }
@@ -1872,7 +1872,7 @@ public class FeedUIController : MonoBehaviour
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.LogError("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+        //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
 
         AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
@@ -1881,12 +1881,12 @@ public class FeedUIController : MonoBehaviour
                 string mediaUrl = callback.Response.Url;
                 UnityToolbag.Dispatcher.Invoke(() =>
                 {
-                    //Debug.LogError("Feed Video URL " + mediaUrl);
+                    //Debug.Log("Feed Video URL " + mediaUrl);
                     //feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: false);
                 });
             }
             else
-                Debug.LogError(callback.Exception);
+               Debug.Log(callback.Exception);
         });*/
 
         if (key != "")
@@ -1905,7 +1905,7 @@ public class FeedUIController : MonoBehaviour
             Debug.Log($"<color=green> Video Key = FeedFollowItemController : </color>{mediaUrl}");
             UnityToolbag.Dispatcher.Invoke(() =>
             {
-                //Debug.LogError("Feed Video URL " + mediaUrl);
+                //Debug.Log("Feed Video URL " + mediaUrl);
                 //feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: false);
             });
         }
@@ -1913,11 +1913,11 @@ public class FeedUIController : MonoBehaviour
 
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         //GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -1952,7 +1952,7 @@ public class FeedUIController : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType " + extension);
+        //Debug.Log("ExtentionType " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -1993,7 +1993,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to comment on feed after update require feed response.......
     public void CommentSuccessAfterUpdateRequireFeedResponse()
     {
-        Debug.LogError("CommentSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom);
+       Debug.Log("CommentSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom);
         switch (feedFullViewScreenCallingFrom)
         {
             case "MyProfile":
@@ -2031,7 +2031,7 @@ public class FeedUIController : MonoBehaviour
                         MyProfileDataManager.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
                     }
                 }
-                Debug.LogError("Full Feed Screen Comment calling from MyProfile");
+               Debug.Log("Full Feed Screen Comment calling from MyProfile");
                 break;
             case "FeedPage":
                 PostFeedVideoItem postFeedPageVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
@@ -2068,7 +2068,7 @@ public class FeedUIController : MonoBehaviour
                         MyProfileDataManager.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
                     }
                 }
-                Debug.LogError("Full Feed Screen Comment calling from FeedPage");
+               Debug.Log("Full Feed Screen Comment calling from FeedPage");
                 break;
             case "OtherProfile":
                 //current full feed selected item data update.......
@@ -2104,19 +2104,19 @@ public class FeedUIController : MonoBehaviour
                         OtherPlayerProfileData.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
                     }
                 }
-                Debug.LogError("Full Feed Screen Comment calling from OtherProfile");
+               Debug.Log("Full Feed Screen Comment calling from OtherProfile");
                 break;
             case "HotTab":
                 CommentAfterRefereshDiscoverAndHotFeedItemResponse();
-                Debug.LogError("Full Feed Screen Comment calling from HotTab");
+               Debug.Log("Full Feed Screen Comment calling from HotTab");
                 break;
             case "FollowingTab":
                 CommentAfterRefereshFollowingFeedItemResponse();
-                Debug.LogError("Full Feed Screen Comment calling from FollowingTab");
+               Debug.Log("Full Feed Screen Comment calling from FollowingTab");
                 break;
             case "DiscoverTab":
                 CommentAfterRefereshDiscoverAndHotFeedItemResponse();
-                Debug.LogError("Full Feed Screen Comment calling from DiscoverTab");
+               Debug.Log("Full Feed Screen Comment calling from DiscoverTab");
                 break;
             default:
                 break;
@@ -2186,7 +2186,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to like or dislike feed after update require feed response.......
     public void LikeDislikeSuccessAfterUpdateRequireFeedResponse(bool isLike, int likeCount)
     {
-        Debug.LogError("LikeDislikeSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom + "  :isLike:" + isLike + "  :LikeCount:" + likeCount);
+       Debug.Log("LikeDislikeSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom + "  :isLike:" + isLike + "  :LikeCount:" + likeCount);
         switch (feedFullViewScreenCallingFrom)
         {
             case "MyProfile":
@@ -2212,7 +2212,7 @@ public class FeedUIController : MonoBehaviour
                     AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItem.userData.Id);
                     allFeedByUserIdRow.isLike = postFeedVideoItem.userData.isLike;
                 }
-                //  Debug.LogError("Full Feed Screen like or dislike calling from MyProfile");
+                // Debug.Log("Full Feed Screen like or dislike calling from MyProfile");
                 break;
             case "OtherProfile":
                 //current full feed selected item data update.......
@@ -2234,15 +2234,15 @@ public class FeedUIController : MonoBehaviour
                     allFeedByUserIdRow.LikeCount = postFeedVideoItem1.userData.LikeCount;
                     allFeedByUserIdRow.isLike = postFeedVideoItem1.userData.isLike;
                 }
-                //  Debug.LogError("Full Feed Screen like or dislike calling from OtherProfile");
+                // Debug.Log("Full Feed Screen like or dislike calling from OtherProfile");
                 break;
             case "HotTab":
                 LikeOrDisLikeAfterRefereshDiscoverAndHotFeedItemResponse(isLike, likeCount);
-                //   Debug.LogError("Full Feed Screen like or dislike calling from HotTab");
+                //  Debug.Log("Full Feed Screen like or dislike calling from HotTab");
                 break;
             case "FollowingTab":
                 LikeOrDisLikeAfterRefereshFollowingFeedItemResponse(isLike, likeCount);
-                //  Debug.LogError("Full Feed Screen like or dislike calling from FollowingTab");
+                // Debug.Log("Full Feed Screen like or dislike calling from FollowingTab");
                 break;
             case "DiscoverTab":
                 LikeOrDisLikeAfterRefereshDiscoverAndHotFeedItemResponse(isLike, likeCount);
@@ -2266,7 +2266,7 @@ public class FeedUIController : MonoBehaviour
                     AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItemFeedPage.userData.Id);
                     allFeedByUserIdRow.isLike = postFeedVideoItemFeedPage.userData.isLike;
                 }
-                //  Debug.LogError("Full Feed Screen like or dislike calling from DiscoverTab");
+                // Debug.Log("Full Feed Screen like or dislike calling from DiscoverTab");
                 break;
             default:
                 break;
@@ -2278,7 +2278,7 @@ public class FeedUIController : MonoBehaviour
     {
         //current full feed selected item data update.......
         FollowingUserFeedItem feedFollowingItemController = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FollowingUserFeedItem>();
-        //  Debug.LogError("LikeOrDisLike islike:" + isLike + "     :FeedId:" + feedFollowingItemController.FollowingUserFeedData.Id + "    :likeCount:" + feedFollowingItemController.FollowingUserFeedData.LikeCount);
+        // Debug.Log("LikeOrDisLike islike:" + isLike + "     :FeedId:" + feedFollowingItemController.FollowingUserFeedData.Id + "    :likeCount:" + feedFollowingItemController.FollowingUserFeedData.LikeCount);
         feedFollowingItemController.FollowingUserFeedData.LikeCount = likeCount;
         feedFollowingItemController.FollowingUserFeedData.isLike = isLike;
 
@@ -2297,7 +2297,7 @@ public class FeedUIController : MonoBehaviour
     {
         //current full feed selected item data update.......
         FeedVideoItem feedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FeedVideoItem>();
-        //  Debug.LogError("LikeOrDisLike islike:" + isLike + "     :feedRawData Id:" + feedVideoItem.FeedRawData.id + "    :FeedId:" + feedVideoItem.FeedData.id + "   :likeCount:" + feedVideoItem.FeedData.likeCount);
+        // Debug.Log("LikeOrDisLike islike:" + isLike + "     :feedRawData Id:" + feedVideoItem.FeedRawData.id + "    :FeedId:" + feedVideoItem.FeedData.id + "   :likeCount:" + feedVideoItem.FeedData.likeCount);
         if (feedFullViewScreenCallingFrom == "HotTab")
         {
             feedVideoItem.hotFeed.likeCount = likeCount;
@@ -2395,42 +2395,42 @@ public class FeedUIController : MonoBehaviour
 
     public void TestKMBValue(int value)
     {
-        Debug.LogError("Test Value:" + GetAbreviation(value));
+       Debug.Log("Test Value:" + GetAbreviation(value));
     }
     #endregion
 
     #region Feed Comment and Like Socket Event Refresh Data.......
     public void FeedCommentAndLikeSocketEventSuccessAfterUpdateRequireFeedResponse(int feedId, int createdBY, int likeCount, int commentCount, bool isComesFromLike)
     {
-        Debug.LogError("LikeDislikeSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom);
+       Debug.Log("LikeDislikeSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom);
         switch (feedFullViewScreenCallingFrom)
         {
             case "MyProfile":
-                //   Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from MyProfile");
+                //  Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from MyProfile");
                 FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse(feedId, likeCount, commentCount, isComesFromLike, true);
                 break;
             case "OtherProfile":
-                //  Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from OtherProfile");
+                // Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from OtherProfile");
                 FeedCommentAndLikeSocketEventAfterRefereshOtherUserProfileResponse(feedId, likeCount, commentCount, isComesFromLike, true);
                 break;
             case "HotTab":
-                //   Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from HotTab");
+                //  Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from HotTab");
                 FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse(feedId, createdBY, likeCount, commentCount, isComesFromLike, true);
                 break;
             case "FollowingTab":
-                //   Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from FollowingTab");
+                //  Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from FollowingTab");
                 FeedCommentAndLikeSocketEventAfterRefereshFollowingFeedItemResponse(feedId, likeCount, commentCount, isComesFromLike, true);
                 break;
             case "DiscoverTab":
-                //   Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from DiscoverTab");
+                //  Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from DiscoverTab");
                 FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse(feedId, createdBY, likeCount, commentCount, isComesFromLike, true);
                 break;
             case "FeedPage":
-                //   Debug.LogError("Full Feed Screen like or dislike or feed comment socket event calling from DiscoverTab");
+                //  Debug.Log("Full Feed Screen like or dislike or feed comment socket event calling from DiscoverTab");
                 FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse(feedId, likeCount, commentCount, isComesFromLike, true);
                 break;
             default:
-                Debug.LogError("Default call.......");
+               Debug.Log("Default call.......");
                 FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse(feedId, createdBY, likeCount, commentCount, isComesFromLike, false);
                 FeedCommentAndLikeSocketEventAfterRefereshFollowingFeedItemResponse(feedId, likeCount, commentCount, isComesFromLike, false);
                 FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse(feedId, likeCount, commentCount, isComesFromLike, false);
@@ -2443,10 +2443,10 @@ public class FeedUIController : MonoBehaviour
     //this method is used to refresh like or dislike or comment socket event response Following Tab.......
     void FeedCommentAndLikeSocketEventAfterRefereshFollowingFeedItemResponse(int feedId, int likeCount, int commentCount, bool isComesFromLike, bool isFullFeedScreen)
     {
-        // Debug.LogError("FeedCommentAndLikeSocketEventAfterRefereshFollowingFeedItemResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
+        //Debug.Log("FeedCommentAndLikeSocketEventAfterRefereshFollowingFeedItemResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
         if (APIController.Instance.feedFollowingIdList.Contains(feedId))
         {
-            //Debug.LogError("Following tab feed data updated");
+            //Debug.Log("Following tab feed data updated");
             FeedsByFollowingUserRow feedsByFollowingUserRow = APIManager.Instance.allFollowingUserRootList.Find((x) => x.Id == feedId);
             if (feedsByFollowingUserRow != null)
             {
@@ -2463,7 +2463,7 @@ public class FeedUIController : MonoBehaviour
             if (isFullFeedScreen)
             {
                 int index = APIController.Instance.feedFollowingIdList.IndexOf(feedId);
-                //Debug.LogError("Index:" + index);
+                //Debug.Log("Index:" + index);
                 //current full feed selected item data update.......
                 FollowingUserFeedItem feedFollowingItemController = videofeedParent.GetChild(index).GetComponent<FollowingUserFeedItem>();
                 if (isComesFromLike)
@@ -2476,7 +2476,7 @@ public class FeedUIController : MonoBehaviour
                     feedFollowingItemController.FollowingUserFeedData.commentCount = commentCount;
                     feedFollowingItemController.CommentCountUISetup(feedFollowingItemController.FollowingUserFeedData.commentCount);
 
-                    //Debug.LogError("Comment Panel.......:" + commentPanel.activeInHierarchy);
+                    //Debug.Log("Comment Panel.......:" + commentPanel.activeInHierarchy);
                     if (commentPanel.activeInHierarchy)//if comment screen is open then refresh comment list api.......
                     {
                         feedFollowingItemController.OnClickCommentButton(true);
@@ -2489,15 +2489,15 @@ public class FeedUIController : MonoBehaviour
     //this method is used to refresh like or dislike or comment socket event response Hot and Discover Tab.......
     void FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse(int feedId, int createdBY, int likeCount, int commentCount, bool isComesFromLike, bool isFullFeedScreen)
     {
-        // Debug.LogError("FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse feed ID:" + feedId + "    :CreatedBY:" + createdBY + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
+        //Debug.Log("FeedCommentAndLikeSocketEventAfterRefereshDiscoverAndHotFeedItemResponse feed ID:" + feedId + "    :CreatedBY:" + createdBY + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
         if (APIController.Instance.feedHotIdList.Contains(feedId))
         {
-            Debug.LogError("here 1");
+           Debug.Log("here 1");
             //if (APIController.Instance.feedForYouIdList.Contains(feedId))
             //{
-            Debug.LogError("Hot or Discover tab feed data updated");
-            Debug.LogError("createdBY => " + createdBY);
-            //Debug.LogError("createdBY => "+ createdBY);
+           Debug.Log("Hot or Discover tab feed data updated");
+           Debug.Log("createdBY => " + createdBY);
+            //Debug.Log("createdBY => "+ createdBY);
 
 
 
@@ -2525,7 +2525,7 @@ public class FeedUIController : MonoBehaviour
 
             if (isFullFeedScreen)
             {
-                // Debug.LogError("isfullscreen");
+                //Debug.Log("isfullscreen");
                 int index = -1;
 
                 for (int i = 0; i < videofeedParent.childCount; i++)
@@ -2537,7 +2537,7 @@ public class FeedUIController : MonoBehaviour
                     }
                 }
                 //   int index = APIController.Instance.feedForYouIdList.IndexOf(feedId);
-                //  Debug.LogError("Index:" + index);
+                // Debug.Log("Index:" + index);
                 //current full feed selected item data update.......
                 FeedVideoItem feedVideoItem = videofeedParent.GetChild(index).GetComponent<FeedVideoItem>();
                 //  Debug.Log("FeedvideoItem:" + feedVideoItem.FeedData.id + "  feediID :" + feedId);
@@ -2568,7 +2568,7 @@ public class FeedUIController : MonoBehaviour
                         feedVideoItem.CommentCountUISetup(feedVideoItem.FeedData.commentCount);
                     }
 
-                    //Debug.LogError("Comment Panel.......:" + commentPanel.activeInHierarchy);
+                    //Debug.Log("Comment Panel.......:" + commentPanel.activeInHierarchy);
                     if (commentPanel.activeInHierarchy)//if comment screen is open then refresh comment list api.......
                     {
                         if (APIManager.Instance.feedIdTemp == feedVideoItem.FeedData.id)
@@ -2585,7 +2585,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to refresh like or dislike or comment socket event response MyProfile screen.......
     void FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse(int feedId, int likeCount, int commentCount, bool isComesFromLike, bool isFullFeedScreen)
     {
-        Debug.LogError("FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
+       Debug.Log("FeedCommentAndLikeSocketEventAfterRefereshMyProfileResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
         if (MyProfileDataManager.Instance.loadedMyPostAndVideoId.Contains(feedId))
         {
             AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == feedId);
@@ -2593,10 +2593,10 @@ public class FeedUIController : MonoBehaviour
             {
                 allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == feedId);
             }
-            // Debug.LogError("here");
+            //Debug.Log("here");
             if (allFeedByUserIdRow != null)
             {
-                // Debug.LogError("my profile feed data updated");
+                //Debug.Log("my profile feed data updated");
                 if (isComesFromLike)
                 {
                     allFeedByUserIdRow.LikeCount = likeCount;
@@ -2654,10 +2654,10 @@ public class FeedUIController : MonoBehaviour
         if (MyProfileDataManager.Instance.loadedMyPostAndVideoIdInFeedPage.Contains(feedId))
         {
             AllFeedByUserIdRow allFeedByUserIdRow = APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Find((x) => x.Id == feedId);
-            // Debug.LogError("here");
+            //Debug.Log("here");
             if (allFeedByUserIdRow != null)
             {
-                // Debug.LogError("my profile feed data updated");
+                //Debug.Log("my profile feed data updated");
                 if (isComesFromLike)
                 {
                     allFeedByUserIdRow.LikeCount = likeCount;
@@ -2683,7 +2683,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to refresh like or dislike or comment socket event response Other user Profile screen.......
     void FeedCommentAndLikeSocketEventAfterRefereshOtherUserProfileResponse(int feedId, int likeCount, int commentCount, bool isComesFromLike, bool isFullFeedScreen)
     {
-        Debug.LogError("FeedCommentAndLikeSocketEventAfterRefereshOtherUserProfileResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
+       Debug.Log("FeedCommentAndLikeSocketEventAfterRefereshOtherUserProfileResponse feed ID:" + feedId + "  :LikeCount:" + likeCount + "    :CommentCount:" + commentCount + "  :IsComesFromLike:" + isComesFromLike + "    :IsFullScreen:" + isFullFeedScreen);
         if (OtherPlayerProfileData.Instance.loadedMyPostAndVideoId.Contains(feedId))
         {
             AllFeedByUserIdRow allFeedByUserIdRow = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == feedId);
@@ -2694,7 +2694,7 @@ public class FeedUIController : MonoBehaviour
 
             if (allFeedByUserIdRow != null)
             {
-                //Debug.LogError("my profile feed data updated");
+                //Debug.Log("my profile feed data updated");
                 if (isComesFromLike)
                 {
                     allFeedByUserIdRow.LikeCount = likeCount;
@@ -2718,7 +2718,7 @@ public class FeedUIController : MonoBehaviour
                     if (index < videofeedParent.childCount)
                     {
                         PostFeedVideoItem postFeedVideoItem = videofeedParent.GetChild(index).GetComponent<PostFeedVideoItem>();
-                        //Debug.LogError("index:" + index + " :postFeedVideoItem Id:" + postFeedVideoItem.userData.Id);
+                        //Debug.Log("index:" + index + " :postFeedVideoItem Id:" + postFeedVideoItem.userData.Id);
                         if (postFeedVideoItem.userData.Id == feedId)
                         {
                             if (isComesFromLike)
@@ -2730,7 +2730,7 @@ public class FeedUIController : MonoBehaviour
                             {
                                 postFeedVideoItem.userData.commentCount = commentCount;
                                 postFeedVideoItem.CommentCountUISetup(postFeedVideoItem.userData.commentCount);
-                                //Debug.LogError("Comment Panel.......:" + commentPanel.activeInHierarchy);
+                                //Debug.Log("Comment Panel.......:" + commentPanel.activeInHierarchy);
                                 if (commentPanel.activeInHierarchy)//if comment screen is open then refresh comment list api.......
                                 {
                                     if (APIManager.Instance.feedIdTemp == feedId)
