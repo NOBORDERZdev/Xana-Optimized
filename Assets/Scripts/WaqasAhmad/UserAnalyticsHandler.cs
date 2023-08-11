@@ -136,7 +136,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
         }
         else
-            Debug.LogError("NetWorkissue");
+            Debug.Log(" <color=red>NetWorkissue </color=red>");
 
         www.Dispose();
     }
@@ -176,7 +176,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             Debug.Log("<color=green> Analytics -- Api Responce Success </color>");
         }
         else
-            Debug.LogError("NetWorkissue");
+           Debug.Log("NetWorkissue");
 
         www.Dispose();
     }
@@ -230,7 +230,7 @@ public class UserAnalyticsHandler : MonoBehaviour
                 Manager.Socket.Emit("enter_world");
         }
         else
-            Debug.LogError("API NetWorkissue");
+           Debug.Log("API NetWorkissue");
         www.Dispose();
     }
     
@@ -271,14 +271,14 @@ public class UserAnalyticsHandler : MonoBehaviour
         //Debug.Log(www.downloadHandler.text);
         if (!www.isHttpError && !www.isNetworkError)
         {
-            //Debug.LogError("API Called Success ");
+            //Debug.Log("API Called Success ");
             if (isJoined)
             {
                 Manager.Socket.Emit("enter_world");
             }
         }
         else
-            Debug.LogError("API NetWorkissue");
+           Debug.Log("API NetWorkissue");
         www.Dispose();
     }
 
@@ -323,7 +323,7 @@ public class UserAnalyticsHandler : MonoBehaviour
 
     void OnConnected(ConnectResponse resp)
     {
-        //Debug.LogError("Analatics -- Socket Connect :");
+        //Debug.Log("Analatics -- Socket Connect :");
         //Debug.Log("<color=green> Analatics -- Socket Connect" + "</color>");
         Manager.Socket.Emit("get_all_world_data");
         Manager.Socket.Emit("enter_world");
@@ -336,11 +336,11 @@ public class UserAnalyticsHandler : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
     void Onresult(CustomError args)
     {
-        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
 
 
@@ -358,14 +358,14 @@ public class UserAnalyticsHandler : MonoBehaviour
     public void UserData(string _data)
     {
         _data = jsonPrefix + _data + "}";
-        //Debug.LogError("Analytics -- Data : " + _data);
+        //Debug.Log("Analytics -- Data : " + _data);
         //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         userDataString = _data;
         onChangeJoinUserStats?.Invoke(_data);
     }
     void UserCountUpdate(string _data)
     {
-        //Debug.LogError("Analytics -- Data : " + _data);
+        //Debug.Log("Analytics -- Data : " + _data);
         //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         _data = jsonPrefix + _data + "}";
         userDataString = _data;

@@ -105,7 +105,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Personal Information Button Click.......
     public void OnClickPersonalInformationButton()
     {
-        Debug.LogError("Personal information button click");
+       Debug.Log("Personal information button click");
 
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {

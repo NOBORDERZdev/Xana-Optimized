@@ -306,7 +306,7 @@ public class ImageCropper : MonoBehaviour
 	{
 		if( image == null )
 		{
-			Debug.LogError( "Image is null!" );
+			Debug.Log( "Image is null!" );
 			return;
 		}
 
@@ -441,13 +441,13 @@ public class ImageCropper : MonoBehaviour
 	{
 		if( !gameObject.activeInHierarchy )
 		{
-			Debug.LogError( "Cropper is not visible!" );
+			Debug.Log( "Cropper is not visible!" );
 			return null;
 		}
 
 		if( m_orientedImage.texture == null )
 		{
-			Debug.LogError( "Cropper is not initialized!" );
+			Debug.Log( "Cropper is not initialized!" );
 			return null;
 		}
 
