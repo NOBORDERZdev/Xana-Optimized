@@ -65,7 +65,19 @@ public class JjWorldChanger : MonoBehaviour
         //FeedEventPrefab.m_EnvName = worldName;
         //Launcher.sceneName = worldName;
 
-         if (isMusuem){
+        // Added by WaqasAhmad
+        // For Live User Count
+        if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            XanaConstants.xanaConstants.customWorldId = MainNet;
+        }
+        else
+        {
+            XanaConstants.xanaConstants.customWorldId = testNet;
+        }
+        //
+
+        if (isMusuem){
             XanaConstants.xanaConstants.IsMuseum = true;
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
