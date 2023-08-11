@@ -453,11 +453,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Exception here..............");
+            Debug.Log("<color = red>Exception here..............</color>");
         }
 
         // Yes Join APi Call Here
-        //Debug.LogError("Waqas : Room Joined.");
+        //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
     }
@@ -475,7 +475,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
-            if (hit.collider.gameObject.tag == "PhotonLocalPlayer")
+            if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
             {
                 spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                 goto CheckAgain;
@@ -503,6 +503,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             player.GetComponent<CapsuleCollider>().isTrigger = false;
+            player.GetComponent<CapsuleCollider>().enabled = false;
             RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
             GamificationComponentData.instance.playerControllerNew.controllerCamera.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
@@ -549,7 +550,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Exception here..............");
+            Debug.Log("<color = red> Exception here..............</color>");
         }
 
         SetAddressableSceneActive();
@@ -558,14 +559,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
 
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");
 
 
         // Yes Join APi Call Here
-        //Debug.LogError("Waqas : Room Joined.");
+        //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
     }

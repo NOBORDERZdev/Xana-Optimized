@@ -14,6 +14,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.SelfiActive -= SelfiActive;
+        Addressables.Release(loadSkyBox);
 
 
     }
@@ -83,7 +85,7 @@ public class BuilderMapDownload : MonoBehaviour
         //BuilderData.mapData = serverData;
         //PopulateLevel();
 
-        terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
+        //terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
     }
 
 
@@ -225,7 +227,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.LogError("Failed to load json....");
+                Debug.Log("Failed to load json....");
             }));
         }
 
@@ -280,7 +282,7 @@ public class BuilderMapDownload : MonoBehaviour
             if (!xanaItem.itemData.ParentID.Equals(""))
             {
                 string parentId = xanaItem.itemData.ParentID;
-                XanaItem parentItem = xanaItems.Find(x=>x.itemData.RuntimeItemID==parentId);
+                XanaItem parentItem = xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
                 if (parentItem != null)
                 {
                     xanaItem.transform.SetParent(parentItem.transform);
@@ -386,22 +388,34 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetPlaneScaleAndPosition(Vector3 scale, Vector3 pos)
     {
-        Debug.Log(scale + "  " + pos);
+        //Debug.Log(scale + "  " + pos);
         terrainPlane.transform.localScale = scale;
-        terrainPlane.transform.position = pos;
+        terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
 
     void SetSkyProperties()
+    {
+        StartCoroutine(SetSkyPropertiesDelay());
+    }
+    AsyncOperationHandle<Material> loadSkyBox;
+    IEnumerator SetSkyPropertiesDelay()
     {
         SkyProperties skyProperties = levelData.skyProperties;
         Camera.main.clearFlags = CameraClearFlags.Skybox;
         if (skyProperties.skyId != -1)
         {
             SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-            //string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-            //AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            //loadSkyBox.Completed += LoadSkyBox_Completed;
-            RenderSettings.skybox = skyBoxItem.skyMaterial;
+            string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+            loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+            while (!loadSkyBox.IsDone)
+            {
+                yield return null;
+            }
+            // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+
+            Material _mat = loadSkyBox.Result;
+            _mat.shader = Shader.Find(skyBoxItem.shaderName);
+            RenderSettings.skybox = _mat;
             directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
             characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
             directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
@@ -433,10 +447,11 @@ public class BuilderMapDownload : MonoBehaviour
             characterLight.intensity = .15f;
             DynamicGI.UpdateEnvironment();
         }
-
     }
+
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
+        Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
@@ -462,7 +477,7 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
-        Invoke(nameof(XanaSetItemData),2.5f);
+        Invoke(nameof(XanaSetItemData), 1.5f);
     }
 
     void XanaSetItemData()
@@ -471,9 +486,20 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
-        //BuilderEventManager.CombineMeshes?.Invoke();
+        BuilderEventManager.CombineMeshes?.Invoke();
         //Set Hierarchy same as builder
         SetObjectHirarchy();
+        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
+        mainPlayerCharacterController.center = Vector3.up * 0.5f;
+        mainPlayerCharacterController.height = 1f;
+        mainPlayerCharacterController.stepOffset = 1f;
+
+        CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
+        mainPlayerCollider.center = Vector3.up * 0.5f;
+        mainPlayerCollider.height = 1f;
+
+        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
 
 
@@ -484,6 +510,13 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPostProcessProperties(VolumeProfile _postProcessVol)
     {
         postProcessVol.profile = _postProcessVol;
+        Vignette vignette;
+        postProcessVol.profile.TryGet(out vignette);
+
+        if (vignette) {
+            GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
+            GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
+        }
     }
 
 
@@ -547,7 +580,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    xanaItem.SetData(levelData.otherItems[i]);
         //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
         //    {
-        //        Debug.LogError("local pos :- "+ levelData.otherItems[i].Position);
+        //        Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
         //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
         //    }
         //}

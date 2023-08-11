@@ -10,6 +10,7 @@ public class SituationChangerComponent : ItemComponent
     private bool isActivated = false;
     public Light[] _light;
     public float[] _lightsIntensity;
+    private bool IsAgainTouchable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,10 @@ public class SituationChangerComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            if (!IsAgainTouchable) return;
+
+            IsAgainTouchable = false;
+
             if (situationChangerComponentData.Timer == 0 && !situationChangerComponentData.isOff)
                 return;
 
@@ -51,6 +56,15 @@ public class SituationChangerComponent : ItemComponent
             situationChangerComponentData.Timer--;
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
     }
 
 }

@@ -85,7 +85,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
-        Debug.LogError("Search User id:" + searchUserRow.id);
+       Debug.Log("Search User id:" + searchUserRow.id);
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -161,14 +161,14 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             if (searchUserRow.isFollowing)
             {
-                Debug.LogError("UnFollow User call:" + searchUserRow.id);
+               Debug.Log("UnFollow User call:" + searchUserRow.id);
                 FeedUIController.Instance.ShowLoader(true);//active api loader
                 //unfollow
                 RequestUnFollowAUser(searchUserRow.id.ToString());
             }
             else
             {
-                Debug.LogError("Follow User call:" + searchUserRow.id);
+               Debug.Log("Follow User call:" + searchUserRow.id);
                 FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
@@ -238,7 +238,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("user unfollow success data:" + data);
+               Debug.Log("user unfollow success data:" + data);
                 searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
@@ -250,11 +250,11 @@ public class FindFriendWithNameItem : MonoBehaviour
     #region Get Image From AWS
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         //GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Chat Image Available on Disk");
+            //Debug.Log("Chat Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -290,7 +290,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType: " + extension);
+        //Debug.Log("ExtentionType: " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -299,7 +299,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         else if (extension == "mp4" || extension == "mov" || extension == "wav" || extension == "avi")
         {
             currentExtention = ExtentionType.Video;
-            // Debug.LogError("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+            //Debug.Log("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
             return ExtentionType.Video;
         }
         else if (extension == "mp3" || extension == "aac" || extension == "flac")
