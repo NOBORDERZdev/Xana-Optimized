@@ -15,46 +15,30 @@ namespace XanaAi
         [SerializeField] public List<string> EyeTexture;
         [SerializeField] public List<string> EyeBrrow;
         [SerializeField] public List<string> EyeLashes;
-        public AiManager aiManager;
+        private PhotonAIController pac;
+        private int rand = 0;
 
-        private void Start()
+        private void Awake()
         {
-            //aiManager = GetComponent<AiManager>();
-
+            pac = GetComponent<PhotonAIController>();
         }
 
         public IEnumerator GetAppearance(AiController ai)
         {
             yield return new WaitForSeconds(0.2f);
-            int rand = Random.Range(0, Uppers.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Uppers[rand], "Chest", ai));
+            rand = Random.Range(0, Uppers.Count);
+            pac.StartCoroutine(pac.DownloadAddressableWearableWearable( Uppers[rand], "Chest", ai));
             Uppers.RemoveAt(rand);
             rand = Random.Range(0, Lower.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Lower[rand], "Legs", ai));
+            pac.StartCoroutine(pac.DownloadAddressableWearableWearable( Lower[rand], "Legs", ai));
             Lower.RemoveAt(rand);
             rand = Random.Range(0, Hair.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Hair[rand], "Hair", ai));
+            pac.StartCoroutine(pac.DownloadAddressableWearableWearable( Hair[rand], "Hair", ai));
             Hair.RemoveAt(rand);
             rand = Random.Range(0, Shoes.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Shoes[rand], "Feet", ai));
+            pac.StartCoroutine(pac.DownloadAddressableWearableWearable( Shoes[rand], "Feet", ai));
             Shoes.RemoveAt(rand);
 
-            //rand = Random.Range(0, Makeup.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture(Makeup[rand], "Makeup", ai));
-            //rand = Random.Range(0, EyeTexture.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture( EyeTexture[rand], "EyeTexture", ai));
-            //rand = Random.Range(0, EyeBrrow.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture( EyeBrrow[rand], "EyeBrrow", ai));
-            //rand = Random.Range(0, EyeLashes.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture(EyeLashes[rand], "EyeLashes", ai));
-
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //yield return new WaitForSeconds(Random.Range(1,2));
             ai.isPerformingAction = false;
             if (ai.ActionCoroutine !=null)
             {
@@ -62,6 +46,7 @@ namespace XanaAi
             }
             ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
         }
+
 
     }
 }

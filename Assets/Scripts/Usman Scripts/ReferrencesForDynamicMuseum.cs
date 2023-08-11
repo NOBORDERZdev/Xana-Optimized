@@ -31,6 +31,8 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public GameObject JoyStick;
     public int RoomMaxPlayerCount=0;
     public int PlayerCount = 0;
+    [HideInInspector]
+    public PhotonAIController pai;
 
     // Start is called before the first frame update
     void Awake()
@@ -330,7 +332,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                 }
                 else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
                 {
-                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount)+ XanaAi.AiManager.instance.SpwanedAiCount;
+                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount)+ pai.totalAISpawn;
                     totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
                 }
                 else
