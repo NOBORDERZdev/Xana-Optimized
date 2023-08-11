@@ -347,9 +347,11 @@ public class WorldManager : MonoBehaviour
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        
+        TutorialsManager.instance.ShowTutorials();
     }
 
-    
+
 
 
     private void CreateLightingAsset(FeedEventPrefab _event)
