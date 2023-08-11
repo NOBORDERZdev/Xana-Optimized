@@ -80,7 +80,7 @@ public class LiveVideoRoomManager : MonoBehaviour
 
     public void OnStartVideoPlay(string url, bool isFromGallery, bool isPickVideo = false)
     {
-        Debug.LogError("OnStartVideoPlay:" + url);
+       Debug.Log("OnStartVideoPlay:" + url);
         // videoPlayer.GetComponent<VideoPlayer>().Prepare();
 
         //videoPlayer.GetComponent<VideoPlayer>().url = url;
@@ -214,7 +214,7 @@ public class LiveVideoRoomManager : MonoBehaviour
     {
         RecordVideoBehaviour.instance.StartRecording();
         videoTime = videoPlayer.GetComponent<VideoPlayer>().length;
-        Debug.LogError("videoTime" + videoTime); 
+       Debug.Log("videoTime" + videoTime); 
         isRecoring = true;        
     }
 
@@ -271,7 +271,7 @@ public class LiveVideoRoomManager : MonoBehaviour
         //ARFaceModuleManager.Instance.DisableBottomMainPanel(false);
         if (ARFaceModuleManager.Instance.mainAvatar != null)
         {
-            Debug.LogError("GetLastAvatarListCount..... main avatar false");
+           Debug.Log("GetLastAvatarListCount..... main avatar false");
             ARFaceModuleManager.Instance.mainAvatar.SetActive(false);
         }
         if (ARFaceModuleManager.Instance.addAvtarItem.Count != 0)
@@ -303,14 +303,14 @@ public class LiveVideoRoomManager : MonoBehaviour
         {
             for (int i = 0; i < ARFaceModuleManager.Instance.addAvtarItem.Count; i++)
             {
-                Debug.LogError("Condition:" + i + " :lastAvatarListCount:" + lastAvatarListCount);
+               Debug.Log("Condition:" + i + " :lastAvatarListCount:" + lastAvatarListCount);
                 if (i < lastAvatarListCount)
                 {
                     ARFaceModuleManager.Instance.addAvtarItem[i].gameObject.SetActive(true);
                 }
                 else
                 {
-                    Debug.LogError("DeletePlayer:" + i);
+                   Debug.Log("DeletePlayer:" + i);
                     GameObject crntObj = ARFaceModuleManager.Instance.addAvtarItem[i];
                     ARFaceModuleManager.Instance.addAvtarItem.Remove(crntObj);
                     Destroy(crntObj);
@@ -340,7 +340,7 @@ public class LiveVideoRoomManager : MonoBehaviour
             ARFaceModuleManager.Instance.SetDefaultAvatarPosition();
             //ARFacePoseTrackingManager.Instance.SetDefaultMoveTargetObjPos();
         }
-        Debug.LogError("ResetLastAvatarListCount.......");
+       Debug.Log("ResetLastAvatarListCount.......");
         if (ARFaceModuleManager.Instance.mainAvatar != null && SceneManager.GetActiveScene().name != "ARModulePlanDetectionScene")
         {
             ARFaceModuleManager.Instance.mainAvatar.gameObject.SetActive(true);

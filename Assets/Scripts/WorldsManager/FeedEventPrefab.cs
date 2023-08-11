@@ -124,7 +124,7 @@ public class FeedEventPrefab : MonoBehaviour
 
     void UpdateUserCount(string UserDetails)
     {
-        //Debug.LogError("Yes, TriggerData " + UserDetails);
+        //Debug.Log("Yes, TriggerData " + UserDetails);
         joinedUserCount.text = "0";
         if (string.IsNullOrEmpty(UserDetails))
         {
@@ -161,7 +161,7 @@ public class FeedEventPrefab : MonoBehaviour
     }
     void UpdateUserCount()
     {
-        //Debug.LogError("Yes, Init " + userAnalyticsHandler.userDataString);
+        //Debug.Log("Yes, Init " + userAnalyticsHandler.userDataString);
         joinedUserCount.text = "0";
         if (userAnalyticsHandler == null)
         {
@@ -185,7 +185,7 @@ public class FeedEventPrefab : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    //Debug.LogError("Yes Matched : " + m_EnvironmentName);
+                    //Debug.Log("Yes Matched : " + m_EnvironmentName);
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
@@ -223,28 +223,28 @@ public class FeedEventPrefab : MonoBehaviour
         if (isVisible && isOnScreen && !string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
             isVisible = false;
-            //Debug.LogError("Image download starting one time");
+            //Debug.Log("Image download starting one time");
             DownloadAndLoadFeed();
             if (!string.IsNullOrEmpty(creatorName))
             {
                 if (!creatorName.Equals("XANA"))
                     UpdateUserProfile();
             }
-            //Debug.LogError("2");
+            //Debug.Log("2");
         }
         else if (isImageSuccessDownloadAndSave)
         {
-            //Debug.LogError("0");
+            //Debug.Log("0");
             LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
-                //Debug.LogError("01");
+                //Debug.Log("01");
                 if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
                 {
-                    //Debug.LogError("02"); 
+                    //Debug.Log("02"); 
                     if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
                     {
-                        //Debug.LogError("03");
+                        //Debug.Log("03");
                         isNotLoaded = false;
                         AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                     }
@@ -259,11 +259,11 @@ public class FeedEventPrefab : MonoBehaviour
             }
             else if (!isOnScreen && worldIcon.sprite && !isNotLoaded)
             {
-                //Debug.LogError("1");
+                //Debug.Log("1");
                 //realse from memory 
                 isReleaseFromMemoryOrNot = true;
                 isNotLoaded = true;
-                //Debug.LogError("remove from memory");
+                //Debug.Log("remove from memory");
                 AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
                 if (!string.IsNullOrEmpty(userAvatarURL))
                 {
@@ -276,7 +276,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
             else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == dummyThumbnail))
             {
-                //Debug.LogError("here we are loading it again.");
+                //Debug.Log("here we are loading it again.");
                 isNotLoaded = true;
                 goto LoadFileAgain;
             }
@@ -306,7 +306,7 @@ public class FeedEventPrefab : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(userAvatarURL))
         {
-            //Debug.LogError("02"); 
+            //Debug.Log("02"); 
             if (AssetCache.Instance.HasFile(userAvatarURL))
             {
                 AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
@@ -498,7 +498,7 @@ public class FeedEventPrefab : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     callBack(false, null);
-                    Debug.LogError("Network Error");
+                   Debug.Log("Network Error");
                 }
                 else
                 {
@@ -526,7 +526,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         catch (FileNotFoundException e)
         {
-            Debug.LogError(e.Message);
+            Debug.Log("<color = red>" + e.Message + "</color>");
         }
     }
 
@@ -680,7 +680,7 @@ public class FeedEventPrefab : MonoBehaviour
 
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.LogError(www.error);
+            Debug.Log("<color = red>" + www.error + "</color>");
         }
         else
         {

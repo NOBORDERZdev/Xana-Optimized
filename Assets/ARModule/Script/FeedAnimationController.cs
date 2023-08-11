@@ -270,7 +270,7 @@ public class FeedAnimationController : MonoBehaviour
             //GC.Collect();
             counter = 0;
         }
-        Debug.LogError("GetAssetBundleFromServerUrl:" + bundlePath);
+       Debug.Log("GetAssetBundleFromServerUrl:" + bundlePath);
         using (WWW www = new WWW(BundleURL))
         {
             currentButton.transform.GetChild(2).gameObject.SetActive(true);
@@ -305,7 +305,7 @@ public class FeedAnimationController : MonoBehaviour
                             //playerAvatar.GetComponent<Animator>().Play("Animation");
                         }
                     }
-                    Debug.LogError("bundle success download save to storage");
+                   Debug.Log("bundle success download save to storage");
                     SaveAssetBundle(www.bytes, bundlePath);
                     assetBundle.Unload(false);
                 }
@@ -329,7 +329,7 @@ public class FeedAnimationController : MonoBehaviour
         {
             //AssetBundle.UnloadAllAssetBundles(true);
             //Resources.UnloadUnusedAssets();
-            Debug.LogError("Clear Cache Before");
+           Debug.Log("Clear Cache Before");
             //Caching.ClearCache();
             Debug.Log("Clear Cache after");
             GC.Collect();
@@ -359,7 +359,7 @@ public class FeedAnimationController : MonoBehaviour
             }
             if (newRequest.isDone)
             {
-                Debug.LogError("Success load bundle from storage");
+               Debug.Log("Success load bundle from storage");
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
                 {

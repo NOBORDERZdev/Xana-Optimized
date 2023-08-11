@@ -190,7 +190,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         InvokeRepeating(nameof(RequestGetUserDetails), 0f, 2f);
         //string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-        //Debug.LogError("Country Name:" + countryName + "    Name:"+ System.Globalization.RegionInfo.CurrentRegion.Name);
+        //Debug.Log("Country Name:" + countryName + "    Name:"+ System.Globalization.RegionInfo.CurrentRegion.Name);
     }
 
     #region Profile screen methods
@@ -241,7 +241,7 @@ public class MyProfileDataManager : MonoBehaviour
     public void SetupData(GetUserDetailData myData, string callingFrom)
     {
         myProfileData = myData;
-        //Debug.LogError(callingFrom);
+        //Debug.Log(callingFrom);
         if (callingFrom == "EditProfileAvatar")
         {
             FeedUIController.Instance.ShowLoader(false);
@@ -251,7 +251,7 @@ public class MyProfileDataManager : MonoBehaviour
                 editProfileScreen.SetActive(false);
             }
             isEditProfileNameAlreadyExists = false;
-            //Debug.LogError("Profile Update Success and delete file");
+            //Debug.Log("Profile Update Success and delete file");
             if (File.Exists(setImageAvatarTempPath))
             {
                 File.Delete(setImageAvatarTempPath);
@@ -267,7 +267,7 @@ public class MyProfileDataManager : MonoBehaviour
             }*/
             if (AssetCache.Instance.HasFile(setImageAvatarTempFilename))
             {
-                //Debug.LogError("IOS update Profile Pic Delete");
+                //Debug.Log("IOS update Profile Pic Delete");
                 AssetCache.Instance.DeleteAsset(setImageAvatarTempFilename);
             }
             //setGroupFromCamera = false;
@@ -298,10 +298,10 @@ public class MyProfileDataManager : MonoBehaviour
     void UpdateAavtarUrlOfAllMyFeed()
     {
         UserPostItem[] userPostItems = mainPostContainer.GetComponentsInChildren<UserPostItem>();
-        //Debug.LogError("UpdateAavtarUrlOfAllMyFeed Length:" + userPostItems.Length);
+        //Debug.Log("UpdateAavtarUrlOfAllMyFeed Length:" + userPostItems.Length);
         for (int i = 0; i < userPostItems.Length; i++)
         {
-            //Debug.LogError("ID:" + userPostItems[i].userData.Id);
+            //Debug.Log("ID:" + userPostItems[i].userData.Id);
             userPostItems[i].avtarUrl = myProfileData.avatar;
         }
     }
@@ -382,7 +382,7 @@ public class MyProfileDataManager : MonoBehaviour
             textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
         }
 
-        //Debug.LogError("isSetTempSpriteAfterUpdateAvatar:" + isSetTempSpriteAfterUpdateAvatar);
+        //Debug.Log("isSetTempSpriteAfterUpdateAvatar:" + isSetTempSpriteAfterUpdateAvatar);
         if (!isSetTempSpriteAfterUpdateAvatar)//if temp avatar set is true then do not add default profile image.......
         {
             profileImage.sprite = defultProfileImage;
@@ -391,7 +391,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(myProfileData.avatar))
         {
-            //Debug.LogError("My profile Avatar :-" + myProfileData.avatar);
+            //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
             if (isUrlContainsHttpAndHttps)
             {
@@ -479,12 +479,12 @@ public class MyProfileDataManager : MonoBehaviour
     public void SetupBioPart(string bioText)
     {
         int numLines = bioText.Split('\n').Length;
-        //Debug.LogError("Bio Line Count:" + numLines);
+        //Debug.Log("Bio Line Count:" + numLines);
 
         if (numLines > 10)
         {
             string[] bioLineSTR = bioText.Split('\n').Take(10).ToArray();
-            //Debug.LogError("Result:" + bioLineSTR);
+            //Debug.Log("Result:" + bioLineSTR);
 
             tempBioOnly10LineStr = "";
             for (int i = 0; i < bioLineSTR.Length; i++)
@@ -542,17 +542,17 @@ public class MyProfileDataManager : MonoBehaviour
         {
             Debug.Log("ProfileAPiPagination 11");
             VerticalPosition = profileMainScrollRectFasterEx.verticalNormalizedPosition;
-            //Debug.LogError("Profile y pos:" + profileMainScrollRectFasterEx.verticalEndPos + "  :verticalnormalize pos:"+ profileMainScrollRectFasterEx.verticalNormalizedPosition + "  :normalize:"+profileMainScrollRectFasterEx.normalizedPosition + "   :isLoaded:"+ isFeedLoaded);
+            //Debug.Log("Profile y pos:" + profileMainScrollRectFasterEx.verticalEndPos + "  :verticalnormalize pos:"+ profileMainScrollRectFasterEx.verticalNormalizedPosition + "  :normalize:"+profileMainScrollRectFasterEx.normalizedPosition + "   :isLoaded:"+ isFeedLoaded);
             //if (profileMainScrollRectFasterEx.verticalEndPos <= 1 && isFeedLoaded)
             //if (profileMainScrollRectFasterEx.verticalNormalizedPosition <= 0 && lastVerticalNormalizedPosition != profileMainScrollRectFasterEx.verticalNormalizedPosition && isFeedLoaded)
             if (profileMainScrollRectFasterEx.verticalNormalizedPosition < 0.01f && isFeedLoaded)
             {
-                //Debug.LogError("scrollRect pos :" + profileMainScrollRectFasterEx.verticalNormalizedPosition + " rows count:" + allFeedWithUserIdRoot.Data.Rows.Count + "   :pageIndex:" + (profileFeedAPiCurrentPageIndex+1));
+                //Debug.Log("scrollRect pos :" + profileMainScrollRectFasterEx.verticalNormalizedPosition + " rows count:" + allFeedWithUserIdRoot.Data.Rows.Count + "   :pageIndex:" + (profileFeedAPiCurrentPageIndex+1));
                 //lastVerticalNormalizedPosition = profileMainScrollRectFasterEx.verticalNormalizedPosition;
                 if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count > 0)
                 {
                     isFeedLoaded = false;
-                    //Debug.LogError("isDataLoad False");
+                    //Debug.Log("isDataLoad False");
                     APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, (profileFeedAPiCurrentPageIndex + 1), 10, "MyProfile");
                 }
                // OnScrollNFT();
@@ -675,7 +675,7 @@ public class MyProfileDataManager : MonoBehaviour
                 }
                 if (pageNumb == 1 && i == 0)
                 {
-                    Debug.LogError("Latest Profile pic set as top");
+                   Debug.Log("Latest Profile pic set as top");
                     userTagPostObject.transform.SetAsFirstSibling();
                     //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
                     //{
@@ -691,7 +691,7 @@ public class MyProfileDataManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Latest Profile pic set as top   5555");
+                   Debug.Log("Latest Profile pic set as top   5555");
 
 
                     //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
@@ -714,20 +714,20 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
-        Debug.LogError("Pagenmub bar");
+       Debug.Log("Pagenmub bar");
         if (pageNumb == 1)
         {
-            Debug.LogError("Pagenmub");
+           Debug.Log("Pagenmub");
             Invoke(nameof(RefreshHieght), 1f);
         }
         StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
         if (allMyFeedImageRootDataList.Count >= 2)
         {
-            Debug.LogError(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
+           Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
             if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
             {
                 allMyFeedImageRootDataList.RemoveAt(0);
-                Debug.LogError("Remove Same ID Post");
+               Debug.Log("Remove Same ID Post");
                 allMyFeedInFeedPageRootDataList.RemoveAt(0);
             }
         }
@@ -753,7 +753,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
-        //Debug.LogError("my profile AllFeedWithUserId:" + isFeedLoaded);
+        //Debug.Log("my profile AllFeedWithUserId:" + isFeedLoaded);
     }
 
     //this mehtod is used to load All Tab feed.......
@@ -767,7 +767,7 @@ public class MyProfileDataManager : MonoBehaviour
         for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
         {
             GameObject userPostObject = Instantiate(photoPrefab, allTagContainer);
-            //Debug.LogError("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
+            //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
             UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
             userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
 
@@ -947,7 +947,7 @@ public class MyProfileDataManager : MonoBehaviour
             Debug.Log("Given URL is Invalid");
             websiteUrl = defaultUrl + myProfileData.userProfile.website;
         }
-        //Debug.LogError("WebsiteURL:" + websiteUrl);
+        //Debug.Log("WebsiteURL:" + websiteUrl);
         Application.OpenURL(websiteUrl);
     }
     #endregion
@@ -1337,14 +1337,14 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     tempStr = tempStr.TrimEnd(' ');
                 }
-                Debug.LogError("temp Name Str:" + tempStr);
+               Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
             }
         }
         else
         {
-            Debug.LogError("Please enter username");
+           Debug.Log("Please enter username");
             ShowEditProfileNameErrorMessage("The name field should not be empty");
             return;
         }
@@ -1358,7 +1358,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-            Debug.LogError("temp Job Str:" + tempStr);
+           Debug.Log("temp Job Str:" + tempStr);
             job = tempStr;
             checkEditInfoUpdated = 1;
         }
@@ -1380,7 +1380,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-            Debug.LogError("temp Web Str:" + tempStr);
+           Debug.Log("temp Web Str:" + tempStr);
             website = tempStr;
             checkEditInfoUpdated = 1;
 
@@ -1400,11 +1400,11 @@ public class MyProfileDataManager : MonoBehaviour
                     isUrl = true;
                 }
 
-                Debug.LogError("WebUrl:" + webUrl + "  :isUrl:" + isUrl);
+               Debug.Log("WebUrl:" + webUrl + "  :isUrl:" + isUrl);
 
                 if (!IsReachableUri(webUrl) || webUrl.Contains("@"))
                 {
-                    Debug.LogError("Please enter valid web");
+                   Debug.Log("Please enter valid web");
                     //FeedUIController.Instance.ShowLoader(false);
                     //websiteErrorObj.GetComponent<Animator>().SetBool("playAnim", true);
                     if (webErrorCo != null)
@@ -1423,7 +1423,7 @@ public class MyProfileDataManager : MonoBehaviour
                     {
                         Uri myUri = new Uri(tempStr);
                         website = myUri.Host;
-                        Debug.LogError("temp Web Str111:" + website);
+                       Debug.Log("temp Web Str111:" + website);
                     }
                 }
             }
@@ -1447,7 +1447,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-            Debug.LogError("temp Bio Str:" + tempStr);
+           Debug.Log("temp Bio Str:" + tempStr);
             bio = tempStr;
             checkEditInfoUpdated = 1;
         }
@@ -1482,7 +1482,7 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            Debug.LogError("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
+           Debug.Log("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
 
             if (string.IsNullOrEmpty(job))
             {
@@ -1499,7 +1499,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (string.IsNullOrEmpty(gender))
             {
                 gender = "Male";
-                Debug.LogError("Default Gender:" + gender);
+               Debug.Log("Default Gender:" + gender);
             }
             if (string.IsNullOrEmpty(countryName))
             {
@@ -1513,7 +1513,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             if (checkEditNameUpdated == 1 || checkEditInfoUpdated == 1)
             {
-                Debug.LogError("EditProfileInfoCheckAndAPICalling Get User Details API Call");
+               Debug.Log("EditProfileInfoCheckAndAPICalling Get User Details API Call");
                 StartCoroutine(WaitEditProfileGetUserDetails(false));
             }
             else
@@ -1538,7 +1538,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("isreachableUri ecception:" + e);
+           Debug.Log("isreachableUri ecception:" + e);
             return false;
         }
         request.Timeout = 2500;
@@ -1580,7 +1580,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-            Debug.LogError("temp Web Str:" + tempStr);
+           Debug.Log("temp Web Str:" + tempStr);
             website = tempStr;
             checkEditInfoUpdated = 1;
 
@@ -1630,7 +1630,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("url", url);
-        Debug.LogError("Web URL:" + url);
+       Debug.Log("Web URL:" + url);
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_WebsiteValidation), form))
         {
             yield return www.SendWebRequest();
@@ -1641,7 +1641,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 Debug.Log(www.error);
                 EditProfileErrorMessageShow(websiteErrorObj);
-                Debug.LogError("Invalid WebSite");
+               Debug.Log("Invalid WebSite");
             }
             else
             {
@@ -1655,7 +1655,7 @@ public class MyProfileDataManager : MonoBehaviour
                         Uri myUri = new Uri(website);
                         //website = myUri.Host;
                     }
-                    Debug.LogError("final result Web Str:" + website);
+                   Debug.Log("final result Web Str:" + website);
 
                     EditProfileInfoCheckAndAPICalling();
                     Debug.Log("Valid WebSite:");
@@ -1663,7 +1663,7 @@ public class MyProfileDataManager : MonoBehaviour
                 else
                 {
                     EditProfileErrorMessageShow(websiteErrorObj);
-                    Debug.LogError("Invalid WebSite");
+                   Debug.Log("Invalid WebSite");
                 }
             }
         }
@@ -1718,7 +1718,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Uploading profile pic :" + setImageAvatarTempPath);
+           Debug.Log("Uploading profile pic :" + setImageAvatarTempPath);
             AWSHandler.Instance.PostAvatarObject(setImageAvatarTempPath, setImageAvatarTempFilename, "EditProfileAvatar");//upload avatar image on AWS.
         }
     }
@@ -1822,13 +1822,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnPickGroupAvatarFromGellery path: " + path);
+               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("OnPickGroupAvatarFromGellery FileName: " + fileName);
+               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -1868,13 +1868,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnPickGroupAvatarFromGellery path: " + path);
+               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("OnPickGroupAvatarFromGellery FileName: " + fileName);
+               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -1946,13 +1946,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnGroupAvatarTakePicture Camera ImagePath : " + path);
+               Debug.Log("OnGroupAvatarTakePicture Camera ImagePath : " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("Camera filename : " + fileName);
+               Debug.Log("Camera filename : " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -1960,7 +1960,7 @@ public class MyProfileDataManager : MonoBehaviour
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-                Debug.LogError("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+               Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
                 setImageAvatarTempPath = filePath;
                 setImageAvatarTempFilename = fileName;
@@ -1996,13 +1996,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnGroupAvatarTakePicture Camera ImagePath : " + path);
+               Debug.Log("OnGroupAvatarTakePicture Camera ImagePath : " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("Camera filename : " + fileName);
+               Debug.Log("Camera filename : " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -2010,7 +2010,7 @@ public class MyProfileDataManager : MonoBehaviour
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-                Debug.LogError("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+               Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
                 setImageAvatarTempPath = filePath;
                 setImageAvatarTempFilename = fileName;
@@ -2050,7 +2050,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         if (device.Length == 0)
         {
-            Debug.LogError("No camera detected");
+           Debug.Log("No camera detected");
             return;
         }
         for (int i = 0; i < device.Length; i++)
@@ -2062,7 +2062,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         if (webCamTexture == null)
         {
-            Debug.LogError("Enable to find back camera");
+           Debug.Log("Enable to find back camera");
             return;
         }
 
@@ -2073,7 +2073,7 @@ public class MyProfileDataManager : MonoBehaviour
         fit.aspectRatio = ratio;
 
         int orient = -webCamTexture.videoRotationAngle;
-        Debug.LogError("Ratio:" + ratio + " :Angle:" + orient);
+       Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
         webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
     }
 
@@ -2120,14 +2120,14 @@ public class MyProfileDataManager : MonoBehaviour
         photo.Apply();
 
         string fileName = "CapturePhoto";
-        Debug.LogError("Camera filename : " + fileName);
+       Debug.Log("Camera filename : " + fileName);
 
         string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
         fileName = fileName + str + ".png";
 
         string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-        Debug.LogError("Camera filePath:" + filePath + "    :filename:" + fileName);
+       Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName);
 
         setImageAvatarTempPath = filePath;
         setImageAvatarTempFilename = fileName;
@@ -2161,10 +2161,10 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("my profile feed data success:" + data);
+               Debug.Log("my profile feed data success:" + data);
                 allFeedWithUserIdRoot = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data);
                 StartCoroutine(AllFeedWithUserId());
-                // Debug.LogError("data" + allFeedWithUserIdRoot.Success);
+                //Debug.Log("data" + allFeedWithUserIdRoot.Success);
             }
         }
     }*/
@@ -2173,11 +2173,11 @@ public class MyProfileDataManager : MonoBehaviour
     #region Get Image From AWS
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("My Profile GetImageFromAWS key:" + key);
+        //Debug.Log("My Profile GetImageFromAWS key:" + key);
         //GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -2212,7 +2212,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        Debug.LogError("ExtentionType: " + extension);
+       Debug.Log("ExtentionType: " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -2221,7 +2221,7 @@ public class MyProfileDataManager : MonoBehaviour
         else if (extension == "mp4" || extension == "mov" || extension == "wav" || extension == "avi")
         {
             currentExtention = ExtentionType.Video;
-            // Debug.LogError("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+            //Debug.Log("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
             return ExtentionType.Video;
         }
         else if (extension == "mp3" || extension == "aac" || extension == "flac")
@@ -2293,11 +2293,11 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     byte[] bytes = croppedImage.EncodeToPNG();
                     File.WriteAllBytes(path, bytes);
-                    Debug.LogError("File SAVE");
+                   Debug.Log("File SAVE");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
+                   Debug.Log(e);
                 }
             }
             else
@@ -2413,12 +2413,12 @@ public class MyProfileDataManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.LogError("IERequestGetUserDetails error:" + www.error);
+               Debug.Log("IERequestGetUserDetails error:" + www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestGetUserDetails Loaded Completed data:" + data);
+               Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
                 OnlyLoadDataMyProfile();//set data                

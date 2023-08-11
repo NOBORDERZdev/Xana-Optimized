@@ -134,18 +134,18 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
     private void OnDisable()
     {
-        //Debug.LogError("isTempDirectMessageScreenOpen:" + isTempDirectMessageScreenOpen);
+        //Debug.Log("isTempDirectMessageScreenOpen:" + isTempDirectMessageScreenOpen);
         if (backKeyManageList.Count > 0 && !isTempDirectMessageScreenOpen)
         {
             /*switch (backKeyManageList[backKeyManageList.Count - 1])
             {
                 case "GroupDetailsScreen":
-                    Debug.LogError("OnDisable OtherPlayerProfileData other user profile disable and clear data");
+                   Debug.Log("OnDisable OtherPlayerProfileData other user profile disable and clear data");
                     break;
                 default:
                     break;
             }*/
-            //Debug.LogError("OnDisable OtherPlayerProfileData feed screen enable");
+            //Debug.Log("OnDisable OtherPlayerProfileData feed screen enable");
             RemoveAndCheckBackKey();
             FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
             FeedUIController.Instance.feedUiScreen.SetActive(true);
@@ -181,7 +181,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void LoadUserData(bool isFirstTime)
     {
-        Debug.LogError("Other user profile load data");
+       Debug.Log("Other user profile load data");
         lastUserId = singleUserProfileData.id;
 
         lastUserIsFollowFollowing = singleUserProfileData.isFollowing;
@@ -198,7 +198,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             profileImage.sprite = defultProfileImage;
 
-            //Debug.LogError("user" + FeedRawData.UserProfile);
+            //Debug.Log("user" + FeedRawData.UserProfile);
             if (singleUserProfileData.userProfile != null)
             {
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.job))
@@ -256,7 +256,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             if (!string.IsNullOrEmpty(singleUserProfileData.avatar))//set avatar image.......
             {
                 bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(singleUserProfileData.avatar);
-                //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isAvatarUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(singleUserProfileData.avatar, singleUserProfileData.avatar, (success) =>
@@ -282,7 +282,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         string websiteUrl = "";
         websiteUrl = singleUserProfileData.userProfile.website;
-        //Debug.LogError("WebsiteURL:" + websiteUrl);
+        //Debug.Log("WebsiteURL:" + websiteUrl);
         Uri uriResult;
         bool result = Uri.TryCreate(singleUserProfileData.userProfile.website, UriKind.Absolute, out uriResult)
                         && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
@@ -317,12 +317,12 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void SetupBioPart(string bioText)
     {
         int numLines = bioText.Split('\n').Length;
-        //Debug.LogError("Bio Line Count:" + numLines);
+        //Debug.Log("Bio Line Count:" + numLines);
 
         if (numLines > 10)
         {
             string[] bioLineSTR = bioText.Split('\n').Take(10).ToArray();
-            //Debug.LogError("Result:" + bioLineSTR);
+            //Debug.Log("Result:" + bioLineSTR);
 
             tempBioOnly10LineStr = "";
             for (int i = 0; i < bioLineSTR.Length; i++)
@@ -375,7 +375,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         if (lastUserId != singleUserProfileData.id)
         {
-            //Debug.LogError("New User");
+            //Debug.Log("New User");
             foreach (Transform item in userPostParent)
             {
                 Destroy(item.gameObject);
@@ -397,14 +397,14 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this method is used to set pagination for other user profile.......
     public void ProfileAPiPagination()
     {
-        //Debug.LogError("Profile y pos:" + profileMainScrollRectFasterEx.verticalEndPos + "  :verticalnormalize pos:"+ profileMainScrollRectFasterEx.verticalNormalizedPosition + "  :normalize:"+profileMainScrollRectFasterEx.normalizedPosition + "   :isLoaded:"+ isFeedLoaded);
+        //Debug.Log("Profile y pos:" + profileMainScrollRectFasterEx.verticalEndPos + "  :verticalnormalize pos:"+ profileMainScrollRectFasterEx.verticalNormalizedPosition + "  :normalize:"+profileMainScrollRectFasterEx.normalizedPosition + "   :isLoaded:"+ isFeedLoaded);
         if (profileMainScrollRectFasterEx.verticalNormalizedPosition < 0.01f && isFeedLoaded)
         {
-            //Debug.LogError("scrollRect pos :" + profileMainScrollRectFasterEx.verticalNormalizedPosition + " rows count:" + allFeedWithUserIdRoot.Data.Rows.Count + "   :pageIndex:" + (profileFeedAPiCurrentPageIndex+1));
+            //Debug.Log("scrollRect pos :" + profileMainScrollRectFasterEx.verticalNormalizedPosition + " rows count:" + allFeedWithUserIdRoot.Data.Rows.Count + "   :pageIndex:" + (profileFeedAPiCurrentPageIndex+1));
             //lastVerticalNormalizedPosition = profileMainScrollRectFasterEx.verticalNormalizedPosition;
             if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count > 0)
             {
-                //Debug.LogError("isDataLoad False");
+                //Debug.Log("isDataLoad False");
                 isFeedLoaded = false;
                 APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData.id, (profileFeedAPiCurrentPageIndex + 1), 10, "OtherPlayerFeed");
             }
@@ -494,7 +494,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
-        //Debug.LogError("other Profile AllFeedWithUserId:" + isFeedLoaded);
+        //Debug.Log("other Profile AllFeedWithUserId:" + isFeedLoaded);
     }
 
     public void OnClickPhotoButton()
@@ -518,11 +518,11 @@ public class OtherPlayerProfileData : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
         //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
-        //Debug.LogError("qqqq");
+        //Debug.Log("qqqq");
         for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
         {
             GameObject userPostObject = Instantiate(userPostPrefab, userTagPostParent);
-            //Debug.LogError("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
+            //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
             UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
             userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
 
@@ -601,7 +601,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             currentFindFriendWithNameItemScript.FollowFollowingSetUp(isFollow);
         }
         //followText.GetComponent<TextLocalization>().LocalizeTextText();
-        //Debug.LogError("Other profile follow text:" + followText.text);
+        //Debug.Log("Other profile follow text:" + followText.text);
     }
 
     //this is used to destroy user from hot tab after follow.......
@@ -629,7 +629,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void OnClickOtherPalyerProfileBackButton()
     {
-        Debug.LogError("Other Player Profile Back Button Click");
+       Debug.Log("Other Player Profile Back Button Click");
         if (currentFindFriendWithNameItemScript != null)
         {
             currentFindFriendWithNameItemScript = null;
@@ -637,7 +637,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         if (backKeyManageList.Count > 0)
         {
-            Debug.LogError("lastUserIsFollowFollowing:" + lastUserIsFollowFollowing + "  :isFollowFollowing:" + isFollowFollowing);
+           Debug.Log("lastUserIsFollowFollowing:" + lastUserIsFollowFollowing + "  :isFollowFollowing:" + isFollowFollowing);
             if (lastUserIsFollowFollowing != isFollowFollowing && isFollowFollowing)
             {
                 //DestroyUserFromHotTabAfterFollow();
@@ -647,24 +647,24 @@ public class OtherPlayerProfileData : MonoBehaviour
             switch (backKeyManageList[backKeyManageList.Count - 1])
             {
                 case "FollowerFollowingListScreen":
-                    Debug.LogError("Last Comes from Follower Following list screen my profile");
+                   Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
                     FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
-                    Debug.LogError("Last Comes from Hot or discover tab Screen");
+                   Debug.Log("Last Comes from Hot or discover tab Screen");
                     FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab();
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
                     break;
                 case "FollowingTabScreen":
-                    Debug.LogError("Last Comes from Following tab screen");
+                   Debug.Log("Last Comes from Following tab screen");
                     FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab("FollowingTabScreen");
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
                     break;
                 case "GroupDetailsScreen":
-                    Debug.LogError("Last Comes from message module group details screen");
+                   Debug.Log("Last Comes from message module group details screen");
                     isProfiletranzistFromMessage = true;
                     RemoveAndCheckBackKey();
                     FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
@@ -736,7 +736,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void OnClickFollowUserButton()
     {
-        Debug.LogError("OnClickFollowUser id" + singleUserProfileData.id.ToString() + " :FollowText:" + followText.text);
+       Debug.Log("OnClickFollowUser id" + singleUserProfileData.id.ToString() + " :FollowText:" + followText.text);
         //FeedUIController.Instance.ShowLoader(true);
         if (isFollowFollowing)
         {
@@ -756,7 +756,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
         if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
         {
-            //Debug.LogError("OnClickMessageButtonClick000000");
+            //Debug.Log("OnClickMessageButtonClick000000");
             if (MessageController.Instance != null)
             {
                 isDirectMessageScreenOpen = true;
@@ -765,7 +765,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                     backKeyManageList.Remove("GroupDetailsScreen");
                     //RemoveAndCheckBackKey();
                 }
-                //Debug.LogError("OnClickMessageButtonClick");
+                //Debug.Log("OnClickMessageButtonClick");
                 MessageController.Instance.OnDirectMessageFromOtherUserProfile(singleUserProfileData.id, singleUserProfileData.name, profileImage.sprite);
             }
         }
@@ -783,7 +783,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         FeedUIController.Instance.ShowLoader(true);
 
-        //Debug.LogError("RequestGetUserDetails:" + singleUserProfileData1.id);
+        //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
         APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 30, "OtherPlayerFeed");
         RequestGetOtherUserRole(singleUserProfileData1.id);
@@ -797,7 +797,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         LoadUserData(true);
 
         FeedUIController.Instance.ShowLoader(true);
-        //Debug.LogError("RequestGetUserDetails:" + singleUserProfileData1.id);
+        //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(id));
         APIManager.Instance.RequestGetFeedsByUserId(id, 1, 30, "OtherPlayerFeed");
         RequestGetOtherUserRole(id);
@@ -825,7 +825,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestGetSingleUserDetails data:" + data);
+               Debug.Log("IERequestGetSingleUserDetails data:" + data);
                 SingleUserProfileRoot singleUserProfileRoot = JsonConvert.DeserializeObject<SingleUserProfileRoot>(data);
                 if (singleUserProfileRoot != null)
                 {
@@ -870,14 +870,14 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this method is used to Get Other userRole and pass info.......
     public void RequestGetOtherUserRole(int userId)
     {
-        Debug.LogError("RequestGetOtherUserRole userId:" + userId);
+       Debug.Log("RequestGetOtherUserRole userId:" + userId);
         StartCoroutine(IERequestGetOtherUserRole(userId));
     }
 
     IEnumerator IERequestGetOtherUserRole(int userId)
     {
         //using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetSingleUserRole), form))
-        Debug.LogError("url:" + ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.r_url_GetSingleUserRole + userId);
+       Debug.Log("url:" + ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.r_url_GetSingleUserRole + userId);
         using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.r_url_GetSingleUserRole + userId))
         {
             yield return www.SendWebRequest();
@@ -889,7 +889,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestGetOtherUserRole data:" + data);
+               Debug.Log("IERequestGetOtherUserRole data:" + data);
                 SingleUserRoleRoot singleUserRoleRoot = JsonConvert.DeserializeObject<SingleUserRoleRoot>(data);
                 if (singleUserRoleRoot.success)
                 {
@@ -906,11 +906,11 @@ public class OtherPlayerProfileData : MonoBehaviour
     #region Get Image From AWS
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         //GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Chat Image Available on Disk");
+            //Debug.Log("Chat Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -921,7 +921,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                 if (success)
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
-                    //Debug.LogError("Save and Image download success");
+                    //Debug.Log("Save and Image download success");
                 }
             });
         }
@@ -946,7 +946,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        Debug.LogError("ExtentionType: " + extension);
+       Debug.Log("ExtentionType: " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -955,7 +955,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         else if (extension == "mp4" || extension == "mov" || extension == "wav" || extension == "avi")
         {
             currentExtention = ExtentionType.Video;
-            // Debug.LogError("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+            //Debug.Log("vvvvvvvvvvvvvvvvvvvvvvvvvvvv");
             return ExtentionType.Video;
         }
         else if (extension == "mp3" || extension == "aac" || extension == "flac")
