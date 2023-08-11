@@ -1,5 +1,5 @@
 using AdvancedInputFieldSamples;
-using Cysharp.Threading.Tasks;
+//using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using WalletConnectSharp.Core.Models;
+//using WalletConnectSharp.Core.Models;
 
 public class Web3APIforWeb2 : MonoBehaviour
 {
@@ -39,7 +39,7 @@ public class Web3APIforWeb2 : MonoBehaviour
     //private string OwnedSpecifiednftAPIMainNet = "https://prod-backend.xanalia.com/nfts/nft-by-address-user?pageIndex=1&pageSize=300&address=";
     // private string OwnedSpecifiednftAPITestNet = "https://backend.xanalia.com/nfts/nft-by-address-user?pageIndex=1&pageSize=300&address=";  
     // private string SpecifiedNFTPostFix = "&categoryFilter=2&userId=0";
-    public OwnedNFTContainer _OwnedNFTDataObj;
+    //public OwnedNFTContainer _OwnedNFTDataObj;
     public string publicID;
     //public UserNFTlistClass.Root NFTlistdata;
     public bool TestSpecificCase;
@@ -107,7 +107,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         Debug.Log("localAPI for Getting Owned NFT: " + localAPI);
         request = await GettingOwnedNFTS(localAPI);
         //    NFTlistdata = new UserNFTlistClass.Root();
-        _OwnedNFTDataObj.NewRootInstance();
+        //_OwnedNFTDataObj.NewRootInstance();
         if (request.downloadHandler.text.Contains("Invalid key"))
         {
             Debug.Log("<color = red> hey Invalid NFT list </color>");
@@ -115,7 +115,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         else
         {
             //   NFTlistdata = UserNFTlistClass.Root.CreateFromJSON(request.downloadHandler.text);
-            _OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
+            //_OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
 
             /*for (int i = 0; i < NFTlistdata.list.Count; i++)
             {
@@ -125,32 +125,32 @@ public class Web3APIforWeb2 : MonoBehaviour
                 }
             }*/
             callback?.Invoke();
-            print("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
-            if (_OwnedNFTDataObj.NFTlistdata.count > 0)
-            {
-                for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
-                {
-                    string NFTname = _OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower();
-                    if (NFTname.Contains("XANA x BreakingDown"))
-                    {
-                        print("BreakingDown");
-                    }
-                    if (NFTname.Contains("deemo"))
-                    {
-                        XanaConstants.xanaConstants.IsDeemoNFT = true;
-                    }
-                    if (NFTname.Contains("astroboy"))
-                    {
-                        print("Astroboy");
-                        //  CryptouserData.instance.AstroboyPass = true;
-                    }
-                    if (NFTname.Contains("ultraman"))
-                    {
-                        print("Contained Ultraman");
-                        //  CryptouserData.instance.UltramanPass = true;
-                    }
-                }
-            }
+            //print("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
+            //if (_OwnedNFTDataObj.NFTlistdata.count > 0)
+            //{
+            //    for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
+            //    {
+            //        string NFTname = _OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower();
+            //        if (NFTname.Contains("XANA x BreakingDown"))
+            //        {
+            //            print("BreakingDown");
+            //        }
+            //        if (NFTname.Contains("deemo"))
+            //        {
+            //            XanaConstants.xanaConstants.IsDeemoNFT = true;
+            //        }
+            //        if (NFTname.Contains("astroboy"))
+            //        {
+            //            print("Astroboy");
+            //            //  CryptouserData.instance.AstroboyPass = true;
+            //        }
+            //        if (NFTname.Contains("ultraman"))
+            //        {
+            //            print("Contained Ultraman");
+            //            //  CryptouserData.instance.UltramanPass = true;
+            //        }
+            //    }
+            //}
         }
         await Task.Delay(500);
         AllDataFetchedfromServer?.Invoke("Web2");
@@ -176,7 +176,7 @@ public class Web3APIforWeb2 : MonoBehaviour
 
         // Set the content type header
         request.SetRequestHeader("Content-Type", "application/json");
-        await request.SendWebRequest();
+        //await request.SendWebRequest();
         // Send the request
         print("return " + request.downloadHandler.text);
         return request;
@@ -251,7 +251,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         var request = new UnityWebRequest(url, "GET");
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        await request.SendWebRequest();
+        //await request.SendWebRequest();
         print("return " + request.downloadHandler.text);
         return request;
     }

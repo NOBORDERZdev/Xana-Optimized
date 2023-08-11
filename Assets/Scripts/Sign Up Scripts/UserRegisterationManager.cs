@@ -18,7 +18,7 @@ using UnityEngine.UI;
 using AdvancedInputFieldPlugin;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using MoralisUnity;
+//using MoralisUnity;
 using System.Threading.Tasks;
 
 public class UserRegisterationManager : MonoBehaviour
@@ -319,7 +319,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (_userType == "Web3")
         {
             
-           if (CryptouserData.instance.CryptoLogin)
+           if (/*CryptouserData.instance.CryptoLogin*/ true)
              {
                  GetOwnedNFTsFromAPI(); 
                 ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
@@ -355,41 +355,41 @@ public class UserRegisterationManager : MonoBehaviour
         else if (_userType == "Web2")
         {
              // StartCoroutine(waitForWalletNFTFetching());
-             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
-            {
-                print("call getting list here");
+            // if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+            //{
+            //    print("call getting list here");
 
-                await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+            //    await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
                  
-                print("wait nft complete 22");
+            //    print("wait nft complete 22");
 
-                // CheckNFTFetched();
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
-                {   
-                     print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
-                     // Currently No Need For Attributes
-                    //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
-                    //print("index is " + LocalIndex);
-                    //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
-                     if (PlayerPrefs.HasKey("Equiped"))
-                    {
-                        XanaConstants.xanaConstants.isNFTEquiped = true;
-                        BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    }   
-                }
-                else
-                {
-                    PlayerPrefs.DeleteKey("Equiped");
-                    PlayerPrefs.DeleteKey("nftID");
-                    XanaConstants.xanaConstants.isNFTEquiped = false;
-                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                     LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
-                 }
-            }
-             else
-            {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-             }
+            //    // CheckNFTFetched();
+            //    if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
+            //    {   
+            //         print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
+            //         // Currently No Need For Attributes
+            //        //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
+            //        //print("index is " + LocalIndex);
+            //        //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
+            //         if (PlayerPrefs.HasKey("Equiped"))
+            //        {
+            //            XanaConstants.xanaConstants.isNFTEquiped = true;
+            //            BoxerNFTEventManager.OnNFTequip?.Invoke(false);
+            //        }   
+            //    }
+            //    else
+            //    {
+            //        PlayerPrefs.DeleteKey("Equiped");
+            //        PlayerPrefs.DeleteKey("nftID");
+            //        XanaConstants.xanaConstants.isNFTEquiped = false;
+            //         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+            //         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
+            //     }
+            //}
+            // else
+            //{
+            //    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            // }
             // savingLoadingNFTsData.SavetoFile();
         }
         else
@@ -502,7 +502,7 @@ public class UserRegisterationManager : MonoBehaviour
         //Caching.ClearCache();
         //GC.Collect();
       //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
-        UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
+        //UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
         //   StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
         //OpenUIPanal(11);
@@ -1375,19 +1375,19 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator OnSucessLogout()
     {
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        //_web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
  
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
          userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         PlayerPrefs.SetString("SaveuserRole", "");
-        if (CryptouserData.instance != null)
-        {
-            CryptouserData.instance.UltramanPass = false;
-            CryptouserData.instance.AlphaPass = false;
-            CryptouserData.instance.AstroboyPass = false;
-        }
+        //if (CryptouserData.instance != null)
+        //{
+        //    CryptouserData.instance.UltramanPass = false;
+        //    CryptouserData.instance.AlphaPass = false;
+        //    CryptouserData.instance.AstroboyPass = false;
+        //}
 
 
         LoggedInAsGuest = false;
@@ -2942,8 +2942,8 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         print(Jsondata);
-         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
-         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
+         //_web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
+         //_web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
          var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);

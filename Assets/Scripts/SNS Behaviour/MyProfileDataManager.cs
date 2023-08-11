@@ -1105,41 +1105,41 @@ public class MyProfileDataManager : MonoBehaviour
         //if (UserRegisterationManager.instance.userRoleObj.NFTsURL.Count < NftDataScript.Instance.ContentPanel.transform.childCount)
         //{
         //  print("come to 2222");
-        if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count > 0)
-        {
-        print("come to async showing NFT in if "+ UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
-            NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-            NftDataScript.Instance.NoNftyet.SetActive(false);
-            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
-            NftDataScript.Instance.nftloading.SetActive(false);
-            print("userRoleObj.NFTsURL: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL.Count);
-            print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
-            for (int i = 0; i < UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count; i++)
-            {
-                if (!UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo"))
-                {
-                    GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
-                    Debug.Log("L_ItemBtnObj");
-                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
-                    {
-                        L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
-                    }
-                    int locali = i;
-                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
-                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
-                    L_ItemBtnObj.gameObject.name = "image_NFT " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
-                }
-            }
-        }  
-        else
-        {
-            print("No NFT Found");
-            Debug.Log("call hua else data");
-            NftDataScript.Instance.NftLoadingPenal.SetActive(true);
-            NftDataScript.Instance.NoNftyet.SetActive(true);
-            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
-            NftDataScript.Instance.nftloading.SetActive(false);
-        }  
+        //if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count > 0)
+        //{
+        //print("come to async showing NFT in if "+ UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
+        //    NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+        //    NftDataScript.Instance.NoNftyet.SetActive(false);
+        //    NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+        //    NftDataScript.Instance.nftloading.SetActive(false);
+        //    print("userRoleObj.NFTsURL: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL.Count);
+        //    print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
+        //    for (int i = 0; i < UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count; i++)
+        //    {
+        //        if (!UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo"))
+        //        {
+        //            GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
+        //            Debug.Log("L_ItemBtnObj");
+        //            if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
+        //            {
+        //                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
+        //            }
+        //            int locali = i;
+        //            L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
+        //            L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
+        //            L_ItemBtnObj.gameObject.name = "image_NFT " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
+        //        }
+        //    }
+        //}  
+        //else
+        //{
+        //    print("No NFT Found");
+        //    Debug.Log("call hua else data");
+        //    NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+        //    NftDataScript.Instance.NoNftyet.SetActive(true);
+        //    NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
+        //    NftDataScript.Instance.nftloading.SetActive(false);
+        //}  
         // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb++;
       //  Invoke(nameof(RefreshNFTScrollHeight), 1f);
     }
