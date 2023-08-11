@@ -85,21 +85,21 @@ public class UserAnalyticsHandler : MonoBehaviour
     }
     void Call_UpdateWorldRelatedStats_Courtine(bool isJoined, bool nftClicked, bool urlClicked, bool isExit)
     {
-#if UNITY_EDITOR
-        return;
-#else
+//#if UNITY_EDITOR
+//        return;
+//#else
         StartCoroutine(UpdateWorldRelatedStats(isJoined, nftClicked, urlClicked, isExit));
 
-#endif
+//#endif
     }
     void Call_UpdateWorldRelatedStats_Courtine(bool isJoined, bool isExit)
     {
-#if UNITY_EDITOR
-        return;
-#else
+//#if UNITY_EDITOR
+//        return;
+//#else
         StartCoroutine(UpdateWorldRelatedStats(isJoined, isExit));
 
-#endif
+//#endif
     }
 
 

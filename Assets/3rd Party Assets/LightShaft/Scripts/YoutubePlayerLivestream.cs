@@ -201,7 +201,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
                     callback.Invoke(liveUrl);
                 }
                 else
-                    Debug.Log("<color = red> Livestream Link Issue </color> ");
+                    Debug.Log("<color=red> Livestream Link Issue </color> ");
             }
             else
             {

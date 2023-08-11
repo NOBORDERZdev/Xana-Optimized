@@ -374,6 +374,9 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent() 
     {
+        //Debug.LogError(" +++++++++++++++++++  WaqasJoinEvent +++++++++++++++");
+        _callSingleTime = true;
+
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -588,15 +591,42 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
     }
 
+    bool _callSingleTime = false;
     public void PlayWorld()
     {
+        // For Analitics & User Count
+        if (!_callSingleTime)
+        {
+            string worldType = "";
+            if (XanaConstants.xanaConstants.isBuilderScene)
+                worldType = "USER";
+            else if (XanaConstants.xanaConstants.IsMuseum)
+                worldType = "MUSEUM";
+            else
+                worldType = "ENVIRONMENT";
+
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("Lobby")) 
+            {
+                if ((ConstantsGod.API_BASEURL.Contains("test")))
+                    XanaConstants.xanaConstants.customWorldId = 163;
+                else
+                    XanaConstants.xanaConstants.customWorldId = 77;
+
+                worldType = "ENVIRONMENT";
+            }
+            UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
+        }
+
+       
+
+
         // Added By WaqasAhmad [20 July 23]
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
         //Caching.ClearCache();
         GC.Collect();
         //
-
+        //Debug.LogError(" +++++++++++++++++++  WaqasPlay +++++++++++++++");
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange )
