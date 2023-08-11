@@ -35,7 +35,7 @@ public class WarpFunctionComponent : ItemComponent
                     if ((warpFunctionComponentData.warpPortalStartKeyValue == warpFunctionComponentData.warpPortalDataEndPoint[i].indexPortalEndKey) && warpFunctionComponentData.warpPortalStartKeyValue != "Select Key")
                     {
                         characterControllerNew.enabled = false;
-                        //GamificationComponentData.instance.buildingDetect.CameraEffect();
+                        GamificationComponentData.instance.buildingDetect.CameraEffect();
                         GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataEndPoint[i].portalEndLocation;
                         characterControllerNew.enabled = true;
                     }
@@ -50,7 +50,7 @@ public class WarpFunctionComponent : ItemComponent
                     if ((warpFunctionComponentData.warpPortalEndKeyValue == warpFunctionComponentData.warpPortalDataStartPoint[i].indexPortalStartKey) && warpFunctionComponentData.warpPortalEndKeyValue != "Select Key")
                     {
                         characterControllerNew.enabled = false;
-                        //GamificationComponentData.instance.buildingDetect.CameraEffect();
+                        GamificationComponentData.instance.buildingDetect.CameraEffect();
                         GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataStartPoint[i].portalStartLocation;
                         characterControllerNew.enabled = true;
                     }
