@@ -2112,7 +2112,8 @@ public class UFE : MonoBehaviour, UFEInterface
 
 				if (UFE.config.selectedStage.stageLoadingMethod == StorageMode.SceneFile)
 				{
-					SceneManager.UnloadSceneAsync(UFE.config.selectedStage.stagePath);
+					//SceneManager.UnloadSceneAsync(UFE.config.selectedStage.stagePath);
+					SceneManager.UnloadSceneAsync("Fighting BreakingDown Arena");
 					SceneManager.SetActiveScene(mainScene);
 				}
 
