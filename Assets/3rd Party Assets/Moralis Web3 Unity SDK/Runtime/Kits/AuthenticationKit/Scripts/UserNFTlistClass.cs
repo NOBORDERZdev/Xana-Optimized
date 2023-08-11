@@ -89,7 +89,7 @@ public class UserNFTlistClass : MonoBehaviour
         request = await MoralisGettingList(localAPI);
         if (request.downloadHandler.text.Contains("Invalid key"))
         {
-            Debug.LogError("hey Invalid NFT list");
+           Debug.Log("hey Invalid NFT list");
         }   
         else
         {
@@ -103,7 +103,7 @@ public class UserNFTlistClass : MonoBehaviour
         request2 = await MoralisGettingList(localAPI2);
         if (request2.downloadHandler.text.Contains("Invalid key"))
         {
-            Debug.LogError("hey Invalid NFT list");
+           Debug.Log("hey Invalid NFT list");
         }
         else
         {
@@ -118,7 +118,7 @@ public class UserNFTlistClass : MonoBehaviour
         request3 = await MoralisGettingList(localAPI3);
         if (request3.downloadHandler.text.Contains("Invalid key"))
         {
-            Debug.LogError("hey Invalid NFT list");
+           Debug.Log("hey Invalid NFT list");
         }
         else
         {
@@ -137,7 +137,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIETHChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {
@@ -164,7 +164,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIPolygonChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {
@@ -193,7 +193,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIBSCChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {
@@ -232,7 +232,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIETHChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {   
@@ -261,7 +261,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIBSCChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {
@@ -290,7 +290,7 @@ public class UserNFTlistClass : MonoBehaviour
             requestChain = await MoralisGettingList(localAPIBSCChain);
             if (requestChain.downloadHandler.text.Contains("Invalid key"))
             {
-                Debug.LogError("hey Invalid NFT list");
+               Debug.Log("hey Invalid NFT list");
             }
             else
             {
@@ -428,7 +428,7 @@ public class UserNFTlistClass : MonoBehaviour
     CryptouserData.instance.NFTlistdata = new Root();
     if (request.downloadHandler.text.Contains("Invalid key"))
    {
-       Debug.LogError("hey Invalid NFT list");
+      Debug.Log("hey Invalid NFT list");
    }        
    else
    {  
@@ -472,7 +472,7 @@ public class UserNFTlistClass : MonoBehaviour
      _OwnedNFTDataObj.NewRootInstance();
     if (request.downloadHandler.text.Contains("Invalid key"))
     {
-        Debug.LogError("hey Invalid NFT list");
+       Debug.Log("hey Invalid NFT list");
     }  
     else
     {
