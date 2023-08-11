@@ -411,7 +411,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 yield return null;
             }
-            // Debug.LogError(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+            // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
 
             Material _mat = loadSkyBox.Result;
             _mat.shader = Shader.Find(skyBoxItem.shaderName);
@@ -451,7 +451,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
-        Debug.LogError(obj.Result.shader.name + "-----" + obj.Status);
+        Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
