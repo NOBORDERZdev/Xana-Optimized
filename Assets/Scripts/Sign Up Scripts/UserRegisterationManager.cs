@@ -1429,6 +1429,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         LoadingHandler.Instance.HideLoading();
         XanaConstants.xanaConstants.isCameraMan = false;
+        XanaConstants.xanaConstants.IsDeemoNFT = false;
         StoreManager.instance.CheckWhenUserLogin();
     }
 
