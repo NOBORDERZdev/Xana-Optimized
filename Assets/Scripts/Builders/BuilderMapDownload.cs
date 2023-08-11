@@ -14,6 +14,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -84,7 +85,7 @@ public class BuilderMapDownload : MonoBehaviour
         //BuilderData.mapData = serverData;
         //PopulateLevel();
 
-        terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
+        //terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
     }
 
 
@@ -226,7 +227,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.LogError("Failed to load json....");
+                Debug.Log("Failed to load json....");
             }));
         }
 
@@ -387,9 +388,9 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetPlaneScaleAndPosition(Vector3 scale, Vector3 pos)
     {
-        Debug.Log(scale + "  " + pos);
+        //Debug.Log(scale + "  " + pos);
         terrainPlane.transform.localScale = scale;
-        terrainPlane.transform.position = pos;
+        terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
 
     void SetSkyProperties()
@@ -410,7 +411,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 yield return null;
             }
-               // Debug.LogError(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+            // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
 
             Material _mat = loadSkyBox.Result;
             _mat.shader = Shader.Find(skyBoxItem.shaderName);
@@ -450,7 +451,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
-        Debug.LogError(obj.Result.shader.name+"-----"+ obj.Status);
+        Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
@@ -493,6 +494,12 @@ public class BuilderMapDownload : MonoBehaviour
         mainPlayerCharacterController.center = Vector3.up * 0.5f;
         mainPlayerCharacterController.height = 1f;
         mainPlayerCharacterController.stepOffset = 1f;
+
+        CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
+        mainPlayerCollider.center = Vector3.up * 0.5f;
+        mainPlayerCollider.height = 1f;
+
+        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
 
 
@@ -503,6 +510,13 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPostProcessProperties(VolumeProfile _postProcessVol)
     {
         postProcessVol.profile = _postProcessVol;
+        Vignette vignette;
+        postProcessVol.profile.TryGet(out vignette);
+
+        if (vignette) {
+            GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
+            GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
+        }
     }
 
 
@@ -566,7 +580,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    xanaItem.SetData(levelData.otherItems[i]);
         //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
         //    {
-        //        Debug.LogError("local pos :- "+ levelData.otherItems[i].Position);
+        //        Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
         //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
         //    }
         //}

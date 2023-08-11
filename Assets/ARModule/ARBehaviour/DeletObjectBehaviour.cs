@@ -21,7 +21,7 @@ public class DeletObjectBehaviour : MonoBehaviour
             if (EventSystem.current.IsPointerOverGameObject(id))
             {
                 isPointerOverButton = true;
-                Debug.LogError("pointerUp");
+               Debug.Log("pointerUp");
             }
         }
 
@@ -29,7 +29,7 @@ public class DeletObjectBehaviour : MonoBehaviour
         {
             if (isPointerOverButton)
             {
-                Debug.LogError("destory");
+               Debug.Log("destory");
                 isPointerOverButton = false;
                 Destroy(ARFaceModuleManager.Instance.mainAvatar);
             }
@@ -37,7 +37,7 @@ public class DeletObjectBehaviour : MonoBehaviour
         }
         if (isPointerOverButton)
         {
-            Debug.LogError("destorrrrry");
+           Debug.Log("destorrrrry");
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
             if (hit.collider != null)
             {

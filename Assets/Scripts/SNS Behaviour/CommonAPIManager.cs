@@ -28,7 +28,7 @@ public class CommonAPIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.LogError("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         SetUpBottomUnReadCount(0);//default message footer message unread count set false.......
         ConnetSocketManagerAndListener();
     }
@@ -41,12 +41,12 @@ public class CommonAPIManager : MonoBehaviour
     public void ConnetSocketManagerAndListener()
     {
         address = ConstantsGod.API_BASEURL;
-        //Debug.LogError("ConnetSocketManagerAndListener Address:" + address);
+        //Debug.Log("ConnetSocketManagerAndListener Address:" + address);
         if (!address.EndsWith("/"))
         {
             address = address + "/";
         }
-        //Debug.LogError("ConnetSocketManagerAndListener Address:" + address);
+        //Debug.Log("ConnetSocketManagerAndListener Address:" + address);
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
@@ -61,18 +61,18 @@ public class CommonAPIManager : MonoBehaviour
 
     void OnConnected(ConnectResponse resp)
     {
-        //Debug.LogError("Connect");
+        //Debug.Log("Connect");
         //Manager.Socket.Emit("hi", "hiiii");
     }
 
     void OnError(CustomError args)
     {
-        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
 
     void Onresult(CustomError args)
     {
-        //Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
 
     public void ResetListener()
@@ -84,7 +84,7 @@ public class CommonAPIManager : MonoBehaviour
 
     public void MessageReceivedResponse(string s)
     {
-        Debug.LogError("Common Socket Handler MessageReceivedResponce.......");
+       Debug.Log("Common Socket Handler MessageReceivedResponce.......");
         if (MessageController.Instance != null)
         {
             if (MessageController.Instance.ChatScreen.activeInHierarchy)
@@ -97,7 +97,7 @@ public class CommonAPIManager : MonoBehaviour
                 MessageController.Instance.isNeedToRefreshConversationAPI = true;
             }
         }
-        Debug.LogError("Common Socket Handler MessageReceivedResponce111111111.......");
+       Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");
         RequestGetAllChatUnReadMessagesCount();//For Get All Chat UnRead Message Count.......
     }
 
@@ -114,10 +114,10 @@ public class CommonAPIManager : MonoBehaviour
     //this api is used to get all UnRead Messages Count.......
     public void RequestGetAllChatUnReadMessagesCount()
     {
-        //Debug.LogError("RequestGetAllChatUnReadMessagesCount0000000.......");
+        //Debug.Log("RequestGetAllChatUnReadMessagesCount0000000.......");
         if (!string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
         {
-            //Debug.LogError("RequestGetAllChatUnReadMessagesCount1111111.......");
+            //Debug.Log("RequestGetAllChatUnReadMessagesCount1111111.......");
             if (IERequestGetAllChatUnReadMessagesCountCo != null)
             {
                 StopCoroutine(IERequestGetAllChatUnReadMessagesCountCo);
@@ -142,7 +142,7 @@ public class CommonAPIManager : MonoBehaviour
             {
                 //Debug.Log("Get UnReadMessagesCount Success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Get UnReadMessagesCount Success! data:" + data);
+                Debug.Log("<color=red> Get UnReadMessagesCount Success! data:" + data +"<color>");
                 MessageUnreadCountRoot myDeserializedClass = JsonConvert.DeserializeObject<MessageUnreadCountRoot>(data);
 
                 SetUpBottomUnReadCount(myDeserializedClass.data);

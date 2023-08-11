@@ -65,7 +65,7 @@ public class AWSHandler : MonoBehaviour
             filemime = MimeTypeMap.GetMimeType(fileExtention[1]);
         }
 
-        Debug.LogError("Post Object Url:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_UploadFile + "    :Token:" + ConstantsGod.AUTH_TOKEN + "  :FileMime:" + filemime + "      :IsCompress:" + isCompress);
+       Debug.Log("Post Object Url:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_UploadFile + "    :Token:" + ConstantsGod.AUTH_TOKEN + "  :FileMime:" + filemime + "      :IsCompress:" + isCompress);
 
         WWWForm wWWForm = new WWWForm();
         wWWForm.AddBinaryData("file", imageData, fileName, filemime);
@@ -130,7 +130,7 @@ public class AWSHandler : MonoBehaviour
         wWWForm.AddBinaryData("file", imageData, fileName);
         wWWForm.AddField("compress", "true");
 
-        Debug.LogError("Post Object Url:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_UploadFile + "    :Token:" + ConstantsGod.AUTH_TOKEN);
+       Debug.Log("Post Object Url:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_UploadFile + "    :Token:" + ConstantsGod.AUTH_TOKEN);
 
         //using (var www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.UPLOADFILE, wWWForm))
         using (var www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.r_url_UploadFile, wWWForm))
@@ -199,7 +199,7 @@ public class AWSHandler : MonoBehaviour
                 //Debug.Log($"<color=red> attechmentStr {MessageController.Instance.attechmentstr}</color>");
 
                 string fileUrl = callback.cdn_link;
-                Debug.LogError("attachment str:" + fileUrl + "  :Message:" + callback.msg);
+               Debug.Log("attachment str:" + fileUrl + "  :Message:" + callback.msg);
 
                 if (!string.IsNullOrEmpty(fileUrl))
                 {
@@ -225,7 +225,7 @@ public class AWSHandler : MonoBehaviour
                             if (MessageController.Instance.CreateNewMessageUserList.Count > 0)
                             {
                                 MessageController.Instance.isDirectMessageFirstTimeRecivedID += MessageController.Instance.CreateNewMessageUserList[0];
-                                Debug.LogError("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
+                               Debug.Log("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
                                 APIManager.Instance.RequestChatCreateMessage(int.Parse(MessageController.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
                             }
                         }
@@ -234,13 +234,13 @@ public class AWSHandler : MonoBehaviour
                 else
                 {
                     MessageController.Instance.LoaderShow(false);//rik loader false.......
-                    Debug.LogError("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
+                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
                 }
             }
             else
             {
                 MessageController.Instance.LoaderShow(false);//rik loader false.......
-                Debug.LogError("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
+               Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
             }
         });
     }
@@ -250,17 +250,17 @@ public class AWSHandler : MonoBehaviour
     {
         string fileName1 = Path.GetFileName(fileName);
         byte[] myData = File.ReadAllBytes(fileName);
-        Debug.LogError("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
+       Debug.Log("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
 
         PostObjectMethodAvatar(myData, fileName1, callback =>
         {
-            //Debug.LogError("callback.success:" + callback.success);
+            //Debug.Log("callback.success:" + callback.success);
             if (callback.success)
             {
                 //  string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
                 //  Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
                 string fileUrl = callback.cdn_link;
-                Debug.LogError("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
+               Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
 
                 if (!string.IsNullOrEmpty(fileUrl))
                 {
@@ -293,7 +293,7 @@ public class AWSHandler : MonoBehaviour
                         default:
                             break;
                     }
-                    Debug.LogError("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
+                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
                 }
             }
         });
@@ -314,7 +314,7 @@ public class AWSHandler : MonoBehaviour
                 currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
                 break;
             default:
-                Debug.LogError("Default case");
+               Debug.Log("Default case");
                 currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
                 break;
         }
@@ -326,14 +326,14 @@ public class AWSHandler : MonoBehaviour
 
         string fileName1 = Path.GetFileName(fileName);
         byte[] myData = File.ReadAllBytes(fileName);
-        Debug.LogError("Retrieving The file From Feed FileName:" + fileName1 + " :Data:" + myData.Length);
+       Debug.Log("Retrieving The file From Feed FileName:" + fileName1 + " :Data:" + myData.Length);
 
         PostObjectMethod(myData, fileName1, callback =>
         {
             if (callback.success)
             {
                 string feedUrl = callback.cdn_link;
-                Debug.LogError("Attachment url:" + feedUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + callingFrom);
+               Debug.Log("Attachment url:" + feedUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + callingFrom);
 
                 if (!string.IsNullOrEmpty(feedUrl))
                 {
@@ -357,7 +357,7 @@ public class AWSHandler : MonoBehaviour
                             FeedUIController.Instance.ShowLoader(false);//active Loader false.......
                             break;
                     }
-                    //Debug.LogError(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
+                    //Debug.Log(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
                 }
                 else
                 {
@@ -386,7 +386,7 @@ public class AWSHandler : MonoBehaviour
                             FeedUIController.Instance.ShowLoader(false);//active Loader false.......
                             break;
                     }
-                    Debug.LogError("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
+                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
                 }
             }
             else
@@ -417,7 +417,7 @@ public class AWSHandler : MonoBehaviour
                         break;
                 }
 
-                Debug.LogError("\nException while posting the callback:" + callback.success);                
+               Debug.Log("\nException while posting the callback:" + callback.success);                
             }
         });
     }

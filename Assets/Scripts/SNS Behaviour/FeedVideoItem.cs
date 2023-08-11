@@ -49,7 +49,7 @@ public class FeedVideoItem : MonoBehaviour
     {
         float value0 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.width;
         float value1 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.height;
-        //Debug.LogError("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:"+value1);
+        //Debug.Log("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:"+value1);
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(value0, value1);
     }
 
@@ -106,7 +106,7 @@ public class FeedVideoItem : MonoBehaviour
         if (isVisible && isOnScreen)//this is check if object is visible on camera then load feed or video one time
         {
             isVisible = false;
-            //Debug.LogError("Image download starting one time");
+            //Debug.Log("Image download starting one time");
             DownloadAndLoadFeed();
         }
         //else if(isImageSuccessDownloadAndSave && isPrintDebug)
@@ -118,7 +118,7 @@ public class FeedVideoItem : MonoBehaviour
                 {
                     isReleaseFromMemoryOrNot = false;
                     //re load from asset 
-                    //Debug.LogError("Re Download Image and play video");
+                    //Debug.Log("Re Download Image and play video");
                     if (!isVideoOrImage)//if false then load image otherwise play video
                     {
                         if (AssetCache.Instance.HasFile(FeedData.image))
@@ -150,7 +150,7 @@ public class FeedVideoItem : MonoBehaviour
                 {
                     //realse from memory 
                     isReleaseFromMemoryOrNot = true;
-                    //Debug.LogError("remove from memory and stop video");
+                    //Debug.Log("remove from memory and stop video");
                     if (!isVideoOrImage)//if false then Remove image otherwise Stop video
                     {
                         AssetCache.Instance.RemoveFromMemory(imgFeed.sprite);
@@ -266,7 +266,7 @@ public class FeedVideoItem : MonoBehaviour
         /*if (!string.IsNullOrEmpty(FeedRawData.avatar))//set avatar image.......
         {
             bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
-            //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(FeedRawData.avatar, FeedRawData.avatar, (success) =>
@@ -284,7 +284,7 @@ public class FeedVideoItem : MonoBehaviour
         if (!string.IsNullOrEmpty(FeedData.image))
         {
             bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
-            //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(FeedData.image, FeedData.image, (success) =>
@@ -310,7 +310,7 @@ public class FeedVideoItem : MonoBehaviour
             bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
             isVideoOrImage = true;
 
-            //Debug.LogError("FeedData.video " + FeedData.video);
+            //Debug.Log("FeedData.video " + FeedData.video);
             PhotoImage.SetActive(false);
             videoDisplay.gameObject.SetActive(true);
             feedMediaPlayer.gameObject.SetActive(true);
@@ -332,7 +332,7 @@ public class FeedVideoItem : MonoBehaviour
         if (!string.IsNullOrEmpty(hotFeed.user.avatar))//set avatar image.......
         {
             bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.user.avatar);
-            //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(hotFeed.user.avatar, hotFeed.user.avatar, (success) =>
@@ -350,7 +350,7 @@ public class FeedVideoItem : MonoBehaviour
         if (!string.IsNullOrEmpty(hotFeed.image))
         {
             bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.image);
-            //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(hotFeed.image, hotFeed.image, (success) =>
@@ -376,7 +376,7 @@ public class FeedVideoItem : MonoBehaviour
             bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.video);
             isVideoOrImage = true;
 
-            //Debug.LogError("FeedData.video " + FeedData.video);
+            //Debug.Log("FeedData.video " + FeedData.video);
             PhotoImage.SetActive(false);
             videoDisplay.gameObject.SetActive(true);
             feedMediaPlayer.gameObject.SetActive(true);
@@ -400,7 +400,7 @@ public class FeedVideoItem : MonoBehaviour
     //this method is used to user profile button click.......
     public void OnClickPlayerProfileButton()
     {
-        Debug.LogError("Feed Id :" + FeedData.id + "   :User Id :" + FeedRawData.id);
+       Debug.Log("Feed Id :" + FeedData.id + "   :User Id :" + FeedRawData.id);
         //Riken
         /*OtherPlayerProfileData.Instance.FeedRawData = FeedRawData;
         //OtherPlayerProfileData.Instance.OnSetUserUi(isFollow);
@@ -455,7 +455,7 @@ public class FeedVideoItem : MonoBehaviour
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-       // Debug.LogError("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+       //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
 
         AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
@@ -466,7 +466,7 @@ public class FeedVideoItem : MonoBehaviour
                 {
                     if (this.isActiveAndEnabled)
                     {
-                        //Debug.LogError("Feed Video URL " + mediaUrl);
+                        //Debug.Log("Feed Video URL " + mediaUrl);
                         bool videoPlay = feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: true);
                         //feedMediaPlayer.Play();
                         if (videoPlay)
@@ -477,7 +477,7 @@ public class FeedVideoItem : MonoBehaviour
                 });
             }
             else
-                Debug.LogError(callback.Exception);
+               Debug.Log(callback.Exception);
         });*/
 
         if (key != "")
@@ -498,7 +498,7 @@ public class FeedVideoItem : MonoBehaviour
             {
                 if (this.isActiveAndEnabled)
                 {
-                    //Debug.LogError("Feed Video URL " + mediaUrl);
+                    //Debug.Log("Feed Video URL " + mediaUrl);
                     bool videoPlay = feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: true);
                     //feedMediaPlayer.Play();
                     if (videoPlay)
@@ -512,11 +512,11 @@ public class FeedVideoItem : MonoBehaviour
 
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             if (mainImage == imgFeed)
             {
@@ -559,7 +559,7 @@ public class FeedVideoItem : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType " + extension);
+        //Debug.Log("ExtentionType " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -634,12 +634,12 @@ public class FeedVideoItem : MonoBehaviour
     public void SetupDecPart(string strText)
     {
         int numLines = strText.Split('\n').Length;
-        //Debug.LogError("Des Line Count:" + numLines);
+        //Debug.Log("Des Line Count:" + numLines);
 
         if (numLines > 2)
         {
             string[] subLineSTR = strText.Split('\n').Take(2).ToArray();
-            //Debug.LogError("Result:" + subLineSTR);
+            //Debug.Log("Result:" + subLineSTR);
 
             tempMinDecLineStr = "";
             for (int i = 0; i < subLineSTR.Length; i++)
@@ -739,7 +739,7 @@ public class FeedVideoItem : MonoBehaviour
                 shareMediaUrl = feedUrlArr[0];
             }
             else
-                Debug.LogError(callback.Exception);
+               Debug.Log(callback.Exception);
         });*/
 
         if (key.Contains("https://"))
