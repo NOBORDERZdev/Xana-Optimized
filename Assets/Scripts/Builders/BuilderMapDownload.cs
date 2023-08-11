@@ -227,7 +227,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.LogError("Failed to load json....");
+                Debug.Log("Failed to load json....");
             }));
         }
 
@@ -580,7 +580,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    xanaItem.SetData(levelData.otherItems[i]);
         //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
         //    {
-        //        Debug.LogError("local pos :- "+ levelData.otherItems[i].Position);
+        //        Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
         //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
         //    }
         //}
