@@ -88,7 +88,9 @@ public static class BuilderEventManager
     //ChangeNinja_ThrowUIPosition
     public static Action<float,bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
-    public static Action<bool> SelfiActive;
+
+    //UI toggle
+    public static Action<bool> UIToggle;
 
     public static Action EnableWorldCanvasCamera;
 }

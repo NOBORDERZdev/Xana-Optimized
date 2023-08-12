@@ -547,7 +547,7 @@ public class SelfieController : MonoBehaviour
             m_PlayerController.GetComponent<PlayerControllerNew>().firstPersonCameraObj.SetActive(true);
         }
 
-        BuilderEventManager.SelfiActive?.Invoke(false);
+        BuilderEventManager.UIToggle?.Invoke(false);
     }
 
 

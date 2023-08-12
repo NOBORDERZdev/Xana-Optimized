@@ -57,7 +57,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
 
         //OnSelfiActive
-        BuilderEventManager.SelfiActive += SelfiActive;
+        BuilderEventManager.UIToggle += UIToggle;
 
         OrientationChange(false);
     }
@@ -70,7 +70,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderData.spawnPoint.Clear();
 
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
-        BuilderEventManager.SelfiActive -= SelfiActive;
+        BuilderEventManager.UIToggle -= UIToggle;
         Addressables.Release(loadSkyBox);
 
 
@@ -134,7 +134,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
     }
 
-    void SelfiActive(bool state)
+    void UIToggle(bool state)
     {
         if (state)
         {
