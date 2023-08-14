@@ -70,7 +70,7 @@ public class YoutubeStreamController : MonoBehaviour
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 #if UNITY_EDITOR
-        if (!FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
+        if (!FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena") && !FeedEventPrefab.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !FeedEventPrefab.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
