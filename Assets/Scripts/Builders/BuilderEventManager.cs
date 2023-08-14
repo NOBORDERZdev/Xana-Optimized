@@ -83,6 +83,8 @@ public static class BuilderEventManager
     public static Action<string, string, string, Transform> OnHyperLinkPopupCollisionEnter;
     public static Action OnHyperLinkPopupCollisionExit;
 
+    //Blind Component
+    public static Action<float> OnBlindComponentTriggerEnter;
     public static Action<ComponentType> ResetComponentUI;
 
     //ChangeNinja_ThrowUIPosition

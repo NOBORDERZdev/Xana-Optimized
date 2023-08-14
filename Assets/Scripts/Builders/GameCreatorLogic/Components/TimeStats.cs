@@ -11,18 +11,22 @@ public class TimeStats : MonoBehaviour
 
     public static Action<bool, Light[], float[], float, GameObject> _intensityChanger;
     public static Action _intensityChangerStop;
+    public static Action<bool, Light[], float[], float, float, GameObject, int> _blindComponentStart;
+    public static Action _blindComponentStop;
 
     private float m_TotalTime;
     public bool IsElapsedTimeActive;
     public bool IsSituationChangerActive;
 
-    public static bool _stopTimer = false, canRun = false;
-    bool isRuninig, isNight;
+    public static bool _stopTimer = false, canRun = false, canBlindRun=false;
+    bool isRuninig, isNight, isBlindRunning, isBlindDark;
     int previousSkyID;
     IEnumerator coroutine, dimmerCoroutine;
 
     public Light[] lights;
     public float[] Intensity;
+    public Light[] blindlights;
+    public float[] blindIntensity;
 
     private void OnEnable()
     {
@@ -30,6 +34,8 @@ public class TimeStats : MonoBehaviour
         _timeStop += StopTimer;
         _intensityChanger += SituationStarter;
         _intensityChangerStop += SituationStoper;
+        _blindComponentStart += BlindComponentStart;
+        _blindComponentStop += BlindComponentStop;
     }
     private void OnDisable()
     {
@@ -37,7 +43,8 @@ public class TimeStats : MonoBehaviour
         _timeStop -= StopTimer;
         _intensityChanger -= SituationStarter;
         _intensityChangerStop -= SituationStoper;
-
+        _blindComponentStart -= BlindComponentStart;
+        _blindComponentStop -= BlindComponentStop;
     }
 
     private void Start()
@@ -76,7 +83,7 @@ public class TimeStats : MonoBehaviour
     GameObject _situationChangeObject;
     public void SituationStarter(bool _isOff, Light[] _lights, float[] _intensities, float _value, GameObject _obj)
     {
-        
+        BlindComponentStop();
         if (isRuninig)
         {
             if (_situationChangeObject == _obj)
@@ -98,7 +105,7 @@ public class TimeStats : MonoBehaviour
         canRun = true;
         isRuninig = true;
         this._situationChangeObject = _obj;
-       Debug.Log("EnableSituationChangerUI  " + _value);
+        //Debug.Log("EnableSituationChangerUI  " + _value);
         if (!_isOff)
             BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
         StartCoroutine(dimmerCoroutine);
@@ -191,5 +198,93 @@ public class TimeStats : MonoBehaviour
         }
 
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
+    }
+
+
+    Coroutine blindDimLightsCoroutine;
+    GameObject _blindComponentObject;
+    void BlindComponentStart(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, GameObject _obj, int _skyBoxID = 20)
+    {
+        if (isBlindRunning)
+        {
+            if (_blindComponentObject == _obj)
+            {
+                isBlindDark ^= true;
+                if (isBlindDark)
+                    ToggleStatus(true, _Radius, _skyBoxID);
+                else
+                    ToggleStatus(false, _Radius, _skyBoxID);
+
+                return;
+            }
+            else
+                BlindComponentStop();
+        }
+        isBlindRunning = true;
+        canBlindRun = true;
+        blindlights = _light;
+        blindIntensity = _lightsIntensity;
+        _blindComponentObject = _obj;
+        if (!_isOff)
+            BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(timeCheck);
+        blindDimLightsCoroutine = StartCoroutine(BlindDimLights(_isOff, _light, _lightsIntensity, timeCheck, _Radius, _skyBoxID));
+    }
+    IEnumerator BlindDimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, int _skyBoxID = 20)
+    {
+        if (_isOff)
+        {
+            isBlindDark ^= true;
+            if (isBlindDark)
+                ToggleStatus(true, _Radius, _skyBoxID);
+            else
+                ToggleStatus(false, _Radius, _skyBoxID);
+        }
+        else
+        {
+            _stopTimer = true;
+            isBlindDark ^= true;
+            if (isBlindDark)
+                ToggleStatus(true, _Radius, _skyBoxID);
+            else
+                ToggleStatus(false, _Radius, _skyBoxID);
+
+            while (!timeCheck.Equals(0) && canBlindRun)
+            {
+                SetTimer(ref timeCheck);
+                yield return null;
+
+            }
+            isBlindDark = false;
+            isBlindRunning = false;
+            ToggleStatus(false, _Radius, _skyBoxID);
+        }
+    }
+
+    void BlindComponentStop()
+    {
+        isBlindRunning = false;
+        canBlindRun = false;
+        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+        if (blindDimLightsCoroutine != null)
+        { StopCoroutine(blindDimLightsCoroutine); }
+        ToggleStatus(false, 0, 0);
+    }
+
+    private void ToggleStatus(bool _Status, float _Radius, int _skyBoxID)
+    {
+        if (_Status)
+        {
+            previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
+            SituationChangerSkyboxScript.instance.ChangeSkyBox(_skyBoxID);
+            PlayerCanvas.Instance.ToggleBlindLight(true, _Radius);
+            return;
+        }
+
+        for (int i = 0; i < blindlights.Length; i++)
+        {
+            blindlights[i].intensity = blindIntensity[i];
+        }
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
+        PlayerCanvas.Instance.ToggleBlindLight(false, 300);
     }
 }

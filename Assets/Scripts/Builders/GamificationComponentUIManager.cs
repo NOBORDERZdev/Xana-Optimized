@@ -24,6 +24,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnHelpButtonCollisionEnter += EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit += DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
+        BuilderEventManager.OnBlindComponentTriggerEnter += EnableBlindComponentUI;
         BuilderEventManager.OnQuizComponentCollisionEnter += EnableQuizComponentUI;
         BuilderEventManager.OnSpecialItemComponentCollisionEnter += EnableSpecialItemUI;
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter += EnableAvatarInvisibilityUI;
@@ -57,6 +58,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnHelpButtonCollisionEnter -= EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit -= DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
+        BuilderEventManager.OnBlindComponentTriggerEnter -= EnableBlindComponentUI;
         BuilderEventManager.OnQuizComponentCollisionEnter -= EnableQuizComponentUI;
         BuilderEventManager.OnSpecialItemComponentCollisionEnter -= EnableSpecialItemUI;
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter -= EnableAvatarInvisibilityUI;
@@ -133,6 +135,10 @@ public class GamificationComponentUIManager : MonoBehaviour
     //Situation Changer Component
     public GameObject SituationChangerParentUI;
     public TextMeshProUGUI SituationChangerTimeText;
+
+    //Blind Component
+    public GameObject BlindComponentParentUI;
+    public TextMeshProUGUI BlindComponentTimeText;
 
     //Narration Component
     void EnableNarrationUI(string narrationText, bool isStory)
@@ -1087,6 +1093,54 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     #endregion
 
+    #region Blind Component
+    public Coroutine BlindComponentCoroutine;
+    public void EnableBlindComponentUI(float timer)
+    {
+        DisableAllComponentUIObject(ComponentType.SituationChanger);
+        if (timer > 0)
+        {
+            if (BlindComponentCoroutine == null)
+            {
+                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            }
+            else
+            {
+                StopCoroutine(BlindComponentCoroutine);
+                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            }
+        }
+        else
+        {
+            BlindComponentParentUI.SetActive(false);
+            if (BlindComponentCoroutine != null)
+                StopCoroutine(BlindComponentCoroutine);
+        }
+    }
+    public IEnumerator IEBlindComponent(float timer)
+    {
+        while (timer > 0)
+        {
+            //SituationChangerTimeText.text = timer.ToString("00");
+            timer--;
+            BlindComponentTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            BlindComponentParentUI.SetActive(true);
+            yield return new WaitForSeconds(1f);
+        }
+        TimeStats._blindComponentStop?.Invoke();
+        BlindComponentParentUI.SetActive(false);
+        BlindComponentTimeText.text = "00:00";
+    }
+
+    public void DisableBlindComponentUI()
+    {
+        if (BlindComponentCoroutine != null)
+            StopCoroutine(BlindComponentCoroutine);
+        BlindComponentParentUI.SetActive(false);
+        BlindComponentTimeText.text = "";
+    }
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -1127,6 +1181,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableThrowThingUI();
         if (componentType != ComponentType.HyperLinkPopup)
             DisableHyperLinkPopupUI();
+        if (componentType != ComponentType.BlindComponent)
+            DisableBlindComponentUI();
     }
 }
 
@@ -1146,5 +1202,6 @@ public enum ComponentType
     NinjaMotion,
     AvatarInvisibility,
     ThrowThings,
-    HyperLinkPopup
+    HyperLinkPopup,
+    BlindComponent
 }

@@ -18,10 +18,13 @@ public class DoorKeyComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            PlayerCanvas.Instance.transform.SetParent(_other.transform);
-            PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
+            if (PlayerCanvas.Instance.transform.parent != _other.transform)
+            {
+                PlayerCanvas.Instance.transform.SetParent(_other.transform);
+                PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
 
-            PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+                PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+            }
             if (this.doorKeyComponentData.isKey && !this.doorKeyComponentData.isDoor)
             {
                 if (!KeyValidation()) return;
