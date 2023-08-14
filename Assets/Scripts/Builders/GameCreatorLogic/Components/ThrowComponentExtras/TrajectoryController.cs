@@ -28,7 +28,9 @@ public class TrajectoryController : MonoBehaviour
             points[i] = point;
         }
 
-        for (int i = 0; i < resolution; i++)
+        bool hitDetected = false; // if any collision detected
+
+        for (int i = 0; i < resolution - 1; i++)
         {
             if (i < resolution - 1)
             {
@@ -36,24 +38,26 @@ public class TrajectoryController : MonoBehaviour
                 if (Physics.Linecast(points[i], points[i + 1], out hitInfo))
                 {
                     if (colliderAim == null)
-                    //{
                         colliderAim = Instantiate(aimCollsion);
-                    //    colliderAim.SetActive(false);
-                    //}
-                    if (hitInfo.collider.CompareTag("Item"))
+                    if (hitInfo.collider.CompareTag("Item") || hitInfo.collider.CompareTag("Ground"))
                     {
                         colliderAim.transform.position = hitInfo.point;
-                        //print("Hit items" + hitInfo.collider.tag);
+                        hitDetected = true;
                         break;
-                    }
-                    else if (hitInfo.collider.CompareTag("Ground"))
-                    {
-                        colliderAim.transform.position = hitInfo.point;
-                        //print("Hit items" + hitInfo.collider.tag);
                     }
                 }
             }
         }
+
+        // If no collision detected, Position setting here
+        if (!hitDetected)
+        {
+            colliderAim.transform.position = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
+        }
+
+
+
+
         lineRenderer.SetPositions(points);
     }
 

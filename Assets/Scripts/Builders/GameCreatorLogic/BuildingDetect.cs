@@ -26,6 +26,11 @@ public class BuildingDetect : MonoBehaviour
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
 
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsole;
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsoleOther;
+
     [Header("Default Mats")]
     [SerializeField]
     private Material defaultHairMat;
@@ -37,6 +42,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultPantsMat;
     [SerializeField]
     private Material defaultShoesMat;
+    [SerializeField]
+    private Material defaultFreeCamConsoleMat;
 
     [Header("Gangster Character")]
     public GameObject gangsterCharacter;
@@ -109,6 +116,9 @@ public class BuildingDetect : MonoBehaviour
 
         playerHead = GamificationComponentData.instance.charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
 
+        playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+        playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
+
         defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
         for (int i = 0; i < playerHead.materials.Length; i++)
         {
@@ -120,6 +130,8 @@ public class BuildingDetect : MonoBehaviour
         defaultShirtMat = playerShirt.material;
         defaultHairMat = playerHair.material;
         defaultShoesMat = playerShoes.material;
+
+        defaultFreeCamConsoleMat = playerFreeCamConsole.material;
     }
 
     private void OnEnable()
@@ -345,6 +357,9 @@ public class BuildingDetect : MonoBehaviour
 
         // Apply the new materials to the SkinnedMeshRenderer
         playerHead.materials = newMaterials;
+
+        playerFreeCamConsole.material = hologramMaterial;
+        playerFreeCamConsoleOther.material = hologramMaterial;
     }
 
     void StopAvatarInvisibility()
@@ -355,6 +370,8 @@ public class BuildingDetect : MonoBehaviour
         playerPants.material = defaultPantsMat;
         playerShoes.material = defaultShoesMat;
         playerHead.sharedMaterials = defaultHeadMaterials;
+        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
+        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
     }
 
     #endregion
