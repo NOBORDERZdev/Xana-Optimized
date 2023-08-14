@@ -74,6 +74,7 @@ public class XanaConstants : MonoBehaviour
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
+    public int customWorldId;
 
     // For Firebase
     public bool isFirebaseInit = false;
