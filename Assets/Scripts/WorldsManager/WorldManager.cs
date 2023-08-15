@@ -373,6 +373,7 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    private static bool playBtnUniqueCount = false;
 
     public async void JoinEvent() 
     {
@@ -472,7 +473,18 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 #endif
 
         }
+        if (FeedEventPrefab.m_EnvName == "ZONE-X")
+        {
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_PlayBtn");
+            if (!playBtnUniqueCount)
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("Num_of_UniqueClick_on_PlayBtn");
+                playBtnUniqueCount = true;
+            }
+            Debug.Log("<color=red> Firebase Event Clicked </color>");
+        }
     }
+
     public async void JoinBuilderWorld() 
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)

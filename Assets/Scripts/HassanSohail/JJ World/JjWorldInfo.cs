@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class JjWorldInfo : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class JjWorldInfo : MonoBehaviour
         if ((Time.time - tempTimer) < clickTime)
         {
             //OpenWorldInfo();
+            PublishLog();
             tempTimer = 0;
         }
 
@@ -51,4 +53,29 @@ public class JjWorldInfo : MonoBehaviour
     //        }
     //    }
     //}
+
+    void PublishLog()
+    {
+        // for firebase analytics
+        int languageMode = CustomLocalization.forceJapanese ? 1 : 0;
+        Debug.Log("<color=red> LanguageMode: " + languageMode + "</color>");
+        if (JjInfoManager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
+        {
+            string sceneName = FindObjectOfType<StayTimeTracker>().worldName;
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(sceneName + "_NFT" + id + "_Click");
+            Debug.Log("<color=red>" + sceneName + "_NFT" + id + "_Click </color>");
+        }
+        else
+            SendFBLogs(JjInfoManager.Instance.worldInfos[id].Title[languageMode]);
+    }
+
+    private void SendFBLogs(string data)
+    {
+        data = Regex.Replace(data, @"\s", "");
+        string trimmedString = data.Substring(0, Mathf.Min(data.Length, 18));
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(trimmedString + "_NFT_Click");
+        Debug.Log("<color=red>" + trimmedString + "_NFT_Click" + "</color>");
+    }
+
 }
+

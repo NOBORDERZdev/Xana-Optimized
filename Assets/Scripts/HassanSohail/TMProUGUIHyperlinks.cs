@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Text.RegularExpressions;
 
 /// <summary>
 /// This class handles basic link color behavior, supports also underline (static only)
@@ -28,6 +29,8 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
     private int hoveredLinkIndex = -1;
     private int pressedLinkIndex = -1;
     private Camera mainCamera;
+    private static bool uniqueClick = true;
+
 
     void Awake()
     {
@@ -77,6 +80,21 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
             Application.OpenURL(linkInfo.GetLinkID());
         }
         pressedLinkIndex = -1;
+
+        int maxLength = 10;
+        string originalString = JjInfoManager.Instance.nftTitle;
+        originalString = Regex.Replace(originalString, @"\s", "");
+        string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+
+        if (uniqueClick)
+        {
+            uniqueClick = false;
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
+            Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
+        }
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("URL_" + trimmedString + "_Clicked");
+        Debug.Log("<color=red> URL_" + trimmedString + "_Clicked </color>");
     }
 
     //private void LateUpdate()
