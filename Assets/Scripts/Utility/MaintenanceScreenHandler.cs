@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,9 +10,11 @@ public class MaintenanceScreenHandler : MonoBehaviour
     public GameObject m_ScreenUI;
     public GameObject updatePanel;
     public static bool checkOnce = true;
+    public TextMeshProUGUI versionText;
     // Start is called before the first frame update
     void Start()
     {
+        versionText.text = "Ver." + Application.version;
         BuildScriptableObject buildScriptableObject =
        Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
 
