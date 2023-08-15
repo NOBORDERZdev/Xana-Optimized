@@ -70,6 +70,10 @@ public class BuildingDetect : MonoBehaviour
     private Animator characterAnimator;
     public SkinnedMeshRenderer[] skinMeshs;
 
+    [Header("Set default value of ProstProcessProfile vol vignette")]
+    internal float defaultSmootnesshvalue;
+    internal float defaultIntensityvalue;
+
     private void Awake()
     {
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
@@ -376,31 +380,26 @@ public class BuildingDetect : MonoBehaviour
         cameraAnimator.SetBool("BlurrEffect", true);
         volume.profile.TryGet(out motionBlur);
         volume.profile.TryGet(out vignette);
-        if (vignette)
-            vignette.active = true;
+        vignette.active = true;
+        motionBlur.active = true;
         vignette.intensity.value = 0.33f;
-        if (motionBlur)
-            motionBlur.active = true;
+        vignette.smoothness.value = 0.702f;
 
         yield return new WaitForSeconds(0.4f);
 
         float timeElapsed = 0f;
         while (timeElapsed < 0.2f)
         {
-            if (vignette)
-                vignette.intensity.value = Mathf.Lerp(0.33f, 0, timeElapsed / 0.2f);
+            vignette.intensity.value = Mathf.Lerp(0.33f, 0, timeElapsed / 0.2f);
             yield return null;
             timeElapsed += Time.deltaTime;
         }
 
         cameraAnimator.SetBool("BlurrEffect", false);
-        if (vignette)
-        {
-            vignette.intensity.value = 0;
-            vignette.active = false;
-        }
-        if (motionBlur)
-            motionBlur.active = false;
+        vignette.intensity.value = defaultIntensityvalue;
+        vignette.smoothness.value = defaultSmootnesshvalue;
+        vignette.active = false;
+        motionBlur.active = false;
     }
     #endregion
 }

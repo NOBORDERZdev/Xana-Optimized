@@ -57,7 +57,7 @@ public class ChatMemberData : MonoBehaviour
             if (!string.IsNullOrEmpty(chatGetConversationUser.user.avatar))//rik for avatar user
             {
                 bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(chatGetConversationUser.user.avatar);
-                //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isAvatarUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(chatGetConversationUser.user.avatar, chatGetConversationUser.user.avatar, (success) =>
@@ -70,7 +70,7 @@ public class ChatMemberData : MonoBehaviour
                 {
                     GetImageFromAWS(chatGetConversationUser.user.avatar, profileImage);//Get image from aws and save/load into asset cache.......
                 }
-                //Debug.LogError("chatmemberdata 1111:" + chatGetConversationUser.user.avatar);
+                //Debug.Log("chatmemberdata 1111:" + chatGetConversationUser.user.avatar);
             }
 
             SetFolloButton(isFollowFollowing);
@@ -82,9 +82,9 @@ public class ChatMemberData : MonoBehaviour
                 userNameText.text = allChatGetConversationDatum.ConSender.name;
                 if (!string.IsNullOrEmpty(allChatGetConversationDatum.ConSender.avatar))
                 {
-                    //Debug.LogError("AllConversation ConSender11:" + allChatGetConversationDatum.ConSender.name);
+                    //Debug.Log("AllConversation ConSender11:" + allChatGetConversationDatum.ConSender.name);
                     bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
-                    //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                    //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                     if (isAvatarUrlFromDropbox)
                     {
                         AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConSender.avatar, allChatGetConversationDatum.ConSender.avatar, (success) =>
@@ -105,10 +105,10 @@ public class ChatMemberData : MonoBehaviour
                 userNameText.text = allChatGetConversationDatum.ConReceiver.name;
                 if (!string.IsNullOrEmpty(allChatGetConversationDatum.ConReceiver.avatar))
                 {
-                    //Debug.LogError("AllConversation ConReceiver:" + allChatGetConversationDatum.ConReceiver.name);
+                    //Debug.Log("AllConversation ConReceiver:" + allChatGetConversationDatum.ConReceiver.name);
 
                     bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
-                    //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                    //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                     if (isAvatarUrlFromDropbox)
                     {
                         AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConReceiver.avatar, allChatGetConversationDatum.ConReceiver.avatar, (success) =>
@@ -149,7 +149,7 @@ public class ChatMemberData : MonoBehaviour
     void GroupUserResponceUpdateAfterFollowOrUnFollow(bool isFollow)
     {
         int index = MessageController.Instance.allChatGetConversationDatum.group.groupUsers.IndexOf(chatGetConversationUser);
-        //Debug.LogError("GroupUserResponceUpdateAfterFollowOrUnFollow Index:" + index);
+        //Debug.Log("GroupUserResponceUpdateAfterFollowOrUnFollow Index:" + index);
         if (index < MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count)
         {
             MessageController.Instance.allChatGetConversationDatum.group.groupUsers[index].isFollowing = isFollow;
@@ -159,7 +159,7 @@ public class ChatMemberData : MonoBehaviour
     //this method is used to Menu button click.......
     public void OnClickMenuButton()
     {
-        Debug.LogError("Menu button click.......");
+       Debug.Log("Menu button click.......");
         MessageController.Instance.currentSelectedGroupMemberDataScript = this;
         MessageController.Instance.removeGroupmemberConfirmationScreen.SetActive(true);
     }
@@ -170,13 +170,13 @@ public class ChatMemberData : MonoBehaviour
         MessageController.Instance.LoaderShow(true);//active loader.......
         if (isFollowFollowing)
         {
-            Debug.LogError("UnFollow User Id:"+ chatGetConversationUser.user.id);
+           Debug.Log("UnFollow User Id:"+ chatGetConversationUser.user.id);
             //unfollow.......
             RequestUnFollowAUser(chatGetConversationUser.user.id.ToString());
         }
         else
         {
-            Debug.LogError("Follow User Id:" + chatGetConversationUser.user.id);
+           Debug.Log("Follow User Id:" + chatGetConversationUser.user.id);
             //follow.......
             RequestFollowAUser(chatGetConversationUser.user.id.ToString());
         }
@@ -256,11 +256,11 @@ public class ChatMemberData : MonoBehaviour
     #region Get Image From AWS
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -271,7 +271,7 @@ public class ChatMemberData : MonoBehaviour
                 if (success)
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(profileImage, key, changeAspectRatio: true);
-                    //Debug.LogError("Save and Image download success");
+                    //Debug.Log("Save and Image download success");
                 }
             });
         }
@@ -297,7 +297,7 @@ public class ChatMemberData : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType " + extension);
+        //Debug.Log("ExtentionType " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -321,7 +321,7 @@ public class ChatMemberData : MonoBehaviour
     //this method is used to user profile button click.......
     public void OnClickPlayerProfileButton()
     {
-        Debug.LogError("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
+       Debug.Log("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
         if (callingIndex == 0)
         {
             MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickFeedButton();
@@ -329,7 +329,7 @@ public class ChatMemberData : MonoBehaviour
             {
                 if (OtherPlayerProfileData.Instance != null)
                 {
-                    Debug.LogError("OnClickPlayerProfileButton other profile calling.......");
+                   Debug.Log("OnClickPlayerProfileButton other profile calling.......");
                     OtherPlayerProfileData.Instance.backKeyManageList.Add("GroupDetailsScreen");//For back mamages.......
 
                     //this api get any user profile data and feed for other player profile....... 

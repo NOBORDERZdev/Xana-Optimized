@@ -237,7 +237,7 @@ public class NFTFromServer : MonoBehaviour
 
                     if (apiData.data.Count ==0)
                     {
-                        Debug.LogError(" NO DATA GET FROM API ");
+                       Debug.Log(" NO DATA GET FROM API ");
                     }
                     else
                     {
@@ -270,7 +270,7 @@ public class NFTFromServer : MonoBehaviour
             }
             else
             {
-                Debug.LogError(request.error);
+               Debug.Log(request.error);
             }
             request.Dispose();
             yield return StartCoroutine(UdpdatData(AllS3Nfts));

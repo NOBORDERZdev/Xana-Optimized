@@ -60,7 +60,7 @@ public class CryptouserData : MonoBehaviour
         //NFTListObjBSC = null;
         //NFTListObjETH = null;
         //NFTListObjPolygon = null;
-        Debug.LogError("aaaaa");
+       Debug.Log("aaaaa");
         UltramanPass = false;
         AstroboyPass = false;
         AlphaPass = false;

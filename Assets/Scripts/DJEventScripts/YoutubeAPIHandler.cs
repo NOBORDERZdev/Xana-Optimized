@@ -88,7 +88,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     {
                         _response = null;
                         Data = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
@@ -158,7 +158,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (www.isHttpError || www.isNetworkError)
                         {
                             _response = null;
-                            //Debug.LogError("Youtube API returned no result");
+                            //Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -229,7 +229,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         {
                             _response = null;
                             Data = null;
-                            Debug.LogError("Youtube API returned no result");
+                           Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -368,7 +368,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (www.isHttpError || www.isNetworkError)
                     {
                         _response = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
