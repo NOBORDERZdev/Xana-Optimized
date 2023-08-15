@@ -44,7 +44,7 @@ public class WebLogin : MonoBehaviour
             account = ConnectAccount();
         };
         // save account for next scene
-        PlayerPrefs.SetString("Account", account);
+        PlayerPrefs.SetString("LoginToken", account);
         // reset login message
         SetConnectAccount("");
         // load next scene
@@ -54,7 +54,7 @@ public class WebLogin : MonoBehaviour
     public void OnSkip()
     {
         // burner account for skipped sign in screen
-        PlayerPrefs.SetString("Account", "");
+        PlayerPrefs.SetString("LoginToken", "");
         // move to next scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

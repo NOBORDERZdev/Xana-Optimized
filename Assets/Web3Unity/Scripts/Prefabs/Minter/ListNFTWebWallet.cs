@@ -30,7 +30,7 @@ namespace Web3Unity.Scripts.Prefabs.Minter
    
         public void Awake()
         {
-            account = PlayerPrefs.GetString("Account");
+            account = PlayerPrefs.GetString("LoginToken");
             description.text = "";
             tokenURI.text = "";
             isApproved.text = "";

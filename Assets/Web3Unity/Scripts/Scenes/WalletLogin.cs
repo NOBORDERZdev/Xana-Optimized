@@ -17,9 +17,9 @@ public class WalletLogin: MonoBehaviour
         PlayerPrefs.SetString("Network", projectConfigSO.Network);
         PlayerPrefs.SetString("RPC", projectConfigSO.Rpc);
         // if remember me is checked, set the account to the saved account
-        if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("Account"))
+        if(PlayerPrefs.HasKey("RememberMe") && PlayerPrefs.HasKey("LoginToken"))
         {
-            if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("Account") != "")
+            if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("LoginToken") != "")
             {
                 // move to next scene
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -43,7 +43,7 @@ public class WalletLogin: MonoBehaviour
         // validate
         if (account.Length == 42 && expirationTime >= now) {
             // save account
-            PlayerPrefs.SetString("Account", account);
+            PlayerPrefs.SetString("LoginToken", account);
             if (rememberMe.isOn)
                 PlayerPrefs.SetInt("RememberMe", 1);
             else

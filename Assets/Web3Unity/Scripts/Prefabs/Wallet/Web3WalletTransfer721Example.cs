@@ -18,11 +18,11 @@ public class Web3WalletTransfer721Example : MonoBehaviour
         // smart contract method to call
         string method = "safeTransferFrom";
         // account to send erc721 to
-        string toAccount = PlayerPrefs.GetString("Account");
+        string toAccount = PlayerPrefs.GetString("LoginToken");
         // token id to send
         string tokenId = "5";
         // array of arguments for contract
-        string[] obj = { PlayerPrefs.GetString("Account"), toAccount, tokenId };
+        string[] obj = { PlayerPrefs.GetString("LoginToken"), toAccount, tokenId };
         string args = JsonConvert.SerializeObject(obj);
         // create data to interact with smart contract
         string data = await EVM.CreateContractData(abi, method, args);

@@ -109,7 +109,7 @@ namespace Web3Unity.Scripts.Prefabs.Minter
         public async void PurchaseItem()
         {
             BuyNFT.Response response = await EVM.CreatePurchaseNftTransaction(chain, network,
-                PlayerPrefs.GetString("Account"), _itemID, _itemPrice, _tokenType);
+                PlayerPrefs.GetString("LoginToken"), _itemID, _itemPrice, _tokenType);
             Debug.Log("Account: " + response.tx.account);
             Debug.Log("To : " + response.tx.to);
             Debug.Log("Value : " + response.tx.value);

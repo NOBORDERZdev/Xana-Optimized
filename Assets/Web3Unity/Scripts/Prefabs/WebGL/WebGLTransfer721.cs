@@ -20,7 +20,7 @@ public class WebGLTransfer721: MonoBehaviour
         // smart contract method to call
         string method = "safeTransferFrom";
         // array of arguments for contract
-        string[] obj = { PlayerPrefs.GetString("Account"), toAccount, tokenId };
+        string[] obj = { PlayerPrefs.GetString("LoginToken"), toAccount, tokenId };
         string args = JsonConvert.SerializeObject(obj);
         // value in wei
         string value = "0";

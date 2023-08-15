@@ -27,7 +27,7 @@ public class ListNFTWebGL : MonoBehaviour
 
     public void Awake()
     {
-        account = PlayerPrefs.GetString("Account");
+        account = PlayerPrefs.GetString("LoginToken");
         description.text = "";
         tokenURI.text = "";
         isApproved.text = "";
