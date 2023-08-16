@@ -99,6 +99,8 @@ public class XanaConstants : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
 
+    // Tutorials
+    public bool isTutorialLoaded=false;
     public string r_EmoteStoragePersistentPath
     {
         get
