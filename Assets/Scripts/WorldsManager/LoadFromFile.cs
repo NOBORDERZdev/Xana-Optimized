@@ -776,13 +776,20 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 yield return handle.Result.ActivateAsync();
                 DownloadCompleted();
+                Debug.LogError("addressable load succesfully");
             }
             else // error occur 
             {
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
 
-                HomeBtn.onClick.Invoke();
+                //HomeBtn.onClick.Invoke();
+                Debug.LogError("addressable loading got error so load scene from build settings");
+                SceneManager.LoadScene(environmentLabel, LoadSceneMode.Additive);
+                StartCoroutine(spwanPlayerWithWait());
+                LoadingHandler.Instance.loadingPanel.SetActive(false);
+                yield return new WaitForSeconds(8f);
+                InstantiateYoutubePlayer();
             }
         }
         else
