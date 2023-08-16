@@ -26,12 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028311806}
-  m_LocalRotation: {x: 0, y: 0.70710677, z: -0.70710677, w: 0}
-  m_LocalPosition: {x: 3.62, y: 0.54, z: 0}
-  m_LocalScale: {x: 3.7745776, y: 0.0019659244, z: 2.1231985}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 3.6200004, y: 0.54000074, z: 0}
+  m_LocalScale: {x: 3.7745767, y: 0.0019659242, z: 2.1231983}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4271034587217290}
-  m_RootOrder: 3
+  m_Father: {fileID: 4309986564952000}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -270, y: -90, z: 90}
 --- !u!33 &1028311810
 MeshFilter:
@@ -52,10 +53,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -80,6 +83,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &1028311808
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -121,11 +125,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4909347236525692}
   - {fileID: 4309986564952000}
   - {fileID: 4251007241955996}
-  - {fileID: 1028311807}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,9 +145,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  mPlayer: {fileID: 0}
   url: https://www.youtube.com/watch?v=iQZobAhgayA
   autoPlay: 1
   fullscreen: 0
+  videoPlayer: {fileID: 0}
+  x: 0
+  y: 0
+  z: 0
 --- !u!1 &1444950797781974
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +182,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1028311807}
   m_Father: {fileID: 4271034587217290}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,6 +222,7 @@ VideoPlayer:
   m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!82 &82147416425015254
 AudioSource:
   m_ObjectHideFlags: 0
@@ -335,6 +348,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.70710677, z: -0.70710677, w: 0}
   m_LocalPosition: {x: 3.62, y: 0.54, z: 0}
   m_LocalScale: {x: 3.7745776, y: 0.0019659244, z: 2.1231985}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4271034587217290}
   m_RootOrder: 0
@@ -358,10 +372,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -386,6 +402,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &64653413445111074
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -429,6 +446,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4271034587217290}
   m_RootOrder: 2
@@ -450,6 +468,7 @@ MonoBehaviour:
   youtubeUrl: https://www.youtube.com/watch?v=uy3KFOykGQc
   videoQuality: 0
   is360: 0
+  dontForceFullscreen: 0
   autoPlayOnStart: 0
   startFromSecond: 0
   startFromSecondTime: 20
@@ -467,6 +486,8 @@ MonoBehaviour:
   layout3d: 0
   mainCamera: {fileID: 0}
   videoPlayer: {fileID: 328868761493553900}
+  mPlayer: {fileID: 0}
+  playInAVPRO: 0
   audioPlayer: {fileID: 0}
   debug: 0
   ignoreTimeout: 0
@@ -475,6 +496,11 @@ MonoBehaviour:
   audioUrl: 
   ForceGetWebServer: 0
   progressStartDrag: 0
+  skyboxMaterial3D: {fileID: 0}
+  skyboxMaterialNormal: {fileID: 0}
+  skyboxMaterial3DSide: {fileID: 0}
+  forceLocal: 0
+  videoTitle: 
   EACMaterial: {fileID: 0}
   Material360: {fileID: 0}
   audioDelayOffset: 0
