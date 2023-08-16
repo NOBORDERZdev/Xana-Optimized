@@ -40,7 +40,7 @@ public class TutorialsManager : MonoBehaviour
     }
     public void ShowTutorials()
     {
-        if (PlayerPrefs.GetInt("ShowTutorial") == 0)
+        if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaEventDetails.eventDetails.DataIsInitialized)
         {
             this.transform.GetChild(0).gameObject.SetActive(true);
             DisplayPanel(currentPanelIndex);
@@ -57,6 +57,13 @@ public class TutorialsManager : MonoBehaviour
         {
             rightNextButton.gameObject.SetActive(true);
             leftNextButton.gameObject.SetActive(false);
+            if (canvasScaler.screenMatchMode == CanvasScaler.ScreenMatchMode.Expand)
+            {
+                //rightNextButton.GetComponent<RectTransform>().w
+                RectTransform rt = rightNextButton.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(290, 113);
+                rt.anchoredPosition = new Vector2(-39,78);
+            }
         }
         else if (index == 7)
         {
@@ -68,6 +75,12 @@ public class TutorialsManager : MonoBehaviour
         {
             rightNextButton.gameObject.SetActive(false);
             leftNextButton.gameObject.SetActive(true);
+            if (canvasScaler.screenMatchMode == CanvasScaler.ScreenMatchMode.Expand)
+            {
+                RectTransform rt = leftNextButton.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(290, 113);
+                rt.anchoredPosition = new Vector2(39, 78);
+            }
         }
     }
     private void DisablePanels()
@@ -79,6 +92,12 @@ public class TutorialsManager : MonoBehaviour
     }
     private void DisplayPanel(int index)
     {
+        if (index == 0 || index == 1)
+            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        else
+        {
+            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        }
         DisablePanels();
         panels[index].SetActive(true);
         HandleButtons(index);
@@ -99,12 +118,7 @@ public class TutorialsManager : MonoBehaviour
             thirdPanel.SetActive(false);
             tutorialCanvasBG.SetActive(true);
         }
-        if (index==0 || index == 1)
-            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        else
-        {
-            canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-        }
+       
     }
     public void NextButtonClicked()
     {
@@ -113,7 +127,7 @@ public class TutorialsManager : MonoBehaviour
             currentPanelIndex++;
             if (currentPanelIndex == 3 && UserRegisterationManager.instance.LoggedInAsGuest)
             {
-                currentPanelIndex = 7;
+               currentPanelIndex = 7;
             }
             DisplayPanel(currentPanelIndex);
         }
