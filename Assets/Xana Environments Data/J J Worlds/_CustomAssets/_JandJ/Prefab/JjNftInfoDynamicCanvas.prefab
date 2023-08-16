@@ -147,9 +147,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -180,7 +179,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -696,7 +695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 52, y: -219.00005}
+  m_AnchoredPosition: {x: 52, y: -353}
   m_SizeDelta: {x: 1173, y: 237}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5986196563893130046
@@ -1035,6 +1034,7 @@ GameObject:
   - component: {fileID: 1054672492020068387}
   - component: {fileID: 1054672492020068384}
   - component: {fileID: 2390234235687242723}
+  - component: {fileID: 959568837}
   m_Layer: 5
   m_Name: JjNftInfoDynamicCanvas
   m_TagString: Untagged
@@ -1263,85 +1263,166 @@ MonoBehaviour:
   PotraiteObj: {fileID: 1172969716760035153}
   worldInfos:
   - Title:
-    - ZONE_X
-    - ZONE_X
+    - Xana Festival
+    - Xana Festival
     Aurthor:
-    - FINEPLAY / GardenGrove / J&J
-    - FINEPLAY / GardenGrove / J&J
+    - XANA
+    - XANA
     Des:
-    - A metaverse world with the concept of urban sports, jointly operated with "FINEPLAY,"
-      Japan's largest action sports and street culture media. You can experience
-      a rich collection of photos, videos, and art that allows you to feel the breath
-      of top athletes who are active on the world stage in a high-quality space.
-      Events involving top athletes are also planned in the future, so don't miss
-      out!
-    - A metaverse world with the concept of urban sports, jointly operated with "FINEPLAY,"
-      Japan's largest action sports and street culture media. You can experience
-      a rich collection of photos, videos, and art that allows you to feel the breath
-      of top athletes who are active on the world stage in a high-quality space.
-      Events involving top athletes are also planned in the future, so don't miss
-      out!
+    - XANA host a phenomenal entertainment festival that includes various immersive
+      experience of live music, dance party, talk session, and many more.
+    - "\u3053\u306E\u30EF\u30FC\u30EB\u30C9\u306FXANA\u304C\u4E3B\u50AC\u3059\u308B\u3001\u97F3\u697D\u30E9\u30A4\u30D6\u3001\u30C0\u30F3\u30B9\u30D1\u30FC\u30C6\u30A3\u30FC\u3001\u30C8\u30FC\u30AF\u30BB\u30C3\u30B7\u30E7\u30F3\u306A\u3069\u3001\u69D8\u3005\u306A\u4F53\u9A13\u304C\u3067\u304D\u308B\u30A8\u30F3\u30BF\u30FC\u30C6\u30A4\u30E1\u30F3\u30C8\u30D5\u30A7\u30B9\u30C6\u30A3\u30D0\u30EB\u3067\u3059\u3002"
     Type: 0
-    WorldImage: {fileID: 21300000, guid: a2b8c92ecf85ab04b9df2aadde1e3e0e, type: 3}
+    WorldImage: {fileID: 21300000, guid: 0bf8bacf3b9803046b3e9bac9a99da0b, type: 3}
     VideoLink: 
   - Title:
-    - FIVE ELEMENTS
-    - FIVE ELEMENTS
+    - BreakingDown Arena
+    - BreakingDown Arena
     Aurthor:
-    - J&J
-    - J&J
+    - XANA
+    - XANA
     Des:
-    - This is a world with a Japanese-style atmosphere based on the concept of "yin-yang
-      and five elements," which was originally introduced to Japan from China and
-      developed uniquely in Japan. It showcases the charm of Japanese traditional
-      crafts and local specialties, with a theme of regional revitalization that
-      promotes the appeal of each region.
-    - This is a world with a Japanese-style atmosphere based on the concept of "yin-yang
-      and five elements," which was originally introduced to Japan from China and
-      developed uniquely in Japan. It showcases the charm of Japanese traditional
-      crafts and local specialties, with a theme of regional revitalization that
-      promotes the appeal of each region.
+    - "By recreating the BreakingDown venue in the metaverse, you can enjoy the match
+      videos of each tournament at any time you like! <br> *BreakingDown, founded
+      by Japanese martial artist and entrepreneur Mikuru Asakura, is Japan\u2019s
+      largest combat sports entertainment, boasting over 300 million total views
+      across all platforms in its latest event."
+    - "BreakingDown\u4F1A\u5834\u3092XANA\u30E1\u30BF\u30D0\u30FC\u30B9\u306B\u518D\u73FE\uFF01\u5404\u5927\u4F1A\u306E\u8A66\u5408\u6620\u50CF\u3092\u3044\u3064\u3067\u3082\u597D\u304D\u306A\u6642\u306B\u697D\u3057\u3081\u307E\u3059\uFF01<br>
+      *BreakingDown\u3068\u306F\u3001\u65E5\u672C\u306E\u683C\u95D8\u5BB6\u304A\u3088\u3073\u5B9F\u696D\u5BB6\u3067\u3042\u308B\u671D\u5009\u672A\u6765\u306B\u3088\u3063\u3066\u8A2D\u7ACB\u3055\u308C\u3001\u76F4\u8FD1\u306E1\u5927\u4F1A\u3067\u5168\u30D7\u30E9\u30C3\u30C8\u30D5\u30A9\u30FC\u30E0\u5408\u8A083\u5104\u56DE\u3092\u8D85\u3048\u308B\u518D\u751F\u6570\u3092\u8A87\u308B\u65E5\u672C\u6700\u5927\u306E\u683C\u95D8\u6280\u30A8\u30F3\u30BF\u30FC\u30C6\u30A4\u30E1\u30F3\u30C8\u3067\u3059\u3002"
     Type: 0
-    WorldImage: {fileID: 21300000, guid: db72c296c60d7964b8a879c11e3ac31c, type: 3}
+    WorldImage: {fileID: 21300000, guid: 77baa592f25d1a641a091d2d064c6a9e, type: 3}
     VideoLink: 
   - Title:
-    - ASTROBOY MUSEUM AREA
-    - ASTROBOY MUSEUM AREA
+    - Astroboy x Tottori Metaverse Museum
+    - Astroboy x Tottori Metaverse Museum
     Aurthor:
-    - TEZUKA PRODUCTIONS / XANA / J&J
-    - TEZUKA PRODUCTIONS / XANA / J&J
+    - XANA
+    - XANA
     Des:
-    - This is a metaverse museum themed on the "Astroboy NFT" project, a Web3.0 regional
-      revitalization NFT project created by Tezuka Productions, J&J, and XANA. You
-      can view attractive spot information depicted in the background in the 3D museum.
-    - This is a metaverse museum themed on the "Astroboy NFT" project, a Web3.0 regional
-      revitalization NFT project created by Tezuka Productions, J&J, and XANA. You
-      can view attractive spot information depicted in the background in the 3D museum.
+    - "To commemorate the release of the first tie-up of ASTROBOY x JAPAN NFT \u201CTottori
+      Prefecture\u201D, An NFT museum where you can enjoy information on each attractive
+      spot in Tottori prefecture drawn in the background in the gallery. The unique
+      characters of Astro Boy, who boasts worldwide popularity, can touch and feel
+      Tottori Prefecture with NFT card designs that make you feel as if you are traveling
+      around Tottori Prefecture. In addition, Tottori Prefecture is working on \u201Ccreating
+      a population related to the Metaverse\u201D, and this museum also serves as
+      a [Tottori Related Population Information Center]. At the museum, we have also
+      set up an exchange window with XANA; Genesis \u201CYakamihime\u201D, who was
+      hired as an employee of the Tottori Prefecture Metaverse Division, so please
+      enjoy a fun conversation!"
+    - "  ASTROBOY x JAPAN NFT\u306E\u7B2C\u4E00\u5F3E\u30BF\u30A4\u30A2\u30C3\u30D7\u300C\u9CE5\u53D6\u770C\u7DE8\u300D\u306E\u767A\u58F2\u3092\u8A18\u5FF5\u3057\u3001
+      \u80CC\u666F\u306B\u63CF\u304B\u308C\u305F\u9CE5\u53D6\u770C\u5185\u306E\u9B45\u529B\u3042\u3075\u308C\u308B\u5404\u30B9\u30DD\u30C3\u30C8\u306E\u60C5\u5831\u306A\u3069\u3092\u30AE\u30E3\u30E9\u30EA\u30FC\u5185\u3067\u697D\u3057\u3081\u308BNFT\u30DF\u30E5\u30FC\u30B8\u30A2\u30E0\u3002
+      \u4E16\u754C\u7684\u306A\u4EBA\u6C17\u3092\u8A87\u308B\u9244\u8155\u30A2\u30C8\u30E0\u306E\u500B\u6027\u3042\u3075\u308C\u308B\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u9054\u304C\u3001\u307E\u308B\u3067\u9CE5\u53D6\u770C\u306E\u5404\u5730\u3092\u65C5\u3057\u3066\u3044\u308B\u304B\u306E\u3088\u3046\u306ANFT\u30AB\u30FC\u30C9\u30C7\u30B6\u30A4\u30F3\u3067\u9CE5\u53D6\u770C\u306B\u89E6\u308C\u3066\u611F\u3058\u3066\u3044\u305F\u3060\u3051\u307E\u3059\u3002
+      \u30DF\u30E5\u30FC\u30B8\u30A2\u30E0\u3067\u306F\u9CE5\u53D6\u770C\u30E1\u30BF\u30D0\u30FC\u30B9\u8AB2\u306E\u8077\u54E1\u3068\u3057\u3066\u63A1\u7528\u3055\u308C\u305FXANA;Genesis\u300C\u516B\u4E0A\u59EBYAKAMIHIME\u300D\u3068\u306E\u4EA4\u6D41\u7A93\u53E3\u3082\u8A2D\u7F6E\u3057\u3066\u3044\u307E\u3059\u306E\u3067\u3001\u697D\u3057\u3044\u4F1A\u8A71\u3082\u304A\u697D\u3057\u307F\u304F\u3060\u3055\u3044\uFF01"
     Type: 0
-    WorldImage: {fileID: 21300000, guid: 7bb76f833d99f144c8f473329c25cba2, type: 3}
+    WorldImage: {fileID: 21300000, guid: d0d3330875aa24d46809bcf316b12256, type: 3}
     VideoLink: 
   - Title:
-    - RENTAL SPACE AREA
-    - RENTAL SPACE AREA
+    - Genesis ART Metaverse Museum
+    - "Genesis ART \u30E1\u30BF\u30D0\u30FC\u30B9\u30DF\u30E5\u30FC\u30B8\u30A2\u30E0"
     Aurthor:
-    - J&J
-    - J&J
+    - KOGAKEN
+    - KOGAKEN
     Des:
-    - This is a rental space built on XANA to provide a new platform for promotion
-      and marketing in the WEB3.0 era. We offer a variety of free spaces to choose
-      from, including large, medium, and small spaces to suit your budget and needs.
-      We can customize the space design and functionality and provide support for
-      planning according to your preferences.
-    - This is a rental space built on XANA to provide a new platform for promotion
-      and marketing in the WEB3.0 era. We offer a variety of free spaces to choose
-      from, including large, medium, and small spaces to suit your budget and needs.
-      We can customize the space design and functionality and provide support for
-      planning according to your preferences.
+    - Ten XANA Genesis were selected by lottery, and contemporary artist KOGAKEN
+      expressed them with his unique colors. The first exhibition, which will be
+      held nationwide in the future, was held at GINZA SIX. At the world, NFT of
+      the same work is represented as a special gallery. A new world that truly fuses
+      the real and the metaverse has been born here.
+    - "\u62BD\u9078\u3067\u9078\u3070\u308C\u305F10\u540D\u306EXANA Genesis\u3092\u73FE\u4EE3\u30A2\u30FC\u30C6\u30A3\u30B9\u30C8KOGAKEN\u304C\u72EC\u81EA\u306E\u8272\u5F69\u3067\u8868\u73FE\u3002\u4ECA\u5F8C\u5168\u56FD\u3067\u884C\u3046\u5C55\u793A\u4F1A\u306E\u7B2C\u4E00\u56DE\u76EE\u304CGINZA
+      SIX\u3067\u958B\u50AC\u3055\u308C\u307E\u3057\u305F\u3002\u30EF\u30FC\u30EB\u30C9\u3067\u306F\u540C\u4F5C\u54C1\u306ENFT\u304C\u7279\u8A2D\u30AE\u30E3\u30E9\u30EA\u30FC\u3068\u3057\u3066\u8868\u73FE\u3055\u308C\u3066\u3044\u307E\u3059\u3002\u307E\u3055\u306B\u30EA\u30A2\u30EB\u3068\u30E1\u30BF\u30D0\u30FC\u30B9\u3092\u878D\u5408\u3055\u305B\u305F\u65B0\u3057\u3044\u4E16\u754C\u304C\u3053\u3053\u306B\u8A95\u751F\u3057\u307E\u3057\u305F\u3002"
     Type: 0
-    WorldImage: {fileID: 21300000, guid: 6afe89dc2c43a26418f199c12fa46860, type: 3}
+    WorldImage: {fileID: 21300000, guid: 02c4f0d1911577049b892857ceaf19d6, type: 3}
+    VideoLink: 
+  - Title:
+    - MAGICCASTLE
+    - MAGICCASTLE
+    Aurthor:
+    - XANAKIDS
+    - XANAKIDS
+    Des:
+    - "XANAKIDS\u3068\u7533\u3057\u307E\u3059\u3002\u305C\u3072\u9B54\u6CD5\u306E\u56FD\u3092\u63A2\u691C\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+    - "XANAKIDS\u3068\u7533\u3057\u307E\u3059\u3002\u305C\u3072\u9B54\u6CD5\u306E\u56FD\u3092\u63A2\u691C\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: ce7e666cc5822fe488ab309196499157, type: 3}
+    VideoLink: 
+  - Title:
+    - ZeusofSorrow
+    - ZeusofSorrow
+    Aurthor:
+    - knft
+    - knft
+    Des:
+    - k.nft's world
+    - k.nft's world
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: 592bdfeff1907e148b48d8f897847c5f, type: 3}
+    VideoLink: 
+  - Title:
+    - BlindAstraia
+    - BlindAstraia
+    Aurthor:
+    - knft
+    - knft
+    Des:
+    - "\u300C\u76F2\u76EE\u306E\u30A2\u30B9\u30C8\u30E9\u30A4\u30A2\u300Dk.nft's
+      world"
+    - "\u300C\u76F2\u76EE\u306E\u30A2\u30B9\u30C8\u30E9\u30A4\u30A2\u300Dk.nft's
+      world"
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: 38af29b7e3e78c0448691b78c2a12388, type: 3}
+    VideoLink: 
+  - Title:
+    - XANAKIDSapartment
+    - XANAKIDSapartment
+    Aurthor:
+    - XANAKIDS
+    - XANAKIDS
+    Des:
+    - "XANAKIDS\u3068\u7533\u3057\u307E\u3059\u30026\u968E\u5EFA\u306624\u5BA4\u306E\u30DE\u30F3\u30B7\u30E7\u30F3\u3092\u5EFA\u7BC9\u3057\u307E\u3057\u305F\u904A\u3093\u3067\u3044\u305F\u3060\u3051\u308B\u3068\u5B09\u3057\u3044\u3067\u3059\u266A"
+    - "XANAKIDS\u3068\u7533\u3057\u307E\u3059\u30026\u968E\u5EFA\u306624\u5BA4\u306E\u30DE\u30F3\u30B7\u30E7\u30F3\u3092\u5EFA\u7BC9\u3057\u307E\u3057\u305F\u3002\u904A\u3093\u3067\u3044\u305F\u3060\u3051\u308B\u3068\u5B09\u3057\u3044\u3067\u3059\u266A"
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: 0e4c3773ebccd1a45a4bd64097544f35, type: 3}
+    VideoLink: 
+  - Title:
+    - BallGame
+    - BallGame
+    Aurthor:
+    - "\u899A\u3048\u305F\u3066\u306E\u5730\u96F7"
+    - "\u899A\u3048\u305F\u3066\u306E\u5730\u96F7"
+    Des:
+    - "\u30AF\u30A3\u30C7\u30A3\u30C3\u30C1"
+    - "\u30AF\u30A3\u30C7\u30A3\u30C3\u30C1"
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: 28fddca953dd1394ca8b2d62439c4647, type: 3}
+    VideoLink: 
+  - Title:
+    - FAN-BEAR
+    - FAN-BEAR
+    Aurthor:
+    - FUKUJUN
+    - FUKUJUN
+    Des:
+    - "\u7389\u5EA7\u306B\u541B\u81E8\u3059\u308B\u306E\u306F\u30FB\u30FB\u30FB\uFF1F\uFF08\u30AF\u30EA\u30A8\u30A4\u30BF\u30FC\uFF1AFUKUJUN\uFF09"
+    - "\u7389\u5EA7\u306B\u541B\u81E8\u3059\u308B\u306E\u306F\u30FB\u30FB\u30FB\uFF1F\uFF08\u30AF\u30EA\u30A8\u30A4\u30BF\u30FC\uFF1AFUKUJUN\uFF09"
+    Type: 0
+    WorldImage: {fileID: 21300000, guid: d8226254f87df024ba6af6e4fdd0b448, type: 3}
     VideoLink: 
   renderTexture: {fileID: 8400000, guid: 881d1b001fb5b1249a1bea368ce7d469, type: 2}
   RetryChances: 3
+--- !u!114 &959568837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054672492020068388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2692e67d39bae4288ab32e093f20df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allowTeleportation: 0
 --- !u!1 &1172969716472922676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1410,9 +1491,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1626,9 +1706,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1655,11 +1734,11 @@ MonoBehaviour:
   m_fontSize: 39
   m_fontSizeBase: 39
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1839,8 +1918,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1864,8 +1943,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 21.8
+  m_fontSizeBase: 21.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2289,9 +2368,8 @@ MonoBehaviour:
 --- !u!1 &2132820916816370185
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 9223372036854775807, guid: 4b02b63bc26898d439e5784cfafebc43,
-    type: 3}
-  m_PrefabInstance: {fileID: 5740037212418005175}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
@@ -2307,9 +2385,8 @@ GameObject:
 --- !u!4 &430271685504307361
 Transform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 9223372036854775806, guid: 4b02b63bc26898d439e5784cfafebc43,
-    type: 3}
-  m_PrefabInstance: {fileID: 5740037212418005175}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132820916816370185}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2323,9 +2400,8 @@ Transform:
 --- !u!114 &8780414860099937263
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3923472715400592216, guid: 4b02b63bc26898d439e5784cfafebc43,
-    type: 3}
-  m_PrefabInstance: {fileID: 5740037212418005175}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132820916816370185}
   m_Enabled: 1
@@ -2343,8 +2419,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2885,9 +2961,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4064,9 +4139,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4547,9 +4621,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4580,7 +4653,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4618,9 +4691,8 @@ MonoBehaviour:
 --- !u!1 &5085669873510392716
 GameObject:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3923472715400592218, guid: 4b02b63bc26898d439e5784cfafebc43,
-    type: 3}
-  m_PrefabInstance: {fileID: 5740037212418005175}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
@@ -4635,9 +4707,8 @@ GameObject:
 --- !u!224 &8780414860099937262
 RectTransform:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-    type: 3}
-  m_PrefabInstance: {fileID: 5740037212418005175}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5085669873510392716}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -4723,8 +4794,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5199,9 +5270,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5713,8 +5783,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6300,9 +6370,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6333,7 +6402,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -6437,8 +6506,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7282,9 +7351,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7619,7 +7687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 54, y: -769.5}
+  m_AnchoredPosition: {x: 54, y: -903.499}
   m_SizeDelta: {x: 1171, y: 786}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3808835574848467646
@@ -7652,8 +7720,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8275,9 +8343,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8308,7 +8375,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -9338,8 +9405,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10071,8 +10138,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10421,9 +10488,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10454,7 +10520,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -10820,9 +10886,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12465,9 +12530,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Author Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12601,9 +12665,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12634,7 +12697,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -12976,8 +13039,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14275,8 +14338,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 54, y: 577.9999}
-  m_SizeDelta: {x: 1171, y: 1169}
+  m_AnchoredPosition: {x: 48, y: 379}
+  m_SizeDelta: {x: 1171, y: 1154}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &3171799382498019779
 CanvasRenderer:
@@ -14774,9 +14837,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14800,14 +14862,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 81.78
-  m_fontSizeBase: 81.78
+  m_fontSize: 81
+  m_fontSizeBase: 81
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 60
+  m_fontSizeMax: 81
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -14842,122 +14904,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1001 &5740037212418005175
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 8780414859449884887}
-    m_Modifications:
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1.0306013
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.31632447
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.038988765
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: -0.22158127
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592217, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3923472715400592218, guid: 4b02b63bc26898d439e5784cfafebc43,
-        type: 3}
-      propertyPath: m_Name
-      value: Name-Text
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4b02b63bc26898d439e5784cfafebc43, type: 3}
