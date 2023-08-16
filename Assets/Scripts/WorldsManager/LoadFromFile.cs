@@ -774,8 +774,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                yield return handle.Result.ActivateAsync();
-                DownloadCompleted();
+                /*yield return handle.Result.ActivateAsync();
+                DownloadCompleted();*/
+                Debug.LogError("addressable loading got error so load scene from build settings");
+                SceneManager.LoadScene(environmentLabel, LoadSceneMode.Additive);
+                StartCoroutine(spwanPlayerWithWait());
+                LoadingHandler.Instance.loadingPanel.SetActive(false);
+                yield return new WaitForSeconds(8f);
+                InstantiateYoutubePlayer();
                 Debug.LogError("addressable load succesfully");
             }
             else // error occur 
