@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TutorialsManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class TutorialsManager : MonoBehaviour
     public Button skipButton;
     public Button rightNextButton;
     public Button leftNextButton;
+    private TextMeshProUGUI rightNextBtnText;
+    private TextMeshProUGUI leftNextBtnText;
     public Button crossButton;
     public Button okButton;
     private GameObject worldsParent;
@@ -37,13 +40,16 @@ public class TutorialsManager : MonoBehaviour
         canvasScaler = this.GetComponent<CanvasScaler>();
        // PlayerPrefs.SetInt("ShowTutorial", 0);
         skipButton.gameObject.SetActive(true);
+        rightNextBtnText = rightNextButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        leftNextBtnText = leftNextButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
     public void ShowTutorials()
     {
-        if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaEventDetails.eventDetails.DataIsInitialized)
+        if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaConstants.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
         {
             this.transform.GetChild(0).gameObject.SetActive(true);
             DisplayPanel(currentPanelIndex);
+            XanaConstants.xanaConstants.isTutorialLoaded = true;
         }
     }
     // Update is called once per frame
@@ -61,8 +67,12 @@ public class TutorialsManager : MonoBehaviour
             {
                 //rightNextButton.GetComponent<RectTransform>().w
                 RectTransform rt = rightNextButton.GetComponent<RectTransform>();
-                rt.sizeDelta = new Vector2(290, 113);
-                rt.anchoredPosition = new Vector2(-39,78);
+                rt.sizeDelta = new Vector2(275, 104);
+                rt.anchoredPosition = new Vector2(-38,74);
+                rt = skipButton.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(160, 35);
+                rt.anchoredPosition = new Vector2(-74, -152);
+                rightNextBtnText.fontSize = 32;
             }
         }
         else if (index == 7)
@@ -78,8 +88,12 @@ public class TutorialsManager : MonoBehaviour
             if (canvasScaler.screenMatchMode == CanvasScaler.ScreenMatchMode.Expand)
             {
                 RectTransform rt = leftNextButton.GetComponent<RectTransform>();
-                rt.sizeDelta = new Vector2(290, 113);
-                rt.anchoredPosition = new Vector2(39, 78);
+                rt.sizeDelta = new Vector2(275, 104);
+                rt.anchoredPosition = new Vector2(38, 74);
+                rt = skipButton.GetComponent<RectTransform>();
+                rt.sizeDelta = new Vector2(160, 35);
+                rt.anchoredPosition = new Vector2(-74, -152);
+                leftNextBtnText.fontSize = 32;
             }
         }
     }
@@ -161,6 +175,7 @@ public class TutorialsManager : MonoBehaviour
     private void SkipTutorial()
     {
         this.transform.GetChild(0).gameObject.SetActive(false);
+        thirdPanel.SetActive(false);
         //PlayerPrefs.SetInt("ShowTutorial", 0);
     }
     private void CrossButton()
