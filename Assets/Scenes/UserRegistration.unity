@@ -2218,18 +2218,18 @@ PrefabInstance:
     - target: {fileID: 2052054103621224053, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 495568710}
+      objectReference: {fileID: 495568704}
     - target: {fileID: 2052054103621224053, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1277272687}
     - target: {fileID: 2052054103621224053, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLogin
+      value: OnSignUpWalletTabPressed
       objectReference: {fileID: 0}
     - target: {fileID: 2052054103621224053, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WalletLogin, Assembly-CSharp
+      value: UserRegisterationManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2052054103621224053, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -2412,9 +2412,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 7799460145920129413, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7799460145920129413, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 495568704}
+      objectReference: {fileID: 495568710}
+    - target: {fileID: 7799460145920129413, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLogin
+      objectReference: {fileID: 0}
+    - target: {fileID: 7799460145920129413, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WalletLogin, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7799460145920129413, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8340083892183628497, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
@@ -2815,9 +2831,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 2058285535, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058285535, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1277272687}
+      objectReference: {fileID: 495568710}
+    - target: {fileID: 2058285535, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnLogin
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058285535, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WalletLogin, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 318576710144093167, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -2881,6 +2909,10 @@ PrefabInstance:
     - target: {fileID: 914379505083968431, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 914379505083968431, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 914379505083968431, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4104,6 +4136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rememberMe: {fileID: 1799637535}
+  SuccessfulPopUp: {fileID: 1146247527}
 --- !u!1 &513183384
 GameObject:
   m_ObjectHideFlags: 0
@@ -8436,6 +8469,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 495568704}
+    - target: {fileID: 7280869202375109894, guid: f3a48363bea67df498924368f8b6489d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -14.4999695
+      objectReference: {fileID: 0}
     - target: {fileID: 7758580480534271881, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 1.5999756

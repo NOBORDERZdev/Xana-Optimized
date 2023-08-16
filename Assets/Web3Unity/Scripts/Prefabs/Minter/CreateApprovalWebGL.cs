@@ -15,7 +15,7 @@ public class CreateApprovalWebGL : MonoBehaviour
 
     private void Awake()
     {
-        account = PlayerPrefs.GetString("LoginToken");
+        account = PlayerPrefs.GetString("publicID");
     }
 
     public async void ApproveTransaction()

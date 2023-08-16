@@ -13,7 +13,7 @@ public class AllErc721 : MonoBehaviour
     async void Start()
     {
         // This is the account taken from the user login scene
-        account = PlayerPrefs.GetString("LoginToken");
+        account = PlayerPrefs.GetString("publicID");
         // Searches through your listed contracts
         foreach (string contract in nftContracts)
         {

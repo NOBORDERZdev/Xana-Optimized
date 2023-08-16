@@ -7,7 +7,7 @@ public class Web3WalletLogOut : MonoBehaviour
 {
    public void OnLogOut()
     {
-         PlayerPrefs.SetString("LoginToken", "");
+         PlayerPrefs.SetString("publicID", "");
          SceneManager.LoadScene(0);
     } 
 }
