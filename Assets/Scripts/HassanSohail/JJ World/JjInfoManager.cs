@@ -36,6 +36,7 @@ public class JjInfoManager : MonoBehaviour
     public RenderTexture renderTexture_4x3;
     [SerializeField] int RetryChances = 3;
     [SerializeField] int JJMusuemId;
+    public string analyticMuseumID;
     int ratioId;
     int videoRetry = 0;
 
@@ -139,7 +140,7 @@ public class JjInfoManager : MonoBehaviour
             if (worldData.Count > i)
             {
                 int tempIndex = worldData[i].index - 1;
-                if (worldData[i].check && tempIndex == i)
+                if (/*worldData[i].check &&*/ tempIndex == i)
                 {
                     //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
                     bool isWithDes = false;
@@ -449,37 +450,85 @@ public class JjInfoManager : MonoBehaviour
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
         }
 
-        // for firebase analytics
+        #region For firebase analytics
+
+        //if (type == DataType.Image)
+        //{
+        //    if (title.IsNullOrEmpty())
+        //    {
+        //        string envName = FindObjectOfType<StayTimeTracker>().worldName;
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "_NFT_Img" + nftId + "_Clicked");
+        //        Debug.Log("<color=red>" + envName + "_NFT_Img" + nftId + "_Clicked </color>");
+        //        return;
+        //    }
+        //    int maxLength = 10;
+        //    string originalString = title;
+        //    originalString = Regex.Replace(originalString, @"\s", "");
+        //    string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Img_" + trimmedString + "_Clicked");
+        //    Debug.Log("<color=red> NFT_Img_" + trimmedString + "_Clicked </color>");
+        //}
+        //else if (type == DataType.Video)
+        //{
+        //    if (title.IsNullOrEmpty())
+        //    {
+        //        string envName = FindObjectOfType<StayTimeTracker>().worldName;
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "NFT_Video" + nftId + "_Clicked");
+        //        Debug.Log("<color=red>" + envName + "NFT_Video" + nftId + "_Clicked </color>");
+        //        return;
+        //    }
+        //    int maxLength = 10;
+        //    string originalString = title;
+        //    originalString = Regex.Replace(originalString, @"\s", "");
+        //    string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Video_" + trimmedString + "_Clicked");
+        //    Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
+        //}
+
+
+        SendCallAnalytics(type, title);
+
+        #endregion
+    }
+
+    public void SendCallAnalytics(DataType type , string title)
+    {
         if (type == DataType.Image)
         {
-            if (title.IsNullOrEmpty())
-            {
-                string envName = FindObjectOfType<StayTimeTracker>().worldName;
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "_NFT_Img" + nftId + "_Clicked");
-                Debug.Log("<color=red>" + envName + "_NFT_Img" + nftId + "_Clicked </color>");
-                return;
-            }
             int maxLength = 10;
             string originalString = title;
             originalString = Regex.Replace(originalString, @"\s", "");
             string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Img_" + trimmedString + "_Clicked");
-            Debug.Log("<color=red> NFT_Img_" + trimmedString + "_Clicked </color>");
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("Lobby_" + trimmedString + "_Clicked");
+            }
+            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem") || XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + trimmedString + "_NFTClicked");
+            }
+            else
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_MuseumID_" + trimmedString + "_NFTClicked");
+            }
+            Debug.Log("<color=red> Lobby_" + trimmedString + "_Clicked </color>");
         }
         else if (type == DataType.Video)
         {
-            if (title.IsNullOrEmpty())
-            {
-                string envName = FindObjectOfType<StayTimeTracker>().worldName;
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "NFT_Video" + nftId + "_Clicked");
-                Debug.Log("<color=red>" + envName + "NFT_Video" + nftId + "_Clicked </color>");
-                return;
-            }
             int maxLength = 10;
             string originalString = title;
             originalString = Regex.Replace(originalString, @"\s", "");
             string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Video_" + trimmedString + "_Clicked");
+
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("Lobby_" + trimmedString + "_Clicked");
+            }
+            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem") || XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + trimmedString + "_Video_Clicked");
+            else
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + analyticMuseumID + "_" + trimmedString + "_Video_Clicked");
+
             Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
         }
     }

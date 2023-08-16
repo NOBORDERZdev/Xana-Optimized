@@ -55,16 +55,27 @@ public class StayTimeTracker : MonoBehaviour
         int minutes = Mathf.FloorToInt(stayTime / 60f);
         int seconds = Mathf.FloorToInt(stayTime % 60f);
 
-        if (minutes > 0)
+        //if (minutes > 0)
+        //{
+        //    Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
+        //}
+        //else
+        //{
+        //    Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
+        //}
+
+
+        if (minutes >= 2)
         {
-            Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_Stay_MoreThan2Mintue");
         }
         else
         {
-            Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_Stay_LessThan2Mintue");
         }
+        Debug.Log("<color=red>" + worldName + "_Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
 
     }
 

@@ -25,7 +25,8 @@ public class PlayerPortal : MonoBehaviour
     {
         if (/*manager.allowTeleportation && */(other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && destinationPoint != null /*&& isAlreadyRunning */ /*&& player.allowTeleport*/)
         {
-            print("player enter");
+            print("player enter : " + transform.parent.name);
+            JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
             if (other.GetComponent<PhotonView>().IsMine)
             {
                 this.StartCoroutine(Teleport());

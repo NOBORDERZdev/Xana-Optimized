@@ -470,10 +470,12 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         }
         if (FeedEventPrefab.m_EnvName == "ZONE-X")
         {
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_PlayBtn");
+            //Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_PlayBtn");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_ZoneX_Play");
             if (!playBtnUniqueCount)
             {
-                Firebase.Analytics.FirebaseAnalytics.LogEvent("Num_of_UniqueClick_on_PlayBtn");
+                //Firebase.Analytics.FirebaseAnalytics.LogEvent("Num_of_UniqueClick_on_PlayBtn");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_ZoneX_Play_Unique");
                 playBtnUniqueCount = true;
             }
             Debug.Log("<color=red> Firebase Event Clicked </color>");
