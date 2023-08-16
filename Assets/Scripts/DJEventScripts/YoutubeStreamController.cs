@@ -69,8 +69,34 @@ public class YoutubeStreamController : MonoBehaviour
             NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
-#if UNITY_EDITOR
+#if UNITY_EDITOR && !UNITY_IOS
         if (!FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena") && !FeedEventPrefab.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        {
+            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+            scale.y *= -1;
+            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        }
+#endif
+#if UNITY_IOS
+        if (FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        {
+            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+            scale.y *= -1;
+            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        }
+        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival"))
+        {
+            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+            scale.y *= -1;
+            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        }
+        if (FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+        {
+            Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
+            scale.y *= -1;
+            NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
+        }
+        if (FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
