@@ -19,10 +19,10 @@ public class StayTimeTracker : MonoBehaviour
         //StartCoroutine(Countdown());
 
         yield return new WaitForSeconds(1f);
-        if (XanaConstants.xanaConstants.Equals(JJMussuemEntry.Astro))
-            worldName = "JJWorld_Astro";
-        else if (XanaConstants.xanaConstants.Equals(JJMussuemEntry.Rental))
-            worldName = "JJWorld_Rental";
+        if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+            worldName = "Astro";
+        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+            worldName = "Rental";
     }
 
     private void StartTrackingTime()

@@ -59,7 +59,7 @@ public class FbAnalytics : MonoBehaviour
     /// <param name="info"></param>
     public void LogEvent(string info)
     {
-        FirebaseAnalytics.LogEvent(info);
+        //FirebaseAnalytics.LogEvent(info);
     }
 
     /// <summary>
@@ -76,7 +76,7 @@ public class FbAnalytics : MonoBehaviour
     {
         // Log an event with no parameters.
         DebugLog("Logging a login event." + FirebaseAnalytics.EventLogin);
-        FirebaseAnalytics.LogEvent(FirebaseAnalytics.EventLogin);
+        //FirebaseAnalytics.LogEvent(FirebaseAnalytics.EventLogin);
     }
 
     public void AnalyticsProgress()

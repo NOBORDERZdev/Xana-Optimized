@@ -509,7 +509,14 @@ public class JjInfoManager : MonoBehaviour
             }
             else
             {
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_MuseumID_" + trimmedString + "_NFTClicked");
+                string worldName = XanaConstants.xanaConstants.EnviornmentName;
+                if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+                    worldName = "Astro_";
+                else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+                    worldName = "Rental_";
+
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked");
+                 Debug.Log("<color=red>"+ worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked </color>");
             }
             Debug.Log("<color=red> Lobby_" + trimmedString + "_Clicked </color>");
         }
@@ -527,9 +534,17 @@ public class JjInfoManager : MonoBehaviour
             else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem") || XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
                 Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + trimmedString + "_Video_Clicked");
             else
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + analyticMuseumID + "_" + trimmedString + "_Video_Clicked");
+            {
+                string worldName = XanaConstants.xanaConstants.EnviornmentName;
+                if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+                    worldName = "Astro";
+                else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+                    worldName = "Rental";
 
-            Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_" + analyticMuseumID + "_" + trimmedString + "_Video_Clicked");
+            }
+
+            Debug.Log("<color=red> Lobby_Video_" + trimmedString + "_Clicked </color>");
         }
     }
 

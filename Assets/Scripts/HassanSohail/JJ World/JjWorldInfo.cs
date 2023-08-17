@@ -29,7 +29,7 @@ public class JjWorldInfo : MonoBehaviour
         if ((Time.time - tempTimer) < clickTime)
         {
             //OpenWorldInfo();
-            PublishLog();
+          //  PublishLog();
             tempTimer = 0;
         }
 

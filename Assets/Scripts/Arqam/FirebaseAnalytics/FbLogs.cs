@@ -22,7 +22,7 @@ public class FbLogs : MonoBehaviour
         if (Application.isEditor)
             Debug.Log("<color=red>LogData: " + data + "</color>");
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(data);
+        //Firebase.Analytics.FirebaseAnalytics.LogEvent(data);
     }
 
     private void Update()
