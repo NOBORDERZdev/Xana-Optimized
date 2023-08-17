@@ -75,6 +75,7 @@ public class XanaConstants : MonoBehaviour
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
+    public int customWorldId;
 
     // For Firebase
     public bool isFirebaseInit = false;
@@ -99,6 +100,8 @@ public class XanaConstants : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
 
+    // Tutorials
+    public bool isTutorialLoaded=false;
     public string r_EmoteStoragePersistentPath
     {
         get

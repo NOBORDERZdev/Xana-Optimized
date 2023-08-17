@@ -31,7 +31,7 @@ public class LoaderController : MonoBehaviour
     {
         if (m_UIRefreshControl.loaderObj.activeSelf)
         {
-            Debug.LogError("RefreshItems Name:" + this.gameObject.name);
+           Debug.Log("RefreshItems Name:" + this.gameObject.name);
             loaderBGImage.SetActive(true);
             m_UIRefreshControl.loaderObj.transform.GetChild(0).GetComponent<CustomLoader>().isRotate = true;
 
@@ -52,11 +52,11 @@ public class LoaderController : MonoBehaviour
                         //Riken
                         //APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
                         APIManager.Instance.RequestGetAllUsersWithFeeds(/*FeedUIController.Instance.allFeedCurrentpage +*/ 1, 10, "PullRefresh");
-                        // Debug.LogError("Refresh GetAllUsersWithFeeds Api");
+                        //Debug.Log("Refresh GetAllUsersWithFeeds Api");
                     }
                 }
             }
-            Debug.LogError("Refresh Current Screen Api");
+           Debug.Log("Refresh Current Screen Api");
 
             StartCoroutine(FetchDataDemo());
         }
@@ -69,7 +69,7 @@ public class LoaderController : MonoBehaviour
 
         while (!isLoaderGetApiResponce)
         {
-            //Debug.LogError("1:" + isLoaderGetApiResponce);
+            //Debug.Log("1:" + isLoaderGetApiResponce);
             yield return true;
         }
         // Call EndRefreshing() when refresh is over.

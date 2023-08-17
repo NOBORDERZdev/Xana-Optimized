@@ -98,7 +98,7 @@ public class TimeStats : MonoBehaviour
         canRun = true;
         isRuninig = true;
         this._situationChangeObject = _obj;
-        Debug.LogError("EnableSituationChangerUI  " + _value);
+       Debug.Log("EnableSituationChangerUI  " + _value);
         if (!_isOff)
             BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
         StartCoroutine(dimmerCoroutine);

@@ -70,7 +70,7 @@ public class SocketHandler : MonoBehaviour
     }
      public void GroupLeaveUserResponce(string s)
     {
-        Debug.LogError("Group Leave responce:" + s);
+       Debug.Log("Group Leave responce:" + s);
         leaveGroupResponce = JsonConvert.DeserializeObject<GroupLeaveResponceRoot>(s);
  
     }
@@ -80,7 +80,7 @@ public class SocketHandler : MonoBehaviour
     }  
     void OnConnected(ConnectResponse resp)
     {
-        Debug.LogError("Connect to Server");      
+       Debug.Log("Connect to Server");      
       // SendDisconnect();   
         //Manager.Socket.Emit("hi", "hiiii");
     }   
@@ -115,11 +115,11 @@ public class SocketHandler : MonoBehaviour
 
     void OnError(CustomError args)
     {
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+       Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
     void Onresult(CustomError args)
     {
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+       Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
   
     public void RequestChatGetMessagesSocket(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId)
@@ -163,7 +163,7 @@ public class SocketHandler : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("socket Message Chat: " + data);
+               Debug.Log("socket Message Chat: " + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -181,7 +181,7 @@ public class SocketHandler : MonoBehaviour
     /*
     public void GetAllChat(int pageNumber)
     {
-        Debug.LogError("SoketHandler GetAllChat........");
+       Debug.Log("SoketHandler GetAllChat........");
         // allChatMessageId.Clear();
         for (int i = 0; i < APIManager.Instance.allChatMessagesRoot.data.rows.Count; i++)
         {
@@ -194,7 +194,7 @@ public class SocketHandler : MonoBehaviour
                     APIController.Instance.SetChetDay(APIManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
                 }                
 
-                Debug.LogError("i : " + i + "+PageNum:" + pageNumber + ":responce:" + APIManager.Instance.allChatMessagesRoot.data.rows[i]);
+               Debug.Log("i : " + i + "+PageNum:" + pageNumber + ":responce:" + APIManager.Instance.allChatMessagesRoot.data.rows[i]);
                 if (APIManager.Instance.allChatMessagesRoot.data.rows[i].senderId == APIManager.Instance.userId)
                 {
                     if (APIManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments.Count > 0)
@@ -203,7 +203,7 @@ public class SocketHandler : MonoBehaviour
                         GameObject ChatPhotoObject = Instantiate(APIController.Instance.chatPhotoPrefabUser, MessageController.Instance.chatPrefabParent);
                         ChatPhotoObject.GetComponent<ChatDataScript>().MessageRow = APIManager.Instance.allChatMessagesRoot.data.rows[i];
                         ChatPhotoObject.GetComponent<ChatDataScript>().LoadFeed();
-                        Debug.LogError("isCreateMessage" + APIManager.Instance.r_isCreateMessage);
+                       Debug.Log("isCreateMessage" + APIManager.Instance.r_isCreateMessage);
                         if (pageNumber == 1 && APIManager.Instance.r_isCreateMessage)
                         {
                             ChatPhotoObject.transform.SetAsLastSibling();
@@ -293,7 +293,7 @@ public class SocketHandler : MonoBehaviour
         MessageController.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         if (APIManager.Instance.allChatMessagesRoot.data.rows.Count > 0)
         {
-            Debug.LogError("here");
+           Debug.Log("here");
             MessageController.Instance.isChatDataLoaded = false;
         }
     }

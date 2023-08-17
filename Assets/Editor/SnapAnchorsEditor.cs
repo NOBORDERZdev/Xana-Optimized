@@ -35,7 +35,7 @@ public class SnapAnchorsEditor : Editor
 				if (o.GetComponent<RectTransform> () != null)
 					recTransform = o.GetComponent<RectTransform> ();
 				else {
-					Debug.LogError (o.name + " Doesn't have RectTransform. SnapAnchors must be used only with UI objects. Please select a objet with RectTransform. Returning function.");
+					Debug.Log (o.name + " Doesn't have RectTransform. SnapAnchors must be used only with UI objects. Please select a objet with RectTransform. Returning function.");
 					return;
 				}
 

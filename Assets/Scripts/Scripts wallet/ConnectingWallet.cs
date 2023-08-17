@@ -234,9 +234,9 @@ public class ConnectingWallet : MonoBehaviour
         if(GeneralFields.status == "error")
         {
             ConnectServerDataExtraction.ErrorClass objerror = new ConnectServerDataExtraction.ErrorClass();
-             Debug.LogError("Error in Response");
-            Debug.LogError(objerror.data);
-            Debug.LogError(objerror.type);
+            Debug.Log("Error in Response");
+           Debug.Log(objerror.data);
+           Debug.Log(objerror.type);
             if(WalletLoginLoader != null)
             WalletLoginLoader.SetActive(false);
             LoaderBool = false;
@@ -638,7 +638,7 @@ public class ConnectingWallet : MonoBehaviour
         if (request.isNetworkError)
         {
                 DisconnectRequestToServer();
-            Debug.LogError("Network error in Get Nounce");
+           Debug.Log("Network error in Get Nounce");
         }
         else
         {
@@ -647,7 +647,7 @@ public class ConnectingWallet : MonoBehaviour
                  if (!NounceReadObj.success)
                 {
                         DisconnectRequestToServer();
-                        Debug.LogError("Success false in  get Nounce");  
+                        Debug.Log("Success false in  get Nounce");  
                 }
             }
         } 
@@ -695,7 +695,7 @@ public class ConnectingWallet : MonoBehaviour
                if (request.isNetworkError)
                {
                    DisconnectRequestToServer();
-                   Debug.LogError("Network error in Verify signature");
+                  Debug.Log("Network error in Verify signature");
                }
                else
                {
@@ -704,7 +704,7 @@ public class ConnectingWallet : MonoBehaviour
                        if (!VerifySignatureReadObj.success)
                        {
                            DisconnectRequestToServer();
-                           Debug.LogError("Success false in  verify sig");
+                          Debug.Log("Success false in  verify sig");
                        }
                    }
                }
@@ -754,7 +754,7 @@ public class ConnectingWallet : MonoBehaviour
             if (request.isNetworkError)
             {
               ////  DisconnectRequestToServer();
-                Debug.LogError("Network error in Get Nounce of Xanalia");
+               Debug.Log("Network error in Get Nounce of Xanalia");
             }
             else
             {
@@ -763,7 +763,7 @@ public class ConnectingWallet : MonoBehaviour
                     if (!NounceReadObjXanalia.success)
                     {
                       //  DisconnectRequestToServer();
-                        Debug.LogError("Success false in  get Nounce of Xanalia");
+                       Debug.Log("Success false in  get Nounce of Xanalia");
                     }
                 }
             }
@@ -848,7 +848,7 @@ public class ConnectingWallet : MonoBehaviour
                         String s = VerifySignatureReadObj.data.user.username.ToString();
                         print("The first four character of the string is: " + s.Substring(0, 4));  
                         PlayerPrefs.SetString("Useridxanalia", s.Substring(0, 4));  
-                         Debug.LogError("title is null");  
+                        Debug.Log("title is null");  
                     }
                     print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
                    //  PlayerPrefs.SetString("UserName", PlayerPrefs.GetString("Useridxanalia"));
@@ -867,7 +867,7 @@ public class ConnectingWallet : MonoBehaviour
               if (request.isNetworkError)
               {
                //   DisconnectRequestToServer();
-                  Debug.LogError("Network error in Verify signature of xanalia");
+                 Debug.Log("Network error in Verify signature of xanalia");
               }
               else
               {
@@ -876,7 +876,7 @@ public class ConnectingWallet : MonoBehaviour
                       if (!VerifySignatureReadObj.success)
                       {
                          // DisconnectRequestToServer();
-                          Debug.LogError("Success false in  verify sig  of xanalia");
+                         Debug.Log("Success false in  verify sig  of xanalia");
                       }
                   }
               }
@@ -935,7 +935,7 @@ public void GetNFTList()
        if (request.isNetworkError)
        {
            //   DisconnectRequestToServer();
-           Debug.LogError("Network error in Getting NFT list of Xanalia");
+          Debug.Log("Network error in Getting NFT list of Xanalia");
        }
        else
        {
@@ -944,7 +944,7 @@ public void GetNFTList()
                if (!ReadObj.success)
                {
                    // DisconnectRequestToServer();
-                   Debug.LogError("Success false in  Getting NFT list of Xanalia");
+                  Debug.Log("Success false in  Getting NFT list of Xanalia");
                }
            }
        }

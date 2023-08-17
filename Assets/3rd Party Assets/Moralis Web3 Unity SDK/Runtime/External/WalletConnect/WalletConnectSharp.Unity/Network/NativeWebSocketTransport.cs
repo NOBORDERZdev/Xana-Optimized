@@ -121,7 +121,7 @@ namespace WalletConnectSharp.Unity.Network
 
         private void HandleError(Exception e)
         {
-            Debug.LogError(e);
+            Debug.Log("<color=red>" + e + "</color>");
         }
 
         private async void CompleteOpen()

@@ -453,11 +453,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Exception here..............");
+            Debug.Log("<color = red>Exception here..............</color>");
         }
 
         // Yes Join APi Call Here
-        //Debug.LogError("Waqas : Room Joined.");
+        //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
     }
@@ -550,7 +550,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Exception here..............");
+            Debug.Log("<color = red> Exception here..............</color>");
         }
 
         SetAddressableSceneActive();
@@ -559,14 +559,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
 
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");
 
 
         // Yes Join APi Call Here
-        //Debug.LogError("Waqas : Room Joined.");
+        //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
     }

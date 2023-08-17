@@ -180,11 +180,11 @@ namespace RenderHeads.Media.AVProVideo
 		{
 			if (context == null)
 			{
-				Debug.Log("<color=red> [AVProVideo]  </color>" + message);
+				Debug.Log("[AVProVideo] " + message);
 			}
 			else
 			{
-				Debug.Log("<color=red> [AVProVideo] </color> " + message, context);
+				Debug.Log("[AVProVideo] " + message, context);
 			}
 		}
 
