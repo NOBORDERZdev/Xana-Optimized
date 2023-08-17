@@ -86,14 +86,37 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         originalString = Regex.Replace(originalString, @"\s", "");
         string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
 
-        if (uniqueClick)
+        //if (uniqueClick)
+        //{
+        //    uniqueClick = false;
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
+        //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
+        //}
+        string worldName = XanaConstants.xanaConstants.EnviornmentName;
+
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
         {
-            uniqueClick = false;
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
-            Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
+            worldName = "Lobby_";
+            //Firebase.Analytics.FirebaseAnalytics.LogEvent("Lobby_" + trimmedString + "_Clicked");
+        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem") || XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        {
+            worldName = XanaConstants.xanaConstants.EnviornmentName + "_";
+            //Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + trimmedString + "_NFTClicked");
+        }
+        else
+        {
+            if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+                worldName = "Astro_";
+            else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+                worldName = "Rental_";
+
+            //Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + JjInfoManager.Instance.analyticMuseumID + "_" + trimmedString + "_NFTClicked");
+            //Debug.Log("<color=red>" + worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked </color>");
         }
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent("URL_" + trimmedString + "_Clicked");
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + JjInfoManager.Instance.analyticMuseumID + "_" + trimmedString + "URL_Clicked");
+        //Firebase.Analytics.FirebaseAnalytics.LogEvent("URL_" + trimmedString + "_Clicked");
         Debug.Log("<color=red> URL_" + trimmedString + "_Clicked </color>");
     }
 
