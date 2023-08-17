@@ -497,7 +497,13 @@ public class BuilderMapDownload : MonoBehaviour
 
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
-        mainPlayerCollider.height = 1f;
+
+        CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
+        playerCollider.height = 1.5f;
+        playerCollider.center = Vector3.up * (playerCollider.height / 2);
+        CharacterController playerCharacterController=GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
+        playerCharacterController.height = playerCollider.height;
+        playerCharacterController.center = playerCollider.center;
 
         GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
@@ -513,7 +519,8 @@ public class BuilderMapDownload : MonoBehaviour
         Vignette vignette;
         postProcessVol.profile.TryGet(out vignette);
 
-        if (vignette) {
+        if (vignette)
+        {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
             GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
         }

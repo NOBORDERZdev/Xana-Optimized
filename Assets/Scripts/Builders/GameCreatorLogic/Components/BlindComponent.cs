@@ -52,8 +52,9 @@ public class BlindComponent : ItemComponent
             {
                 PlayerCanvas.Instance.transform.SetParent(_other.transform);
                 PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
-                PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+                
             }
+            PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             if (!IsAgainTouchable) return;
 
             IsAgainTouchable = false;
@@ -63,6 +64,7 @@ public class BlindComponent : ItemComponent
             //    blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
 
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
+            TimeStats._intensityChangerStop?.Invoke();
             TimeStats._blindComponentStart?.Invoke(blindToggle, _light, _lightsIntensity, blindComponentData.time, blindComponentData.radius, this.gameObject, skyBoxID);
         }
     }

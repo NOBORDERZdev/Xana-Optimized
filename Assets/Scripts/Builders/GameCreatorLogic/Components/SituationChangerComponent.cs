@@ -45,6 +45,7 @@ public class SituationChangerComponent : ItemComponent
                 situationCo = StartCoroutine(nameof(SituationChange));
 
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
+            TimeStats._blindComponentStop?.Invoke();
             TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
         }
     }

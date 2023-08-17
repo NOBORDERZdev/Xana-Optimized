@@ -445,9 +445,9 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine SituationChangerCoroutine;
     public void EnableSituationChangerUI(float timer)
     {
-        DisableAllComponentUIObject(ComponentType.SituationChanger);
         if (timer > 0)
         {
+            DisableAllComponentUIObject(ComponentType.SituationChanger);
             if (SituationChangerCoroutine == null)
             {
                 SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
@@ -1097,9 +1097,9 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine BlindComponentCoroutine;
     public void EnableBlindComponentUI(float timer)
     {
-        DisableAllComponentUIObject(ComponentType.SituationChanger);
         if (timer > 0)
         {
+            DisableAllComponentUIObject(ComponentType.BlindComponent);
             if (BlindComponentCoroutine == null)
             {
                 BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));

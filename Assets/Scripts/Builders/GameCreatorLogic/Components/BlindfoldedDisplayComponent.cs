@@ -39,7 +39,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
             raycast = GamificationComponentData.instance.raycast;
 
             Physics.IgnoreLayerCollision(9, 22, true);
-            
+
             if (blindfoldedDisplayComponentData.footprintPaintAvatar)
             {
                 SetFootPrinting(other.gameObject);
@@ -55,7 +55,11 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
         //shoes.localPosition = Vector3.forward * 0.761f;
-        shoes.gameObject.AddComponent<Rigidbody>().isKinematic = true;
+        Rigidbody rb = null;
+        shoes.TryGetComponent(out rb);
+        if (rb == null)
+            rb = shoes.gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
         for (int i = 0; i < shoes.childCount; i++)
         {
             Destroy(shoes.GetChild(i).gameObject);
@@ -63,7 +67,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         GameObject goFootStep = GamificationComponentData.instance.FootSteps[0];
         {
             var tempobj = Instantiate(goFootStep, shoes);
-            tempobj.transform.localPosition = Vector3.up* 0.0207f;
+            tempobj.transform.localPosition = Vector3.up * 0.0207f;
         }
 
         skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -87,11 +91,11 @@ public class BlindfoldedDisplayComponent : ItemComponent
         }
 
         RingbufferFootSteps[] ringbufferFootSteps = other.gameObject.GetComponentsInChildren<RingbufferFootSteps>();
-        for (int i = 0; i < ringbufferFootSteps.Length; i++)
-        {
-            ringbufferFootSteps[0].enabled = true;
-            ringbufferFootSteps[0].transform.GetChild(0).gameObject.SetActive(true);
-        }
+        //for (int i = 0; i < ringbufferFootSteps.Length; i++)
+        //{
+            ringbufferFootSteps[ringbufferFootSteps.Length-1].enabled = true;
+            ringbufferFootSteps[ringbufferFootSteps.Length - 1].transform.GetChild(0).gameObject.SetActive(true);
+        //}
         //Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
         StartCoroutine(BackToVisible(ringbufferFootSteps));
     }

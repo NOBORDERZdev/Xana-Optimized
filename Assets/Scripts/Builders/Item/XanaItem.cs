@@ -218,12 +218,12 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(hyperLinkComponentData);
         }
 
-        BlindComponentData blindComponentData = itemData.blindComponentData;
-        if (blindComponentData.IsActive)
-        {
-            BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
-            itemComponent.Init(blindComponentData);
-        }
+        //BlindComponentData blindComponentData = itemData.blindComponentData;
+        //if (blindComponentData.IsActive)
+        //{
+        //    BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
+        //    itemComponent.Init(blindComponentData);
+        //}
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);

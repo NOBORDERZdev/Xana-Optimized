@@ -23,8 +23,8 @@ public class DoorKeyComponent : ItemComponent
                 PlayerCanvas.Instance.transform.SetParent(_other.transform);
                 PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
 
-                PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             }
+            PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             if (this.doorKeyComponentData.isKey && !this.doorKeyComponentData.isDoor)
             {
                 if (!KeyValidation()) return;
