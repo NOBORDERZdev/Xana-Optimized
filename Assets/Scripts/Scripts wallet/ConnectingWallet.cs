@@ -10,6 +10,7 @@ using ZXing.QrCode;
 using System;
 using UnityEngine.Networking;
 using UnityEngine.EventSystems;
+using Photon.Pun.Demo.Procedural;
 #if UNITY_IOS && !UNITY_EDITOR
 using System.Runtime.InteropServices;
 #endif
@@ -23,6 +24,7 @@ public class ConnectingWallet : MonoBehaviour
     public string bundleIdofLunchingApp;
     bool CheckLunchingFail = false;
     string ServerNounceXanalia = "";
+
     string SignedSigXanalia = "";
     private bool XanaliaSignedMsg = false;
     Sprite mySprite;
@@ -224,7 +226,9 @@ public class ConnectingWallet : MonoBehaviour
     public IEnumerator ThisWillBeExecutedOnTheMainThread(string txt)
     {
         Debug.Log("This is executed from the main thread");
-        GetText(txt);  
+        ///walletComment
+        //GetText(txt);
+        //End
           yield return null;
     }  
      void GetText(string txt)  
@@ -300,7 +304,9 @@ public class ConnectingWallet : MonoBehaviour
                         VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounce, objVerify.data.sig);
                         var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
                         print("Verify Signed msg Json is  " + jsonObj2);
-                          StartCoroutine(HitVerifySignatureAPI(ConstantsGod.API_BASEURL+ConstantsGod.VerifySignedURL, jsonObj2));
+                        ///Wallet Commect  
+                        ///StartCoroutine(HitVerifySignatureAPI(ConstantsGod.API_BASEURL+ConstantsGod.VerifySignedURL, jsonObj2));
+                        ///End
                     }      
                     else
                     {
@@ -351,7 +357,7 @@ public class ConnectingWallet : MonoBehaviour
             MsgGenObj = MsgGenObj.msgClassFtn(ServerNounceXanalia, AppID);
          var jsonObj = JsonUtility.ToJson(MsgGenObj);   
         print("Asking class "+jsonObj);      
-        websocket.Send(jsonObj);          
+        //websocket.Send(jsonObj);          
      }                   
  
     void GenerateQRCode()
@@ -495,7 +501,9 @@ public class ConnectingWallet : MonoBehaviour
         var jsonObj = JsonUtility.ToJson(dataObj);
         print(jsonObj);
         // print(new JsonObject(JsonUtility.ToJson(dataObj)).ToString());
-        websocket.Send(jsonObj);    
+        ///Wallet Connect 
+       //// websocket.Send(jsonObj);    
+       ///
     }     
     IEnumerator waitForLoader (GameObject loaderObj =null)
     {
@@ -654,15 +662,106 @@ public class ConnectingWallet : MonoBehaviour
     }
  }
  
-    IEnumerator HitVerifySignatureAPI(string url, string Jsondata)
+    //IEnumerator HitVerifySignatureAPI(string url, string Jsondata)
+    //{  
+    //    // print(Jsondata);
+    //    var request = new UnityWebRequest(url, "POST");
+    //    byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+    //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+    //    request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type", "application/json");
+    //    yield return request.SendWebRequest();
+    //    print("Json data of Signed signature is   = " + request.downloadHandler.text);
+    //    //    ConnectServerDataExtraction.VerifyReadSignedMsgFromServer VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServer>(request.downloadHandler.text);
+    //    ConnectServerDataExtraction.ClassWithToken VerifySignatureReadObj = new ConnectServerDataExtraction.ClassWithToken();  
+    //    VerifySignatureReadObj = ConnectServerDataExtraction.ClassWithToken.CreateFromJSON(request.downloadHandler.text);  
+    //       if (!request.isHttpError && !request.isNetworkError)
+    //       {
+    //           if (request.error == null)  
+    //           {
+    //               Debug.Log(request.downloadHandler.text);
+    //               if (VerifySignatureReadObj.success)
+    //               {
+    //                PlayerPrefs.SetInt("WalletLogin", 1);
+    //                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+    //                PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());  
+    //                OpenMenu("OpenJWTPage");      
+    //                print("JWT token of user is  " + VerifySignatureReadObj.data.token);
+
+
+    //                ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
+    //                VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounceXanalia, SignedSigXanalia);
+    //                var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
+    //                print("Xanalia Verify Signed msg Json is  " + jsonObj2);
+    //                StartCoroutine(HitVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA+ConstantsGod.VerifySignedXanaliaURL, jsonObj2));
+ 
+    //            }      
+    //           }    
+    //       }  
+    //       else
+    //       {
+    //           if (request.isNetworkError)
+    //           {
+    //               DisconnectRequestToServer();
+    //              Debug.Log("Network error in Verify signature");
+    //           }
+    //           else
+    //           {
+    //               if (request.error != null)
+    //               {
+    //                   if (!VerifySignatureReadObj.success)
+    //                   {
+    //                       DisconnectRequestToServer();
+    //                      Debug.Log("Success false in  verify sig");
+    //                   }
+    //               }
+    //           }
+    //       }
+     //}
+
+
+    public IEnumerator SaveChainSafeNonce(string sign, string walletAddress, string nonce){
+        string url = ConstantsGod.API_BASEURL+ConstantsGod.SaveNonce;
+        UnityWebRequest request;
+        WWWForm form = new WWWForm();
+        form.AddField("walletAddress", walletAddress);
+        form.AddField("nonce", nonce);
+        request = UnityWebRequest.Post(url, form);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+
+        if (!request.isHttpError && !request.isNetworkError){ 
+            if (request.error == null)  { 
+                AppID = uniqueID(); 
+                GetXanaliaNounce(sign, walletAddress,nonce);
+                yield return new WaitForSeconds (0.5f);
+            }
+        }
+    }
+
+    IEnumerator HitChainSafeVerifySignatureAPI( string sign, string walletAddress ,string nonce)
     {  
+        string url = ConstantsGod.API_BASEURL+ConstantsGod.VerifySignedURL;
         // print(Jsondata);
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
+        ////var request = new UnityWebRequest(url, "POST");
+        ////byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        ////request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        ////request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        ////request.SetRequestHeader("Content-Type", "application/json");
+        ////yield return request.SendWebRequest();
+        UnityWebRequest request;
+        WWWForm form = new WWWForm();
+        form.AddField("signature", sign);
+        form.AddField("nonce", nonce);
+        request = UnityWebRequest.Post(url, form);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
         print("Json data of Signed signature is   = " + request.downloadHandler.text);
         //    ConnectServerDataExtraction.VerifyReadSignedMsgFromServer VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServer>(request.downloadHandler.text);
         ConnectServerDataExtraction.ClassWithToken VerifySignatureReadObj = new ConnectServerDataExtraction.ClassWithToken();  
@@ -675,17 +774,19 @@ public class ConnectingWallet : MonoBehaviour
                    if (VerifySignatureReadObj.success)
                    {
                     PlayerPrefs.SetInt("WalletLogin", 1);
-                     PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+                    PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+                    ConstantsGod.AUTH_TOKEN= VerifySignatureReadObj.data.token;
                     PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());  
                     OpenMenu("OpenJWTPage");      
                     print("JWT token of user is  " + VerifySignatureReadObj.data.token);
 
 
                     ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
-                    VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounceXanalia, SignedSigXanalia);
+                    VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
                     var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
                     print("Xanalia Verify Signed msg Json is  " + jsonObj2);
-                    StartCoroutine(HitVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA+ConstantsGod.VerifySignedXanaliaURL, jsonObj2));
+                    
+                    StartCoroutine(HitChainSafeVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA+ConstantsGod.VerifySignedXanaliaURL,sign, ServerNounceXanalia));
  
                 }      
                }    
@@ -710,19 +811,18 @@ public class ConnectingWallet : MonoBehaviour
                }
            }
      }
-
-
-    public void GetXanaliaNounce()
+    public void GetXanaliaNounce(string sign, string walletAddress, string nonce)
     {
        ConnectServerDataExtraction.NounceClassForXanalia NounceObj = new ConnectServerDataExtraction.NounceClassForXanalia();
-        NounceObj = NounceObj.NounceClassFtnForXanalia(PlayerPrefs.GetString("publicKey"));
+        NounceObj = NounceObj.NounceClassFtnForXanalia(PlayerPrefs.GetString("publicID"));
         var jsonObj = JsonUtility.ToJson(NounceObj);
         print("Xanalia Nouce JSON is  " + jsonObj);  
-        StartCoroutine(HitGetNounceFromXANALIAServerAPI(ConstantsGod.API_BASEURL_XANALIA+ConstantsGod.GetXanaliaNounceURL, jsonObj));
+        StartCoroutine(HitGetNounceFromXANALIAServerAPI(ConstantsGod.API_BASEURL_XANALIA+ConstantsGod.GetXanaliaNounceURL, jsonObj, sign, walletAddress,nonce));
     }
 
+    string XanaliaNonce;
     // API,s calling
-    IEnumerator HitGetNounceFromXANALIAServerAPI(string url, string Jsondata)
+    IEnumerator HitGetNounceFromXANALIAServerAPI(string url, string Jsondata, string sign, string walletAddress, string nonce)
     {
         // print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
@@ -745,6 +845,8 @@ public class ConnectingWallet : MonoBehaviour
                     print(" in Success xanalia Nounce Is here " + NounceReadObjXanalia.data);
                     ServerNounceXanalia = NounceReadObjXanalia.data;
                     XanaliaSignedMsg = true;
+                    StartCoroutine(HitChainSafeVerifySignatureAPI(sign,walletAddress,nonce));
+
                     GenerateMsg(XanaliaSignedMsg);
                 }
             }
@@ -771,17 +873,27 @@ public class ConnectingWallet : MonoBehaviour
     
     }
 
-    // 
-    IEnumerator HitVerifySignatureXanaliaAPI(string url, string Jsondata)
+    IEnumerator HitChainSafeVerifySignatureXanaliaAPI(string url, string sign,string nonce)
     {
-         print(Jsondata);      
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");  
-        yield return request.SendWebRequest();    
-         ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia VerifySignatureReadObj = new ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia();
+         //print(Jsondata);      
+        //var request = new UnityWebRequest(url, "POST");
+        //byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        //request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        //request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        //request.SetRequestHeader("Content-Type", "application/json");  
+        //yield return request.SendWebRequest();    
+        UnityWebRequest request;
+         WWWForm form = new WWWForm();
+
+        form.AddField("signature", sign);
+        form.AddField("nonce", nonce);
+        request = UnityWebRequest.Post(url, form);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia VerifySignatureReadObj = new ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia();
         VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia>(request.downloadHandler.text);
         print("Login Xanalia is "+request.downloadHandler.text);    
            if (!request.isHttpError && !request.isNetworkError)
@@ -837,10 +949,11 @@ public class ConnectingWallet : MonoBehaviour
                     }           
                     */
                      PlayerPrefs.SetString("LoginTokenxanalia", VerifySignatureReadObj.data.token);  
+                    print("~~~~~~~~~~~~~~~~~ "+ VerifySignatureReadObj.data.user.title);
                     if(VerifySignatureReadObj.data.user.title != null)
                     {
                         PlayerPrefs.SetString("Useridxanalia", VerifySignatureReadObj.data.user.title.ToString());
-                     }
+                    }
                     else
                     {
 
@@ -883,6 +996,119 @@ public class ConnectingWallet : MonoBehaviour
           }
 
     }
+
+    // 
+    //IEnumerator HitVerifySignatureXanaliaAPI(string url, string Jsondata)
+    //{
+    //     print(Jsondata);      
+    //    var request = new UnityWebRequest(url, "POST");
+    //    byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+    //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+    //    request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type", "application/json");  
+    //    yield return request.SendWebRequest();    
+    //     ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia VerifySignatureReadObj = new ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia();
+    //    VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia>(request.downloadHandler.text);
+    //    print("Login Xanalia is "+request.downloadHandler.text);    
+    //       if (!request.isHttpError && !request.isNetworkError)
+    //        {   
+    //          if (request.error == null)  
+    //          {
+    //             if (VerifySignatureReadObj.success)
+    //              {
+    //                 print(" userNftRole " + VerifySignatureReadObj.data.user.userNftRole);
+    //                // free // premium // alpha-pass
+    //                VerifySignatureReadObj.data.user.userNftRole = VerifySignatureReadObj.data.user.userNftRole.ToLower();
+
+    //                switch(VerifySignatureReadObj.data.user.userNftRole)
+    //                 {
+    //                    case "alpha-pass":   
+    //                        {
+    //                            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+    //                             break;
+    //                        }
+    //                    case "premium":
+    //                        {
+    //                            PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+    //                             break;
+    //                        }
+    //                    case "dj-event":  
+    //                        {
+    //                            PremiumUsersDetails.Instance.GetGroupDetails("djevent");  
+    //                            break;
+    //                        }    
+    //                    case "free":
+    //                        {
+    //                            PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+
+    //                            break;
+    //                        }
+    //                }  
+                      
+    //                /*
+    //                if (VerifySignatureReadObj.data.user.userNftRole =="")
+    //                {  
+    //                  if (VerifySignatureReadObj.data.user.userNftRole.Contains("access"))
+    //                      {
+    //                         PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+    //                      }     
+    //                    else  
+    //                    {
+    //                          PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");  
+    //                     }      
+    //                  }    
+    //                else  
+    //                {
+    //                     PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+    //                }           
+    //                */
+    //                 PlayerPrefs.SetString("LoginTokenxanalia", VerifySignatureReadObj.data.token);  
+    //                if(VerifySignatureReadObj.data.user.title != null)
+    //                {
+    //                    PlayerPrefs.SetString("Useridxanalia", VerifySignatureReadObj.data.user.title.ToString());
+    //                 }
+    //                else
+    //                {
+
+    //                    print(VerifySignatureReadObj.data.user.username);
+    //                    String s = VerifySignatureReadObj.data.user.username.ToString();
+    //                    print("The first four character of the string is: " + s.Substring(0, 4));  
+    //                    PlayerPrefs.SetString("Useridxanalia", s.Substring(0, 4));  
+    //                    Debug.Log("title is null");  
+    //                }
+    //                print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
+    //               //  PlayerPrefs.SetString("UserName", PlayerPrefs.GetString("Useridxanalia"));
+    //                PlayerPrefs.SetInt("WalletConnect", 1);
+    //                SuccessfulPopUp.SetActive(true);
+    //                UserRegisterationManager.instance.LoginWithWallet();  
+    //                PlayerPrefs.Save();    
+    //                 SetNameInServer();
+    //                 print("ID of UserName is  :  " + PlayerPrefs.GetString("Useridxanalia"));
+    //                  GetNFTList();
+    //             }  
+    //        }
+    //      }
+    //      else
+    //      {
+    //          if (request.isNetworkError)
+    //          {
+    //           //   DisconnectRequestToServer();
+    //             Debug.Log("Network error in Verify signature of xanalia");
+    //          }
+    //          else
+    //          {
+    //              if (request.error != null)
+    //              {
+    //                  if (!VerifySignatureReadObj.success)
+    //                  {
+    //                     // DisconnectRequestToServer();
+    //                     Debug.Log("Success false in  verify sig  of xanalia");
+    //                  }
+    //              }
+    //          }
+    //      }
+
+    //}
     /*
     {limit: 25,
     loggedIn: "0x7ebe14ab1e82f9d230d8235c5ca7d3b77d92b07d",
@@ -955,7 +1181,7 @@ public void GetNFTList()
     {
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
-
+        print("Useridxanalia "+PlayerPrefs.GetString("Useridxanalia"));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL+ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
      }
 

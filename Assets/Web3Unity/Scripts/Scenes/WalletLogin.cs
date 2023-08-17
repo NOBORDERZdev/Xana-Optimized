@@ -12,6 +12,7 @@ public class WalletLogin: MonoBehaviour
     ProjectConfigScriptableObject projectConfigSO = null;
     public Toggle rememberMe;
     UserRegisterationManager registerationManager;
+    [SerializeField] ConnectingWallet connectingWallet;
     [SerializeField] GameObject SuccessfulPopUp;
     void Start() {
         registerationManager = UserRegisterationManager.instance;
@@ -49,6 +50,7 @@ public class WalletLogin: MonoBehaviour
         int expirationTime = timestamp + 60;
         // set message
         string message = expirationTime.ToString();
+        print("message is "+ message);
         // sign message
         string signature = await Web3Wallet.Sign(message);
         // verify account
@@ -72,16 +74,18 @@ public class WalletLogin: MonoBehaviour
                    // registerationManager.LoaderBool = false;
                     PlayerPrefs.SetInt("WalletConnect", 1);
                     SuccessfulPopUp.SetActive(true);
-                    registerationManager.LoginWithWallet();
+                    //registerationManager.LoginWithWallet();
+                    connectingWallet.StartCoroutine(connectingWallet.SaveChainSafeNonce(signature,account,message));
                     SetNameInServer();
-                    PlayerPrefs.Save();
+
                     break;
                 case WalletConnectCallType.Login:
-                    registerationManager.LoginWithWallet();
+                    connectingWallet.StartCoroutine(connectingWallet.SaveChainSafeNonce(signature,account,message));
                     break;
                 default:
                     break;
             }
+                    PlayerPrefs.Save();
 
         }
     }
