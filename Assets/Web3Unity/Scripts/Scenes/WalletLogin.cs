@@ -27,6 +27,7 @@ public class WalletLogin: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
