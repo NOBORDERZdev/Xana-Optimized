@@ -95,12 +95,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
                 LoadingHandler.Instance.ShowLoading();
 
-                AssetBundle.UnloadAllAssetBundles(false);
+                GC.Collect();
+                AssetBundle.UnloadAllAssetBundles(true);
                 Resources.UnloadUnusedAssets();
 
                 // Added By WaqasAhmad [20 July 23]
                 //Caching.ClearCache();
-                GC.Collect();
                 //
 
                 //   Caching.ClearCache();

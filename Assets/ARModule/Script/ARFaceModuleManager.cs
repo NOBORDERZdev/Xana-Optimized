@@ -237,7 +237,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void ARFaceManagerDisable(bool isDisable)
     {
-        Debug.LogError("ARFaceManagerDisable:" + isDisable);
+       Debug.Log("ARFaceManagerDisable:" + isDisable);
         //if (aRFaceTrackManager != null)
         //{
         //    aRFaceTrackManager.enabled = isDisable;
@@ -346,7 +346,7 @@ public class ARFaceModuleManager : MonoBehaviour
             mainAvatar.transform.localScale = endScale;
 
             mainAvatar.transform.position = MainAvatarDefaultPos;
-            Debug.LogError("MainAvatarPos:" + mainAvatar.transform.position);
+           Debug.Log("MainAvatarPos:" + mainAvatar.transform.position);
         }
     }
         
@@ -540,7 +540,7 @@ public class ARFaceModuleManager : MonoBehaviour
         newCam.targetTexture = null;
         Sprite captureSp = Sprite.Create(screenshot, new Rect(0, 0, screenshot.width, screenshot.height), new Vector2(0, 0), 100f, 0, SpriteMeshType.FullRect);
 
-        Debug.LogError("Texture Size:" + screenshot.texelSize);
+       Debug.Log("Texture Size:" + screenshot.texelSize);
         //screenshot.Compress(true);
         uiCan.SetActive(true);
         if (captureId != 1)
@@ -569,7 +569,7 @@ public class ARFaceModuleManager : MonoBehaviour
         createFeedFileName = filename;
         createFeedFilePath = pathStr;
 
-        //Debug.LogError("path:" + createFeedFilePath);
+        //Debug.Log("path:" + createFeedFilePath);
         //File.WriteAllBytes(createFeedFilePath, lastCapturedByteData);
         //NativeGallery.SaveImageToGallery(imageByte, "ArCapture", filename);
     }
@@ -651,7 +651,7 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 /*long fileSizeibBytes = GetFileSize(path);
                 long fileSizeibMbs = fileSizeibBytes / (1024 * 1024);
-                Debug.LogError("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
+               Debug.Log("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
                 if (fileSizeibMbs > 15)//check video file size and upload upto 15MG only.......
                 {
                     SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 15MB");
@@ -700,7 +700,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void SelectionBorderOnBackgroundImage(int index)
     {
-        Debug.LogError("index:" + index);
+       Debug.Log("index:" + index);
         for (int i = 0; i < backGroundScreenContainer.childCount; i++)
         {
             if (i == index)
@@ -716,7 +716,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void SelectionBorderOnBackgroundColor(int index)
     {
-        Debug.LogError("index:" + index);
+       Debug.Log("index:" + index);
         for (int i = 0; i < backgroundScreenColorContainer.childCount; i++)
         {
             if (i == index)
@@ -916,14 +916,14 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             deleteItemWithDragScript.isPointerEnter = false;
         }
-        //Debug.LogError("deleteItemScreen:" + deleteItemWithDragScript.isPointerEnter);
+        //Debug.Log("deleteItemScreen:" + deleteItemWithDragScript.isPointerEnter);
     }
 
     public void OnDeleteItemObject()
     {
         if (deleteItemScreen.activeSelf)
         {
-            //Debug.LogError("ispointerEnter111111:" + deleteItemWithDragScript.isPointerEnter);
+            //Debug.Log("ispointerEnter111111:" + deleteItemWithDragScript.isPointerEnter);
             if (deleteItemWithDragScript.isPointerEnter)
             {
                 if (addAvtarItem.Contains(currentSelectedItemObj))
@@ -1025,7 +1025,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
                 feedMediaPlayer.OpenMedia(new MediaPath(createFeedFilePath, MediaPathType.AbsolutePathOrURL), autoPlay: true);
 
-                Debug.LogError("media path:"+ feedMediaPlayer.MediaPath.Path);
+               Debug.Log("media path:"+ feedMediaPlayer.MediaPath.Path);
                 break;
             default:
                 break;
@@ -1053,7 +1053,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void CreateFeedAPICall(string url, string thumbnail)
     {
-        Debug.LogError("Room Feed Create:" + url);
+       Debug.Log("Room Feed Create:" + url);
         switch (imageOrVideo)
         {
             case "Image":

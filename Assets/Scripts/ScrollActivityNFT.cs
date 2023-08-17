@@ -60,7 +60,7 @@ public class ScrollActivityNFT : MonoBehaviour
             }    
             else
             {
-                Debug.LogError("Download Failed");
+               Debug.Log("Download Failed");
             }
         });  
         ScrollController.movementType = ScrollRect.MovementType.Elastic;

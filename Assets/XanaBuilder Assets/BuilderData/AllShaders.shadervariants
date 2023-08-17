@@ -32,11 +32,17 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
+  - first: {fileID: 104, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants: []
   - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
       - keywords: _SUNDISK_SIMPLE
         passType: 0
+  - first: {fileID: 108, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants: []
   - first: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
     second:
       variants:
@@ -97,41 +103,10 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: _DEPTH_MSAA_2
-        passType: 0
-  - first: {fileID: 4800000, guid: 65df88701913c224d95fc554db28381a, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: _BLOOM_HQ _TONEMAP_ACES
-        passType: 0
   - first: {fileID: 4800000, guid: 8d19bf0a0d7a69643b050c159096b413, type: 3}
     second:
       variants:
       - keywords: SOFTMASK_SIMPLE
-        passType: 0
-  - first: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-      - keywords: _BLOOM_HQ
         passType: 0
   - first: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
     second:
@@ -153,6 +128,67 @@ ShaderVariantCollection:
         passType: 13
       - keywords: _ALPHATEST_ON
         passType: 13
+  - first: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+    second:
+      variants:
+      - keywords: _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _DEPTH_MSAA_2
+        passType: 0
+  - first: {fileID: 4800000, guid: d2862e538ed34704297d434d0ab8c398, type: 3}
+    second:
+      variants:
+      - keywords: _OVERRIDE_MOS
+        passType: 8
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _OVERRIDE_MOS
+        passType: 13
+      - keywords: _OVERRIDE_MOS
+        passType: 13
+  - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHATEST_ON _COLORADDSUBDIFF_ON _EMISSION
+        passType: 0
+  - first: {fileID: 4800000, guid: 65df88701913c224d95fc554db28381a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _BLOOM_HQ _TONEMAP_ACES
+        passType: 0
+  - first: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _BLOOM_HQ
+        passType: 0
   - first: {fileID: -6465566751694194690, guid: 09b53c40f9a7246448be60bc83a776f7, type: 3}
     second:
       variants:
@@ -162,16 +198,33 @@ ShaderVariantCollection:
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
         passType: 13
-  - first: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  - first: {fileID: -6465566751694194690, guid: aee6183c5ef9a344c8dcf0cf040c304d, type: 3}
     second:
       variants:
-      - keywords: _SURFACE_TYPE_TRANSPARENT
-        passType: 0
-  - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+        passType: 13
+  - first: {fileID: -6465566751694194690, guid: f0d9ba69800d30147a7c770ed2906a57, type: 3}
     second:
       variants:
-      - keywords: _ALPHATEST_ON _COLORADDSUBDIFF_ON _EMISSION
-        passType: 0
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+        passType: 13
+  - first: {fileID: -6465566751694194690, guid: c052675ef47f9ba4381203f07cde1192, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+        passType: 13
   - first: {fileID: 4800000, guid: 6eb86e4931b506a408fd1477edec61ea, type: 3}
     second:
       variants:
@@ -234,58 +287,24 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: -6465566751694194690, guid: aee6183c5ef9a344c8dcf0cf040c304d, type: 3}
+  - first: {fileID: -6465566751694194690, guid: 286c960d5d207bf4895603839adbb760, type: 3}
     second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: 
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-        passType: 13
-  - first: {fileID: -6465566751694194690, guid: f0d9ba69800d30147a7c770ed2906a57, type: 3}
+      variants: []
+  - first: {fileID: -6465566751694194690, guid: 99de9a716c82cfe4981925761c2a23c7, type: 3}
     second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: 
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-        passType: 13
+      variants: []
   - first: {fileID: 4800000, guid: f09f6116f4d90c74aa35e48e247625d9, type: 3}
     second:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: -6465566751694194690, guid: c052675ef47f9ba4381203f07cde1192, type: 3}
+  - first: {fileID: -6465566751694194690, guid: 4127de13d658355408f8d63b178b818e, type: 3}
     second:
       variants:
       - keywords: 
         passType: 8
-      - keywords: 
-        passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
         passType: 13
-  - first: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: d2862e538ed34704297d434d0ab8c398, type: 3}
-    second:
-      variants:
-      - keywords: _OVERRIDE_MOS
-        passType: 8
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
-          _OVERRIDE_MOS
-        passType: 13
-      - keywords: _OVERRIDE_MOS
-        passType: 13
-  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: d97e848955c99c94cb9ac295c5fe9f4f, type: 3}
     second:
       variants:
@@ -294,11 +313,4 @@ ShaderVariantCollection:
       - keywords: CFXR_URP PASS_SHADOW_CASTER SHADOWS_DEPTH _ALPHABLEND_ON
         passType: 8
       - keywords: CFXR_URP _ALPHABLEND_ON
-        passType: 13
-  - first: {fileID: -6465566751694194690, guid: 4127de13d658355408f8d63b178b818e, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 8
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
         passType: 13

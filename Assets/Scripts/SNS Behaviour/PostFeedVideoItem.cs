@@ -52,7 +52,7 @@ public class PostFeedVideoItem : MonoBehaviour
     {
         float value0 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.width;
         float value1 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.height;
-        // Debug.LogError("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:" + value1);
+        //Debug.Log("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:" + value1);
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(value0, value1);
 
         if (FeedUIController.Instance.feedFullViewScreenCallingFrom == "MyProfile"|| FeedUIController.Instance.feedFullViewScreenCallingFrom == "FeedPage")
@@ -121,7 +121,7 @@ public class PostFeedVideoItem : MonoBehaviour
         if (isVisible && isOnScreen)//this is check if object is visible on camera then load feed or video one time
         {
             isVisible = false;
-            //Debug.LogError("Image download starting one time");
+            //Debug.Log("Image download starting one time");
             DownloadAndLoadFeed();
         }
         else if (isImageSuccessDownloadAndSave)
@@ -132,7 +132,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 {
                     isReleaseFromMemoryOrNot = false;
                     //re load from asset 
-                    //Debug.LogError("Re Download Image and play video");
+                    //Debug.Log("Re Download Image and play video");
                     if (!isVideoOrImage)//if false then load image otherwise play video
                     {
                         if (AssetCache.Instance.HasFile(userData.Image))
@@ -159,7 +159,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 {
                     //realse from memory 
                     isReleaseFromMemoryOrNot = true;
-                    //Debug.LogError("remove from memory and stop video");
+                    //Debug.Log("remove from memory and stop video");
                     if (!isVideoOrImage)//if false then Remove image otherwise Stop video
                     {
                         AssetCache.Instance.RemoveFromMemory(imgFeed.sprite);
@@ -188,7 +188,7 @@ public class PostFeedVideoItem : MonoBehaviour
                         {
                             feedMediaPlayer.Pause();
                         }
-                        //Debug.LogError("WorldPosition:" + mousePosNR);
+                        //Debug.Log("WorldPosition:" + mousePosNR);
                         ReleaseVideoMemoryAndRefresh();//For release video after 10 more and 10 lees video.......
                     }
                 }
@@ -218,7 +218,7 @@ public class PostFeedVideoItem : MonoBehaviour
         if (isCloseVideo && !isLastCloseVideo)
         {
             isCloseVideo = false;
-            //Debug.LogError("Close Video0000000");
+            //Debug.Log("Close Video0000000");
             isLastCloseVideo = true;
             feedMediaPlayer.CloseMedia();
         }
@@ -226,11 +226,11 @@ public class PostFeedVideoItem : MonoBehaviour
         if (isReloadVideo && !isLastReloadVideo)
         {
             isReloadVideo = false;
-            //Debug.LogError("Reload video0000000");
+            //Debug.Log("Reload video0000000");
             isLastReloadVideo = true;
             if (!feedMediaPlayer.MediaOpened)
             {
-                //Debug.LogError("Reload video1111111");
+                //Debug.Log("Reload video1111111");
                 string mediaUrl = "";
                 if (userData.Video.Contains("https"))
                 {
@@ -323,12 +323,12 @@ public class PostFeedVideoItem : MonoBehaviour
         if (!string.IsNullOrEmpty(avatarUrl))//set avatar image.......
         {
             bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(avatarUrl);
-            Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + feedUserData.Name);
+           Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + feedUserData.Name);
             if (isAvatarUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(avatarUrl, avatarUrl, (success) =>
                 {
-                    Debug.LogError("DownloadAndLoadFeed Profile have been set " + success+"  /"+avatarUrl);
+                   Debug.Log("DownloadAndLoadFeed Profile have been set " + success+"  /"+avatarUrl);
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, avatarUrl, changeAspectRatio: true);
@@ -367,7 +367,7 @@ public class PostFeedVideoItem : MonoBehaviour
             if (!string.IsNullOrEmpty(userData.Image))
             {
                 bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
-                //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isImageUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(userData.Image, userData.Image, (success) =>
@@ -391,7 +391,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
                 isVideoOrImage = true;
 
-                // Debug.LogError("FeedData.video " + userData.Image);
+                //Debug.Log("FeedData.video " + userData.Image);
                 SetVideoUi(true);
 
                 if (isVideoUrlFromDropbox)
@@ -429,7 +429,7 @@ public class PostFeedVideoItem : MonoBehaviour
             if (!string.IsNullOrEmpty(tagUserData.feed.image))
             {
                 bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.image);
-                //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+                //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isImageUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(tagUserData.feed.image, tagUserData.feed.image, (success) =>
@@ -468,7 +468,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 {
                     GetVideoUrl(tagUserData.feed.video);//get video url from aws and play.......
                 }
-                // Debug.LogError("FeedData.video " + userData.Image);
+                //Debug.Log("FeedData.video " + userData.Image);
             }
         }
     }
@@ -492,7 +492,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //this method is used to user profile button click.......
     public void OnClickPlayerProfileButton()
     {
-        Debug.LogError("Feed Id :" + userData.Id + "    :User Id:" + feedUserData.Id);
+       Debug.Log("Feed Id :" + userData.Id + "    :User Id:" + feedUserData.Id);
         FeedUIController.Instance.OnClickVideoItemBackButton(false);//this method close feed full screen and back to myprofile or other player profile screen.......
 
         //this api get any user profile data and feed for other player profile....... 
@@ -508,7 +508,7 @@ public class PostFeedVideoItem : MonoBehaviour
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.LogError("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+        //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
 
         AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
@@ -519,7 +519,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 {
                     if (this.isActiveAndEnabled)
                     {
-                        //Debug.LogError("Feed Video URL " + mediaUrl);
+                        //Debug.Log("Feed Video URL " + mediaUrl);
                         bool videoPlay = feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: true);
                         //feedMediaPlayer.Play();
                         if (videoPlay)
@@ -530,7 +530,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 });
             }
             else
-                Debug.LogError(callback.Exception);
+               Debug.Log(callback.Exception);
         });*/
 
         if (key != "")
@@ -551,7 +551,7 @@ public class PostFeedVideoItem : MonoBehaviour
             {
                 if (this.isActiveAndEnabled)
                 {
-                    //Debug.LogError("Feed Video URL " + mediaUrl);
+                    //Debug.Log("Feed Video URL " + mediaUrl);
                     bool videoPlay = feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: true);
                     //feedMediaPlayer.Play();
                     if (videoPlay)
@@ -565,11 +565,11 @@ public class PostFeedVideoItem : MonoBehaviour
 
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             if (mainImage == imgFeed)
             {
@@ -612,7 +612,7 @@ public class PostFeedVideoItem : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType " + extension);
+        //Debug.Log("ExtentionType " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -692,12 +692,12 @@ public class PostFeedVideoItem : MonoBehaviour
     public void SetupDecPart(string strText)
     {
         int numLines = strText.Split('\n').Length;
-        //Debug.LogError("Des Line Count:" + numLines);
+        //Debug.Log("Des Line Count:" + numLines);
 
         if (numLines > 2)
         {
             string[] subLineSTR = strText.Split('\n').Take(2).ToArray();
-            //Debug.LogError("Result:" + subLineSTR);
+            //Debug.Log("Result:" + subLineSTR);
 
             tempMinDecLineStr = "";
             for (int i = 0; i < subLineSTR.Length; i++)
@@ -784,7 +784,7 @@ public class PostFeedVideoItem : MonoBehaviour
                 shareMediaUrl = feedUrlArr[0];
             }
             else
-                Debug.LogError(callback.Exception);
+               Debug.Log(callback.Exception);
         });*/
 
         if (key.Contains("https://"))

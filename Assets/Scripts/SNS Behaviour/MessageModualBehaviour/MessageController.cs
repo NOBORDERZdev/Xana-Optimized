@@ -197,7 +197,7 @@ public class MessageController : MonoBehaviour
         bool isTempNeedToRefreshConversation = false;
         if (OtherPlayerProfileData.Instance != null)
         {
-            Debug.LogError("MessageDetailScreen :" + MessageDetailScreen.activeSelf + " :isChatDetailsScreenDeactive:" + isChatDetailsScreenDeactive);
+           Debug.Log("MessageDetailScreen :" + MessageDetailScreen.activeSelf + " :isChatDetailsScreenDeactive:" + isChatDetailsScreenDeactive);
             if (MessageDetailScreen.activeSelf && isChatDetailsScreenDeactive)
             {
                 isChatDetailsScreenDeactive = false;
@@ -226,7 +226,7 @@ public class MessageController : MonoBehaviour
             isTempNeedToRefreshConversation = true;
         }
         yield return new WaitForSeconds(0.1f);
-        Debug.LogError("MessageController isLoginFromDifferentId:" + APIManager.Instance.isLoginFromDifferentId);
+       Debug.Log("MessageController isLoginFromDifferentId:" + APIManager.Instance.isLoginFromDifferentId);
         if (APIManager.Instance.isLoginFromDifferentId)
         {
             APIController.Instance.allFollowingUserList.Clear();
@@ -257,7 +257,7 @@ public class MessageController : MonoBehaviour
                 {
                     if (allChatGetConversationDatum.receivedGroupId != 0)
                     {
-                        Debug.LogError("Group then refresh group message");
+                       Debug.Log("Group then refresh group message");
                         SocketHandler.Instance.RequestChatGetMessagesSocket(1, 50, 0, allChatGetConversationDatum.receivedGroupId);
                     }
                 }
@@ -266,7 +266,7 @@ public class MessageController : MonoBehaviour
 
         if (isTempNeedToRefreshConversation && isNeedToRefreshConversationAPI)
         {
-            Debug.LogError("Need To Refresh Conversation APi.......");
+           Debug.Log("Need To Refresh Conversation APi.......");
             APIManager.Instance.RequestChatGetConversation();
         }
         isTempNeedToRefreshConversation = false;
@@ -358,7 +358,7 @@ public class MessageController : MonoBehaviour
         if (!string.IsNullOrEmpty(myUserData.avatar))//set avatar image.......
         {
             bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(myUserData.avatar);
-            //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
+            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(myUserData.avatar, myUserData.avatar, (success) =>
@@ -524,12 +524,12 @@ public class MessageController : MonoBehaviour
     public void SelectFriendsFollowingListPagination(ScrollRect scrollRect)
     {
         //return;
-        //Debug.LogError("Scrollview verticalNormalPos:" + scrollRect.verticalNormalizedPosition);
+        //Debug.Log("Scrollview verticalNormalPos:" + scrollRect.verticalNormalizedPosition);
         if (scrollRect.verticalNormalizedPosition <= 0.01f && isSelectFriendDataLoaded)
         {
             if (APIManager.Instance.allFollowingRoot.data.rows.Count > 0)
             {
-                //Debug.LogError("Select friend following pagination api call.......");
+                //Debug.Log("Select friend following pagination api call.......");
                 isSelectFriendDataLoaded = false;
                 selectFriendPaginationPageNum += 1;
                 APIManager.Instance.RequestGetAllFollowing(selectFriendPaginationPageNum, 100, "Message");
@@ -609,20 +609,20 @@ public class MessageController : MonoBehaviour
     public IEnumerator IEActiveSelectionScroll()    //.......selectfriendscreen.........
     {
         yield return new WaitForSeconds(0.01f);
-        //  Debug.LogError("looggggg :" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
+        // Debug.Log("looggggg :" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
 
         if (selectedFriendItemPrefabParent.childCount > 0)
         {
-            // Debug.LogError("looggggg" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
+            //Debug.Log("looggggg" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
             if (!selectionScrollView.gameObject.activeSelf)
             {
-                //Debug.LogError("enable");
+                //Debug.Log("enable");
                 selectionScrollView.SetActive(true);
             }
         }
         else
         {
-            // Debug.LogError("desable");
+            //Debug.Log("desable");
             selectionScrollView.SetActive(false);
         }
         yield return new WaitForSeconds(0.05f);
@@ -663,7 +663,7 @@ public class MessageController : MonoBehaviour
             }
             if (CreateNewMessageUserList.Count > 0)
             {
-                Debug.LogError("group addFrindCallingScreenIndex:" + addFrindCallingScreenIndex);
+               Debug.Log("group addFrindCallingScreenIndex:" + addFrindCallingScreenIndex);
                 if (addFrindCallingScreenIndex == 1)
                 {
                     AddmeberOnGroup();
@@ -683,7 +683,7 @@ public class MessageController : MonoBehaviour
                     {
                         if (APIManager.Instance.allChatGetConversationRoot.data[i].receivedGroupId == 0)
                         {
-                            // Debug.LogError("id" + int.Parse(CreateNewMessageUserList[0]));
+                            //Debug.Log("id" + int.Parse(CreateNewMessageUserList[0]));
                             if (APIManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(CreateNewMessageUserList[0]))
                             {
                                 APIManager.Instance.RequestChatGetMessages(1, 50, APIManager.Instance.allChatGetConversationRoot.data[i].receiverId, 0, "");
@@ -798,7 +798,7 @@ public class MessageController : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-        Debug.LogError("setupGroupData:" + selectedFriendItemPrefabParent.childCount);
+       Debug.Log("setupGroupData:" + selectedFriendItemPrefabParent.childCount);
         for (int i = 0; i < selectedFriendItemPrefabParent.childCount; i++)
         {
             GameObject g = Instantiate(selectedFriendItemPrefabParent.GetChild(i).gameObject, setGroupMemberContainer);
@@ -811,11 +811,11 @@ public class MessageController : MonoBehaviour
     public void OnSetGroupNameBtnClick()//rik start
     {
         string tempStr = setGroupNameInputField.text.TrimStart(' ');
-        Debug.LogError("groupname str:" + tempStr + ":length:" + tempStr.Length);
+       Debug.Log("groupname str:" + tempStr + ":length:" + tempStr.Length);
 
         setGroupNameInputField.text = tempStr;
 
-        Debug.LogError("OnSetGroupNameBtnClick.......:" + setGroupNameInputField.text);
+       Debug.Log("OnSetGroupNameBtnClick.......:" + setGroupNameInputField.text);
         if (!string.IsNullOrEmpty(setGroupNameInputField.text))
         {
             if (!string.IsNullOrEmpty(setGroupAvatarTempPath))
@@ -834,7 +834,7 @@ public class MessageController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Please enter group name");
+           Debug.Log("Please enter group name");
 
             if (groupnameErrorCo != null)
             {
@@ -875,7 +875,7 @@ public class MessageController : MonoBehaviour
         }
 
         CreateMemberString(CreateNewMessageUserList);
-        Debug.LogError("Create New Group:" + setGroupNameInputField.text + " :GroupID:" + groupMembersStr + "   :AvatarUrl:" + avatarUrl);
+       Debug.Log("Create New Group:" + setGroupNameInputField.text + " :GroupID:" + groupMembersStr + "   :AvatarUrl:" + avatarUrl);
         isDirectCreateFirstTimeGroupName = setGroupNameInputField.text;
         APIManager.Instance.RequestChatCreateGroup(setGroupNameInputField.text, groupMembersStr, avatarUrl);
 
@@ -919,11 +919,11 @@ public class MessageController : MonoBehaviour
     public void UpdateGroupInfo(string avatarUrl)
     {
         string tempStr = setGroupNameInputField.text.TrimStart(' ');
-        Debug.LogError("groupname str:" + tempStr + ":length:" + tempStr.Length);
+       Debug.Log("groupname str:" + tempStr + ":length:" + tempStr.Length);
 
         setGroupNameInputField.text = tempStr;
 
-        Debug.LogError("UpdateGroupInfo.......:" + setGroupNameInputField.text);
+       Debug.Log("UpdateGroupInfo.......:" + setGroupNameInputField.text);
         if (!string.IsNullOrEmpty(setGroupNameInputField.text))
         {
             LoaderShow(true);//active api loader.
@@ -935,7 +935,7 @@ public class MessageController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Please enter group name");
+           Debug.Log("Please enter group name");
 
             if (groupnameErrorCo != null)
             {
@@ -956,7 +956,7 @@ public class MessageController : MonoBehaviour
 
             if (AssetCache.Instance.HasFile(setGroupAvatarTempFilename))
             {
-                Debug.LogError("IOS update Group Avatar Delete");
+               Debug.Log("IOS update Group Avatar Delete");
                 AssetCache.Instance.DeleteAsset(setGroupAvatarTempFilename);
             }
 
@@ -1104,13 +1104,13 @@ public class MessageController : MonoBehaviour
 
                 setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnPickGroupAvatarFromGellery path: " + path);
+               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("OnPickGroupAvatarFromGellery FileName: " + fileName);
+               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -1118,7 +1118,7 @@ public class MessageController : MonoBehaviour
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-                Debug.LogError("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+               Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
                 setGroupAvatarTempPath = filePath;
                 setGroupAvatarTempFilename = fileName;
@@ -1154,13 +1154,13 @@ public class MessageController : MonoBehaviour
 
                 setGroupTempAvatarTexture = texture;
 
-                Debug.LogError("OnGroupAvatarTakePicture Camera ImagePath : " + path);
+               Debug.Log("OnGroupAvatarTakePicture Camera ImagePath : " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("Camera filename : " + fileName);
+               Debug.Log("Camera filename : " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -1168,7 +1168,7 @@ public class MessageController : MonoBehaviour
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-                Debug.LogError("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+               Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
                 setGroupAvatarTempPath = filePath;
                 setGroupAvatarTempFilename = fileName;
@@ -1252,27 +1252,27 @@ public class MessageController : MonoBehaviour
     public bool OnClcikSendMessageButtonbool = false;
     public void OnClcikSendMessageButton(int index)
     {
-        Debug.LogError("OnSend Button click:" + OnClcikSendMessageButtonbool);
+       Debug.Log("OnSend Button click:" + OnClcikSendMessageButtonbool);
         if (OnClcikSendMessageButtonbool)
         {
             return;
         }
         OnClcikSendMessageButtonbool = true;
         APIManager.Instance.r_isCreateMessage = true;
-        Debug.LogError("isDirectMessage : " + isDirectMessage);
+       Debug.Log("isDirectMessage : " + isDirectMessage);
         if (isDirectMessage)
         {
-            Debug.LogError("isDirectMessageisDirectMessage : " + isDirectMessage);
-            Debug.LogError("count : " + CreateNewMessageUserList.Count);
+           Debug.Log("isDirectMessageisDirectMessage : " + isDirectMessage);
+           Debug.Log("count : " + CreateNewMessageUserList.Count);
             if (CreateNewMessageUserList.Count > 0)
             {
                 if (CreateNewMessageUserList.Count > 1)
                 {
-                    Debug.LogError("counts : " + CreateNewMessageUserList.Count);
+                   Debug.Log("counts : " + CreateNewMessageUserList.Count);
                     CreateMemberString(CreateNewMessageUserList);
-                    Debug.LogError("id : " + APIManager.Instance.ChatCreateGroupRoot.data.id);
+                   Debug.Log("id : " + APIManager.Instance.ChatCreateGroupRoot.data.id);
                     // APIManager.Instance.RequestChatCreateGroup("New Group", groupMembersStr);
-                    Debug.LogError("group iD" + APIManager.Instance.ChatCreateGroupRoot.data.id);
+                   Debug.Log("group iD" + APIManager.Instance.ChatCreateGroupRoot.data.id);
                     //APIManager.Instance.RequestChatCreateMessage(0, APIManager.Instance.ChatCreateGroupRoot.data.id, typeMessageText.text, "", "");
                     APIManager.Instance.RequestChatCreateMessage(0, APIManager.Instance.ChatCreateGroupRoot.data.id, chatTypeMessageInputfield.RichText, "", "");
                     OnClcikSendMessageButtonbool = true;
@@ -1293,8 +1293,8 @@ public class MessageController : MonoBehaviour
         {
             if (allChatGetConversationDatum.receivedGroupId != 0)
             {
-                Debug.LogError("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + chatTypeMessageInputfield.RichText);
-                //Debug.LogError("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + typeMessageText.text + "string :" + "");
+               Debug.Log("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + chatTypeMessageInputfield.RichText);
+                //Debug.Log("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + typeMessageText.text + "string :" + "");
                 //APIManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, typeMessageText.text, "", "");
                 APIManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, chatTypeMessageInputfield.RichText, "", "");
             }
@@ -1310,14 +1310,14 @@ public class MessageController : MonoBehaviour
                     APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, chatTypeMessageInputfield.RichText, "", "");
                     //APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, typeMessageText.text, "", "");
                 }
-                //Debug.LogError("id : " + allChatGetConversationDatum.receiverId + "msg: " + typeMessageText.text + "string :" + "");
-                Debug.LogError("id : " + allChatGetConversationDatum.receiverId + "msg: " + chatTypeMessageInputfield.RichText);
+                //Debug.Log("id : " + allChatGetConversationDatum.receiverId + "msg: " + typeMessageText.text + "string :" + "");
+               Debug.Log("id : " + allChatGetConversationDatum.receiverId + "msg: " + chatTypeMessageInputfield.RichText);
             }
         }
     }
     public void ApiPagination(Vector2 scrollPos)
     {
-        //Debug.LogError("ApiPagination Pos:" + scrollPos.y);
+        //Debug.Log("ApiPagination Pos:" + scrollPos.y);
         if (scrollPos.y > 0.9 && !isChatDataLoaded && allChatGetConversationDatum != null)//rik last condition added
         {
             isChatDataLoaded = true;
@@ -1325,15 +1325,15 @@ public class MessageController : MonoBehaviour
             //if (currentConversationData.allChatGetConversationDatum.receivedGroupId != 0)//rik
             if (allChatGetConversationDatum.receivedGroupId != 0)
             {
-                //   Debug.LogError("receivedGroupId" + APIManager.Instance.AllChatCreateMessageRoot.data.receivedGroupId);
+                //  Debug.Log("receivedGroupId" + APIManager.Instance.AllChatCreateMessageRoot.data.receivedGroupId);
                 //APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, currentConversationData.allChatGetConversationDatum.receivedGroupId);//rik
                 APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, allChatGetConversationDatum.receivedGroupId, "");
             }
             else
             {
-                // Debug.LogError("currentChatPage " + currentChatPage);
-                //  Debug.LogError("receiverId " + currentConversationData.allChatGetConversationDatum.receiverId);
-                //  Debug.LogError("senderId " + currentConversationData.allChatGetConversationDatum.senderId);
+                //Debug.Log("currentChatPage " + currentChatPage);
+                // Debug.Log("receiverId " + currentConversationData.allChatGetConversationDatum.receiverId);
+                // Debug.Log("senderId " + currentConversationData.allChatGetConversationDatum.senderId);
                 //if (currentConversationData.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)//rik
                 if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
                 {
@@ -1353,7 +1353,7 @@ public class MessageController : MonoBehaviour
     public bool isVideo = false;
     public void OnShowChatVideoOrImage(Sprite imageSP, MediaPlayer currentMediaPlayer)
     {
-        Debug.LogError("on chat view image or video");
+       Debug.Log("on chat view image or video");
         if (imageSP != null)
         {
             isVideo = false;
@@ -1412,7 +1412,7 @@ public class MessageController : MonoBehaviour
                     Debug.Log("Couldn't load texture from " + path);
                     return;
                 }
-                Debug.LogError("ImagePath : " + path);
+               Debug.Log("ImagePath : " + path);
                 attechmentstr = "[" + attechmentArraystr + path + attechmentArraystr + "]";
                 APIManager.Instance.r_isCreateMessage = true;
 
@@ -1420,7 +1420,7 @@ public class MessageController : MonoBehaviour
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("filename : " + fileName);
+               Debug.Log("filename : " + fileName);
 
                 AWSHandler.Instance.PostObject(path, fileName, "true");
             }
@@ -1450,7 +1450,7 @@ public class MessageController : MonoBehaviour
                         case NativeGallery.MediaType.Video:
                             long fileSizeibBytes = GetFileSize(path);
                             long fileSizeibMbs = fileSizeibBytes / (1024 * 1024);
-                            Debug.LogError("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
+                           Debug.Log("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
                             if (fileSizeibMbs > 100)//check video file size and upload upto 50MG only.......
                             {
                                 SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 100MB");
@@ -1489,7 +1489,7 @@ public class MessageController : MonoBehaviour
 
                     //string fileName = pathArry[pathArry.Length - 1];
                     string fileName = Path.GetFileName(path);
-                    Debug.LogError("Pick Image Or Video Path: " + path + "  :Filename : " + fileName + "    :Iscompress:" + iscompress);
+                   Debug.Log("Pick Image Or Video Path: " + path + "  :Filename : " + fileName + "    :Iscompress:" + iscompress);
 
                     AWSHandler.Instance.PostObject(path, (Time.time + fileName), iscompress);
                 }
@@ -1545,7 +1545,7 @@ public class MessageController : MonoBehaviour
                     return;
                 }
 
-                //Debug.LogError("Camera ImagePath : " + path);
+                //Debug.Log("Camera ImagePath : " + path);
                 attechmentstr = "[" + attechmentArraystr + path + attechmentArraystr + "]";
                 APIManager.Instance.r_isCreateMessage = true;
 
@@ -1553,20 +1553,20 @@ public class MessageController : MonoBehaviour
                 //string fileName = pathArry[pathArry.Length - 1];
 
                 string fileName = Path.GetFileName(path);
-                //Debug.LogError("Camera filename : " + fileName);
+                //Debug.Log("Camera filename : " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                //Debug.LogError("Camera filename11212 : " + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+                //Debug.Log("Camera filename11212 : " + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
                 tempRawImg.texture = texture;
                 byte[] bytes = texture.EncodeToPNG();
-                //Debug.LogError("camera total bytes:" + bytes);
+                //Debug.Log("camera total bytes:" + bytes);
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName + "png");
 
-                Debug.LogError("Camera File Path:" + path + "   :SavePath:" + filePath + "  :fileName:" + fileName);
+               Debug.Log("Camera File Path:" + path + "   :SavePath:" + filePath + "  :fileName:" + fileName);
                 /*string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
                 if (!Directory.Exists(saveDir))
                 {
@@ -1607,7 +1607,7 @@ public class MessageController : MonoBehaviour
     {
         if (allChatGetConversationDatum == null || allChatGetConversationDatum.id == 0 && allChatGetConversationDatum.receiverId == 0 && allChatGetConversationDatum.receivedGroupId == 0 && allChatGetConversationDatum.senderId == 0)
         {
-            Debug.LogError("Attachment Data Is null");
+           Debug.Log("Attachment Data Is null");
             chatShareAttechmentparent.gameObject.SetActive(false);
             APIController.Instance.SetChatMember();
         }
@@ -1635,11 +1635,11 @@ public class MessageController : MonoBehaviour
     public void MessageDetailsSceenLeaveChatActive()
     {
         //check for group or personal.......
-        //Debug.LogError("allChatGetConversationDatum:" + allChatGetConversationDatum.group.name);        
+        //Debug.Log("allChatGetConversationDatum:" + allChatGetConversationDatum.group.name);        
 
         if (allChatGetConversationDatum != null)
         {
-            Debug.LogError("MessageDetailsSceenLeaveChatActive allChatGetConversationDatum not null");
+           Debug.Log("MessageDetailsSceenLeaveChatActive allChatGetConversationDatum not null");
             if (string.IsNullOrEmpty(allChatGetConversationDatum.group.name))
             {
                 for (int i = 0; i < messageDetailsLeaveGroupFalseObjList.Count; i++)
@@ -1668,7 +1668,7 @@ public class MessageController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("MessageDetailsSceenLeaveChatActive allChatGetConversationDatum null");
+           Debug.Log("MessageDetailsSceenLeaveChatActive allChatGetConversationDatum null");
             for (int i = 0; i < messageDetailsLeaveGroupFalseObjList.Count; i++)
             {
                 messageDetailsLeaveGroupFalseObjList[i].SetActive(false);
@@ -1699,7 +1699,7 @@ public class MessageController : MonoBehaviour
     //this method is used to details screen back button click.......
     public void OnClickDetailScreenBackButton()
     {
-        Debug.LogError("click");
+       Debug.Log("click");
         MessageDetailScreen.SetActive(false);
         ChatScreen.SetActive(true);
         foreach (Transform item in chatShareAttechmentparent)
@@ -1743,7 +1743,7 @@ public class MessageController : MonoBehaviour
     public bool isLeaveGroup = false;
     public void OnClickLeaveTheChatButton()
     {
-        Debug.LogError("OnLeaveChat calling.......:" + allChatGetConversationDatum.group.id);
+       Debug.Log("OnLeaveChat calling.......:" + allChatGetConversationDatum.group.id);
         //calling leave the api here.......
         APIManager.Instance.RequestLeaveTheChat(allChatGetConversationDatum.group.id.ToString(), "DetailsScreen");
     }
@@ -1754,7 +1754,7 @@ public class MessageController : MonoBehaviour
         {
             for (int j = 0; j < allChatGetConversationDatum.group.groupUsers.Count; j++)
             {
-                Debug.LogError("after leave id:" + allChatGetConversationDatum.group.groupUsers[j].id + "    user:" + groupLeaveResponceRoot.userList[i]);
+               Debug.Log("after leave id:" + allChatGetConversationDatum.group.groupUsers[j].id + "    user:" + groupLeaveResponceRoot.userList[i]);
                 if (allChatGetConversationDatum.group.groupUsers[j].id == groupLeaveResponceRoot.userList[i])
                 {
                     allChatGetConversationDatum.group.groupUsers.Remove(allChatGetConversationDatum.group.groupUsers[j]);
@@ -1827,10 +1827,10 @@ public class MessageController : MonoBehaviour
 
     public void SaveAttachmentDetailsSetup(int index)
     {
-        //Debug.LogError("SaveAttachmentDetailsSetup.......:" + index);
+        //Debug.Log("SaveAttachmentDetailsSetup.......:" + index);
         saveAttachmentSenderNameText.text = APIManager.Instance.AllChatAttachmentsRoot.data.rows[index].message.messageRecipient.sender.name;
         DateTime today = TimeZoneInfo.ConvertTimeFromUtc(APIManager.Instance.AllChatAttachmentsRoot.data.rows[index].updatedAt, TimeZoneInfo.Local);
-        //Debug.LogError("Uploaded Time" + today.Day + " " + today.ToString("MMM") + " " + today.Year);
+        //Debug.Log("Uploaded Time" + today.Day + " " + today.ToString("MMM") + " " + today.Year);
         string dateSTR = today.Day + " " + today.ToString("MMM") + " " + today.Year;
         saveAttachmentDateTimeText.text = dateSTR;
     }
@@ -1890,18 +1890,18 @@ public class MessageController : MonoBehaviour
             {
                 if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group.createdBy == APIManager.Instance.userId)//group admin is this user.......
                 {
-                    Debug.LogError("delete group chat calling.......");
+                   Debug.Log("delete group chat calling.......");
                     APIManager.Instance.RequestDeleteChatGroup(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId, "ConversationScreen");
                 }
                 else//group admin is not this user.......
                 {
-                    Debug.LogError("Leave Group calling.......");
+                   Debug.Log("Leave Group calling.......");
                     APIManager.Instance.RequestLeaveTheChat(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId.ToString(), "ConversationScreen");
                 }
             }
             else//one to one conversation.......
             {
-                Debug.LogError("delete one to one conversation calling.......");
+               Debug.Log("delete one to one conversation calling.......");
                 APIManager.Instance.RequestDeleteConversation(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.id);
             }
         }
@@ -1912,7 +1912,7 @@ public class MessageController : MonoBehaviour
     {
         if (deleteConfirmationCurrentConversationDataScript != null)
         {
-            Debug.LogError("DeleteConversationApiResponseSuccess.......");
+           Debug.Log("DeleteConversationApiResponseSuccess.......");
             if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum != null)
             {
                 searchManagerAllConversation.allConversationDatasList.Remove(deleteConfirmationCurrentConversationDataScript);
@@ -1920,7 +1920,7 @@ public class MessageController : MonoBehaviour
                 {
                     int index = APIManager.Instance.allChatGetConversationRoot.data.IndexOf(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
                     APIManager.Instance.allChatGetConversationRoot.data.Remove(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
-                    Debug.LogError("Index:" + index);
+                   Debug.Log("Index:" + index);
                     if (index >= 0)
                     {
                         APIController.Instance.allConversationList.RemoveAt(index);
@@ -1946,7 +1946,7 @@ public class MessageController : MonoBehaviour
             isLeaveGroup = true;
             //after leave group then create leave user msg on this group.......
             APIManager.Instance.r_isCreateMessage = true;
-            Debug.LogError("DeleteConversationWithLeaveGroupApiResponseSuccess removed User Name:" + etc.user.name);
+           Debug.Log("DeleteConversationWithLeaveGroupApiResponseSuccess removed User Name:" + etc.user.name);
             string messageStr = etc.user.name + " Left";
             APIManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");
 
@@ -1967,7 +1967,7 @@ public class MessageController : MonoBehaviour
     //this method is used to details screen delete group button click.......
     public void OnClickDeleteGroupChatButton()
     {
-        Debug.LogError("Detele group button click.......");
+       Debug.Log("Detele group button click.......");
         APIManager.Instance.RequestDeleteChatGroup(allChatGetConversationDatum.receivedGroupId, "DetailsScreen");
     }
 
@@ -1984,7 +1984,7 @@ public class MessageController : MonoBehaviour
         /*MessageController.Instance.isLeaveGroup = true;
         //after leave group then create leave user msg on this group.......
         APIManager.Instance.r_isCreateMessage = true;
-        Debug.LogError("removed User Name:" + etc.user.name);
+       Debug.Log("removed User Name:" + etc.user.name);
         string messageStr = etc.user.name + " Left";
         APIManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");*/
     }
@@ -1993,11 +1993,11 @@ public class MessageController : MonoBehaviour
     #region Get Image From AWS
     public void GetImageFromAWS(string key, Image mainImage)
     {
-        //Debug.LogError("GetImageFromAWS key:" + key);
+        //Debug.Log("GetImageFromAWS key:" + key);
         GetExtentionType(key);
         if (AssetCache.Instance.HasFile(key))
         {
-            //Debug.LogError("Image Available on Disk");
+            //Debug.Log("Image Available on Disk");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
             return;
         }
@@ -2008,7 +2008,7 @@ public class MessageController : MonoBehaviour
                 if (success)
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
-                    //Debug.LogError("Save and Image download success");
+                    //Debug.Log("Save and Image download success");
                 }
             });
         }
@@ -2034,7 +2034,7 @@ public class MessageController : MonoBehaviour
         }
 
         extension = extension.ToLowerInvariant();
-        //Debug.LogError("ExtentionType " + extension);
+        //Debug.Log("ExtentionType " + extension);
         if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
         {
             currentExtention = ExtentionType.Image;
@@ -2086,11 +2086,11 @@ public class MessageController : MonoBehaviour
                     setGroupTempAvatarTexture = croppedImage;
                     byte[] bytes = croppedImage.EncodeToPNG();
                     File.WriteAllBytes(path, bytes);
-                    Debug.LogError("File SAVE");
+                   Debug.Log("File SAVE");
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError(e);
+                   Debug.Log(e);
                 }
             }
             else

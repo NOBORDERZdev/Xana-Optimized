@@ -98,7 +98,7 @@ namespace PullToRefresh
             //m_ScrollRect.onValueChanged.AddListener(OnScroll);
             loaderStartPos = loaderObj.GetComponent<RectTransform>().anchoredPosition;
 
-            //Debug.LogError("InitialPos:" + m_InitialPosition + ":Name:"+this.transform.parent.parent.name);
+            //Debug.Log("InitialPos:" + m_InitialPosition + ":Name:"+this.transform.parent.parent.name);
 
         }
 
@@ -108,12 +108,12 @@ namespace PullToRefresh
             if (m_ScrollRect.isClaimedDragging)
             {
                 var distance = m_InitialPosition - GetContentAnchoredPosition();
-                //Debug.LogError("Distance:" + distance + ":m_InitialPosition:"+ m_InitialPosition +":anchor:"+ GetContentAnchoredPosition());
+                //Debug.Log("Distance:" + distance + ":m_InitialPosition:"+ m_InitialPosition +":anchor:"+ GetContentAnchoredPosition());
                 if (distance >= -1f)
                 {
                     var tempDistance = m_ScrollRect.m_InitialPosition - m_ScrollRect.currentDragPos;
                     float tempPos = tempDistance / m_PullDistanceRequiredRefresh;
-                    //Debug.LogError("tempPos:" + tempPos + ":InitalPos:"+ m_ScrollRect.m_InitialPosition + ":CurrentPos:"+ m_ScrollRect.currentDragPos);
+                    //Debug.Log("tempPos:" + tempPos + ":InitalPos:"+ m_ScrollRect.m_InitialPosition + ":CurrentPos:"+ m_ScrollRect.currentDragPos);
                     
                     OnScroll1(tempPos, tempDistance);
                 }
@@ -151,7 +151,7 @@ namespace PullToRefresh
 
         private void OnScroll1(float distance , float Ypos)
         {
-            //Debug.LogError("Distance:" + distance + ":Ypos:" + Ypos);
+            //Debug.Log("Distance:" + distance + ":Ypos:" + Ypos);
             /*if (loaderObj.activeSelf)
             {
                 FeedUIController.Instance.fingerTouch.SetActive(false);
@@ -221,7 +221,7 @@ namespace PullToRefresh
             {
                 m_IsRefreshing = true;
                 //m_OnRefresh.Invoke();
-                Debug.LogError("gggg name:" + this.gameObject.name);
+               Debug.Log("gggg name:" + this.gameObject.name);
                 LoaderController.Instance.m_UIRefreshControl = this;
                 LoaderController.Instance.RefreshItems();
             }

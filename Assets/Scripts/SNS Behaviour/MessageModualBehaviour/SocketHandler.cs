@@ -34,12 +34,12 @@ public class SocketHandler : MonoBehaviour
     void Start()
     {
         address = ConstantsGod.API_BASEURL;
-        //Debug.LogError("Address:" + address);
+        //Debug.Log("Address:" + address);
         if (!address.EndsWith("/"))
         {
             address = address + "/";
         }
-        Debug.LogError("Socket Handler Address:" + address);
+        Debug.Log("<color = red> Socket Handler Address:" + address + "</color>");
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
@@ -54,7 +54,7 @@ public class SocketHandler : MonoBehaviour
 
     void OnConnected(ConnectResponse resp)
     {
-        //Debug.LogError("SocketHandler OnConnected:"+isSNSFeedSocketEvent);
+        //Debug.Log("SocketHandler OnConnected:"+isSNSFeedSocketEvent);
         Manager.Socket.Emit("hi", "hiiii");
         if (!isSNSFeedSocketEvent)
         {
@@ -64,14 +64,14 @@ public class SocketHandler : MonoBehaviour
 
     void OnError(CustomError args)
     {
-        //Debug.LogError("SocketHandler OnError");
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+        //Debug.Log("SocketHandler OnError");
+       Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
 
     void Onresult(CustomError args)
     {
-        Debug.LogError("SocketHandler Onresult");
-        Debug.LogError(string.Format("Error: {0}", args.ToString()));
+       Debug.Log("SocketHandler Onresult");
+       Debug.Log(string.Format("Error: {0}", args.ToString()));
     }
 
     public void ResetListener()
@@ -101,12 +101,12 @@ public class SocketHandler : MonoBehaviour
         if (!this.gameObject.activeInHierarchy)
             return;
 
-        //Debug.LogError("Group delete response:" + s);
+        //Debug.Log("Group delete response:" + s);
         DeleteGroupRoot deleteGroupResponce = JsonConvert.DeserializeObject<DeleteGroupRoot>(s);
 
         if (MessageController.Instance.allChatGetConversationDatum != null)//user in chat or details screen show popup and ok press goto conversation screen and clear data 
         {
-            //Debug.LogError("GroupDeleted:" + MessageController.Instance.allChatGetConversationDatum.group.createdBy);
+            //Debug.Log("GroupDeleted:" + MessageController.Instance.allChatGetConversationDatum.group.createdBy);
             if(MessageController.Instance.allChatGetConversationDatum.receivedGroupId == deleteGroupResponce.groupId && MessageController.Instance.allChatGetConversationDatum.group.createdBy != APIManager.Instance.userId)
             {
                 MessageController.Instance.groupDeletedShowPopupForOtherUser.SetActive(true);
@@ -125,7 +125,7 @@ public class SocketHandler : MonoBehaviour
         if (!this.gameObject.activeInHierarchy)
             return;
 
-        //Debug.LogError("Group Leave Responce Data:" + s);
+        //Debug.Log("Group Leave Responce Data:" + s);
         leaveGroupResponce = JsonConvert.DeserializeObject<GroupLeaveResponceRoot>(s);
         MessageController.Instance.LeaveGroupAfterRemoveMemberFromCurrentConversation(leaveGroupResponce);
     }
@@ -135,7 +135,7 @@ public class SocketHandler : MonoBehaviour
         //if (!this.gameObject.activeInHierarchy)
             //return;
 
-        //Debug.LogError("socket Group Created Response Data:" + s);
+        //Debug.Log("socket Group Created Response Data:" + s);
         msgResponce = JsonConvert.DeserializeObject<SocketResponce>(s);
         for (int i = 0; i < msgResponce.userList.Count; i++)
         {
@@ -150,32 +150,32 @@ public class SocketHandler : MonoBehaviour
     bool isReconnectGetmessage = false;
     void OnGetMessageAfterReconnectSocket()
     {
-        //Debug.LogError("OnGetMessageAfterReconnectSocket0000000.......:"+ isReconnectGetmessage);
+        //Debug.Log("OnGetMessageAfterReconnectSocket0000000.......:"+ isReconnectGetmessage);
         if (!isReconnectGetmessage && MessageController.Instance != null && MessageController.Instance.allChatGetConversationDatum != null)
         {
             if (!MessageController.Instance.ChatScreen.activeSelf)
             {
-                //Debug.LogError("Refresh  Conversation call.......");
+                //Debug.Log("Refresh  Conversation call.......");
                 return;
             }
-            //Debug.LogError("OnGetMessageAfterReconnectSocket1111111.......");
-            // Debug.LogError("2");
+            //Debug.Log("OnGetMessageAfterReconnectSocket1111111.......");
+            //Debug.Log("2");
             if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
             {
-                //Debug.LogError("3");
+                //Debug.Log("3");
                 RequestChatGetMessagesSocket(1, 50, 0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId);
             }
             else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
             {
-                //Debug.LogError("4");
+                //Debug.Log("4");
                 if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
                 {
-                    // Debug.LogError("5");
+                    //Debug.Log("5");
                     RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.senderId, 0);
                 }
                 else
                 {
-                    //   Debug.LogError("6");
+                    //  Debug.Log("6");
                     RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.receiverId, 0);
                 }
             }
@@ -185,22 +185,22 @@ public class SocketHandler : MonoBehaviour
     //this method is used to message received response.......
     public void MessageReceivedResponse(string s)
     {
-        //Debug.LogError("socket MessageReceivedResponce Data:" + s + ":Name:"+this.transform.parent.parent.name);
+        //Debug.Log("socket MessageReceivedResponce Data:" + s + ":Name:"+this.transform.parent.parent.name);
         //if (!this.gameObject.activeInHierarchy)
             //return;
 
         //  APIManager.Instance.isCreateMessage = true;
         msgResponce = JsonConvert.DeserializeObject<SocketResponce>(s);
 
-        //Debug.LogError("MessageReceivedResponse:" + msgResponce.userList.Count);
+        //Debug.Log("MessageReceivedResponse:" + msgResponce.userList.Count);
         for (int i = 0; i < msgResponce.userList.Count; i++)
         {
-            //Debug.LogError("MessageReceivedResponce:"+msgResponce.userList[i]);
+            //Debug.Log("MessageReceivedResponce:"+msgResponce.userList[i]);
             if (int.Parse(msgResponce.userList[i]) == APIManager.Instance.userId)
             {
                 if (MessageController.Instance != null && !MessageController.Instance.ChatScreen.activeSelf)
                 {
-                    //Debug.LogError("Refresh  Conversation call.......");
+                    //Debug.Log("Refresh  Conversation call.......");
                     APIManager.Instance.RequestChatGetConversation();
                 }
 
@@ -209,23 +209,23 @@ public class SocketHandler : MonoBehaviour
 
                 if (MessageController.Instance.allChatGetConversationDatum != null)
                 {
-                    // Debug.LogError("2");
+                    //Debug.Log("2");
                     if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
                     {
-                        //Debug.LogError("3");
+                        //Debug.Log("3");
                         RequestChatGetMessagesSocket(1, 50, 0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId);
                     }
                     else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
                     {
-                        //Debug.LogError("4");
+                        //Debug.Log("4");
                         if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
                         {
-                            // Debug.LogError("5");
+                            //Debug.Log("5");
                             RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.senderId, 0);
                         }
                         else
                         {
-                            //   Debug.LogError("6");
+                            //  Debug.Log("6");
                             RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.receiverId, 0);
                         }
                     }
@@ -275,7 +275,7 @@ public class SocketHandler : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                //Debug.LogError("socket Message Chat: " + data);
+                //Debug.Log("socket Message Chat: " + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -299,7 +299,7 @@ public class SocketHandler : MonoBehaviour
     {
         if (!this.gameObject.activeInHierarchy)
             return;
-        Debug.LogError("Feed Comment response:" + s + ":Name:" + this.transform.parent.parent.name);
+        Debug.Log("Feed Comment response:" + s + ":Name:" + this.transform.parent.parent.name);
 
         FeedCommentSocketRoot feedCommentSocketRoot = JsonConvert.DeserializeObject<FeedCommentSocketRoot>(s);
 
@@ -310,12 +310,12 @@ public class SocketHandler : MonoBehaviour
     {
         if (!this.gameObject.activeInHierarchy)
             return;
-        Debug.LogError("Feed Like response:" + s + ":Name:" + this.transform.parent.parent.name);
+       Debug.Log("Feed Like response:" + s + ":Name:" + this.transform.parent.parent.name);
 
         FeedLikeSocketRoot feedLikeSocketRoot = JsonConvert.DeserializeObject<FeedLikeSocketRoot>(s);
-        Debug.LogError("feedLikeSocketRoot.createdBy" + feedLikeSocketRoot.createdBy );
-        Debug.LogError("APIManager.Instance.userId" + APIManager.Instance.userId);
-        Debug.LogError("APIManager.Instance.userId" + APIManager.Instance.userId);
+       Debug.Log("feedLikeSocketRoot.createdBy" + feedLikeSocketRoot.createdBy );
+       Debug.Log("APIManager.Instance.userId" + APIManager.Instance.userId);
+       Debug.Log("APIManager.Instance.userId" + APIManager.Instance.userId);
 
         //if (feedLikeSocketRoot.createdBy == APIManager.Instance.userId)
         //    return;

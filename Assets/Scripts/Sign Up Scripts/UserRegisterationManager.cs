@@ -215,7 +215,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
-              //  StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
 
@@ -394,7 +394,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-             Debug.LogError("not Logged in");
+            Debug.Log("not Logged in");
         }  
          /*
         if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
@@ -1078,7 +1078,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-                        Debug.LogError("show welcome");
+                        Debug.Log("show welcome");
                         PlayerPrefs.SetInt("shownWelcome", 1);
 
                         //ShowWelcomeClosed();
@@ -1086,7 +1086,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("show welcome else");
+                        Debug.Log("show welcome else");
                         LoggedIn = true;
                         GameManager.Instance.SignInSignUpCompleted();
                     }
@@ -1138,14 +1138,14 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 13:
                 {
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                    //if (PlayerPrefs.GetInt("WalletLogin") != 1)
-                    //{
-                    //    RegistrationCompletePanal.SetActive(true);
-                    //    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                    //}
-                    //if (shownWelcome)
-                    //    ShowWelcomeClosed();
+
+                    if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                    {
+                        RegistrationCompletePanal.SetActive(true);
+                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    }
+                    if (shownWelcome)
+                        ShowWelcomeClosed();
                     break;
                 }
             case 14:
@@ -1172,6 +1172,23 @@ public class UserRegisterationManager : MonoBehaviour
                     //    Password1_ForgetPasswrod.Text="";
                     //    Password2_ForgetPasswrod.Text="";
                     // Password1_ForgetPasswrod.SelectOtherField();
+                    break;
+                }
+            case 16:
+                {
+                    if (PlayerPrefs.GetInt("iSignup") == 1)
+                    {
+                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    }
+                    else {
+                        if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                        {
+                            RegistrationCompletePanal.SetActive(true);
+                            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        }
+                        if (shownWelcome)
+                            ShowWelcomeClosed();
+                     }
                     break;
                 }
         }
@@ -1258,7 +1275,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in set device token");
+               Debug.Log("Network error in set device token");
             }
             else
             {
@@ -1267,7 +1284,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        Debug.LogError("Success false in  in set device token");
+                       Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1307,7 +1324,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.LogError(request.downloadHandler.text);
+        Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
         //  print(request.GetRequestHeader("Authorization"));
         //  print(request.isDone);
         MyClassNewApi myObject1 = new MyClassNewApi();
@@ -1381,9 +1398,12 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
 
+        int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
+
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
+        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -1404,6 +1424,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return new WaitForSeconds(.1f);
         LoadingHandler.Instance.HideLoading();
         XanaConstants.xanaConstants.isCameraMan = false;
+        XanaConstants.xanaConstants.IsDeemoNFT = false;
         StoreManager.instance.CheckWhenUserLogin();
     }
 
@@ -1474,7 +1495,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.LogError(request.downloadHandler.text);
+        Debug.Log("<color = red>" + request.downloadHandler.text + "</color>");
         DeleteApiRes myObject1 = new DeleteApiRes();
         myObject1 = JsonUtility.FromJson<DeleteApiRes>(request.downloadHandler.text);
 
@@ -1948,7 +1969,7 @@ public class UserRegisterationManager : MonoBehaviour
                     else
                     {
                         //   print("Registration With Name Completed ");
-                        OpenUIPanal(13);
+                        OpenUIPanal(16);
                         GameManager.Instance.SignInSignUpCompleted();
                         usernamePanal.SetActive(false);
                         LoggedIn = true;
@@ -3134,7 +3155,7 @@ public class UserRegisterationManager : MonoBehaviour
         Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            Debug.LogError("User Already loged in set name api call.......");
+           Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3291,7 +3312,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in logout from other device");
+               Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3299,7 +3320,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                        Debug.LogError("Success false in logout from other device  " + obj_LogOut.msg);
+                       Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
@@ -3352,7 +3373,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (www.isHttpError || www.isNetworkError)
             {
 
-                //  Debug.LogError("Network Error");
+                // Debug.Log("Network Error");
                 errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                 errorTextEmail.GetComponent<Text>().text = www.error.ToUpper();
@@ -3526,7 +3547,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    Debug.LogError(myObject1.msg);
+                   Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3545,7 +3566,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("PlayerName", localUsername);
 
 
-                        OpenUIPanal(13);
+                        OpenUIPanal(16);
                         usernamePanal.SetActive(false);
                         LoggedIn = true;
                         //OpenUIPanal(6);  
@@ -3621,7 +3642,7 @@ public class UserRegisterationManager : MonoBehaviour
                 Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    Debug.LogError(myObject1.msg);
+                   Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -4093,7 +4114,7 @@ public class UserRegisterationManager : MonoBehaviour
         //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        Debug.LogError("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
+       Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4102,7 +4123,7 @@ public class UserRegisterationManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.LogError("nft response :- " + url + request.downloadHandler.text);
+       Debug.Log("nft response :- " + url + request.downloadHandler.text);
 
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
@@ -4121,7 +4142,7 @@ public class UserRegisterationManager : MonoBehaviour
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                        Debug.LogError("---- " + s + "----" + ReturnNftRole(s));
+                       Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4173,7 +4194,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.LogError("Network error in set device token");
+                Debug.Log("<color = red> Network error in set device token </color>");
             }
             else
             {
@@ -4182,7 +4203,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                        Debug.LogError("Success false in  in set device token");
+                       Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -4244,7 +4265,7 @@ public class UserRegisterationManager : MonoBehaviour
         // }
         // else
         // {
-        //     Debug.LogError("NetWOrkerror DO Somethin");
+        //    Debug.Log("NetWOrkerror DO Somethin");
         ////     print(myObject1.msg + " | success: " + myObject1.success);
         // }
         yield return null;

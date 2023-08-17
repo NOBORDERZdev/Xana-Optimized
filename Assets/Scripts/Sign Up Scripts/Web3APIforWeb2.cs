@@ -110,7 +110,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         _OwnedNFTDataObj.NewRootInstance();
         if (request.downloadHandler.text.Contains("Invalid key"))
         {
-            Debug.LogError("hey Invalid NFT list");
+            Debug.Log("<color = red> hey Invalid NFT list </color>");
         }
         else
         {
@@ -138,10 +138,6 @@ public class Web3APIforWeb2 : MonoBehaviour
                     if (NFTname.Contains("deemo"))
                     {
                         XanaConstants.xanaConstants.IsDeemoNFT = true;
-                    }
-                    else
-                    {
-                        XanaConstants.xanaConstants.IsDeemoNFT = false;
                     }
                     if (NFTname.Contains("astroboy"))
                     {

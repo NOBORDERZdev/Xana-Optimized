@@ -83,6 +83,9 @@ public class JJVideoAndImage : MonoBehaviour
 
         StartCoroutine(GetSprite(imageLink, (response) =>
         {
+            if (JjInfoManager.Instance && response != null)
+                JjInfoManager.Instance.NFTLoadedSprites.Add(response);
+
             if (ApplyImageOnTexture && imageMesh!= null)
             {
                 imageMesh.material= imageMat;
@@ -213,7 +216,7 @@ public class JJVideoAndImage : MonoBehaviour
         }
     }
 
-
+    RenderTexture renderTexture_temp;
     void SetVideo()
     {
         if (imgVideo16x9)
@@ -240,7 +243,7 @@ public class JJVideoAndImage : MonoBehaviour
         else if(_videoType == VideoTypeRes.prerecorded && preRecordedPlayer)
         {
             RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
-
+            renderTexture_temp = renderTexture;
 
                 imgVideo16x9.GetComponent<RawImage>().texture= renderTexture;
                 imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
@@ -275,6 +278,7 @@ public class JJVideoAndImage : MonoBehaviour
                     imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                     RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
+                    renderTexture_temp = renderTexture;
                     imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
@@ -289,6 +293,7 @@ public class JJVideoAndImage : MonoBehaviour
                     imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                     RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_9x16);
+                    renderTexture_temp = renderTexture;
                     imgVideo9x16.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo9x16.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo9x16.GetComponent<VideoPlayer>().url = videoLink;
@@ -303,6 +308,7 @@ public class JJVideoAndImage : MonoBehaviour
                     imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                     RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_1x1);
+                    renderTexture_temp = renderTexture;
                     imgVideo1x1.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo1x1.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo1x1.GetComponent<VideoPlayer>().url = videoLink;
@@ -317,6 +323,7 @@ public class JJVideoAndImage : MonoBehaviour
                     imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                     RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_4x3);
+                    renderTexture_temp = renderTexture;
                     imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
@@ -324,6 +331,8 @@ public class JJVideoAndImage : MonoBehaviour
                 }
             }
         }
+        if (JjInfoManager.Instance && renderTexture_temp != null)
+            JjInfoManager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
     }
 
     public void OpenWorldInfo()

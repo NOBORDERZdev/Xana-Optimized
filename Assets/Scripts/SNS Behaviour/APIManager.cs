@@ -55,7 +55,7 @@ public class APIManager : MonoBehaviour
     private void OnEnable()
     {
         Instance = this;
-        Debug.LogError("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        Debug.Log("<color=red> APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName") + "</color>");
         if (!isTestDefaultToken)
         {
             if (userAuthorizeToken != ConstantsGod.AUTH_TOKEN)
@@ -94,7 +94,7 @@ public class APIManager : MonoBehaviour
         }
         else
         {
-            // Debug.LogError("dfdfsd");
+            //Debug.Log("dfdfsd");
             RequestGetAllUsersWithFeeds(1, 20);
             RequestGetFeedsByFollowingUser(1, 20);
         }*/
@@ -102,7 +102,7 @@ public class APIManager : MonoBehaviour
 
     public void OnFeedAPiCalling(string callingFrom = "")
     {
-        Debug.LogError("OnFeedAPiCalling");
+       Debug.Log("OnFeedAPiCalling");
         RequestGetAllUsersWithFeeds(1, 10, callingFrom);
 
         if (followingTabCo != null)
@@ -123,7 +123,7 @@ public class APIManager : MonoBehaviour
         using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedData.json"))
         {
             string json = r.ReadToEnd();
-            //Debug.LogError("json " + json);
+            //Debug.Log("json " + json);
             StartCoroutine(SaveAndLoadJson(json, 0, 1, ""));
             //  FeedUIController.Instance.isDataLoad = true;
         }
@@ -134,7 +134,7 @@ public class APIManager : MonoBehaviour
         using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedFollowingData.json"))
         {
             string json = r.ReadToEnd();
-            //Debug.LogError("json " + json);
+            //Debug.Log("json " + json);
             StartCoroutine(SaveAndLoadJsonFollowingFeed(json, 0, 1, ""));
             //  FeedUIController.Instance.isDataLoad = true;
         }
@@ -187,9 +187,9 @@ public class APIManager : MonoBehaviour
             }
             else
             {
-                //Debug.LogError("Form upload complete! IERequestGetAllUsersWithFeeds pageNum:" + pageNum + "   :pageSize:" + pageSize);
+                //Debug.Log("Form upload complete! IERequestGetAllUsersWithFeeds pageNum:" + pageNum + "   :pageSize:" + pageSize);
                 string data = www.downloadHandler.text;
-                //Debug.LogError("IERequestGetAllUsersWithFeeds PageNum:" + pageNum + "    :PageSize:" + pageSize + "     :Data:" + data);
+                //Debug.Log("IERequestGetAllUsersWithFeeds PageNum:" + pageNum + "    :PageSize:" + pageSize + "     :Data:" + data);
                 // FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
 
                 StartCoroutine(SaveAndLoadJson(data, 1, pageNum, callingFrom));
@@ -239,7 +239,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("Form upload complete! IERequestGetFeedsByFollowingUser pageNum:" + pageNum + "   :pageSize:" + pageSize + " :Data:" + data);
+               Debug.Log("Form upload complete! IERequestGetFeedsByFollowingUser pageNum:" + pageNum + "   :pageSize:" + pageSize + " :Data:" + data);
                 //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
                 //  followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data);
                 // APIController.Instance.OnGetAllFeedForFollowingTab();
@@ -270,7 +270,7 @@ public class APIManager : MonoBehaviour
                 allhotFeedRoot.data.rows.Add(hotFeedRoot.data.rows[i]);
             }
         }
-        //Debug.LogError("root data count:" + root.data.rows.Count + "    :Caller:"+caller);
+        //Debug.Log("root data count:" + root.data.rows.Count + "    :Caller:"+caller);
         /*if (caller == 0)
         {
             for (int i = 0; i < root.data.rows.Count; i++)
@@ -311,7 +311,7 @@ public class APIManager : MonoBehaviour
 
         ///////////////////////////////////////////////
         APIController.Instance.AllUsersWithHotFeeds(callingFrom);
-        // Debug.LogError("Feed Load");
+        //Debug.Log("Feed Load");
         FeedUIController.Instance.myPostCurrentPage += 1;
         RequestGetFeedsByUserId(userId, (FeedUIController.Instance.myPostCurrentPage), 10, "FeedPage");
         yield return new WaitForSeconds(1f);
@@ -323,8 +323,8 @@ public class APIManager : MonoBehaviour
          {
              string feedData = JsonUtility.ToJson(hotSavejsonList);
              File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
-             //Debug.LogError("path " + Application.persistentDataPath + "/FeedData.json");
-             //Debug.LogError("json  " + feedData);
+             //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
+             //Debug.Log("json  " + feedData);
          }*/
     }
 
@@ -345,7 +345,7 @@ public class APIManager : MonoBehaviour
     {
         AllUserWithFeedRow allUserWithFeedRow = allUserRootList[index];
         bool isFindSuccess = false;
-        //Debug.LogError("HotAndDiscoverSaveAndUpdateJson:" + allUserWithFeedRow.id + "   :feedId:" + feedId);
+        //Debug.Log("HotAndDiscoverSaveAndUpdateJson:" + allUserWithFeedRow.id + "   :feedId:" + feedId);
         if (allUserWithFeedRow.id == feedId)
         {
             isFindSuccess = true;
@@ -361,7 +361,7 @@ public class APIManager : MonoBehaviour
             }
         }
 
-        //Debug.LogError("Find Success:" + isFindSuccess + "   :id:" + allUserWithFeedRow.id);
+        //Debug.Log("Find Success:" + isFindSuccess + "   :id:" + allUserWithFeedRow.id);
         if (isFindSuccess)
         {
             if (hotSaveRootList.Contains(allUserWithFeedRow))
@@ -375,7 +375,7 @@ public class APIManager : MonoBehaviour
                 {
                     string feedData = JsonUtility.ToJson(hotSavejsonList);
                     File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
-                    //Debug.LogError("path " + Application.persistentDataPath + "/FeedData.json");
+                    //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
                 }
             }
             allUserRootList.Remove(allUserWithFeedRow);
@@ -390,7 +390,7 @@ public class APIManager : MonoBehaviour
             MissingMemberHandling = MissingMemberHandling.Ignore
         };
         followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data, settings);
-        //Debug.LogError("following user root data count:" + followingUserRoot.Data.Rows.Count + "    :Caller:" + caller);
+        //Debug.Log("following user root data count:" + followingUserRoot.Data.Rows.Count + "    :Caller:" + caller);
         if (caller == 0)
         {
             for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
@@ -402,9 +402,9 @@ public class APIManager : MonoBehaviour
         {
             for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
             {
-                //  Debug.LogError("id :" + followingUserRootList[i].Id + "DataId" + followingUserRoot.Data.Rows[i].Id);
+                // Debug.Log("id :" + followingUserRootList[i].Id + "DataId" + followingUserRoot.Data.Rows[i].Id);
                 List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.Id == followingUserRoot.Data.Rows[i].Id).ToList();
-                //   Debug.LogError("matches" + matches.Count);
+                //  Debug.Log("matches" + matches.Count);
                 for (int k = 0; k < matches.Count; k++)
                 {
                     allFollowingUserRootList.Remove(matches[k]);
@@ -432,8 +432,8 @@ public class APIManager : MonoBehaviour
         {
             string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
             File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
-            //Debug.LogError("path " + Application.persistentDataPath + "/FeedFollowingData.json");
-            //Debug.LogError("json  " + feedData);
+            //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
+            //Debug.Log("json  " + feedData);
         }
     }
 
@@ -441,9 +441,9 @@ public class APIManager : MonoBehaviour
     {
         for (int i = 0; i < unFollowingUserList.Count; i++)
         {
-            //Debug.LogError("UmFollow Id:" + unFollowingUserList[i]);
+            //Debug.Log("UmFollow Id:" + unFollowingUserList[i]);
             List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.CreatedBy == unFollowingUserList[i]).ToList();
-            //Debug.LogError("matches" + matches.Count);
+            //Debug.Log("matches" + matches.Count);
             for (int k = 0; k < matches.Count; k++)
             {
                 APIController.Instance.RemoveFollowingItemAndResetData(matches[k].Id);
@@ -461,8 +461,8 @@ public class APIManager : MonoBehaviour
         {
             string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
             File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
-            //Debug.LogError("path " + Application.persistentDataPath + "/FeedFollowingData.json");
-            //Debug.LogError("json  " + feedData);
+            //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
+            //Debug.Log("json  " + feedData);
         }
 
         FeedUIController.Instance.unFollowedUserListForFollowingTab.Clear();//clear 
@@ -472,7 +472,7 @@ public class APIManager : MonoBehaviour
         //GC.Collect();
         if (FeedUIController.Instance.followingFeedTabContainer.childCount <= 0)
         {
-            //Debug.LogError("RequestGetFeedsByFollowingUser.......");
+            //Debug.Log("RequestGetFeedsByFollowingUser.......");
             RequestGetFeedsByFollowingUser(1, 10);
         }
         switch (callingFrom)
@@ -519,7 +519,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                //Debug.LogError("IERequestGetFeedsByUserId success data" + data);
+                //Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -590,7 +590,7 @@ public class APIManager : MonoBehaviour
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
                 //  FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
-                Debug.LogError("taggedFeedsByUserIdRoot" + data);
+               Debug.Log("taggedFeedsByUserIdRoot" + data);
                 taggedFeedsByUserIdRoot = JsonConvert.DeserializeObject<TaggedFeedsByUserIdRoot>(data);
                 StartCoroutine(OtherPlayerProfileData.Instance.AllTagFeed());
                 // Debug.Log(root.data.count);
@@ -630,7 +630,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("GetAllFollowing Data" + data);
+               Debug.Log("GetAllFollowing Data" + data);
                 allFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
 
                 switch (getFollowingFor)
@@ -667,7 +667,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Get Follower Success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("GetAllFollowers Data" + data);
+                Debug.Log("<color = red> GetAllFollowers Data" + data + "</color>");
                 AllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
 
                 switch (callingFrom)
@@ -685,7 +685,7 @@ public class APIManager : MonoBehaviour
     //this api is used to follow user.......
     public void RequestFollowAUser(string user_Id, string callingFrom)
     {
-        //Debug.LogError("RequestFollowAUser:" + user_Id + "    :Calling From:" + callingFrom);
+        //Debug.Log("RequestFollowAUser:" + user_Id + "    :Calling From:" + callingFrom);
         StartCoroutine(IERequestFollowAUser(user_Id, callingFrom));
     }
     public IEnumerator IERequestFollowAUser(string user_Id, string callingFrom)
@@ -710,7 +710,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("Follow User data:" + data + "   :Follow User ID:" + user_Id + ":CallingFrom:" + callingFrom);
+               Debug.Log("Follow User data:" + data + "   :Follow User ID:" + user_Id + ":CallingFrom:" + callingFrom);
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
@@ -766,7 +766,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("Un Follow a user data:" + data + "  :user id:" + user_Id + "   :CallingFrom:" + callingFrom);
+               Debug.Log("Un Follow a user data:" + data + "  :user id:" + user_Id + "   :CallingFrom:" + callingFrom);
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
@@ -821,7 +821,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("MakeFavouriteFollower data:" + data);
+               Debug.Log("MakeFavouriteFollower data:" + data);
                 // root = JsonUtility.FromJson<MakeAllFavouriteFollowerRoot>(data);
             }
         }
@@ -851,7 +851,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("GetAllFollowersFromProfile data:" + data);
+                Debug.Log("<color = red> GetAllFollowersFromProfile data:" + data + "</color>");
                 profileAllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
 
                 FeedUIController.Instance.ProfileGetAllFollower(pageNum);
@@ -881,7 +881,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("GetAllFollowingFromProfile data:" + data);
+                Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
                 profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
 
                 FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
@@ -895,12 +895,12 @@ public class APIManager : MonoBehaviour
     //this method is used to Comment button click and get comment list for current feed.......
     public void CommentListGetAndClickFeedCommentButton(int currentId, bool isRefresh, int commentCount)
     {
-        Debug.LogError("CommentListGetAndClickFeedCommentButton CurrentId:" + currentId + "   :FeedIdTemp:" + feedIdTemp + "    :IsRefresh:" + isRefresh + "    :CommentCount:" + commentCount);
+       Debug.Log("CommentListGetAndClickFeedCommentButton CurrentId:" + currentId + "   :FeedIdTemp:" + feedIdTemp + "    :IsRefresh:" + isRefresh + "    :CommentCount:" + commentCount);
 
         if (!isRefresh && lastCommentTotalCount != commentCount)
         {
             isRefresh = true;
-            //Debug.LogError("CommentListGetAndClickFeedCommentButton1111111");
+            //Debug.Log("CommentListGetAndClickFeedCommentButton1111111");
         }
 
         if (feedIdTemp != currentId || isRefresh)
@@ -908,7 +908,7 @@ public class APIManager : MonoBehaviour
             isCommentDataLoaded = false;
             commentPageCount = 1;
             scrollToTop = false;
-            Debug.LogError("FeedIdTemp change: " + isRefresh + " not same :" + (feedIdTemp != currentId));
+           Debug.Log("FeedIdTemp change: " + isRefresh + " not same :" + (feedIdTemp != currentId));
             feedIdTemp = currentId;
             RequestFeedCommentList(feedIdTemp, 1, 1, commnetFeedPagesize);
         }
@@ -939,7 +939,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestCommentFeed(string feed_feedId, string feed_comment)
     {
-        //Debug.LogError("Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment);
+        //Debug.Log("Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment);
         WWWForm form = new WWWForm();
         form.AddField("feedId", feed_feedId);
         form.AddField("comment", feed_comment);
@@ -947,7 +947,7 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed), form))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            Debug.LogError("Comment API:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed);
+           Debug.Log("Comment API:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed);
 
             yield return www.SendWebRequest();
 
@@ -958,7 +958,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestCommentFeed success data:" + data + "  :Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment);
+                Debug.Log("<color = red> IERequestCommentFeed success data:" + data + "  :Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment  + "</color>");
 
                 //CommentPostDetail bean = Gods.DeserializeJSON<CommentPostDetail>(data.Trim());
                 CommentPostDetail bean = JsonConvert.DeserializeObject<CommentPostDetail>(data);
@@ -1010,12 +1010,12 @@ public class APIManager : MonoBehaviour
 
     public void ScrollToTop(ScrollRect scrollRect)
     {
-        //Debug.LogError("comment ScrollToTop:" + scrollRect.verticalNormalizedPosition);
+        //Debug.Log("comment ScrollToTop:" + scrollRect.verticalNormalizedPosition);
         if (scrollRect.verticalNormalizedPosition <= 0f && isCommentDataLoaded)
         {
             if (commentFeedList.data.rows.Count > 0)
             {
-                //Debug.LogError("Comment pagination api call.......");
+                //Debug.Log("Comment pagination api call.......");
                 isCommentDataLoaded = false;
                 if (checkText.Equals("Oldest"))
                 {
@@ -1069,7 +1069,7 @@ public class APIManager : MonoBehaviour
     //this api is used to get comment list for feed.......
     public void RequestFeedCommentList(int feedId, int sortOrder, int pageNumber, int pageSize)
     {
-        //Debug.LogError("RequestFeedCommentList:" + feedId + "   :sortOrder:" + sortOrder + "    :pageNum:" + pageNumber + "   :PageSize:" + pageSize);
+        //Debug.Log("RequestFeedCommentList:" + feedId + "   :sortOrder:" + sortOrder + "    :pageNum:" + pageNumber + "   :PageSize:" + pageSize);
         StartCoroutine(IERequestFeedCommentList(feedId, sortOrder, pageNumber, pageSize));
     }
 
@@ -1099,7 +1099,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestFeedCommentList success data:" + data);
+               Debug.Log("IERequestFeedCommentList success data:" + data);
 
                 //commentFeedList = Gods.DeserializeJSON<CommentDetails>(data.Trim());
                 commentFeedList = JsonConvert.DeserializeObject<CommentDetails>(data);
@@ -1160,7 +1160,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("DeleteComment data:" + data);
+               Debug.Log("DeleteComment data:" + data);
                 // root = JsonUtility.FromJson<AllCommentFeedRoot>(data);
             }
         }
@@ -1169,7 +1169,7 @@ public class APIManager : MonoBehaviour
     public void CommentCountTextSetup(int count)
     {
         lastCommentTotalCount = count;
-        //Debug.LogError("Comment Count:" + count);
+        //Debug.Log("Comment Count:" + count);
         if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
         {
             FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
@@ -1204,7 +1204,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("GetAllFeed data:" + data);
+                Debug.Log(" <color = red> GetAllFeed data:" + data + "</color>");
                 //   root = JsonUtility.FromJson<AllFeedRoot>(data);
                 // Debug.Log(root.data.count);
             }
@@ -1218,7 +1218,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestCreateFeed(string feed_title, string feed_descriptions, string feed_image, string feed_video, string thumbnail, string feed_isAllowComment, string feed_tagUserIds, string callingFrom)
     {
-        //Debug.LogError("Create Feed API Calling from:" + callingFrom);
+        //Debug.Log("Create Feed API Calling from:" + callingFrom);
         WWWForm form = new WWWForm();
         form.AddField("title", feed_title);
         form.AddField("descriptions", feed_descriptions);
@@ -1267,7 +1267,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Create Feed complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("CreateFeed data:" + data + "    :Calling from:" + callingFrom);
+               Debug.Log("CreateFeed data:" + data + "    :Calling from:" + callingFrom);
                 // root = JsonUtility.FromJson<AllCreateFeedRoot>(data);
                 switch (callingFrom)
                 {
@@ -1301,7 +1301,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestDeleteFeed(string feed_Id, string callingFrom)
     {
-        Debug.LogError("Delete Feed Id:" + feed_Id + "  :" + (ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed + "/" + feed_Id));
+       Debug.Log("Delete Feed Id:" + feed_Id + "  :" + (ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed + "/" + feed_Id));
         WWWForm form = new WWWForm();
         form.AddField("feedId", feed_Id);
 
@@ -1322,7 +1322,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Feed Delete Success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("DeleteFeed data:" + data);
+                Debug.Log("<color = red> DeleteFeed data:" + data + "</color>");
                 switch (callingFrom)
                 {
                     case "DeleteFeed":
@@ -1342,7 +1342,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestEdit(string feedID, string description, string image, string video)
     {
-        Debug.LogError("IERequestEdit Post API Calling feedId:" + feedID);
+       Debug.Log("IERequestEdit Post API Calling feedId:" + feedID);
 
         WWWForm form = new WWWForm();
 
@@ -1362,13 +1362,13 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                //Debug.LogError("data" + form);
+                //Debug.Log("data" + form);
             }
             else
             {
                 //Debug.Log("feed update complete!");
                 string data = www.downloadHandler.text;
-                //  Debug.LogError("Edit Feed data:" + data);
+                // Debug.Log("Edit Feed data:" + data);
                 FeedUIController.Instance.OnSuccessFeedEdit();
             }
         }
@@ -1377,7 +1377,7 @@ public class APIManager : MonoBehaviour
     //this api is used to Like or DisLike Feed.......
     public void RequestLikeOrDisLikeFeed(string feedId, Button likeButton)
     {
-        //  Debug.LogError("RequestLikeOrDisLikeFeed feedId:" + feedId);
+        // Debug.Log("RequestLikeOrDisLikeFeed feedId:" + feedId);
         likeButton.interactable = false;//like button interactable false untill response.......
 
         if (IERequestLikeOrDisLikeFeedCo != null)
@@ -1403,13 +1403,13 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                //Debug.LogError("data" + form);
+                //Debug.Log("data" + form);
             }
             else
             {
                 //Debug.Log("Feed Like or DisLike success!");
                 string data = www.downloadHandler.text;
-                //  Debug.LogError("LikeOrDisLikeFeed data:" + data);
+                // Debug.Log("LikeOrDisLikeFeed data:" + data);
                 FeedLikeDisLikeRoot feedLikeDisLikeRoot = JsonConvert.DeserializeObject<FeedLikeDisLikeRoot>(data);
 
                 //if (feedLikeDisLikeRoot.data == null)
@@ -1437,7 +1437,7 @@ public class APIManager : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.responseCode == 200)
         {
-            Debug.LogError("Occupied Asset Delete Successfully");
+            Debug.Log("<color = red> Occupied Asset Delete Successfully </color>");
         }
     }
 
@@ -1465,7 +1465,7 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.LogError("Search user name data:" + data);
+               Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 APIController.Instance.FeedGetAllSearchUser();
             }
@@ -1499,13 +1499,13 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("SetName data:" + data);
+               Debug.Log("SetName data:" + data);
                 // root = JsonUtility.FromJson<SetNameRoot>(data);
                 var jo = Newtonsoft.Json.Linq.JObject.Parse(data);
                 var msg = jo["msg"].ToString();
                 if (msg == "This name is already taken by other user.")
                 {
-                    //Debug.LogError("Username already exists");
+                    //Debug.Log("Username already exists");
                     MyProfileDataManager.Instance.ShowEditProfileNameErrorMessage("Username already exists");
                 }
             }
@@ -1526,7 +1526,7 @@ public class APIManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.LogError("IERequestGetUserDetails error:" + www.error);
+               Debug.Log("IERequestGetUserDetails error:" + www.error);
                 if (FeedUIController.Instance != null)
                 {
                     FeedUIController.Instance.ShowLoader(false);
@@ -1544,8 +1544,8 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("IERequestGetUserDetails Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("IERequestGetUserDetails Loaded Completed data:" + data + "      :Calling From:" + callingFrom);
-                //Debug.LogError("callingFrom" + callingFrom);
+               Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data + "      :Calling From:" + callingFrom);
+                //Debug.Log("callingFrom" + callingFrom);
                 myProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 switch (callingFrom)
                 {
@@ -1603,7 +1603,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("UpdateUserAvatar data:" + data);
+               Debug.Log("UpdateUserAvatar data:" + data);
                 // root = JsonUtility.FromJson<UpdateUserAvatarRoot>(data);
                 switch (callingFrom)
                 {
@@ -1625,7 +1625,7 @@ public class APIManager : MonoBehaviour
     public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         WWWForm form = new WWWForm();
-        Debug.LogError("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
+       Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
         form.AddField("gender", user_gender);
         form.AddField("job", user_job);
         form.AddField("country", user_country);
@@ -1641,13 +1641,13 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                //Debug.LogError("data" + form);
+                //Debug.Log("data" + form);
             }
             else
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("UpdateUserProfile data:" + data);
+                Debug.Log("<color = red> UpdateUserProfile data:" + data + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }
@@ -1675,7 +1675,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("DeleteAccount data:" + data);
+               Debug.Log("DeleteAccount data:" + data);
                 // root = JsonUtility.FromJson<DeletAccountRoot>(data);
             }
         }
@@ -1686,7 +1686,7 @@ public class APIManager : MonoBehaviour
     //this api is used to get all conversation.......
     public void RequestChatGetConversation()
     {
-        //Debug.LogError("111111");
+        //Debug.Log("111111");
         StartCoroutine(IERequestChatGetConversation());
     }
     public IEnumerator IERequestChatGetConversation()
@@ -1709,7 +1709,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("ChatGetConversation data:" + data);
+               Debug.Log("ChatGetConversation data:" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1726,7 +1726,7 @@ public class APIManager : MonoBehaviour
     //this api is used to chate mute unmute conversation.......
     public void RequestChatMuteUnMuteConversation(int conversationId)
     {
-        Debug.LogError("RequestChatMuteUnMuteConversation conversation id:" + conversationId);
+       Debug.Log("RequestChatMuteUnMuteConversation conversation id:" + conversationId);
         if (IERequestChatMuteUnMuteConversationCo != null)
         {
             StopCoroutine(IERequestChatMuteUnMuteConversationCo);
@@ -1754,7 +1754,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Mute UnMute conversation success: " + data);
+               Debug.Log("Mute UnMute conversation success: " + data);
                 ChatMuteUnMuteRoot chatMuteUnMuteRoot = JsonConvert.DeserializeObject<ChatMuteUnMuteRoot>(data);
 
                 if (chatMuteUnMuteRoot != null)//refresh current conversation data after mute unmute.......
@@ -1813,7 +1813,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Message Chat: " + data);
+               Debug.Log("Message Chat: " + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1868,13 +1868,13 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 // Debug.Log(www.error);
-                // Debug.LogError("data" + www.downloadHandler);
-                //  Debug.LogError("data" + www.downloadHandler.text);
+                //Debug.Log("data" + www.downloadHandler);
+                // Debug.Log("data" + www.downloadHandler.text);
 
                 MessageController.Instance.LoaderShow(false);//False api loader.
 
                 string data = www.downloadHandler.text;
-                Debug.LogError("Get Attachment Error:" + data);
+               Debug.Log("Get Attachment Error:" + data);
                 AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
                 if (AllChatAttachmentsRoot != null)
                 {
@@ -1900,7 +1900,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Get Attachment Data: " + data);
+               Debug.Log("Get Attachment Data: " + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1941,7 +1941,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Message Chat: " + data);
+               Debug.Log("Message Chat: " + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -1949,8 +1949,8 @@ public class APIManager : MonoBehaviour
                 };
                 ChatCreateGroupRoot = JsonConvert.DeserializeObject<ChatCreateGroupRoot>(data, settings);
 
-                //Debug.LogError("msg : " + MessageController.Instance.typeMessageText.text);
-                //Debug.LogError("msg : " + MessageController.Instance.chatTypeMessageInputfield.Text);
+                //Debug.Log("msg : " + MessageController.Instance.typeMessageText.text);
+                //Debug.Log("msg : " + MessageController.Instance.chatTypeMessageInputfield.Text);
                 yield return new WaitForSeconds(0.1f);
 
                 // RequestChatCreateMessage(0, ChatCreateGroupRoot.data.id,MessageController.Instance.typeMessageText.text,"");
@@ -1991,7 +1991,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Add member success on group: " + data);
+               Debug.Log("Add member success on group: " + data);
                 RequestChatGetConversation();//refresh conversation list to update group data
             }
         }
@@ -2025,7 +2025,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Update Success Group Info: " + data);
+               Debug.Log("Update Success Group Info: " + data);
                 MessageController.Instance.UpdateGroupInFoSuccessResponce();
             }
         }
@@ -2051,7 +2051,7 @@ public class APIManager : MonoBehaviour
         if (!string.IsNullOrEmpty(createMessageMsg))
         {
             string encodeSTR = EncodedString(createMessageMsg);
-            Debug.LogError("Encode STR:" + encodeSTR);
+           Debug.Log("Encode STR:" + encodeSTR);
             form.AddField("msg", encodeSTR);
         }
 
@@ -2062,7 +2062,7 @@ public class APIManager : MonoBehaviour
 
         if (!string.IsNullOrEmpty(createMessageAttachments))
         {
-            Debug.LogError("attachments: " + createMessageAttachments);
+           Debug.Log("attachments: " + createMessageAttachments);
             form.AddField("attachments", createMessageAttachments);
         }
 
@@ -2071,10 +2071,10 @@ public class APIManager : MonoBehaviour
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             yield return www.SendWebRequest();
-            // Debug.LogError("receiverId" + createMessageReceiverId);
-            // Debug.LogError("receivedGroupId" + createMessageReceivedGroupId);
-            // Debug.LogError("msg" + createMessageMsg);
-            //  Debug.LogError("attachments" + createMessageAttachments);
+            //Debug.Log("receiverId" + createMessageReceiverId);
+            //Debug.Log("receivedGroupId" + createMessageReceivedGroupId);
+            //Debug.Log("msg" + createMessageMsg);
+            // Debug.Log("attachments" + createMessageAttachments);
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -2089,7 +2089,7 @@ public class APIManager : MonoBehaviour
             {
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                //Debug.LogError("Message : " + data);
+                //Debug.Log("Message : " + data);
                 // RequestChatGetConversation();
                 var settings = new JsonSerializerSettings
                 {
@@ -2101,18 +2101,18 @@ public class APIManager : MonoBehaviour
                 yield return new WaitForSeconds(0f);
 
                 MessageController.Instance.LoaderShow(false);//rik loader false.......
-                Debug.LogError("Chat CreateMessage success:" + MessageController.Instance.isLeaveGroup + "  :Data:" + data);
+               Debug.Log("Chat CreateMessage success:" + MessageController.Instance.isLeaveGroup + "  :Data:" + data);
                 if (!MessageController.Instance.isLeaveGroup)//not get message api call after leave group.......
                 {
                     if (AllChatCreateMessageRoot.data.receivedGroupId != 0)
                     {
-                        //Debug.LogError("receivedGroupId" + AllChatCreateMessageRoot.data.receivedGroupId);
+                        //Debug.Log("receivedGroupId" + AllChatCreateMessageRoot.data.receivedGroupId);
                         //MessageController.Instance.LoaderShow(true);//rik loader active.......
                         RequestChatGetMessages(1, 50, 0, AllChatCreateMessageRoot.data.receivedGroupId, "Conversation");
                     }
                     else
                     {
-                        //Debug.LogError("user id:" + userId + "    :receiverId:" + AllChatCreateMessageRoot.data.receiverId);
+                        //Debug.Log("user id:" + userId + "    :receiverId:" + AllChatCreateMessageRoot.data.receiverId);
                         if (AllChatCreateMessageRoot.data.receiverId == userId)
                         {
                             //MessageController.Instance.LoaderShow(true);//rik loader active.......
@@ -2151,7 +2151,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestLeaveTheChat(string groupId, string callingFrom)
     {
-        Debug.LogError("Group ID:" + groupId + "    :CallingFrom:" + callingFrom);
+       Debug.Log("Group ID:" + groupId + "    :CallingFrom:" + callingFrom);
         WWWForm form = new WWWForm();
         form.AddField("id", groupId);
 
@@ -2169,7 +2169,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Leave The Chat success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Leave The Chat: " + data);
+               Debug.Log("Leave The Chat: " + data);
                 switch (callingFrom)
                 {
                     case "ConversationScreen":
@@ -2193,7 +2193,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestRemoveGroupMember(int groupId, int userId)
     {
-        Debug.LogError("Remove Group member Group ID:" + groupId + "    :UserId:" + userId);
+       Debug.Log("Remove Group member Group ID:" + groupId + "    :UserId:" + userId);
         WWWForm form = new WWWForm();
         form.AddField("groupId", groupId);
         form.AddField("userId", userId);
@@ -2214,7 +2214,7 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log("Remove group member from Group Chat success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Remove group member data: " + data);
+               Debug.Log("Remove group member data: " + data);
                 MessageController.Instance.RemoveMemberApiResponseSuccess();
             }
         }
@@ -2228,7 +2228,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestDeleteConversation(int conversationId)
     {
-        Debug.LogError("Delete conversation ID:" + conversationId);
+       Debug.Log("Delete conversation ID:" + conversationId);
         WWWForm form = new WWWForm();
         form.AddField("conversationId", conversationId);
 
@@ -2248,7 +2248,7 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log("Delete conversation success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Delete conversation data: " + data);
+               Debug.Log("Delete conversation data: " + data);
                 MessageController.Instance.DeleteConversationApiResponseSuccess("Conversation Deleted");
             }
         }
@@ -2262,7 +2262,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestDeleteChatGroup(int groupId, string callingFrom)
     {
-        Debug.LogError("Delete Group Chat GroupID:" + groupId);
+       Debug.Log("Delete Group Chat GroupID:" + groupId);
         WWWForm form = new WWWForm();
         form.AddField("groupId", groupId);
 
@@ -2282,7 +2282,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Delete Group Chat success!");
                 string data = www.downloadHandler.text;
-                Debug.LogError("Delete Group Chat data: " + data);
+               Debug.Log("Delete Group Chat data: " + data);
                 switch (callingFrom)
                 {
                     case "ConversationScreen":

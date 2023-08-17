@@ -194,9 +194,14 @@ public class YoutubePlayerLivestream : MonoBehaviour
             if (isLive)
             {
                 //WriteLog("kelvin", player_response);
-                string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
-                Debug.Log(liveUrl);
-                callback.Invoke(liveUrl);
+                if (json?["streamingData"]?["hlsManifestUrl"] != null)
+                {
+                    string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
+                    Debug.Log(liveUrl);
+                    callback.Invoke(liveUrl);
+                }
+                else
+                    Debug.Log("<color=red> Livestream Link Issue </color> ");
             }
             else
             {

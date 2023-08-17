@@ -23488,6 +23488,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce5abf3a8e4df644e8023a9d8f1deb6c, type: 3}
+--- !u!224 &943050580 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8504723684509753532, guid: ce5abf3a8e4df644e8023a9d8f1deb6c, type: 3}
+  m_PrefabInstance: {fileID: 943050579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &945182938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65969,6 +65974,7 @@ Transform:
   m_Children:
   - {fileID: 2226408470578739437}
   - {fileID: 2226408470019596815}
+  - {fileID: 943050580}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -66015,7 +66021,7 @@ MonoBehaviour:
   spotLightSprite: {fileID: 4183035712081772258, guid: 1e6926f084bd40a438fea1beac7ac6c5, type: 3}
   testnetMussuemId: 36
   mainnetMussuemId: 14
-  dynamicMusuemApi: /item/get-museum-all-assets/
+  eventid: 
   AllS3Nfts: []
 --- !u!4 &2226408470019596815
 Transform:
@@ -93234,7 +93240,7 @@ MonoBehaviour:
   spotLightPrefab: {fileID: 5858837961160933806, guid: 7a54894123706624eb7bd6ced385f66e, type: 3}
   FrameMaterial: {fileID: 0}
   squarSize: ?width=512&height=512
-  VideosquarSize: 
+  VideosquarSize: ?width=512&height=512
   potraiteSize: ?width=500&height=600
   landscapeSize: ?width=700&height=500
   exhibatsSizes:

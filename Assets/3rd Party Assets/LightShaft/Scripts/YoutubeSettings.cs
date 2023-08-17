@@ -396,12 +396,12 @@ namespace LightShaft.Scripts
             {
                 /*if (GetComponent<YoutubeVideoController>() == null)
                 {
-                    Debug.LogError("You need a VideoController attached to YoutubePlayer");
+                   Debug.Log("You need a VideoController attached to YoutubePlayer");
                     return;
                 }*/
                 if (GetComponent<YoutubeVideoEvents>() == null)
                 {
-                    Debug.LogError("You need a VidepoEvents attached to YoutubePlayer");
+                   Debug.Log("You need a VidepoEvents attached to YoutubePlayer");
                     return;
                 }
                 _controller = GetComponent<YoutubeVideoController>();
@@ -1420,7 +1420,7 @@ namespace LightShaft.Scripts
             }
 
             videoEnded = false;
-            Debug.LogError("onvideostarted startPlayBack");
+           Debug.Log("onvideostarted startPlayBack");
             _events.OnVideoStarted.Invoke();
 
             if (videoQuality != YoutubeVideoQuality.STANDARD)
@@ -1454,7 +1454,7 @@ namespace LightShaft.Scripts
             if (!prepareVideoToPlayLater)
             {
                 _events.OnVideoStarted.Invoke();
-                Debug.LogError("onvideostarted prepareVideoToPlayLater");
+               Debug.Log("onvideostarted prepareVideoToPlayLater");
                 if (videoQuality != YoutubeVideoQuality.STANDARD)
                 {
                     //audioPlayer.Play();
@@ -2843,7 +2843,7 @@ namespace LightShaft.Scripts
                         }
                         else
                         {
-                            Debug.LogError("Connection to Youtube Server Error! Try Again");
+                            Debug.Log("<color = red> Connection to Youtube Server Error! Try Again </color>");
                         }
                     }
 
@@ -3348,7 +3348,7 @@ namespace LightShaft.Scripts
         IEnumerator WaitSync()
         {
             yield return new WaitForSeconds(2f);
-            Debug.LogError("WaitSync");
+           Debug.Log("WaitSync");
             Play();
             Invoke("VerifyFrames", 2);
         }
@@ -3368,7 +3368,7 @@ namespace LightShaft.Scripts
             {
                 //dropAlreadyCalled = false;
                 //ignoreDrop = true;
-                Debug.LogError("pauseCalled");
+               Debug.Log("pauseCalled");
                 Play();
                 StartCoroutine(ReleaseDrop());
             }
@@ -3405,7 +3405,7 @@ namespace LightShaft.Scripts
             startedFromTime = false;
             if (!pauseCalled)
             {
-                Debug.LogError("PlayNowFromTime");
+               Debug.Log("PlayNowFromTime");
                 Play();
             }
             else
