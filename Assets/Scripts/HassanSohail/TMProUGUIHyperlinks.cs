@@ -76,15 +76,21 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
 
             // For Analatics URL Clicked = true;
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, true, false);
-
+            CallFirebaseEventForLinkClicked();
             Application.OpenURL(linkInfo.GetLinkID());
         }
         pressedLinkIndex = -1;
 
-        int maxLength = 10;
-        string originalString = JjInfoManager.Instance.nftTitle;
-        originalString = Regex.Replace(originalString, @"\s", "");
-        string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+        
+       
+    }
+
+    void CallFirebaseEventForLinkClicked()
+    {
+        //int maxLength = 10;
+        //string originalString = JjInfoManager.Instance.nftTitle;
+        //originalString = Regex.Replace(originalString, @"\s", "");
+        //string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
 
         //if (uniqueClick)
         //{
@@ -92,32 +98,35 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
         //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
         //}
+
         string worldName = XanaConstants.xanaConstants.EnviornmentName;
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
         {
-            worldName = "Lobby_";
-            //Firebase.Analytics.FirebaseAnalytics.LogEvent("Lobby_" + trimmedString + "_Clicked");
+            worldName = "1F_Mainloby_NFTclick";
         }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem") || XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
         {
-            worldName = XanaConstants.xanaConstants.EnviornmentName + "_";
-            //Firebase.Analytics.FirebaseAnalytics.LogEvent(XanaConstants.xanaConstants.EnviornmentName + "_" + trimmedString + "_NFTClicked");
+            worldName = "1F_ZoneX_NFTclick";
+        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        {
+            worldName = "1F_FiveElement_NFTclick";
         }
         else
         {
             if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
-                worldName = "Astro_";
+                worldName = "2F_Atom" + JjInfoManager.Instance.analyticMuseumID + "_NFTclick_No_";
             else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
-                worldName = "Rental_";
+                worldName = "2F_Rental" + JjInfoManager.Instance.analyticMuseumID + "_NFTclick_No_";
 
             //Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + JjInfoManager.Instance.analyticMuseumID + "_" + trimmedString + "_NFTClicked");
             //Debug.Log("<color=red>" + worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked </color>");
         }
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + JjInfoManager.Instance.analyticMuseumID + "_" + trimmedString + "URL_Clicked");
-        //Firebase.Analytics.FirebaseAnalytics.LogEvent("URL_" + trimmedString + "_Clicked");
-        Debug.Log("<color=red> URL_" + trimmedString + "_Clicked </color>");
+        worldName += JjInfoManager.Instance.clickedNftInd;
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName);
+        Debug.Log("<color=red>" + worldName + "</color>");
     }
 
     //private void LateUpdate()

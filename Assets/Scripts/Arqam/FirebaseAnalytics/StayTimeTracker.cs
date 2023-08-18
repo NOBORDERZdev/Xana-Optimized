@@ -19,10 +19,18 @@ public class StayTimeTracker : MonoBehaviour
         //StartCoroutine(Countdown());
 
         yield return new WaitForSeconds(1f);
-        if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
-            worldName = "Astro";
-        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
-            worldName = "Rental";
+
+        if (worldName.Contains("Zone_Museum"))
+            worldName = "1F_ZoneX_StayTime_"; 
+        
+        else if (worldName.Contains("Lobby"))
+            worldName = "1F_Mainloby_StayTime_";
+
+        else if (worldName.Contains("FiveElement"))
+            worldName = "1F_FiveElement_StayTime_";
+
+        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+            worldName = "2F_AtomRental_StayTime_";
     }
 
     private void StartTrackingTime()
@@ -66,17 +74,21 @@ public class StayTimeTracker : MonoBehaviour
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
         //}
 
+        if (seconds > 0)
+            minutes++;
 
-        if (minutes >= 2)
+        // For Testing 
+        //minutes += 40;
+
+        if (minutes > 30)
         {
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_Stay_MoreThan2Mintue");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + minutes +"m_");
         }
         else
         {
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_Stay_LessThan2Mintue");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + +minutes + "m");
         }
-        Debug.Log("<color=red>" + worldName + "_Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
-
+        Debug.Log("<color=red>" + worldName + minutes + "m</color>");
     }
 
 

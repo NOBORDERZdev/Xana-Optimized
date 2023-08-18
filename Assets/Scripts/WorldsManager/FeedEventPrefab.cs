@@ -571,7 +571,6 @@ public class FeedEventPrefab : MonoBehaviour
     //}
 
     //string tempWorldName;
-    private static bool worldUniqueCount = false;
 
     public void OnClickPrefab()
     {
@@ -670,14 +669,8 @@ public class FeedEventPrefab : MonoBehaviour
         if (m_EnvironmentName == "ZONE-X")
         {
             //Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_JJWorld");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_ZoneX_Detail");
-            if (!worldUniqueCount)
-            {
-                //Firebase.Analytics.FirebaseAnalytics.LogEvent("Num_of_UniqueClick_on_JJWorld");
-                Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_ZoneX_Detail_Unique");
-                worldUniqueCount = true;
-            }
-            Debug.Log("<color=red> Firebase Event Clicked </color>");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_Thumbnail");
+            Debug.Log("<color=red> Home_Thumbnail </color>");
         }
     }
 

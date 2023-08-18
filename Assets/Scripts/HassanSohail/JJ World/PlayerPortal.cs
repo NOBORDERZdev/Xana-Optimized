@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerPortal : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerPortal : MonoBehaviour
     // private PlayerControllerNew player;
     private ReferrencesForDynamicMuseum referrencesForDynamicMuseum;
     Collider colider;
+    string firebaseEventName = "";
     #endregion
     #region PrivateFunc
     private void Start()
@@ -29,14 +31,48 @@ public class PlayerPortal : MonoBehaviour
     {
         if (/*manager.allowTeleportation && */(other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && destinationPoint != null /*&& isAlreadyRunning */ /*&& player.allowTeleport*/)
         {
-            print("player enter : " + transform.parent.name);
+            print("player enter : " + transform.parent.parent.name);
+            
+            // For NFT Click
             JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
+            if (transform.parent.parent.name.Contains("Rental"))
+            {
+                string tempString = JjInfoManager.Instance.analyticMuseumID;
+                int ind = int.Parse(tempString.Split('_').Last());
+                JjInfoManager.Instance.analyticMuseumID= "Space_" + ind;
+            }
+
+            // For EnterPortal
+            if(currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
+            {
+                if(transform.parent.name.Contains("Astroboy"))
+                customFirebaseEvent = "2F_Infoboard_AtomMuseum" + name;
+                else
+                    customFirebaseEvent = "2F_Infoboard_RentalSpace" + name;
+            }
+            else if (currentPortal == PortalType.Enter)
+            {
+                if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
+                    customFirebaseEvent = "2F_EachRoom_AtomMuseum" + ref_JJMuseumInfoManager.name;
+                else
+                    customFirebaseEvent = "2F_EachRoom_RentalSpace" + ref_JJMuseumInfoManager.name;
+            }
+
             if (other.GetComponent<PhotonView>().IsMine)
             {
+                
+                CallAnalyticsEvent();
                 this.StartCoroutine(Teleport());
             }
           
         }
+    }
+
+    string customFirebaseEvent = "";
+    void CallAnalyticsEvent()
+    {
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(customFirebaseEvent);
+        Debug.Log("<color=red>" + customFirebaseEvent + "</color>");
     }
 
     //private void OnTriggerExit(Collider other)
