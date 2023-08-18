@@ -588,7 +588,7 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendY", 3f);
         }
 
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && (characterController.isGrounded) && !animator.IsInTransition(0))/* || (jumpNow && allowJump && allowFpsJump && !IsJumping && characterController.isGrounded)*/)) // FPS jump
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((/*Input.GetKeyDown(KeyCode.Space) ||*/ IsJumpButtonPress) && (characterController.isGrounded) && !animator.IsInTransition(0))/* || (jumpNow && allowJump && allowFpsJump && !IsJumping && characterController.isGrounded)*/)) // FPS jump
         {
             IsJumpButtonPress = false;
             allowFpsJump = false;
@@ -828,7 +828,7 @@ public class PlayerControllerNew : MonoBehaviour
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((/*Input.GetKeyDown(KeyCode.Space) ||*/ IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
             allowJump = false;
             IsJumpButtonPress = false;
@@ -1250,7 +1250,7 @@ public class PlayerControllerNew : MonoBehaviour
     bool canDoubleJump = false;
     void SpecialItemDoubleJump()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
+        if ((/*Input.GetKeyDown(KeyCode.Space) ||*/ IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
         {
             canDoubleJump = true;
             Debug.Log("Double jump testing ");
@@ -1291,7 +1291,7 @@ public class PlayerControllerNew : MonoBehaviour
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
 
 
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && (Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded))
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NinjaTree") && (/*Input.GetKeyDown(KeyCode.Space) ||*/ IsJumpButtonPress) && characterController.isGrounded))
         {
             allowJump = false;
             IsJumpButtonPress = false;
@@ -1317,13 +1317,13 @@ public class PlayerControllerNew : MonoBehaviour
             }
         }
 
-        if ((Input.GetKeyDown(KeyCode.LeftShift) || sprint_Button) && !sprint)
+        if ((/*Input.GetKeyDown(KeyCode.LeftShift) ||*/ sprint_Button) && !sprint)
         {
             sprint = true;
             movementSpeed = sprintSpeed + 2;
         }
 
-        if ((Input.GetKeyUp(KeyCode.LeftShift) || !sprint_Button) && sprint)
+        if ((/*Input.GetKeyUp(KeyCode.LeftShift) ||*/ !sprint_Button) && sprint)
         {
             sprint = false;
             movementSpeed = sprintSpeed;
@@ -1669,10 +1669,10 @@ public class PlayerControllerNew : MonoBehaviour
                 //Debug.Log("Throw Mode Active");
 
 #if UNITY_EDITOR
-                if (Input.GetKeyDown(KeyCode.Q) && throwAction == null)
+                if (/*Input.GetKeyDown(KeyCode.Q) &&*/ throwAction == null)
                     throwBallPositionSet = true;
 
-                if (Input.GetKeyDown(KeyCode.E) && isThrowReady)
+                if (/*Input.GetKeyDown(KeyCode.E) &&*/ isThrowReady)
                     throwBall = true;
 #endif
 

@@ -52,7 +52,7 @@ public class MouseLook : MonoBehaviour
             return;
         
 #if UNITY_EDITOR
-        if (!isGyroOn && _allowRotation)
+        if (!isGyroOn && _allowRotation && Input.GetMouseButton(0))
         {
             float mouseX;
             float mouseY;
@@ -87,12 +87,12 @@ public class MouseLook : MonoBehaviour
             MoveCamera(delta);
         }
 
-        if (playerController.m_FreeFloatCam && _allowRotation)
+        if (playerController.m_FreeFloatCam && _allowRotation && Input.GetMouseButton(0))
         {
             MoveCameraFreeFloat();
         }
 #if UNITY_EDITOR
-        if(_allowRotation)
+        if(_allowRotation && Input.GetMouseButton(0))
             MouseMovement();
 
 #endif

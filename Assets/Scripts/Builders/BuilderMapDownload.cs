@@ -46,9 +46,13 @@ public class BuilderMapDownload : MonoBehaviour
 
     List<XanaItem> xanaItems = new List<XanaItem>();
 
+    public GameObject lights;
+
+    public static BuilderMapDownload _instance;
     #region UNITY_METHOD
     private void OnEnable()
     {
+        _instance = this;
         BuilderEventManager.OnBuilderDataFetch += OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
