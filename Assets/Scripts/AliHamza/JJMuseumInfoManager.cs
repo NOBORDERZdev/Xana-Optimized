@@ -41,7 +41,7 @@ public class JJMuseumInfoManager : MonoBehaviour
                     JjInfoManager.Instance.worldInfos[i].isAWSVideo = false;
                     JjInfoManager.Instance.worldInfos[i].isLiveVideo = false;
                 }
-                JjInfoManager.Instance.InitData(json, NftPlaceholder);
+                StartCoroutine(JjInfoManager.Instance.InitData(json, NftPlaceholder));
             }
         }
     }

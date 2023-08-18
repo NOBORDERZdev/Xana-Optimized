@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using System.Text.RegularExpressions;
 
 public class JjInfoManager : MonoBehaviour
 {
@@ -114,7 +115,7 @@ public class JjInfoManager : MonoBehaviour
                 data.Append(request.downloadHandler.text);
                 //Debug.Log("JJ World Req" + data.ToString());
                 JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
-                InitData(json, NftPlaceholder);
+                StartCoroutine(InitData(json, NftPlaceholder));
 
             }
         }
@@ -131,115 +132,63 @@ public class JjInfoManager : MonoBehaviour
 
     }
 
-
-    public void InitData(JjJson data, List<GameObject> NftPlaceholderList)
+    bool isNFTUploaded = false;
+    public IEnumerator InitData(JjJson data, List<GameObject> NftPlaceholderList)
     {
         int nftPlaceHolder = NftPlaceholderList.Count;
         List<JjAsset> worldData = data.data;
         for (int i = 0; i < nftPlaceHolder; i++)
         {
-            if(worldData.Count > i ){
-                 int tempIndex = worldData[i].index-1;
-                if (worldData[i].check && tempIndex == i)
+            isNFTUploaded = false;
+           // if(worldData.Count > i ){
+           // int tempIndex = worldData[i].index-1;
+            for (int j = 0; j < worldData.Count; j++)
                 {
-                    //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
-                    bool isWithDes = false;
-                    string compersionPrfex = "";
+                    if (i == worldData[j].index - 1)
+                    {
+                        isNFTUploaded = true;
+                        //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
+                        bool isWithDes = false;
+                        string compersionPrfex = "";
                     //Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
-                    switch (worldData[i].ratio)
-                    {
-                        case "1:1":
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            compersionPrfex = "?width=512&height=512";
-                            break;
-                        case "16:9":
-                            worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
-                            compersionPrfex = "?width=500&height=600";
-                            break;
-                        case "9:16":
-                            worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
-                            compersionPrfex = "?width=700&height=500";
-                            break;
-                        case "4:3":
-                            worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
-                            compersionPrfex = "?width=640&height=480";
-                            break;
-                        default:
-                            worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
-                            compersionPrfex = "?width=512&height=512";
-                            break;
-                    }
-
-                    //Debug.LogError("-----" + worldData[i].media_type);
-                    if (worldData[i].media_type == "IMAGE")
-                    {
-
-                        worldInfos[i].Type = DataType.Image;
-                        NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[i].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
-
-                        if (!string.IsNullOrEmpty(worldData[i].title[0]) && !string.IsNullOrEmpty(worldData[i].authorName[0]) && !string.IsNullOrEmpty(worldData[i].description[0]))
+                    switch (worldData[j].ratio)
                         {
-                            isWithDes = true;
-                            worldInfos[i].Title = worldData[i].title;
-                            worldInfos[i].Aurthor = worldData[i].authorName;
-                            worldInfos[i].Des = worldData[i].description;
-
-                        }
-                        else
-                        {
-                            isWithDes = false;
-                            worldInfos[i].Title = null;
-                            worldInfos[i].Aurthor = null;
-                            worldInfos[i].Des = null;
+                            case "1:1":
+                                worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
+                                compersionPrfex = "?width=512&height=512";
+                                break;
+                            case "16:9":
+                                worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
+                                compersionPrfex = "?width=500&height=600";
+                                break;
+                            case "9:16":
+                                worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
+                                compersionPrfex = "?width=700&height=500";
+                                break;
+                            case "4:3":
+                                worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
+                                compersionPrfex = "?width=640&height=480";
+                                break;
+                            default:
+                                worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
+                                compersionPrfex = "?width=512&height=512";
+                                break;
                         }
 
-                    }
-                    else if (worldData[i].media_type == "VIDEO" || worldData[i].media_type == "LIVE")
-                    {
-                        worldInfos[i].Type = DataType.Video;
-                        if (worldPlayingVideos) // to play video's in world
+                        //Debug.LogError("-----" + worldData[i].media_type);
+                        if (worldData[j].media_type == "IMAGE")
                         {
-                            if (worldData[i].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[i].youtubeUrl))  //for Live Video 
-                            {
-                                worldInfos[i].VideoLink = worldData[i].youtubeUrl;
-                                worldInfos[i].videoType = VideoTypeRes.islive;
-                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
-                            }
-                            else if (!worldData[i].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[i].youtubeUrl))  // for Prerecorded video
-                            {
-                                worldInfos[i].VideoLink = worldData[i].youtubeUrl;
-                                worldInfos[i].videoType = VideoTypeRes.prerecorded;
-                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = true;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
-                            }
-                            else if (!string.IsNullOrEmpty(worldData[i].asset_link))
-                            {
-                                worldInfos[i].VideoLink = worldData[i].asset_link;
-                                worldInfos[i].videoType = VideoTypeRes.aws;
-                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[i].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].asset_link;
-                                //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
-                            }
 
+                            worldInfos[i].Type = DataType.Image;
+                            NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[j].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
 
-                            if (!string.IsNullOrEmpty(worldData[i].title[0]) && !string.IsNullOrEmpty(worldData[i].authorName[0]) && !string.IsNullOrEmpty(worldData[i].description[0]))
+                            if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
                             {
                                 isWithDes = true;
-                                worldInfos[i].Title = worldData[i].title;
-                                worldInfos[i].Aurthor = worldData[i].authorName;
-                                worldInfos[i].Des = worldData[i].description;
+                                worldInfos[i].Title = worldData[j].title;
+                                worldInfos[i].Aurthor = worldData[j].authorName;
+                                worldInfos[i].Des = worldData[j].description;
+
                             }
                             else
                             {
@@ -248,21 +197,89 @@ public class JjInfoManager : MonoBehaviour
                                 worldInfos[i].Aurthor = null;
                                 worldInfos[i].Des = null;
                             }
+
+                        }
+                        else if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                        {
+                            worldInfos[i].Type = DataType.Video;
+                            if (worldPlayingVideos) // to play video's in world
+                            {
+                                if (worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  //for Live Video 
+                                {
+                                    yield return new WaitForSeconds(1f);
+                                    worldInfos[i].VideoLink = worldData[j].youtubeUrl;
+                                    worldInfos[i].videoType = VideoTypeRes.islive;
+                                    NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
+                                }
+                                else if (!worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  // for Prerecorded video
+                                {
+                                    yield return new WaitForSeconds(1f);
+                                    worldInfos[i].VideoLink = worldData[j].youtubeUrl;
+                                    worldInfos[i].videoType = VideoTypeRes.prerecorded;
+                                    NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = true;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
+                                }
+                                else if (!string.IsNullOrEmpty(worldData[j].asset_link))
+                                {
+                                    worldInfos[i].VideoLink = worldData[j].asset_link;
+                                    worldInfos[i].videoType = VideoTypeRes.aws;
+                                    NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[j].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].asset_link;
+                                    //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
+                                }
+
+
+                                if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
+                                {
+                                    isWithDes = true;
+                                    worldInfos[i].Title = worldData[j].title;
+                                    worldInfos[i].Aurthor = worldData[j].authorName;
+                                    worldInfos[i].Des = worldData[j].description;
+                                }
+                                else
+                                {
+                                    isWithDes = false;
+                                    worldInfos[i].Title = null;
+                                    worldInfos[i].Aurthor = null;
+                                    worldInfos[i].Des = null;
+                                }
+                            }
+                        }
+                        break; 
+                    }
+                    else
+                    {
+                        if (j == worldData.Count - 1)
+                        {
+                            NftPlaceholderList[i].gameObject.SetActive(false);
+                            NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
+                            Debug.Log("INDEX is off!");
                         }
                     }
                 }
-                else
-                {
-                    NftPlaceholderList[i].gameObject.SetActive(false);
-                    NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
-                    Debug.Log("INDEX is off!");
-                }
-            }
-            else
+            if (!isNFTUploaded)
             {
                 NftPlaceholderList[i].gameObject.SetActive(false);
                 NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
             }
+            //}
+            // else
+            //{
+            //   NftPlaceholderList[i].gameObject.SetActive(false);
+            //   NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
+            //}
         }
 
     }
@@ -310,7 +327,7 @@ public class JjInfoManager : MonoBehaviour
     //    }
     //}
 
-    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType)
+    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType, int nftId=0)
     {
         nftTitle = title;
         _Ratio = ratio;
@@ -450,6 +467,40 @@ public class JjInfoManager : MonoBehaviour
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
         }
         // infoParent.SetActive(true);
+
+        // for firebase analytics
+        if (type == DataType.Image)
+        {
+            if (title.IsNullOrEmpty())
+            {
+                string envName = FindObjectOfType<StayTimeTracker>().worldName;
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "_NFT_Img" + nftId + "_Clicked");
+                Debug.Log("<color=red>" + envName + "_NFT_Img" + nftId + "_Clicked </color>");
+                return;
+            }
+            int maxLength = 10;
+            string originalString = title;
+            originalString = Regex.Replace(originalString, @"\s", "");
+            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Img_" + trimmedString + "_Clicked");
+            Debug.Log("<color=red> NFT_Img_" + trimmedString + "_Clicked </color>");
+        }
+        else if (type == DataType.Video)
+        {
+            if (title.IsNullOrEmpty())
+            {
+                string envName = FindObjectOfType<StayTimeTracker>().worldName;
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "NFT_Video" + nftId + "_Clicked");
+                Debug.Log("<color=red>" + envName + "NFT_Video" + nftId + "_Clicked </color>");
+                return;
+            }
+            int maxLength = 10;
+            string originalString = title;
+            originalString = Regex.Replace(originalString, @"\s", "");
+            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Video_" + trimmedString + "_Clicked");
+            Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
+        }
     }
 
     public void CloseInfoPop()

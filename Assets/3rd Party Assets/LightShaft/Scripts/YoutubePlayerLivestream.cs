@@ -19,8 +19,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
     //AVPRO
     public MediaPlayer mPlayer;
 
+    public bool rotateScreen = true;
+
     void Start()
     {
+        if (!rotateScreen)
+            return;
         //GetLivestreamUrl(_livestreamUrl);
 #if UNITY_ANDROID
         if (FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
@@ -61,9 +65,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if (mPlayer.OpenMedia(check, url, true))
         {
             mPlayer.GetComponent<MeshRenderer>().material.color = Color.white;
+            if (rotateScreen)
+            {
 #if UNITY_EDITOR
-            mPlayer.transform.rotation = Quaternion.identity;
+                mPlayer.transform.rotation = Quaternion.identity;
 #endif
+            }
         }
 
         //Easy Movie Texture (Good for mobile only[sometimes stuck in editor])
