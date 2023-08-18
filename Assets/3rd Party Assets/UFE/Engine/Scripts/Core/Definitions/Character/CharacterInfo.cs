@@ -47,5 +47,8 @@ namespace UFE3D
         public string[] stanceResourcePath = new string[0];
         public MoveSetData[] moves = new MoveSetData[0];
         public AIInstructionsSet[] aiInstructionsSet = new AIInstructionsSet[0];
+
+        //Attizaz
+        public string clothesString;
     }
 }

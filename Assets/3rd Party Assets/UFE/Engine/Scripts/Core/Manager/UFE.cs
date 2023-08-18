@@ -3406,10 +3406,10 @@ public class UFE : MonoBehaviour, UFEInterface
                 Debug.LogError("Stage prefab not found! Make sure the prefab is correctly located under the Resources folder and the path is written correctly.");
             }
         } else {
-			Debug.Log("scene "+UFE.config.name+"  " + UFE.config.selectedStage.stagePath);
+			Debug.Log("scene " + UFE.config.name + "  " + UFE.config.selectedStage.stagePath);
 			//SceneManager.LoadScene(UFE.config.selectedStage.stagePath, LoadSceneMode.Additive);
 			SceneManager.LoadScene("Fighting BreakingDown Arena", LoadSceneMode.Additive);
-            UFE.DelayLocalAction(SetActiveStageScene, 3);
+			UFE.DelayLocalAction(SetActiveStageScene, 3);
         }
 		
 
@@ -3617,9 +3617,8 @@ public class UFE : MonoBehaviour, UFEInterface
         }
         else
         {
-            stageScene = SceneManager.GetSceneByName(UFE.config.selectedStage.stagePath);
-        }
-		stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
+			stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
+		}
         
         SceneManager.SetActiveScene(stageScene);
     }

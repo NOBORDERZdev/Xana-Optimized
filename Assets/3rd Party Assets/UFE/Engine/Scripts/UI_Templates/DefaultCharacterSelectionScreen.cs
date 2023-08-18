@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FPLibrary;
 using UFE3D;
 using UnityEngine.SceneManagement;
+using Photon.Pun; //Attizaz
 
 public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 	#region public enum definitions
@@ -40,17 +41,52 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 
     public int defaultCharacterPlayer1 = 0;
 	public int defaultCharacterPlayer2 = 999;
+
+	public static DefaultCharacterSelectionScreen instance;
     #endregion
 
-
-
-    private void Start()
+    private void Awake()
     {
-		print("Starting"); //kush
-		UFE.SetPlayer1(P1SelectedChar);
-        UFE.SetPlayer2(P2SelectedChar);
-        UFE.StartLoadingBattleScreen();
+		if (!instance) instance = this;
     }
+
+	private void Start()
+	{
+		print("Starting"); //kush
+
+		//GetPlayersInstances();//Attizaz
+		if (UFE.gameMode == GameMode.NetworkGame)
+		{
+			if (PhotonNetwork.IsMasterClient)
+			{
+				 FightingGameManager.instance.CallRPC();
+			}
+		}
+	
+            UFE.SetPlayer1(P1SelectedChar);
+            UFE.SetPlayer2(P2SelectedChar);
+            UFE.StartLoadingBattleScreen();
+    }
+	//Attizaz
+	//void GetPlayersInstances()
+	//{
+	//	print("Getting Instances");
+	////	if (PhotonNetwork.IsMasterClient)
+	//	{
+	//		P1SelectedChar = FightingGameManager.instance.P1SelectedChar;
+ //           P1SelectedChar.clothesString = "Player 1 Clothes String";
+ //       }
+	////	else
+	//	{
+	//		P2SelectedChar = FightingGameManager.instance.P2SelectedChar;
+ //           P2SelectedChar.clothesString = "Player 2 Clothes String";
+ //       }
+		
+		
+
+	//	print(P1SelectedChar.clothesString);
+	//	print(P2SelectedChar.clothesString);
+	//}
 
     #region protected instance fields
     protected List<Selectable> characterButtonsWhiteList = new List<Selectable>();

@@ -22,8 +22,8 @@ MonoBehaviour:
     bakeSpeed: 0
     hitBoxDefinitionType: 0
   _animationSpeed:
-    _serializedValue: 4294967296
-  wrapMode: 2
+    _serializedValue: 9448928256
+  wrapMode: 0
   characterPrefab: {fileID: 1069319171809847178, guid: 16aaab803057fa642aea048b7827bc5f,
     type: 3}
   moveName: Step Left
@@ -31,7 +31,7 @@ MonoBehaviour:
   fps: 60
   ignoreGravity: 0
   ignoreFriction: 0
-  cancelMoveWhenLanding: 0
+  cancelMoveWhenLanding: 1
   landingMoveLink: {fileID: 0}
   forceMirrorLeft: 0
   forceMirrorRight: 0
@@ -46,11 +46,11 @@ MonoBehaviour:
   speedKeyFrameToggle: 0
   fixedSpeed: 1
   animSpeedKeyFrame: []
-  totalFrames: 47
+  totalFrames: 21
   startUpFrames: 0
   activeFrames: 1
   recoveryFrames: 2
-  applyRootMotion: 1
+  applyRootMotion: 0
   lockXMotion: 0
   lockYMotion: 0
   lockZMotion: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
     _chargeTiming:
       _serializedValue: 3006477107
     allowInputLeniency: 0
-    allowNegativeEdge: 0
-    forceAxisPrecision: 0
+    allowNegativeEdge: 1
+    forceAxisPrecision: 1
     leniencyBuffer: 3
     onReleaseExecution: 0
     requireButtonPress: 1
@@ -76,7 +76,7 @@ MonoBehaviour:
     buttonSequence: 
     buttonExecution: 0a000000
     editorToggle: 1
-    buttonSequenceToggle: 0
+    buttonSequenceToggle: 1
     buttonExecutionToggle: 1
   altInputs:
     chargeMove: 0
@@ -102,7 +102,21 @@ MonoBehaviour:
     statesToggle: 0
   selfConditions:
     basicMoveLimitation: 000000000100000002000000
-    possibleMoveStates: []
+    possibleMoveStates:
+    - possibleState: 0
+      jumpArc: 0
+      jumpArcBegins: 0
+      jumpArcEnds: 100
+      opponentDistance: 0
+      proximityRangeBegins: 0
+      proximityRangeEnds: 100
+      movingForward: 1
+      movingBack: 1
+      standBy: 1
+      blocking: 0
+      blockStunned: 0
+      stunned: 0
+      resetStunValue: 0
     basicMovesToggle: 1
     statesToggle: 1
   moveClassification:
@@ -117,7 +131,35 @@ MonoBehaviour:
     anyHitType: 1
     anyHitConfirmType: 1
   frameLinks: []
-  gauges: []
+  gauges:
+  - castingFrame: 0
+    targetGauge: 0
+    startDrainingGauge: 0
+    inhibitGainWhileDraining: 0
+    stopDrainingGauge: 0
+    _gaugeDPS:
+      _serializedValue: 0
+    _totalDrain:
+      _serializedValue: 0
+    _gaugeRequired:
+      _serializedValue: 0
+    _gaugeUsage:
+      _serializedValue: 0
+    _gaugeGainOnMiss:
+      _serializedValue: 0
+    _gaugeGainOnHit:
+      _serializedValue: 0
+    _gaugeGainOnBlock:
+      _serializedValue: 0
+    _opGaugeGainOnBlock:
+      _serializedValue: 0
+    _opGaugeGainOnParry:
+      _serializedValue: 0
+    _opGaugeGainOnHit:
+      _serializedValue: 0
+    DCMove: {fileID: 0}
+    DCStance: 0
+    editorToggle: 0
   sortOrder: []
   particleEffects: []
   appliedForces:
@@ -132,7 +174,7 @@ MonoBehaviour:
       y:
         _serializedValue: 0
       z:
-        _serializedValue: 21474836480
+        _serializedValue: 42949672960
   opAppliedForces: []
   slowMoEffects: []
   bodyPartVisibilityChanges: []
@@ -263,4 +305,4 @@ MonoBehaviour:
     damageAbsorption: 0
     nonAffectedBodyParts: 
   projectiles: []
-  rotationPreview: {x: 0, y: 180, z: 0}
+  rotationPreview: {x: 0, y: 0, z: 0}

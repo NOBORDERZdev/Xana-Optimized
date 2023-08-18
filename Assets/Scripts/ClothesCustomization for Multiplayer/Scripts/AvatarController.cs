@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
+using UFE3D;
 
 public class AvatarController : MonoBehaviour
 {

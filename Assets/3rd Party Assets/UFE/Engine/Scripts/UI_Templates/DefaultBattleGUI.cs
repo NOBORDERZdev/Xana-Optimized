@@ -77,7 +77,6 @@ public class DefaultBattleGUI : BattleGUI{
 	public void AddInput (InputReferences[] inputReferences, int player){
 		this.OnInput(inputReferences, player);
 	}
-
 	public void setPlayerIcon(string url, Image img)
 	{
 		Debug.LogError("setPlayerIcon: " + url);
@@ -380,6 +379,14 @@ public class DefaultBattleGUI : BattleGUI{
 	#region protected override methods
 	protected override void OnGameBegin (ControlsScript cPlayer1, ControlsScript cPlayer2, StageOptions stage){
 		base.OnGameBegin (cPlayer1, cPlayer2, stage);
+
+		// Mubashir Code
+		OnlineExit scriptInstance = FindObjectOfType<OnlineExit>();
+		if (scriptInstance != null)
+		{
+			scriptInstance.CheckMode();
+		}
+		// End
 
 		if (this.wonRounds.NotFinishedRounds == null){
 			Debug.LogError("\"Not Finished Rounds\" Sprite not found! Make sure you have set the sprite correctly in the Editor");
@@ -829,4 +836,4 @@ public class DefaultBattleGUI : BattleGUI{
 		}
 	}
 	*/
-}
+			}

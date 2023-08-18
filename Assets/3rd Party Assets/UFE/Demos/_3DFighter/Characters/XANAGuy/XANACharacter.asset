@@ -15,7 +15,7 @@ MonoBehaviour:
   gameplayType: 1
   profilePictureSmall: {fileID: 2800000, guid: ccf7a43e6861e694d96a2b2566dcf5f7, type: 3}
   profilePictureBig: {fileID: 2800000, guid: 91104fa501cf4e5459fe1003f973cf98, type: 3}
-  characterName: XANAGuy
+  characterName: Player1
   gender: 0
   characterDescription: 
   selectionAnimation: {fileID: 0}
@@ -60,10 +60,10 @@ MonoBehaviour:
     canCrouch: 1
     crouchDelay: 2
     standingDelay: 2
-    canJump: 0
+    canJump: 1
     pressureSensitiveJump: 0
     _jumpForce:
-      _serializedValue: 171798691840
+      _serializedValue: 85899345920
     _minJumpForce:
       _serializedValue: 128849018880
     minJumpDelay: 4
@@ -89,12 +89,13 @@ MonoBehaviour:
     disableOnHit: 1
   customControls:
     overrideControlFreak: 0
-    controlFreak2Prefab: {fileID: 0}
-    zAxisMovement: 0
+    controlFreak2Prefab: {fileID: 11467906, guid: 3b691fd3550ba074aa196ddda13fab95,
+      type: 3}
+    zAxisMovement: 1
     disableJump: 0
     disableCrouch: 0
-    jumpButton: 2
-    crouchButton: 3
+    jumpButton: 12
+    crouchButton: 13
   hideGauges: 00000000000000000000
   _executionTiming:
     _serializedValue: 1288490240
@@ -114,3 +115,4 @@ MonoBehaviour:
   aiInstructionsSet:
   - aiInfo: {fileID: 11400000, guid: 791c92735d87af04e9d26344289ea785, type: 2}
     behavior: 3
+  clothesString: 
