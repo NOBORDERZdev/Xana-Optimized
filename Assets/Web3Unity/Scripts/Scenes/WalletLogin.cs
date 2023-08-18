@@ -23,15 +23,22 @@ public class WalletLogin: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
-               // LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
     }
 
-    void SetChainSafeInfo() { 
-       projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
+    void SetChainSafeInfo() {
+        if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigDataMainNet", typeof(ScriptableObject));
+        }
+        else
+        {
+            projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigData", typeof(ScriptableObject));
+        }
         PlayerPrefs.SetString("ProjectID", projectConfigSO.ProjectId);
         PlayerPrefs.SetString("ChainID", projectConfigSO.ChainId);
         PlayerPrefs.SetString("Chain", projectConfigSO.Chain);

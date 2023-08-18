@@ -493,7 +493,7 @@ public class ConnectingWallet : MonoBehaviour
     {
         print("Signature verify here ");
     }
-    public bool isWalletNewReg=false; // for new registration of wallet  
+    [HideInInspector] public bool isWalletNewReg=false; // for new registration of wallet  
      public void DisconnectRequestToServer()
     {
         ConnectServerDataExtraction.Disconnect1 dataObj = new ConnectServerDataExtraction.Disconnect1();
