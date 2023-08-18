@@ -1375,7 +1375,10 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator OnSucessLogout()
     {
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        if (_web3APIforWeb2._OwnedNFTDataObj != null)
+        {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        }
  
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
@@ -1404,6 +1407,7 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
+        PlayerPrefs.SetString("publicID","");
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());

@@ -202,7 +202,7 @@ public class ConnectingWallet : MonoBehaviour
                     LoaderBool = false;
 
                     PlayerPrefs.SetInt("WalletConnect", 1);
-                    SuccessfulPopUp.SetActive(true);
+                    //SuccessfulPopUp.SetActive(true);
                     UserRegisterationManager.instance.LoginWithWallet();
                     PlayerPrefs.Save();
                     SetNameInServer();
@@ -493,6 +493,7 @@ public class ConnectingWallet : MonoBehaviour
     {
         print("Signature verify here ");
     }
+    public bool isWalletNewReg=false; // for new registration of wallet  
      public void DisconnectRequestToServer()
     {
         ConnectServerDataExtraction.Disconnect1 dataObj = new ConnectServerDataExtraction.Disconnect1();
@@ -500,11 +501,17 @@ public class ConnectingWallet : MonoBehaviour
         dataObj = dataObj._Disconnect(AppID);
         var jsonObj = JsonUtility.ToJson(dataObj);
         print(jsonObj);
+        if (isWalletNewReg)
+        {
+               UserRegisterationManager.instance.OpenUIPanal(5);
+        }
+        SuccessfulPopUp.SetActive(true);
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         // print(new JsonObject(JsonUtility.ToJson(dataObj)).ToString());
         ///Wallet Connect 
-       //// websocket.Send(jsonObj);    
-       ///
-    }     
+        //// websocket.Send(jsonObj);    
+        ///
+    }
     IEnumerator waitForLoader (GameObject loaderObj =null)
     {
  
@@ -966,7 +973,7 @@ public class ConnectingWallet : MonoBehaviour
                     print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
                    //  PlayerPrefs.SetString("UserName", PlayerPrefs.GetString("Useridxanalia"));
                     PlayerPrefs.SetInt("WalletConnect", 1);
-                    SuccessfulPopUp.SetActive(true);
+                    //SuccessfulPopUp.SetActive(true);
                     UserRegisterationManager.instance.LoginWithWallet();  
                     PlayerPrefs.Save();    
                      SetNameInServer();
@@ -979,7 +986,7 @@ public class ConnectingWallet : MonoBehaviour
           {
               if (request.isNetworkError)
               {
-               //   DisconnectRequestToServer();
+                  DisconnectRequestToServer();
                  Debug.Log("Network error in Verify signature of xanalia");
               }
               else
@@ -988,7 +995,7 @@ public class ConnectingWallet : MonoBehaviour
                   {
                       if (!VerifySignatureReadObj.success)
                       {
-                         // DisconnectRequestToServer();
+                          DisconnectRequestToServer();
                          Debug.Log("Success false in  verify sig  of xanalia");
                       }
                   }
@@ -1160,7 +1167,7 @@ public void GetNFTList()
    {
        if (request.isNetworkError)
        {
-           //   DisconnectRequestToServer();
+              DisconnectRequestToServer();
           Debug.Log("Network error in Getting NFT list of Xanalia");
        }
        else
@@ -1169,7 +1176,7 @@ public void GetNFTList()
            {
                if (!ReadObj.success)
                {
-                   // DisconnectRequestToServer();
+                    DisconnectRequestToServer();
                   Debug.Log("Success false in  Getting NFT list of Xanalia");
                }
            }
