@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.AI;
 
 namespace XanaAi
@@ -13,29 +14,29 @@ namespace XanaAi
         List<Texture> masks = new List<Texture>();
         private Stitcher stitcher;
         [SerializeField] WanderingAI wandering;
-        [SerializeField]AiSelfie selfie;
-        [SerializeField]AiEmote aiEmote;
+        [SerializeField] AiSelfie selfie;
+        [SerializeField] AiEmote aiEmote;
         [SerializeField] AiReaction aiReaction;
         [SerializeField] AIJump aIJump;
         [SerializeField] AiFreeCam freeCam;
         [SerializeField] EyesBlinking blinking;
-        bool isNewlySpwaned =true;
+        bool isNewlySpwaned = true;
         Coroutine emoteCoroutine;
         [HideInInspector]
-        public Coroutine ActionCoroutine=null;
+        public Coroutine ActionCoroutine = null;
         [HideInInspector]
-        public bool isPerformingAction= false;
+        public bool isPerformingAction = false;
         private void Awake()
         {
             stitcher = new Stitcher();
-            
+
         }
 
         private void Start()
         {
             blinking.StoreBlendShapeValues();          // enabling blinking
             blinking.isBlinking = true;
-            blinking.StartCoroutine(blinking.BlinkingStartRoutine()); 
+            blinking.StartCoroutine(blinking.BlinkingStartRoutine());
         }
 
         /// <summary>
@@ -158,17 +159,18 @@ namespace XanaAi
         /// To Perform Action Randomly
         /// </summary>
         /// <returns></returns>
-        public IEnumerator PerformAction() {
+        public IEnumerator PerformAction()
+        {
             if (!isPerformingAction)
             {
-                isPerformingAction= true;
+                isPerformingAction = true;
                 print("PerformAction call");
                 yield return new WaitForSeconds(/*Random.Range(1,2)*/0);
                 int rand;
                 if (isNewlySpwaned)
                 {
                     print("in newly to wander");
-                    rand=0;
+                    rand = 0;
                     isNewlySpwaned = false;
                 }
                 else
@@ -176,64 +178,106 @@ namespace XanaAi
                     rand = Random.Range(0, 5);
                     print("get random action : " + rand);
                 }
-           
+
 
                 switch (rand)
                 {
-                    case 0:
+                    case 0:    // for wander
                         print("Performing Wander");
-                        wandering.Wander();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
+                        //wandering.Wander();
                         selfie.ForceFullyDisableSelfie();
-                        if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        aiEmote.ForceFullyStopEmote();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+
+                        //aiEmote.ForceFullyStopEmote();
                         break;
-                    case 1:
+                    case 1:    // for selfie
                         print("Performing Selfie action");
                         selfie.SelfieAction();
-                        if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        aiEmote.ForceFullyStopEmote();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+
+                        //aiEmote.ForceFullyStopEmote();
                         break;
-                    case 2:
-                         print("Performing Emote");
-                       if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        emoteCoroutine= aiEmote.StartCoroutine(aiEmote.PlayEmote());
+                    case 2:    // for Emote
+                        print("Performing Emote");
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                        {
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                            GetComponent<PhotonView>().RPC(nameof(PlayAIEmotes), RpcTarget.All);
+                        }
+
                         selfie.ForceFullyDisableSelfie();
                         break;
-                    case 3:
+                    case 3:    // for jump
                         print("Performing Jump");
                         aIJump.AiJump();
-                        if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        aiEmote.ForceFullyStopEmote();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+
+                        //aiEmote.ForceFullyStopEmote();
                         break;
-                    case 4:
+                    case 4:    // for freeCam
                         print("Performing Ai free cam");
                         freeCam.PerformFreeCam();
-                        if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        aiEmote.ForceFullyStopEmote();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+
+                        //aiEmote.ForceFullyStopEmote();
                         break;
-                    default:
+                    default:    // for wander
                         print("Performing Wander from default");
-                        wandering.Wander();
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
+                        //wandering.Wander();
+
                         selfie.ForceFullyDisableSelfie();
-                       if(emoteCoroutine != null)
-                            StopCoroutine(emoteCoroutine);
-                        aiEmote.ForceFullyStopEmote();
+
+                        if (this.GetComponent<PhotonView>().IsMine)
+                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+
+                        //aiEmote.ForceFullyStopEmote();
                         break;
                 }
             }
         }
 
+        [PunRPC]
+        private void PlayAIEmotes()
+        {
+            emoteCoroutine = aiEmote.StartCoroutine(aiEmote.PlayEmote());
+            Handheld.Vibrate();
+        }
+
+        [PunRPC]
+        private void StopAIEmotes()
+        {
+            if (emoteCoroutine != null)
+                StopCoroutine(emoteCoroutine);
+
+            aiEmote.ForceFullyStopEmote();
+        }
+
+        [PunRPC]
+        private void StartWandering()
+        {
+            wandering.Wander();
+        }
 
         /// <summary>
         /// To Set Ai name
         /// </summary>
         /// <param name="name"></param>
-        public void SetAiName(string name){ 
+        public void SetAiName(string name)
+        {
             NameTxt.text = name;
         }
     }

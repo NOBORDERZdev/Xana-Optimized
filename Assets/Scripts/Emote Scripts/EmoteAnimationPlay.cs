@@ -27,6 +27,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     public Animator animator = null;
     public Animator animatorremote = null;
     public RuntimeAnimatorController controller;
+    public RuntimeAnimatorController aiController;
     // public GameObject CameraLook;
     public AnimationDetails bean;
     public GameObject AnimObject;

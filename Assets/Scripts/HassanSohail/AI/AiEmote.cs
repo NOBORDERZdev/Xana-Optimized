@@ -22,10 +22,10 @@ namespace XanaAi
         //[SerializeField] List<string> EmoteUrl;
         private void Awake()
         {
-           // ai = GetComponent<AiController>();
+            // ai = GetComponent<AiController>();
             //animationController = GetComponent<Animator>();
             //wandering = GetComponent<WanderingAI>();
-            controller = EmoteAnimationPlay.Instance.controller;
+            controller = EmoteAnimationPlay.Instance.aiController; // controller;
             spawnCharacterObjectRemote = EmoteAnimationPlay.Instance.spawnCharacterObjectRemote;
         }
 

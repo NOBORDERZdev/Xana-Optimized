@@ -29,7 +29,7 @@ namespace XanaAi{
             //animator = gameObject.GetComponent<Animator>();
             //aiController = GetComponent<AiController>();
             agent.enabled=false;
-            animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
+            //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
             animator.SetBool("IsGrounded", true);
 
         }
@@ -47,8 +47,8 @@ namespace XanaAi{
                              agent.updateRotation = true;
                             // Done
                             isMoving =false;
-                            animator.SetFloat("Blend", 0.0f);
-                            animator.SetFloat("BlendY", 0.0f);
+                            animator.SetFloat("Blended", 0.0f);
+                            animator.SetFloat("BlendVer", 0.0f);
                             print("Reach Destination of wander");
                             aiController.isPerformingAction = false;
                             if (aiController.ActionCoroutine !=null)
@@ -70,8 +70,8 @@ namespace XanaAi{
                         //{
                         //    transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
                         //}
-                        //animator.SetFloat("Blend", agent.speed);
-                        animator.SetFloat("BlendY", agent.transform.eulerAngles.y);
+                        //animator.SetFloat("Blended", agent.speed);
+                        animator.SetFloat("BlendVer", agent.transform.eulerAngles.y);
                         agent.updateRotation = false;
                             FaceTarget(agent.destination);
                     }
@@ -80,15 +80,15 @@ namespace XanaAi{
                 {
                     //animator.SetFloat("Blend", agent.speed);
                     animator.SetBool("IsGrounded", true);
-                    animator.SetFloat("BlendY", agent.transform.eulerAngles.y);
+                    animator.SetFloat("BlendVer", agent.transform.eulerAngles.y);
                     agent.updateRotation = false;
                             FaceTarget(agent.destination);
                 }
             }
             else
             {
-                animator.SetFloat("Blend", 0.0f);
-                animator.SetFloat("BlendY", 0.0f);
+                animator.SetFloat("Blended", 0.0f);
+                animator.SetFloat("BlendVer", 0.0f);
             }
         }
 
@@ -97,23 +97,23 @@ namespace XanaAi{
             Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius,maxRadius), -1);
             agent.SetDestination(newPos);
             animator.SetBool("IsGrounded", true);
-            animator.SetFloat("Blend", 0.01f);
-            animator.SetFloat("Blend", 0f);
+            animator.SetFloat("Blended", 0.01f);
+            animator.SetFloat("Blended", 0f);
 
             int rand = Random.Range(0, 2);  
             print("Start wander with rand : "+ rand);
             switch (rand)
             {
                 case 0: // walk
-                    animator.SetFloat("Blend", 0.55f);
+                    animator.SetFloat("Blended", 0.55f);
                     agent.speed =1.2f;
                     break;
                 case 1: // run
-                    animator.SetFloat("Blend", 1.0f);
+                    animator.SetFloat("Blended", 1.0f);
                     agent.speed = 2.2f;
                     break;
                 default: // sprint
-                    animator.SetFloat("Blend", 1.3f);
+                    animator.SetFloat("Blended", 1.3f);
                     agent.speed = 3;
                     break;
             }
