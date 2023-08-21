@@ -46,16 +46,16 @@ public class PlayerPortal : MonoBehaviour
             if(currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
             {
                 if(transform.parent.name.Contains("Astroboy"))
-                customFirebaseEvent = "2F_Infoboard_AtomMuseum" + name;
+                customFirebaseEvent = "F2_Infoboard_AtomMuseum" + name;
                 else
-                    customFirebaseEvent = "2F_Infoboard_RentalSpace" + name;
+                    customFirebaseEvent = "F2_Infoboard_RentalSpace" + name;
             }
             else if (currentPortal == PortalType.Enter)
             {
                 if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
-                    customFirebaseEvent = "2F_EachRoom_AtomMuseum" + ref_JJMuseumInfoManager.name;
+                    customFirebaseEvent = "F2_EachRoom_AtomMuseum" + ref_JJMuseumInfoManager.name;
                 else
-                    customFirebaseEvent = "2F_EachRoom_RentalSpace" + ref_JJMuseumInfoManager.name;
+                    customFirebaseEvent = "F2_EachRoom_RentalSpace" + ref_JJMuseumInfoManager.name;
             }
 
             if (other.GetComponent<PhotonView>().IsMine)

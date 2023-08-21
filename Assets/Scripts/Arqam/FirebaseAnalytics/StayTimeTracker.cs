@@ -21,16 +21,16 @@ public class StayTimeTracker : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         if (worldName.Contains("Zone_Museum"))
-            worldName = "1F_ZoneX_StayTime_"; 
+            worldName = "F1_ZoneX_StayTime_"; 
         
         else if (worldName.Contains("Lobby"))
-            worldName = "1F_Mainloby_StayTime_";
+            worldName = "F1_Mainloby_StayTime_";
 
         else if (worldName.Contains("FiveElement"))
-            worldName = "1F_FiveElement_StayTime_";
+            worldName = "F1_FiveElement_StayTime_";
 
         else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
-            worldName = "2F_AtomRental_StayTime_";
+            worldName = "F2_AtomRental_StayTime_";
     }
 
     private void StartTrackingTime()

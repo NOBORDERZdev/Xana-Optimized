@@ -563,25 +563,25 @@ public class JjInfoManager : MonoBehaviour
                         break;
                 }
 
-                Firebase.Analytics.FirebaseAnalytics.LogEvent("1F_Mainloby_" + myString);
-                Debug.Log("<color=red> 1F_Mainloby_" + myString +"</color>");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_Mainloby_" + myString);
+                Debug.Log("<color=red> F1_Mainloby_" + myString +"</color>");
             }
             else if (worldName.Contains("ZONE X Musuem") )
             {
-                Firebase.Analytics.FirebaseAnalytics.LogEvent("1F_ZoneX_NFT_No_" + clickedNftInd);
-                Debug.Log("<color=red> 1F_ZoneX_NFT_No_" + clickedNftInd+ " </color>");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_ZoneX_NFT_No_" + clickedNftInd);
+                Debug.Log("<color=red> F1_ZoneX_NFT_No_" + clickedNftInd+ " </color>");
             }
             else if (worldName.Contains("FIVE ELEMENTS"))
             {
-                Firebase.Analytics.FirebaseAnalytics.LogEvent("1F_FiveElement_NFT_No_" + clickedNftInd);
-                Debug.Log("<color=red> 1F_FiveElement_NFT_No_" + clickedNftInd + " </color>");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_FiveElement_NFT_No_" + clickedNftInd);
+                Debug.Log("<color=red> F1_FiveElement_NFT_No_" + clickedNftInd + " </color>");
             }
             else
             {
                 if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
-                    worldName = "2F_Atom";
+                    worldName = "F2_Atom";
                 else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
-                    worldName = "2F_Rental";
+                    worldName = "F2_Rental";
 
                 Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + analyticMuseumID + "NFT_No_"+ (clickedNftInd + 1));
                 Debug.Log("<color=red>" + worldName + analyticMuseumID + "NFT_No_" + (clickedNftInd + 1) + " </color>");
