@@ -60,6 +60,7 @@ public class WalletLogin: MonoBehaviour
             {
                 type = WalletConnectCallType.Login;
             }
+
             // get current timestamp
             int timestamp = (int)(System.DateTime.UtcNow.Subtract(new System.DateTime(1970, 1, 1))).TotalSeconds;
             // set expiration time
@@ -67,11 +68,15 @@ public class WalletLogin: MonoBehaviour
             // set message
             string message = expirationTime.ToString();
             print("message is "+ message);
+             string signature;
+            string account;
             // sign message
-            string signature = await Web3Wallet.Sign(message);
-            print("signature is "+ signature);
+             signature = await Web3Wallet.Sign(message);
+             account = await EVM.Verify(message, signature);
+
             // verify account
-            string account = await EVM.Verify(message, signature);
+
+            
             int now = (int)(System.DateTime.UtcNow.Subtract(new System.DateTime(1970, 1, 1))).TotalSeconds;
             // validate
             if (account.Length == 42 && expirationTime >= now) {

@@ -2431,10 +2431,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7958925442453035827, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.1579285
+      objectReference: {fileID: 0}
     - target: {fileID: 8340083892183628497, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
       propertyPath: m_FontData.m_Font
       value: 
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
+    - target: {fileID: 8530674954234203359, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.1579285
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcb84cf33bfa24e69abaad45acc9d92e, type: 3}
 --- !u!1 &141641255 stripped
@@ -3132,7 +3140,7 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 4784853775622055335, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.3999023
+      value: -1.3999329
       objectReference: {fileID: 0}
     - target: {fileID: 4873686172193778069, guid: 4afe240ecd03742b580ce2700bce9313, type: 3}
       propertyPath: m_FontData.m_Font
@@ -3702,6 +3710,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 495568704}
+    - target: {fileID: 8794514071821901229, guid: 8b37dc46314a54c3bb911c0e9fca890c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -34.25177
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b37dc46314a54c3bb911c0e9fca890c, type: 3}
 --- !u!224 &481726266 stripped
@@ -3737,6 +3749,18 @@ PrefabInstance:
       propertyPath: SplashvideoObj
       value: 
       objectReference: {fileID: 1861701326}
+    - target: {fileID: 495568709, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
+      propertyPath: TestSpecificCase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495568709, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
+      propertyPath: TestSpecificAdrress
+      value: 0xb2b194ecc00c87A37A5FCCC2dc20800862DEa228
+      objectReference: {fileID: 0}
+    - target: {fileID: 495568709, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
+      propertyPath: useXanaliaMainnetApiOnTestnet
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 721177378, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
       propertyPath: CodeText
       value: 
@@ -4141,7 +4165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rememberMe: {fileID: 1799637535}
   connectingWallet: {fileID: 1277272687}
-  SuccessfulPopUp: {fileID: 1146247527}
 --- !u!1 &513183384
 GameObject:
   m_ObjectHideFlags: 0
@@ -4473,6 +4496,10 @@ PrefabInstance:
     - target: {fileID: 2020247932511279319, guid: 83ab69acb9a03bc4aac81e1d01ea1c8a, type: 3}
       propertyPath: m_Name
       value: Regisration complete-Screen
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644738639019477302, guid: 83ab69acb9a03bc4aac81e1d01ea1c8a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.191002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83ab69acb9a03bc4aac81e1d01ea1c8a, type: 3}
@@ -6363,6 +6390,9 @@ MonoBehaviour:
   - {fileID: 141641264}
   - {fileID: 470902189}
   - {fileID: 470902186}
+  EnableTestWallet: 0
+  TestWaletAddress: 0xb2b194ecc00c87A37A5FCCC2dc20800862DEa228
+  isWalletNewReg: 0
 --- !u!114 &1277272688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8463,7 +8493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4578801651614017392, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -10.730072
+      value: -10.730103
       objectReference: {fileID: 0}
     - target: {fileID: 4860652738181580869, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_FontData.m_Font
@@ -8491,11 +8521,11 @@ PrefabInstance:
       objectReference: {fileID: 495568704}
     - target: {fileID: 6947234910275303269, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -10.730072
+      value: -10.730103
       objectReference: {fileID: 0}
     - target: {fileID: 7280869202375109894, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -14.499939
+      value: -14.499878
       objectReference: {fileID: 0}
     - target: {fileID: 7758580480534271881, guid: f3a48363bea67df498924368f8b6489d, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -8846,7 +8876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5511522592145397261, guid: f7d5cf7ffc89c4c74a80602bf4bc8574, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 21.90039
+      value: 21.90033
       objectReference: {fileID: 0}
     - target: {fileID: 5609647480667870027, guid: f7d5cf7ffc89c4c74a80602bf4bc8574, type: 3}
       propertyPath: m_FontData.m_Font
