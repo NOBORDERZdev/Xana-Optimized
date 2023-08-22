@@ -29,8 +29,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-unity:11.1.0' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
     implementation 'com.google.firebase:firebase-dynamic-links:21.1.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:13
     implementation 'com.google.firebase:firebase-dynamic-links-unity:11.1.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:20
-    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-    implementation 'androidx.multidex:multidex:2.0.1'
 // Android Resolver Dependencies End
 **DEPS**}
 
@@ -64,7 +62,6 @@ android {
         versionCode **VERSIONCODE**
         versionName '**VERSIONNAME**'
         consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
-        multiDexEnabled true
     }
 
     lintOptions {

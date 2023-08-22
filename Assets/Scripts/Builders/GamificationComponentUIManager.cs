@@ -255,7 +255,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             TimeLimitText.text = ConvertTimetoSecondsandMinute(time);
             yield return new WaitForSeconds(1);
         }
-        yield return new WaitForSeconds(5f);
+        //yield return new WaitForSeconds(5f);
         DisableTimeLimitUI();
     }
 
