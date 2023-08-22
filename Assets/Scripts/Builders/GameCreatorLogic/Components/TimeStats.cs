@@ -36,7 +36,7 @@ public class TimeStats : MonoBehaviour
         _intensityChangerStop += SituationStoper;
         _blindComponentStart += BlindComponentStart;
         _blindComponentStop += BlindComponentStop;
-    }
+}
     private void OnDisable()
     {
         _timeStart -= StartTimer;
@@ -196,9 +196,12 @@ public class TimeStats : MonoBehaviour
     {
         previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
         //EventManager.ChangeSituationToNight?.Invoke(false);
-        for (int i = 0; i < _light.Length; i++)
+        if (_light != null)
         {
-            _light[i].intensity = _lightsIntensity[i];
+            for (int i = 0; i < _light.Length; i++)
+            {
+                _light[i].intensity = _lightsIntensity[i];
+            }
         }
 
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
@@ -284,9 +287,12 @@ public class TimeStats : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < blindlights.Length; i++)
+        if (blindlights != null)
         {
-            blindlights[i].intensity = blindIntensity[i];
+            for (int i = 0; i < blindlights.Length; i++)
+            {
+                blindlights[i].intensity = blindIntensity[i];
+            }
         }
         PlayerCanvas.Instance.ToggleBlindLight(false, 300);
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);

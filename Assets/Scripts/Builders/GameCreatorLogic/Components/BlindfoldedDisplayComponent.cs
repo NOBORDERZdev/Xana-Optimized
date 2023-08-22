@@ -60,13 +60,10 @@ public class BlindfoldedDisplayComponent : ItemComponent
         if (rb == null)
             rb = shoes.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true;
-        for (int i = 0; i < shoes.childCount; i++)
+
+        if (shoes.transform.childCount == 0)
         {
-            Destroy(shoes.GetChild(i).gameObject);
-        }
-        GameObject goFootStep = GamificationComponentData.instance.FootSteps[0];
-        {
-            var tempobj = Instantiate(goFootStep, shoes);
+            var tempobj = Instantiate(GamificationComponentData.instance.FootSteps[0], shoes);
             tempobj.transform.localPosition = Vector3.up * 0.0207f;
         }
 
@@ -90,14 +87,14 @@ public class BlindfoldedDisplayComponent : ItemComponent
             skinMesh[i].enabled = false;
         }
 
-        RingbufferFootSteps[] ringbufferFootSteps = other.gameObject.GetComponentsInChildren<RingbufferFootSteps>();
+        RingbufferFootSteps ringbufferFootStep = shoes.gameObject.GetComponentInChildren<RingbufferFootSteps>();
         //for (int i = 0; i < ringbufferFootSteps.Length; i++)
         //{
-            ringbufferFootSteps[ringbufferFootSteps.Length-1].enabled = true;
-            ringbufferFootSteps[ringbufferFootSteps.Length - 1].transform.GetChild(0).gameObject.SetActive(true);
+        ringbufferFootStep.enabled = true;
+        ringbufferFootStep.transform.GetChild(0).gameObject.SetActive(true);
         //}
         //Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
-        StartCoroutine(BackToVisible(ringbufferFootSteps));
+        StartCoroutine(BackToVisible(ringbufferFootStep));
     }
 
     private void SetAvatarInvisibility()
@@ -114,7 +111,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         StartCoroutine(BackToAvatarVisiblityHologram());
     }
 
-    IEnumerator BackToVisible(RingbufferFootSteps[] rr)
+    IEnumerator BackToVisible(RingbufferFootSteps rr)
     {
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
 
@@ -140,11 +137,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
             skinMesh[i].enabled = true;
         }
 
-        for (int i = 0; i < rr.Length; i++)
-        {
-            rr[0].enabled = false;
-            rr[0].transform.GetChild(0).gameObject.SetActive(false);
-        }
+        rr.enabled = false;
+        rr.transform.GetChild(0).gameObject.SetActive(false);
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
