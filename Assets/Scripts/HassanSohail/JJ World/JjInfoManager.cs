@@ -478,8 +478,8 @@ public class JjInfoManager : MonoBehaviour
 
         #region For firebase analytics
       
-        SendCallAnalytics(type, title , id);
-        clickedNftInd = id;
+        SendCallAnalytics(type, title , nftId);
+        clickedNftInd = nftId;
         #endregion
     }
 
