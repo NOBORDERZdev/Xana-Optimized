@@ -107,6 +107,8 @@ public class FeedEventPrefab : MonoBehaviour
                 StartCoroutine(DownloadAndLoadBanner());
             }
         }
+
+        
     }
 
     int cnt = 0;
@@ -119,6 +121,7 @@ public class FeedEventPrefab : MonoBehaviour
         cnt += 1;
 
         UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
+
         UpdateUserCount();
     }
 
@@ -234,7 +237,6 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else if (isImageSuccessDownloadAndSave)
         {
-            //Debug.Log("0");
             LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
@@ -341,6 +343,7 @@ public class FeedEventPrefab : MonoBehaviour
         worldIcon.sprite = dummyThumbnail;
         WorldManager.instance.ResourcesUnloadAssetFile();
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
+
     }
 
     void GetEventType(string entityType)
