@@ -164,91 +164,83 @@ namespace XanaAi
             if (!isPerformingAction)
             {
                 isPerformingAction = true;
-                print("PerformAction call");
-                yield return new WaitForSeconds(/*Random.Range(1,2)*/0);
+                //yield return new WaitForSeconds(/*Random.Range(1,2)*/0);
                 int rand;
                 if (isNewlySpwaned)
                 {
-                    print("in newly to wander");
                     rand = 0;
                     isNewlySpwaned = false;
                 }
                 else
                 {
                     rand = Random.Range(0, 5);
-                    print("get random action : " + rand);
                 }
 
 
                 switch (rand)
                 {
                     case 0:    // for wander
-                        print("Performing Wander");
-
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
-                        //wandering.Wander();
-                        selfie.ForceFullyDisableSelfie();
-
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-
-                        //aiEmote.ForceFullyStopEmote();
+                        {
+                            if (this.GetComponent<PhotonView>().IsMine)
+                            {
+                                GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(NPCDisableSelfie), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                            }
+                        }
                         break;
                     case 1:    // for selfie
-                        print("Performing Selfie action");
-                        selfie.SelfieAction();
-
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-
-                        //aiEmote.ForceFullyStopEmote();
+                        {
+                            if (this.GetComponent<PhotonView>().IsMine)
+                            {
+                                GetComponent<PhotonView>().RPC(nameof(NPCSelfieAction), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                            }
+                        }
                         break;
                     case 2:    // for Emote
-                        print("Performing Emote");
-
-                        if (this.GetComponent<PhotonView>().IsMine)
                         {
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-                            GetComponent<PhotonView>().RPC(nameof(PlayAIEmotes), RpcTarget.All);
+                            if (this.GetComponent<PhotonView>().IsMine)
+                            {
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(PlayAIEmotes), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(NPCDisableSelfie), RpcTarget.All);
+                            }
                         }
-
-                        selfie.ForceFullyDisableSelfie();
                         break;
                     case 3:    // for jump
-                        print("Performing Jump");
-                        aIJump.AiJump();
+                        {
+                            aIJump.AiJump();
 
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-
-                        //aiEmote.ForceFullyStopEmote();
+                            if (this.GetComponent<PhotonView>().IsMine)
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                        }
                         break;
                     case 4:    // for freeCam
-                        print("Performing Ai free cam");
-                        freeCam.PerformFreeCam();
-
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-
-                        //aiEmote.ForceFullyStopEmote();
+                        {
+                            if (this.GetComponent<PhotonView>().IsMine)
+                            {
+                                GetComponent<PhotonView>().RPC(nameof(NPCFreeCam), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                            }
+                        }
                         break;
-                    default:    // for wander
-                        print("Performing Wander from default");
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
-                        //wandering.Wander();
-
-                        selfie.ForceFullyDisableSelfie();
-
-                        if (this.GetComponent<PhotonView>().IsMine)
-                            GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
-
-                        //aiEmote.ForceFullyStopEmote();
+                    default:    // for wander as default
+                        {
+                            if (this.GetComponent<PhotonView>().IsMine)
+                            {
+                                GetComponent<PhotonView>().RPC(nameof(StartWandering), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(NPCDisableSelfie), RpcTarget.All);
+                                GetComponent<PhotonView>().RPC(nameof(StopAIEmotes), RpcTarget.All);
+                            }
+                        }
                         break;
                 }
             }
+            yield return null;
         }
+
+        #region NPCRegion
 
         [PunRPC]
         private void PlayAIEmotes()
@@ -272,6 +264,26 @@ namespace XanaAi
             wandering.Wander();
         }
 
+        [PunRPC]
+        private void NPCDisableSelfie()
+        {
+            selfie.ForceFullyDisableSelfie();
+        }
+
+        [PunRPC]
+        private void NPCSelfieAction()
+        {
+            selfie.SelfieAction();
+        }
+
+        [PunRPC]
+        private void NPCFreeCam()
+        {
+            freeCam.PerformFreeCam();
+        }
+
+        #endregion
+
         /// <summary>
         /// To Set Ai name
         /// </summary>
@@ -280,5 +292,7 @@ namespace XanaAi
         {
             NameTxt.text = name;
         }
+
+
     }
 }
