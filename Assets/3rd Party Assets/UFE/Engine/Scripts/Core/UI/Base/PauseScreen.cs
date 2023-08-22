@@ -13,8 +13,9 @@
         private void GoToMainMenuDelayed()
         {
             UFE.EndGame();
-            UFE.StartMainMenuScreen();
             UFE.PauseGame(false);
+            UFE.StartMainMenuScreen();
+            Destroy(this.gameObject, 1);
         }
 
         public virtual void ResumeGame()

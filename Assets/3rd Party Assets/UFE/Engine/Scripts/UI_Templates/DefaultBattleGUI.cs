@@ -77,6 +77,7 @@ public class DefaultBattleGUI : BattleGUI{
 	public void AddInput (InputReferences[] inputReferences, int player){
 		this.OnInput(inputReferences, player);
 	}
+
 	public void setPlayerIcon(string url, Image img)
 	{
 		Debug.LogError("setPlayerIcon: " + url);
@@ -457,11 +458,14 @@ public class DefaultBattleGUI : BattleGUI{
 				this.player1GUI.portrait.gameObject.SetActive(true);
 				setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
 				/*this.player1GUI.portrait.sprite = Sprite.Create(
+				this.player1GUI.portrait.sprite = Sprite.Create(
 					cPlayer1.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer1.myInfo.profilePictureSmall.width, cPlayer1.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer1.myInfo.profilePictureSmall.width, 0.5f * cPlayer1.myInfo.profilePictureSmall.height)
 				);*/
-			}else{
+			}
+			else
+			{
 				this.player1GUI.portrait.gameObject.SetActive(false);
 			}
 		}
@@ -836,4 +840,4 @@ public class DefaultBattleGUI : BattleGUI{
 		}
 	}
 	*/
-			}
+}

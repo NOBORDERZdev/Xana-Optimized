@@ -5,7 +5,7 @@ using FPLibrary;
 using UFE3D;
 using UnityEngine.SceneManagement;
 using Photon.Pun; //Attizaz
-
+using System;
 public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 	#region public enum definitions
 	public enum DisplayMode{
@@ -48,25 +48,41 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
     private void Awake()
     {
 		if (!instance) instance = this;
-    }
 
-	private void Start()
+	}
+    private void OnEnable()
+    {
+		StartCoroutine(GoToLoading());
+	}
+    private void Start()
 	{
-		print("Starting"); //kush
 
 		//GetPlayersInstances();//Attizaz
 		if (UFE.gameMode == GameMode.NetworkGame)
 		{
 			if (PhotonNetwork.IsMasterClient)
 			{
-				 FightingGameManager.instance.CallRPC();
+				FightingGameManager.instance.CallRPC();
 			}
 		}
-	
-            UFE.SetPlayer1(P1SelectedChar);
-            UFE.SetPlayer2(P2SelectedChar);
-            UFE.StartLoadingBattleScreen();
+
+
+
     }
+
+	System.Collections.IEnumerator GoToLoading() 
+	{
+		yield return new WaitForSeconds(0.8f);
+		print("Starting"); //kush
+		UFE.SetPlayer1(P1SelectedChar);
+		UFE.SetPlayer2(P2SelectedChar);
+		//UFE.config.gameGUI.screenFadeDuration = 0f;
+		//instance.globalConfigFile.gameGUI.screenFadeDuration = 0f;
+		//instance.hasFadeIn = false;
+		//instance.hasFadeOut = false;
+		UFE.StartLoadingBattleScreen();
+	}
+
 	//Attizaz
 	//void GetPlayersInstances()
 	//{

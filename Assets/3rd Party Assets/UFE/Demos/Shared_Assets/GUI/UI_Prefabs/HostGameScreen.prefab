@@ -659,6 +659,7 @@ GameObject:
   - component: {fileID: 22244466}
   - component: {fileID: 11465318}
   - component: {fileID: 11442570}
+  - component: {fileID: 7470795063004107032}
   m_Layer: 5
   m_Name: InputField_Timer
   m_TagString: Untagged
@@ -778,7 +779,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 1
-  m_CharacterLimit: 2
+  m_CharacterLimit: 3
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls:
@@ -808,6 +809,20 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &7470795063004107032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb51de5e9b70e24b9fa83ac6bc47a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minValue: 60
+  maxValue: 300
 --- !u!1 &106608
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,6 +3380,7 @@ GameObject:
   - component: {fileID: 22202822}
   - component: {fileID: 11444824}
   - component: {fileID: 11494908}
+  - component: {fileID: 2452036463815133931}
   m_Layer: 5
   m_Name: InputField_Rounds
   m_TagString: Untagged
@@ -3484,7 +3500,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 1
-  m_CharacterLimit: 2
+  m_CharacterLimit: 1
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls:
@@ -3514,6 +3530,20 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &2452036463815133931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beb51de5e9b70e24b9fa83ac6bc47a71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minValue: 1
+  maxValue: 5
 --- !u!1 &198338
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,10 +44,6 @@ namespace UFE3D
                 controlsScript = transform.parent.gameObject.GetComponent<ControlsScript>();
                 collisionBoxSize = controlsScript.myInfo.physics._groundCollisionMass;
             }
-            if (UFE.gameMode==GameMode.VersusMode)
-            {
-                
-            }
             moveSetScript = GetComponent<MoveSetScript>();
             UpdateRenderer();
 

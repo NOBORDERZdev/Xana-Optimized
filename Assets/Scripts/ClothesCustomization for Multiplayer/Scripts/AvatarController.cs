@@ -63,6 +63,10 @@ public class AvatarController : MonoBehaviour
         {
             //Invoke(nameof(IntializeAvatar), 0.5f);
             Invoke(nameof(Custom_IntializeAvatar), 0.5f);
+            if (XanaConstants.xanaConstants.isNFTEquiped)
+            {
+                GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+            }
         }
 
         //Invoke(nameof(Test_EquiptNFT), 1f);
@@ -224,15 +228,15 @@ public class AvatarController : MonoBehaviour
     }
     void Custom_IntializeAvatar()
     {
-        Debug.LogError("Custom_IntializeAvatar");
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             //_CharData = _CharacterData;
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
-        Debug.LogError("Custom_IntializeAvatar: in if");
+                Debug.LogError("Custom_IntializeAvatar: in if");
                 if (_CharacterData.myItemObj.Count > 0)
                 {
                     for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -253,6 +257,7 @@ public class AvatarController : MonoBehaviour
                                     {
                                         if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                         {
+                                            Debug.LogError("Chest ::" + wornShirt);
                                             if (wornShirt)
                                             {
                                                 UnStichItem("Chest");
@@ -478,7 +483,7 @@ public class AvatarController : MonoBehaviour
             }
             else // wolrd scence 
             {
-                if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine|| staticPlayer) // self
+                if ((GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine) || staticPlayer) // self
                 {
                     Debug.LogError("Custom_IntializeAvatar: in else");
                     if (_CharacterData.myItemObj.Count > 0)
@@ -501,6 +506,7 @@ public class AvatarController : MonoBehaviour
                                         {
                                             if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                             {
+                                                Debug.LogError("Chest ::" + wornShirt);
                                                 if (wornShirt)
                                                 {
                                                     UnStichItem("Chest");
@@ -1272,7 +1278,6 @@ public class AvatarController : MonoBehaviour
                 wornPant.SetActive(false);
             if (wornChain)
                 wornChain.SetActive(false);
-
             if (gameObject.GetComponent<SwitchToBoxerAvatar>())
                 gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
         }
