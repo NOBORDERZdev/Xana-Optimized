@@ -495,7 +495,12 @@ namespace SuperStar.Helpers
         private IEnumerator LoadResourceRemote(int id, string key, string imageUrl, string forceLocalFileName, int _expirationDays, SpriteMeshType meshType)
         {
             UnityWebRequest www = UnityWebRequest.Get(imageUrl);
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             if (!string.IsNullOrEmpty(www.error))
             {
@@ -503,7 +508,11 @@ namespace SuperStar.Helpers
                 {
                     imageUrl = imageUrl.Remove(4, 1); // remove "s"
                     www = UnityWebRequest.Get(imageUrl);
-                    yield return www.SendWebRequest();
+                    www.SendWebRequest();
+                    while(!www.isDone)
+                    {
+                        yield return null;
+                    }
                 }
             }
 
@@ -513,7 +522,11 @@ namespace SuperStar.Helpers
                 if (www.error.Contains("timeout"))
                 {
                     www = UnityWebRequest.Get(imageUrl);
-                    yield return www.SendWebRequest();
+                    www.SendWebRequest();
+                    while(!www.isDone)
+                    {
+                        yield return null;
+                    }
                 }
                 timeoutRetryCounter++;
             }
