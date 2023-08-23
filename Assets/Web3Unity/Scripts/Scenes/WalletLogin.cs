@@ -48,7 +48,7 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
-        //SetChainSafeInfo();
+        SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
         try
         {
