@@ -70,7 +70,7 @@ public class TimeLimitComponent : ItemComponent
             IsTimeLimitActive = true;
 
             //TimeStats.canRun = false;
-            BuilderEventManager.OnTimerLimitTriggerEnter?.Invoke(timeLimitComponentData.PurposeHeading, m_TotalTime);
+            
         }
     }
 
@@ -117,7 +117,8 @@ public class TimeLimitComponent : ItemComponent
         {
             if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                StartTimerEvent?.Invoke();
+                //StartTimerEvent?.Invoke();
+             BuilderEventManager.OnTimerLimitTriggerEnter?.Invoke(timeLimitComponentData.PurposeHeading, timeLimitComponentData.TimeLimitt + 1);
             }
         }
     }
