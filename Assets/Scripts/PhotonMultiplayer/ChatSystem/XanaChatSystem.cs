@@ -10,10 +10,10 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Photon.Chat;
+//using Photon.Chat;
 using Photon.Realtime;
-using AuthenticationValues = Photon.Chat.AuthenticationValues;
-using Photon.Chat.Demo;
+//using AuthenticationValues = Photon.Chat.AuthenticationValues;
+//using Photon.Chat.Demo;
 using UnityEngine.AI;
 using WebSocketSharp;
 #if PHOTON_UNITY_NETWORKING
@@ -41,7 +41,7 @@ using TMPro;
 /// Note:
 /// Don't forget to call ChatClient.Service() on Update to keep the Chatclient operational.
 /// </remarks>
-public class XanaChatSystem : MonoBehaviour, IChatClientListener
+public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
 {
     public static XanaChatSystem instance;
     public GameObject chatOutPutPenal;
@@ -60,7 +60,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
     private string selectedChannelName; // mainly used for GUI/input
 
-    public ChatClient chatClient;
+    //public ChatClient chatClient;
 
     [Header("UI Elements")]
     public GameObject chatButton;
@@ -72,7 +72,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 #if !PHOTON_UNITY_NETWORKING
         [SerializeField]
 #endif
-    protected internal ChatAppSettings chatAppSettings;
+    //protected internal ChatAppSettings chatAppSettings;
 
 
     //public GameObject missingAppIdErrorPanel;
@@ -92,7 +92,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
     private readonly Dictionary<string, Toggle> channelToggles = new Dictionary<string, Toggle>();
 
-    private readonly Dictionary<string, FriendItem> friendListItemLUT = new Dictionary<string, FriendItem>();
+  //  private readonly Dictionary<string, FriendItem> friendListItemLUT = new Dictionary<string, FriendItem>();
 
     public bool ShowState = true;
     //public GameObject Title;
@@ -153,19 +153,19 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
 
 
-#if PHOTON_UNITY_NETWORKING
-        this.chatAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
-#endif
+//#if PHOTON_UNITY_NETWORKING
+//        this.chatAppSettings = PhotonNetwork.PhotonServerSettings.AppSettings.GetChatSettings();
+//#endif
 
-        bool appIdPresent = !string.IsNullOrEmpty(this.chatAppSettings.AppIdChat);
+//        bool appIdPresent = !string.IsNullOrEmpty(this.chatAppSettings.AppIdChat);
 
-        //this.missingAppIdErrorPanel.SetActive(!appIdPresent);
-        //this.UserIdFormPanel.gameObject.SetActive(appIdPresent);
+//        //this.missingAppIdErrorPanel.SetActive(!appIdPresent);
+//        //this.UserIdFormPanel.gameObject.SetActive(appIdPresent);
 
-        if (!appIdPresent)
-        {
-            Debug.Log("You need to set the chat app ID in the PhotonServerSettings file in order to continue.");
-        }
+//        if (!appIdPresent)
+//        {
+//            Debug.Log("You need to set the chat app ID in the PhotonServerSettings file in order to continue.");
+//        }
 
         Connect();
     }
@@ -281,16 +281,16 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
     {
         //this.UserIdFormPanel.gameObject.SetActive(false);
 
-        this.chatClient = new ChatClient(this);
-#if !UNITY_WEBGL
-        this.chatClient.UseBackgroundWorkerForSending = true;
-#endif
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            this.UserName = PlayerPrefs.GetString("PlayerName");
+//        this.chatClient = new ChatClient(this);
+//#if !UNITY_WEBGL
+//        this.chatClient.UseBackgroundWorkerForSending = true;
+//#endif
+//        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+//            this.UserName = PlayerPrefs.GetString("PlayerName");
 
-        this.chatClient.AuthValues = new AuthenticationValues(this.UserName);
+//        this.chatClient.AuthValues = new AuthenticationValues(this.UserName);
 
-        this.chatClient.ConnectUsingSettings(this.chatAppSettings);
+//        this.chatClient.ConnectUsingSettings(this.chatAppSettings);
 
         this.ChannelToggleToInstantiate.gameObject.SetActive(false);
         PlayerPrefs.SetString(UsernamePrefs, this.UserName);
@@ -301,29 +301,29 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
     }
 
     /// <summary>To avoid that the Editor becomes unresponsive, disconnect all Photon connections in OnDestroy.</summary>
-    public void OnDestroy()
-    {
-        if (this.chatClient != null)
-        {
-            this.chatClient.Disconnect();
-        }
-    }
+    //public void OnDestroy()
+    //{
+    //    if (this.chatClient != null)
+    //    {
+    //        this.chatClient.Disconnect();
+    //    }
+    //}
 
     /// <summary>To avoid that the Editor becomes unresponsive, disconnect all Photon connections in OnApplicationQuit.</summary>
-    public void OnApplicationQuit()
-    {
-        if (this.chatClient != null)
-        {
-            this.chatClient.Disconnect();
-        }
-    }
+    //public void OnApplicationQuit()
+    //{
+    //    if (this.chatClient != null)
+    //    {
+    //        this.chatClient.Disconnect();
+    //    }
+    //}
 
     public void Update()
     {
-        if (this.chatClient != null)
-        {
-            this.chatClient.Service(); // make sure to call this regularly! it limits effort internally, so calling often is ok!
-        }
+        //if (this.chatClient != null)
+        //{
+        //    this.chatClient.Service(); // make sure to call this regularly! it limits effort internally, so calling often is ok!
+        //}
 
         // check if we are missing context, which means we got kicked out to get back to the Photon Demo hub.
         //if (this.StateText == null)
@@ -400,11 +400,11 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
                 this.testBytes = new byte[this.TestLength];
             }
 
-            this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, this.testBytes, true);
+            //this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, this.testBytes, true);
         }
 
-        if (inputLine.Trim() != "")
-            this.chatClient.PublishMessage(this.selectedChannelName, inputLine);
+        //if (inputLine.Trim() != "")
+        //    this.chatClient.PublishMessage(this.selectedChannelName, inputLine);
     }
 
     public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)
@@ -437,7 +437,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
             {
                 this.ChannelsToJoinOnConnect = SceneManager.GetActiveScene().name;// FeedEventPrefab
             }
-            this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
+          //  this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
             //Debug.Log(this.ChannelsToJoinOnConnect);
         }
 
@@ -470,7 +470,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
         //}
         #endregion
 
-        this.chatClient.SetOnlineStatus(ChatUserStatus.Online); // You can set your online state (without a mesage).
+        //this.chatClient.SetOnlineStatus(ChatUserStatus.Online); // You can set your online state (without a mesage).
     }
 
     public void OnDisconnected()
@@ -480,13 +480,13 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
             Connect();
     }
 
-    public void OnChatStateChange(ChatState state)
-    {
-        // use OnConnected() and OnDisconnected()
-        // this method might become more useful in the future, when more complex states are being used.
+    //public void OnChatStateChange(ChatState state)
+    //{
+    //    // use OnConnected() and OnDisconnected()
+    //    // this method might become more useful in the future, when more complex states are being used.
 
-        //this.StateText.text = state.ToString();
-    }
+    //    //this.StateText.text = state.ToString();
+    //}
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
@@ -497,10 +497,10 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
             {
                 Debug.Log("Currently Joined Channel: " + channel);
 
-                if (Application.systemLanguage == SystemLanguage.English)
-                    this.chatClient.PublishMessage(channel, " has joined."); // you don't HAVE to send a msg on join but you could.
-                else
-                    this.chatClient.PublishMessage(channel, " 参加しました");
+                //if (Application.systemLanguage == SystemLanguage.English)
+                //    this.chatClient.PublishMessage(channel, " has joined."); // you don't HAVE to send a msg on join but you could.
+                //else
+                //    this.chatClient.PublishMessage(channel, " 参加しました");
             }
 
             if (this.ChannelToggleToInstantiate != null)
@@ -552,7 +552,7 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
         Toggle cbtn = (Toggle)Instantiate(this.ChannelToggleToInstantiate);
         cbtn.gameObject.SetActive(true);
-        cbtn.GetComponentInChildren<ChannelSelector>().SetChannel(channelName);
+      //  cbtn.GetComponentInChildren<ChannelSelector>().SetChannel(channelName);
         cbtn.transform.SetParent(this.ChannelToggleToInstantiate.transform.parent, false);
 
         this.channelToggles.Add(channelName, cbtn);
@@ -563,13 +563,13 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
     {
         GameObject fbtn = (GameObject)Instantiate(this.FriendListUiItemtoInstantiate);
         fbtn.gameObject.SetActive(true);
-        FriendItem _friendItem = fbtn.GetComponent<FriendItem>();
+       // FriendItem _friendItem = fbtn.GetComponent<FriendItem>();
 
-        _friendItem.FriendId = friendId;
+       // _friendItem.FriendId = friendId;
 
         fbtn.transform.SetParent(this.FriendListUiItemtoInstantiate.transform.parent, false);
 
-        this.friendListItemLUT[friendId] = _friendItem;
+       // this.friendListItemLUT[friendId] = _friendItem;
     }
 
 
@@ -785,11 +785,11 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
         Debug.LogWarning("status: " + string.Format("{0} is {1}. Msg:{2}", user, status, message));
 
-        if (this.friendListItemLUT.ContainsKey(user))
-        {
-            FriendItem _friendItem = this.friendListItemLUT[user];
-            if (_friendItem != null) _friendItem.OnFriendStatusUpdate(status, gotMessage, message);
-        }
+        //if (this.friendListItemLUT.ContainsKey(user))
+        //{
+        //    FriendItem _friendItem = this.friendListItemLUT[user];
+        //    if (_friendItem != null) _friendItem.OnFriendStatusUpdate(status, gotMessage, message);
+        //}
     }
 
     public void OnUserSubscribed(string channel, string user)
@@ -821,18 +821,18 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
     public void AddMessageToSelectedChannel(string msg)
     {
-        ChatChannel channel = null;
-        bool found = this.chatClient.TryGetChannel(this.selectedChannelName, out channel);
-        if (!found)
-        {
-            Debug.Log("AddMessageToSelectedChannel failed to find channel: " + this.selectedChannelName);
-            return;
-        }
+        //ChatChannel channel = null;
+        //bool found = this.chatClient.TryGetChannel(this.selectedChannelName, out channel);
+        //if (!found)
+        //{
+        //    Debug.Log("AddMessageToSelectedChannel failed to find channel: " + this.selectedChannelName);
+        //    return;
+        //}
 
-        if (channel != null)
-        {
-            channel.Add("Bot", msg, 0); //TODO: how to use msgID?
-        }
+        //if (channel != null)
+        //{
+        //    channel.Add("Bot", msg, 0); //TODO: how to use msgID?
+        //}
     }
 
 
@@ -957,13 +957,13 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
             return;
         }
 
-        ChatChannel channel = null;
-        bool found = this.chatClient.TryGetChannel(channelName, out channel);
-        if (!found)
-        {
-            Debug.Log("ShowChannel failed to find channel: " + channelName);
-            return;
-        }
+        //ChatChannel channel = null;
+        //bool found = this.chatClient.TryGetChannel(channelName, out channel);
+        //if (!found)
+        //{
+        //    Debug.Log("ShowChannel failed to find channel: " + channelName);
+        //    return;
+        //}
 
         this.selectedChannelName = channelName;
 
