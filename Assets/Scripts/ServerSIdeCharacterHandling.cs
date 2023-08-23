@@ -12,7 +12,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
     public static ServerSIdeCharacterHandling Instance;
 
     //Event will be called when user loged In and new Avatar is saved by user. Event is created for multiple avatar saving.
-    public static event Action<int, int> loadAllAvatar;
+    public event Action<int, int> loadAllAvatar;
     private void Awake()
     {
         if (Instance == null)
@@ -134,8 +134,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
             {
 
                 print("DataUpdated");
-                if (StoreManager.instance.AvatarUpdated != null)
-                    StoreManager.instance.AvatarUpdated.SetActive(true);
+                //if (StoreManager.instance.AvatarUpdated != null)
+                    //StoreManager.instance.AvatarUpdated.SetActive(true);
                 if(StoreManager.instance.MultipleSave && LoadPlayerAvatar.instance_loadplayer!= null)
                     LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 1);
                 /*if (StoreManager.instance.isSaveFromreturnHomePopUp)
