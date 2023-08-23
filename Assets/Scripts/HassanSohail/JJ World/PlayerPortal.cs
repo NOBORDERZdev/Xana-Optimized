@@ -121,6 +121,8 @@ public class PlayerPortal : MonoBehaviour
         foreach (RenderTexture rnd in JjInfoManager.Instance.NFTLoadedVideos)
             Destroy(rnd);
         JjInfoManager.Instance.NFTLoadedVideos.Clear();
+        if (JjInfoManager.Instance.videoRenderObject)
+            JjInfoManager.Instance.videoRenderObject.SetActive(false);
     }
     #endregion
 

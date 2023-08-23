@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using System.Text.RegularExpressions;
+using RenderHeads.Media.AVProVideo;
 
 public class JjInfoManager : MonoBehaviour
 {
@@ -53,6 +54,12 @@ public class JjInfoManager : MonoBehaviour
     public List<Texture> NFTLoadedSprites = new List<Texture>();
     public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
 
+    public GameObject videoRenderObject;
+
+    public AudioSource videoPlayerSource;
+    public MediaPlayer livePlayerSource;
+
+    public bool isJJWorld = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -62,6 +69,14 @@ public class JjInfoManager : MonoBehaviour
         else
         {
             Instance = this;
+        }
+
+        if (SoundManager.Instance)
+        {
+            SoundManager.Instance.videoPlayerSource = videoPlayerSource;
+            SoundManager.Instance.livePlayerSource = livePlayerSource;
+            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
+            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 

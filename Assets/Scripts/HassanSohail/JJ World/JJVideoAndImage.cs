@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using RenderHeads.Media.AVProVideo;
 
 public class JJVideoAndImage : MonoBehaviour
 {
@@ -30,7 +31,14 @@ public class JJVideoAndImage : MonoBehaviour
 
      [SerializeField] bool applyVideoMesh; // If play video on mesh 
     [SerializeField] VideoPlayer videoMesh;
-    // Start is called before the first frame update
+
+
+    public GameObject imgVideoFrame16x9;
+    public GameObject imgVideoFrame9x16;
+    public GameObject imgVideoFrame1x1;
+    public GameObject imgVideoFrame4x3;
+
+    public bool isMultipleScreen = false;
 
     private void Start()
     {
@@ -95,6 +103,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo16x9)
                 {
+                    if (imgVideoFrame16x9)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame16x9);
+                    }
                     imgVideo16x9.SetActive(true);
                     imgVideo16x9.GetComponent<RawImage>().texture = response;
                     imgVideo16x9.GetComponent<VideoPlayer>().enabled = false;
@@ -112,6 +124,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo9x16)
                 {
+                    if (imgVideoFrame9x16)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame9x16);
+                    }
                     imgVideo9x16.SetActive(true);
                     imgVideo9x16.GetComponent<RawImage>().texture = response;
                     imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
@@ -129,6 +145,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo1x1)
                 {
+                    if (imgVideoFrame1x1)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame1x1);
+                    }
                     imgVideo1x1.SetActive(true);
                     imgVideo1x1.GetComponent<RawImage>().texture = response;
                     imgVideo1x1.GetComponent<VideoPlayer>().enabled = false;
@@ -146,6 +166,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo4x3)
                 {
+                    if (imgVideoFrame4x3)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame4x3);
+                    }
                     imgVideo4x3.SetActive(true);
                     imgVideo4x3.GetComponent<RawImage>().texture = response;
                     imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
@@ -160,6 +184,16 @@ public class JJVideoAndImage : MonoBehaviour
                 }
             }
         }));
+    }
+
+    void EnableImageVideoFrame(GameObject frameToEnable)
+    {
+        imgVideoFrame16x9.SetActive(false);
+        imgVideoFrame9x16.SetActive(false);
+        imgVideoFrame1x1.SetActive(false);
+        imgVideoFrame4x3.SetActive(false);
+
+        frameToEnable.SetActive(true);
     }
 
     public void TurnOffAllImageAndVideo()
@@ -234,19 +268,33 @@ public class JJVideoAndImage : MonoBehaviour
 
         if (_videoType==VideoTypeRes.islive && liveVideoPlayer)
         {
+            JjInfoManager.Instance.videoRenderObject = liveVideoPlayer;
             if (liveVideoPlayer)
             liveVideoPlayer.SetActive(true);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+            SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
         else if(_videoType == VideoTypeRes.prerecorded && preRecordedPlayer)
         {
             RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
+            SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+            SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            JjInfoManager.Instance.videoRenderObject = imgVideo16x9;
             renderTexture_temp = renderTexture;
-
                 imgVideo16x9.GetComponent<RawImage>().texture= renderTexture;
                 imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+            if (isMultipleScreen)
+            {
+                for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
+                {
+                    imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
+                    imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                }
+            }
                 preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
                 VideoPlayer tempVideoPlayer;
                 if (applyVideoMesh)
@@ -266,7 +314,10 @@ public class JJVideoAndImage : MonoBehaviour
                 preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
                 imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
                 imgVideo16x9.SetActive(true);
-            
+            if (imgVideoFrame16x9)
+            {
+                EnableImageVideoFrame(imgVideoFrame16x9);
+            }
         }
         else if(_videoType == VideoTypeRes.aws)
         {
@@ -274,6 +325,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo16x9)
                 {
+                    if (imgVideoFrame16x9)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame16x9);
+                    }
                     imgVideo16x9.SetActive(true);
                     imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
@@ -289,6 +344,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo9x16)
                 {
+                    if (imgVideoFrame9x16)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame9x16);
+                    }
                     imgVideo9x16.SetActive(true);
                     imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
@@ -304,6 +363,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo1x1)
                 {
+                    if (imgVideoFrame1x1)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame1x1);
+                    }
                     imgVideo1x1.SetActive(true);
                     imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
@@ -319,6 +382,10 @@ public class JJVideoAndImage : MonoBehaviour
             {
                 if (imgVideo4x3)
                 {
+                    if (imgVideoFrame4x3)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame4x3);
+                    }
                     imgVideo4x3.SetActive(true);
                     imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
                     //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
