@@ -26,46 +26,48 @@ public class SwitchToShoesHirokoKoshinoNFT : MonoBehaviour
     public void SwitchLightFor_HirokoKoshino(string s)
     {
         //DisableAllLighting();
-
+        if (KintDressLight == null)
+            return;
+        
         if (s.Equals("full_costume_hirokoch01"))
         {
             DisableAllLighting();
-            TaffetaGatheredDressLight.SetActive(true);
+            TaffetaGatheredDressLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("TaffetaGatheredDressLight Activted");
         }
         else if (s.Equals("full_costume_hirokoch03"))
         {
             DisableAllLighting();
-            LilyFlowerPrintCoordSetLight.SetActive(true);
+            LilyFlowerPrintCoordSetLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("lilly Flower Print light Dress Activted");
         }
         else if (s.Equals("full_costume_hirokoch09"))
         {
             DisableAllLighting();
-            SwirlCoordSetLight.SetActive(true);
+            SwirlCoordSetLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("Swirl Co-ord Set Light Activted");
         }
         else if (s.Equals("full_costume_hirokoch06"))
         {
             DisableAllLighting();
-            KintPulloverLight.SetActive(true);
+            KintPulloverLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("Knit Pull over Light Activted");
         }
         else if (s.Equals("full_costume_hirokoch05"))
         {
             DisableAllLighting();
-            KintDressLight.SetActive(true);
+            KintDressLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("color block knit Light Activted");
         }
         else if (s.Equals("full_costume_hirokoch04"))
         {
-            DisableAllLighting();
-            PrintDressLight.SetActive(true);
+            //DisableAllLighting();
+            PrintDressLight?.SetActive(true);
             PlayerPrefs.SetString("HirokoLight", s);
             Debug.Log("Print Co-ord Set Light Activted");
         }
@@ -83,13 +85,14 @@ public class SwitchToShoesHirokoKoshinoNFT : MonoBehaviour
 
     public void DisableAllLighting()
     {
-        KintDressLight.SetActive(false);
-        KintPulloverLight.SetActive(false);
-        LilyFlowerPrintCoordSetLight.SetActive(false);
-        PrintDressLight.SetActive(false);
-        YarnKnitLight.SetActive(false);
-        SwirlCoordSetLight.SetActive(false);
-        TaffetaGatheredDressLight.SetActive(false);
+        
+        KintDressLight?.SetActive(false);
+        KintPulloverLight?.SetActive(false);
+        LilyFlowerPrintCoordSetLight?.SetActive(false);
+        PrintDressLight?.SetActive(false);
+        YarnKnitLight?.SetActive(false);
+        SwirlCoordSetLight?.SetActive(false);
+        TaffetaGatheredDressLight?.SetActive(false);
    
     }
 
