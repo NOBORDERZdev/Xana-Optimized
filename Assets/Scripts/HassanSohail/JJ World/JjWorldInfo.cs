@@ -29,7 +29,7 @@ public class JjWorldInfo : MonoBehaviour
         if ((Time.time - tempTimer) < clickTime)
         {
             //OpenWorldInfo();
-            PublishLog();
+          //  PublishLog();
             tempTimer = 0;
         }
 
@@ -62,7 +62,7 @@ public class JjWorldInfo : MonoBehaviour
         if (JjInfoManager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
         {
             string sceneName = FindObjectOfType<StayTimeTracker>().worldName;
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(sceneName + "_NFT" + id + "_Click");
+            //Firebase.Analytics.FirebaseAnalytics.LogEvent(sceneName + "_NFT" + id + "_Click");
             Debug.Log("<color=red>" + sceneName + "_NFT" + id + "_Click </color>");
         }
         else
@@ -73,7 +73,7 @@ public class JjWorldInfo : MonoBehaviour
     {
         data = Regex.Replace(data, @"\s", "");
         string trimmedString = data.Substring(0, Mathf.Min(data.Length, 18));
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(trimmedString + "_NFT_Click");
+        //Firebase.Analytics.FirebaseAnalytics.LogEvent(trimmedString + "_NFT_Click");
         Debug.Log("<color=red>" + trimmedString + "_NFT_Click" + "</color>");
     }
 

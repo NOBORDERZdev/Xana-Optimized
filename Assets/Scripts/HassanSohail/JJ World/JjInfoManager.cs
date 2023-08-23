@@ -5,6 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -37,6 +40,7 @@ public class JjInfoManager : MonoBehaviour
     public RenderTexture renderTexture_4x3;
     [SerializeField] int RetryChances = 3;
     [SerializeField] int JJMusuemId;
+    public string analyticMuseumID;
     int ratioId;
     int videoRetry = 0;
 
@@ -50,7 +54,8 @@ public class JjInfoManager : MonoBehaviour
     VideoTypeRes _videoType;
 
     public string nftTitle;
-
+    public string firebaseEventName;
+    public int clickedNftInd;
     public List<Texture> NFTLoadedSprites = new List<Texture>();
     public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
 
@@ -423,8 +428,12 @@ public class JjInfoManager : MonoBehaviour
                 }
                 else if (videoType == VideoTypeRes.aws)
                 {
-                    ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-                    ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                    if(ratioReferences[ratioId].l_PrerecordedPlayer)
+                        ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+
+                    if (ratioReferences[ratioId].l_LivePlayer)
+                        ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+
                     ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
                     ratioReferences[ratioId].l_videoPlayer.enabled = true;
                     ratioReferences[ratioId].l_videoPlayer.url = videoLink;
@@ -481,40 +490,134 @@ public class JjInfoManager : MonoBehaviour
         {
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
         }
-        // infoParent.SetActive(true);
 
-        // for firebase analytics
-        if (type == DataType.Image)
+        #region For firebase analytics
+      
+        SendCallAnalytics(type, title , nftId);
+        clickedNftInd = nftId;
+        #endregion
+    }
+
+    public void SendCallAnalytics(DataType type , string title ,int id=-1)
+    {
+
+        #region OLD Implementation
+        //if (type == DataType.Image)
+        //{
+        //    int maxLength = 10;
+        //    string originalString = title;
+        //    originalString = Regex.Replace(originalString, @"\s", "");
+        //    string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+        //    string worldName = XanaConstants.xanaConstants.EnviornmentName;
+
+        //    if (worldName.Contains("ZONE-X"))
+        //    {
+        //        //1F_Mainloby_A_ZoneX
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent("1F_Mainloby_" + trimmedString + "_Clicked");
+        //    }
+        //    else if (worldName.Contains("ZONE X Musuem") || worldName.Contains("FIVE ELEMENTS"))
+        //    {
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_" + trimmedString + "_NFTClicked");
+        //    }
+        //    else
+        //    {
+        //        if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+        //            worldName = "Astro_";
+        //        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+        //            worldName = "Rental_";
+
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked");
+        //    }
+        //    Debug.Log("<color=red>" + worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked </color>");
+        //}
+        //else if (type == DataType.Video)
+        //{
+        //    int maxLength = 10;
+        //    string originalString = title;
+        //    originalString = Regex.Replace(originalString, @"\s", "");
+        //    string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+
+        //    string worldName = XanaConstants.xanaConstants.EnviornmentName;
+        //    if (worldName.Contains("ZONE-X"))
+        //    {
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent("Lobby_" + trimmedString + "_Clicked");
+        //    }
+        //    else if (worldName.Contains("ZONE X Musuem") || worldName.Contains("FIVE ELEMENTS"))
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_" + trimmedString + "_Video_Clicked");
+        //    else
+        //    {
+        //        if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+        //            worldName = "Astro";
+        //        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+        //            worldName = "Rental";
+
+        //        Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "_" + analyticMuseumID + "_" + trimmedString + "_Video_Clicked");
+        //    }
+
+        //    Debug.Log("<color=red>"+ worldName + "_" + analyticMuseumID + "_" + trimmedString + "_Video_Clicked </color>");
+        //}
+        #endregion
+
+       // if (type == DataType.Image)
         {
-            if (title.IsNullOrEmpty())
+            string worldName = XanaConstants.xanaConstants.EnviornmentName;
+            if (!string.IsNullOrEmpty(firebaseEventName))
             {
-                string envName = FindObjectOfType<StayTimeTracker>().worldName;
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "_NFT_Img" + nftId + "_Clicked");
-                Debug.Log("<color=red>" + envName + "_NFT_Img" + nftId + "_Clicked </color>");
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
+                Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
                 return;
             }
-            int maxLength = 10;
-            string originalString = title;
-            originalString = Regex.Replace(originalString, @"\s", "");
-            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Img_" + trimmedString + "_Clicked");
-            Debug.Log("<color=red> NFT_Img_" + trimmedString + "_Clicked </color>");
-        }
-        else if (type == DataType.Video)
-        {
-            if (title.IsNullOrEmpty())
+            if (worldName.Contains("ZONE-X"))
             {
-                string envName = FindObjectOfType<StayTimeTracker>().worldName;
-                Firebase.Analytics.FirebaseAnalytics.LogEvent(envName + "NFT_Video" + nftId + "_Clicked");
-                Debug.Log("<color=red>" + envName + "NFT_Video" + nftId + "_Clicked </color>");
-                return;
+                //1F_Mainloby_A_ZoneX
+                string myString = "";
+                switch (id)
+                {
+                    case 0:
+                        myString = "A_ZoneX";
+                        break;
+
+                    case 1:
+                        myString = "B_FiveElement";
+                        break;
+
+                    case 2:
+                        myString = "C_AtomMuseum";
+                        break;
+
+                    case 3:
+                        myString = "D_RentalSpace";
+                        break;
+
+                    default:
+                        myString = "";
+                        break;
+                }
+
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_Mainloby_" + myString);
+                Debug.Log("<color=red> F1_Mainloby_" + myString +"</color>");
             }
-            int maxLength = 10;
-            string originalString = title;
-            originalString = Regex.Replace(originalString, @"\s", "");
-            string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("NFT_Video_" + trimmedString + "_Clicked");
-            Debug.Log("<color=red> NFT_Video_" + trimmedString + "_Clicked </color>");
+            else if (worldName.Contains("ZONE X Musuem") )
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_ZoneX_NFT_No_" + clickedNftInd);
+                Debug.Log("<color=red> F1_ZoneX_NFT_No_" + clickedNftInd+ " </color>");
+            }
+            else if (worldName.Contains("FIVE ELEMENTS"))
+            {
+                Firebase.Analytics.FirebaseAnalytics.LogEvent("F1_FiveElement_NFT_No_" + clickedNftInd);
+                Debug.Log("<color=red> F1_FiveElement_NFT_No_" + clickedNftInd + " </color>");
+            }
+            else
+            {
+                if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro))
+                    worldName = "F2_Atom";
+                else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+                    worldName = "F2_Rental";
+
+                Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + analyticMuseumID + "NFT_No_"+ (clickedNftInd + 1));
+                Debug.Log("<color=red>" + worldName + analyticMuseumID + "NFT_No_" + (clickedNftInd + 1) + " </color>");
+            }
+            //Debug.Log("<color=red>" + worldName + analyticMuseumID + "_" + trimmedString + "_NFTClicked </color>");
         }
     }
 
