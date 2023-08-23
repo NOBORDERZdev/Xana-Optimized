@@ -4293,6 +4293,7 @@ public class UserRegisterationManager : MonoBehaviour
         LoggedInAsGuest = false;
         getdatafromserver();
         usernamePanal.SetActive(false);
+        GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
         if (UIManager.Instance != null)//rik
         {

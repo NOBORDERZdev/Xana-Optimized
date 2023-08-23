@@ -1120,7 +1120,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
                     Debug.Log("L_ItemBtnObj");
-                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
+                    if ( UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype.Count> i && UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
                     {
                         L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
                     }
