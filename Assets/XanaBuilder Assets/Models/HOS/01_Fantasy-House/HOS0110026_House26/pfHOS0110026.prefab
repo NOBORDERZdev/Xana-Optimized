@@ -164,6 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5528719285267042022}
   - component: {fileID: 3590392487136532144}
+  - component: {fileID: 7286856025704001505}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -197,8 +198,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7849205, y: 9.085142, z: 1.76951}
-  m_Center: {x: 0, y: 4.542571, z: 0.0043579936}
+  m_Size: {x: 2.2562215, y: 6.8102803, z: 2.1229854}
+  m_Center: {x: 0.016832232, y: 3.4051402, z: -0.020890474}
+--- !u!65 &7286856025704001505
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4991741091190985082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4006249, y: 2.2567244, z: 1.4221244}
+  m_Center: {x: -0.010474026, y: 7.9006524, z: 0.0018647909}
 --- !u!1 &9029787414882404290
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +240,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9029787414882404290}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -323,9 +337,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
