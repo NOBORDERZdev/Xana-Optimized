@@ -19,10 +19,18 @@ public class StayTimeTracker : MonoBehaviour
         //StartCoroutine(Countdown());
 
         yield return new WaitForSeconds(1f);
-        if (XanaConstants.xanaConstants.Equals(JJMussuemEntry.Astro))
-            worldName = "JJWorld_Astro";
-        else if (XanaConstants.xanaConstants.Equals(JJMussuemEntry.Rental))
-            worldName = "JJWorld_Rental";
+
+        if (worldName.Contains("Zone_Museum"))
+            worldName = "F1_ZoneX_StayTime_"; 
+        
+        else if (worldName.Contains("Lobby"))
+            worldName = "F1_Mainloby_StayTime_";
+
+        else if (worldName.Contains("FiveElement"))
+            worldName = "F1_FiveElement_StayTime_";
+
+        else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+            worldName = "F2_AtomRental_StayTime_";
     }
 
     private void StartTrackingTime()
@@ -55,17 +63,32 @@ public class StayTimeTracker : MonoBehaviour
         int minutes = Mathf.FloorToInt(stayTime / 60f);
         int seconds = Mathf.FloorToInt(stayTime % 60f);
 
-        if (minutes > 0)
+        //if (minutes > 0)
+        //{
+        //    Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
+        //}
+        //else
+        //{
+        //    Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
+        //}
+
+        if (seconds > 0)
+            minutes++;
+
+        // For Testing 
+        //minutes += 40;
+
+        if (minutes > 30)
         {
-            Debug.Log("<color=red>" + worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + minutes.ToString() + "m_" + seconds.ToString() + "s");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + minutes +"m_");
         }
         else
         {
-            Debug.Log("<color=red>" + worldName + "Stay_" + seconds.ToString() + "s</color>");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + "Stay_" + seconds.ToString() + "s");
+            Firebase.Analytics.FirebaseAnalytics.LogEvent(worldName + +minutes + "m");
         }
-
+        Debug.Log("<color=red>" + worldName + minutes + "m</color>");
     }
 
 
