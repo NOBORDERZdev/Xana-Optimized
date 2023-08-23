@@ -26,8 +26,10 @@ namespace LightShaft.Scripts
         {
             Debug.Log("Video is started ....");
 
-            thumbnailObject.material.color = Color.white;
-            videoPlayer.targetMaterialRenderer.material.color = Color.white;
+            if(thumbnailObject!=null)
+                thumbnailObject.material.color = Color.white;
+            if(videoPlayer!=null && videoPlayer.targetMaterialRenderer)
+                videoPlayer.targetMaterialRenderer.material.color = Color.white;
             if (mPlayer != null)
                 mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = Color.white;
         }
@@ -142,11 +144,16 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-                if (_controller.volumeSlider != null)
-                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                else
-                    audioPlayer.GetTargetAudioSource(0).volume = 1;
-
+                if (JjInfoManager.Instance.isJJWorld)
+                {
+                    audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
+                }
+                else { 
+                    if (_controller.volumeSlider != null)
+                        audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                    else
+                        audioPlayer.GetTargetAudioSource(0).volume = 1;
+                }
                 if (!noAudioAtacched)
                 {
                     audioPlayer.Play(); //TODO check other unity versions

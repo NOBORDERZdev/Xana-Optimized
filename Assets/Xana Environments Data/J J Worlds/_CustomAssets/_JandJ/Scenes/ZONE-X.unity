@@ -495,6 +495,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!1 &36146610
 GameObject:
   m_ObjectHideFlags: 0
@@ -2412,6 +2418,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 252702892}
     m_Modifications:
+    - target: {fileID: 250370736792225584, guid: c9494ce8697c1924fa7439ff50643eb6, type: 3}
+      propertyPath: m_text
+      value: Rental Space
+      objectReference: {fileID: 0}
+    - target: {fileID: 250370736792225584, guid: c9494ce8697c1924fa7439ff50643eb6, type: 3}
+      propertyPath: m_fontSize
+      value: 2.35
+      objectReference: {fileID: 0}
     - target: {fileID: 5457452071055735436, guid: c9494ce8697c1924fa7439ff50643eb6, type: 3}
       propertyPath: m_Name
       value: Rental Text
@@ -3068,6 +3082,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!114 &252702891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4868,6 +4888,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!114 &337280563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9777,6 +9803,7 @@ MonoBehaviour:
   youtubeUrl: 
   videoQuality: 1
   is360: 0
+  dontForceFullscreen: 0
   autoPlayOnStart: 0
   startFromSecond: 0
   startFromSecondTime: 20
@@ -9794,6 +9821,8 @@ MonoBehaviour:
   layout3d: 0
   mainCamera: {fileID: 0}
   videoPlayer: {fileID: 0}
+  mPlayer: {fileID: 0}
+  playInAVPRO: 0
   audioPlayer: {fileID: 0}
   debug: 0
   ignoreTimeout: 0
@@ -9802,8 +9831,14 @@ MonoBehaviour:
   audioUrl: 
   ForceGetWebServer: 0
   progressStartDrag: 0
+  skyboxMaterial3D: {fileID: 0}
+  skyboxMaterialNormal: {fileID: 0}
+  skyboxMaterial3DSide: {fileID: 0}
+  forceLocal: 0
+  videoTitle: 
   EACMaterial: {fileID: 0}
   Material360: {fileID: 0}
+  audioDelayOffset: 0
   pauseCalled: 0
   isSyncing: 0
   encryptedSignatureVideo: 
@@ -11778,6 +11813,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!1 &836790520
 GameObject:
   m_ObjectHideFlags: 0
@@ -11916,6 +11957,7 @@ MonoBehaviour:
   youtubeUrl: 
   videoQuality: 1
   is360: 0
+  dontForceFullscreen: 0
   autoPlayOnStart: 0
   startFromSecond: 0
   startFromSecondTime: 20
@@ -11933,6 +11975,8 @@ MonoBehaviour:
   layout3d: 0
   mainCamera: {fileID: 0}
   videoPlayer: {fileID: 0}
+  mPlayer: {fileID: 0}
+  playInAVPRO: 0
   audioPlayer: {fileID: 0}
   debug: 0
   ignoreTimeout: 0
@@ -11941,8 +11985,14 @@ MonoBehaviour:
   audioUrl: 
   ForceGetWebServer: 0
   progressStartDrag: 0
+  skyboxMaterial3D: {fileID: 0}
+  skyboxMaterialNormal: {fileID: 0}
+  skyboxMaterial3DSide: {fileID: 0}
+  forceLocal: 0
+  videoTitle: 
   EACMaterial: {fileID: 0}
   Material360: {fileID: 0}
+  audioDelayOffset: 0
   pauseCalled: 0
   isSyncing: 0
   encryptedSignatureVideo: 
@@ -12901,10 +12951,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 983775702}
+  mPlayer: {fileID: 0}
   url: 
   autoPlay: 1
   fullscreen: 0
   videoPlayer: {fileID: 0}
+  x: 0
+  y: 0
+  z: 0
 --- !u!1001 &907742748
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13147,6 +13201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _livestreamUrl: 
   mPlayer: {fileID: 918945667}
+  rotateScreen: 1
 --- !u!114 &918945667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14124,6 +14179,7 @@ MonoBehaviour:
   youtubeUrl: 
   videoQuality: 1
   is360: 0
+  dontForceFullscreen: 0
   autoPlayOnStart: 0
   startFromSecond: 0
   startFromSecondTime: 20
@@ -14141,6 +14197,8 @@ MonoBehaviour:
   layout3d: 0
   mainCamera: {fileID: 0}
   videoPlayer: {fileID: 0}
+  mPlayer: {fileID: 0}
+  playInAVPRO: 0
   audioPlayer: {fileID: 0}
   debug: 0
   ignoreTimeout: 0
@@ -14149,8 +14207,14 @@ MonoBehaviour:
   audioUrl: 
   ForceGetWebServer: 0
   progressStartDrag: 0
+  skyboxMaterial3D: {fileID: 0}
+  skyboxMaterialNormal: {fileID: 0}
+  skyboxMaterial3DSide: {fileID: 0}
+  forceLocal: 0
+  videoTitle: 
   EACMaterial: {fileID: 0}
   Material360: {fileID: 0}
+  audioDelayOffset: 0
   pauseCalled: 0
   isSyncing: 0
   encryptedSignatureVideo: 
@@ -14812,6 +14876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _livestreamUrl: 
   mPlayer: {fileID: 1021666108}
+  rotateScreen: 1
 --- !u!114 &1021666108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15837,6 +15902,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!1 &1057365619
 GameObject:
   m_ObjectHideFlags: 0
@@ -18393,6 +18464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _livestreamUrl: 
   mPlayer: {fileID: 1226796650}
+  rotateScreen: 1
 --- !u!114 &1226796650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20496,10 +20568,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 692995677}
+  mPlayer: {fileID: 0}
   url: 
   autoPlay: 1
   fullscreen: 0
   videoPlayer: {fileID: 0}
+  x: 0
+  y: 0
+  z: 0
 --- !u!1 &1367529978
 GameObject:
   m_ObjectHideFlags: 0
@@ -21113,6 +21189,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!4 &1447955280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4116192292416230, guid: dd2a4e6da131b1349bba72c9084bc774, type: 3}
@@ -22338,10 +22420,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 846947186}
+  mPlayer: {fileID: 0}
   url: 
   autoPlay: 1
   fullscreen: 0
   videoPlayer: {fileID: 0}
+  x: 0
+  y: 0
+  z: 0
 --- !u!4 &1557199253
 Transform:
   m_ObjectHideFlags: 0
@@ -23986,6 +24072,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _livestreamUrl: 
   mPlayer: {fileID: 1669844721}
+  rotateScreen: 1
 --- !u!114 &1669844721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24642,6 +24729,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!114 &1687245176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29470,10 +29563,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2134987759}
+  mPlayer: {fileID: 0}
   url: 
   autoPlay: 1
   fullscreen: 0
   videoPlayer: {fileID: 0}
+  x: 0
+  y: 0
+  z: 0
 --- !u!1 &2071869819
 GameObject:
   m_ObjectHideFlags: 0
@@ -30322,6 +30419,12 @@ MonoBehaviour:
   imageMat: {fileID: 0}
   applyVideoMesh: 0
   videoMesh: {fileID: 0}
+  firebaseEventName: 
+  imgVideoFrame16x9: {fileID: 0}
+  imgVideoFrame9x16: {fileID: 0}
+  imgVideoFrame1x1: {fileID: 0}
+  imgVideoFrame4x3: {fileID: 0}
+  isMultipleScreen: 0
 --- !u!114 &2127444176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30488,6 +30591,7 @@ MonoBehaviour:
   youtubeUrl: 
   videoQuality: 1
   is360: 0
+  dontForceFullscreen: 0
   autoPlayOnStart: 0
   startFromSecond: 0
   startFromSecondTime: 20
@@ -30505,6 +30609,8 @@ MonoBehaviour:
   layout3d: 0
   mainCamera: {fileID: 0}
   videoPlayer: {fileID: 0}
+  mPlayer: {fileID: 0}
+  playInAVPRO: 0
   audioPlayer: {fileID: 0}
   debug: 0
   ignoreTimeout: 0
@@ -30513,8 +30619,14 @@ MonoBehaviour:
   audioUrl: 
   ForceGetWebServer: 0
   progressStartDrag: 0
+  skyboxMaterial3D: {fileID: 0}
+  skyboxMaterialNormal: {fileID: 0}
+  skyboxMaterial3DSide: {fileID: 0}
+  forceLocal: 0
+  videoTitle: 
   EACMaterial: {fileID: 0}
   Material360: {fileID: 0}
+  audioDelayOffset: 0
   pauseCalled: 0
   isSyncing: 0
   encryptedSignatureVideo: 
