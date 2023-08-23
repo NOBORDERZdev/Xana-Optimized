@@ -21,12 +21,31 @@ public class AddressableDownloader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            DownloadCatalogFile();
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+
+    void DownloadCatalogFile()
+    {
+#if UNITY_EDITOR
+        string catalogFilePath=UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
+        catalogFilePath = catalogFilePath.Replace("[BuildTarget]",UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
+        catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
+        Addressables.LoadContentCatalogAsync(catalogFilePath);
+        Debug.LogError(catalogFilePath);
+
+#else
+BuildScriptableObject buildScriptableObject =Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+        Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
+
+#endif
+    }
+
+
     //public int appliedItemsInPresets = 0;
     //public bool isTextureDownloaded = false;
     /// <summary>
