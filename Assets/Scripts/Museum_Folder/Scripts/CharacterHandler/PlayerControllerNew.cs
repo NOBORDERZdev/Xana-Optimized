@@ -169,7 +169,9 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-
+        // RFM: we need a reference to the local player to set its position.
+        RFM.Globals.player = this;
+        // RFM
 
 
     }

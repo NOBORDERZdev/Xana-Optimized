@@ -21,8 +21,8 @@ namespace RFM
         public static int gameRestartWait = 5000; // In milli-seconds
         public static int countDownTime = 10;
         public static int takePositionTime = 10;
-        public static int gameplayTime = 999;
-        public static int minNumberOfPlayer = 1;
+        public static int gameplayTime = 30;
+        public static int minNumberOfPlayer = 2;
         public static int numOfHunters = 2;
 
         public static readonly int GainingMoneyTimeInterval = 1;
