@@ -125,6 +125,7 @@ public class ScrollActivityNFT : MonoBehaviour
             PlayerPrefs.DeleteKey("nftID");
             XanaConstants.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";

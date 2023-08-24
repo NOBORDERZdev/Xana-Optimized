@@ -138,11 +138,11 @@ public class NFTtypeClass : MonoBehaviour
             IsNFTCollectionBreakingDown = true;
             PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 1);
         }
-        else
+       else if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "HIROKO KOSHINO")
         {
             IsNFTCollectionBreakingDown = false;
-            PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 0);
-            Debug.Log("Current NFT Colelction is not Breaking Down");
+            PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 2);
+            Debug.Log("Current NFT Colelction is HIROKO KOSHINO");
         }
     }
 
