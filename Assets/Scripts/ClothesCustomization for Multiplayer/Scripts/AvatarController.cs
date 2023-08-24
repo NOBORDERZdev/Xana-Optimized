@@ -1382,9 +1382,14 @@ public class AvatarController : MonoBehaviour
                         item.layer = 25;
                     else
                         item.layer = 26;
+
+                    SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
                 }
-                if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 0)
+                if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
+                    // HIROKO KOSHINO NFT 
+                    
+                    SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
 

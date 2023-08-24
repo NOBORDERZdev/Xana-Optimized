@@ -330,27 +330,27 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetMicVolume(float vol)
     {
-        //PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
+        PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
         Debug.Log("Volume SetMicVolume===" + vol);
         Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-        //if(totalVolumeSlider.value >= vol)
-        //{
-        //foreach (var gameobject in Launcher.instance.playerobjects)
-        //{
-        //    if (!gameobject.GetComponent<PhotonView>().IsMine)
-        //    {
-        //        gameobject.GetComponent<AudioSource>().volume = vol;
-        //    }
-        //}
-        //}
-        //else
-        //{
-        //        foreach (var gameobject in Launcher.instance.playerobjects)
-        //        {
-        //            if (!gameobject.GetComponent<PhotonView>().IsMine)
-        //            gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
-        //        }
-        //}
+        if (totalVolumeSlider.value >= vol)
+        {
+            foreach (var gameobject in Launcher.instance.playerobjects)
+            {
+                if (!gameobject.GetComponent<PhotonView>().IsMine)
+                {
+                    gameobject.GetComponent<AudioSource>().volume = vol;
+                }
+            }
+        }
+        else
+        {
+            foreach (var gameobject in Launcher.instance.playerobjects)
+            {
+                if (!gameobject.GetComponent<PhotonView>().IsMine)
+                    gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
+            }
+        }
     }
     //Setting AudioSource Volume Slider Range between 0 and 0.7
     public void SetAudioSourceSliderVal(AudioSource _audioSrcRef, float _vol)
