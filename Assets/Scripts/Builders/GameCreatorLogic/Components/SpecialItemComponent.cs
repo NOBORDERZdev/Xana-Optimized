@@ -16,6 +16,7 @@ public class SpecialItemComponent : ItemComponent
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             TimeStats._intensityChangerStop?.Invoke();
+            TimeStats._blindComponentStop?.Invoke();
             // Ninja Component Stops
             PlayerControllerNew pc = GamificationComponentData.instance.playerControllerNew;
             pc.NinjaComponentTimerStart(0);
