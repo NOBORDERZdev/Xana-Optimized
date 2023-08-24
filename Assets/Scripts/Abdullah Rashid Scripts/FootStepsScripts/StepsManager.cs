@@ -15,7 +15,7 @@ namespace MalbersAnimations
         [Tooltip("Scale of the dust and track particles")]
         public Vector3 Scale = Vector3.one;
 
-        public AudioClip[] sandclips,stoneClips,waterClips,metalClips,snowClips,wetClips,floorClips,grassClips;
+        public AudioClip[] sandclips,stoneClips,waterClips,metalClips,snowClips,wetClips,floorClips,grassClips=default;
         [Tooltip("Distance to Instantiate the tracks on a terrain")]
        // public float trackOffset = 0.0085f;
 
@@ -76,7 +76,7 @@ namespace MalbersAnimations
                         foot.StepAudio.Play();
                         break;
                     default:
-                        foot.StepAudio.clip = sandclips[Random.Range(0, sandclips.Length)];
+                        foot.StepAudio.clip = floorClips[Random.Range(0, floorClips.Length)];
                         foot.StepAudio.Play();
                         break;
                 }
