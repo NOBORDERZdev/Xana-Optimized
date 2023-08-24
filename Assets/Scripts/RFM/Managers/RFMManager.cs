@@ -35,6 +35,10 @@ namespace RFM
         private RFMMissionsManager missionsManager;
 
         public static int NumOfActivePlayers;
+        
+        // For Invisibility Card
+        public Material invisibilityMaterial;
+        //
 
         private void Awake()
         {
@@ -274,6 +278,8 @@ namespace RFM
         [PunRPC]
         private void StartGameplay()
         {
+            Globals.player.gameObject.AddComponent<RFMPlayer>();
+            
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
