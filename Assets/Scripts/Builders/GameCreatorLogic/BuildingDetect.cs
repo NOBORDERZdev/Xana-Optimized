@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
-using WalletConnectSharp.Core.Events;
+//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
