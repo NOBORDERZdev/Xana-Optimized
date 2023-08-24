@@ -1,15 +1,18 @@
 using System;
+using Photon.Pun;
 using UnityEngine;
 
 namespace RFM
 {
-    public class RFMPlayer : MonoBehaviour
+    public class RFMPlayer : MonoBehaviour, IPunObservable
     {
         public bool isHunter;
         
         // For Invisibility Card
         public SkinnedMeshRenderer[] _meshRenderers;
         public Material[][] _defaultMaterials;
+
+        private bool _isInvisible;
         //
         
 
@@ -32,6 +35,18 @@ namespace RFM
             }
         }
 
+        private void Update()
+        {
+            if (_isInvisible)
+            {
+                ChangeMaterials();
+            }
+            else
+            {
+                ResetMaterial();
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             Debug.LogError("RFMPlayer OnTriggerEnter() with " + other.gameObject.name + ", " + other.tag);
@@ -42,7 +57,7 @@ namespace RFM
                 {
                     case RFMCard.CardType.Invisibility:
                     {
-                        ChangeMaterials();
+                        _isInvisible = true;
 
                         Debug.LogError("RFM Invisibility Card Picked");
                         break;
@@ -71,6 +86,7 @@ namespace RFM
                 meshRenderer.sharedMaterials = mats;
             }
 
+            _isInvisible = true;
             Invoke(nameof(ResetMaterial), 5);
         }
 
@@ -80,6 +96,23 @@ namespace RFM
             for (var i = 0; i < _meshRenderers.Length; i++)
             {
                 _meshRenderers[i].sharedMaterials = _defaultMaterials[i];
+            }
+            
+            _isInvisible = false;
+        }
+
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                // We own this player: send the others our data
+                stream.SendNext(_isInvisible);
+            }
+            else
+            {
+                // Network player, receive data
+                this._isInvisible = (bool)stream.ReceiveNext();
             }
         }
     }

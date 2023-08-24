@@ -413,6 +413,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             environmentCameraRender.gameObject.SetActive(false);
             Debug.LogError("entered in RFMDummy Scene");
             mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
+            RFM.Globals.player = player.GetComponentInChildren<Climbing.ThirdPersonController>();
         }
         else
         {
