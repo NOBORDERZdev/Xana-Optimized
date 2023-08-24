@@ -169,9 +169,6 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-
-
-
     }
 
 

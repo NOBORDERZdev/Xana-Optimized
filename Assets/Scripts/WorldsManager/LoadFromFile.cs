@@ -38,7 +38,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public bool setLightOnce = false;
     public PopulationGenerator populationGenerator;
 
-    private GameObject player;
+    public GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
 
@@ -346,7 +346,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-        CheckAgain:
+            CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -372,7 +372,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
-            else if(FeedEventPrefab.m_EnvName.Contains("Koto") || FeedEventPrefab.m_EnvName.Contains("Tottori") || FeedEventPrefab.m_EnvName.Contains("DEEMO") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+            else if (FeedEventPrefab.m_EnvName.Contains("Koto") || FeedEventPrefab.m_EnvName.Contains("Tottori") || FeedEventPrefab.m_EnvName.Contains("DEEMO") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
                 //Invoke(nameof(SetKotoAngle), 0.5f);
@@ -406,7 +406,19 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+        {
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            PlayerCamera.gameObject.SetActive(false);
+            environmentCameraRender.gameObject.SetActive(false);
+            Debug.LogError("entered in RFMDummy Scene");
+            mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+            Debug.LogError("Enter in other scene");
+        }
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -471,7 +483,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-    CheckAgain:
+        CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -493,7 +505,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+        {
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            PlayerCamera.gameObject.SetActive(false);
+            environmentCameraRender.gameObject.SetActive(false);
+            Debug.LogError("entered in RFMDummy Scene");
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+            Debug.LogError("Enter in other scene");
+        }
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
@@ -512,7 +535,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
             GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.53f;
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
-            if(GamificationComponentData.instance.worldCameraEnable)
+            if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
             GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
@@ -540,7 +563,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-    End:
+        End:
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -571,7 +594,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
     }
 
-    public IEnumerator setPlayerCamAngle(float xValue, float yValue) {
+    public IEnumerator setPlayerCamAngle(float xValue, float yValue)
+    {
         yield return new WaitForSeconds(0.1f);
         PlayerCamera.m_XAxis.Value = xValue;
         PlayerCamera.m_YAxis.Value = yValue;
@@ -803,7 +827,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-    CheckAgain:
+        CheckAgain:
         Transform temp = null;
         temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         if (temp)
