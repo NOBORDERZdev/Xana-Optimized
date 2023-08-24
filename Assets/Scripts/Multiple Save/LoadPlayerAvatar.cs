@@ -436,7 +436,8 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //StoreManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
-
+            OnUpdateExistingRemoveOld(avatarId);
+            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
             //if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
@@ -562,6 +563,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         {
             if (contentParent.transform.GetChild(i).name == _avatarID)
             {
+                avatarThumbnailUrl = contentParent.transform.GetChild(i).GetComponent<SavedPlayerDataJson>().avatarThumbnailLink;
                 Destroy(contentParent.transform.GetChild(i).gameObject);
                 break;
             }
