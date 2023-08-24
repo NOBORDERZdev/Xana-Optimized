@@ -234,9 +234,7 @@ namespace RFM
                     position.y,
                     position.z + Random.Range(-2, 3));
 
-                Debug.LogError("RFM 1");
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
-                Debug.LogError("RFM 2");
             }
         }
         
