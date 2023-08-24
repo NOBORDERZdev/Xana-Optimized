@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -18,7 +18,7 @@ using UnityEngine.UI;
 using AdvancedInputFieldPlugin;
 using System.Linq;
 using UnityEngine.SceneManagement;
-using MoralisUnity;
+//using MoralisUnity;
 using System.Threading.Tasks;
 
 public class UserRegisterationManager : MonoBehaviour
@@ -1375,7 +1375,10 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator OnSucessLogout()
     {
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        if (_web3APIforWeb2._OwnedNFTDataObj != null)
+        {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        }
  
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
@@ -1404,6 +1407,7 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
+        PlayerPrefs.SetString("publicID","");
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -4289,6 +4293,7 @@ public class UserRegisterationManager : MonoBehaviour
         LoggedInAsGuest = false;
         getdatafromserver();
         usernamePanal.SetActive(false);
+        GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
         if (UIManager.Instance != null)//rik
         {
