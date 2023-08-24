@@ -429,13 +429,20 @@ public class XanaChatSystem : MonoBehaviour, IChatClientListener
 
         if (this.ChannelsToJoinOnConnect != null)
         {
-            if (SceneManager.GetActiveScene().name == "AddressableScene")
+            if (!XanaConstants.xanaConstants.isBuilderScene)
             {
-                this.ChannelsToJoinOnConnect = FeedEventPrefab.m_EnvName;// FeedEventPrefab
+                if (SceneManager.GetActiveScene().name == "AddressableScene")
+                {
+                    this.ChannelsToJoinOnConnect = FeedEventPrefab.m_EnvName;// FeedEventPrefab
+                }
+                else
+                {
+                    this.ChannelsToJoinOnConnect = SceneManager.GetActiveScene().name;// FeedEventPrefab
+                }
             }
             else
             {
-                this.ChannelsToJoinOnConnect = SceneManager.GetActiveScene().name;// FeedEventPrefab
+                this.ChannelsToJoinOnConnect = XanaConstants.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
             }
             this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
             //Debug.Log(this.ChannelsToJoinOnConnect);

@@ -75,7 +75,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
         RenderSettings.skybox = obj.Result;
-        DynamicGI.UpdateEnvironment();
+        //DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
 
     }
