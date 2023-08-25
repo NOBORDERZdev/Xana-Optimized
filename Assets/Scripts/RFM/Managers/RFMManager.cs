@@ -74,6 +74,7 @@ namespace RFM
 
         public void ForceStartGame()
         {
+            Debug.LogError("ForceStartGame: " + Globals.gameState);
             if (Globals.gameState == Globals.GameState.InLobby)
             {
                 StartCoroutine(StartRFM());
