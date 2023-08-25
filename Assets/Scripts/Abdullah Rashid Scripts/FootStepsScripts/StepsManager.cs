@@ -15,7 +15,7 @@ namespace MalbersAnimations
         [Tooltip("Scale of the dust and track particles")]
         public Vector3 Scale = Vector3.one;
 
-        public AudioClip[] sandclips,stoneClips,waterClips,metalClips,snowClips,wetClips,floorClips,grassClips=default;
+        public AudioClip[] sandclips,stoneClips,waterClips,metalClips,snowClips,wetClips,floorClips,grassClips = default;
         [Tooltip("Distance to Instantiate the tracks on a terrain")]
        // public float trackOffset = 0.0085f;
 
@@ -40,47 +40,49 @@ namespace MalbersAnimations
 
             if (Physics.Raycast(foot.transform.position, Vector3.down, out RaycastHit footRay, 3))
             {
-                switch (footRay.collider.tag)
+                if (foot.StepAudio && PlayerControllerNew.isJoystickDragging)
                 {
+                    switch (footRay.collider.tag)
+                    {
 
-                    case "Footsteps/sand":
-                        foot.StepAudio.clip = sandclips[Random.Range(0, sandclips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/stone":
-                        foot.StepAudio.clip = stoneClips[Random.Range(0, stoneClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/water":
-                        foot.StepAudio.clip = waterClips[Random.Range(0, waterClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/metal":
-                        foot.StepAudio.clip = metalClips[Random.Range(0, metalClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/snow":
-                        foot.StepAudio.clip = snowClips[Random.Range(0, snowClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/wet":
-                        foot.StepAudio.clip = wetClips[Random.Range(0, wetClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/floor":
-                        foot.StepAudio.clip = floorClips[Random.Range(0, wetClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    case "Footsteps/grass":
-                        foot.StepAudio.clip = grassClips[Random.Range(0, wetClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
-                    default:
-                        foot.StepAudio.clip = floorClips[Random.Range(0, floorClips.Length)];
-                        foot.StepAudio.Play();
-                        break;
+                        case "Footsteps/sand":
+                            foot.StepAudio.clip = sandclips[Random.Range(0, sandclips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/stone":
+                            foot.StepAudio.clip = stoneClips[Random.Range(0, stoneClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/water":
+                            foot.StepAudio.clip = waterClips[Random.Range(0, waterClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/metal":
+                            foot.StepAudio.clip = metalClips[Random.Range(0, metalClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/snow":
+                            foot.StepAudio.clip = snowClips[Random.Range(0, snowClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/wet":
+                            foot.StepAudio.clip = wetClips[Random.Range(0, wetClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/floor":
+                            foot.StepAudio.clip = floorClips[Random.Range(0, wetClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        case "Footsteps/grass":
+                            foot.StepAudio.clip = grassClips[Random.Range(0, wetClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                        default:
+                            foot.StepAudio.clip = floorClips[Random.Range(0, floorClips.Length - 1)];
+                            foot.StepAudio.Play();
+                            break;
+                    }
                 }
-
                 //if (foot.StepAudio && sandclips.Length > 0) //If the track has an AudioSource Component and whe have some audio to play
                 //{
                 //    foot.StepAudio.clip = sandclips[Random.Range(0, sandclips.Length)];  //Set the any of the Audio Clips from the list to the Feet's AudioSource Component
