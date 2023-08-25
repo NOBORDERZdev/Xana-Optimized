@@ -21,6 +21,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
 
     public bool rotateScreen = true;
 
+    public Vector3 rotateScreenValue;
     void Start()
     {
         if (!rotateScreen)
@@ -30,7 +31,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if (FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         else
-            mPlayer.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
+            mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
     }
 

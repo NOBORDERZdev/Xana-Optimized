@@ -728,9 +728,8 @@ namespace LightShaft.Scripts
         void FixedUpdate()
         {
             Debug.Log("projectionType: " + projectionType);
-            if (videoPlayer != null && !JjInfoManager.Instance.isJJWorld)
+            if (videoPlayer != null && !JjInfoManager.Instance.IsJjWorld)
             {
-                Debug.Log("JjInfoManager.Instance.isJJWorld: " + JjInfoManager.Instance.isJJWorld);
                 if (videoPlayer.isPlaying)
                 {
                     if (!lowRes)

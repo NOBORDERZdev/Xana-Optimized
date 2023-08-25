@@ -133,6 +133,7 @@ namespace LightShaft.Scripts
         ///<summary>Play the loaded video.</summary>
         public override void Play()
         {
+
             base.Play();
             _events.OnVideoStarted.Invoke();
             DisableThumbnailObject();
@@ -144,7 +145,7 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-                if (JjInfoManager.Instance.isJJWorld)
+                if (JjInfoManager.Instance.IsJjWorld)
                 {
                     audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
                 }

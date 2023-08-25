@@ -18,7 +18,7 @@ using RenderHeads.Media.AVProVideo;
 
 public class JjInfoManager : MonoBehaviour
 {
-    [SerializeField] bool IsJjWorld;
+    public bool IsJjWorld;
     [SerializeField] bool worldPlayingVideos;
     [NonReorderable]
     public List<RatioReferences> ratioReferences;
@@ -64,7 +64,6 @@ public class JjInfoManager : MonoBehaviour
     public AudioSource videoPlayerSource;
     public MediaPlayer livePlayerSource;
 
-    public bool isJJWorld = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
