@@ -21,7 +21,7 @@ namespace MalbersAnimations
 
         protected bool active = true;
         //Is Called by any of the "StepTrigger" Script on a feet when they collide with the ground.
-        public PlayerControllerNew playerController;
+        //public PlayerControllerNew playerController;
        
         public void EnterStep(StepTrigger foot)
         {
