@@ -405,6 +405,9 @@ public class JJVideoAndImage : MonoBehaviour
             JjInfoManager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
     }
 
+    string NFT_title;
+    string NFT_Author;
+    string NFT_Description;
     public void OpenWorldInfo()
     {
         if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
@@ -414,15 +417,36 @@ public class JJVideoAndImage : MonoBehaviour
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
             {
-                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType,id);
+                if (JjInfoManager.Instance.worldInfos[id].Title.Length < 2)
+                    NFT_title = " ";
+                else
+                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[0];
+                if (JjInfoManager.Instance.worldInfos[id].Aurthor.Length < 2)
+                    NFT_Author = " ";
+                else
+                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[0];
+                if (JjInfoManager.Instance.worldInfos[id].Des.Length < 2)
+                    NFT_Description = " ";
+                else
+                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[0];
+
             }
             else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                if (!JjInfoManager.Instance.worldInfos[id].Title[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Aurthor[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Des[1].IsNullOrEmpty())
-                {
-                    JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType,id);
-                }
+                if (JjInfoManager.Instance.worldInfos[id].Title.Length < 2)
+                    NFT_title = " ";
+                else
+                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[0];
+                if (JjInfoManager.Instance.worldInfos[id].Aurthor.Length < 2)
+                    NFT_Author = " ";
+                else
+                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[0];
+                if (JjInfoManager.Instance.worldInfos[id].Des.Length < 2)
+                    NFT_Description = " ";
+                else
+                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[0];
             }
+            JjInfoManager.Instance.SetInfo(_imgVideoRatio, NFT_title, NFT_Author, NFT_Description, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id);
         }
     }
 }
