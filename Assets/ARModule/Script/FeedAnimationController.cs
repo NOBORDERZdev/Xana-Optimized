@@ -261,7 +261,7 @@ public class FeedAnimationController : MonoBehaviour
     {
         if (lastFeedAnimBtnClicked != null && _gameObject == lastFeedAnimBtnClicked && !bundleName.Contains("Sit") && !bundleName.Contains("Laydown"))
             return;
-        else if(lastFeedAnimBtnClicked.GetInstanceID()==_gameObject.GetInstanceID())
+        else
             waitForStandUp = true;
         if (alreadyRuning)
         {
