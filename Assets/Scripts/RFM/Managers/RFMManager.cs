@@ -46,14 +46,14 @@ namespace RFM
         public override void OnEnable()
         {
             base.OnEnable();
-            // EventsManager.onPlayerCaught += PlayerCaught;
+            EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onRestarting += ActivatePlayer;
         }
 
         public override void OnDisable()
         {
             base.OnDisable();
-            // EventsManager.onPlayerCaught -= PlayerCaught;
+            EventsManager.onPlayerCaught -= PlayerCaught;
             EventsManager.onRestarting -= ActivatePlayer;
         }
 
@@ -155,7 +155,7 @@ namespace RFM
                 }
 
                 // var numberOfEscapees = numberOfPlayers - numberOfHunters;
-                numberOfHunters = 3;
+                numberOfHunters = 1;
 
                 Hashtable properties = new Hashtable { { "numberOfHunters", numberOfHunters } };
                 PhotonNetwork.MasterClient.SetCustomProperties(properties);
@@ -308,11 +308,6 @@ namespace RFM
             var dict = new Dictionary<string, int>() { { PhotonNetwork.LocalPlayer.NickName, missionsManager.Money } };
             photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, dict);
 
-            // Destroy all hunters
-            // Reset other stuff if necessary
-
-            // Show stats of all players
-            
             await Task.Delay(Globals.gameRestartWait); 
             
             gameOverPanel.SetActive(false);
@@ -335,11 +330,9 @@ namespace RFM
         [PunRPC]
         public void LocalPlayerCaughtByHunter(int viewID)
         {
-            Debug.LogError("RFM LocalPlayerCaughtByHunter viewID = " + viewID);
-            
             if (Globals.player.GetComponentInChildren<PhotonView>().ViewID == viewID)
             {
-                Debug.LogError("RFM LocalPlayerCaughtByHunter 2");
+                Debug.LogError("RFM LocalPlayerCaughtByHunter viewID = " + viewID);
                 
                 if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -358,23 +351,23 @@ namespace RFM
             }
         }
 
-        // private void PlayerCaught(NPC catcher)
-        // {
-        //     if (Globals.gameState != Globals.GameState.Gameplay) return;
-        //
-        //     mainCam.SetActive(false);
-        //     gameCanvas.SetActive(false);
-        //     statusTMP.text = "You've been caught!";
-        //     statusTMP.transform.parent.gameObject.SetActive(true);
-        //     Globals.player.transform.root.gameObject.SetActive(false);
-        //
-        //     var dict = new Dictionary<int, int>();
-        //     dict.Add(0, PhotonNetwork.LocalPlayer.ActorNumber);
-        //     photonView.RPC(nameof(DeactivateNPCPlayer), RpcTarget.Others, dict);
-        //
-        //     npcCamera = Instantiate(npcCameraPrefab);
-        //     npcCamera.Init(catcher.transform/*.CameraTarget*/);
-        // }
+        private void PlayerCaught(NPC catcher)
+        {
+            if (Globals.gameState != Globals.GameState.Gameplay) return;
+        
+            mainCam.SetActive(false);
+            gameCanvas.SetActive(false);
+            statusTMP.text = "You've been caught!";
+            statusTMP.transform.parent.gameObject.SetActive(true);
+            Globals.player.transform.root.gameObject.SetActive(false);
+        
+            var dict = new Dictionary<int, int>();
+            dict.Add(0, PhotonNetwork.LocalPlayer.ActorNumber);
+            photonView.RPC(nameof(DeactivateNPCPlayer), RpcTarget.Others, dict);
+        
+            npcCamera = Instantiate(npcCameraPrefab);
+            npcCamera.Init(catcher.CameraTarget);
+        }
 
         private void ActivatePlayer()
         {

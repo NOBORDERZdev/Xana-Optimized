@@ -19,7 +19,7 @@ namespace RFM
         private List<GameObject> _players;
         private Transform _target;
 
-        public Transform CameraTarget { get { return cameraPosition; } }
+        public Transform CameraTarget => cameraPosition;
 
         private void Awake()
         {
@@ -49,9 +49,11 @@ namespace RFM
             
             _players = new List<GameObject>(GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
 
-            _target = _players[Random.Range(0, _players.Count)].transform;
-            
-            FollowTarget(_target.position);
+            if (_players.Count > 0)
+            {
+                _target = _players[Random.Range(0, _players.Count)].transform;
+                FollowTarget(_target.position);
+            }
         }
 
         private void Update()
@@ -86,12 +88,14 @@ namespace RFM
         {
             Debug.LogError("RFM OnTriggerEnter() with " + other.gameObject.name + ", " + other.tag);
             
-            if (other.CompareTag(/*Globals.PLAYER_TAG*/Globals.LOCAL_PLAYER_TAG))
+            if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
                 if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
                 _players.Remove(other.gameObject);
                 
-                int Collidedviewid = other.GetComponent<PhotonView>().ViewID;
+                // PhotonView is on the parent of the gameobject that has a collider.
+                int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
+                
                 RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 
                 EventsManager.PlayerCaught(this);

@@ -12,17 +12,17 @@ namespace RFM
         private List<PhotonView> playersPhotonViews = new List<PhotonView>();
         private NPC[]/*List<NPC>*/ npcs/* = new List<NPC>()*/;
 
-        // private void OnEnable()
-        // {
-        //     // EventsManager.onRestarting += ResetAll;
-        //     // EventsManager.onGameTimeup += GameOver;
-        // }
-        //
-        // private void OnDisable()
-        // {
-        //     // EventsManager.onRestarting -= ResetAll;
-        //     // EventsManager.onGameTimeup -= GameOver;
-        // }
+        private void OnEnable()
+        {
+            // EventsManager.onRestarting += ResetAll;
+            EventsManager.onGameTimeup += GameOver;
+        }
+        
+        private void OnDisable()
+        {
+            // EventsManager.onRestarting -= ResetAll;
+            EventsManager.onGameTimeup -= GameOver;
+        }
 
         private void Start()
         {
@@ -73,10 +73,10 @@ namespace RFM
             // }
         }
 
-        // private void GameOver()
-        // {
-        //     CancelInvoke(nameof(SetTargetForNPC));
-        // }
+        private void GameOver()
+        {
+            CancelInvoke(nameof(SetTargetForNPC));
+        }
 
         // private void ResetAll()
         // {
