@@ -40,12 +40,12 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             directionLightColors.Add(skyBoxesData.skyBoxes[i].skyId, skyBoxesData.skyBoxes[i].directionalLightData.directionLightColor);
         }
     }
-
+    int indexx = 0;
     public void ChangeSkyBox(int skyID)
     {
         Debug.Log("SKY BOXX" + skyID);
 
-        int indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
+         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
         {
@@ -53,10 +53,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
             loadSkyBox.Completed += LoadSkyBox_Completed;
             //RenderSettings.skybox = skyBoxesData.skyBoxes[indexx].skyMaterial;
-            directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
-            ppVolume.profile = skyBoxesData.skyBoxes[indexx].ppVolumeProfile;
-            DirectionLightColorChange(indexx);
-
         }
         if (skyID == -1)
         {
@@ -75,6 +71,9 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
         RenderSettings.skybox = obj.Result;
+        directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
+        ppVolume.profile = skyBoxesData.skyBoxes[indexx].ppVolumeProfile;
+        DirectionLightColorChange(indexx);
         //DynamicGI.UpdateEnvironment();
         //throw new NotImplementedException();
 
