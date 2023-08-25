@@ -86,8 +86,6 @@ namespace RFM
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.LogError("RFM OnTriggerEnter() with " + other.gameObject.name + ", " + other.tag);
-            
             if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
                 if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
@@ -96,7 +94,8 @@ namespace RFM
                 // PhotonView is on the parent of the gameobject that has a collider.
                 int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
                 
-                RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
+                // Uncomment for player hunter
+                // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 
                 EventsManager.PlayerCaught(this);
             }
