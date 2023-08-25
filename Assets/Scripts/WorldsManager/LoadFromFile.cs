@@ -870,7 +870,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (XanaConstants.xanaConstants.isBuilderScene)
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(11));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
         else
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
 
