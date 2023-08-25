@@ -21,7 +21,8 @@ namespace MalbersAnimations
 
         protected bool active = true;
         //Is Called by any of the "StepTrigger" Script on a feet when they collide with the ground.
-
+        
+       
         public void EnterStep(StepTrigger foot)
         {
             //if (Tracks && !Tracks.gameObject.activeInHierarchy)         //If is a prefab clone it!
@@ -40,7 +41,7 @@ namespace MalbersAnimations
 
             if (Physics.Raycast(foot.transform.position, Vector3.down, out RaycastHit footRay, 3))
             {
-                if (foot.StepAudio && PlayerControllerNew.isJoystickDragging)
+                if (foot.StepAudio && PlayerControllerNew.isJoystickDragging && ReferrencesForDynamicMuseum.instance.playerControllerNew._IsGrounded)
                 {
                     switch (footRay.collider.tag)
                     {
