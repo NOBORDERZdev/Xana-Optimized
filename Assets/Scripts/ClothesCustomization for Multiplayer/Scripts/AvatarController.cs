@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class AvatarController : MonoBehaviour
 {
@@ -178,7 +176,7 @@ public class AvatarController : MonoBehaviour
     //bool getHairColorFormFile = false;
     Color presetHairColor;
 
-    public void IntializeAvatar(bool canWriteFile = false)
+    public async void IntializeAvatar(bool canWriteFile = false)
     {
         // Other Requirements 
         // Set "isNFTAquiped" Variable according to Equipt & Unequipt of the NFT
@@ -188,6 +186,12 @@ public class AvatarController : MonoBehaviour
         //    XanaConstants.xanaConstants.isHoldCharacterNFT = true;
         //    XanaConstants.xanaConstants.isNFTEquiped = true;
         //}
+
+
+        while(!XanaConstants.isAddressableCatalogDownload)
+        {
+            await Task.Yield();
+        }
 
         if (canWriteFile && /*XanaConstants.xanaConstants.isHoldCharacterNFT &&*/ XanaConstants.xanaConstants.isNFTEquiped)
         {
