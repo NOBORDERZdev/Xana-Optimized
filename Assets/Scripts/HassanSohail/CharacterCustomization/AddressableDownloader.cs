@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -29,22 +28,35 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
-    void DownloadCatalogFile()
+    bool isDownloading=false;
+    public void DownloadCatalogFile()
     {
+        if(!isDownloading)
+        {
+            isDownloading = true;
 #if UNITY_EDITOR
-        string catalogFilePath=UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
-        catalogFilePath = catalogFilePath.Replace("[BuildTarget]",UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
-        catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
-        Addressables.LoadContentCatalogAsync(catalogFilePath);
-        Debug.LogError(catalogFilePath);
-
+            string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
+            catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
+            catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
+            AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath);
+            DownloadingCatalog.Completed += OnCatalogDownload;
 #else
-BuildScriptableObject buildScriptableObject =Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
-        Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
-
+BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+        AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
+        DownloadingCatalog.Completed += OnCatalogDownload;
 #endif
+
+        }
     }
 
+
+    void OnCatalogDownload(AsyncOperationHandle handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+            XanaConstants.isAddressableCatalogDownload = true;
+        else
+            isDownloading = false;
+    }
 
     //public int appliedItemsInPresets = 0;
     //public bool isTextureDownloaded = false;
