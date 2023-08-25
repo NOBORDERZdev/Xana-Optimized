@@ -74,6 +74,7 @@ namespace RFM
 
         public void ForceStartGame()
         {
+            Debug.LogError("ForceStartGame: " + Globals.gameState);
             if (Globals.gameState == Globals.GameState.InLobby)
             {
                 StartCoroutine(StartRFM());
@@ -154,12 +155,12 @@ namespace RFM
                 }
 
                 // var numberOfEscapees = numberOfPlayers - numberOfHunters;
-
+                numberOfHunters = 3;
 
                 Hashtable properties = new Hashtable { { "numberOfHunters", numberOfHunters } };
                 PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
-                // SpawnHunters(numberOfHunters);
+                SpawnHunters(numberOfHunters);
                 
                 photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
             }
@@ -261,7 +262,7 @@ namespace RFM
         private void SpawnHunters(int numOfHunters)
         {
             // numOfHunters = Globals.numOfHunters;
-            
+            Debug.LogError("numOfHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject(hunterPrefab.name,

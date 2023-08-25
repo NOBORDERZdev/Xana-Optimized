@@ -170,7 +170,7 @@ public class PlayerControllerNew : MonoBehaviour
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
         // RFM: we need a reference to the local player to set its position.
-        RFM.Globals.player = this;
+        //RFM.Globals.player = this;
         // RFM
 
 
@@ -803,7 +803,10 @@ public class PlayerControllerNew : MonoBehaviour
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
         {
             controllerCamera.SetActive(true);
-            controllerCharacterRenderCamera.SetActive(true);
+            if (controllerCharacterRenderCamera != null)
+            {
+                controllerCharacterRenderCamera.SetActive(true);
+            }
         }
 
         _IsGrounded = characterController.isGrounded;
@@ -1062,7 +1065,7 @@ public class PlayerControllerNew : MonoBehaviour
             canDoubleJump = true;
             gravityVector.y = JumpVelocity * 2;
         }
-       
+
 
     }
 
@@ -1074,7 +1077,7 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 jumpNow = true;
                 IsJumping = true;
-               
+
                 //tpsJumpAnim();
                 //Debug.Log("JumpAllowed");
                 //jump camera start...
@@ -1119,7 +1122,7 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAnimation();
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
-        
+
     }
 
     public void JumpNotAllowed()

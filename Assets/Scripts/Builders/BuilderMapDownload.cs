@@ -611,6 +611,12 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
+        if (RFM.Globals.IsRFMWorld) // TODO Muneeb
+        {
+            SceneManager.LoadSceneAsync("RFMDummy", LoadSceneMode.Additive);
+        }
+
         LoadingHandler.Instance.UpdateLoadingSlider(.8f);
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
     }
