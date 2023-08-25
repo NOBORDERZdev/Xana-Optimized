@@ -11,17 +11,17 @@ namespace RFM
     public class NPC : MonoBehaviour
     {
         [SerializeField] private Transform cameraPosition;
-        /*[SerializeField] private Animator npcAnim;
+        [SerializeField] private Animator npcAnim;
         [SerializeField] private string velocityNameX, velocityNameY;
         private NavMeshAgent navMeshAgent;
         private float maxSpeed;
 
         private List<GameObject> _players;
-        private Transform _target;*/
+        private Transform _target;
 
         public Transform CameraTarget { get { return cameraPosition; } }
 
-        /*private void Awake()
+        private void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
@@ -80,7 +80,7 @@ namespace RFM
 
             navMeshAgent.SetDestination(targetPosition);
             navMeshAgent.isStopped = false;
-        }*/
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -88,19 +88,19 @@ namespace RFM
             
             if (other.CompareTag(/*Globals.PLAYER_TAG*/Globals.LOCAL_PLAYER_TAG))
             {
-                /*if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>();*/
-                /*_players.Remove(other.gameObject);*/
+                if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
+                _players.Remove(other.gameObject);
                 
                 int Collidedviewid = other.GetComponent<PhotonView>().ViewID;
                 RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 
-                /*EventsManager.PlayerCaught(this);*/
+                EventsManager.PlayerCaught(this);
             }
         }
 
-        /*private void GameOver()
+        private void GameOver()
         {
             PhotonNetwork.Destroy(gameObject);
-        }*/
+        }
     }
 }
