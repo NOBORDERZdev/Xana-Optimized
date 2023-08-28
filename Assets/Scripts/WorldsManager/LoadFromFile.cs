@@ -38,7 +38,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public bool setLightOnce = false;
     public PopulationGenerator populationGenerator;
 
-    public GameObject player;
+    private GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
 
@@ -346,7 +346,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-            CheckAgain:
+        CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -406,19 +406,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
-        {
-            RFM.Globals.player = player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
-            PlayerCamera.gameObject.SetActive(false);
-            environmentCameraRender.gameObject.SetActive(false);
-            Debug.LogError("entered in RFMDummy Scene");
-            mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
-        }
-        else
-        {
-            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
-            Debug.LogError("Enter in other scene");
-        }
+        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -483,7 +471,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -504,21 +492,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-
-        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
-        {
-            RFM.Globals.player = player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
-            PlayerCamera.gameObject.SetActive(false);
-            environmentCameraRender.gameObject.SetActive(false);
-            Debug.LogError("entered in RFMDummy Scene");
-        }
-        else
-        {
-            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
-            Debug.LogError("Enter in other scene");
-        }
+        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
+            player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
             playerRB.isKinematic = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
@@ -533,7 +510,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.playerControllerNew.firstPersonCameraObj.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
 
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
-            GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.53f;
+            GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.683f;
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
@@ -563,7 +540,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-        End:
+    End:
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -727,44 +704,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         Transform tempSpawnPoint = null;
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
-        if (RFM.Globals.IsRFMWorld) // TODO Muneeb
+        if (BuilderData.spawnPoint.Count == 1)
         {
-            spawnPoint = RFM.RFMManager.Instance.lobbySpawnPoint.position;
-
-            if (BuilderData.spawnPoint.Count == 1)
-            {
-                RFM.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-                RFM.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-
-                var position = RFM.RFMManager.Instance.huntersSpawnArea.position;
-                position = new Vector3(
-                    position.x,
-                    position.y,
-                    position.z + 10
-                );
-                RFM.RFMManager.Instance.huntersSpawnArea.position = position;
-            }
-            else if (BuilderData.spawnPoint.Count > 1)
-            {
-                RFM.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-                RFM.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[1].spawnObject.transform;
-            }
+            tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
         }
-        else
+        else if (BuilderData.spawnPoint.Count > 1)
         {
-            if (BuilderData.spawnPoint.Count == 1)
+            foreach (SpawnPointData g in BuilderData.spawnPoint)
             {
-                spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.position;
-            }
-            else if (BuilderData.spawnPoint.Count > 1)
-            {
-                foreach (SpawnPointData g in BuilderData.spawnPoint)
+                if (g.IsActive)
                 {
-                    if (g.IsActive)
-                    {
-                        spawnPoint = g.spawnObject.transform.position;
-                        break;
-                    }
+                    tempSpawnPoint = g.spawnObject.transform;
+                    break;
                 }
             }
         }
@@ -853,7 +804,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
         temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
         if (temp)
@@ -915,11 +866,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        print("~~~~~~ " + temp);
+        //print("~~~~~~ " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (XanaConstants.xanaConstants.isBuilderScene)
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(11));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
         else
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
 
