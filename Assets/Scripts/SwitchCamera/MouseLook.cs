@@ -137,7 +137,7 @@ public class MouseLook : MonoBehaviour
                 Touch t1 = Input.GetTouch(1);
                 Touch t2 = (t.position.x > t1.position.x) ? t : t1;
                 //Touch t2 = (t.position.x > 500) ? t : t1;
-                if (t2.phase == TouchPhase.Moved && t2.position.x > 500)// && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)// && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = t2.deltaPosition;
                     _allowSyncedControl = true;
@@ -150,7 +150,7 @@ public class MouseLook : MonoBehaviour
             else if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                if (t.phase == TouchPhase.Moved && t.position.x > 500) // && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
                     _allowSyncedControl = true;
@@ -167,7 +167,7 @@ public class MouseLook : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                if (t.phase == TouchPhase.Moved && t.position.x > 500) // && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
                     _allowSyncedControl = true;
@@ -183,7 +183,7 @@ public class MouseLook : MonoBehaviour
                 Touch t1 = Input.GetTouch(1);
                 Touch t2 = (t.position.x > t1.position.x) ? t : t1;
                 //Touch t2 = (t.position.x > 500) ? t : t1;
-                if (t2.phase == TouchPhase.Moved && t2.position.x > 500)// && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)// && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = t2.deltaPosition;
                     _allowSyncedControl = true;
