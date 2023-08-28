@@ -40,7 +40,7 @@ namespace RFM
         {
             maxSpeed = navMeshAgent.speed;
             
-            InvokeRepeating(nameof(SearchForTarget), 3, 3);
+            InvokeRepeating(nameof(SearchForTarget), 1, 1);
         }
 
         private void SearchForTarget()
@@ -88,16 +88,16 @@ namespace RFM
         {
             if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
-                if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
-                _players.Remove(other.gameObject);
+                //if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
+                //_players.Remove(other.gameObject);
                 
                 // PhotonView is on the parent of the gameobject that has a collider.
-                int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
+                //int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
                 
                 // Uncomment for player hunter
                 // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 
-                EventsManager.PlayerCaught(this);
+                //EventsManager.PlayerCaught(this);
             }
         }
 
