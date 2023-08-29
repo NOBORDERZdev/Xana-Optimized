@@ -486,9 +486,11 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
+        
         //Set Hierarchy same as builder
         SetObjectHirarchy();
+
+        BuilderEventManager.CombineMeshes?.Invoke();
         GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.5f;
@@ -611,6 +613,12 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+
+        if (RFM.Globals.IsRFMWorld) // TODO Muneeb
+        {
+            SceneManager.LoadSceneAsync("RFMDummy", LoadSceneMode.Additive);
+        }
+
         LoadingHandler.Instance.UpdateLoadingSlider(.8f);
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
     }

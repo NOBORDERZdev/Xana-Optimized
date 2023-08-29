@@ -28,7 +28,7 @@ public class TranslateComponent : ItemComponent
 
     private bool CheckDistance()
     {
-        if ((translatePositions.Count > counter) &&  (Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
+        if ((Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
         {
             //counter = (counter == 0) ? 1 : 0;
             if (moveForward == true && counter < translatePositions.Count - 1)

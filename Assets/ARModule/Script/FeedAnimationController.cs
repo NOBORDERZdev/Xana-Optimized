@@ -352,10 +352,21 @@ public class FeedAnimationController : MonoBehaviour
     {
         if (waitForStandUp && runtimeAnimatorGameObject!=null && (url.Contains("sit") || url.Contains("laydown")))
         {
-            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
-            counterForEtc = 0;
-            yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
-            waitForStandUp = false;
+            if (counterForEtc != 0)
+            {
+                playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+                waitForStandUp = false;
+            }
+        }else if(runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
+        {
+            if (counterForEtc != 0)
+            {
+                playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                counterForEtc = 0;
+                yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+            }else
+                counterForEtc = 0;
         }
         if (counter > 4)
         {
