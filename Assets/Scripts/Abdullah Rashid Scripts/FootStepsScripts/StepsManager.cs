@@ -4,7 +4,7 @@
     public class StepsManager : MonoBehaviour
     {
     public AudioSource StepAudio;
-    public float StepsVolume = 0.2f;
+    public float StepsVolume = 0.05f;
      
     public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips, grassClips = default;
     [Tooltip("Scale of the dust and track particles")]
@@ -23,43 +23,34 @@
                     switch (footRay.collider.tag)
                     {
 
-                        case "Footsteps/sand":
-                            StepAudio.clip = sandclips[Random.Range(0, sandclips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/stone":
-                            StepAudio.clip = stoneClips[Random.Range(0, stoneClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/water":
-                            StepAudio.clip = waterClips[Random.Range(0, waterClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/metal":
-                            StepAudio.clip = metalClips[Random.Range(0, metalClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/snow":
-                            StepAudio.clip = snowClips[Random.Range(0, snowClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/wet":
-                            StepAudio.clip = wetClips[Random.Range(0, wetClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        case "Footsteps/floor":
-                            StepAudio.clip = floorClips[Random.Range(0, wetClips.Length - 1)];
-                           StepAudio.Play();
-                            break;
-                        case "Footsteps/grass":
-                            StepAudio.clip = grassClips[Random.Range(0, wetClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                        default:
-                            StepAudio.clip = floorClips[Random.Range(0, floorClips.Length - 1)];
-                            StepAudio.Play();
-                            break;
-                    }
+                    case "Footsteps/sand":
+                        StepAudio.PlayOneShot(sandclips[UnityEngine.Random.Range(0, sandclips.Length - 1)]);
+                        break;
+                    case "Footsteps/stone":
+                        StepAudio.PlayOneShot(metalClips[UnityEngine.Random.Range(0, metalClips.Length - 1)]);
+                        break;
+                    case "Footsteps/water":
+                        StepAudio.PlayOneShot(waterClips[UnityEngine.Random.Range(0, waterClips.Length - 1)]);
+                        break;
+                    case "Footsteps/metal":
+                        StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
+                        break;
+                    case "Footsteps/snow":
+                        StepAudio.PlayOneShot(snowClips[UnityEngine.Random.Range(0, snowClips.Length - 1)]);
+                        break;
+                    case "Footsteps/wet":
+                        StepAudio.PlayOneShot(wetClips[UnityEngine.Random.Range(0, wetClips.Length - 1)]);
+                        break;
+                    case "Footsteps/grass":
+                        StepAudio.PlayOneShot(grassClips[UnityEngine.Random.Range(0, grassClips.Length - 1)]);
+                        break;
+                    case "Footsteps/floor":
+                        StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                        break;
+                    default:
+                        StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                        break;
+                }
                 }
               
             }
