@@ -121,7 +121,7 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
         //this.StateText.gameObject.SetActive(true);
         //this.UserIdText.gameObject.SetActive(true);
         //this.Title.SetActive(true);
-        this.ChatPanel.gameObject.SetActive(false);
+        //this.ChatPanel.gameObject.SetActive(false);
 
         if (!string.IsNullOrEmpty(CurrentChannelText.text.ToString()))
         {
@@ -356,6 +356,7 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
         this.SendChatMessage(this.InputFieldChat.text);
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
+        XanaChatSocket_Waqas.onSendMsg?.Invoke(1, XanaConstants.xanaConstants.customWorldId, this.InputFieldChat.text);
         this.InputFieldChat.text = "";
         //}
 
@@ -401,6 +402,7 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
             }
 
             //this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, this.testBytes, true);
+            XanaChatSocket_Waqas.onSendMsg.Invoke(1,XanaConstants.xanaConstants.customWorldId,inputLine);
         }
 
         //if (inputLine.Trim() != "")

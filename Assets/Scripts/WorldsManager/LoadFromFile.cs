@@ -460,6 +460,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+
+        // Join Room Activate Chat
+        //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        XanaChatSocket_Waqas.onJoinRoom?.Invoke(123);
     }
 
 
