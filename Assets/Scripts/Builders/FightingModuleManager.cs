@@ -12,14 +12,6 @@ public class FightingModuleManager : MonoBehaviour
     public bool isEnvLoaded;
     public string addressableSceneName;
     public string environmentLabel;
-    public GameObject ClothAvatar;
-    public GameObject CharacterLight;
-    public Vector3 CharacterLightPosition;
-    public float LightIntesity = .6f;
-    public Animator avatarAnimator;
-    public RuntimeAnimatorController fightingModuleAnimator;
-    public RuntimeAnimatorController XanaAvatarAnimator;
-    public GameObject myAvatar;
     public string player1Icon;
     public string player2Icon;
 
@@ -37,29 +29,13 @@ public class FightingModuleManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    void Start()
-    {
 
-    }
-
-    void Update()
-    {
-        /*if (Input.GetKeyDown(KeyCode.L))
-        {
-            myAvatar = Instantiate(ClothAvatar, transform);
-            myAvatar.GetComponent<FootStaticIK>().enabled = false;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            myAvatar.GetComponent<Animator>().runtimeAnimatorController = fightingModuleAnimator;
-        }*/
-    }
     public void OnClickMainMenu()
     {
         StartCoroutine(IEOnClickMainMenu());
     }
 
-        public IEnumerator IEOnClickMainMenu()
+    public IEnumerator IEOnClickMainMenu()
     {
         const string UsernamePrefs = "PlayerName";
         string UserName = "";
@@ -79,26 +55,7 @@ public class FightingModuleManager : MonoBehaviour
             }*/
         }
         Debug.LogError("UserName: " + UserName);
-        ClothAvatar = GameManager.Instance.mainCharacter;
-        avatarAnimator = ClothAvatar.GetComponent<Animator>();
-        if (myAvatar != null)
-        {
-            Destroy(myAvatar);
-        }
-        myAvatar = Instantiate(ClothAvatar, transform);
-        myAvatar.GetComponent<FootStaticIK>().enabled = false;
-        myAvatar.name = UserName;
-        GameObject L = Instantiate(CharacterLight, myAvatar.transform);
-        for (int i = 0; i < L.transform.childCount; i++)
-        {
-            if (L.transform.GetChild(i).GetComponent<Light>())
-            {
-                L.transform.GetChild(i).GetComponent<Light>().intensity = LightIntesity;
-            }
-        }
-        L.transform.position = CharacterLightPosition;
-        myAvatar.GetComponent<Animator>().runtimeAnimatorController = fightingModuleAnimator;
-        myAvatar.gameObject.SetActive(false);
+
         yield return new WaitForSeconds(.1f);
         SceneManager.LoadScene("Demo_Fighter3D - Type 2");
     }
