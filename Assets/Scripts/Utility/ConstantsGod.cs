@@ -184,6 +184,7 @@ public class ConstantsGod
     public static readonly string GetXanaliaNounceURL = "/auth/get-address-nonce";
     public static readonly string GetXanaliaNFTURL = "/xanalia/mydata";
     public static readonly string GetGroupDetailsAPI = "/item/get-sets";
+    public static readonly string SaveNonce = "/auth/save-user-nonce";
 
 
     #endregion

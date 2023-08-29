@@ -19,6 +19,7 @@ public class FeedAnimationController : MonoBehaviour
     public List<Button> buttonList = new List<Button>();
 
     public List<string> animationGroup = new List<string>();
+    public List<string> reducedAnimationGroup = new List<string>();
     // Start is called before the first frame update
     public GameObject lastFeedAnimBtnClicked;
     private GameObject runtimeAnimatorGameObject;
@@ -52,20 +53,49 @@ public class FeedAnimationController : MonoBehaviour
                 string groupName = buttonList[i].name;
                 for (int j = 0; j < ContentPanel.transform.childCount; j++)
                 {
+                    string animName = ContentPanel.transform.GetChild(j).name;
+                    GameObject animObject= ContentPanel.transform.GetChild(j).gameObject;
                     if (groupName == "All")
                     {
-                        ContentPanel.transform.GetChild(j).gameObject.SetActive(true);
+                        animObject.SetActive(true);
                     }
-                    else
+                    else if(groupName == "Dance")
                     {
-                        if (ContentPanel.transform.GetChild(j).name == groupName)
-                        {
-                            ContentPanel.transform.GetChild(j).gameObject.SetActive(true);
-                        }
+                        if(animName.Contains("Full")|| animName.Contains("Jazz") || animName.Contains("Foot"))
+                            animObject.SetActive(true);
                         else
-                        {
-                            ContentPanel.transform.GetChild(j).gameObject.SetActive(false);
-                        }
+                            animObject.SetActive(false);
+                    }
+                    else if (groupName == "Moves")
+                    {
+                        if (animName.Contains("Break") || animName.Contains("Clapping")
+                            || animName.Contains("Hand") || animName.Contains("Club"))
+                            animObject.SetActive(true);
+                        else
+                            animObject.SetActive(false);
+                    }
+                    else if (groupName == "Reaction")
+                    {
+                        if (animName.Contains("React"))
+                            animObject.SetActive(true);
+                        else if (animName.Contains("Idle"))
+                            animObject.SetActive(true);
+                        else
+                            animObject.SetActive(false);
+                    }
+                    else if (groupName == "Sit & lying")
+                    {
+                        if (animName.Contains("Laydown") || animName.Contains("Sit"))
+                            animObject.SetActive(true);
+                        else
+                            animObject.SetActive(false);
+                    }
+                    else if (groupName == "Walk")
+                    {
+                        if (animName.Contains("Walk"))
+                            animObject.SetActive(true);
+                        else
+                            animObject.SetActive(false);
                     }
                 }
             }
@@ -130,11 +160,11 @@ public class FeedAnimationController : MonoBehaviour
                         animObject.transform.localScale = Vector3.one;
                         animObject.transform.localRotation = Quaternion.identity;
                         animObject.transform.GetChild(1).gameObject.SetActive(false);
-                        animObject.name = bean.data.animationList[i].group;
+                        animObject.name = bean.data.animationList[i].name;
 
-                        if (!animationGroup.Contains(bean.data.animationList[i].group))
+                        if (!animationGroup.Contains(bean.data.animationList[i].group) && reducedAnimationGroup.Contains(bean.data.animationList[i].group))
                             animationGroup.Add(bean.data.animationList[i].group);
-
+                        animationGroup = reducedAnimationGroup;
                         StartCoroutine(LoadSpriteEnv(bean.data.animationList[i].thumbnail, animObject.transform.GetChild(0).gameObject, i));
                         //animObject.GetComponent<Button>().onClick.AddListener(() => SetAnimationHighlight(animObject));
                         string url = "";
@@ -160,6 +190,8 @@ public class FeedAnimationController : MonoBehaviour
                         categoryObject.transform.localPosition = Vector3.zero;
                         categoryObject.transform.localScale = Vector3.one;
                         categoryObject.transform.localRotation = Quaternion.identity;
+                        if (animationGroup[i] == "Etc")
+                            animationGroup[i] = "Sit & lying";
                         categoryObject.name = animationGroup[i];
                         categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey(animationGroup[i]);
                         categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
@@ -320,10 +352,21 @@ public class FeedAnimationController : MonoBehaviour
     {
         if (waitForStandUp && runtimeAnimatorGameObject!=null && (url.Contains("sit") || url.Contains("laydown")))
         {
-            playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
-            counterForEtc = 0;
-            yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
-            waitForStandUp = false;
+            if (counterForEtc != 0)
+            {
+                playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+                waitForStandUp = false;
+            }
+        }else if(runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
+        {
+            if (counterForEtc != 0)
+            {
+                playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                counterForEtc = 0;
+                yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+            }else
+                counterForEtc = 0;
         }
         if (counter > 4)
         {

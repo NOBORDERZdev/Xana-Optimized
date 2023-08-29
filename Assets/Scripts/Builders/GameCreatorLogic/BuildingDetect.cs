@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
-using WalletConnectSharp.Core.Events;
+//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
@@ -88,7 +88,11 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        
+
+        yield return new WaitForSeconds(2f);
+
+_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
 
         defaultJumpHeight = _playerControllerNew.JumpVelocity;
         defaultSprintSpeed = _playerControllerNew.sprintSpeed;
@@ -103,10 +107,6 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
-
-        yield return new WaitForSeconds(2f);
-
-        //_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
         //Initializing
         playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
         playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
