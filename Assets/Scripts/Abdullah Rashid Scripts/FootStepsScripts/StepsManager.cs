@@ -4,7 +4,7 @@
     public class StepsManager : MonoBehaviour
     {
     public AudioSource StepAudio;
-    public float StepsVolume = 0.05f;
+    public float StepsVolume = 0.1f;
      
     public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips = default;
     [Tooltip("Scale of the dust and track particles")]
@@ -28,13 +28,13 @@
                         StepAudio.PlayOneShot(sandclips[UnityEngine.Random.Range(0, sandclips.Length - 1)]);
                         break;
                     case "Footsteps/stone":
-                        StepAudio.PlayOneShot(metalClips[UnityEngine.Random.Range(0, metalClips.Length - 1)]);
+                        StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
                         break;
                     case "Footsteps/water":
                         StepAudio.PlayOneShot(waterClips[UnityEngine.Random.Range(0, waterClips.Length - 1)]);
                         break;
                     case "Footsteps/metal":
-                        StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
+                        StepAudio.PlayOneShot(metalClips[UnityEngine.Random.Range(0, metalClips.Length - 1)]);
                         break;
                     case "Footsteps/snow":
                         StepAudio.PlayOneShot(snowClips[UnityEngine.Random.Range(0, snowClips.Length - 1)]);
@@ -46,7 +46,7 @@
                         StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
                         break;
                     default:
-                        StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
+                        StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
                         break;
                 }
                 }
