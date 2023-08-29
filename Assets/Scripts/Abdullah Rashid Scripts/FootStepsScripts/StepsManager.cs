@@ -4,7 +4,7 @@
     public class StepsManager : MonoBehaviour
     {
     public AudioSource StepAudio;
-    public float StepsVolume = 0.1f;
+    public float StepsVolume = 0.07f;
      
     public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips = default;
     [Tooltip("Scale of the dust and track particles")]
