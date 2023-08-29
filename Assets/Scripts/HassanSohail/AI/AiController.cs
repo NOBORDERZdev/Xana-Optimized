@@ -35,7 +35,7 @@ namespace XanaAi
         {
             blinking.StoreBlendShapeValues();          // enabling blinking
             blinking.isBlinking = true;
-            blinking.StartCoroutine(blinking.BlinkingStartRoutine()); 
+            StartCoroutine(blinking.BlinkingStartRoutine()); 
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace XanaAi
             item = this.stitcher.Stitch(item, applyOn);
             if (type == "Hair")
             {
-                tempBodyParts.StartCoroutine(tempBodyParts.ImplementColors(Color.black /*_CharacterData.HairColor*/, SliderType.HairColor, applyOn));
+                StartCoroutine(tempBodyParts.ImplementColors(Color.black /*_CharacterData.HairColor*/, SliderType.HairColor, applyOn));
             }
             item.layer = 11;
             switch (type)
@@ -162,12 +162,12 @@ namespace XanaAi
             if (!isPerformingAction)
             {
                 isPerformingAction= true;
-                print("PerformAction call");
+                //print("PerformAction call");
                 yield return new WaitForSeconds(/*Random.Range(1,2)*/0);
                 int rand;
                 if (isNewlySpwaned)
                 {
-                    print("in newly to wander");
+                   // print("in newly to wander");
                     rand=0;
                     isNewlySpwaned = false;
                 }
@@ -181,7 +181,7 @@ namespace XanaAi
                 switch (rand)
                 {
                     case 0:
-                        print("Performing Wander");
+                       // print("Performing Wander");
                         wandering.Wander();
                         selfie.ForceFullyDisableSelfie();
                         if(emoteCoroutine != null)
@@ -189,35 +189,35 @@ namespace XanaAi
                         aiEmote.ForceFullyStopEmote();
                         break;
                     case 1:
-                        print("Performing Selfie action");
+                        //print("Performing Selfie action");
                         selfie.SelfieAction();
                         if(emoteCoroutine != null)
                             StopCoroutine(emoteCoroutine);
                         aiEmote.ForceFullyStopEmote();
                         break;
                     case 2:
-                         print("Performing Emote");
+                        // print("Performing Emote");
                        if(emoteCoroutine != null)
                             StopCoroutine(emoteCoroutine);
-                        emoteCoroutine= aiEmote.StartCoroutine(aiEmote.PlayEmote());
+                        emoteCoroutine= StartCoroutine(aiEmote.PlayEmote());
                         selfie.ForceFullyDisableSelfie();
                         break;
                     case 3:
-                        print("Performing Jump");
+                       // print("Performing Jump");
                         aIJump.AiJump();
                         if(emoteCoroutine != null)
                             StopCoroutine(emoteCoroutine);
                         aiEmote.ForceFullyStopEmote();
                         break;
                     case 4:
-                        print("Performing Ai free cam");
+                        //print("Performing Ai free cam");
                         freeCam.PerformFreeCam();
                         if(emoteCoroutine != null)
                             StopCoroutine(emoteCoroutine);
                         aiEmote.ForceFullyStopEmote();
                         break;
                     default:
-                        print("Performing Wander from default");
+                        //print("Performing Wander from default");
                         wandering.Wander();
                         selfie.ForceFullyDisableSelfie();
                        if(emoteCoroutine != null)

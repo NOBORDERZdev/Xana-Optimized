@@ -6,11 +6,13 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
+using TMPro;
 
 namespace XanaAi
 {
     public class AiManager : MonoBehaviour
     {
+        public TMP_InputField inputField;
         #region public 
         [HideInInspector]
         public int SpwanedAiCount=0; 
@@ -30,18 +32,23 @@ namespace XanaAi
 
         private void Awake()
         {
-            aiPrefab= Resources.Load("Ai") as GameObject;
              if (instance == null)
              instance = this;
            else if (instance != this)
              Destroy(gameObject);
-           //apperance = GetComponent<AiApperance>();
-           StartCoroutine( IntAis());
         }
 
-         IEnumerator IntAis() {
+        IEnumerator Start()
+        {
+            aiPrefab = Resources.Load("Ai") as GameObject;
+            inputField.text = "2";
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(IntAis());
+        }
+
+        IEnumerator IntAis() {
             int rand;
-            ReactScreen.Instance.StartCoroutine(ReactScreen.Instance.getAllReactions());
+            StartCoroutine(ReactScreen.Instance.getAllReactions());
             for (int i = 0; i < AiCountToSpwaned; i++)
             {
                 rand = Random.Range(0, SpwanPoints.Count);
@@ -50,11 +57,21 @@ namespace XanaAi
                 //aiTemp.transform.position = temp.position;
                 //SpwanedAi.Add(aiTemp.GetComponent<AiController>());
                 SpwanPoints.RemoveAt(rand);
-                apperance.StartCoroutine( apperance.GetAppearance(aiTemp.GetComponent<AiController>()) );
+                StartCoroutine( apperance.GetAppearance(aiTemp.GetComponent<AiController>()) );
                 rand = Random.Range(0, aiNames.Count);
                 aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
                 SpwanedAiCount++;
-                yield return new WaitForSeconds(7f);
+
+                int integerValue;
+                string data = inputField.text;
+                if (int.TryParse(data, out integerValue))
+                {
+                    // Successfully converted to an integer
+                    Debug.Log("Integer value: " + integerValue);
+                    AiCountToSpwaned = integerValue;
+                }
+
+                yield return new WaitForSeconds(7f); 
             }
            
         }
@@ -63,7 +80,7 @@ namespace XanaAi
        
         public IEnumerator DownloadAddressableWearableWearable( string key, string ObjectType,AiController ai)
         {
-            Resources.UnloadUnusedAssets();
+            //Resources.UnloadUnusedAssets();
             CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
@@ -77,10 +94,10 @@ namespace XanaAi
                 {
                     WearDefault(ObjectType, ai); // wear default cloth
                     throw;
-                }   
+                }
 
                 while (!loadObj.IsDone /*|| loadTex.IsDone*/)
-                    yield return loadObj;
+                    yield return null; // loadObj;
 
                 if (loadObj.Status == AsyncOperationStatus.Failed)
                 {
@@ -100,7 +117,7 @@ namespace XanaAi
 
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
         {
-            Resources.UnloadUnusedAssets();
+            //Resources.UnloadUnusedAssets();
             CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
@@ -134,7 +151,7 @@ namespace XanaAi
                 }
 
                 while (!loadObj.IsDone /*|| loadTex.IsDone*/)
-                    yield return loadObj;
+                    yield return null; //loadObj;
 
                 if (loadObj.Status == AsyncOperationStatus.Failed)
                 {
