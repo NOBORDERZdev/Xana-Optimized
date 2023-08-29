@@ -283,7 +283,8 @@ namespace RFM
             statusTMP.gameObject.SetActive(false);
 
             
-            Timer.SetDurationAndRun(Globals.gameplayTime, GameplayTimeOver, gameplayTimeText);
+            Timer.SetDurationAndRun(Globals.gameplayTime, GameplayTimeOver, 
+                gameplayTimeText, AfterEachSecond);
 
             npcManager = gameObject.GetComponent<NPC_Manager>();
             if (npcManager)
@@ -293,6 +294,11 @@ namespace RFM
             }
 
             npcManager = gameObject.AddComponent<NPC_Manager>();
+        }
+
+        private void AfterEachSecond()
+        {
+            Debug.LogError("RFM gameplay time 1 second passed");
         }
 
         private async void GameplayTimeOver()
