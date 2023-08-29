@@ -276,6 +276,11 @@ public class WorldManager : MonoBehaviour
             try
             {
                 _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+
+                if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+                {
+                    _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                }
             }
             catch (Exception e)
             {
