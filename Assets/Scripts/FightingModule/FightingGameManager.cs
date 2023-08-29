@@ -12,6 +12,7 @@ public class FightingGameManager : MonoBehaviour
 
     public UFE3D.CharacterInfo P1SelectedChar;
     public UFE3D.CharacterInfo P2SelectedChar;
+
     public string myName = ""; //Attizaz
     public string opponentName = "";
     private void Awake()
@@ -24,7 +25,6 @@ public class FightingGameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.LogError("Fighting Game Manager: " + gameObject.name);
         myName = "Player : " + Random.Range(0, 20).ToString();
         PhotonNetwork.NickName = myName;
         if (startDirectly)
@@ -55,5 +55,19 @@ public class FightingGameManager : MonoBehaviour
 
         //UFE.StartLoadingBattleScreen();
     }
+
+
+    public void RestartScene()
+    {
+        StartCoroutine("RestartingScene");
+
+    }
+
+    IEnumerator RestartingScene()
+    {
+        yield return new WaitForSeconds(0.2f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
     #endregion
+
 }

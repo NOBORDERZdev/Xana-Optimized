@@ -111,11 +111,10 @@
             {
                 if (UFE.GetLocalPlayer() == player)
                 {
-                    UFE.EndGame();
-                    UFE.DisconnectFromGame();
-
-                    UFE.StartSearchMatchScreen();
                     UFE.PauseGame(false);
+                    UFE.DisconnectFromGame();
+                    UFE.EndGame();
+                    Invoke("SearchNewMatch", 2f);
                 }
                 else
                 {
@@ -161,5 +160,10 @@
             }
         }
         #endregion
+
+        void SearchNewMatch()
+        {
+            UFE.StartSearchMatchScreen();
+        }
     }
 }

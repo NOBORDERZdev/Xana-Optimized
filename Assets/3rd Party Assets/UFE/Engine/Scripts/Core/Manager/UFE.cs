@@ -2002,7 +2002,7 @@ public class UFE : MonoBehaviour, UFEInterface
 			UFE.OnGameEnds(winner, loser);
 		}
 	}
-	
+
 	public static void FireRoundBegins(int currentRound){
 		if (UFE.OnRoundBegins != null) UFE.OnRoundBegins(currentRound);
 	}
@@ -2113,7 +2113,7 @@ public class UFE : MonoBehaviour, UFEInterface
 				if (UFE.config.selectedStage.stageLoadingMethod == StorageMode.SceneFile)
 				{
 					//SceneManager.UnloadSceneAsync(UFE.config.selectedStage.stagePath);
-					SceneManager.UnloadSceneAsync("Fighting BreakingDown Arena");
+					SceneManager.UnloadSceneAsync("BreakingDown Arena");
 					SceneManager.SetActiveScene(mainScene);
 				}
 
@@ -2750,6 +2750,36 @@ public class UFE : MonoBehaviour, UFEInterface
             }
         }
 	}
+	
+	public static void MyPlayerDisconnectedFromMatch(MultiplayerAPI.PlayerInformation player = null) {
+        if (UFE.config.debugOptions.connectionLog) Debug.Log("Clean up after player " + player);
+        //UFE.multiplayerAPI.OnPlayerDisconnectedFromMatch -= UFE.OnPlayerDisconnectedFromMatch;
+        if (UFE.replayMode != null) UFE.replayMode.StopAll();
+
+        UFE.fluxCapacitor.Initialize(); // Return to single player controls
+
+		if (!UFE.closing){
+			UFE.disconnecting = true;
+			Application.runInBackground = UFE.config.runInBackground;
+
+            UFE.DisconnectFromGame();
+
+            if (UFE.gameRunning || !(currentScreen is OnlineModeAfterBattleScreen))
+            {
+                UFE.EndGame();
+
+                if (UFE.config.lockInputs && UFE.currentScreen == null)
+                {
+                   // UFE.DelayLocalAction(UFE.StartConnectionLostScreenIfMainMenuNotLoaded, 1f);
+                }
+                else
+                {
+                 //   UFE.StartConnectionLostScreen();
+                }
+                UFE.PauseGame(false);
+            }
+        }
+	}
 
 	protected static void OnServerInitialized() {
         if (UFE.config.debugOptions.connectionLog) Debug.Log("Server initialized and ready");
@@ -3344,6 +3374,43 @@ public class UFE : MonoBehaviour, UFEInterface
 
     private static void _StartGame(float fadeTime){
 		UFE.HideScreen(UFE.currentScreen);
+		// Load Stage
+		GameObject stageInstance = null;
+		if (config.selectedStage.stageLoadingMethod == StorageMode.Prefab)
+		{
+			if (UFE.config.selectedStage.prefab != null)
+			{
+				stageInstance = Instantiate(config.selectedStage.prefab);
+				stageInstance.transform.parent = gameEngine.transform;
+			}
+			else
+			{
+				Debug.LogError("Stage prefab not found! Make sure you have set the prefab correctly in the Global Editor.");
+			}
+		}
+		else if (config.selectedStage.stageLoadingMethod == StorageMode.ResourcesFolder)
+		{
+			GameObject prefab = Resources.Load<GameObject>(config.selectedStage.stagePath);
+
+			if (prefab != null)
+			{
+				stageInstance = Instantiate(prefab);
+				stageInstance.transform.parent = gameEngine.transform;
+			}
+			else
+			{
+				Debug.LogError("Stage prefab not found! Make sure the prefab is correctly located under the Resources folder and the path is written correctly.");
+			}
+		}
+		else
+		{
+			SceneManager.LoadScene("BreakingDown Arena", LoadSceneMode.Additive);
+			UFE.DelayLocalAction(SetActiveStageScene, 3);
+		}
+	}
+
+	public static void _StartGameGUI(float fadeTime)
+    {
         // Initialize Battle GUI
         if (UFE.config.gameGUI.battleGUI == null){
 			Debug.LogError("Battle GUI not found! Make sure you have set the prefab correctly in the Global Editor");
@@ -3386,32 +3453,7 @@ public class UFE : MonoBehaviour, UFEInterface
             UFE.SetRandomAI(1);
             UFE.SetRandomAI(2);
         }
-
-        // Load Stage
-        GameObject stageInstance = null;
-        if (config.selectedStage.stageLoadingMethod == StorageMode.Prefab) {
-            if (UFE.config.selectedStage.prefab != null) {
-                stageInstance = Instantiate(config.selectedStage.prefab);
-                stageInstance.transform.parent = gameEngine.transform;
-            } else {
-                Debug.LogError("Stage prefab not found! Make sure you have set the prefab correctly in the Global Editor.");
-            }
-        } else if (config.selectedStage.stageLoadingMethod == StorageMode.ResourcesFolder) {
-            GameObject prefab = Resources.Load<GameObject>(config.selectedStage.stagePath);
-
-            if (prefab != null) {
-                stageInstance = Instantiate(prefab);
-                stageInstance.transform.parent = gameEngine.transform;
-            } else {
-                Debug.LogError("Stage prefab not found! Make sure the prefab is correctly located under the Resources folder and the path is written correctly.");
-            }
-        } else {
-            //SceneManager.LoadScene(UFE.config.selectedStage.stagePath, LoadSceneMode.Additive);
-			SceneManager.LoadScene("Fighting BreakingDown Arena", LoadSceneMode.Additive);
-			UFE.DelayLocalAction(SetActiveStageScene, 3);
-        }
 		
-
         UFE.config.currentRound = 1;
 		UFE.config.lockInputs = true;
 		UFE.SetTimer(config.roundOptions._timer);
@@ -3604,11 +3646,11 @@ public class UFE : MonoBehaviour, UFEInterface
         }
 
         UFE.eventSystem.enabled = true;
-    }
-    #endregion
+	}
+	#endregion
 
-    #region public class methods: Load & Spawn Related methods
-    public static void SetActiveStageScene() {
+	#region public class methods: Load & Spawn Related methods
+	public static void SetActiveStageScene() {
         Scene stageScene;
         if (UFE.config.selectedStage.stagePath.Contains(".unity"))
         {
@@ -3618,8 +3660,8 @@ public class UFE : MonoBehaviour, UFEInterface
         {
             stageScene = SceneManager.GetSceneByName(UFE.config.selectedStage.stagePath);
         }
-		stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
-		SceneManager.SetActiveScene(stageScene);
+		stageScene = SceneManager.GetSceneByName("BreakingDown Arena");
+        SceneManager.SetActiveScene(stageScene);
     }
 
     public static ControlsScript SpawnCharacter(UFE3D.CharacterInfo characterInfo, int player, int mirror, FPVector location, bool isAssist, MoveInfo enterMove = null, MoveInfo exitMove = null, int altCostume = -1) {

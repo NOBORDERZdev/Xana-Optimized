@@ -70,5 +70,5 @@ public class DefaultMainMenuScreen : MainMenuScreen{
         Camera.main.GetComponent<AudioListener>().enabled = false;
         Camera.main.GetComponent<AudioListener>().enabled = true;
     }
-	#endregion
+    #endregion
 }

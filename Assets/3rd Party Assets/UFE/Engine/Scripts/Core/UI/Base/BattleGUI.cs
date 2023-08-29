@@ -368,6 +368,10 @@ namespace UFE3D
             if (winner.playerNum == this.player1.controlsScript.playerNum) this.player1.winner = true;
             if (winner.playerNum == this.player2.controlsScript.playerNum) this.player2.winner = true;
 
+        }
+
+        public void OnGameEnded()
+        {
             UFE.DelaySynchronizedAction(this.OpenMenuAfterBattle, UFE.config.roundOptions._showMenuDelay);
         }
 

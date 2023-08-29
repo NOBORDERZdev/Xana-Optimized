@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine.UI;
+using System.Collections;
 
 namespace UFE3D
 {
@@ -9,7 +11,7 @@ namespace UFE3D
         #region public instance fields
         public int pageSize = 20;
         public int searchDelay = 180;
-        public int maxSearchTimes = 3;
+        public int maxSearchTimes = 20;
         public UFE.MultiplayerMode multiplayerMode;
         #endregion
 
@@ -59,7 +61,8 @@ namespace UFE3D
         {
             UFE.DisconnectFromGame();
             this.StopSearchingMatchGames();
-            UFE.StartNetworkOptionsScreen();
+          //  UFE.StartNetworkOptionsScreen(); // Attizaz, by default this was the screen
+            UFE.StartMainMenuScreen(); // Attizaz
         }
 
         public virtual void GoToConnectionLostScreen()
@@ -179,17 +182,70 @@ namespace UFE3D
                 }
                 if (UFE.config.debugOptions.connectionLog) Debug.Log("Matches Found (available/total): " + unique + "/" + matches.Count);
             }
+            //if (unique == 0 || _currentSearchTime == 5)
+            //{
+            //    if (unique == 0) //Attizaz
+            //    {
+            //        this.TryConnect(); //Attizaz instead of above statements by default it was calling this statement
+            //    }
+            //}
 
-            if (unique > 0 || _currentSearchTime >= maxSearchTimes)
+            if (unique > 0 || _currentSearchTime >= 5) //Attizaz instead of 30 it was maxSearchTimes which used to wait for 5 seconds for match
             {
-                this.TryConnect();
+                if (_currentSearchTime >=5)//Attizaz by default there was no condition just this code
+                {
+                    if (increamentCoroutine != null)
+                    {
+                        StopCoroutine(increamentCoroutine);
+                    }
+                    UFE.gameMode = GameMode.VersusMode;
+                    UFE.StartPlayerVersusCpu(); //Attizaz
+                    print("The wait is over start match with AI");
+                    
+                }
+                else
+                {
+                    if (increamentCoroutine != null)
+                    {
+                        StopCoroutine(increamentCoroutine);
+                    }
+                    this.TryConnect(); //Attizaz instead of above statements by default it was calling this statement
+                }
             }
             else
             {
+                if (increamentCoroutine == null)
+                {
+                    increamentCoroutine = StartCoroutine(IncrementValueOverTime());
+                }
                 UFE.DelayLocalAction(StartSearchingGames, searchDelay);
                 _currentSearchTime++;
             }
             this.StopSearchingMatchGames(false);
+        }
+
+        // Mubashir
+        public Text uiText;
+        private float targetValue = 100f;
+        public float duration = 30f;
+        private float currentValue = 0f;
+        Coroutine increamentCoroutine = null;
+
+        private IEnumerator IncrementValueOverTime()
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                currentValue = Mathf.Lerp(0f, targetValue, elapsedTime / duration);
+                uiText.text = currentValue.ToString("F0") + "%";
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            currentValue = targetValue;
+            uiText.text = currentValue.ToString("F0") + "%";
         }
 
         protected virtual void OnMatchDiscoveryError()

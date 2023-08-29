@@ -6,6 +6,11 @@ public class OnlinePausePanel : MonoBehaviour
 {
     public void GoToMainMenu()
     {
+        UFE.EndGame();
+        UFE.PauseGame(false);
+       UFE.StartMainMenuScreen();
+        UFE.MyPlayerDisconnectedFromMatch();
+        //   FightingGameManager.instance.RestartScene();
         Destroy(this.gameObject);
     }
 

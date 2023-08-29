@@ -458,14 +458,12 @@ public class DefaultBattleGUI : BattleGUI{
 				this.player1GUI.portrait.gameObject.SetActive(true);
 				setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
 				/*this.player1GUI.portrait.sprite = Sprite.Create(
-				this.player1GUI.portrait.sprite = Sprite.Create(
 					cPlayer1.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer1.myInfo.profilePictureSmall.width, cPlayer1.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer1.myInfo.profilePictureSmall.width, 0.5f * cPlayer1.myInfo.profilePictureSmall.height)
 				);*/
 			}
-			else
-			{
+			else{
 				this.player1GUI.portrait.gameObject.SetActive(false);
 			}
 		}
@@ -543,11 +541,17 @@ public class DefaultBattleGUI : BattleGUI{
 		base.OnGameEnd (winner, loser);
 
         if (this.info != null) this.info.text = string.Empty;
-        //if (this.player1GUI.name != null)	this.player1GUI.name.text = string.Empty;
-        //if (this.player2GUI.name != null)	this.player2GUI.name.text = string.Empty;
-        //if (this.timer != null)				this.timer.text = string.Empty;
+		//if (this.player1GUI.name != null)	this.player1GUI.name.text = string.Empty;
+		//if (this.player2GUI.name != null)	this.player2GUI.name.text = string.Empty;
+		//if (this.timer != null)				this.timer.text = string.Empty;
+
+		TimeLineManager.instance.StartOutroCutScene();
     }
 
+	public void abc()
+    {
+
+    }
 
 	protected override void OnGamePaused (bool isPaused){
 		base.OnGamePaused(isPaused);
@@ -692,6 +696,7 @@ public class DefaultBattleGUI : BattleGUI{
 		base.OnRoundEnd (winner, loser);
 
 		if (winner == null || loser == null) return;
+
 		// Find out who is the winner and who is the loser...
 		int winnerPlayer = winner.playerNum;
 		int loserPlayer = loser.playerNum;

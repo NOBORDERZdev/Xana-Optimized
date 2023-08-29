@@ -27,7 +27,8 @@ namespace UFE3D
 
 		public virtual void GoToVersusModeScreen()
 		{
-			UFE.StartVersusModeScreen();
+			UFE.StartSearchMatchScreen();//Attizaz
+			//UFE.StartVersusModeScreen(); // Attizaz 
 		}
 
 		public virtual void GoToTrainingModeScreen()
