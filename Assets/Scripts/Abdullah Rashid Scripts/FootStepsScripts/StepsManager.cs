@@ -6,11 +6,12 @@
     public AudioSource StepAudio;
     public float StepsVolume = 0.05f;
      
-    public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips, grassClips = default;
+    public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips = default;
     [Tooltip("Scale of the dust and track particles")]
 
     void Awake()
     {
+        StepAudio.spatialBlend = 1;
         StepAudio.volume = StepsVolume;
 
     }
@@ -41,14 +42,11 @@
                     case "Footsteps/wet":
                         StepAudio.PlayOneShot(wetClips[UnityEngine.Random.Range(0, wetClips.Length - 1)]);
                         break;
-                    case "Footsteps/grass":
-                        StepAudio.PlayOneShot(grassClips[UnityEngine.Random.Range(0, grassClips.Length - 1)]);
-                        break;
                     case "Footsteps/floor":
                         StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
                         break;
                     default:
-                        StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                        StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
                         break;
                 }
                 }
