@@ -10,6 +10,8 @@ public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
 
+    public static bool isAddressableCatalogDownload;
+
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
 

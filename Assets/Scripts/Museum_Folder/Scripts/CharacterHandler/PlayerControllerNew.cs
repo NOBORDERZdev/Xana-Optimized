@@ -1233,6 +1233,7 @@ public class PlayerControllerNew : MonoBehaviour
     //update player jump according to builder setting 
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
+        sprintSpeed = 5;
         JumpVelocity += (jumpValue - 1);
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;

@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
-using WalletConnectSharp.Core.Events;
+//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
@@ -26,6 +26,11 @@ public class BuildingDetect : MonoBehaviour
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
 
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsole;
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsoleOther;
+
     [Header("Default Mats")]
     [SerializeField]
     private Material defaultHairMat;
@@ -37,6 +42,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultPantsMat;
     [SerializeField]
     private Material defaultShoesMat;
+    [SerializeField]
+    private Material defaultFreeCamConsoleMat;
 
     [Header("Gangster Character")]
     public GameObject gangsterCharacter;
@@ -81,7 +88,11 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        
+
+        yield return new WaitForSeconds(2f);
+
+_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
 
         defaultJumpHeight = _playerControllerNew.JumpVelocity;
         defaultSprintSpeed = _playerControllerNew.sprintSpeed;
@@ -96,10 +107,6 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
-
-        yield return new WaitForSeconds(2f);
-
-        //_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
         //Initializing
         playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
         playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
@@ -108,6 +115,9 @@ public class BuildingDetect : MonoBehaviour
         playerBody = GamificationComponentData.instance.charcterBodyParts.Body;
 
         playerHead = GamificationComponentData.instance.charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+
+        playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+        playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
         defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
         for (int i = 0; i < playerHead.materials.Length; i++)
@@ -120,6 +130,8 @@ public class BuildingDetect : MonoBehaviour
         defaultShirtMat = playerShirt.material;
         defaultHairMat = playerHair.material;
         defaultShoesMat = playerShoes.material;
+
+        defaultFreeCamConsoleMat = playerFreeCamConsole.material;
     }
 
     private void OnEnable()
@@ -345,6 +357,9 @@ public class BuildingDetect : MonoBehaviour
 
         // Apply the new materials to the SkinnedMeshRenderer
         playerHead.materials = newMaterials;
+
+        playerFreeCamConsole.material = hologramMaterial;
+        playerFreeCamConsoleOther.material = hologramMaterial;
     }
 
     void StopAvatarInvisibility()
@@ -355,6 +370,8 @@ public class BuildingDetect : MonoBehaviour
         playerPants.material = defaultPantsMat;
         playerShoes.material = defaultShoesMat;
         playerHead.sharedMaterials = defaultHeadMaterials;
+        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
+        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
     }
 
     #endregion

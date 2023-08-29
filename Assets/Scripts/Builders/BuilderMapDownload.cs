@@ -57,7 +57,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
 
         //OnSelfiActive
-        BuilderEventManager.SelfiActive += SelfiActive;
+        BuilderEventManager.UIToggle += UIToggle;
 
         OrientationChange(false);
     }
@@ -70,7 +70,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderData.spawnPoint.Clear();
 
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
-        BuilderEventManager.SelfiActive -= SelfiActive;
+        BuilderEventManager.UIToggle -= UIToggle;
         Addressables.Release(loadSkyBox);
 
 
@@ -134,7 +134,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
     }
 
-    void SelfiActive(bool state)
+    void UIToggle(bool state)
     {
         if (state)
         {
@@ -486,9 +486,11 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
+        
         //Set Hierarchy same as builder
         SetObjectHirarchy();
+
+        BuilderEventManager.CombineMeshes?.Invoke();
         GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.5f;
@@ -497,7 +499,13 @@ public class BuilderMapDownload : MonoBehaviour
 
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
-        mainPlayerCollider.height = 1f;
+
+        CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
+        playerCollider.height = 1.5f;
+        playerCollider.center = Vector3.up * (playerCollider.height / 2);
+        CharacterController playerCharacterController=GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
+        playerCharacterController.height = playerCollider.height;
+        playerCharacterController.center = playerCollider.center;
 
         GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
@@ -513,7 +521,8 @@ public class BuilderMapDownload : MonoBehaviour
         Vignette vignette;
         postProcessVol.profile.TryGet(out vignette);
 
-        if (vignette) {
+        if (vignette)
+        {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
             GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
         }

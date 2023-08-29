@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -21,12 +20,44 @@ public class AddressableDownloader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            DownloadCatalogFile();
         }
         else
         {
             Destroy(this.gameObject);
         }
     }
+
+    bool isDownloading=false;
+    public void DownloadCatalogFile()
+    {
+        if(!isDownloading)
+        {
+            isDownloading = true;
+#if UNITY_EDITOR
+            string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
+            catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
+            catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
+            AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath);
+            DownloadingCatalog.Completed += OnCatalogDownload;
+#else
+BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+        AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
+        DownloadingCatalog.Completed += OnCatalogDownload;
+#endif
+
+        }
+    }
+
+
+    void OnCatalogDownload(AsyncOperationHandle handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+            XanaConstants.isAddressableCatalogDownload = true;
+        else
+            isDownloading = false;
+    }
+
     //public int appliedItemsInPresets = 0;
     //public bool isTextureDownloaded = false;
     /// <summary>
@@ -54,6 +85,8 @@ public class AddressableDownloader : MonoBehaviour
             }
             AsyncOperationHandle<GameObject> loadOp;
             loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+
+            SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
 
             //if (!key.Contains("Fighter") && !key.Contains("FullCostume"))
             //{
