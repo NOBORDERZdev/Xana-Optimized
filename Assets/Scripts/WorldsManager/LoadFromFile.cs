@@ -463,7 +463,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         // Join Room Activate Chat
         //Debug.Log("<color=blue> XanaChat -- Joined </color>");
-        XanaChatSocket_Waqas.onJoinRoom?.Invoke(123);
+        XanaChatSocket_Waqas.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
     }
 
 

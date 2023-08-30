@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,24 +12,25 @@ using TMPro;
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
-
+using System.Collections.Generic;
 
 public class XanaChatSocket_Waqas : MonoBehaviour
 {
     public string address = "https://chat-testing.xana.net/";
     public SocketManager Manager;
 
-    public TMP_Text connectedText;
-    public TMP_Text joinedText;
-    public TMP_Text receivedMsg;
-    public TMP_Text oldMsgRec;
+    //public TMP_Text connectedText;
+    //public TMP_Text joinedText;
+    //public TMP_Text receivedMsg;
+    //public TMP_Text oldMsgRec;
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
     public string fetchAllMsgApi = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
 
     public int worldId, pageNumber, dataLimit;
 
-    public string testMsgString = "";
     public string socketId;
+    public string testMsgString = "";
+
     #region Summery
 
     // Join Room : socket.emit('joinRoom', { username, room });
@@ -48,8 +50,9 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     #endregion
 
-    public static Action<int> onJoinRoom;
-    public static Action<int, int, string> onSendMsg;
+    public static Action<string> onJoinRoom;
+    public static Action<string, string> onSendMsg;
+    public static Action callApi;
 
 
     void Start()
@@ -66,11 +69,13 @@ public class XanaChatSocket_Waqas : MonoBehaviour
     {
         onJoinRoom += UserJoinRoom;
         onSendMsg += SendMsg;
+        callApi += CallApiForMessages;
     }
     private void OnDisable()
     {
         onJoinRoom -= UserJoinRoom;
         onSendMsg -= SendMsg;
+        callApi -= CallApiForMessages;
     }
 
 
@@ -79,10 +84,8 @@ public class XanaChatSocket_Waqas : MonoBehaviour
     void OnConnected(ConnectResponse resp)
     {
         socketId = resp.sid;
-        connectedText.text = "XanaChat -- SocketConnected : " + resp.sid;
-        Manager.Socket.On<string>("message", ReceiveMsgs);
-
-        //Debug.Log("<color=green> XanaChat -- Socket ConnectCallBack" + "</color>");
+        Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
+        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
     }
     void OnError(CustomError args)
     {
@@ -98,34 +101,35 @@ public class XanaChatSocket_Waqas : MonoBehaviour
     }
 
 
-    void ReceiveMsgs(string msg)
+    void ReceiveMsgs(ChatUserData msg)
     {
-        Debug.Log("<color=gray> MsgReceive : " + msg + "</color>");
-        receivedMsg.text = msg;
-    }
-    void UserJoinRoom(int worldId)
-    {
-        //Debug.Log("<color=blue> XanaChat -- JoinRoom : " + worldId + "</color>");
-        //Manager.Socket.Emit("joinRoom", userName, worldId);
+        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
 
-        joinedText.text = "XanaChat -- JoinRoom : " + worldId;
-        string roomId = worldId.ToString();
-        var data = new { username = socketId, room = roomId };
+        XanaChatSystem.instance.DisplayMsg_FromSocket("Xana", msg.message);
+    }
+    void UserJoinRoom(string worldId)
+    {
+        string userId = XanaConstants.xanaConstants.userId;
+        var data = new { username = userId, room = worldId };
+        Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + worldId + "</color>");
+
         Manager.Socket.Emit("joinRoom", data);
     }
-    void SendMsg(int event_Id, int world_Id, string msg)
+    void SendMsg(string world_Id, string msg)
     {
-        if (string.IsNullOrEmpty(msg))
+        string userId = XanaConstants.xanaConstants.userId;
+        string event_Id = "1";
+
+        // Checking For Event
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
-            Debug.Log("<color=blue> XanaChat -- NoMsgTyped </color>");
-            return;
+            event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
 
+        Debug.Log("<color=blue> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
-        Debug.Log("<color=blue> XanaChat -- MsgSend : " + event_Id + " - " + world_Id + " - " + msg + "</color>");
-        //Manager.Socket.Emit("chatMessage", userName, eventId, worldId, msg);
 
-        var data = new { userId = socketId, eventId = event_Id, worldId = world_Id, msg = msg };
+        var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
         Manager.Socket.Emit("chatMessage", data);
     }
 
@@ -140,7 +144,9 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + worldId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
+
+
+        string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
         Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
@@ -158,26 +164,115 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
         if (!www.isHttpError && !www.isNetworkError)
         {
-            oldMsgRec.text = www.downloadHandler.text;
+            //oldMsgRec.text = www.downloadHandler.text;
             Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
+            DisplayOldChat(www.downloadHandler.text);
         }
         else
             Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
 
         www.Dispose();
     }
+
+    void DisplayOldChat(string OldChat)
+    {
+        //if(!string.IsNullOrEmpty(OldChat))
+
+        //OldChatOutPut myChat = JsonUtility.FromJson<OldChatOutPut>(OldChat);
+        ////JsonUtility.FromJson<S3NftDetail>(jsonData);
+        //if (myChat.count > 0)
+        //{
+        //    string tempUserName = "";
+        //    for (int i = myChat.data.Count - 1; i > -1; i--)
+        //    {
+        //        if (string.IsNullOrEmpty(myChat.data[i].username))
+        //            tempUserName = "Xana";
+        //        else
+        //            tempUserName = myChat.data[i].username;
+
+        //        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, myChat.data[i].message);
+        //    }
+        //}
+
+
+        RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
+        if (rootData.count > 0)
+        {
+            string tempUserName = "";
+            for (int i = rootData.data.Count - 1; i > -1; i--)
+            {
+                if (string.IsNullOrEmpty(rootData.data[i].username))
+                    tempUserName = "Xana";
+                else
+                    tempUserName = rootData.data[i].username;
+
+                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, rootData.data[i].message);
+            }
+        }
+
+
+    }
+
     #endregion
 
 
     // Testing Function
     public void CallJoinRoom()
     {
-        UserJoinRoom(worldId);
+        UserJoinRoom(worldId.ToString());
     }
     public void TestSendMsg()
     {
-        SendMsg(1, 1011, testMsgString);
+        SendMsg(worldId.ToString(), testMsgString);
     }
 
 
+}
+
+
+[System.Serializable]
+public class ChatUserData
+{
+    public string username;
+    public string avatar;
+    public string message;
+    public string world;
+    public string eventId;
+    public long time;
+}
+
+
+//[System.Serializable]
+//public class OldChatOutPut
+//{
+//    public bool success;
+//    public List<OldChatMessage> data;
+//    public int count;
+//}
+
+//[System.Serializable]
+//public class OldChatMessage
+//{
+//    public string username;
+//    public string avatar;
+//    public string message;
+//    public DateTime time;
+//    public DateTime createdAt;
+//}
+
+[System.Serializable]
+public class MessageData
+{
+    public string username;
+    public string avatar;
+    public string message;
+    public DateTime time;
+    public DateTime createdAt;
+}
+[System.Serializable]
+public class RootData
+{
+    public bool success;
+    public List<MessageData> data;
+    public int count;
 }

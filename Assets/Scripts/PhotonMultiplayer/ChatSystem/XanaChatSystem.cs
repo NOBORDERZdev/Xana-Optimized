@@ -68,6 +68,9 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
     public GameObject chatNotificationIcon;
 
     public GameObject chatDialogBox;
+    public GameObject oldChatButton;
+
+
 
 #if !PHOTON_UNITY_NETWORKING
         [SerializeField]
@@ -169,6 +172,23 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
 
         Connect();
     }
+
+
+    public void DisplayMsg_FromSocket(string _userName,string _msg)
+    {
+        //this.CurrentChannelText.text =
+        //                "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
+
+        this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
+    }
+
+    public void LoadOldChat()
+    {
+        XanaChatSocket_Waqas.callApi?.Invoke();
+        oldChatButton.SetActive(false);
+    }
+
+
 
     public void helpScreenOnOff()
     {
@@ -353,10 +373,10 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
 
         //if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.KeypadEnter))
         //{
-        this.SendChatMessage(this.InputFieldChat.text);
+        //this.SendChatMessage(this.InputFieldChat.text);
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
-        XanaChatSocket_Waqas.onSendMsg?.Invoke(1, XanaConstants.xanaConstants.customWorldId, this.InputFieldChat.text);
+        XanaChatSocket_Waqas.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
         this.InputFieldChat.text = "";
         //}
 
@@ -402,7 +422,7 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
             }
 
             //this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, this.testBytes, true);
-            XanaChatSocket_Waqas.onSendMsg.Invoke(1,XanaConstants.xanaConstants.customWorldId,inputLine);
+            XanaChatSocket_Waqas.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID,inputLine);
         }
 
         //if (inputLine.Trim() != "")

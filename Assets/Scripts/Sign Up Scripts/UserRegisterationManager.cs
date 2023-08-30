@@ -3795,7 +3795,8 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("shownWelcome", 1);
                     PlayerPrefs.SetInt("firstTime", 1);
 
-
+                    XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
+                    
                     if (!AutoLoginBool)
                     {
                         // savePasswordList.instance.saveData(LoginEmailNew.Text.Trim(), LoginPasswordShiftCode.GetText().Trim());
