@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -8,29 +9,31 @@ namespace RFM
         public bool isHunter;
         
         // For Invisibility Card
-        public SkinnedMeshRenderer[] _meshRenderers;
-        public Material[][] _defaultMaterials;
+        [SerializeField] private SkinnedMeshRenderer[] meshRenderers;
+        private Material[][] _defaultMaterials;
 
         public bool _isInvisible;
         //
-        
 
-        private void Start()
+        private void OnEnable()
         {
-            _meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+            EventsManager.onGameStart += OnGameStart;
+        }
+        
+        private void OnDisable()
+        {
+            EventsManager.onGameStart -= OnGameStart;
+        }
 
+        private void OnGameStart()
+        {
+            meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
 
             // A single meshRenderer may have more than one materials.
-            _defaultMaterials = new Material[_meshRenderers.Length][];
-            for (var i = 0; i < _meshRenderers.Length; i++)
+            _defaultMaterials = new Material[meshRenderers.Length][];
+            for (var i = 0; i < meshRenderers.Length; i++)
             {
-                _defaultMaterials[i] = _meshRenderers[i].sharedMaterials;
-                
-                // for (var j = 0; j < _meshRenderers[i].sharedMaterials.Length; j++)
-                // {
-                //     var material = _meshRenderers[i].sharedMaterials[j];
-                //     _defaultMaterials[i][j] = material;
-                // }
+                _defaultMaterials[i] = meshRenderers[i].sharedMaterials;
             }
         }
 
@@ -74,7 +77,7 @@ namespace RFM
 
         private void ChangeMaterials()
         {
-            foreach (var meshRenderer in _meshRenderers)
+            foreach (var meshRenderer in meshRenderers)
             {
                 var mats = new Material[meshRenderer.sharedMaterials.Length];
                 for (var index = 0; index < mats.Length; index++)
@@ -86,15 +89,15 @@ namespace RFM
             }
 
             _isInvisible = true;
-            Invoke(nameof(ResetMaterial), 200);
+            Invoke(nameof(ResetMaterial), 100);
         }
 
         
         private void ResetMaterial()
         {
-            for (var i = 0; i < _meshRenderers.Length; i++)
+            for (var i = 0; i < meshRenderers.Length; i++)
             {
-                _meshRenderers[i].sharedMaterials = _defaultMaterials[i];
+                meshRenderers[i].sharedMaterials = _defaultMaterials[i];
             }
             
             _isInvisible = false;
