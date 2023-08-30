@@ -86,7 +86,7 @@ namespace RFM
             }
 
             _isInvisible = true;
-            Invoke(nameof(ResetMaterial), 5);
+            Invoke(nameof(ResetMaterial), 100);
         }
 
         
