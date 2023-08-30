@@ -1,18 +1,20 @@
-using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using TMPro;
+using Random = UnityEngine.Random;
 
 namespace RFM
 {
     public class RFMMissionsManager : MonoBehaviour
     {
-        private int _money = 0;
         public TextMeshProUGUI showMoney;
 
-        private Dictionary<string, int> _scores;
+        // private Dictionary<string, int> _scores;
 
-        public int Money { get { return _money; } }
+        [SerializeField] private Transform pickupCardsParent;
+        [SerializeField] private Transform[] pickupCardsPossibleLocations;
+
+        public int Money { get; private set; } = 0;
 
         private void OnEnable()
         {
@@ -40,11 +42,24 @@ namespace RFM
         {
             if (Globals.IsLocalPlayerHunter) return;
             
-            _money = 0;
-            _scores = new Dictionary<string, int>();
+            Money = 0;
+            // _scores = new Dictionary<string, int>();
             showMoney.gameObject.SetActive(true);
             
             InvokeRepeating(nameof(AddMoney), Globals.GainingMoneyTimeInterval, Globals.GainingMoneyTimeInterval);
+            
+            Invoke(nameof(SpawnPickupCards), 5);
+        }
+
+        private void SpawnPickupCards()
+        {
+            foreach (var location in pickupCardsPossibleLocations)
+            {
+                var card = PhotonNetwork.InstantiateRoomObject("RFMCard", 
+                    location.position, location.rotation);
+                card.transform.SetParent(pickupCardsParent);
+                card.GetComponent<RFMCard>().cardType = (RFMCard.CardType)Random.Range(0,2);
+            }
         }
 
         private void RestartingGame()
@@ -66,17 +81,17 @@ namespace RFM
             CancelInvoke(nameof(AddMoney));
         }
 
-        private void SendMoneyToMaster (string playerName, int money)
-        {
-            Debug.LogError("RFM SendMoneyToMaster() " + playerName + ": " + money);
-            
-            //_scores.Add(playerName, money);
-        }
+        // private void SendMoneyToMaster (string playerName, int money)
+        // {
+        //     Debug.LogError("RFM SendMoneyToMaster() " + playerName + ": " + money);
+        //     
+        //     //_scores.Add(playerName, money);
+        // }
 
         private void AddMoney()
         {
-            _money += Globals.MoneyPerInterval;
-            showMoney.text = _money.ToString("F0") + " XENY";
+            Money += Globals.MoneyPerInterval;
+            showMoney.text = Money.ToString("F0") + " XENY";
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -69,7 +68,7 @@ namespace RFM
                     }
                 }
                 
-                Destroy(other.gameObject);
+                PhotonNetwork.Destroy(other.gameObject);
             }
         }
 
