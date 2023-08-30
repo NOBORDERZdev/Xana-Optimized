@@ -280,10 +280,10 @@ namespace RFM
         [PunRPC]
         private void StartGameplay()
         {
-            if (!Globals.player.gameObject.GetComponent<RFMPlayer>())
-            {
-                Globals.player.gameObject.AddComponent<RFMPlayer>();
-            }
+            // if (!Globals.player.gameObject.GetComponent<RFMPlayer>())
+            // {
+            //     Globals.player.gameObject.AddComponent<RFMPlayer>();
+            // }
             
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;

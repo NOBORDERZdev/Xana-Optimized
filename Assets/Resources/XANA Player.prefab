@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358532925082188}
-  m_LocalRotation: {x: 0.045405038, y: -0.06379179, z: 0.009605433, w: 0.9968836}
+  m_LocalRotation: {x: 0.045405038, y: -0.06379181, z: 0.009605436, w: 0.9968836}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -380,6 +380,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7942164388486371721}
+  - {fileID: 5307097806045729187}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -407,7 +408,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358533144897770}
-  m_LocalRotation: {x: 0.08158681, y: -0.06340078, z: 0.011916329, w: 0.9945762}
+  m_LocalRotation: {x: 0.08158681, y: -0.06340075, z: 0.011916322, w: 0.99457633}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1267,6 +1268,7 @@ GameObject:
   - component: {fileID: 5556358534646836584}
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
+  - component: {fileID: 5307097806045729187}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -1622,6 +1624,21 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &5307097806045729187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f849d1813862f4baa827c84edc04b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHunter: 0
+  _meshRenderers: []
+  _isInvisible: 0
 --- !u!1001 &4104292345617233943
 PrefabInstance:
   m_ObjectHideFlags: 0
