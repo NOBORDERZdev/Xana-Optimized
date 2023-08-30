@@ -11,7 +11,7 @@ namespace RFM
         public SkinnedMeshRenderer[] _meshRenderers;
         public Material[][] _defaultMaterials;
 
-        private bool _isInvisible;
+        public bool _isInvisible;
         //
         
 
@@ -86,7 +86,7 @@ namespace RFM
             }
 
             _isInvisible = true;
-            Invoke(nameof(ResetMaterial), 100);
+            Invoke(nameof(ResetMaterial), 200);
         }
 
         
