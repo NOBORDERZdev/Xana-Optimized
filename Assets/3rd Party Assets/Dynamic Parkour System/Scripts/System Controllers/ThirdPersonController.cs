@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG;
 using Cinemachine;
+using DG.Tweening;
 
 namespace Climbing
 {
@@ -176,8 +177,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Running)
             {
                 characterMovement.SetCurrentState(MovementState.Running);
-                runCamera.m_Lens.FieldOfView = 60;
-                sliderCamera.m_Lens.FieldOfView = 60;
+                DOTween.To(() => runCamera.m_Lens.FieldOfView, x => runCamera.m_Lens.FieldOfView = x, 60, 1);
+                DOTween.To(() => sliderCamera.m_Lens.FieldOfView, x => sliderCamera.m_Lens.FieldOfView = x, 60, 0.3f);
                 characterMovement.curSpeed = characterMovement.RunSpeed;
                 characterAnimation.animator.SetBool("Run", true);
             }
@@ -187,8 +188,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Walking)
             {
                 characterMovement.SetCurrentState(MovementState.Walking);
-                runCamera.m_Lens.FieldOfView = 40;
-                sliderCamera.m_Lens.FieldOfView = 40;
+                DOTween.To(() => runCamera.m_Lens.FieldOfView, x => runCamera.m_Lens.FieldOfView = x, 40, 1);
+                DOTween.To(() => sliderCamera.m_Lens.FieldOfView, x => sliderCamera.m_Lens.FieldOfView = x, 40, 0.6f);
                 characterMovement.curSpeed = characterMovement.walkSpeed;
                 characterAnimation.animator.SetBool("Run", false);
             }
