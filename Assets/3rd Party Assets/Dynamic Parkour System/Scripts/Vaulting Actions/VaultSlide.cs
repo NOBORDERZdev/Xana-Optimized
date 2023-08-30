@@ -64,7 +64,7 @@ namespace Climbing
                             dis = 4 / Vector3.Distance(startPos, targetPos);
                             controller.characterAnimation.animator.SetFloat("AnimSpeed", dis);
                             controller.characterAnimation.switchCameras.SlideCam();
-
+                            controller.slideParticleEffect.SetActive(true);
                             startPos = controller.transform.position;
                             startRot = controller.transform.rotation;
                             targetPos = hit2.point;
@@ -97,6 +97,7 @@ namespace Climbing
                 {
                     controller.characterAnimation.animator.SetFloat("AnimSpeed",1);
                     controller.characterAnimation.switchCameras.FreeLookCam();
+                    controller.slideParticleEffect.SetActive(false);
                     controller.EnableController();
                 }
                 else

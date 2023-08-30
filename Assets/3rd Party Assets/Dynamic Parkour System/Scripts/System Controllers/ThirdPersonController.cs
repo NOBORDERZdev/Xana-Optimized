@@ -21,6 +21,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG;
+using Cinemachine;
 
 namespace Climbing
 {
@@ -50,6 +52,9 @@ namespace Climbing
         public CameraController cameraController;
         public Transform mainCamera;
         public Transform freeCamera;
+        public CinemachineFreeLook runCamera;
+        public CinemachineVirtualCamera sliderCamera;
+
 
         [Header("Step Settings")]
         [Range(0, 10.0f)] public float stepHeight = 0.8f;
@@ -58,6 +63,9 @@ namespace Climbing
         [Header("Colliders")]
         public CapsuleCollider normalCapsuleCollider;
         public CapsuleCollider slidingCapsuleCollider;
+
+        [Header("VFX")]
+        public GameObject slideParticleEffect;
 
         private float turnSmoothTime = 0.1f;
         private float turnSmoothVelocity;
@@ -168,6 +176,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Running)
             {
                 characterMovement.SetCurrentState(MovementState.Running);
+                runCamera.m_Lens.FieldOfView = 60;
+                sliderCamera.m_Lens.FieldOfView = 60;
                 characterMovement.curSpeed = characterMovement.RunSpeed;
                 characterAnimation.animator.SetBool("Run", true);
             }
@@ -177,6 +187,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Walking)
             {
                 characterMovement.SetCurrentState(MovementState.Walking);
+                runCamera.m_Lens.FieldOfView = 40;
+                sliderCamera.m_Lens.FieldOfView = 40;
                 characterMovement.curSpeed = characterMovement.walkSpeed;
                 characterAnimation.animator.SetBool("Run", false);
             }
