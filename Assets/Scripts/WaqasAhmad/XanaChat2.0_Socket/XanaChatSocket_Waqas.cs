@@ -30,6 +30,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     public string socketId;
     public string testMsgString = "";
+    bool isJoinRoom = false;
 
     #region Summery
 
@@ -86,6 +87,15 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         socketId = resp.sid;
         Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+
+
+        if (isJoinRoom)
+        {
+            // Socket ID Update After Reconnect 
+            // Need To Emit joinRoom again with new Socket Id
+
+            onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+        }
     }
     void OnError(CustomError args)
     {
@@ -113,6 +123,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         var data = new { username = userId, room = worldId };
         Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + worldId + "</color>");
 
+        isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
     void SendMsg(string world_Id, string msg)
