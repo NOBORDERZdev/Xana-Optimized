@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpeakerRefrence : MonoBehaviour
 {
    
-    public GameObject RangeVolSpeaker;
-    public GameObject VolSpeaker;
+    public AudioSource RangeVolSpeaker;
+    
+
 }
