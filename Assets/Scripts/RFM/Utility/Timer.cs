@@ -14,11 +14,13 @@ namespace RFM
     	
         private float _totalSeconds = 0;
         private float _elapsedSeconds = 0;
+        private float _elapsedSeconds2 = 0;
         
         private bool _running = false;
         private bool _finished = false;
 
         private Action _onFinishedCallback;
+        private Action<float> _onTickCallback;
         private TMPro.TextMeshProUGUI TimeText;
 
         #endregion
@@ -40,8 +42,9 @@ namespace RFM
         /// <param name="value">duration in seconds</param>
         /// <param name="onFinishedCallback">called when timer is finished</param>
         /// <param name="timeText">Text that shows remaining time</param>
+        /// <param name="onOneSecondCallback">Called after each second</param>
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null)
+	        TMPro.TextMeshProUGUI timeText = null, Action<float> onOneSecondCallback = null)
         {
 	        var timerObj = new GameObject("timerObj");
 	        var timer = timerObj.AddComponent<RFM.Timer>();
@@ -49,7 +52,9 @@ namespace RFM
 	        timer._totalSeconds = value;
 	        
 	        timer._onFinishedCallback = null; // clear the callback in case it was used previously
+	        timer._onTickCallback = null;
 	        if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
+	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
 
 	        timer.TimeText = null;
 	        if (timeText) timer.TimeText = timeText;
@@ -64,9 +69,16 @@ namespace RFM
 	        if (!_running) return;
 	        
 	        _elapsedSeconds += Time.deltaTime;
+	        _elapsedSeconds2 += Time.deltaTime;
 
 	        if (TimeText) TimeText.text = (_totalSeconds - _elapsedSeconds).ToString("F0");
-	        
+
+	        if (_elapsedSeconds2 > 1)
+	        {
+		        _elapsedSeconds2 = 0;
+		        _onTickCallback?.Invoke(_totalSeconds - _elapsedSeconds);
+	        }
+            
             if (_elapsedSeconds >= _totalSeconds)
             {
 	            _finished = true;
@@ -88,7 +100,7 @@ namespace RFM
     	}
 
         public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null)
+	        TMPro.TextMeshProUGUI timeText = null, Action<float> onOneSecondCallback = null)
         {
 	        // SetDurationAndRun(value, onFinishedCallback, timeText);
 	        
@@ -98,7 +110,9 @@ namespace RFM
 	        timer._totalSeconds = value;
 	        
 	        timer._onFinishedCallback = null; // clear the callback in case it was used previously
+	        timer._onTickCallback = null;
 	        if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
+	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
 
 	        timer.TimeText = null;
 	        if (timeText) timer.TimeText = timeText;
