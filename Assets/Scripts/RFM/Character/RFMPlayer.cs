@@ -8,11 +8,16 @@ namespace RFM
     {
         public bool isHunter;
         
-        // For Invisibility Card
+        [Header("Invisibility Card")]
         [SerializeField] private SkinnedMeshRenderer[] meshRenderers;
         private Material[][] _defaultMaterials;
-
-        public bool _isInvisible;
+        [SerializeField] private float invisibilityDuration = 30;
+        private bool _isInvisible;
+        //
+        
+        
+        [Header("SpeedBoost Card")]
+        [SerializeField] private float boostDuration = 20;
         //
 
         private void OnEnable()
@@ -51,8 +56,6 @@ namespace RFM
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.LogError("RFMPlayer OnTriggerEnter() with " + other.gameObject.name + ", " + other.tag);
-            
             if (other.TryGetComponent<RFMCard>(out var card))
             {
                 switch (card.cardType)
@@ -66,6 +69,8 @@ namespace RFM
                     }
                     case RFMCard.CardType.SpeedBoost:
                     {
+                        RFM.Globals.player.isInBoostMood = true;
+                        Invoke(nameof(ResetSpeed), boostDuration);
                         Debug.LogError("RFM SpeedBoost Card Picked");
                         break;
                     }
@@ -89,7 +94,7 @@ namespace RFM
             }
 
             _isInvisible = true;
-            Invoke(nameof(ResetMaterial), 100);
+            Invoke(nameof(ResetMaterial), invisibilityDuration);
         }
 
         
@@ -101,6 +106,11 @@ namespace RFM
             }
             
             _isInvisible = false;
+        }
+
+        private void ResetSpeed()
+        {
+            RFM.Globals.player.isInBoostMood = false;
         }
 
 

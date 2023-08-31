@@ -46,7 +46,8 @@ namespace RFM
             // _scores = new Dictionary<string, int>();
             showMoney.gameObject.SetActive(true);
             
-            InvokeRepeating(nameof(AddMoney), Globals.GainingMoneyTimeInterval, Globals.GainingMoneyTimeInterval);
+            InvokeRepeating(nameof(AddMoney), Globals.GainingMoneyTimeInterval, 
+                Globals.GainingMoneyTimeInterval);
             
             Invoke(nameof(SpawnPickupCards), 5);
         }

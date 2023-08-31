@@ -17,13 +17,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Climbing
 {
-    public enum MovementState { Walking, Running }
+    public enum MovementState { Walking, Running, Boost }
 
     [RequireComponent(typeof(ThirdPersonController))]
     public class MovementCharacterController : MonoBehaviour
@@ -51,6 +52,7 @@ namespace Climbing
         public float walkSpeed;
         public float JogSpeed;
         public float RunSpeed;
+        public float BoostSpeed = 7;
         public float fallForce;
 
         [Header("Feet IK")]
@@ -294,6 +296,10 @@ namespace Climbing
                     break;
                 case MovementState.Running:
                     curSpeed = RunSpeed;
+                    smoothSpeed = curSpeed;
+                    break;
+                case MovementState.Boost:
+                    curSpeed = BoostSpeed;
                     smoothSpeed = curSpeed;
                     break;
             }
