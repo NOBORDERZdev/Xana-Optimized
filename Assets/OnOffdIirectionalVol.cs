@@ -9,13 +9,15 @@ public class OnOffdIirectionalVol : MonoBehaviour
     public void ClickOnDirVol()
     {
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.SetActive(false);
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().VolSpeaker.SetActive(false);
         this.gameObject.SetActive(false);
         otherButton.SetActive(true);
      }
     public void ClickOffDirVol()
     {
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.SetActive(true);
-       this.gameObject.SetActive(false);
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().VolSpeaker.SetActive(false);
+        this.gameObject.SetActive(false);
         otherButton.SetActive(true);
      }
 }
