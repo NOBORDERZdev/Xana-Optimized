@@ -70,10 +70,6 @@ namespace Climbing
 
         private float turnSmoothTime = 0.1f;
         private float turnSmoothVelocity;
-        
-        //Pickup Cards
-        public bool isInBoostMood;
-        //
 
         private void Awake()
         {
@@ -92,6 +88,20 @@ namespace Climbing
             characterMovement.OnLanded += characterAnimation.Land;
             characterMovement.OnFall += characterAnimation.Fall;
         }
+        
+        //Boost Pickup Card
+        public void ToggleBoost(bool state)
+        {
+            if (state)
+            {
+                characterMovement.RunSpeed = characterMovement.BoostRunSpeed;
+            }
+            else
+            {
+                characterMovement.RunSpeed = characterMovement.NormalRunSpeed;
+            }
+        }
+        //
 
         void Update()
         {
@@ -103,13 +113,8 @@ namespace Climbing
             {
                 AddMovementInput(characterInput.movement);
 
-                if (isInBoostMood)
-                {
-                    ToggleBoost();
-                }
-
                 //Detects if Joystick is being pushed hard
-                else if (characterInput.run && characterInput.movement.magnitude > 0.5f)
+                if (characterInput.run && characterInput.movement.magnitude > 0.5f)
                 {
                     ToggleRun();
                 }
@@ -179,18 +184,6 @@ namespace Climbing
         public void ResetMovement()
         {
             characterMovement.ResetSpeed();
-        }
-
-        private void ToggleBoost() // When player picks RFM SpeedBoost card
-        {
-            if (characterMovement.GetState() != MovementState.Boost)
-            {
-                characterMovement.SetCurrentState(MovementState.Boost);
-                DOTween.To(() => runCamera.m_Lens.FieldOfView, x => runCamera.m_Lens.FieldOfView = x, 70, 1);
-                DOTween.To(() => sliderCamera.m_Lens.FieldOfView, x => sliderCamera.m_Lens.FieldOfView = x, 70, 0.3f);
-                characterMovement.curSpeed = characterMovement.BoostSpeed;
-                characterAnimation.animator.SetBool("Run", true);
-            }
         }
 
         public void ToggleRun()

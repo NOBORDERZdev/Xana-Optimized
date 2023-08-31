@@ -24,7 +24,7 @@ using UnityEngine;
 
 namespace Climbing
 {
-    public enum MovementState { Walking, Running, Boost }
+    public enum MovementState { Walking, Running }
 
     [RequireComponent(typeof(ThirdPersonController))]
     public class MovementCharacterController : MonoBehaviour
@@ -52,7 +52,8 @@ namespace Climbing
         public float walkSpeed;
         public float JogSpeed;
         public float RunSpeed;
-        public float BoostSpeed = 7;
+        public float BoostRunSpeed = 7; // RFM Boost Card
+        public float NormalRunSpeed = 4.5f;
         public float fallForce;
 
         [Header("Feet IK")]
@@ -296,10 +297,6 @@ namespace Climbing
                     break;
                 case MovementState.Running:
                     curSpeed = RunSpeed;
-                    smoothSpeed = curSpeed;
-                    break;
-                case MovementState.Boost:
-                    curSpeed = BoostSpeed;
                     smoothSpeed = curSpeed;
                     break;
             }

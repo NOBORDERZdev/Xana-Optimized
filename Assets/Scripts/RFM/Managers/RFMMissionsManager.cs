@@ -48,8 +48,11 @@ namespace RFM
             
             InvokeRepeating(nameof(AddMoney), Globals.GainingMoneyTimeInterval, 
                 Globals.GainingMoneyTimeInterval);
-            
-            Invoke(nameof(SpawnPickupCards), 5);
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Invoke(nameof(SpawnPickupCards), Globals.gameplayTime/3);
+            }
         }
 
         private void SpawnPickupCards()
@@ -66,6 +69,11 @@ namespace RFM
         private void RestartingGame()
         {
             showMoney.gameObject.SetActive(false);
+
+            foreach (Transform card in pickupCardsParent)
+            {
+                PhotonNetwork.Destroy(card.gameObject);
+            }
         }
 
         private void OnPlayerCaught(NPC catcher)

@@ -23,11 +23,13 @@ namespace RFM
         private void OnEnable()
         {
             EventsManager.onGameStart += OnGameStart;
+            EventsManager.onRestarting += OnGameRestarting;
         }
         
         private void OnDisable()
         {
             EventsManager.onGameStart -= OnGameStart;
+            EventsManager.onRestarting -= OnGameRestarting;
         }
 
         private void OnGameStart()
@@ -40,6 +42,12 @@ namespace RFM
             {
                 _defaultMaterials[i] = meshRenderers[i].sharedMaterials;
             }
+        }
+        
+        private void OnGameRestarting()
+        {
+            ResetMaterial();
+            ResetSpeed();
         }
 
         private void Update()
@@ -69,7 +77,7 @@ namespace RFM
                     }
                     case RFMCard.CardType.SpeedBoost:
                     {
-                        RFM.Globals.player.isInBoostMood = true;
+                        RFM.Globals.player.ToggleBoost(true);
                         Invoke(nameof(ResetSpeed), boostDuration);
                         Debug.LogError("RFM SpeedBoost Card Picked");
                         break;
@@ -110,7 +118,7 @@ namespace RFM
 
         private void ResetSpeed()
         {
-            RFM.Globals.player.isInBoostMood = false;
+            RFM.Globals.player.ToggleBoost(false);
         }
 
 
