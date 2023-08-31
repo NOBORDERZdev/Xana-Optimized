@@ -283,8 +283,14 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
 
     }
+    public void OnDirectionalVolFunc() {
+        SpeakerRefrence.instance.reftoSpeaker.SetActive(true);
+    }
+    public void OffDirectionalVolFunc() {
+        SpeakerRefrence.instance.reftoSpeaker.SetActive(false);
+    }
     ////////////////////////////////////
-   
+
     //private void Start()
     //{
     //    StartCoroutine(SetPlayerCounter());
@@ -349,4 +355,5 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
+
 }

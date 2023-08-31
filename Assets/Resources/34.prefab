@@ -11549,6 +11549,7 @@ GameObject:
   - component: {fileID: 5436968773894372362}
   - component: {fileID: 300990757756869482}
   - component: {fileID: 8357973693737612267}
+  - component: {fileID: 1868599478022124912}
   m_Layer: 22
   m_Name: 34
   m_TagString: PhotonLocalPlayer
@@ -12311,6 +12312,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8f6465525b20f1544b4139a7c2f98a75, type: 3}
   floorClips:
   - {fileID: 8300000, guid: 1adc404d0e40bcd41ad78cd808a333ef, type: 3}
+--- !u!114 &1868599478022124912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6a0a9c374cded459ce413b69a46d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reftoSpeaker: {fileID: 8538310469038373701}
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0
@@ -18644,7 +18658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6203503939709969469
 Transform:
   m_ObjectHideFlags: 0
