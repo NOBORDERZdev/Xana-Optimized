@@ -106,8 +106,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358532959275495}
-  m_LocalRotation: {x: 0.11536851, y: 0.0018741746, z: -0.00021767462, w: 0.993321}
-  m_LocalPosition: {x: 0, y: 2.7600002, z: -4.7}
+  m_LocalRotation: {x: 0.13267733, y: 0.0031128912, z: -0.00041669607, w: 0.9911543}
+  m_LocalPosition: {x: -0.05, y: -0.42000008, z: 2.3199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,11 +137,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
-  far clip plane: 5000
-  field of view: 40
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1303,6 +1303,7 @@ GameObject:
   - component: {fileID: 5556358534646836584}
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
+  - component: {fileID: 8709046672898625435}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -1662,6 +1663,21 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &8709046672898625435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f849d1813862f4baa827c84edc04b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHunter: 0
+  meshRenderers: []
+  _isInvisible: 0
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
