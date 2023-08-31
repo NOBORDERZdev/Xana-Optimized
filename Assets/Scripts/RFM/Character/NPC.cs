@@ -89,14 +89,14 @@ namespace RFM
         {
             if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
-                if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
-                _players.Remove(other.gameObject);
+                // if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
+                // _players.Remove(other.gameObject);
 
                 // PhotonView is on the parent of the gameobject that has a collider.
-                int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
+                // int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
                 
                 // Uncomment for player hunter
-                 RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
+                // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 killVFX.SetActive(true);
                 EventsManager.PlayerCaught(this);
             }
