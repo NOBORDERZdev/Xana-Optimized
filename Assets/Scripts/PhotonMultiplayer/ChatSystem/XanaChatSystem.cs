@@ -176,10 +176,9 @@ public class XanaChatSystem : MonoBehaviour/*, IChatClientListener*/
 
     public void DisplayMsg_FromSocket(string _userName,string _msg)
     {
-        //this.CurrentChannelText.text =
-        //                "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
+        this.CurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
 
-        this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
+        //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
 
     public void LoadOldChat()

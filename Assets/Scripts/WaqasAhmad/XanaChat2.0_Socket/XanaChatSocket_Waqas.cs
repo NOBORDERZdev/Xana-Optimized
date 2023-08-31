@@ -30,6 +30,10 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     public string socketId;
     public string testMsgString = "";
+    public ChatUserData receivedMsgForTesting;
+    bool isJoinRoom = false;
+
+
 
     #region Summery
 
@@ -86,6 +90,14 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         socketId = resp.sid;
         Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+
+        if (isJoinRoom)
+        {
+            // Socket ID Update After Reconnect 
+            // Need To Emit joinRoom again with new Socket Id
+
+            onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+        }
     }
     void OnError(CustomError args)
     {
@@ -103,9 +115,16 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     void ReceiveMsgs(ChatUserData msg)
     {
-        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        if (string.IsNullOrEmpty(msg.message))
+            return;
 
-        XanaChatSystem.instance.DisplayMsg_FromSocket("Xana", msg.message);
+        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        if (string.IsNullOrEmpty(msg.username))
+        {
+            msg.username = socketId;
+        }
+        receivedMsgForTesting = msg;
+        XanaChatSystem.instance.DisplayMsg_FromSocket(msg.username, msg.message);
     }
     void UserJoinRoom(string worldId)
     {
@@ -113,6 +132,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         var data = new { username = userId, room = worldId };
         Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + worldId + "</color>");
 
+        isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
     void SendMsg(string world_Id, string msg)
@@ -233,6 +253,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 [System.Serializable]
 public class ChatUserData
 {
+    public string name;
     public string username;
     public string avatar;
     public string message;
