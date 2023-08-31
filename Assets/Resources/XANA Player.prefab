@@ -185,7 +185,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.5
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -236,7 +236,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -556,6 +556,7 @@ GameObject:
   - component: {fileID: 5556358533377525082}
   - component: {fileID: 5556358533377525083}
   - component: {fileID: 1565225843}
+  - component: {fileID: 4360660503683738441}
   m_Layer: 10
   m_Name: FreeLookCam
   m_TagString: Untagged
@@ -761,6 +762,23 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -6122062259217429950, guid: 92b096a3ca2aaaf4793e33b3389b03a4, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &4360660503683738441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358533377525086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 11400000, guid: 0e0da2512eb228249b90c3a2d729080b, type: 2}
 --- !u!1 &5556358533626337625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5556358534259412729}
   - component: {fileID: 5556358534259412710}
+  - component: {fileID: 1158031930746202360}
   m_Layer: 10
   m_Name: SlideCam
   m_TagString: Untagged
@@ -1117,6 +1136,23 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 5556358533204089959}
+--- !u!114 &1158031930746202360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534259412728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449ef5ebbe24720439ec31d15f7b6f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 11400000, guid: 0e0da2512eb228249b90c3a2d729080b, type: 2}
 --- !u!1 &5556358534287788685
 GameObject:
   m_ObjectHideFlags: 0
