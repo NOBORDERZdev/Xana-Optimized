@@ -1492,8 +1492,8 @@ public class StoreManager : MonoBehaviour
     {
         if (index == 0)
         {
-            if (ParentOfBtnsCustomHair.gameObject.activeInHierarchy)
-                tempBool = true;
+            //if (ParentOfBtnsCustomHair.gameObject.activeInHierarchy)
+            //    tempBool = true;
             ParentOfBtnsCustomHair.gameObject.SetActive(false);
             ParentOfBtnsAvatarHairs.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[0], (RectTransform)ParentOfBtnsAvatarHairs);
@@ -1501,8 +1501,8 @@ public class StoreManager : MonoBehaviour
         }
         else if (index == 2)
         {
-            if (ParentOfBtnsCustomEyeBrows.gameObject.activeInHierarchy)
-                tempBool = true;
+            //if (ParentOfBtnsCustomEyeBrows.gameObject.activeInHierarchy)
+            //    tempBool = true;
             ParentOfBtnsCustomEyeBrows.gameObject.SetActive(false);
             ParentOfBtnsAvatarEyeBrows.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[2], (RectTransform)ParentOfBtnsAvatarEyeBrows);
@@ -1510,8 +1510,8 @@ public class StoreManager : MonoBehaviour
         }
         else if (index == 3)
         {
-            if (ParentOfBtnsCustomEyesPalette.gameObject.activeInHierarchy)
-                tempBool = true;
+            //if (ParentOfBtnsCustomEyesPalette.gameObject.activeInHierarchy)
+            //    tempBool = true;
             ParentOfBtnsCustomEyesPalette.gameObject.SetActive(false);
             ParentOfBtnsAvatarEyes.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[3], (RectTransform)ParentOfBtnsAvatarEyes);
@@ -1519,8 +1519,8 @@ public class StoreManager : MonoBehaviour
         }
         else if (index == 5)
         {
-            if (ParentOfBtnsCustomLipsPalette.gameObject.activeInHierarchy)
-                tempBool = true;
+            //if (ParentOfBtnsCustomLipsPalette.gameObject.activeInHierarchy)
+            //    tempBool = true;
             ParentOfBtnsCustomLipsPalette.gameObject.SetActive(false);
             ParentOfBtnsAvatarLips.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[5], (RectTransform)ParentOfBtnsAvatarLips);
