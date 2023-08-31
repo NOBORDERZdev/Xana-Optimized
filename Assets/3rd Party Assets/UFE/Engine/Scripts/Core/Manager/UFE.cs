@@ -2113,7 +2113,7 @@ public class UFE : MonoBehaviour, UFEInterface
 				if (UFE.config.selectedStage.stageLoadingMethod == StorageMode.SceneFile)
 				{
 					//SceneManager.UnloadSceneAsync(UFE.config.selectedStage.stagePath);
-					SceneManager.UnloadSceneAsync("BreakingDown Arena");
+					SceneManager.UnloadSceneAsync("Fighting BreakingDown Arena");
 					SceneManager.SetActiveScene(mainScene);
 				}
 
@@ -3404,7 +3404,7 @@ public class UFE : MonoBehaviour, UFEInterface
 		}
 		else
 		{
-			SceneManager.LoadScene("BreakingDown Arena", LoadSceneMode.Additive);
+			SceneManager.LoadScene("Fighting BreakingDown Arena", LoadSceneMode.Additive);
 			UFE.DelayLocalAction(SetActiveStageScene, 3);
 		}
 	}
@@ -3660,7 +3660,7 @@ public class UFE : MonoBehaviour, UFEInterface
         {
             stageScene = SceneManager.GetSceneByName(UFE.config.selectedStage.stagePath);
         }
-		stageScene = SceneManager.GetSceneByName("BreakingDown Arena");
+		stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
         SceneManager.SetActiveScene(stageScene);
     }
 
