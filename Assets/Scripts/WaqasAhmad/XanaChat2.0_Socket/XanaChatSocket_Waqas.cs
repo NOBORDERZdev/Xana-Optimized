@@ -119,12 +119,14 @@ public class XanaChatSocket_Waqas : MonoBehaviour
             return;
 
         Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
-        if (string.IsNullOrEmpty(msg.username))
-        {
-            msg.username = socketId;
-        }
+        string tempUser = msg.username;
         receivedMsgForTesting = msg;
-        XanaChatSystem.instance.DisplayMsg_FromSocket(msg.username, msg.message);
+
+        if (string.IsNullOrEmpty(tempUser))
+        {
+            tempUser = socketId;
+        }
+        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
     }
     void UserJoinRoom(string worldId)
     {
@@ -146,7 +148,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
             event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
 
-        Debug.Log("<color=blue> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
+        Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
 
         var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
@@ -218,15 +220,15 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
         if (rootData.count > 0)
         {
-            string tempUserName = "";
+            //string tempUserName = "";
             for (int i = rootData.data.Count - 1; i > -1; i--)
             {
-                if (string.IsNullOrEmpty(rootData.data[i].username))
-                    tempUserName = "Xana";
-                else
-                    tempUserName = rootData.data[i].username;
+                //if (string.IsNullOrEmpty(rootData.data[i].username))
+                //    tempUserName = "Xana";
+                //else
+                //    tempUserName = rootData.data[i].username;
 
-                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, rootData.data[i].message);
+                XanaChatSystem.instance.DisplayMsg_FromSocket(rootData.data[i].username, rootData.data[i].message);
             }
         }
 
