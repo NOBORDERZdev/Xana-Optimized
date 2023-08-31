@@ -9,6 +9,7 @@ using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
+using UnityEngine.Rendering.Universal;
 
 namespace RFM
 {
@@ -34,6 +35,12 @@ namespace RFM
         [SerializeField] private MMScaleShaker timerTextScaleShaker;
         [SerializeField] private MMScaleShaker countdownTimerTextScaleShaker;
         [SerializeField] private MMF_Player statusMMFPlayer;
+
+        //Camera Manager
+        [SerializeField] private RFMCameraManager rfmCameraManager;
+
+        //VFX
+        [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
 
 
         private NPC_Manager npcManager;
@@ -78,6 +85,10 @@ namespace RFM
             Debug.LogError("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
             
             InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
+
+            //this is to turn post processing on
+            var cameraData = Camera.main.GetUniversalAdditionalCameraData();
+            cameraData.renderPostProcessing = true;
         }
 
         #region Public Methods
@@ -222,10 +233,13 @@ namespace RFM
 
                 var hunterPosition = huntersSpawnArea.position;
                 var randomHunterPos = new Vector3(
-                    hunterPosition.x + Random.Range(-3, 3),
+                    hunterPosition.x + Random.Range(-2, 2),
                     hunterPosition.y,
-                    hunterPosition.z + Random.Range(-3, 3));
+                    hunterPosition.z + Random.Range(-2, 2));
 
+                //play VFX
+                hunterSpawnVFX.SetActive(true);
+                Destroy(hunterSpawnVFX, 10f);
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
                 Hashtable properties = new Hashtable { { "numberOfHunters", numOfHunters - 1 } };
@@ -236,7 +250,7 @@ namespace RFM
             {
                 Debug.LogError(PhotonNetwork.NickName + " Spawning as Escapee. RFM");
                 
-                statusTMP.text = "Run far from the Hunters!";
+                statusTMP.text = "RUN FAR FROM <#008FFF>THE HUNTERS!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
@@ -249,9 +263,13 @@ namespace RFM
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
-                    position.x + Random.Range(-4, 5),
+                    position.x + Random.Range(-1, 1),
                     position.y,
-                    position.z + Random.Range(-2, 3));
+                    position.z + Random.Range(-1, 1));
+
+                //play VFX
+                playerSpawnVFX.SetActive(true);
+                Destroy(playerSpawnVFX, 10f);
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
@@ -314,16 +332,27 @@ namespace RFM
             npcManager = gameObject.AddComponent<NPC_Manager>();
         }
 
-        private void AfterEachSecondGameplayTimer()
+        private void AfterEachSecondGameplayTimer(float time)
         {
             //Debug.LogError("RFM gameplay time 1 second passed");
             if(timerTextScaleShaker) timerTextScaleShaker.Play();
         }
 
-        private void AfterEachSecondCountdownTimer()
+        private void AfterEachSecondCountdownTimer(float time)
         {
-            Debug.LogError("RFM gameplay time 1 second passed");
+            //Debug.LogError("RFM gameplay time 1 second passed" + time);
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
+
+            //camera logic
+            if (Globals.gameState == Globals.GameState.TakePosition) 
+            {
+                if (time < 7)
+                    rfmCameraManager.SwtichCamera(0);
+                if (time < 4)
+                    rfmCameraManager.SwtichCamera(1);
+                if (time < 1)
+                    rfmCameraManager.SwitchOffAllCameras();
+            }
         }
 
         private async void GameplayTimeOver()
