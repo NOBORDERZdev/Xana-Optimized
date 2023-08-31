@@ -11,9 +11,10 @@
 
     void Awake()
     {
-        if(!StepAudio)
-        StepAudio.volume = StepsVolume;
-
+        if (StepAudio!= null)
+        {
+            StepAudio.volume = StepsVolume;
+        }
     }
     public void EnterStep()
     {
