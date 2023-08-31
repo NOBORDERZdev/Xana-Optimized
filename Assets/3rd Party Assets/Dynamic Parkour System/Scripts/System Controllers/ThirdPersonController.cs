@@ -21,6 +21,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG;
+using Cinemachine;
+using DG.Tweening;
 
 namespace Climbing
 {
@@ -50,6 +53,9 @@ namespace Climbing
         public CameraController cameraController;
         public Transform mainCamera;
         public Transform freeCamera;
+        public CinemachineFreeLook runCamera;
+        public CinemachineVirtualCamera sliderCamera;
+
 
         [Header("Step Settings")]
         [Range(0, 10.0f)] public float stepHeight = 0.8f;
@@ -58,6 +64,9 @@ namespace Climbing
         [Header("Colliders")]
         public CapsuleCollider normalCapsuleCollider;
         public CapsuleCollider slidingCapsuleCollider;
+
+        [Header("VFX")]
+        public GameObject slideParticleEffect;
 
         private float turnSmoothTime = 0.1f;
         private float turnSmoothVelocity;
@@ -168,6 +177,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Running)
             {
                 characterMovement.SetCurrentState(MovementState.Running);
+                DOTween.To(() => runCamera.m_Lens.FieldOfView, x => runCamera.m_Lens.FieldOfView = x, 60, 1);
+                DOTween.To(() => sliderCamera.m_Lens.FieldOfView, x => sliderCamera.m_Lens.FieldOfView = x, 60, 0.3f);
                 characterMovement.curSpeed = characterMovement.RunSpeed;
                 characterAnimation.animator.SetBool("Run", true);
             }
@@ -177,6 +188,8 @@ namespace Climbing
             if (characterMovement.GetState() != MovementState.Walking)
             {
                 characterMovement.SetCurrentState(MovementState.Walking);
+                DOTween.To(() => runCamera.m_Lens.FieldOfView, x => runCamera.m_Lens.FieldOfView = x, 40, 1);
+                DOTween.To(() => sliderCamera.m_Lens.FieldOfView, x => sliderCamera.m_Lens.FieldOfView = x, 40, 0.6f);
                 characterMovement.curSpeed = characterMovement.walkSpeed;
                 characterAnimation.animator.SetBool("Run", false);
             }

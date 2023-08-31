@@ -8,6 +8,8 @@ using UnityEngine;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
+using MoreMountains.Feedbacks;
+using UnityEngine.Rendering.Universal;
 
 namespace RFM
 {
@@ -24,9 +26,22 @@ namespace RFM
 
         [SerializeField] private TextMeshProUGUI countDownText;
         [SerializeField] private TextMeshProUGUI gameplayTimeText, statusTMP;
+        [SerializeField] private GameObject statusBG;
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private RectTransform leaderboardEntryContainer;
         [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
+
+        //MMeffects
+        [SerializeField] private MMScaleShaker timerTextScaleShaker;
+        [SerializeField] private MMScaleShaker countdownTimerTextScaleShaker;
+        [SerializeField] private MMF_Player statusMMFPlayer;
+
+        //Camera Manager
+        [SerializeField] private RFMCameraManager rfmCameraManager;
+
+        //VFX
+        [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
+
 
         private NPC_Manager npcManager;
         private GameObject mainCam, gameCanvas;
@@ -74,6 +89,10 @@ namespace RFM
             Debug.LogError("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
             
             InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
+
+            //this is to turn post processing on
+            var cameraData = Camera.main.GetUniversalAdditionalCameraData();
+            cameraData.renderPostProcessing = true;
         }
 
         #region Public Methods
@@ -114,7 +133,8 @@ namespace RFM
             {
                 Globals.gameState = Globals.GameState.InLobby;
                 countDownText.transform.parent.gameObject.SetActive(false);
-                statusTMP.gameObject.SetActive(false);
+                statusBG.SetActive(false);
+                //statusTMP.gameObject.SetActive(false);
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -131,8 +151,10 @@ namespace RFM
             Globals.gameState = Globals.GameState.Countdown;
             countDownText.transform.parent.gameObject.SetActive(true);
             statusTMP.text = "Countdown";
-            statusTMP.gameObject.SetActive(true);
-            
+            statusBG.SetActive(true);
+            statusMMFPlayer.PlayFeedbacks();
+            //statusTMP.gameObject.SetActive(true);
+
             huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up");
 
             if (PhotonNetwork.IsMasterClient)
@@ -144,7 +166,7 @@ namespace RFM
 
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(
                 Globals.countDownTime,
-                null, countDownText));
+                null, countDownText, AfterEachSecondCountdownTimer));
             
 
             if (PhotonNetwork.IsMasterClient)
@@ -205,7 +227,9 @@ namespace RFM
                 Debug.LogError(PhotonNetwork.NickName + " Spawning as Hunter. RFM");
                 
                 statusTMP.text = "Catch the Escapees!";
-                statusTMP.gameObject.SetActive(true);
+                statusBG.SetActive(true);
+                statusMMFPlayer.PlayFeedbacks();
+                //statusTMP.gameObject.SetActive(true);
 
                 Globals.gameState = Globals.GameState.TakePosition;
                 
@@ -213,10 +237,13 @@ namespace RFM
 
                 var hunterPosition = huntersSpawnArea.position;
                 var randomHunterPos = new Vector3(
-                    hunterPosition.x + Random.Range(-3, 3),
+                    hunterPosition.x + Random.Range(-2, 2),
                     hunterPosition.y,
-                    hunterPosition.z + Random.Range(-3, 3));
+                    hunterPosition.z + Random.Range(-2, 2));
 
+                //play VFX
+                hunterSpawnVFX.SetActive(true);
+                Destroy(hunterSpawnVFX, 10f);
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
                 Hashtable properties = new Hashtable { { "numberOfHunters", numOfHunters - 1 } };
@@ -227,19 +254,26 @@ namespace RFM
             {
                 Debug.LogError(PhotonNetwork.NickName + " Spawning as Escapee. RFM");
                 
-                statusTMP.text = "Run far from the Hunters!";
-                statusTMP.gameObject.SetActive(true);
+                statusTMP.text = "RUN FAR FROM <#008FFF>THE HUNTERS!</color>";
+                statusBG.SetActive(true);
+                statusMMFPlayer.PlayFeedbacks();
+
+                //statusTMP.gameObject.SetActive(true);
 
                 Globals.gameState = Globals.GameState.TakePosition;
             
             
-                Timer.SetDurationAndRun(Globals.takePositionTime, AfterTakePositionTimer, countDownText);
+                Timer.SetDurationAndRun(Globals.takePositionTime, AfterTakePositionTimer, countDownText, AfterEachSecondCountdownTimer);
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
-                    position.x + Random.Range(-4, 5),
+                    position.x + Random.Range(-1, 1),
                     position.y,
-                    position.z + Random.Range(-2, 3));
+                    position.z + Random.Range(-1, 1));
+
+                //play VFX
+                playerSpawnVFX.SetActive(true);
+                Destroy(playerSpawnVFX, 10f);
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
@@ -289,10 +323,13 @@ namespace RFM
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
-            statusTMP.gameObject.SetActive(false);
+            statusBG.SetActive(false);
+            statusMMFPlayer.PlayFeedbacks();
+            //statusTMP.gameObject.SetActive(false);
 
-            
-            Timer.SetDurationAndRun(Globals.gameplayTime, GameplayTimeOver, gameplayTimeText);
+
+            Timer.SetDurationAndRun(Globals.gameplayTime, GameplayTimeOver, 
+                gameplayTimeText, AfterEachSecondGameplayTimer);
 
             npcManager = gameObject.GetComponent<NPC_Manager>();
             if (npcManager)
@@ -304,13 +341,38 @@ namespace RFM
             npcManager = gameObject.AddComponent<NPC_Manager>();
         }
 
+        private void AfterEachSecondGameplayTimer(float time)
+        {
+            //Debug.LogError("RFM gameplay time 1 second passed");
+            if(timerTextScaleShaker) timerTextScaleShaker.Play();
+        }
+
+        private void AfterEachSecondCountdownTimer(float time)
+        {
+            //Debug.LogError("RFM gameplay time 1 second passed" + time);
+            if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
+
+            //camera logic
+            if (Globals.gameState == Globals.GameState.TakePosition) 
+            {
+                if (time < 7)
+                    rfmCameraManager.SwtichCamera(0);
+                if (time < 4)
+                    rfmCameraManager.SwtichCamera(1);
+                if (time < 1)
+                    rfmCameraManager.SwitchOffAllCameras();
+            }
+        }
+
         private async void GameplayTimeOver()
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
             EventsManager.GameTimeup();
             Globals.gameState = Globals.GameState.GameOver;
             statusTMP.text = "Time's Up!";
-            statusTMP.gameObject.SetActive(false);
+            statusBG.SetActive(false);
+
+            //statusTMP.gameObject.SetActive(false);
             // gameOverTMP.text = npcManager.TotalActivePlayers() > 0 ? "YOUR TEAM WON!" : "YOUR TEAM LOST!";
             // Calculate local player's score.
             gameOverPanel.SetActive(true);
@@ -349,7 +411,9 @@ namespace RFM
                 mainCam.SetActive(false);
                 gameCanvas.SetActive(false);
                 statusTMP.text = "You've been caught!";
-                statusTMP.gameObject.SetActive(true);
+                statusBG.SetActive(true);
+                statusMMFPlayer.PlayFeedbacks();
+                //statusTMP.gameObject.SetActive(true);
                 Globals.player.transform.root.gameObject.SetActive(false);
 
                 var dict = new Dictionary<int, int>();
@@ -368,7 +432,9 @@ namespace RFM
             mainCam.SetActive(false);
             gameCanvas.SetActive(false);
             statusTMP.text = "You've been caught!";
-            statusTMP.gameObject.SetActive(true);
+            statusBG.SetActive(true);
+            statusMMFPlayer.PlayFeedbacks();
+            //statusTMP.gameObject.SetActive(true);
             Globals.player.transform.root.gameObject.SetActive(false);
         
             var dict = new Dictionary<int, int>();
