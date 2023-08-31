@@ -25,7 +25,7 @@ public class SpeakerRefrence : MonoBehaviour
             {
                 if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 0;
+                    Launcher.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 0;
                 }
             }
         }
@@ -44,7 +44,7 @@ public class SpeakerRefrence : MonoBehaviour
             {
                 if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 1;
+                    Launcher.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 1;
                 }
             }
         }
