@@ -667,6 +667,7 @@ public class StoreManager : MonoBehaviour
             {
                 if (StoreManager.instance.MultipleSave)
                 {
+                    LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();
                     AvatarSaved.SetActive(true);
                 }
                 else
@@ -1130,6 +1131,10 @@ public class StoreManager : MonoBehaviour
                     OpenMainPanel("StoreItemsPanel");
 
                     GetDataAfterLogin();
+                    if(PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
+                    {
+                        myAvatarButton.gameObject.SetActive(true);
+                    }
                     GameManager.Instance.BottomAvatarButtonBool = false;
                     break;
                 }
