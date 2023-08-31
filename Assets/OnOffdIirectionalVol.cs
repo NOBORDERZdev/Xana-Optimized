@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class OnOffdIirectionalVol : MonoBehaviour
@@ -8,18 +7,15 @@ public class OnOffdIirectionalVol : MonoBehaviour
     public GameObject otherButton;
     public void ClickOnDirVol()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 0;
-
-
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().MyspeakerSync2D();
         this.gameObject.SetActive(false);
         otherButton.SetActive(true);
      }
     public void ClickOffDirVol()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 1;
-
-
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().MyspeakerSync3D();
         this.gameObject.SetActive(false);
         otherButton.SetActive(true);
      }
+   
 }
