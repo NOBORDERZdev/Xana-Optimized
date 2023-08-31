@@ -13,11 +13,11 @@ public class SpeakerRefrence : MonoBehaviour
 
     public void MyspeakerSync2D()                  //Added by Ali Hamza
     {
-        GetComponent<PhotonView>().RPC(nameof(SyncSpeaker), RpcTarget.AllBuffered, GetComponent<PhotonView>().ViewID);
+        GetComponent<PhotonView>().RPC(nameof(SyncSpeaker2D), RpcTarget.AllBuffered, GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
-    void SyncSpeaker(int viewId)                       //Added by Ali Hamza
+    void SyncSpeaker2D(int viewId)                       //Added by Ali Hamza
     {
         for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
         {
