@@ -9,7 +9,7 @@ public class OnOffdIirectionalVol : MonoBehaviour
     public void ClickOnDirVol()
     {
         SpeakerRefrence.instance.RangeVolSpeaker.SetActive(false);
-        SpeakerRefrence.instance.NormalVolSpeaker.SetActive(true);
+       // SpeakerRefrence.instance.NormalVolSpeaker.SetActive(true);
         this.gameObject.SetActive(false);
         otherButton.SetActive(true);
        
@@ -18,7 +18,7 @@ public class OnOffdIirectionalVol : MonoBehaviour
     public void ClickOffDirVol()
     {
         SpeakerRefrence.instance.RangeVolSpeaker.SetActive(true);
-        SpeakerRefrence.instance.NormalVolSpeaker.SetActive(false);
+     //   SpeakerRefrence.instance.NormalVolSpeaker.SetActive(false);
         this.gameObject.SetActive(false);
         otherButton.SetActive(true);
        

@@ -6,7 +6,7 @@ public class SpeakerRefrence : MonoBehaviour
 {
     public static SpeakerRefrence instance;
     public GameObject RangeVolSpeaker;
-    public GameObject NormalVolSpeaker;
+   // public GameObject NormalVolSpeaker;
 
     private void Awake()
     {
