@@ -223,12 +223,14 @@ public class XanaChatSocket_Waqas : MonoBehaviour
             //string tempUserName = "";
             for (int i = rootData.data.Count - 1; i > -1; i--)
             {
-                //if (string.IsNullOrEmpty(rootData.data[i].username))
-                //    tempUserName = "Xana";
-                //else
-                //    tempUserName = rootData.data[i].username;
+                string tempUser = rootData.data[i].username;
 
-                XanaChatSystem.instance.DisplayMsg_FromSocket(rootData.data[i].username, rootData.data[i].message);
+                if (string.IsNullOrEmpty(tempUser))
+                {
+                    tempUser = socketId;
+                }
+
+                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
             }
         }
 

@@ -51,7 +51,8 @@ public class XanaChatSystem : MonoBehaviour
     public GameObject chatNotificationIcon;
 
     public GameObject chatDialogBox;
-    public GameObject oldChatButton;
+    public GameObject chatConfirmationPanel;
+    bool isPanelConfirmationRequire = false;
 
     public RectTransform ChatPanel;     // set in inspector (to enable/disable panel)
     public GameObject UserIdFormPanel;
@@ -127,8 +128,8 @@ public class XanaChatSystem : MonoBehaviour
 
     public void DisplayMsg_FromSocket(string _userName,string _msg)
     {
-        this.CurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
-        this.PotriatCurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
+        this.CurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text; ;
+        this.PotriatCurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.PotriatCurrentChannelText.text;
 
 
         if (!chatDialogBox.activeSelf && _userName != UserName)
@@ -143,7 +144,7 @@ public class XanaChatSystem : MonoBehaviour
     public void LoadOldChat()
     {
         XanaChatSocket_Waqas.callApi?.Invoke();
-        oldChatButton.SetActive(false);
+        chatConfirmationPanel.SetActive(false);
     }
     void CheckIfDeviceHasNotch()
     {
@@ -197,6 +198,12 @@ public class XanaChatSystem : MonoBehaviour
             chatDialogBox.SetActive(true);
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
+
+            if (!isPanelConfirmationRequire)
+            {
+                isPanelConfirmationRequire = true;
+                chatConfirmationPanel.SetActive(true);
+            }
         }
         else
         {
