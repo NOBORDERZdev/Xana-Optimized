@@ -259,14 +259,13 @@ public class CameraLook : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_allowSyncedControl && _allowRotation)
+        if (_allowSyncedControl && _allowRotation && !playerController.isFirstPerson)
         {
             MoveCamera(delta);            // Rotate camera on the base input
         }
     }
     private void MoveCamera(Vector2 delta)
     {
-        print("move camera call");
         cinemachine.m_XAxis.Value += delta.x * 10 * lookSpeedd * Time.deltaTime;
         cinemachine.m_YAxis.Value += -delta.y * 0.08f * lookSpeedd * Time.deltaTime;
     }
@@ -355,10 +354,12 @@ public class CameraLook : MonoBehaviour
         {
             if (results[i].gameObject.layer == LayerMask.NameToLayer("NFTDisplayPanel") || results[i].gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
             {
+                print("Touch on JOYSTICK!!!!");
                 //Debug.Log("Object is hover===" + results[i].gameObject.name);
                 return true;
             }
         }
+        print("NOT TOUCH ON JOYSTICK");
         return false;
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MouseLook : MonoBehaviour
@@ -43,14 +44,20 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _allowRotation = true;
-        if (CameraLook.IsPointerOverUIObject())
-        {
-            _allowRotation = false;
-        }
         if (!playerController.isFirstPerson)
             return;
-        
+        if (IsPointerOverUI())
+        {
+            _allowRotation = false;
+            _allowSyncedControl =false;
+        }
+        else
+        {
+            _allowRotation = true;
+            //_allowSyncedControl = true;
+        }
+
+
 #if UNITY_EDITOR
         if (!isGyroOn && _allowRotation)
         {
@@ -82,7 +89,7 @@ public class MouseLook : MonoBehaviour
     {
         if (isGyroOn)
             return;
-        if (_allowSyncedControl && _allowRotation && !playerController.m_FreeFloatCam)
+        if (_allowSyncedControl && _allowRotation && !playerController.m_FreeFloatCam && playerController.isFirstPerson)
         {
             MoveCamera(delta);
         }
@@ -92,7 +99,7 @@ public class MouseLook : MonoBehaviour
             MoveCameraFreeFloat();
         }
 #if UNITY_EDITOR
-        if(_allowRotation)
+        if (_allowRotation)
             MouseMovement();
 
 #endif
@@ -231,6 +238,7 @@ public class MouseLook : MonoBehaviour
     }
     private void MoveCamera(Vector2 delta)
     {
+        print("<color=red> in fps cam  </color>");
         xRotation -= delta.y * 10 * CameraLook.instance.lookSpeedd * Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -90f, 55f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -295,4 +303,22 @@ public class MouseLook : MonoBehaviour
         playerBody.RotateAround(transform.position, Vector3.up, -axis * Time.deltaTime);
     }
 
+
+     public  bool IsPointerOverUI(){
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        if (results.Count>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
 }
