@@ -192,7 +192,7 @@ public class JjInfoManager : MonoBehaviour
                                 compersionPrfex = "?width=512&height=512";
                                 break;
                         }
-
+                    NftPlaceholderList[i].SetActive(true);
                         //Debug.LogError("-----" + worldData[i].media_type);
                         if (worldData[j].media_type == "IMAGE")
                         {
