@@ -238,7 +238,6 @@ public class MouseLook : MonoBehaviour
     }
     private void MoveCamera(Vector2 delta)
     {
-        print("<color=red> in fps cam  </color>");
         xRotation -= delta.y * 10 * CameraLook.instance.lookSpeedd * Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -90f, 55f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
