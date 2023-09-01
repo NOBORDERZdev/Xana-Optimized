@@ -34,6 +34,7 @@ public class RandomNumberComponent : ItemComponent
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
             BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
             GenerateNumber();
         }
