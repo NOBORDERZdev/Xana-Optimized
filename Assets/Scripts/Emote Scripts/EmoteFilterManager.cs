@@ -237,6 +237,9 @@ public class EmoteFilterManager : MonoBehaviour
                         animObject.transform.localPosition = Vector3.zero;
                         animObject.transform.localScale = Vector3.one;
                         animObject.transform.localRotation = Quaternion.identity;
+                        if (EmoteAnimationPlay.Instance.emoteAnim[i].name.Contains("React")){
+                            EmoteAnimationPlay.Instance.emoteAnim[i].name = EmoteAnimationPlay.Instance.emoteAnim[i].name.Replace("React", "Reaction");
+                        }
                         animObject.transform.name = EmoteAnimationPlay.Instance.emoteAnim[i].name;
 
                         //animObject.GetComponent<Image>().color= emoteBGs[(UnityEngine.Random.Range(0, emoteBGs.Length))];
