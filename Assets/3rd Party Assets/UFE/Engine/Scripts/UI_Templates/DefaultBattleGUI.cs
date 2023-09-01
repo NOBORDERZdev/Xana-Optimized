@@ -358,6 +358,7 @@ public class DefaultBattleGUI : BattleGUI{
 			}
 		}else if (msg == UFE.config.selectedLanguage.ko){
 			if (this.announcer != null && !this.muteAnnouncer && this.announcer.ko != null){
+				Debug.Log("KO Sound Play");
 				UFE.PlaySound(this.announcer.ko);
 			}
 		}else{
@@ -445,11 +446,11 @@ public class DefaultBattleGUI : BattleGUI{
 		// Set the character names
 		if (this.player1GUI != null && this.player1GUI.name != null){
 			//this.player1GUI.name.text = cPlayer1.myInfo.characterName;
-			this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
+			this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName").ToString().ToUpper();
 		}
 
 		if (this.player2GUI != null && this.player2GUI.name != null){
-			this.player2GUI.name.text = cPlayer2.myInfo.characterName;
+			this.player2GUI.name.text = cPlayer2.myInfo.characterName.ToString().ToUpper();
 		}
 
 		// Set the character portraits

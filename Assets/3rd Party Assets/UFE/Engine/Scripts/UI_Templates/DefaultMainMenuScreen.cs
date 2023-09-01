@@ -3,70 +3,81 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UFE3D;
+using System.Collections;
 
-public class DefaultMainMenuScreen : MainMenuScreen{
-	#region public instance fields
-	public AudioClip onLoadSound;
-	public AudioClip music;
-	public AudioClip selectSound;
-	public AudioClip cancelSound;
-	public AudioClip moveCursorSound;
+public class DefaultMainMenuScreen : MainMenuScreen
+{
+    #region public instance fields
+    public AudioClip onLoadSound;
+    public AudioClip music;
+    public AudioClip selectSound;
+    public AudioClip cancelSound;
+    public AudioClip moveCursorSound;
     public AudioClip gameMusic; //kush
     public bool stopPreviousSoundEffectsOnLoad = false;
-	public float delayBeforePlayingMusic = 0.1f;
+    public float delayBeforePlayingMusic = 0.1f;
 
-	public Button buttonNetwork;
-	public Button buttonBluetooth;
-	#endregion
+    public Button buttonNetwork;
+    public Button buttonBluetooth;
+    #endregion
 
-	#region public override methods
-	public override void DoFixedUpdate(
-		IDictionary<InputReferences, InputEvents> player1PreviousInputs,
-		IDictionary<InputReferences, InputEvents> player1CurrentInputs,
-		IDictionary<InputReferences, InputEvents> player2PreviousInputs,
-		IDictionary<InputReferences, InputEvents> player2CurrentInputs
-	){
-		base.DoFixedUpdate(player1PreviousInputs, player1CurrentInputs, player2PreviousInputs, player2CurrentInputs);
+    #region public override methods
+    public override void DoFixedUpdate(
+        IDictionary<InputReferences, InputEvents> player1PreviousInputs,
+        IDictionary<InputReferences, InputEvents> player1CurrentInputs,
+        IDictionary<InputReferences, InputEvents> player2PreviousInputs,
+        IDictionary<InputReferences, InputEvents> player2CurrentInputs
+    )
+    {
+        base.DoFixedUpdate(player1PreviousInputs, player1CurrentInputs, player2PreviousInputs, player2CurrentInputs);
 
-		this.DefaultNavigationSystem(
-			player1PreviousInputs,
-			player1CurrentInputs,
-			player2PreviousInputs,
-			player2CurrentInputs,
-			this.moveCursorSound,
-			this.selectSound,
-			this.cancelSound
-		);
-	}
+        this.DefaultNavigationSystem(
+            player1PreviousInputs,
+            player1CurrentInputs,
+            player2PreviousInputs,
+            player2CurrentInputs,
+            this.moveCursorSound,
+            this.selectSound,
+            this.cancelSound
+        );
+    }
 
-	public override void OnShow (){
-		base.OnShow ();
-		this.HighlightOption(this.FindFirstSelectable());
+    public override void OnShow()
+    {
+        base.OnShow();
+       
 
-		if (this.music != null){
-			UFE.DelayLocalAction(delegate(){UFE.PlayMusic(this.music);}, this.delayBeforePlayingMusic);
-		}
-		
-		if (this.stopPreviousSoundEffectsOnLoad){
-			UFE.StopSounds();
-		}
-		
-		if (this.onLoadSound != null){
-			UFE.DelayLocalAction(delegate(){UFE.PlaySound(this.onLoadSound);}, this.delayBeforePlayingMusic);
-		}
+            this.HighlightOption(this.FindFirstSelectable());
 
-		if (buttonNetwork != null) {
-			buttonNetwork.interactable = UFE.isNetworkAddonInstalled || UFE.isBluetoothAddonInstalled;
-		}
+            if (this.music != null)
+            {
+                UFE.DelayLocalAction(delegate () { UFE.PlayMusic(this.music); }, this.delayBeforePlayingMusic);
+            }
 
-		if (buttonBluetooth != null){
-            buttonBluetooth.interactable = UFE.isBluetoothAddonInstalled;
-        }
-	}
+            if (this.stopPreviousSoundEffectsOnLoad)
+            {
+                UFE.StopSounds();
+            }
+
+            if (this.onLoadSound != null)
+            {
+                UFE.DelayLocalAction(delegate () { UFE.PlaySound(this.onLoadSound); }, this.delayBeforePlayingMusic);
+            }
+
+            if (buttonNetwork != null)
+            {
+                buttonNetwork.interactable = UFE.isNetworkAddonInstalled || UFE.isBluetoothAddonInstalled;
+            }
+
+            if (buttonBluetooth != null)
+            {
+                buttonBluetooth.interactable = UFE.isBluetoothAddonInstalled;
+            }
+    }
 
     private void Start()
     {
-		UFE.config.selectedStage.music = gameMusic; //kush
+        UFE.config.selectedStage.music = gameMusic; //kush
         Camera.main.GetComponent<AudioListener>().enabled = false;
         Camera.main.GetComponent<AudioListener>().enabled = true;
     }
