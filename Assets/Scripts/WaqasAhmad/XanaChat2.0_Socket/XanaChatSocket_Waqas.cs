@@ -30,6 +30,10 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     public string socketId;
     public string testMsgString = "";
+    public ChatUserData receivedMsgForTesting;
+    bool isJoinRoom = false;
+
+
 
     #region Summery
 
@@ -86,6 +90,14 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         socketId = resp.sid;
         Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+
+        if (isJoinRoom)
+        {
+            // Socket ID Update After Reconnect 
+            // Need To Emit joinRoom again with new Socket Id
+
+            onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+        }
     }
     void OnError(CustomError args)
     {
@@ -103,9 +115,18 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 
     void ReceiveMsgs(ChatUserData msg)
     {
-        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        if (string.IsNullOrEmpty(msg.message))
+            return;
 
-        XanaChatSystem.instance.DisplayMsg_FromSocket("Xana", msg.message);
+        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        string tempUser = msg.username;
+        receivedMsgForTesting = msg;
+
+        if (string.IsNullOrEmpty(tempUser))
+        {
+            tempUser = socketId;
+        }
+        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
     }
     void UserJoinRoom(string worldId)
     {
@@ -113,6 +134,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         var data = new { username = userId, room = worldId };
         Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + worldId + "</color>");
 
+        isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
     void SendMsg(string world_Id, string msg)
@@ -126,7 +148,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
             event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
 
-        Debug.Log("<color=blue> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
+        Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
 
         var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
@@ -198,15 +220,15 @@ public class XanaChatSocket_Waqas : MonoBehaviour
         RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
         if (rootData.count > 0)
         {
-            string tempUserName = "";
+            //string tempUserName = "";
             for (int i = rootData.data.Count - 1; i > -1; i--)
             {
-                if (string.IsNullOrEmpty(rootData.data[i].username))
-                    tempUserName = "Xana";
-                else
-                    tempUserName = rootData.data[i].username;
+                //if (string.IsNullOrEmpty(rootData.data[i].username))
+                //    tempUserName = "Xana";
+                //else
+                //    tempUserName = rootData.data[i].username;
 
-                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, rootData.data[i].message);
+                XanaChatSystem.instance.DisplayMsg_FromSocket(rootData.data[i].username, rootData.data[i].message);
             }
         }
 
@@ -233,6 +255,7 @@ public class XanaChatSocket_Waqas : MonoBehaviour
 [System.Serializable]
 public class ChatUserData
 {
+    public string name;
     public string username;
     public string avatar;
     public string message;

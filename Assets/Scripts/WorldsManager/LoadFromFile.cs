@@ -463,6 +463,19 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         // Join Room Activate Chat
         //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            string worldId = 0.ToString();
+            if (XanaEventDetails.eventDetails.environmentId != 0)
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+            }
+            else
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+            }
+        }
+
         XanaChatSocket_Waqas.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
     }
 
@@ -573,6 +586,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        XanaChatSocket_Waqas.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
