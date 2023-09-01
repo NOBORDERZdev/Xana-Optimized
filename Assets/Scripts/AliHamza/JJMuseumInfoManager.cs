@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
 using System.Text;
-using Cysharp.Threading.Tasks;
+//using Cysharp.Threading.Tasks;
+
 public class JJMuseumInfoManager : MonoBehaviour
 {
     [NonReorderable]

@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
-
+using static GlobalConstants;
 public class FeedEventPrefab : MonoBehaviour
 {
     public static string m_EnvName;
@@ -670,11 +670,7 @@ public class FeedEventPrefab : MonoBehaviour
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount);
 
         if (m_EnvironmentName == "ZONE-X")
-        {
-            //Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_JJWorld");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_Thumbnail");
-            Debug.Log("<color=red> Home_Thumbnail </color>");
-        }
+            SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());
     }
 
     //private void OnValidate()
