@@ -15,6 +15,7 @@ public class PlayerPortal : MonoBehaviour
     public enum PortalType { None, Enter, Exit, Teleport }
     public PortalType currentPortal = PortalType.None;
     public JJMuseumInfoManager ref_JJMuseumInfoManager;
+    public float cam_XValue = -50f;
     #endregion
     #region PrivateVar
     // private PlayerControllerNew player;
@@ -129,7 +130,7 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(-50f, 0.5f));
+            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
@@ -149,6 +150,13 @@ public class PlayerPortal : MonoBehaviour
         foreach (RenderTexture rnd in JjInfoManager.Instance.NFTLoadedVideos)
             Destroy(rnd);
         JjInfoManager.Instance.NFTLoadedVideos.Clear();
+        foreach (GameObject nftInfo in ref_JJMuseumInfoManager.NftPlaceholder)
+        {
+            nftInfo.GetComponent<JJVideoAndImage>().imgVideo16x9.SetActive(false);
+            nftInfo.GetComponent<JJVideoAndImage>().imgVideo9x16.SetActive(false);
+            nftInfo.GetComponent<JJVideoAndImage>().imgVideo1x1.SetActive(false);
+            nftInfo.GetComponent<JJVideoAndImage>().imgVideo4x3.SetActive(false);
+        }
         if (JjInfoManager.Instance.videoRenderObject)
             JjInfoManager.Instance.videoRenderObject.SetActive(false);
     }

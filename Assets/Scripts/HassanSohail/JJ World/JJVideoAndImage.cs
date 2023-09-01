@@ -449,15 +449,15 @@ public class JJVideoAndImage : MonoBehaviour
                 if (JjInfoManager.Instance.worldInfos[id].Title.Length < 2)
                     NFT_title = " ";
                 else
-                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[0];
+                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[1];
                 if (JjInfoManager.Instance.worldInfos[id].Aurthor.Length < 2)
                     NFT_Author = " ";
                 else
-                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[0];
+                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[1];
                 if (JjInfoManager.Instance.worldInfos[id].Des.Length < 2)
                     NFT_Description = " ";
                 else
-                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[0];
+                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[1];
             }
             JjInfoManager.Instance.SetInfo(_imgVideoRatio, NFT_title, NFT_Author, NFT_Description, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
         }

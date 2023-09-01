@@ -201,7 +201,7 @@ public class CameraLook : MonoBehaviour
                 if (isRotatingScreen)     // screen is already rotation before joystick down
                 {
                     // ignore 2nd touch that will be joystick touch
-                    if (t.phase == TouchPhase.Moved && t.position.x > 500)
+                    if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/)
                     {
                         delta = Input.GetTouch(0).deltaPosition;
                         _allowSyncedControl = true;
@@ -214,7 +214,7 @@ public class CameraLook : MonoBehaviour
                 else if (!isRotatingScreen)
                 {
                     // ignore 1st touch that will be joystick touch
-                    if (t1.phase == TouchPhase.Moved && t1.position.x > 500)
+                    if (t1.phase == TouchPhase.Moved /*&& t1.position.x > 500*/)
                     {
                         delta = t1.deltaPosition;
                         _allowSyncedControl = true;
@@ -230,7 +230,7 @@ public class CameraLook : MonoBehaviour
     void OneFingureTouch()
     {
         Touch t = Input.GetTouch(0);
-        if (t.phase == TouchPhase.Moved && t.position.x > 500)
+        if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/)
         {
             delta = Input.GetTouch(0).deltaPosition;
             _allowSyncedControl = true;
@@ -246,7 +246,7 @@ public class CameraLook : MonoBehaviour
         Touch t1 = Input.GetTouch(1);
         Touch t2 = (t.position.x > t1.position.x) ? t : t1;
 
-        if (t2.phase == TouchPhase.Moved && t2.position.x > 500)
+        if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)
         {
             delta = t2.deltaPosition;
             _allowSyncedControl = true;
@@ -259,7 +259,7 @@ public class CameraLook : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_allowSyncedControl && _allowRotation)
+        if (_allowSyncedControl && _allowRotation && !playerController.isFirstPerson)
         {
             MoveCamera(delta);            // Rotate camera on the base input
         }
