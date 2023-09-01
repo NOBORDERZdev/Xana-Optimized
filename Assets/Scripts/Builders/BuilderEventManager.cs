@@ -85,7 +85,7 @@ public static class BuilderEventManager
 
     //Blind Component
     public static Action<float> OnBlindComponentTriggerEnter;
-    public static Action<ComponentType> ResetComponentUI;
+    public static Action<Constants.ItemComponentType> ResetComponentUI;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float,bool> ChangeNinja_ThrowUIPosition;

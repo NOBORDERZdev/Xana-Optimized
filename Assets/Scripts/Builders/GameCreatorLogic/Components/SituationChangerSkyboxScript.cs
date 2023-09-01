@@ -45,7 +45,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     {
         Debug.Log("SKY BOXX" + skyID);
 
-         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
+        indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
         {
@@ -64,8 +64,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             directionLight.intensity = 1f;
             directionLight.shadowStrength = .2f;
             characterDirectionLight.intensity = .15f;
+            DynamicGI.UpdateEnvironment();
         }
-        DynamicGI.UpdateEnvironment();
 
     }
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
@@ -122,6 +122,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.lensFlareData = null;
             sceneLensFlare.scale = 1;
         }
-        //DynamicGI.UpdateEnvironment();
+        DynamicGI.UpdateEnvironment();
     }
 }

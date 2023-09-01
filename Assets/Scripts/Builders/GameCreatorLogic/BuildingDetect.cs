@@ -88,11 +88,11 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-        
+
 
         yield return new WaitForSeconds(2f);
 
-_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
 
         defaultJumpHeight = _playerControllerNew.JumpVelocity;
         defaultSprintSpeed = _playerControllerNew.sprintSpeed;
@@ -388,7 +388,10 @@ _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
     {
         StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
+        RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
+        if (cameraAnimator == null) cameraAnimator=GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }
     IEnumerator WaitForEffect()
