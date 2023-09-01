@@ -250,7 +250,7 @@ namespace RFM
             {
                 Debug.LogError(PhotonNetwork.NickName + " Spawning as Escapee. RFM");
                 
-                statusTMP.text = "RUN FAR FROM <#008FFF>THE HUNTERS!</color>";
+                statusTMP.text = "RUN FAR FROM <#FF36D3>THE HUNTERS!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 

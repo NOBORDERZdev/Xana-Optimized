@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using TMPro;
+using MoreMountains.Feedbacks;
 
 namespace RFM
 {
@@ -9,6 +10,7 @@ namespace RFM
     {
         private int _money = 0;
         public TextMeshProUGUI showMoney;
+        public MMScaleShaker moneyScaleShaker;
 
         private Dictionary<string, int> _scores;
 
@@ -32,7 +34,7 @@ namespace RFM
 
         private void Start()
         {
-            showMoney.text = "00 XENY";
+            showMoney.text = "00";
             showMoney.gameObject.SetActive(false);
         }
 
@@ -76,7 +78,8 @@ namespace RFM
         private void AddMoney()
         {
             _money += Globals.MoneyPerInterval;
-            showMoney.text = _money.ToString("F0") + " XENY";
+            showMoney.text = _money.ToString("F0") + "";
+            moneyScaleShaker.Play();
         }
     }
 }
