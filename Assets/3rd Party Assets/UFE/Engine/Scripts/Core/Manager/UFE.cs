@@ -3644,8 +3644,6 @@ public class UFE : MonoBehaviour, UFEInterface
 
             //if (GetLocalPlayer() == 1) GetPlayer1Controller().humanController = UFE.UFEInstance.gameObject.GetComponent<AbstractInputController>();
         }
-
-        UFE.eventSystem.enabled = true;
 	}
 	#endregion
 

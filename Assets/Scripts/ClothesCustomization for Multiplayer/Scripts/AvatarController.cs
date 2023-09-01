@@ -495,6 +495,10 @@ public class AvatarController : MonoBehaviour
             bodyParts.SetSssIntensity(0, this.gameObject);
             bodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
             LoadBonesData(_CharacterData, this.gameObject);
+            if (head != null && Body != null)
+            {
+                head.enabled = Body.enabled = true;
+            }
             return;
         }
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
@@ -992,7 +996,16 @@ public class AvatarController : MonoBehaviour
         }
         if (XanaConstants.xanaConstants.isNFTEquiped)
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+
+        if (head != null && Body != null)
+        {
+            head.enabled = Body.enabled = true;
+        }
     }
+
+    public SkinnedMeshRenderer head;
+    public SkinnedMeshRenderer Body;
+
 
     /// <summary>
     /// For Boxer NFT there is no modification in data
