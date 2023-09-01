@@ -354,12 +354,10 @@ public class CameraLook : MonoBehaviour
         {
             if (results[i].gameObject.layer == LayerMask.NameToLayer("NFTDisplayPanel") || results[i].gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
             {
-                print("Touch on JOYSTICK!!!!");
                 //Debug.Log("Object is hover===" + results[i].gameObject.name);
                 return true;
             }
         }
-        print("NOT TOUCH ON JOYSTICK");
         return false;
     }
 
