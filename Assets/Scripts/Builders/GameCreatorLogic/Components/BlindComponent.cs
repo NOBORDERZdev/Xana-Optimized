@@ -64,6 +64,7 @@ public class BlindComponent : ItemComponent
             //    blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
 
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
+            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
             TimeStats._intensityChangerStop?.Invoke();
             TimeStats._blindComponentStart?.Invoke(blindToggle, _light, _lightsIntensity, blindComponentData.time, blindComponentData.radius, this.gameObject, skyBoxID);
         }
