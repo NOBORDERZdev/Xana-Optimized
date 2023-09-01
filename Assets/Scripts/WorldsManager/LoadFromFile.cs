@@ -407,11 +407,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
-
+        
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
+        if (player.GetComponent<StepsManager>()) {
+            player.GetComponent<StepsManager>().isplayer = true;
+         }
         GetComponent<ChecklPostProcessing>().SetPostProcessing();
 
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
