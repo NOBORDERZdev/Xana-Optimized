@@ -9,7 +9,7 @@ using RenderHeads.Media.AVProVideo;
 public class JJVideoAndImage : MonoBehaviour
 {
     public int id;
-
+   
     private Texture2D _texture;
 
     public GameObject imgVideo16x9;
@@ -42,6 +42,19 @@ public class JJVideoAndImage : MonoBehaviour
     public GameObject imgVideoFrame4x3;
 
     public bool isMultipleScreen = false;
+
+    public enum MuseumType
+    {
+        AtomMuseum, 
+        RentalSpace
+    }
+    [Space(5)]
+    [Header("For Firebase Enum")]
+    public MuseumType museumType;
+    [Space(5)]
+    [Header("For Firebase roomNumber")]
+    [Range(0, 12)]
+    public int roomNumber = 1;
 
     private void Start()
     {
@@ -412,7 +425,7 @@ public class JJVideoAndImage : MonoBehaviour
     {
         if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
 
-        JjInfoManager.Instance.firebaseEventName = firebaseEventName;
+        //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
         if (JjInfoManager.Instance != null && _videoType!=VideoTypeRes.islive)
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
@@ -446,7 +459,7 @@ public class JJVideoAndImage : MonoBehaviour
                 else
                     NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[1];
             }
-            JjInfoManager.Instance.SetInfo(_imgVideoRatio, NFT_title, NFT_Author, NFT_Description, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id);
+            JjInfoManager.Instance.SetInfo(_imgVideoRatio, NFT_title, NFT_Author, NFT_Description, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
         }
     }
 }

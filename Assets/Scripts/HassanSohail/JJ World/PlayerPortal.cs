@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static GlobalConstants;
 
 public class PlayerPortal : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class PlayerPortal : MonoBehaviour
     string firebaseEventName = "";
     #endregion
     #region PrivateFunc
+    string customFirebaseEvent = "";
+
     private void Start()
     {
         referrencesForDynamicMuseum = ReferrencesForDynamicMuseum.instance;
@@ -47,42 +50,30 @@ public class PlayerPortal : MonoBehaviour
             if(currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
             {
                 if(transform.parent.name.Contains("Astroboy"))
-                customFirebaseEvent = "F2_Infoboard_AtomMuseum" + name;
+                customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Atom + "_" + name;
                 else
-                    customFirebaseEvent = "F2_Infoboard_RentalSpace" + name;
+                    customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Rental + "_" + name;
             }
             else if (currentPortal == PortalType.Enter)
             {
                 if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
-                    customFirebaseEvent = "F2_EachRoom_AtomMuseum" + ref_JJMuseumInfoManager.name;
+                    customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Atom + "_" + ref_JJMuseumInfoManager.name;
                 else
-                    customFirebaseEvent = "F2_EachRoom_RentalSpace" + ref_JJMuseumInfoManager.name;
+                    customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
             }
 
             if (other.GetComponent<PhotonView>().IsMine)
             {
-                
-                CallAnalyticsEvent();
+                SendFirebaseEvent(customFirebaseEvent);
+                //CallAnalyticsEvent();
                 this.StartCoroutine(Teleport());
             }
           
         }
     }
 
-    string customFirebaseEvent = "";
-    void CallAnalyticsEvent()
-    {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(customFirebaseEvent);
-        Debug.Log("<color=red>" + customFirebaseEvent + "</color>");
-    }
+   
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (manager.allowTeleportation && !player.allowTeleport)
-    //    {
-    //        player.allowTeleport = true;
-    //    }
-    //}
 
     /// <summary>
     /// Teleport player from one point to other with loading effect

@@ -10,6 +10,7 @@ using AdvancedInputFieldPlugin;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
+using static GlobalConstants;
 
 public class WorldManager : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class WorldManager : MonoBehaviour
                 System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/MainMenuData/" + "BuilderData");
             }
         }
-        
+
     }
 
     // Start is called before the first frame update
@@ -93,7 +94,7 @@ public class WorldManager : MonoBehaviour
         //ScrollRectEx.OnDragEndVerticalCustom += CheckForReloading;
         PixelPerfectScrollRect.OnDragEndVerticalCustom += CheckForReloading;
 
-     
+
         OnWorldTabChange(APIURL.Hot, true);
         GetBuilderWorlds(APIURL.Hot, (a) => { });
 
@@ -104,9 +105,9 @@ public class WorldManager : MonoBehaviour
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-     //   Caching.ClearCache();
+        //   Caching.ClearCache();
 
-        
+
         BuilderEventManager.OnWorldTabChange -= OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
         //ScrollRectEx.OnDragEndVerticalCustom -= CheckForReloading;
@@ -236,28 +237,28 @@ public class WorldManager : MonoBehaviour
             else
             {
                 _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
-                worldstr= www.downloadHandler.text;
+                worldstr = www.downloadHandler.text;
                 callback(true);
             }
         }
     }
     public string worldstr;
-    bool isLobbyActive=false; 
+    bool isLobbyActive = false;
     void InstantiateWorlds()
     {
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
-             GameObject TempObject;
+            GameObject TempObject;
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-                 isLobbyActive=true;
-                 TempObject  = eventPrefabLobby;
-                 TempObject.transform.SetParent(listParent.transform.parent);
-                 //TempObject.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.00012207f,344.261f);
-                 TempObject.transform.SetAsFirstSibling();
-                 //TempObject.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                 //TempObject.transform.GetComponent<RectTransform>().localPosition = new Vector3(-6.65151f,1493.0f,0);
-                 //TempObject.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0,283.57f);
+                isLobbyActive = true;
+                TempObject = eventPrefabLobby;
+                TempObject.transform.SetParent(listParent.transform.parent);
+                //TempObject.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.00012207f,344.261f);
+                TempObject.transform.SetAsFirstSibling();
+                //TempObject.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                //TempObject.transform.GetComponent<RectTransform>().localPosition = new Vector3(-6.65151f,1493.0f,0);
+                //TempObject.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0,283.57f);
             }
             else
             {
@@ -304,13 +305,13 @@ public class WorldManager : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
                     _event.creatorName = _WorldInfo.data.rows[i].creator;
-               //else if (_event.m_EnvironmentName == "Genesis ART Metaverse Museum")
-               //     _event.creatorName = "KOGAKEN";
+                //else if (_event.m_EnvironmentName == "Genesis ART Metaverse Museum")
+                //     _event.creatorName = "KOGAKEN";
                 else
                     _event.creatorName = "XANA";
 
 
-                
+
 
                 _event.userLimit = _WorldInfo.data.rows[i].user_limit;
             }
@@ -339,7 +340,8 @@ public class WorldManager : MonoBehaviour
 
             TempObject.transform.localScale = new Vector3(1, 1, 1);
             _event.Init();
-             if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby")){ 
+            if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
+            {
                 if (aPIURLGlobal == APIURL.Hot)
                     hotWorldList.Add(TempObject);
                 else if (aPIURLGlobal == APIURL.AllWorld)
@@ -351,11 +353,11 @@ public class WorldManager : MonoBehaviour
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
-            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=12;
+            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top = 12;
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        
+
         TutorialsManager.instance.ShowTutorials();
     }
 
@@ -382,7 +384,7 @@ public class WorldManager : MonoBehaviour
     }
 
 
-    public async void JoinEvent() 
+    public async void JoinEvent()
     {
         //Debug.LogError(" +++++++++++++++++++  WaqasJoinEvent +++++++++++++++");
         _callSingleTime = true;
@@ -414,7 +416,7 @@ public class WorldManager : MonoBehaviour
                 Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 print("_IsInOwnerShip :: " + _IsInOwnerShip);
-                 if (!_IsInOwnerShip)
+                if (!_IsInOwnerShip)
                 {
                     print("Show UI NFT not available");
                     PlayerPrefs.DeleteKey("Equiped");
@@ -481,14 +483,10 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
         }
         if (FeedEventPrefab.m_EnvName == "ZONE-X")
-        {
-            //Firebase.Analytics.FirebaseAnalytics.LogEvent("Total_Num_of_click_on_PlayBtn");
-            Firebase.Analytics.FirebaseAnalytics.LogEvent("Home_Thumbnail_Playbutton");
-            Debug.Log("<color=red> Home_Thumbnail_Playbutton </color>");
-        }
+            SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
 
-    public async void JoinBuilderWorld() 
+    public async void JoinBuilderWorld()
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
@@ -547,7 +545,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
 
-           
+
 
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
@@ -592,7 +590,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-        CheckAgain:
+    CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
@@ -622,7 +620,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             else
                 worldType = "ENVIRONMENT";
 
-            if (XanaConstants.xanaConstants.EnviornmentName.Contains("Lobby")) 
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("Lobby"))
             {
                 if ((ConstantsGod.API_BASEURL.Contains("test")))
                     XanaConstants.xanaConstants.customWorldId = 163;
@@ -634,7 +632,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
 
-       
+
 
 
         // Added By WaqasAhmad [20 July 23]
@@ -646,7 +644,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         //Debug.LogError(" +++++++++++++++++++  WaqasPlay +++++++++++++++");
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange )
+            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 #if UNITY_EDITOR
@@ -672,7 +670,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange )
+            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 #if UNITY_EDITOR
@@ -747,7 +745,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         {
             unloadUnusedFileCount = 0;
             Resources.UnloadUnusedAssets();
-          //  Caching.ClearCache();
+            //  Caching.ClearCache();
             //AssetBundle.UnloadAllAssetBundles(false);
             //GC.Collect();
         }
@@ -779,82 +777,82 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
-            if (XanaConstants.xanaConstants.JjWorldTeleportSceneName=="Xana Festival")
+            if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
-                XanaConstants.xanaConstants.userLimit ="16";
+                XanaConstants.xanaConstants.userLimit = "16";
             }
             else
             {
-                if(XanaConstants.xanaConstants.isBuilderScene)
+                if (XanaConstants.xanaConstants.isBuilderScene)
                 {
-                    XanaConstants.xanaConstants.userLimit ="10";
+                    XanaConstants.xanaConstants.userLimit = "10";
                 }
                 else
                 {
-                    XanaConstants.xanaConstants.userLimit ="15";
+                    XanaConstants.xanaConstants.userLimit = "15";
                 }
-            }            
-            Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName; 
+            }
+            Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
     }
 
 }
 [System.Serializable]
-    public class WorldsInfo
-    {
-        public bool success;
-        public DataClass data;
-        public string msg;
-    }
+public class WorldsInfo
+{
+    public bool success;
+    public DataClass data;
+    public string msg;
+}
 
-    [System.Serializable]
-    public class DataClass
-    {
-        public int count;
-        public List<RowList> rows;
-    }
+[System.Serializable]
+public class DataClass
+{
+    public int count;
+    public List<RowList> rows;
+}
 
-    [System.Serializable]
-    public class RowList
-    {
-     // Updated By WaqasAhmad According to Swagger
-        public string id;
-        public string name;
-        public string user_limit;
-        public string thumbnail;
-        public string banner;
-        public string description;
-        public string creator;
-        public string createdAt;
-        public string updatedAt;
-        public string entityType;
-        public string status;
-        public string createdBy;
-        public UserInfo user;
-    }
+[System.Serializable]
+public class RowList
+{
+    // Updated By WaqasAhmad According to Swagger
+    public string id;
+    public string name;
+    public string user_limit;
+    public string thumbnail;
+    public string banner;
+    public string description;
+    public string creator;
+    public string createdAt;
+    public string updatedAt;
+    public string entityType;
+    public string status;
+    public string createdBy;
+    public UserInfo user;
+}
 
-    [System.Serializable]
-    public class UserInfo
-    {
-        public string id;
-        public string name;
-        public string email;
-        public string avatar;
-    }
+[System.Serializable]
+public class UserInfo
+{
+    public string id;
+    public string name;
+    public string email;
+    public string avatar;
+}
 
 [System.Serializable]
 public class SearchWorldData
 {
     public int count;
-    public List<SearchWorld> rows=new List<SearchWorld>();
+    public List<SearchWorld> rows = new List<SearchWorld>();
 }
 
 [System.Serializable]
 public class SearchworldRoot
 {
     public bool success;
-    public SearchWorldData data=new SearchWorldData();
+    public SearchWorldData data = new SearchWorldData();
     public string msg;
 }
 
@@ -878,7 +876,7 @@ public class SearchWorld
     public string map_json_link;
     public string map_code;
     public object nft_token_id;
-    public WorldUser user=new WorldUser();
+    public WorldUser user = new WorldUser();
 }
 
 [System.Serializable]
