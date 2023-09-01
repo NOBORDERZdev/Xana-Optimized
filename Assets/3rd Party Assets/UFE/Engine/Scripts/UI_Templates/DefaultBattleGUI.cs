@@ -471,11 +471,15 @@ public class DefaultBattleGUI : BattleGUI{
 		if (this.player2GUI != null && this.player2GUI.portrait != null){
 			if (cPlayer2.myInfo.profilePictureSmall != null){
 				this.player2GUI.portrait.gameObject.SetActive(true);
-				this.player2GUI.portrait.sprite = Sprite.Create(
+                if (UFE.gameMode==GameMode.VersusMode)
+                {
+					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
+				}
+				/*this.player2GUI.portrait.sprite = Sprite.Create(
 					cPlayer2.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer2.myInfo.profilePictureSmall.width, cPlayer2.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer2.myInfo.profilePictureSmall.width, 0.5f * cPlayer2.myInfo.profilePictureSmall.height)
-				);
+				);*/
 			}else{
 				this.player2GUI.portrait.gameObject.SetActive(false);
 			}

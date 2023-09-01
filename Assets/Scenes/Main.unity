@@ -710,7 +710,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 42
+  m_RootOrder: 43
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &218387417
 PrefabInstance:
@@ -1538,6 +1538,7 @@ MonoBehaviour:
   minimap: 0
   userName: 0
   NFTUrl: 
+  defaultFightingNFTUrl: https://ik.imagekit.io/xanalia/breaking-down/v3/0382.png
   CurrentSceneName: 
   EnviornmentName: 
   userLimit: 
@@ -2166,14 +2167,6 @@ MonoBehaviour:
   isEnvLoaded: 0
   addressableSceneName: 
   environmentLabel: 
-  ClothAvatar: {fileID: 0}
-  CharacterLight: {fileID: 7846243930142895843, guid: 88c2c017b4fae564da0be94019085c2c, type: 3}
-  CharacterLightPosition: {x: 0, y: 0, z: 0}
-  LightIntesity: 0.6
-  avatarAnimator: {fileID: 0}
-  fightingModuleAnimator: {fileID: 9100000, guid: 801d1f49b339dcb4ab4cf6a553f74d7f, type: 2}
-  XanaAvatarAnimator: {fileID: 9100000, guid: d33d3787caec8ca4b9094eb59ac0103f, type: 2}
-  myAvatar: {fileID: 0}
   player1Icon: 
   player2Icon: 
 --- !u!4 &730254988
@@ -2189,7 +2182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 43
+  m_RootOrder: 44
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &759614557
 PrefabInstance:
@@ -6916,11 +6909,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8761832015439735931, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_CellSize.x
-      value: 303.35135
+      value: 1377.8134
       objectReference: {fileID: 0}
     - target: {fileID: 8761832015439735931, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_CellSize.y
-      value: 303.35135
+      value: 1377.8134
       objectReference: {fileID: 0}
     - target: {fileID: 8761832015662084770, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_Name
@@ -7070,19 +7063,19 @@ PrefabInstance:
       objectReference: {fileID: 830606826}
     - target: {fileID: 31687126150111555, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 339.34457
+      value: 1364.48
       objectReference: {fileID: 0}
     - target: {fileID: 31687126150111555, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.y
-      value: 339.34457
+      value: 1364.48
       objectReference: {fileID: 0}
     - target: {fileID: 106255099186295454, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 344.67795
+      value: 1369.8134
       objectReference: {fileID: 0}
     - target: {fileID: 106255099764452016, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 344.67795
+      value: 1369.8134
       objectReference: {fileID: 0}
     - target: {fileID: 301817430646325710, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -7134,11 +7127,11 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 1143142936462745065, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 339.3446
+      value: 1364.48
       objectReference: {fileID: 0}
     - target: {fileID: 1143142936462745065, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.y
-      value: 339.3446
+      value: 1364.48
       objectReference: {fileID: 0}
     - target: {fileID: 1143142936727446879, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -7174,7 +7167,7 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 1143142937727903830, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 339.3446
+      value: 1364.48
       objectReference: {fileID: 0}
     - target: {fileID: 1143142937802224666, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_fontAsset
@@ -7342,11 +7335,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2555993634065051150, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 344.67795
+      value: 344.6779
       objectReference: {fileID: 0}
     - target: {fileID: 2555993634065051150, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.y
-      value: 344.67795
+      value: 344.6779
       objectReference: {fileID: 0}
     - target: {fileID: 2632883246372135497, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font
@@ -7410,11 +7403,11 @@ PrefabInstance:
       objectReference: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
     - target: {fileID: 3444034774344858903, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.x
-      value: 341.3446
+      value: 1366.48
       objectReference: {fileID: 0}
     - target: {fileID: 3444034774344858903, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_CellSize.y
-      value: 341.3446
+      value: 1366.48
       objectReference: {fileID: 0}
     - target: {fileID: 3773771773771042162, guid: 3d6e230617d225c46bcf8430c44701dc, type: 3}
       propertyPath: m_FontData.m_Font
@@ -9371,11 +9364,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3073043291370528187, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: m_CellSize.x
-      value: 352
+      value: 1377.8134
       objectReference: {fileID: 0}
     - target: {fileID: 3073043291370528187, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: m_CellSize.y
-      value: 352
+      value: 1377.8134
       objectReference: {fileID: 0}
     - target: {fileID: 3073043292826499812, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: thirdPanel

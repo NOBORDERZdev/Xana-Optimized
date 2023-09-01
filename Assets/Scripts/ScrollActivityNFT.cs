@@ -109,6 +109,8 @@ public class ScrollActivityNFT : MonoBehaviour
             subButtonTextToCheck = "Unequip";
             XanaConstants.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
+            int l = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindIndex(o => o.nftId == PlayerPrefs.GetInt("nftID"));
+            XanaConstants.xanaConstants.NFTUrl = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[l];
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);

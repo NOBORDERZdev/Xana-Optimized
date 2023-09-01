@@ -83,8 +83,13 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 			}*/
 		}
 
+		StartCoroutine(IEDelay());
+		IEnumerator IEDelay()
+        {
+			yield return new WaitForSeconds(2f);
         UFE.DelayLocalAction(UFE.PreloadBattle, this.delayBeforePreload);
         UFE.DelayLocalAction(this.StartBattle, UFE.config._preloadingTime);
+        }
 
         // If network synchornization is needed in this screen, use this instead
         //UFE.DelaySynchronizedAction(UFE.PreloadBattle, this.delayBeforePreload);

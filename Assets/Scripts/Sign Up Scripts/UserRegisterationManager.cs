@@ -74,7 +74,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField LoginEmailOrPhone;
     public AdvancedInputField LoginPassword;
 
-    [Space(5)] 
+    [Space(5)]
     [Header("ForgetPassword-InputFields")]
     // public MobileInputField EmailOrPhone_ForgetPasswrod;
     public AdvancedInputField EmailOrPhone_Forget_NewField;
@@ -161,7 +161,7 @@ public class UserRegisterationManager : MonoBehaviour
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
     public userRoleScript userRoleObj;
-     /// <Web 3.0 and Web 2.0>
+    /// <Web 3.0 and Web 2.0>
     public bool XanaliaBool;
     public Web3APIforWeb2 _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
@@ -315,132 +315,130 @@ public class UserRegisterationManager : MonoBehaviour
     {
         print("Event Called here");
         print("User type is " + _userType);
-  
+
         if (_userType == "Web3")
         {
-            
-           if (CryptouserData.instance.CryptoLogin)
-             {
-                 GetOwnedNFTsFromAPI(); 
+
+            if (CryptouserData.instance.CryptoLogin)
+            {
+                GetOwnedNFTsFromAPI();
                 ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
                 LoginWithMoralisSDK();
-                 print("Wallet logged in here ");  
-                 /*
-                if (CryptouserData.instance.AlphaPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("alpha-pass");
-                }
-                if (CryptouserData.instance.UltramanPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("premium");
-                }
-                if (CryptouserData.instance.AstroboyPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("premium");
-                }
-                */
+                print("Wallet logged in here ");
+                /*
+               if (CryptouserData.instance.AlphaPass)
+               {
+                   userRoleObj.userNftRoleSlist.Add("alpha-pass");
+               }
+               if (CryptouserData.instance.UltramanPass)
+               {
+                   userRoleObj.userNftRoleSlist.Add("premium");
+               }
+               if (CryptouserData.instance.AstroboyPass)
+               {
+                   userRoleObj.userNftRoleSlist.Add("premium");
+               }
+               */
 
                 //if (userRoleObj.userNftRoleSlist.Count == 0)
                 //{
-                 userRoleObj.userNftRoleSlist.Add("free");  
+                userRoleObj.userNftRoleSlist.Add("free");
                 // if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
                 //{
                 //     print("nft's are greater then zero");
                 //    await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
                 //    print("wait nft complete");
                 // }
-                 StartCoroutine(WalletLoggedInAccessGroup());
-             }    
+                StartCoroutine(WalletLoggedInAccessGroup());
+            }
         }
         else if (_userType == "Web2")
         {
-             // StartCoroutine(waitForWalletNFTFetching());
-             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+            // StartCoroutine(waitForWalletNFTFetching());
+            if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 print("call getting list here");
 
                 await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-                 
+
                 print("wait nft complete 22");
 
                 // CheckNFTFetched();
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
-                {   
-                     print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
-                     // Currently No Need For Attributes
+                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
+                {
+                    print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
+                    // Currently No Need For Attributes
                     //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
                     //print("index is " + LocalIndex);
                     //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
-                     if (PlayerPrefs.HasKey("Equiped"))
+                    if (PlayerPrefs.HasKey("Equiped"))
                     {
                         XanaConstants.xanaConstants.isNFTEquiped = true;
-                        List l = _web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Find(o => o.nftId == PlayerPrefs.GetInt("nftID"));
-                        if (l != null)
-                        {
-                            XanaConstants.xanaConstants.NFTUrl = l.mediaUrl;
-                        }
+                        int l = _web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindIndex(o => o.nftId == PlayerPrefs.GetInt("nftID"));
+                        XanaConstants.xanaConstants.NFTUrl = _web3APIforWeb2._OwnedNFTDataObj.NFTsURL[l];
+                        
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    }   
+                    }
                 }
                 else
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                     LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
-                 }
+                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
             }
-             else
+            else
             {
                 LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-             }
+            }
             // savingLoadingNFTsData.SavetoFile();
         }
         else
         {
             Debug.Log("not Logged in");
-        }  
-         /*
-        if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
-        {
-            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-           // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
-          
-            switch (VerifySignatureReadObj.data.user.userNftRole)
-            {
-                case "alpha-pass":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-                        break;
-                    }
-                case "premium":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
-                        break;
-                    }
-                case "dj-event":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("djevent");
-                        break;
-                    }
-                case "free":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-
-                        break;
-                    }
-            }
-         //   
-
-            print("you have access of Premium Feature");
         }
-        */
+        /*
+       if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
+       {
+           PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+          // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
+
+           switch (VerifySignatureReadObj.data.user.userNftRole)
+           {
+               case "alpha-pass":
+                   {
+                       PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                       break;
+                   }
+               case "premium":
+                   {
+                       PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+                       break;
+                   }
+               case "dj-event":
+                   {
+                       PremiumUsersDetails.Instance.GetGroupDetails("djevent");
+                       break;
+                   }
+               case "free":
+                   {
+                       PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+
+                       break;
+                   }
+           }
+        //   
+
+           print("you have access of Premium Feature");
+       }
+       */
     }
     void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
-     }  
+    }
 
     public void LoginWithMoralisSDK(bool auto = false)
     {
@@ -465,7 +463,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             StartCoroutine(WaitForDeepLink());
         }
-         // SubmitSetDeviceToken();
+        // SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
@@ -506,7 +504,7 @@ public class UserRegisterationManager : MonoBehaviour
         Resources.UnloadUnusedAssets();
         //Caching.ClearCache();
         //GC.Collect();
-      //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
+        //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
         UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
         //   StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
@@ -569,13 +567,14 @@ public class UserRegisterationManager : MonoBehaviour
         //   StartCoroutine(LoginUserPresetOnly());
     }
 
-    void CheckCameraMan() {
+    void CheckCameraMan()
+    {
         MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
         LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
         if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
         {
             XanaConstants.xanaConstants.isCameraMan = true;
-            
+
         }
         else
         {
@@ -589,8 +588,8 @@ public class UserRegisterationManager : MonoBehaviour
         if (loadData)
         {
             GetOwnedNFTsFromAPI();
-             yield return new WaitForSeconds(.1f);  
-        } 
+            yield return new WaitForSeconds(.1f);
+        }
         yield return new WaitForSeconds(.8f);
         if (userRoleObj.userNftRoleSlist.Count > 0)
         {
@@ -648,9 +647,9 @@ public class UserRegisterationManager : MonoBehaviour
             print("you have no Premium Access ");
             PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         }
-         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-     }
- 
+        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+    }
+
     #region Sign Up Animations
 
     public void OnSignUpEmailTabPressed()
@@ -1185,7 +1184,8 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                     }
-                    else {
+                    else
+                    {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
                             RegistrationCompletePanal.SetActive(true);
@@ -1193,7 +1193,7 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (shownWelcome)
                             ShowWelcomeClosed();
-                     }
+                    }
                     break;
                 }
         }
@@ -1280,7 +1280,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-               Debug.Log("Network error in set device token");
+                Debug.Log("Network error in set device token");
             }
             else
             {
@@ -1289,7 +1289,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                       Debug.Log("Success false in  in set device token");
+                        Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1329,7 +1329,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
+        Debug.Log("<color=red>" + request.downloadHandler.text + "</color>");
         //  print(request.GetRequestHeader("Authorization"));
         //  print(request.isDone);
         MyClassNewApi myObject1 = new MyClassNewApi();
@@ -1382,12 +1382,12 @@ public class UserRegisterationManager : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         }
- 
+
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
-         userRoleObj.userNftRoleSlist.Clear();
+        userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
@@ -1411,8 +1411,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
-        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
-        PlayerPrefs.SetString("publicID","");
+        PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
+        PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -2951,9 +2951,9 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         print(Jsondata);
-         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
-         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
-         var request = new UnityWebRequest(url, "POST");
+        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+        var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -3164,7 +3164,7 @@ public class UserRegisterationManager : MonoBehaviour
         Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-           Debug.Log("User Already loged in set name api call.......");
+            Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3247,7 +3247,7 @@ public class UserRegisterationManager : MonoBehaviour
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass("", L_LoginEmail, L_loginPassword));
         }
         //print("Start Json " + bodyJson);
-        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));    
+        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));
     }
 
 
@@ -3321,7 +3321,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-               Debug.Log("Network error in logout from other device");
+                Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3329,7 +3329,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                       Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
+                        Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
@@ -3556,7 +3556,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                   Debug.Log(myObject1.msg);
+                    Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3651,7 +3651,7 @@ public class UserRegisterationManager : MonoBehaviour
                 Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                   Debug.Log(myObject1.msg);
+                    Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3886,7 +3886,7 @@ public class UserRegisterationManager : MonoBehaviour
 
                     if (!string.IsNullOrEmpty(myObject1.data.user.walletAddress) && PlayerPrefs.HasKey("Equiped"))
                         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                   // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
+                    // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
 
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
@@ -4043,7 +4043,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
             StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        } 
+        }
     }
 
 
@@ -4123,7 +4123,7 @@ public class UserRegisterationManager : MonoBehaviour
         //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-       Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
+        Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4132,7 +4132,7 @@ public class UserRegisterationManager : MonoBehaviour
             yield return null;
         }
 
-       Debug.Log("nft response :- " + url + request.downloadHandler.text);
+        Debug.Log("nft response :- " + url + request.downloadHandler.text);
 
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
@@ -4151,7 +4151,7 @@ public class UserRegisterationManager : MonoBehaviour
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                       Debug.Log("---- " + s + "----" + ReturnNftRole(s));
+                        Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4212,7 +4212,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                       Debug.Log("Success false in  in set device token");
+                        Debug.Log("Success false in  in set device token");
                     }
                 }
             }

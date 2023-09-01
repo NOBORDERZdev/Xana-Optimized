@@ -56,7 +56,7 @@ public class AvatarController : MonoBehaviour
         {
             SetAvatarClothDefault(this.gameObject);
         }
-        if (transform.parent != null)
+        if (UFE.gameMode == UFE3D.GameMode.VersusMode && transform.parent != null)
         {
             if (transform.parent.GetComponent<ControlsScript>())
             {
@@ -64,6 +64,10 @@ public class AvatarController : MonoBehaviour
                 if (transform.parent.GetComponent<ControlsScript>().playerNum == 2)
                 {
                     isLoadStaticClothFromJson = true;
+                }
+                else
+                {
+                    staticPlayer = true;
                 }
             }
         }
@@ -84,14 +88,20 @@ public class AvatarController : MonoBehaviour
 
     private void OnTransformParentChanged()
     {
-        if (transform.parent.GetComponent<ControlsScript>())
+        if (UFE.gameMode == UFE3D.GameMode.VersusMode && transform.parent != null)
         {
-            Debug.LogError("parent: " + transform.parent);
-            if (transform.parent.GetComponent<ControlsScript>().playerNum == 2)
+            if (transform.parent.GetComponent<ControlsScript>())
             {
-                isLoadStaticClothFromJson = true;
+                Debug.LogError("parent: " + transform.parent);
+                if (transform.parent.GetComponent<ControlsScript>().playerNum == 2)
+                {
+                    isLoadStaticClothFromJson = true;
+                }
+                else
+                {
+                    staticPlayer = true;
+                }
             }
-            Invoke(nameof(Custom_IntializeAvatar), 0.5f);
         }
     }
     private void OnDisable()
@@ -218,7 +228,7 @@ public class AvatarController : MonoBehaviour
         //}
 
 
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -1471,7 +1481,7 @@ public class AvatarController : MonoBehaviour
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    
+
                     SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
