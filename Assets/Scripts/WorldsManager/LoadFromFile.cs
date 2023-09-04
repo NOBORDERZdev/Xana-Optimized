@@ -523,7 +523,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             environmentCameraRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             Camera freeCam = this.GetComponent<ChecklPostProcessing>().freeCam;
             freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-
+            if (player.GetComponent<StepsManager>())
+            {
+                player.GetComponent<StepsManager>().isplayer = true;
+            }
             //set Far & Near value same as builder for flickering assets testing
             firstPersonCamera.nearClipPlane = 0.03f;
             environmentCameraRender.nearClipPlane = 0.03f;
