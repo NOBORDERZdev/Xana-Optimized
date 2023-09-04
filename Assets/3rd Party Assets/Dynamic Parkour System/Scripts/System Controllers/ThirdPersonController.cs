@@ -88,20 +88,6 @@ namespace Climbing
             characterMovement.OnLanded += characterAnimation.Land;
             characterMovement.OnFall += characterAnimation.Fall;
         }
-        
-        //Boost Pickup Card
-        public void ToggleBoost(bool state)
-        {
-            if (state)
-            {
-                characterMovement.RunSpeed = characterMovement.BoostRunSpeed;
-            }
-            else
-            {
-                characterMovement.RunSpeed = characterMovement.NormalRunSpeed;
-            }
-        }
-        //
 
         void Update()
         {

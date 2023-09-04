@@ -52,8 +52,6 @@ namespace Climbing
         public float walkSpeed;
         public float JogSpeed;
         public float RunSpeed;
-        public float BoostRunSpeed = 7; // RFM Boost Card
-        public float NormalRunSpeed = 4.5f;
         public float fallForce;
 
         [Header("Feet IK")]
