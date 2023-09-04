@@ -15,12 +15,13 @@ namespace XanaAi
         public TMP_InputField inputField;
         #region public 
         [HideInInspector]
-        public int SpwanedAiCount=0; 
+        public int SpwanedAiCount = 0;
         public static AiManager instance;
         #endregion
         #region private
         [SerializeField] int AiCountToSpwaned;
-        /*[SerializeField]*/ private GameObject aiPrefab;
+        /*[SerializeField]*/
+        private GameObject aiPrefab;
         [SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<Transform> SpwanPoints;
@@ -32,32 +33,33 @@ namespace XanaAi
 
         private void Awake()
         {
-             if (instance == null)
-             instance = this;
-           else if (instance != this)
-             Destroy(gameObject);
+            if (instance == null)
+                instance = this;
+            else if (instance != this)
+                Destroy(gameObject);
         }
 
         IEnumerator Start()
         {
             aiPrefab = Resources.Load("Ai") as GameObject;
-            inputField.text = "2";
+            inputField.text = "5";
             yield return new WaitForSeconds(2f);
             StartCoroutine(IntAis());
         }
 
-        IEnumerator IntAis() {
+        IEnumerator IntAis()
+        {
             int rand;
             StartCoroutine(ReactScreen.Instance.getAllReactions());
             for (int i = 0; i < AiCountToSpwaned; i++)
             {
                 rand = Random.Range(0, SpwanPoints.Count);
                 Transform temp = SpwanPoints[rand];
-                GameObject aiTemp= Instantiate(aiPrefab,temp.position, Quaternion.identity);
+                GameObject aiTemp = Instantiate(aiPrefab, temp.position, Quaternion.identity);
                 //aiTemp.transform.position = temp.position;
                 //SpwanedAi.Add(aiTemp.GetComponent<AiController>());
                 SpwanPoints.RemoveAt(rand);
-                StartCoroutine( apperance.GetAppearance(aiTemp.GetComponent<AiController>()) );
+                StartCoroutine(apperance.GetAppearance(aiTemp.GetComponent<AiController>()));
                 rand = Random.Range(0, aiNames.Count);
                 aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
                 SpwanedAiCount++;
@@ -67,18 +69,17 @@ namespace XanaAi
                 if (int.TryParse(data, out integerValue))
                 {
                     // Successfully converted to an integer
-                    Debug.Log("Integer value: " + integerValue);
                     AiCountToSpwaned = integerValue;
                 }
 
-                yield return new WaitForSeconds(7f); 
+                yield return new WaitForSeconds(7f);
             }
-           
+
         }
 
-       
-       
-        public IEnumerator DownloadAddressableWearableWearable( string key, string ObjectType,AiController ai)
+
+
+        public IEnumerator DownloadAddressableWearableWearable(string key, string ObjectType, AiController ai)
         {
             //Resources.UnloadUnusedAssets();
             CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
@@ -102,16 +103,16 @@ namespace XanaAi
                 if (loadObj.Status == AsyncOperationStatus.Failed)
                 {
                     WearDefault(ObjectType, ai); // wear default cloth
-                    
-                   
+
+
                     yield break;
-                    
+
                 }
                 else if (loadObj.Status == AsyncOperationStatus.Succeeded)
                 {
                     ai.StichItem(-1, (GameObject)(object)loadObj.Result, ObjectType, ai.gameObject, false);
                 }
-                
+
             }
         }
 
@@ -132,7 +133,7 @@ namespace XanaAi
                     // wear default 
                     if (ObjectType.Contains("EyeTexture"))
                     {
-                        charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture,ai.gameObject);
+                        charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture, ai.gameObject);
                     }
                     else if (ObjectType.Contains("EyeBrrow"))
                     {
@@ -146,8 +147,8 @@ namespace XanaAi
                     {
                         charcterBody.ApplyEyeLashes(charcterBody.defaultEyelashes, ai.gameObject);
                     }
-                   
-                     throw;
+
+                    throw;
                 }
 
                 while (!loadObj.IsDone /*|| loadTex.IsDone*/)
@@ -155,11 +156,11 @@ namespace XanaAi
 
                 if (loadObj.Status == AsyncOperationStatus.Failed)
                 {
-                 // wear default 
+                    // wear default 
 
-                     if (ObjectType.Contains("EyeTexture"))
+                    if (ObjectType.Contains("EyeTexture"))
                     {
-                        charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture,ai.gameObject);
+                        charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture, ai.gameObject);
                     }
                     else if (ObjectType.Contains("EyeBrrow"))
                     {
@@ -180,7 +181,7 @@ namespace XanaAi
                 {
                     if (ObjectType.Contains("EyeTexture"))
                     {
-                        charcterBody.ApplyEyeLenTexture(loadObj.Result,ai.gameObject);
+                        charcterBody.ApplyEyeLenTexture(loadObj.Result, ai.gameObject);
                     }
                     else if (ObjectType.Contains("EyeBrrow"))
                     {
@@ -199,7 +200,8 @@ namespace XanaAi
             }
         }
 
-        void WearDefault(string type, AiController ai) {
+        void WearDefault(string type, AiController ai)
+        {
             switch (type)
             {
                 case "Chest":
@@ -220,7 +222,7 @@ namespace XanaAi
             }
         }
 
-        
+
     }
 
 }
