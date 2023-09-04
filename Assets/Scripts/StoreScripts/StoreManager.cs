@@ -667,7 +667,6 @@ public class StoreManager : MonoBehaviour
             {
                 if (StoreManager.instance.MultipleSave)
                 {
-                    LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();
                     AvatarSaved.SetActive(true);
                 }
                 else
