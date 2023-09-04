@@ -228,7 +228,7 @@ public class WorldManager : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-            //Debug.Log(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);

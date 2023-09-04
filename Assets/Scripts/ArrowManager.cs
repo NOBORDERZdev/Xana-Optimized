@@ -286,6 +286,37 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    public void GenerateAIChat()
+    {
+        StartCoroutine(GenerateAIChatDelay());
+    }
+
+    IEnumerator GenerateAIChatDelay()
+    {
+    CheckForChattingStart:
+        if (InstantiateAI.startChating)
+        {
+            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1, 5));
+        NextChat:
+            int x = UnityEngine.Random.Range(0, InstantiateAI.instance.dialogueString.Length);
+            string chat = InstantiateAI.instance.dialogueString[x];
+            yield return StartCoroutine(ChatShowData(chat, 0));
+            yield return new WaitForSeconds(3f);
+            goto NextChat;
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+            goto CheckForChattingStart;
+        }
+        
+    }
+
+
+
+
     IEnumerator ChatShowData(string chatData, int id)
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -293,7 +324,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (gameObject.GetComponent<PhotonView>().ViewID == id)
+            if (/*gameObject.GetComponent<PhotonView>().ViewID == id*/true)
             {
                 if (chatData.Length <= 20)
                 {

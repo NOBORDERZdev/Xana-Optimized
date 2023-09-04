@@ -31,6 +31,9 @@ public class AvatarController : MonoBehaviour
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
 
+
+    public bool isAI;
+    public string aiJson;
     private void Awake()
     {
         bodyParts = this.GetComponent<CharcterBodyParts>();
@@ -224,12 +227,29 @@ public class AvatarController : MonoBehaviour
         //Custom_IntializeAvatar();
         //}
     }
+
+    public void DownloadAICloths(bool _isAI, string _aiJson)
+    {
+        isAI = _isAI;
+        aiJson = _aiJson;
+        Custom_IntializeAvatar();
+    }
+
     void Custom_IntializeAvatar()
     {
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            if (isAI)
+            {
+                _CharacterData = _CharacterData.CreateFromJSON(aiJson);
+            }
+            else
+            {
+                
+                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+
+            }
             //_CharData = _CharacterData;
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
@@ -478,7 +498,7 @@ public class AvatarController : MonoBehaviour
             }
             else // wolrd scence 
             {
-                if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine) // self
+                if ((GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine) || isAI ) // self
                 {
                     if (_CharacterData.myItemObj.Count > 0)
                     {
@@ -673,10 +693,10 @@ public class AvatarController : MonoBehaviour
                     {
                         bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.LipColor, SliderType.LipsColor, this.gameObject));
                     }
-                    //if (_CharacterData.HairColor != null)
-                    //{
-                    //    bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, this.gameObject));
-                    //}
+                    if (_CharacterData.HairColor != null)
+                    {
+                        bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, this.gameObject));
+                    }
                     if (_CharacterData.EyebrowColor != null)
                     {
                         bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.EyebrowColor, SliderType.EyeBrowColor, this.gameObject));
@@ -1165,7 +1185,7 @@ public class AvatarController : MonoBehaviour
         item = this.stitcher.Stitch(item, applyOn);
         if (type == "Hair")
         {
-            if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
+            if (applyHairColor && !isAI/*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
                 SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));

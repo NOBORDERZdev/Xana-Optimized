@@ -295,7 +295,14 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         CheckAgain:
         try
         {
-            if (totalCounter != null)
+            if(true)
+            {
+                totalCounter.text = InstantiateAI.totalplayer.ToString() + "/" + RoomMaxPlayerCount;
+
+                if (RoomMaxPlayerCount < InstantiateAI.totalplayer)
+                    RoomMaxPlayerCount = InstantiateAI.totalplayer;
+            }
+            else if (totalCounter != null)
             {
                 if (FeedEventPrefab.m_EnvName.Contains("Xana Festival")) // for Xana Festival
                 {
