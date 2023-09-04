@@ -77,7 +77,7 @@ namespace RFM
                     }
                     case RFMCard.CardType.SpeedBoost:
                     {
-                        RFM.Globals.player.ToggleBoost(true);
+                        RFM.Globals.player.characterMovement.RunSpeed *= 2;
                         Invoke(nameof(ResetSpeed), boostDuration);
                         Debug.LogError("RFM SpeedBoost Card Picked");
                         break;
@@ -118,7 +118,7 @@ namespace RFM
 
         private void ResetSpeed()
         {
-            RFM.Globals.player.ToggleBoost(false);
+            RFM.Globals.player.characterMovement.RunSpeed /= 2;
         }
 
 
