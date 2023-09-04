@@ -15,8 +15,8 @@ public class ThrowThingsComponent : MonoBehaviour
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
             GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);
+            BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
             Destroy(gameObject);
         }
     }
