@@ -24,6 +24,7 @@ using UnityEngine;
 using DG;
 using Cinemachine;
 using DG.Tweening;
+using Photon.Pun;
 
 namespace Climbing
 {
@@ -93,6 +94,8 @@ namespace Climbing
         {
             //Detect if Player is on Ground
             isGrounded = OnGround();
+            
+            if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
 
             //Get Input if controller and movement are not disabled
             if (!dummy && allowMovement)

@@ -22,8 +22,8 @@ namespace RFM
         public static int countDownTime = 10;
         public static int takePositionTime = 10;
         public static int gameplayTime = 30;
-        public static int minNumberOfPlayer = 1;
-        public static int numOfAIHunters = 3;
+        public static int minNumberOfPlayer = 2;
+        public static int numOfAIHunters = 0;
 
         public static readonly int GainingMoneyTimeInterval = 1;
         public static readonly int MoneyPerInterval = 5;
