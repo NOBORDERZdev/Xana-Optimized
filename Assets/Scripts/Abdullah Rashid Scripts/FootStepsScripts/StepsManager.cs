@@ -4,9 +4,9 @@
     public class StepsManager : MonoBehaviour
     {
     public AudioSource StepAudio;
-    public float StepsVolume = 0.05f;
+    public float StepsVolume = 0.07f;
     public bool isplayer = false;
-    public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips = default;
+    public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips, grassClips = default;
     [Tooltip("Scale of the dust and track particles")]
 
     void Awake()
@@ -47,6 +47,9 @@
                             break;
                         case "Footsteps/floor":
                             StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                            break;
+                        case "Footsteps/grass":
+                            StepAudio.PlayOneShot(grassClips[UnityEngine.Random.Range(0, grassClips.Length - 1)]);
                             break;
                         default:
                             StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
