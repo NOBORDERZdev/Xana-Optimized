@@ -34,47 +34,45 @@ public class XanaItem : MonoBehaviour
     }
 
     internal ItemData itemData;
+    internal Renderer m_renderer;    //renderer reference
+
     #endregion
 
     #region UNITY_METHOD
+    private void OnEnable()
+    {
+        m_renderer = GetComponentInChildren<Renderer>();
+    }
     #endregion
 
     #region PUBLIC_METHODS
     public void SetData(ItemData itemData)
     {
-        this.itemData = itemData;
-        transform.localScale = itemData.Scale;
         //transform.localRotation = itemData.Rotation;
-
         CollectibleComponentData collectibleComponentData = itemData.collectibleComponentData;
         if (collectibleComponentData.IsActive)
         {
             CollectibleComponent itemComponent = gameObject.AddComponent<CollectibleComponent>();
             itemComponent.Init(collectibleComponentData);
         }
-
         RotatorComponentData rotatorComponentData = itemData.rotatorComponentData;
         if (rotatorComponentData.IsActive)
         {
             RotatorComponent itemComponent = gameObject.AddComponent<RotatorComponent>();
             itemComponent.Init(rotatorComponentData);
         }
-
-
         TimerCountdownComponentData timerCountdownComponentData = itemData.timerCountdownComponentData;
         if (timerCountdownComponentData.IsActive)
         {
             TimerCountdownComponent itemComponent = gameObject.AddComponent<TimerCountdownComponent>();
             itemComponent.Init(timerCountdownComponentData);
         }
-
         AddForceComponentData addForceComponentData = itemData.addForceComponentData;
         if (addForceComponentData.isActive)
         {
-            AddForceComponent addForceComponent = gameObject.AddComponent<AddForceComponent>();
-            addForceComponent.Init(addForceComponentData);
+            AddForceComponent itemComponent = gameObject.AddComponent<AddForceComponent>();
+            itemComponent.Init(addForceComponentData);
         }
-
         TimerComponentData timerComponentData = itemData.timerComponentData;
         if (timerComponentData.IsActive)
         {
@@ -219,6 +217,13 @@ public class XanaItem : MonoBehaviour
             HyperLinkPopComponent itemComponent = gameObject.AddComponent<HyperLinkPopComponent>();
             itemComponent.Init(hyperLinkComponentData);
         }
+
+        //BlindComponentData blindComponentData = itemData.blindComponentData;
+        //if (blindComponentData.IsActive)
+        //{
+        //    BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
+        //    itemComponent.Init(blindComponentData);
+        //}
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);

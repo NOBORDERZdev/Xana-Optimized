@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using SuperStar.Helpers;
 using System.Collections;
 using System.Collections.Generic;
@@ -60,7 +60,7 @@ public class ScrollActivityNFT : MonoBehaviour
             }    
             else
             {
-                Debug.LogError("Download Failed");
+               Debug.Log("Download Failed");
             }
         });  
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
@@ -125,6 +125,7 @@ public class ScrollActivityNFT : MonoBehaviour
             PlayerPrefs.DeleteKey("nftID");
             XanaConstants.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";

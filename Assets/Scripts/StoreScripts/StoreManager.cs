@@ -1130,6 +1130,10 @@ public class StoreManager : MonoBehaviour
                     OpenMainPanel("StoreItemsPanel");
 
                     GetDataAfterLogin();
+                    if(PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
+                    {
+                        myAvatarButton.gameObject.SetActive(true);
+                    }
                     GameManager.Instance.BottomAvatarButtonBool = false;
                     break;
                 }
@@ -3891,7 +3895,7 @@ public class StoreManager : MonoBehaviour
                             if (faceAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.faceIndex)
                             {
                                 faceAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                XanaConstants.xanaConstants._lastClickedBtn = faceAvatarButton[i];
+                                XanaConstants.xanaConstants._lastAvatarClickedBtn = faceAvatarButton[i];
                                 XanaConstants.xanaConstants.avatarStoreSelection[1] = faceAvatarButton[i];
 
                                 CheckForAvatarBtn(XanaConstants.xanaConstants.faceIndex, "face");
@@ -3941,7 +3945,7 @@ public class StoreManager : MonoBehaviour
                             if (eyeBrowsAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.eyeBrowIndex)
                             {
                                 eyeBrowsAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                XanaConstants.xanaConstants._lastClickedBtn = eyeBrowsAvatarButton[i];
+                                XanaConstants.xanaConstants._lastAvatarClickedBtn = eyeBrowsAvatarButton[i];
                                 XanaConstants.xanaConstants.avatarStoreSelection[2] = eyeBrowsAvatarButton[i];
 
                                 CheckForAvatarBtn(XanaConstants.xanaConstants.eyeBrowIndex, "eyeBrow");
@@ -4009,7 +4013,7 @@ public class StoreManager : MonoBehaviour
                                 if (eyeAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.eyeIndex)
                                 {
                                     eyeAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstants.xanaConstants._lastClickedBtn = eyeAvatarButton[i];
+                                    XanaConstants.xanaConstants._lastAvatarClickedBtn = eyeAvatarButton[i];
                                     XanaConstants.xanaConstants.avatarStoreSelection[3] = eyeAvatarButton[i];
 
                                     CheckForAvatarBtn(XanaConstants.xanaConstants.eyeIndex, "eye");
@@ -4096,7 +4100,7 @@ public class StoreManager : MonoBehaviour
                                 if (noseAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.noseIndex)
                                 {
                                     noseAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstants.xanaConstants._lastClickedBtn = noseAvatarButton[i];
+                                    XanaConstants.xanaConstants._lastAvatarClickedBtn = noseAvatarButton[i];
                                     XanaConstants.xanaConstants.avatarStoreSelection[4] = noseAvatarButton[i];
 
                                     CheckForAvatarBtn(XanaConstants.xanaConstants.noseIndex, "nose");
@@ -4166,7 +4170,7 @@ public class StoreManager : MonoBehaviour
                                 if (lipAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.lipIndex)
                                 {
                                     lipAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstants.xanaConstants._lastClickedBtn = lipAvatarButton[i];
+                                    XanaConstants.xanaConstants._lastAvatarClickedBtn = lipAvatarButton[i];
                                     XanaConstants.xanaConstants.avatarStoreSelection[5] = lipAvatarButton[i];
 
                                     CheckForAvatarBtn(XanaConstants.xanaConstants.lipIndex, "lip");
@@ -4251,7 +4255,7 @@ public class StoreManager : MonoBehaviour
                         if (childObject.GetComponent<AvatarBtn>()._Bodyint == XanaConstants.xanaConstants.bodyNumber)
                         {
                             childObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                            XanaConstants.xanaConstants._lastClickedBtn = childObject;
+                            XanaConstants.xanaConstants._lastAvatarClickedBtn = childObject;
                             XanaConstants.xanaConstants.avatarStoreSelection[6] = childObject;
                             break;
                         }
@@ -4327,7 +4331,7 @@ public class StoreManager : MonoBehaviour
                         if (childObject.GetComponent<AvatarBtn>().AvatarBtnId == XanaConstants.xanaConstants.makeupIndex)
                         {
                             childObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                            XanaConstants.xanaConstants._lastClickedBtn = childObject;
+                            XanaConstants.xanaConstants._lastAvatarClickedBtn = childObject;
                             XanaConstants.xanaConstants.avatarStoreSelection[9] = childObject;
                             break;
                         }

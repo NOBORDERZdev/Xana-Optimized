@@ -23,6 +23,7 @@ public class HelpButtonComponent : ItemComponent
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
             infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
             go.SetActive(true);
+            BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
         }
     }
 

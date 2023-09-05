@@ -43,7 +43,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
-    private int pageCount = 20;
+    private int pageCount = 200;
     private bool loadOnce = true;
     private bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
@@ -52,6 +52,8 @@ public class WorldManager : MonoBehaviour
     public static WorldManager instance;
     public AllWorldManage m_AllWorldManage;
 
+    ScrollRect s1;
+    ScrollSnapRect s2;
 
     private void Awake()
     {
@@ -114,7 +116,8 @@ public class WorldManager : MonoBehaviour
 
     void CheckForReloading(float scrollPos)
     {
-        if (scrollPos < .5f && dataIsFatched && listParent.gameObject.activeInHierarchy)
+        //Debug.LogError(scrollPos);
+        if (scrollPos < .1f && dataIsFatched && listParent.gameObject.activeInHierarchy)
         {
             loadOnce = true;
             dataIsFatched = false;
@@ -273,6 +276,11 @@ public class WorldManager : MonoBehaviour
             try
             {
                 _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+
+                if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+                {
+                    _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                }
             }
             catch (Exception e)
             {
@@ -347,9 +355,11 @@ public class WorldManager : MonoBehaviour
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        
+        TutorialsManager.instance.ShowTutorials();
     }
 
-    
+
 
 
     private void CreateLightingAsset(FeedEventPrefab _event)
@@ -374,6 +384,9 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent() 
     {
+        //Debug.LogError(" +++++++++++++++++++  WaqasJoinEvent +++++++++++++++");
+        _callSingleTime = true;
+
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -588,15 +601,42 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
     }
 
+    bool _callSingleTime = false;
     public void PlayWorld()
     {
+        // For Analitics & User Count
+        if (!_callSingleTime)
+        {
+            string worldType = "";
+            if (XanaConstants.xanaConstants.isBuilderScene)
+                worldType = "USER";
+            else if (XanaConstants.xanaConstants.IsMuseum)
+                worldType = "MUSEUM";
+            else
+                worldType = "ENVIRONMENT";
+
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("Lobby")) 
+            {
+                if ((ConstantsGod.API_BASEURL.Contains("test")))
+                    XanaConstants.xanaConstants.customWorldId = 163;
+                else
+                    XanaConstants.xanaConstants.customWorldId = 77;
+
+                worldType = "ENVIRONMENT";
+            }
+            UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
+        }
+
+       
+
+
         // Added By WaqasAhmad [20 July 23]
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
         //Caching.ClearCache();
         GC.Collect();
         //
-
+        //Debug.LogError(" +++++++++++++++++++  WaqasPlay +++++++++++++++");
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange )
@@ -701,7 +741,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             unloadUnusedFileCount = 0;
             Resources.UnloadUnusedAssets();
           //  Caching.ClearCache();
-            AssetBundle.UnloadAllAssetBundles(false);
+            //AssetBundle.UnloadAllAssetBundles(false);
             //GC.Collect();
         }
         unloadUnusedFileCount += 1;

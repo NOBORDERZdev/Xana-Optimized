@@ -42,7 +42,7 @@ public class UserRolesView : MonoBehaviour
     public void SetUpUserRole(string _userPriorityRole, List<string> _UserRoles)
     {
         ResetBadges();
-        Debug.LogError("SetUpUserRole...:" + _userPriorityRole);
+       Debug.Log("SetUpUserRole...:" + _userPriorityRole);
         userPriorityRole = _userPriorityRole;
         UserRoles = _UserRoles;
 
@@ -176,7 +176,7 @@ public class UserRolesView : MonoBehaviour
     public ScrollRectFasterEx profileMainScrollRect;
     public void OnValueChangedProfileMainScroll()
     {
-        //Debug.LogError(profileMainScrollRect.verticalNormalizedPosition);
+        //Debug.Log(profileMainScrollRect.verticalNormalizedPosition);
         if (profileMainScrollRect.verticalNormalizedPosition <= 0.98)
         {
             userRoleButtonMainObj.SetActive(false);

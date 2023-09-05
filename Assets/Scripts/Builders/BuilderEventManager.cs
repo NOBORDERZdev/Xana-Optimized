@@ -83,12 +83,16 @@ public static class BuilderEventManager
     public static Action<string, string, string, Transform> OnHyperLinkPopupCollisionEnter;
     public static Action OnHyperLinkPopupCollisionExit;
 
-    public static Action<ComponentType> ResetComponentUI;
+    //Blind Component
+    public static Action<float> OnBlindComponentTriggerEnter;
+    public static Action<Constants.ItemComponentType> ResetComponentUI;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float,bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
-    public static Action<bool> SelfiActive;
+
+    //UI toggle
+    public static Action<bool> UIToggle;
 
     public static Action EnableWorldCanvasCamera;
 }

@@ -31,18 +31,18 @@ public class RecordVideoBehaviour : MonoBehaviour
 
         videoWidth = Screen.width;
         videoHeight = Screen.height;
-        //Debug.LogError("RecordVideo width:" + videoWidth + "    :height:" + videoHeight);
+        //Debug.Log("RecordVideo width:" + videoWidth + "    :height:" + videoHeight);
 
         if (videoWidth % 2 == 1 )
         {
             videoWidth = (int)(Screen.width )+1;
-            //Debug.LogError("RecordVideo111 width:" + videoWidth);
+            //Debug.Log("RecordVideo111 width:" + videoWidth);
         }
 
         if (videoHeight % 2 == 1)
         {
             videoHeight = (int)(Screen.height +1);
-            //Debug.LogError("RecordVideo111 height:" + videoHeight);
+            //Debug.Log("RecordVideo111 height:" + videoHeight);
         }
         //videoTexture.width = Screen.width;
         //videoTexture.height = Screen.height;        
@@ -118,7 +118,7 @@ public class RecordVideoBehaviour : MonoBehaviour
                             ARFaceModuleManager.Instance.addAvtarItem[i].gameObject.SetActive(false);
                         }
                     }*/
-                    Debug.LogError("videoPath : " + LiveVideoRoomManager.Instance.videoPath + " :Prefix:" + prefix);
+                   Debug.Log("videoPath : " + LiveVideoRoomManager.Instance.videoPath + " :Prefix:" + prefix);
                     LiveVideoRoomManager.Instance.OnStartVideoPlay($"{prefix}{recordingPath}", false);
                     LiveVideoRoomManager.Instance.videoPath = $"{prefix}{recordingPath}";
                 }

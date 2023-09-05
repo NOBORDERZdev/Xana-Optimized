@@ -118,8 +118,9 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         {
             print("Horayyy you have Access");
         }
-        if (contentParent.transform.childCount <= 1)
+        if (contentParent.transform.childCount >= 1)
         {
+            EmptyAvatarContainer();
             StartCoroutine(GetAvatarData_Server(1, 20));
         }
         mainPanel.SetActive(true);
@@ -216,7 +217,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
                     // write latest json data to file
                     for (int c = 0; c < getdata.data.rows.Count; c++)
                     {
-                        // Debug.LogError(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
+                        //Debug.Log(getdata.data.rows[c].id.ToString()+"-------"+ getdata.data.rows[c].thumbnail);
                         if (!string.IsNullOrEmpty(getdata.data.rows[c].id.ToString()) && !string.IsNullOrEmpty(getdata.data.rows[c].thumbnail))
                         {
                             GameObject avatarInstance = Instantiate(avatarPrefab);
@@ -275,7 +276,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         }
         else
         {
-            Debug.LogError("NetWorkissue");
+           Debug.Log("NetWorkissue");
             loader.SetActive(false);
         }
 
@@ -346,7 +347,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
                         yield return null;
                     }
                     yield return www;
-                    //Debug.LogError(ImageUrl+"------"+www.downloadHandler.text);
+                    //Debug.Log(ImageUrl+"------"+www.downloadHandler.text);
                     Texture2D texture = DownloadHandlerTexture.GetContent(www);
                     texture.Compress(true);
                     thumbnail.GetComponent<RawImage>().texture = texture;
@@ -395,7 +396,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
     /// <param name="tex"> texture to apply </param>
     public void applySkinTexture(Texture2D tex)
     {
-        Debug.LogError("Waqas Eye : " + tex.name);
+       Debug.Log("Waqas Eye : " + tex.name);
         GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[2].SetTexture("_BaseMap", tex); ;
 
 
@@ -436,7 +437,8 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //StoreManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
-
+            OnUpdateExistingRemoveOld(avatarId);
+            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
             //if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
@@ -470,7 +472,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         //        {
         //            isAlreadyRunning = true;
         //#if UNITY_EDITOR
-        //            Debug.LogError(e.ToString());
+        //           Debug.Log(e.ToString());
         //            Debug.Break();
         //#endif
         //        }
@@ -534,7 +536,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError(e.ToString());
+                        Debug.Log("<color = red>" + e.ToString() + "</color>");
                     }
                 }
                 yield return new WaitForSeconds(.05f);
@@ -562,6 +564,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         {
             if (contentParent.transform.GetChild(i).name == _avatarID)
             {
+                avatarThumbnailUrl = contentParent.transform.GetChild(i).GetComponent<SavedPlayerDataJson>().avatarThumbnailLink;
                 Destroy(contentParent.transform.GetChild(i).gameObject);
                 break;
             }
@@ -640,7 +643,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
     {
         int count = contentParent.transform.childCount - 1;
         Transform container = contentParent.transform;
-        if (count > 1)
+        if (count >= 1)
         {
             for (int i = count; i >= 1; i--)
             {

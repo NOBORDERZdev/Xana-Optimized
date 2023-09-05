@@ -283,8 +283,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
 
     }
+  
     ////////////////////////////////////
-   
+
     //private void Start()
     //{
     //    StartCoroutine(SetPlayerCounter());
@@ -349,4 +350,5 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
+
 }

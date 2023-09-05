@@ -11,7 +11,7 @@ public class SafeAreaRevers : MonoBehaviour
         Panel = GetComponent<RectTransform>();
 
         Rect safeArea = Screen.safeArea;
-        Debug.LogError("SafeArea:" + safeArea.height + "  :Height:" + Screen.height);
+       Debug.Log("SafeArea:" + safeArea.height + "  :Height:" + Screen.height);
         if(safeArea.height != Screen.height)
         {
             Panel.offsetMax = new Vector2(0, 80);

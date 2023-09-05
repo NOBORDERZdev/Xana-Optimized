@@ -42,67 +42,76 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
             if (blindfoldedDisplayComponentData.footprintPaintAvatar)
             {
-                Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
-                //shoes.localPosition = Vector3.forward * 0.761f;
-                shoes.gameObject.AddComponent<Rigidbody>().isKinematic = true;
-                for (int i = 0; i < shoes.childCount; i++)
-                {
-                    Destroy(shoes.GetChild(i).gameObject);
-                }
-                foreach (GameObject goFootStep in GamificationComponentData.instance.FootSteps)
-                {
-                    var tempobj = Instantiate(goFootStep, shoes);
-                    tempobj.transform.localPosition = Vector3.zero;
-                }
-
-
-                skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
-
-                //other.gameObject.GetComponent<PlayerControllerNew>().isThrow = false;
-                footstepsBool = true;
-                for (int i = 0; i < childCollider.Length; i++)
-                {
-                    childCollider[i].enabled = false;
-                }
-
-
-                for (int i = 0; i < childMesh.Length; i++)
-                {
-                    childMesh[i].enabled = false;
-                }
-
-                for (int i = 0; i < skinMesh.Length; i++)
-                {
-                    skinMesh[i].enabled = false;
-                }
-
-                RingbufferFootSteps[] ringbufferFootSteps = other.gameObject.GetComponentsInChildren<RingbufferFootSteps>();
-                for (int i = 0; i < ringbufferFootSteps.Length; i++)
-                {
-                    ringbufferFootSteps[0].enabled = true;
-                    ringbufferFootSteps[0].transform.GetChild(0).gameObject.SetActive(true);
-                }
-                //Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
-                StartCoroutine(BackToVisible(ringbufferFootSteps));
-
+                SetFootPrinting(other.gameObject);
             }
             else if (blindfoldedDisplayComponentData.invisibleAvatar)
             {
-                for (int i = 0; i < childCollider.Length; i++)
-                {
-                    childCollider[i].enabled = false;
-                }
-
-                for (int i = 0; i < childMesh.Length; i++)
-                {
-                    childMesh[i].enabled = false;
-                }
-                StartCoroutine(BackToAvatarVisiblityHologram());
+                SetAvatarInvisibility();
             }
         }
     }
 
-    IEnumerator BackToVisible(RingbufferFootSteps[] rr)
+    private void SetFootPrinting(GameObject other)
+    {
+        Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
+        //shoes.localPosition = Vector3.forward * 0.761f;
+        Rigidbody rb = null;
+        shoes.TryGetComponent(out rb);
+        if (rb == null)
+            rb = shoes.gameObject.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        if (shoes.transform.childCount == 0)
+        {
+            var tempobj = Instantiate(GamificationComponentData.instance.FootSteps[0], shoes);
+            tempobj.transform.localPosition = Vector3.up * 0.0207f;
+        }
+
+        skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        //other.gameObject.GetComponent<PlayerControllerNew>().isThrow = false;
+        footstepsBool = true;
+        for (int i = 0; i < childCollider.Length; i++)
+        {
+            childCollider[i].enabled = false;
+        }
+
+
+        for (int i = 0; i < childMesh.Length; i++)
+        {
+            childMesh[i].enabled = false;
+        }
+
+        for (int i = 0; i < skinMesh.Length; i++)
+        {
+            skinMesh[i].enabled = false;
+        }
+
+        RingbufferFootSteps ringbufferFootStep = shoes.gameObject.GetComponentInChildren<RingbufferFootSteps>();
+        //for (int i = 0; i < ringbufferFootSteps.Length; i++)
+        //{
+        ringbufferFootStep.enabled = true;
+        ringbufferFootStep.transform.GetChild(0).gameObject.SetActive(true);
+        //}
+        //Debug.Log("BlindFolded Value : " + blindfoldedDisplayComponentData.blindfoldSliderValue);
+        StartCoroutine(BackToVisible(ringbufferFootStep));
+    }
+
+    private void SetAvatarInvisibility()
+    {
+        for (int i = 0; i < childCollider.Length; i++)
+        {
+            childCollider[i].enabled = false;
+        }
+
+        for (int i = 0; i < childMesh.Length; i++)
+        {
+            childMesh[i].enabled = false;
+        }
+        StartCoroutine(BackToAvatarVisiblityHologram());
+    }
+
+    IEnumerator BackToVisible(RingbufferFootSteps rr)
     {
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
 
@@ -128,11 +137,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
             skinMesh[i].enabled = true;
         }
 
-        for (int i = 0; i < rr.Length; i++)
-        {
-            rr[0].enabled = false;
-            rr[0].transform.GetChild(0).gameObject.SetActive(false);
-        }
+        rr.enabled = false;
+        rr.transform.GetChild(0).gameObject.SetActive(false);
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);

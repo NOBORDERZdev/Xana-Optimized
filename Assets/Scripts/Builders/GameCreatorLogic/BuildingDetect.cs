@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using TMPro;
-using WalletConnectSharp.Core.Events;
+//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
@@ -26,6 +26,11 @@ public class BuildingDetect : MonoBehaviour
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
 
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsole;
+    [SerializeField]
+    public MeshRenderer playerFreeCamConsoleOther;
+
     [Header("Default Mats")]
     [SerializeField]
     private Material defaultHairMat;
@@ -37,6 +42,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultPantsMat;
     [SerializeField]
     private Material defaultShoesMat;
+    [SerializeField]
+    private Material defaultFreeCamConsoleMat;
 
     [Header("Gangster Character")]
     public GameObject gangsterCharacter;
@@ -70,6 +77,10 @@ public class BuildingDetect : MonoBehaviour
     private Animator characterAnimator;
     public SkinnedMeshRenderer[] skinMeshs;
 
+    [Header("Set default value of ProstProcessProfile vol vignette")]
+    internal float defaultSmootnesshvalue;
+    internal float defaultIntensityvalue;
+
     private void Awake()
     {
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
@@ -77,6 +88,10 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
+
+
+        yield return new WaitForSeconds(2f);
+
         _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
 
         defaultJumpHeight = _playerControllerNew.JumpVelocity;
@@ -92,10 +107,6 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
-
-        yield return new WaitForSeconds(2f);
-
-        //_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
         //Initializing
         playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
         playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
@@ -104,6 +115,9 @@ public class BuildingDetect : MonoBehaviour
         playerBody = GamificationComponentData.instance.charcterBodyParts.Body;
 
         playerHead = GamificationComponentData.instance.charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+
+        playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+        playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
         defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
         for (int i = 0; i < playerHead.materials.Length; i++)
@@ -116,6 +130,8 @@ public class BuildingDetect : MonoBehaviour
         defaultShirtMat = playerShirt.material;
         defaultHairMat = playerHair.material;
         defaultShoesMat = playerShoes.material;
+
+        defaultFreeCamConsoleMat = playerFreeCamConsole.material;
     }
 
     private void OnEnable()
@@ -341,6 +357,9 @@ public class BuildingDetect : MonoBehaviour
 
         // Apply the new materials to the SkinnedMeshRenderer
         playerHead.materials = newMaterials;
+
+        playerFreeCamConsole.material = hologramMaterial;
+        playerFreeCamConsoleOther.material = hologramMaterial;
     }
 
     void StopAvatarInvisibility()
@@ -351,6 +370,8 @@ public class BuildingDetect : MonoBehaviour
         playerPants.material = defaultPantsMat;
         playerShoes.material = defaultShoesMat;
         playerHead.sharedMaterials = defaultHeadMaterials;
+        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
+        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
     }
 
     #endregion
@@ -367,7 +388,10 @@ public class BuildingDetect : MonoBehaviour
     {
         StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
+        RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
+        if (cameraAnimator == null) cameraAnimator=GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }
     IEnumerator WaitForEffect()
@@ -376,31 +400,26 @@ public class BuildingDetect : MonoBehaviour
         cameraAnimator.SetBool("BlurrEffect", true);
         volume.profile.TryGet(out motionBlur);
         volume.profile.TryGet(out vignette);
-        if (vignette)
-            vignette.active = true;
+        vignette.active = true;
+        motionBlur.active = true;
         vignette.intensity.value = 0.33f;
-        if (motionBlur)
-            motionBlur.active = true;
+        vignette.smoothness.value = 0.702f;
 
         yield return new WaitForSeconds(0.4f);
 
         float timeElapsed = 0f;
         while (timeElapsed < 0.2f)
         {
-            if (vignette)
-                vignette.intensity.value = Mathf.Lerp(0.33f, 0, timeElapsed / 0.2f);
+            vignette.intensity.value = Mathf.Lerp(0.33f, 0, timeElapsed / 0.2f);
             yield return null;
             timeElapsed += Time.deltaTime;
         }
 
         cameraAnimator.SetBool("BlurrEffect", false);
-        if (vignette)
-        {
-            vignette.intensity.value = 0;
-            vignette.active = false;
-        }
-        if (motionBlur)
-            motionBlur.active = false;
+        vignette.intensity.value = defaultIntensityvalue;
+        vignette.smoothness.value = defaultSmootnesshvalue;
+        vignette.active = false;
+        motionBlur.active = false;
     }
     #endregion
 }

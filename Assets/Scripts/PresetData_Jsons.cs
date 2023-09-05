@@ -124,6 +124,8 @@ public class PresetData_Jsons : MonoBehaviour
                 {
                     Invoke("abcd", 5f);
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                    UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
+                    UserRegisterationManager.instance.BlackScreen.SetActive(true);
                 }
                 else                // as a guest
                 {

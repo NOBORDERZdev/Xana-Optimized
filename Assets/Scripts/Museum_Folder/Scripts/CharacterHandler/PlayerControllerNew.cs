@@ -166,8 +166,8 @@ public class PlayerControllerNew : MonoBehaviour
         ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
 
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
 
 
@@ -184,8 +184,8 @@ public class PlayerControllerNew : MonoBehaviour
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt -= JumpNotAllowed;
         }
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -294,7 +294,7 @@ public class PlayerControllerNew : MonoBehaviour
     // Toogle camera first person to therd person
     public void SwitchCameraButton()
     {
-        //Debug.LogError("0");
+        //Debug.Log("0");
         isFirstPerson = !isFirstPerson;
         gravityVector.y = 0;
 
@@ -302,7 +302,7 @@ public class PlayerControllerNew : MonoBehaviour
         if (isFirstPerson)
         {
 
-            //Debug.LogError("1");
+            //Debug.Log("1");
             //Debug.Log("first person call ");
             //Enable_DisableObjects.Instance.ActionsObject.GetComponent<Button>().interactable = true;
             //Enable_DisableObjects.Instance.EmoteObject.GetComponent<Button>().interactable = true;
@@ -322,7 +322,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("2");
+            //Debug.Log("2");
             //MuseumRaycaster.instance.playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
             gyroButton.SetActive(false);
             gyroButton_Portait.SetActive(false);
@@ -473,7 +473,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             animator.SetBool("standJump", false);
         }
-        //Debug.LogError("MovmentInput:" + movementInput + "  :Move:" + move);
+        //Debug.Log("MovmentInput:" + movementInput + "  :Move:" + move);
         if (animator != null && movementInput.sqrMagnitude >= inputThershold)
         {
             float horizontal1 = horizontal * 1.2f;
@@ -524,7 +524,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
-                //Debug.LogError("Move Sprint:" + firstPersonSprintSpeed + "    :Move:" + move);
+                //Debug.Log("Move Sprint:" + firstPersonSprintSpeed + "    :Move:" + move);
                 characterController.Move(move * sprintSpeed * Time.deltaTime);
                 velocity.y += gravity * Time.deltaTime;
                 characterController.Move(velocity * Time.deltaTime);
@@ -536,7 +536,7 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else
             {
-                //Debug.LogError("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
+                //Debug.Log("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
                 PlayerIsWalking?.Invoke();
                 UpdateSefieBtn(false);
                 //if (Mathf.Abs(horizontal) > .5f || Mathf.Abs(vertical) > .5f)
@@ -606,7 +606,7 @@ public class PlayerControllerNew : MonoBehaviour
             JumpTimePostion = firstPersonCameraObj.transform.localPosition;
             //CanvasJumpTimePostion = CanvasObject.transform.localPosition;
             //StartCoroutine(CanvasJump(diff));
-            //Debug.LogError("FirstPersonCameraMove jump");
+            //Debug.Log("FirstPersonCameraMove jump");
             StartCoroutine(Jump(diff));
         }
         /*else if (characterController.isGrounded && velocity.y < 0 && !IsJumping)
@@ -624,7 +624,7 @@ public class PlayerControllerNew : MonoBehaviour
     /// <returns></returns>
     IEnumerator Jump(Vector3 diff)
     {
-        //Debug.LogError("Jump");
+        //Debug.Log("Jump");
         float progress = 0.0f;
         float d = camStartPosition.y + diff.y;
 
@@ -633,7 +633,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             tempWait /= 3f;
         }
-        //Debug.LogError("jump TempWait:" + tempWait + "    :Horizontal:" + horizontal + "    :Vertical:" + vertical);
+        //Debug.Log("jump TempWait:" + tempWait + "    :Horizontal:" + horizontal + "    :Vertical:" + vertical);
 
         while (progress < tempWait)//0.75f
         {
@@ -675,7 +675,7 @@ public class PlayerControllerNew : MonoBehaviour
             tempWait /= 3f;
             tempWait2 /= 3f;
         }
-        //Debug.LogError("JumpEnd TempWait:" + tempWait + "   :TempWait2:" + tempWait2 + "    :Horizontal:"+horizontal + "    :Vertical:" + vertical);
+        //Debug.Log("JumpEnd TempWait:" + tempWait + "   :TempWait2:" + tempWait2 + "    :Horizontal:"+horizontal + "    :Vertical:" + vertical);
 
         while (progress < tempWait)//0.35f
         {
@@ -684,7 +684,7 @@ public class PlayerControllerNew : MonoBehaviour
             yield return null;
         }
         firstPersonCameraObj.transform.localPosition = new Vector3(0f, 1.1f, 0.1f);
-        //Debug.LogError("Jump end");
+        //Debug.Log("Jump end");
         Invoke(nameof(JumpNotAllowed), tempWait2);//0.3f
         allowFpsJump = true;
     }
@@ -754,6 +754,21 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                if (b)
+                    StartCoroutine(nameof(ThrowEnd));
+                else
+                    isThrowPose = true;
+            }
+        }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
@@ -826,8 +841,8 @@ public class PlayerControllerNew : MonoBehaviour
         //    right.Normalize();
 
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
-        //Debug.LogError("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
-        //Debug.LogError("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
+        //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
+        //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
             allowJump = false;
@@ -905,14 +920,14 @@ public class PlayerControllerNew : MonoBehaviour
         {
             /*if (animator != null)
             {
-                Debug.LogError("FP Normal Movement.......");
+               Debug.Log("FP Normal Movement.......");
                 animator.SetFloat("Blend", horizontal, speedSmoothTime, Time.deltaTime);
                 animator.SetFloat("BlendY", vertical, speedSmoothTime, Time.deltaTime);
             }*/
 
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
-                //Debug.LogError("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
+                //Debug.Log("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 characterController.Move(desiredMoveDirection * sprintSpeed * Time.deltaTime);
 
                 gravityVector.y += gravityValue * Time.deltaTime;
@@ -927,7 +942,7 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else// player is walking
             {
-                //Debug.LogError("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
+                //Debug.Log("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 PlayerIsWalking?.Invoke();
                 UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
@@ -1060,7 +1075,7 @@ public class PlayerControllerNew : MonoBehaviour
             canDoubleJump = true;
             gravityVector.y = JumpVelocity * 2;
         }
-       
+
 
     }
 
@@ -1072,9 +1087,9 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 jumpNow = true;
                 IsJumping = true;
-               
+
                 //tpsJumpAnim();
-                //Debug.LogError("JumpAllowed");
+                //Debug.Log("JumpAllowed");
                 //jump camera start...
                 Vector3 diff = playerRig.transform.localPosition - camStartPosition;
                 JumpTimePostion = firstPersonCameraObj.transform.localPosition;
@@ -1095,7 +1110,7 @@ public class PlayerControllerNew : MonoBehaviour
                 CameraLook.instance.DisAllowControl();
                 if (isFirstPerson)
                 {
-                    //Debug.LogError("JumpAllowed1111111");
+                    //Debug.Log("JumpAllowed1111111");
                     Invoke(nameof(JumpNotAllowed), 1.3f);
                 }
                 else
@@ -1117,12 +1132,12 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAnimation();
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
-        
+
     }
 
     public void JumpNotAllowed()
     {
-        //Debug.LogError("JumpNotAllowed");
+        //Debug.Log("JumpNotAllowed");
         IsJumping = false;
         jumpNow = false;
         allowJump = true;
@@ -1233,6 +1248,7 @@ public class PlayerControllerNew : MonoBehaviour
     //update player jump according to builder setting 
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
+        sprintSpeed = 5;
         JumpVelocity += (jumpValue - 1);
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;
@@ -1573,27 +1589,29 @@ public class PlayerControllerNew : MonoBehaviour
         isThrowModeActive = false;
         if (throwMainCo != null)
             throwMainCo = null;
+        BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
         NinjaCo = StartCoroutine(NinjaComponentTimer(time));
     }
     public IEnumerator NinjaComponentTimer(float time)
     {
         isDrawSword = false;
-        if (swordModel)
+        if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
             swordModel.SetActive(true);
         }
-        yield return new WaitForSecondsRealtime(time);
+        yield return new WaitForSeconds(time);
         isNinjaMotion = false;
         if (swordModel)
         {
             swordModel.SetActive(false);
         }
-        animator.SetBool("NinjaJump", true);
+        animator.SetBool("NinjaJump", false);
         animator.SetBool("isNinjaMotion", false);
-
+        animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
+        animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
@@ -1653,7 +1671,7 @@ public class PlayerControllerNew : MonoBehaviour
                     tempRotation.x = this.transform.eulerAngles.x;
                     tempRotation.z = this.transform.eulerAngles.z;
                     this.transform.eulerAngles = tempRotation;
-                    //Debug.LogError("Throw Pose Active");
+                    //Debug.Log("Throw Pose Active");
                     trajectoryController.UpdateTrajectory(_ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     throwLineRenderer.enabled = true;
                     trajectoryController.colliderAim.SetActive(true);
@@ -1666,7 +1684,7 @@ public class PlayerControllerNew : MonoBehaviour
                     handBall.SetActive(false);
                 }
 
-                //Debug.LogError("Throw Mode Active");
+                //Debug.Log("Throw Mode Active");
 
 #if UNITY_EDITOR
                 if (Input.GetKeyDown(KeyCode.Q) && throwAction == null)
@@ -1748,7 +1766,7 @@ public class PlayerControllerNew : MonoBehaviour
         StopCoroutine(throwAction);
         throwAction = null;
     }
-    IEnumerator ThrowEnd()
+    public IEnumerator ThrowEnd()
     {
         Debug.Log("Throw End Co");
         yield return new WaitForSeconds(0f);
@@ -1763,7 +1781,8 @@ public class PlayerControllerNew : MonoBehaviour
 
         yield return new WaitForSeconds(01.3f);
         isMovementAllowed = true;
-        StopCoroutine(throwEnd);
+        if (throwEnd != null)
+            StopCoroutine(throwEnd);
         throwEnd = null;
     }
 
@@ -1781,14 +1800,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        //if (state)
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.ninjaMotion;
-        //else
-        //{
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.defaultAnimation;
-        //    return;
-        //}
-
         if (swordModel == null)
         {
             swordModel = Instantiate(GamificationComponentData.instance.katanaPrefab, transform.parent);

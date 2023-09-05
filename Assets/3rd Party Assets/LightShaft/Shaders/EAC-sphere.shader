@@ -48,7 +48,7 @@
 				float u = 0, v = 0;
 				float scale; // sphere coordinates to cube coordinates according to similar-triangle
 				if (abs(x) >= abs(y) && abs(x) >= abs(z)) {
-					scale = 0.99 / abs(x); // let's assume that radius of sphere is 1, which means u is 6.0 and v is 4.0
+					scale = 1 / abs(x); // let's assume that radius of sphere is 1, which means u is 6.0 and v is 4.0
 					if (x >= 0) { // right
 						//u = 5.0 - 4.0 * atan(z * scale) / pi;
 						//v = 3.0 + 4.0 * atan(y * scale) / pi;
@@ -61,7 +61,7 @@
 						v = 3.0 - 4 * atan(y * scale) / pi;//adjust the border
 					}
 				} else if (abs(y) >= abs(x) && abs(y) >= abs(z)) {
-					scale = 0.99 / abs(y);
+					scale = 1 / abs(y);
 					if (y >= 0) { // top
 						u = 5.0 + 4.0 * atan(z * scale) / pi;
 						v = 1.0 + 4.0 * atan(x * scale) / pi;
@@ -70,7 +70,7 @@
 						v = 1.0 + 4.0 * atan(x * scale) / pi;
 					}
 				} else if (abs(z) >= abs(x) && abs(z) >= abs(y)) {
-					scale = 0.99 / abs(z);
+					scale = 1 / abs(z);
 					if (z >= 0) { // front
 						u = 3.0 - 4.0 * atan(x * scale) / pi;
 						v = 3.0 - 4.0 * atan(y * scale) / pi;

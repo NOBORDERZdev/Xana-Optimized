@@ -15,7 +15,7 @@ MonoBehaviour:
   skyBoxes:
   - skyId: 0
     skyName: Golden Sky
-    skyMaterial: {fileID: 2100000, guid: b2193072a85930e42a540e43930e0d26, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -27,7 +27,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 1891ab98624fbf34da08e685087fe60a, type: 2}
   - skyId: 1
     skyName: Day Sky
-    skyMaterial: {fileID: 2100000, guid: 9de9c8d1cf3c2d24583b35f91a0c7eaa, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -39,7 +39,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: e8c58b91dc8cf7f458945d327b5f04fb, type: 2}
   - skyId: 4
     skyName: Day Sky 02
-    skyMaterial: {fileID: 2100000, guid: ad7c1e064f7aa884fb1d90f932c65dfd, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -51,7 +51,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: ab69cd8309343ff41b768a7e5c631254, type: 2}
   - skyId: 5
     skyName: Day Sky 03
-    skyMaterial: {fileID: 2100000, guid: 01210524c7185c74babbd24988b46fc0, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -63,7 +63,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 5172ad79e90356e44a609ff3bccd9aa8, type: 2}
   - skyId: 6
     skyName: Day Sky 04
-    skyMaterial: {fileID: 2100000, guid: 1474982501a6ef743a225abaa1258796, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -75,7 +75,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: d516988f7d956fa45b8c843be419cbf0, type: 2}
   - skyId: 7
     skyName: Cloudy Sky
-    skyMaterial: {fileID: 2100000, guid: 14878b4045d624f3da908fb45f4c3ae1, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -87,7 +87,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 48fd25b4b870941fb893fa17cf066e96, type: 2}
   - skyId: 8
     skyName: Cloudy Sky 02
-    skyMaterial: {fileID: 2100000, guid: 2f100e2f5946f4f2bbad6f2e32615e40, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -99,7 +99,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 836505cc1a68c6a4c85eb77241515895, type: 2}
   - skyId: 9
     skyName: Cloudy Sky 03
-    skyMaterial: {fileID: 2100000, guid: a3443426390464163b0cf924a24011da, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -111,7 +111,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 18f9e50002f285e4da455833343c0dec, type: 2}
   - skyId: 10
     skyName: Cloudy Sky 04
-    skyMaterial: {fileID: 2100000, guid: b682e0f1a8c1a4fdeada28f59640309e, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
       lightIntensity: 1.05
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -123,7 +123,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: fc0f545a569eb8444994b50373d6a64a, type: 2}
   - skyId: 2
     skyName: Cloudy Sky 05
-    skyMaterial: {fileID: 2100000, guid: d9f093fc5efc9aa4e9e9a63248ad9ff3, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.85
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -135,7 +135,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 8db7eea24b9b3c94c886bcd9050cf9c8, type: 2}
   - skyId: 11
     skyName: Sunny Sky
-    skyMaterial: {fileID: 2100000, guid: 2f04dca2b442b4bbe8148a1af7719a0d, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -147,7 +147,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 8dde79a1344331f438832a043d7b2145, type: 2}
   - skyId: 12
     skyName: Stormy Sky
-    skyMaterial: {fileID: 2100000, guid: b63e59039cb564494b85882be45aa045, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -159,7 +159,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: d37a19a2ab0d478419ada52c9c32ad89, type: 2}
   - skyId: 13
     skyName: Dusk Sky
-    skyMaterial: {fileID: 2100000, guid: 1dd78ce31370a41e78c06bba165edd05, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 0.85
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -171,7 +171,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 8ff0a3b86a1381e449de6ad22c4df6da, type: 2}
   - skyId: 14
     skyName: Dusk Sky 02
-    skyMaterial: {fileID: 2100000, guid: 508148fdf65724d8a9ba848eec4cbd54, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 0.85
       directionLightColor: {r: 1, g: 0.8627451, b: 0.9137255, a: 1}
@@ -183,7 +183,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 4d46b6c3a2150b54b9073a6a26fd8239, type: 2}
   - skyId: 15
     skyName: Dusk Sky 03
-    skyMaterial: {fileID: 2100000, guid: 91b89776b1d1b444e8f2b27983fdd118, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.55
       directionLightColor: {r: 1, g: 0.84313726, b: 0.91764706, a: 1}
@@ -195,7 +195,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 34e8484ca9355cb47a536373922d1f27, type: 2}
   - skyId: 3
     skyName: Night Sky
-    skyMaterial: {fileID: 2100000, guid: d328e26bd685cde4cb354c2d3b72f4a1, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.6
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -207,7 +207,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: d7c47b80d6a95f241ac461ef2ccffa21, type: 2}
   - skyId: 16
     skyName: Night Sky 02
-    skyMaterial: {fileID: 2100000, guid: 75919e5ffe5e44a498745e90ff421f6d, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
       lightIntensity: 0.6
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -219,7 +219,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 1cba110c625df0e4ea27edf26935d420, type: 2}
   - skyId: 17
     skyName: Night Sky 03
-    skyMaterial: {fileID: 2100000, guid: b5055a01b089443938678ac3fd71ab43, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
       lightIntensity: 0.65
       directionLightColor: {r: 0.78431374, g: 0.87058824, b: 1, a: 1}
@@ -231,7 +231,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: ec28fd20593c6c54580b5c6f1c3238d0, type: 2}
   - skyId: 18
     skyName: Night Sky 04
-    skyMaterial: {fileID: 2100000, guid: 41df6db391b39ed42a10a4b9eedd1742, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.62
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -243,7 +243,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: cb302e501fe689c479936498f826d39b, type: 2}
   - skyId: 19
     skyName: Dark Sky
-    skyMaterial: {fileID: 2100000, guid: 670de39e5029f40c68c2c4ec4f6eff93, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.8
       directionLightColor: {r: 0.9882353, g: 0.85490197, b: 1, a: 1}
@@ -255,7 +255,7 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 7735528b066ecc14db5c985dbf92bbd4, type: 2}
   - skyId: 20
     skyName: No Moon Sky
-    skyMaterial: {fileID: 2100000, guid: 00b6bdccbab345547832476cfd603703, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
       lightIntensity: 0.5
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
@@ -267,9 +267,9 @@ MonoBehaviour:
     ppVolumeProfile: {fileID: 11400000, guid: 2938cdbca4b27264c8348ad026ef735a, type: 2}
   - skyId: 21
     skyName: Blind Sky
-    skyMaterial: {fileID: 2100000, guid: 4490437022dc190479747e40008806e9, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
-      lightIntensity: 0.5
+      lightIntensity: 0.51
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
       character_directionLightIntensity: 0.2

@@ -182,7 +182,7 @@ public class SelfieController : MonoBehaviour
 
 #if UNITY_IOS
 
-            if (Input.touchCount <= 1)
+           if (Input.touchCount != 0 && Input.touchCount <= 1)
                         {
                             Touch l_Touch = Input.GetTouch(0);
 
@@ -499,7 +499,7 @@ public class SelfieController : MonoBehaviour
 #elif UNITY_ANDROID || UNITY_IOS
 
        
-        if (Input.touchCount <= 1 || isReconnecting)
+        if (Input.touchCount != 0 && Input.touchCount <= 1 || isReconnecting)
         {
             isReconnecting=false;
             m_IsSelfieFeatureActive = false;
@@ -547,7 +547,7 @@ public class SelfieController : MonoBehaviour
             m_PlayerController.GetComponent<PlayerControllerNew>().firstPersonCameraObj.SetActive(true);
         }
 
-        BuilderEventManager.SelfiActive?.Invoke(false);
+        BuilderEventManager.UIToggle?.Invoke(false);
     }
 
 

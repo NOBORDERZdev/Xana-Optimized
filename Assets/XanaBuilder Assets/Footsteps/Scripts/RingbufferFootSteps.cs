@@ -1,51 +1,25 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
-using System.Collections;
 
 public class RingbufferFootSteps : MonoBehaviour
 {
-    public ParticleSystem system;
-    public NavMeshAgent agent;
-    public Material activeMat;
-    public Material selectedMat;
-    public Material activeParticleMat;
-    public Material selectedParticleMat;
-    public ParticleSystem clickEffect;
     PlayerControllerNew playerControllerNew;
+    public ParticleSystem system;
     Vector3 lastEmit;
 
     public float delta = 1;
     public float gap = 0.1f;
     int dir = 1;
-    static RingbufferFootSteps selectedSystem;
 
     void Start()
     {
         playerControllerNew = GamificationComponentData.instance.playerControllerNew;
         lastEmit = transform.position;
-        GetComponent<MeshRenderer>().material = activeMat;
     }
 
-    bool onJump = false;
     public void Update()
     {
         if (BlindfoldedDisplayComponent.footstepsBool == true)
         {
-            if (selectedSystem == this && Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-                {
-                    agent.isStopped = false;
-                    agent.SetDestination(hit.point);
-                    clickEffect.transform.position = hit.point;
-                    clickEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-                    clickEffect.Play(true);
-                    //clickEffect.GetComponent<Animator>().SetTrigger("grow");
-                    Debug.Log("First");
-                }
-            }
-
             if (Vector3.Distance(lastEmit, transform.position) > delta && playerControllerNew._IsGrounded)
             {
                 Gizmos.color = Color.green;
@@ -56,26 +30,7 @@ public class RingbufferFootSteps : MonoBehaviour
                 ep.rotation = transform.rotation.eulerAngles.y;
                 system.Emit(ep, 1);
                 lastEmit = transform.position;
-                //Invoke("ParticlesFalse", 2f);
             }
         }
-    }
-
-
-    public void OnMouseUpAsButton()
-    {
-        if (selectedSystem == this)
-            return;
-
-        if (selectedSystem != null)
-        {
-            selectedSystem.agent.isStopped = true;
-            selectedSystem.GetComponent<Renderer>().material = activeMat;
-            selectedSystem.system.GetComponent<Renderer>().material = activeParticleMat;
-        }
-
-        selectedSystem = this;
-        GetComponent<Renderer>().material = selectedMat;
-        system.GetComponent<Renderer>().material = selectedParticleMat;
     }
 }
