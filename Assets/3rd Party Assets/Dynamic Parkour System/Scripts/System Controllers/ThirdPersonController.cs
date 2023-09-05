@@ -70,12 +70,12 @@ namespace Climbing
 
         private float turnSmoothTime = 0.1f;
         private float turnSmoothVelocity;
-        private PhotonView _photonView;
+        public PhotonView photonView;
         private void Awake()
         {
-            _photonView = transform.parent.GetComponent<PhotonView>();
+            photonView = transform.parent.GetComponent<PhotonView>();
             
-            if (_photonView.IsMine)
+            if (photonView.IsMine)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
             }
@@ -102,7 +102,7 @@ namespace Climbing
             if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
 
             //Get Input if controller and movement are not disabled
-            if (!dummy && allowMovement && _photonView.IsMine)
+            if (!dummy && allowMovement && photonView.IsMine)
             {
                 AddMovementInput(characterInput.movement);
 
