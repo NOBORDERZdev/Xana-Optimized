@@ -39,7 +39,7 @@ public class TrajectoryController : MonoBehaviour
                 {
                     if (colliderAim == null)
                         colliderAim = Instantiate(aimCollsion);
-                    if (hitInfo.collider.CompareTag("Item") || hitInfo.collider.CompareTag("Ground"))
+                    if (hitInfo.collider.CompareTag("Item") || hitInfo.collider.CompareTag("Footsteps/grass"))//"Ground"
                     {
                         colliderAim.transform.position = hitInfo.point;
                         hitDetected = true;
