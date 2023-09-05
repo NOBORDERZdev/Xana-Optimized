@@ -176,22 +176,32 @@ public class JjInfoManager : MonoBehaviour
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
+                            if(JJFrameManager.instance)
+                                JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
                             compersionPrfex = "?width=512&height=512";
                             break;
                         case "16:9":
+                            if (JJFrameManager.instance)
+                                JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                             worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
                             compersionPrfex = "?width=500&height=600";
                             break;
                         case "9:16":
+                            if (JJFrameManager.instance)
+                                JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                             worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
                             compersionPrfex = "?width=700&height=500";
                             break;
                         case "4:3":
+                            if (JJFrameManager.instance)
+                                JJFrameManager.instance.SetTransformForFrameSpotLight(3);
                             worldInfos[i].JjRatio = JjRatio.FourXThreeWithDes;
                             compersionPrfex = "?width=640&height=480";
                             break;
                         default:
+                            if (JJFrameManager.instance)
+                                JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].JjRatio = JjRatio.OneXOneWithDes;
                             compersionPrfex = "?width=512&height=512";
                             break;
@@ -204,21 +214,21 @@ public class JjInfoManager : MonoBehaviour
                         worldInfos[i].Type = DataType.Image;
                         NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[j].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
 
-                        if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
-                        {
+                        //if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
+                        //{
                             isWithDes = true;
                             worldInfos[i].Title = worldData[j].title;
                             worldInfos[i].Aurthor = worldData[j].authorName;
                             worldInfos[i].Des = worldData[j].description;
 
-                        }
-                        else
-                        {
-                            isWithDes = false;
-                            worldInfos[i].Title = null;
-                            worldInfos[i].Aurthor = null;
-                            worldInfos[i].Des = null;
-                        }
+                        //}
+                        //else
+                        //{
+                        //    isWithDes = false;
+                        //    worldInfos[i].Title = null;
+                        //    worldInfos[i].Aurthor = null;
+                        //    worldInfos[i].Des = null;
+                        //}
 
                     }
                     else if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
@@ -263,20 +273,20 @@ public class JjInfoManager : MonoBehaviour
                             }
 
 
-                            if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
-                            {
+                            //if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
+                            //{
                                 isWithDes = true;
                                 worldInfos[i].Title = worldData[j].title;
                                 worldInfos[i].Aurthor = worldData[j].authorName;
                                 worldInfos[i].Des = worldData[j].description;
-                            }
-                            else
-                            {
-                                isWithDes = false;
-                                worldInfos[i].Title = null;
-                                worldInfos[i].Aurthor = null;
-                                worldInfos[i].Des = null;
-                            }
+                            //}
+                            //else
+                            //{
+                            //    isWithDes = false;
+                            //    worldInfos[i].Title = null;
+                            //    worldInfos[i].Aurthor = null;
+                            //    worldInfos[i].Des = null;
+                            //}
                         }
                     }
                     break;

@@ -159,6 +159,11 @@ public class PlayerPortal : MonoBehaviour
         }
         if (JjInfoManager.Instance.videoRenderObject)
             JjInfoManager.Instance.videoRenderObject.SetActive(false);
+
+        foreach (GameObject obj in JJFrameManager.instance.ref_JJObjectPooler.pooledObjectsforFrame)
+            obj.SetActive(false);
+        foreach (GameObject obj in JJFrameManager.instance.ref_JJObjectPooler.pooledObjectsforSpotLight)
+            obj.SetActive(false);
     }
     #endregion
 

@@ -43,6 +43,8 @@ public class JJVideoAndImage : MonoBehaviour
 
     public bool isMultipleScreen = false;
 
+
+    public bool isCreateFrame = true;
     public enum MuseumType
     {
         AtomMuseum, 
@@ -87,6 +89,9 @@ public class JJVideoAndImage : MonoBehaviour
             SetImage();
         else if (dataType == DataType.Video)
             SetVideo();
+
+        if(isCreateFrame)
+            CreateFrame();   //create frame
     }
 
     void SetImage()
@@ -418,9 +423,25 @@ public class JJVideoAndImage : MonoBehaviour
             JjInfoManager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
     }
 
-    string NFT_title;
-    string NFT_Author;
-    string NFT_Description;
+    private void CreateFrame()
+    {
+        GameObject frame = JJFrameManager.instance.ref_JJObjectPooler.GetPooledObjectFrame();
+        frame.transform.SetParent(this.gameObject.transform);
+        frame.transform.position = transform.position;
+        frame.SetActive(true);
+        frame.transform.localPosition = new Vector3(JJFrameManager.instance.frameLocalPos.x, JJFrameManager.instance.frameLocalPos.y, JJFrameManager.instance.frameLocalPos.z);
+        frame.transform.localEulerAngles = new Vector3(90, -180.0f, 0);
+        frame.transform.localScale = new Vector3(JJFrameManager.instance.frameLocalScale.x, JJFrameManager.instance.frameLocalScale.y, JJFrameManager.instance.frameLocalScale.z);
+        
+        GameObject spotLightObj = JJFrameManager.instance.ref_JJObjectPooler.GetPooledObjectSpotLight();
+        spotLightObj.transform.SetParent(this.gameObject.transform);
+        spotLightObj.transform.position = transform.position;
+        spotLightObj.SetActive(true);
+        spotLightObj.transform.localScale = new Vector3(JJFrameManager.instance.spotLightScale.x, JJFrameManager.instance.spotLightScale.y, JJFrameManager.instance.spotLightScale.z);
+        spotLightObj.transform.localPosition = JJFrameManager.instance.spotLightPrefabPos ;
+        spotLightObj.transform.localEulerAngles = new Vector3(-22.857f, 180f, 0f);
+    }
+
     public void OpenWorldInfo()
     {
         if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
@@ -430,36 +451,13 @@ public class JJVideoAndImage : MonoBehaviour
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
             {
-                if (JjInfoManager.Instance.worldInfos[id].Title.Length < 2)
-                    NFT_title = " ";
-                else
-                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[0];
-                if (JjInfoManager.Instance.worldInfos[id].Aurthor.Length < 2)
-                    NFT_Author = " ";
-                else
-                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[0];
-                if (JjInfoManager.Instance.worldInfos[id].Des.Length < 2)
-                    NFT_Description = " ";
-                else
-                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[0];
-
+                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);       
             }
             else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                if (JjInfoManager.Instance.worldInfos[id].Title.Length < 2)
-                    NFT_title = " ";
-                else
-                    NFT_title = JjInfoManager.Instance.worldInfos[id].Title[1];
-                if (JjInfoManager.Instance.worldInfos[id].Aurthor.Length < 2)
-                    NFT_Author = " ";
-                else
-                    NFT_Author = JjInfoManager.Instance.worldInfos[id].Aurthor[1];
-                if (JjInfoManager.Instance.worldInfos[id].Des.Length < 2)
-                    NFT_Description = " ";
-                else
-                    NFT_Description = JjInfoManager.Instance.worldInfos[id].Des[1];
+                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
+
             }
-            JjInfoManager.Instance.SetInfo(_imgVideoRatio, NFT_title, NFT_Author, NFT_Description, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
         }
     }
 }

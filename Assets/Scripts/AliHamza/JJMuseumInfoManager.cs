@@ -9,7 +9,6 @@ public class JJMuseumInfoManager : MonoBehaviour
     [NonReorderable]
     public List<GameObject> NftPlaceholder;
     [SerializeField] int JJMusuemId;
-    // Start is called before the first frame update
 
 
     public async void InitJJMuseumInfoManager()
