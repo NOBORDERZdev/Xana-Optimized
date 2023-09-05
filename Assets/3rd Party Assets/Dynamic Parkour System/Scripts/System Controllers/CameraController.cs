@@ -34,6 +34,11 @@ namespace Climbing
         public float maxTime = 2.0f;
         private float curTime = 0.0f;
         private bool anim = false;
+        
+        // Mun New
+        public Transform playerModel;
+        public Transform focus;
+        //
 
 
         void Start()

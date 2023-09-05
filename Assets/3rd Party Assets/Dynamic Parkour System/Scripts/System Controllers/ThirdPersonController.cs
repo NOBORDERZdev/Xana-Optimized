@@ -34,7 +34,7 @@ namespace Climbing
     [RequireComponent(typeof(CameraController))]
     [RequireComponent(typeof(VaultingController))]
 
-    public class ThirdPersonController : MonoBehaviourPun
+    public class ThirdPersonController : MonoBehaviour/*Pun*/
     {
         public InputCharacterController characterInput;
         [HideInInspector] public MovementCharacterController characterMovement;
@@ -73,7 +73,8 @@ namespace Climbing
         public PhotonView photonView;
         private void Awake()
         {
-            photonView = GetComponent<PhotonView>();
+            photonView = transform.parent.GetComponent<PhotonView>();
+            
             if (photonView.IsMine)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
@@ -97,6 +98,8 @@ namespace Climbing
         {
             //Detect if Player is on Ground
             isGrounded = OnGround();
+            
+            if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
 
             //Get Input if controller and movement are not disabled
             if (!dummy && allowMovement && photonView.IsMine)
