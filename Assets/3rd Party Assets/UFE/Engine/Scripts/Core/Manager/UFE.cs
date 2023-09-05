@@ -3644,6 +3644,8 @@ public class UFE : MonoBehaviour, UFEInterface
 
             //if (GetLocalPlayer() == 1) GetPlayer1Controller().humanController = UFE.UFEInstance.gameObject.GetComponent<AbstractInputController>();
         }
+
+        UFE.eventSystem.enabled = true;
 	}
 	#endregion
 
@@ -3659,7 +3661,7 @@ public class UFE : MonoBehaviour, UFEInterface
             stageScene = SceneManager.GetSceneByName(UFE.config.selectedStage.stagePath);
         }
 		stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
-        SceneManager.SetActiveScene(stageScene);
+		SceneManager.SetActiveScene(stageScene);
     }
 
     public static ControlsScript SpawnCharacter(UFE3D.CharacterInfo characterInfo, int player, int mirror, FPVector location, bool isAssist, MoveInfo enterMove = null, MoveInfo exitMove = null, int altCostume = -1) {

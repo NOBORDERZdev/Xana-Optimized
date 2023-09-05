@@ -126,6 +126,8 @@ namespace UFE3D
             if (UFE.config.debugOptions.connectionLog) Debug.Log("OnMatchCreationError");
         }
 
+       // Attizaz Network Check Bool
+       public bool isNetworkGame;
         protected virtual void OnMatchesDiscovered(ReadOnlyCollection<MultiplayerAPI.MatchInformation> matches)
         {
             int unique = 0;
@@ -192,7 +194,7 @@ namespace UFE3D
 
             if (unique > 0 || _currentSearchTime >= 5) //Attizaz instead of 30 it was maxSearchTimes which used to wait for 5 seconds for match
             {
-                if (_currentSearchTime >=5)//Attizaz by default there was no condition just this code
+                if (_currentSearchTime >=5&&!isNetworkGame)//Attizaz by default there was no condition just this code
                 {
                     if (increamentCoroutine != null)
                     {
@@ -203,7 +205,7 @@ namespace UFE3D
                     print("The wait is over start match with AI");
                     
                 }
-                else
+                else //if(isNetworkGame)
                 {
                     if (increamentCoroutine != null)
                     {
