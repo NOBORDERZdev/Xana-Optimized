@@ -88,7 +88,7 @@ public class AvatarController : MonoBehaviour
 
     private void OnTransformParentChanged()
     {
-        if (UFE.gameMode == UFE3D.GameMode.VersusMode && transform.parent != null)
+        if (transform.parent != null)
         {
             if (transform.parent.GetComponent<ControlsScript>())
             {
