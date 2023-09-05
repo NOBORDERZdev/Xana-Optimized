@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 22200014}
   - component: {fileID: 11400022}
   - component: {fileID: 11400002}
+  - component: {fileID: 4318371214087502024}
   m_Layer: 5
   m_Name: MainMenuScreen
   m_TagString: Untagged
@@ -517,6 +518,25 @@ MonoBehaviour:
   delayBeforePlayingMusic: 0.1
   buttonNetwork: {fileID: 11418330}
   buttonBluetooth: {fileID: 11407270}
+--- !u!114 &4318371214087502024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 919342d273e42d44ab4f6058e8067b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAddressableScene: 0
+  AnimHighlight: {fileID: 0}
+  popupPenal: {fileID: 0}
+  spawnCharacterObject: {fileID: 0}
+  spawnCharacterObjectRemote: {fileID: 0}
+  EventEndedPanel: {fileID: 0}
+  mainScene: Main
 --- !u!1 &100020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,17 +1705,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400002}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Quit
-        m_Mode: 1
+      - m_Target: {fileID: 4318371214087502024}
+        m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
+        m_MethodName: LoadMain
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 1
 --- !u!1 &163730
 GameObject:
