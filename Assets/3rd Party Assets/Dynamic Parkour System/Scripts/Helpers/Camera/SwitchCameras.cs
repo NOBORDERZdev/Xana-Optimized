@@ -43,9 +43,12 @@ namespace Climbing
         [SerializeField] private CinemachineVirtualCamera Slide;
 
 
-        void Start()
+        private IEnumerator Start()
         {
             animator = GetComponent<Animator>();
+
+            yield return new WaitUntil(() => RFM.Globals.player);
+            SetCameraTargets();
 
             FreeLookCam();
         }
@@ -68,6 +71,20 @@ namespace Climbing
                 FreeLook.Priority = 0;
                 Slide.Priority = 1;
             }
+        }
+
+        private void SetCameraTargets()
+        {
+            var cameraController = RFM.Globals.player.GetComponentInChildren<Climbing.CameraController>();
+            FreeLook.Follow = cameraController.playerModel;
+            FreeLook.LookAt = cameraController.focus;
+            Slide.Follow = cameraController.playerModel;
+
+            var controller = RFM.Globals.player.GetComponentInChildren<Climbing.ThirdPersonController>();
+            controller.mainCamera = transform;
+            controller.freeCamera = FreeLook.transform;
+            controller.runCamera = FreeLook;
+            controller.sliderCamera = Slide;
         }
     }
 }

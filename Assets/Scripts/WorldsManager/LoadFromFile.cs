@@ -411,13 +411,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             RFM.Globals.player = player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
             PlayerCamera.gameObject.SetActive(false);
             environmentCameraRender.gameObject.SetActive(false);
-            Debug.LogError("entered in RFMDummy Scene");
             mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
         }
         else
         {
             player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
-            Debug.LogError("Enter in other scene");
         }
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;

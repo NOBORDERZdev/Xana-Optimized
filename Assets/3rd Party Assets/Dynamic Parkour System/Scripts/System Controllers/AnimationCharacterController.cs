@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace Climbing
         {
             controller = GetComponent<ThirdPersonController>();
             animator = GetComponent<Animator>();
-            switchCameras = Camera.main.GetComponent<SwitchCameras>();
+            switchCameras = Camera.main?.GetComponent<SwitchCameras>();
         }
 
         void Update()
@@ -57,6 +58,11 @@ namespace Climbing
             {
                 animator.applyRootMotion = false;
             }
+        }
+
+        private void LateUpdate()
+        {
+            if (!switchCameras) switchCameras = Camera.main?.GetComponent<SwitchCameras>();
         }
 
         public void SetAnimVelocity(Vector3 value) { animVelocity = value; animVelocity.y = 0; }
