@@ -28,14 +28,14 @@ namespace Climbing
     {
         private PlayerControls controls = null;
 
-        [HideInInspector] public Vector2 movement;
-        [HideInInspector] public bool run;
-        [HideInInspector] public bool jump;
-        [HideInInspector] public bool drop;
+        public Vector2 movement;
+        public bool run;
+        public bool jump;
+        public bool drop;
 
         private void OnEnable()
         {
-            if(controls != null)
+            if (controls != null)
                 controls.Enable();
         }
 
@@ -55,8 +55,8 @@ namespace Climbing
             controls.Player.Jump.canceled += ctx => jump = ctx.ReadValueAsButton();
             controls.Player.Drop.performed += ctx => drop = ctx.ReadValueAsButton();
             controls.Player.Drop.canceled += ctx => drop = ctx.ReadValueAsButton();
-            controls.Player.Run.performed += ctx => run = ctx.ReadValueAsButton();
-            controls.Player.Run.canceled += ctx => run = ctx.ReadValueAsButton();
+            /*controls.Player.Run.performed += ctx => run = ctx.ReadValueAsButton();
+            controls.Player.Run.canceled += ctx => run = ctx.ReadValueAsButton();*/
             controls.GameManager.Exit.performed += ctx => Exit();
         }
 

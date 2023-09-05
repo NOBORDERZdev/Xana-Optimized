@@ -24,19 +24,19 @@ using UnityEngine;
 using DG;
 using Cinemachine;
 using DG.Tweening;
+using Photon.Pun;
 
 namespace Climbing
 {
-    [RequireComponent(typeof(InputCharacterController))]
     [RequireComponent(typeof(MovementCharacterController))]
     [RequireComponent(typeof(AnimationCharacterController))]
     [RequireComponent(typeof(DetectionCharacterController))]
     [RequireComponent(typeof(CameraController))]
     [RequireComponent(typeof(VaultingController))]
 
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : MonoBehaviourPun
     {
-        [HideInInspector] public InputCharacterController characterInput;
+        public InputCharacterController characterInput;
         [HideInInspector] public MovementCharacterController characterMovement;
         [HideInInspector] public AnimationCharacterController characterAnimation;
         [HideInInspector] public DetectionCharacterController characterDetection;
@@ -70,10 +70,14 @@ namespace Climbing
 
         private float turnSmoothTime = 0.1f;
         private float turnSmoothVelocity;
-
+        public PhotonView photonView;
         private void Awake()
         {
-            characterInput = GetComponent<InputCharacterController>();
+            photonView = GetComponent<PhotonView>();
+            if (photonView.IsMine)
+            {
+                characterInput = CanvasButtonsHandler.inst.RFMInputController;
+            }
             characterMovement = GetComponent<MovementCharacterController>();
             characterAnimation = GetComponent<AnimationCharacterController>();
             characterDetection = GetComponent<DetectionCharacterController>();
@@ -95,7 +99,7 @@ namespace Climbing
             isGrounded = OnGround();
 
             //Get Input if controller and movement are not disabled
-            if (!dummy && allowMovement)
+            if (!dummy && allowMovement && photonView.IsMine)
             {
                 AddMovementInput(characterInput.movement);
 
@@ -214,7 +218,7 @@ namespace Climbing
             characterMovement.EnableFeetIK();
             characterMovement.ApplyGravity();
             characterMovement.stopMotion = false;
-            dummy = false; 
+            dummy = false;
             allowMovement = true;
         }
     }

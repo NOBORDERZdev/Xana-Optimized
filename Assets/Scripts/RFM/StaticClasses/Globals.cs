@@ -28,7 +28,7 @@ namespace RFM
         public static readonly int GainingMoneyTimeInterval = 1;
         public static readonly int MoneyPerInterval = 5;
 
-        public static bool IsRFMWorld = true;
+        public static bool IsRFMWorld = false;
         public static bool IsLocalPlayerHunter;
     }
 }
