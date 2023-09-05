@@ -5,13 +5,15 @@ using Photon.Pun;
 
 public class WarpFunctionComponent : ItemComponent
 {
-    private WarpFunctionComponentData warpFunctionComponentData;
+    internal WarpFunctionComponentData warpFunctionComponentData;
     public static bool isPortalUsed;
     CharacterController characterControllerNew;
 
     public void Init(WarpFunctionComponentData warpFunctionComponentData)
     {
         this.warpFunctionComponentData = warpFunctionComponentData;
+
+        GamificationComponentData.instance.warpComponentList.Add(this);
     }
 
     private void Start()
@@ -64,5 +66,4 @@ public class WarpFunctionComponent : ItemComponent
         yield return new WaitForSeconds(2);
         isPortalUsed = false;
     }
-
 }

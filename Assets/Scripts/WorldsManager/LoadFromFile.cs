@@ -524,10 +524,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             player.GetComponent<CapsuleCollider>().isTrigger = false;
             player.GetComponent<CapsuleCollider>().enabled = false;
-            RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
-            GamificationComponentData.instance.playerControllerNew.controllerCamera.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
-            GamificationComponentData.instance.playerControllerNew.firstPersonCameraObj.AddComponent<Animator>().runtimeAnimatorController = cameraEffect;
 
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
             GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.683f;
@@ -543,7 +540,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             environmentCameraRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             Camera freeCam = this.GetComponent<ChecklPostProcessing>().freeCam;
             freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-
+            if (player.GetComponent<StepsManager>())
+            {
+                player.GetComponent<StepsManager>().isplayer = true;
+            }
             //set Far & Near value same as builder for flickering assets testing
             firstPersonCamera.nearClipPlane = 0.03f;
             environmentCameraRender.nearClipPlane = 0.03f;

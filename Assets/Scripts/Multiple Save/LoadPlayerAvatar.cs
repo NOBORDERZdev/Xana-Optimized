@@ -118,8 +118,9 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
         {
             print("Horayyy you have Access");
         }
-        if (contentParent.transform.childCount <= 1)
+        if (contentParent.transform.childCount >= 1)
         {
+            EmptyAvatarContainer();
             StartCoroutine(GetAvatarData_Server(1, 20));
         }
         mainPanel.SetActive(true);
@@ -642,7 +643,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
     {
         int count = contentParent.transform.childCount - 1;
         Transform container = contentParent.transform;
-        if (count > 1)
+        if (count >= 1)
         {
             for (int i = count; i >= 1; i--)
             {

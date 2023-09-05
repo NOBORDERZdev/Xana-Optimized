@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Models;
 using System.Globalization;
+using System;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
 
         DisableThrowThingUI();
-        DisableAllComponentUIObject(ComponentType.None);
+        DisableAllComponentUIObject(Constants.ItemComponentType.none);
     }
     private void OnDisable()
     {
@@ -91,7 +92,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             GamificationComponentData.instance.Ninja_Throw_InitPosX = NinjaMotionUIButtonPanel.transform.localPosition;
     }
 
-    //Narration Comopnent 
+    //Narration Comopnent
+    internal NarrationComponent narrationComponent;
     public GameObject narrationUIParent;
     public TextMeshProUGUI narrationTextUI;
     float letterDelay = 0.1f;
@@ -136,14 +138,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     public GameObject SituationChangerParentUI;
     public TextMeshProUGUI SituationChangerTimeText;
 
-    //Blind Component
-    public GameObject BlindComponentParentUI;
-    public TextMeshProUGUI BlindComponentTimeText;
+
 
     //Narration Component
     void EnableNarrationUI(string narrationText, bool isStory)
     {
-        DisableAllComponentUIObject(ComponentType.Narration);
+        DisableAllComponentUIObject(Constants.ItemComponentType.narration);
         narrationUIParent.SetActive(true);
         if (!isStory)
         {
@@ -218,7 +218,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableRandomNumberUI(float r)
     {
-        DisableAllComponentUIObject(ComponentType.RandomNumberGenerator);
+        DisableAllComponentUIObject(Constants.ItemComponentType.randomNumber);
         RandomNumberUIParent.SetActive(true);
         string s = TextLocalization.GetLocaliseTextByKey("Generated Number On This");
         RandomNumberText.text = s + " : " + r.ToString();
@@ -233,7 +233,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     Coroutine TimeCoroutine;
     public void EnableTimeLimitUI(string purpose, float time)
     {
-        DisableAllComponentUIObject(ComponentType.TimeLimit);
+        DisableAllComponentUIObject(Constants.ItemComponentType.timeLimit);
         TimeLimitUIParent.SetActive(true);
         if (TimeCoroutine == null)
         {
@@ -270,7 +270,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine TimerCountdownCoroutine;
     public void EnableTimerCountDownUI(int time, bool isRunning)
     {
-        DisableAllComponentUIObject(ComponentType.TimerCountDown);
+        DisableAllComponentUIObject(Constants.ItemComponentType.timerCountdown);
         if (isRunning)
         {
             if (TimerCountdownCoroutine == null)
@@ -315,7 +315,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         //Debug.Log("EnableElapseTimeCounDownUI" + time);
         if (isRunning)
         {
-            DisableAllComponentUIObject(ComponentType.ElapsedTime);
+            DisableAllComponentUIObject(Constants.ItemComponentType.elapsedTime);
             ElapseTimeUIParent.SetActive(true);
             if (ElapsedTimerCoroutine == null)
             {
@@ -358,7 +358,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     Coroutine EnableDisplayMessageCoroutine;
     public void EnableDisplayMessageUI(string DisplayMessage, float time, bool state)
     {
-        DisableAllComponentUIObject(ComponentType.DisplayMessage);
+        DisableAllComponentUIObject(Constants.ItemComponentType.displayMessages);
         if (EnableDisplayMessageCoroutine == null)
         {
             EnableDisplayMessageCoroutine = StartCoroutine(IEEnableDisplayMessageUI(DisplayMessage, time, state));
@@ -405,7 +405,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableHelpButtonUI(string helpButtonTitle, string HelpTexts, GameObject obj)
     {
-        DisableAllComponentUIObject(ComponentType.HelpButton);
+        DisableAllComponentUIObject(Constants.ItemComponentType.helpButton);
         helpButtonComponentResizer.target = obj.transform;
         helpButtonComponentResizer.isAlwaysOn = false;
         HelpButtonTitleText.text = helpButtonTitle;
@@ -447,7 +447,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            DisableAllComponentUIObject(ComponentType.SituationChanger);
+            DisableAllComponentUIObject(Constants.ItemComponentType.situationChanger);
             if (SituationChangerCoroutine == null)
             {
                 SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
@@ -531,7 +531,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         confirm = "Confirm";
         result = "Result";
         next = "Next";
-        DisableAllComponentUIObject(ComponentType.Quiz);
+        DisableAllComponentUIObject(Constants.ItemComponentType.quiz);
         quizComponentUI.SetActive(true);
         this.quizComponent = quizComponent;
         StartQuiz(quizComponentData);
@@ -844,9 +844,10 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisableQuizComponentUI();
     }
 
-    void DisableQuizComponentUI()
+    internal void DisableQuizComponentUI()
     {
         quizComponentUI.SetActive(false);
+        quizComponent = null;
     }
     #endregion
 
@@ -857,7 +858,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableSpecialItemUI(float time)
     {
-        DisableAllComponentUIObject(ComponentType.SpecialItem);
+        DisableAllComponentUIObject(Constants.ItemComponentType.specialItem);
         SpecialItemUIParent.SetActive(true);
 
         if (SpecialItemCoroutine == null)
@@ -899,7 +900,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableAvatarInvisibilityUI(float time)
     {
-        DisableAllComponentUIObject(ComponentType.AvatarInvisibility);
+        DisableAllComponentUIObject(Constants.ItemComponentType.blindFoldedDisplay);
         AvatarInvisibilityUIParent.SetActive(true);
 
         if (AvatarInvisibilityCoroutine == null)
@@ -944,7 +945,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableNinjaMotionUI(float time)
     {
-        DisableAllComponentUIObject(ComponentType.NinjaMotion);
+        DisableAllComponentUIObject(Constants.ItemComponentType.ninja);
         DisableThrowThingUI();
         NinjaMotionUIParent.SetActive(true);
 
@@ -1000,7 +1001,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableThrowThingsUI()
     {
-        DisableAllComponentUIObject(ComponentType.ThrowThings);
+        DisableAllComponentUIObject(Constants.ItemComponentType.throwThings);
         ThrowThingsUIParent.SetActive(true);
     }
 
@@ -1065,7 +1066,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, Transform obj)
     {
         HyperLinkPopupUIParent.SetActive(true);
-        DisableAllComponentUIObject(ComponentType.HyperLinkPopup);
+        DisableAllComponentUIObject(Constants.ItemComponentType.hyperLinkPop);
         hyperLinkPopupTitleText.text = hyperLinkPopupTitle;
         hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
@@ -1094,12 +1095,26 @@ public class GamificationComponentUIManager : MonoBehaviour
     #endregion
 
     #region Blind Component
+    public GameObject BlindComponentParentUI;
+    public TextMeshProUGUI BlindComponentTimeText;
+    public bool isNight;
+    public bool isBlindToogle;
+    public int previousSkyID;
     public Coroutine BlindComponentCoroutine;
+
+    #region BlindComponent
+    public void BlindTimerCount(bool _toggle, int _time)
+    {
+        TimeSpan ts = TimeSpan.FromSeconds(_time);
+        BlindComponentTimeText.text = ts.ToString(@"mm\:ss");
+        BlindComponentParentUI.SetActive(_toggle);
+    }
+    #endregion
     public void EnableBlindComponentUI(float timer)
     {
         if (timer > 0)
         {
-            DisableAllComponentUIObject(ComponentType.BlindComponent);
+            DisableAllComponentUIObject(Constants.ItemComponentType.blind);
             if (BlindComponentCoroutine == null)
             {
                 BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
@@ -1151,57 +1166,37 @@ public class GamificationComponentUIManager : MonoBehaviour
             return time.ToString("00");
     }
 
-    void DisableAllComponentUIObject(ComponentType componentType)
+    void DisableAllComponentUIObject(Constants.ItemComponentType componentType)
     {
-        if (componentType != ComponentType.SituationChanger)
+        if (componentType != Constants.ItemComponentType.situationChanger)
             DisableSituationChangerUI();
-        if (componentType != ComponentType.DisplayMessage)
+        if (componentType != Constants.ItemComponentType.displayMessages)
             DisableDisplayMessageUI();
-        if (componentType != ComponentType.TimerCountDown)
+        if (componentType != Constants.ItemComponentType.elapsedTime)
             DisableElapseTimeCounDownUI();
-        if (componentType != ComponentType.HelpButton)
+        if (componentType != Constants.ItemComponentType.helpButton)
             DisableHelpButtonUI();
-        if (componentType != ComponentType.Narration)
+        if (componentType != Constants.ItemComponentType.narration)
             DisableNarrationUI();
-        if (componentType != ComponentType.RandomNumberGenerator)
+        if (componentType != Constants.ItemComponentType.randomNumber)
             DisableRandomNumberUI();
-        if (componentType != ComponentType.TimeLimit)
+        if (componentType != Constants.ItemComponentType.timeLimit)
             DisableTimeLimitUI();
-        if (componentType != ComponentType.TimerCountDown)
+        if (componentType != Constants.ItemComponentType.timerCountdown)
             DisableTimerCounDownUI();
-        if (componentType != ComponentType.Quiz)
+        if (componentType != Constants.ItemComponentType.quiz)
             DisableQuizComponentUI();
-        if (componentType != ComponentType.SpecialItem)
+        if (componentType != Constants.ItemComponentType.specialItem)
             DisableSpecialItemUI();
-        if (componentType != ComponentType.NinjaMotion)
+        if (componentType != Constants.ItemComponentType.ninja)
             DisableNinjaMotionUI();
-        if (componentType != ComponentType.AvatarInvisibility)
+        if (componentType != Constants.ItemComponentType.blindFoldedDisplay)
             DisableAvatarInvisibilityUI();
-        if (componentType != ComponentType.ThrowThings)
+        if (componentType != Constants.ItemComponentType.throwThings)
             DisableThrowThingUI();
-        if (componentType != ComponentType.HyperLinkPopup)
+        if (componentType != Constants.ItemComponentType.hyperLinkPop)
             DisableHyperLinkPopupUI();
-        if (componentType != ComponentType.BlindComponent)
+        if (componentType != Constants.ItemComponentType.blind)
             DisableBlindComponentUI();
     }
-}
-
-public enum ComponentType
-{
-    None,
-    TimeLimit,
-    ElapsedTime,
-    Narration,
-    RandomNumberGenerator,
-    TimerCountDown,
-    SituationChanger,
-    HelpButton,
-    DisplayMessage,
-    SpecialItem,
-    Quiz,
-    NinjaMotion,
-    AvatarInvisibility,
-    ThrowThings,
-    HyperLinkPopup,
-    BlindComponent
 }

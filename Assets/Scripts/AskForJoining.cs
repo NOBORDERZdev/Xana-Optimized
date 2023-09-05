@@ -89,7 +89,7 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();
-            BuilderEventManager.ResetComponentUI?.Invoke(ComponentType.None);
+            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
             Destroy(this.gameObject);
 

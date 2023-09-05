@@ -4371,7 +4371,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4435,7 +4435,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1419179164607386639
@@ -7705,7 +7705,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7769,7 +7769,7 @@ MonoBehaviour:
   m_margin: {x: -1.9392984, y: 0.25139192, z: -1.855501, w: -1.6092674}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &4188578815985498965
@@ -11550,6 +11550,7 @@ GameObject:
   - component: {fileID: 300990757756869482}
   - component: {fileID: 8357973693737612267}
   - component: {fileID: 1868599478022124912}
+  - component: {fileID: 49617900000299018}
   m_Layer: 22
   m_Name: 34
   m_TagString: PhotonLocalPlayer
@@ -12291,7 +12292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StepAudio: {fileID: 2716766233648052159}
-  StepsVolume: 0.05
+  StepsVolume: 0.07
   isplayer: 0
   sandclips:
   - {fileID: 8300000, guid: ec0e869c144b594438ea12854fa5e1cf, type: 3}
@@ -12307,6 +12308,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 88b503d163157bf41b2f7920aac1289b, type: 3}
   floorClips:
   - {fileID: 8300000, guid: b2cbe6a0cb047e946b5ceeb39526d0b5, type: 3}
+  grassClips:
+  - {fileID: 8300000, guid: 198b5672c9b39264b90780e65cbaffca, type: 3}
 --- !u!114 &1868599478022124912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12320,6 +12323,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RangeVolSpeaker: {fileID: 4745365908476068343}
+--- !u!81 &49617900000299018
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0
@@ -20641,8 +20652,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: abc
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
