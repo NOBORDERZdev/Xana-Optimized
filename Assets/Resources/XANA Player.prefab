@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358532925082188}
-  m_LocalRotation: {x: 0.045405038, y: -0.063791774, z: 0.00960543, w: 0.9968836}
+  m_LocalRotation: {x: 0.045405038, y: -0.06379181, z: 0.009605436, w: 0.9968836}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -106,8 +106,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358532959275495}
-  m_LocalRotation: {x: 0.11536851, y: 0.0018741746, z: -0.00021767462, w: 0.993321}
-  m_LocalPosition: {x: 0, y: 2.7600002, z: -4.7}
+  m_LocalRotation: {x: 0.13267733, y: 0.0031128912, z: -0.00041669607, w: 0.9911543}
+  m_LocalPosition: {x: -0.05, y: -0.42000008, z: 2.3199997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -137,11 +137,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
-  far clip plane: 5000
-  field of view: 40
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
   orthographic: 0
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1293,7 +1293,6 @@ GameObject:
   - component: {fileID: 5556358534646836577}
   - component: {fileID: 5556358534646836576}
   - component: {fileID: 6941776532399528574}
-  - component: {fileID: 7974667347261648450}
   - component: {fileID: 5556358534646836590}
   - component: {fileID: 5556358534646836588}
   - component: {fileID: 5556358534646836586}
@@ -1303,6 +1302,7 @@ GameObject:
   - component: {fileID: 5556358534646836584}
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
+  - component: {fileID: 4596010710677339407}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -1393,22 +1393,6 @@ CapsuleCollider:
   m_Height: 1.39
   m_Direction: 1
   m_Center: {x: 0, y: 0.86576736, z: 0}
---- !u!114 &7974667347261648450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556358534646836578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7c3ccb252414bc46a44e428b27b1c70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movement: {x: 0, y: 0}
-  run: 0
-  jump: 0
-  drop: 0
 --- !u!114 &5556358534646836590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1421,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3983e0cb5dfc40445bc6676bb1f9c7b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterInput: {fileID: 7974667347261648450}
+  characterInput: {fileID: 0}
   characterMovement: {fileID: 5556358534646836588}
   characterAnimation: {fileID: 5556358534646836589}
   characterDetection: {fileID: 5556358534646836587}
@@ -1443,6 +1427,7 @@ MonoBehaviour:
   normalCapsuleCollider: {fileID: 5556358534646836576}
   slidingCapsuleCollider: {fileID: 6941776532399528574}
   slideParticleEffect: {fileID: 2237075156762427131}
+  photonView: {fileID: 0}
 --- !u!114 &5556358534646836588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1662,6 +1647,29 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &4596010710677339407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7942164388486371721}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
