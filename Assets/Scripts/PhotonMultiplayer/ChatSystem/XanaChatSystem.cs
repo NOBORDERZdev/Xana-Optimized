@@ -141,6 +141,25 @@ public class XanaChatSystem : MonoBehaviour
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
+    public void DisplayErrorMsg_FromSocket(string _msg ,string errorType)
+    {
+
+        if (errorType.Contains("Error"))
+        {
+            this.CurrentChannelText.text = "<color=red>" + _msg + "...</color>" + "\n" + this.CurrentChannelText.text; ;
+            this.PotriatCurrentChannelText.text = "<color=red>" + _msg + "...</color>" + "\n" + this.PotriatCurrentChannelText.text;
+        }
+        else
+        {
+            this.CurrentChannelText.text = "<color=green>" + _msg + "</color>" + "\n" + this.CurrentChannelText.text; ;
+            this.PotriatCurrentChannelText.text = "<color=green>" + _msg + "</color>" + "\n" + this.PotriatCurrentChannelText.text;
+        }
+
+        //StartCoroutine(Delay());
+
+        //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
+    }
+
     public void LoadOldChat()
     {
         XanaChatSocket_Waqas.callApi?.Invoke();
