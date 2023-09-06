@@ -88,7 +88,7 @@ public class AvatarController : MonoBehaviour
 
     private void OnTransformParentChanged()
     {
-        if (transform.parent != null)
+        /*if (transform.parent != null)
         {
             if (transform.parent.GetComponent<ControlsScript>())
             {
@@ -102,7 +102,7 @@ public class AvatarController : MonoBehaviour
                     staticPlayer = true;
                 }
             }
-        }
+        }*/
     }
     private void OnDisable()
     {

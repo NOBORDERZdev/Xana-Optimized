@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightingGameManager : MonoBehaviour
+public class FightingGameManager : MonoBehaviourPunCallbacks
 {
     public static FightingGameManager instance;
     public bool startDirectly = false;
@@ -13,6 +13,8 @@ public class FightingGameManager : MonoBehaviour
     public UFE3D.CharacterInfo P1SelectedChar;
     public UFE3D.CharacterInfo P2SelectedChar;
 
+    public PlayerDataClass player1Data = new PlayerDataClass();
+    public PlayerDataClass player2Data = new PlayerDataClass();
     public string myName = ""; //Attizaz
     public string opponentName = "";
     private void Awake()
@@ -34,8 +36,31 @@ public class FightingGameManager : MonoBehaviour
             UFE.SetPlayer2(P2SelectedChar);
             UFE.StartLoadingBattleScreen();
         }
+        Invoke("GetPlayerData", 5);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            GetPlayerData();
+        }
+    }
+    public void GetPlayerData()
+    {
+        Debug.LogError("GetPlayerData");
+        player1Data = new PlayerDataClass(
+            PhotonNetwork.LocalPlayer.CustomProperties["PlayerName"].ToString(),
+            PhotonNetwork.LocalPlayer.CustomProperties["NFTURL"].ToString(),
+            PhotonNetwork.LocalPlayer.CustomProperties["ClothJson"].ToString()
+            );
+
+        player2Data = new PlayerDataClass(
+            PhotonNetwork.PlayerListOthers[0].CustomProperties["PlayerName"].ToString(),
+            PhotonNetwork.PlayerListOthers[0].CustomProperties["NFTURL"].ToString(),
+            PhotonNetwork.PlayerListOthers[0].CustomProperties["ClothJson"].ToString()
+            );
+    }
     #region Attizaz's code
     public void CallRPC()
     {
@@ -70,4 +95,23 @@ public class FightingGameManager : MonoBehaviour
     }
     #endregion
 
+}
+
+[System.Serializable]
+public class PlayerDataClass
+{
+    public string name;
+    public string NFT;
+    public string cloth;
+
+    public PlayerDataClass()
+    {
+
+    }
+    public PlayerDataClass(string n,string nft,string c)
+    {
+        name = n;
+        NFT = nft;
+        cloth = c;
+    }
 }

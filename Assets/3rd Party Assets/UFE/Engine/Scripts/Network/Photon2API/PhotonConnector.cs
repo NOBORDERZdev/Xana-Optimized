@@ -300,7 +300,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     /// </remarks>
     public override void OnConnected()
     {
-        if (debugInfo) Debug.Log("PhotonConnector.OnConnected");
+        if (debugInfo) Debug.Log("PhotonConnector.OnConnected: "+PhotonNetwork.LocalPlayer.NickName);
         this.RaiseOnInitializationSuccessful();
     }
 
@@ -492,7 +492,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     /// </remarks>
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        if (debugInfo) Debug.Log("PhotonConnector.OnPlayerConnected");
+        if (debugInfo) Debug.Log("PhotonConnector.OnPlayerConnected"+ newPlayer.NickName);
 
         if (this._isMasterClient)
         {
@@ -546,6 +546,12 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     public override void OnConnectedToMaster()
     {
         if (debugInfo) Debug.Log("PhotonConnector.OnConnectedToMaster");
+
+        Hashtable playerProperties = new Hashtable();
+        playerProperties.Add("PlayerName",PlayerPrefs.GetString("PlayerName"));
+        playerProperties.Add("NFTURL",XanaConstants.xanaConstants.NFTUrl);
+        playerProperties.Add("ClothJson", XanaConstants.xanaConstants.clothJson);
+        PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
         PhotonNetwork.JoinLobby();
     }
 
@@ -828,6 +834,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
 
     protected virtual void RaiseOnPlayerConnectedToMatch(MultiplayerAPI.PlayerInformation player)
     {
+        Debug.LogError("player networkIdentity: " + player.networkIdentity);
         if (debugInfo) Debug.Log("PhotonConnector.RaiseOnPlayerConnectedToMatch");
         if (this.OnPlayerConnectedToMatch != null)
         {
