@@ -32,8 +32,10 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
         StartCoroutine(IEDelay());
         IEnumerator IEDelay()
         {
+        FightingGameManager.instance.GetPlayerData();
             player1RawImage.gameObject.SetActive(false);
             player2RawImage.gameObject.SetActive(false);
+            yield return new WaitForSeconds(.1f);
             player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
             player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
             if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
@@ -57,7 +59,7 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
             player2.GetComponent<AvatarController>().OnEnable();
 
             player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = false;
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = true;
             player1RawImage.gameObject.SetActive(true);
             player2RawImage.gameObject.SetActive(true);
