@@ -49,17 +49,25 @@ public class FightingGameManager : MonoBehaviourPunCallbacks
     public void GetPlayerData()
     {
         Debug.LogError("GetPlayerData");
+        Debug.LogError("player actornumber:" + PhotonNetwork.LocalPlayer.ActorNumber);
         player1Data = new PlayerDataClass(
             PhotonNetwork.LocalPlayer.CustomProperties["PlayerName"].ToString(),
             PhotonNetwork.LocalPlayer.CustomProperties["NFTURL"].ToString(),
             PhotonNetwork.LocalPlayer.CustomProperties["ClothJson"].ToString()
             );
+        if (PhotonNetwork.PlayerListOthers.Length > 0)
+        {
+            player2Data = new PlayerDataClass(
+                PhotonNetwork.PlayerListOthers[0].CustomProperties["PlayerName"].ToString(),
+                PhotonNetwork.PlayerListOthers[0].CustomProperties["NFTURL"].ToString(),
+                PhotonNetwork.PlayerListOthers[0].CustomProperties["ClothJson"].ToString()
+                );
+        }
+    }
 
-        player2Data = new PlayerDataClass(
-            PhotonNetwork.PlayerListOthers[0].CustomProperties["PlayerName"].ToString(),
-            PhotonNetwork.PlayerListOthers[0].CustomProperties["NFTURL"].ToString(),
-            PhotonNetwork.PlayerListOthers[0].CustomProperties["ClothJson"].ToString()
-            );
+    public override void OnJoinedRoom()
+    {
+        GetPlayerData();
     }
     #region Attizaz's code
     public void CallRPC()
@@ -108,7 +116,7 @@ public class PlayerDataClass
     {
 
     }
-    public PlayerDataClass(string n,string nft,string c)
+    public PlayerDataClass(string n, string nft, string c)
     {
         name = n;
         NFT = nft;
