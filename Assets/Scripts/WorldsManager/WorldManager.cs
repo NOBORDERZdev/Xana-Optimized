@@ -351,7 +351,7 @@ public class WorldManager : MonoBehaviour
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
-            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=12;
+            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=25;
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
