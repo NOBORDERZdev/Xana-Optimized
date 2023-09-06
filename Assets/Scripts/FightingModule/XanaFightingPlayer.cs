@@ -6,6 +6,7 @@ using UnityEngine;
 public class XanaFightingPlayer : MonoBehaviour
 {
     public AvatarController avatarController;
+    public string cloth;
     void Start()
     {
 
@@ -17,20 +18,30 @@ public class XanaFightingPlayer : MonoBehaviour
     }
     private void OnTransformParentChanged()
     {
+        Debug.LogError("OnTransformParentChanged");
         if (transform.parent.GetComponent<ControlsScript>())
         {
+            Debug.LogError("playernum: " + transform.parent.GetComponent<ControlsScript>().playerNum + " actor number: " + PhotonNetwork.LocalPlayer.ActorNumber);
             if (transform.parent.GetComponent<ControlsScript>().playerNum == 1)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
                 {
-                    avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                }
+                else
+                {
+                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
                 }
             }
             else
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
-                    avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                }
+                else
+                {
+                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
                 }
             }
             avatarController.OnEnable();
