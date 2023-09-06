@@ -21,16 +21,19 @@ public class XanaFightingPlayer : MonoBehaviour
         Debug.LogError("OnTransformParentChanged");
         if (transform.parent.GetComponent<ControlsScript>())
         {
-            Debug.LogError("playernum: " + transform.parent.GetComponent<ControlsScript>().playerNum + " actor number: " + PhotonNetwork.LocalPlayer.ActorNumber);
-            if (transform.parent.GetComponent<ControlsScript>().playerNum == 1)
+            ControlsScript controlsScript = transform.parent.GetComponent<ControlsScript>();
+            Debug.LogError("playernum: " + controlsScript.playerNum + " actor number: " + PhotonNetwork.LocalPlayer.ActorNumber);
+            if (controlsScript.playerNum == 1)
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
                 {
                     cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                    controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name;
                 }
                 else
                 {
                     cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                    controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name;
                 }
             }
             else
@@ -38,9 +41,11 @@ public class XanaFightingPlayer : MonoBehaviour
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                    controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name;
                 }
                 else
                 {
+                    controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name;
                     cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
                 }
             }
