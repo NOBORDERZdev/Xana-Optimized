@@ -25,20 +25,12 @@ public class XanaFightingPlayer : MonoBehaviour
                 {
                     avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
                 }
-                else
-                {
-                    avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
-                }
             }
             else
             {
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
-                }
-                else
-                {
-                    avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
                 }
             }
             avatarController.OnEnable();

@@ -64,7 +64,7 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
 			{
 				UFE.DelayLocalAction(delegate () { UFE.PlaySound(this.onLoadSound); }, this.delayBeforeMusic);
 			}
-
+			FightingGameManager.instance.GetPlayerData();
 			if (UFE.config.player1Character != null)
 			{
 				if (this.portraitPlayer1 != null)
