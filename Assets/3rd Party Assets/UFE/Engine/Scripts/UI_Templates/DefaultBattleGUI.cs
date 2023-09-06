@@ -539,11 +539,11 @@ public class DefaultBattleGUI : BattleGUI
             //this.player2GUI.name.text = cPlayer2.myInfo.characterName.ToString().ToUpper();
             if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
             {
-                this.player1GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                this.player2GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
             }
             else
             {
-                this.player1GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                this.player2GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
             }
         }
 
@@ -581,11 +581,11 @@ public class DefaultBattleGUI : BattleGUI
 
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
-                    setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player1GUI.portrait);
+                    setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player2GUI.portrait);
                 }
                 else
                 {
-                    setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player1GUI.portrait);
+                    setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player2GUI.portrait);
                 }
                 /*if (UFE.gameMode == GameMode.VersusMode)
                 {
