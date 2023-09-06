@@ -44,7 +44,7 @@ public class AvatarController : MonoBehaviour
         stitcher = new Stitcher();
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;

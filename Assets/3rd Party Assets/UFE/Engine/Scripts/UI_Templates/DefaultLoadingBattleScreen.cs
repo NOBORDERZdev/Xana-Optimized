@@ -33,6 +33,13 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
 		{
 			player1RawImage.gameObject.SetActive(false);
 			player2RawImage.gameObject.SetActive(false);
+			player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+			player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+			player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+			player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+			player1.GetComponent<AvatarController>().OnEnable();
+			player2.GetComponent<AvatarController>().OnEnable();
+
 			player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = false;
 			yield return new WaitForSeconds(1f);
 			player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = true;
@@ -72,7 +79,7 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
 				if (this.namePlayer1 != null)
 				{
 					//this.namePlayer1.text = UFE.config.player1Character.characterName;
-					this.namePlayer1.text = PlayerPrefs.GetString("PlayerName").ToString().ToUpper();
+					this.namePlayer1.text = FightingGameManager.instance.player1Data.name.ToUpper();
 				}
 			}
 
@@ -89,7 +96,8 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
 
 				if (this.namePlayer2 != null)
 				{
-					this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();
+					//this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();
+					this.namePlayer2.text = FightingGameManager.instance.player2Data.name.ToUpper();
 				}
 			}
 

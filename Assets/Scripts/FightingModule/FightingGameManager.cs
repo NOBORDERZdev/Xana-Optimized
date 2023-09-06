@@ -110,7 +110,7 @@ public class PlayerDataClass
 {
     public string name;
     public string NFT;
-    public string cloth;
+    public string clothJson;
 
     public PlayerDataClass()
     {
@@ -120,6 +120,6 @@ public class PlayerDataClass
     {
         name = n;
         NFT = nft;
-        cloth = c;
+        clothJson = c;
     }
 }
