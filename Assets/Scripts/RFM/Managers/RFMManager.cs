@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,12 +10,28 @@ using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
+using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 
 namespace RFM
 {
     public class RFMManager : MonoBehaviourPunCallbacks
     {
+        [Serializable]
+        public class GameConfiguration
+        {
+            public int GameRestartWaitTime;
+            public int CountDownTime;
+            public int TakePositionTime;
+            public int GameplayTime;
+            public int MinNumberOfPlayers;
+            public int NumOfAIHunters;
+            public int GainingMoneyTimeInterval;
+            public int MoneyPerInterval;
+        }
+        
+        // TODO (Muneeb): Replace RPCs with RaiseEvent.
+
         public static RFMManager Instance;
 
         public Transform lobbySpawnPoint;
@@ -51,6 +68,41 @@ namespace RFM
 
         public static int NumOfActivePlayers;
 
+        public GameConfiguration CurrentGameConfiguration;
+
+        //the api is set we just have to get the map
+        private IEnumerator FetchUserMapFromServer()
+        {
+            var url = "https://muneebullah.com/test.json";
+            using UnityWebRequest www = UnityWebRequest.Get(url);
+            // www.SetRequestHeader("Authorization", userToken);
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
+                
+                CurrentGameConfiguration = new GameConfiguration
+                {
+                    GameRestartWaitTime = 10000,
+                    CountDownTime = 20,
+                    TakePositionTime = 20,
+                    GameplayTime = 60,
+                    MinNumberOfPlayers = 2,
+                    NumOfAIHunters = 4,
+                    GainingMoneyTimeInterval = 2,
+                    MoneyPerInterval = 15,
+                };
+            }
+            else
+            {
+                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+            }
+        }
+
         private void Awake()
         {
             Instance = this;
@@ -72,20 +124,22 @@ namespace RFM
             EventsManager.onRestarting -= ActivatePlayer;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
+            yield return StartCoroutine(FetchUserMapFromServer());
+            
             Globals.gameState = Globals.GameState.InLobby;
             mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             
             gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
-
+            
             photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
             Debug.LogError("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
             
             InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
-
+            
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
@@ -120,7 +174,7 @@ namespace RFM
 
         private void CheckForGameStartCondition()
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount >= Globals.minNumberOfPlayer)
+            if (PhotonNetwork.CurrentRoom.PlayerCount >= CurrentGameConfiguration.MinNumberOfPlayers)
             {
                 if (Globals.gameState != Globals.GameState.InLobby) return;
                 StartCoroutine(StartRFM());
@@ -161,7 +215,7 @@ namespace RFM
             NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
 
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(
-                Globals.countDownTime,
+                CurrentGameConfiguration.CountDownTime,
                 null, countDownText, AfterEachSecondCountdownTimer));
             
 
@@ -184,7 +238,7 @@ namespace RFM
                 Hashtable properties = new Hashtable { { "numberOfHunters", numberOfPlayerHunters } };
                 PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
-                SpawnHunters(Globals.numOfAIHunters);
+                SpawnHunters(CurrentGameConfiguration.NumOfAIHunters);
                 
                 photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
             }
@@ -228,8 +282,9 @@ namespace RFM
                 //statusTMP.gameObject.SetActive(true);
 
                 Globals.gameState = Globals.GameState.TakePosition;
-                
-                Timer.SetDurationAndRun(Globals.takePositionTime, AfterTakePositionTimerHunter, countDownText);
+
+                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, AfterTakePositionTimerHunter,
+                    countDownText);
 
                 var hunterPosition = huntersSpawnArea.position;
                 var randomHunterPos = new Vector3(
@@ -257,9 +312,10 @@ namespace RFM
                 //statusTMP.gameObject.SetActive(true);
 
                 Globals.gameState = Globals.GameState.TakePosition;
-            
-            
-                Timer.SetDurationAndRun(Globals.takePositionTime, AfterTakePositionTimer, countDownText, AfterEachSecondCountdownTimer);
+
+
+                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, AfterTakePositionTimer, countDownText,
+                    AfterEachSecondCountdownTimer);
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
@@ -319,7 +375,7 @@ namespace RFM
             //statusTMP.gameObject.SetActive(false);
 
 
-            Timer.SetDurationAndRun(Globals.gameplayTime, GameplayTimeOver, 
+            Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver, 
                 gameplayTimeText, AfterEachSecondGameplayTimer);
 
             npcManager = gameObject.GetComponent<NPC_Manager>();
@@ -371,7 +427,7 @@ namespace RFM
             var dict = new Dictionary<string, int>() { { PhotonNetwork.LocalPlayer.NickName, missionsManager.Money } };
             photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, dict);
 
-            await Task.Delay(Globals.gameRestartWait); 
+            await Task.Delay(CurrentGameConfiguration.GameRestartWaitTime); 
             
             gameOverPanel.SetActive(false);
             EventsManager.GameRestarting();
@@ -384,7 +440,7 @@ namespace RFM
             //
             
             if (Globals.gameState == Globals.GameState.GameOver
-                && PhotonNetwork.CurrentRoom.PlayerCount >= Globals.minNumberOfPlayer)
+                && PhotonNetwork.CurrentRoom.PlayerCount >= CurrentGameConfiguration.MinNumberOfPlayers)
             {
                 StartCoroutine(StartRFM());
             }
