@@ -632,7 +632,7 @@ Animator:
   m_GameObject: {fileID: 250644416097083164}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 38250a64116ade34c8ec343394068dbb, type: 3}
-  m_Controller: {fileID: 9100000, guid: 88462c776560782479612ce45260f911, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8f926a0d4a3de2748b963e25cf0b1e8e, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1870,11 +1870,11 @@ GameObject:
   - component: {fileID: 1047487497717293250}
   - component: {fileID: 3829161618264365950}
   - component: {fileID: 6519023036355749454}
-  - component: {fileID: 7904688241321179723}
   - component: {fileID: 8235149719610812909}
+  - component: {fileID: 6871966640619135633}
   m_Layer: 8
-  m_Name: NPC
-  m_TagString: HunterNPC
+  m_Name: EscapeeNPC
+  m_TagString: EscapeeNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1959,23 +1959,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7904688241321179723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650430759411851697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7e95cd6e4fa3ec4fafd1dded02ba910, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraPosition: {fileID: 6669974379091633010}
-  killVFX: {fileID: 181816480502676347}
-  npcAnim: {fileID: 250644416097083143}
-  velocityNameX: velocityX
-  velocityNameY: velocityY
 --- !u!54 &8235149719610812909
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1992,6 +1975,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6871966640619135633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650430759411851697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf853f666895814da52a71357e8cd45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killVFX: {fileID: 181816480502676347}
+  npcAnim: {fileID: 250644416097083143}
+  velocityNameX: velocityX
+  velocityNameY: velocityY
+  minDistanceToStartRunning: 10
+  huntersTrasnforms: []
 --- !u!1 &685820000775412649
 GameObject:
   m_ObjectHideFlags: 0
