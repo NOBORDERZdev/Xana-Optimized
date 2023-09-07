@@ -479,7 +479,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
         }
 
-        XanaChatSocket_Waqas.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
     }
 
 
@@ -589,7 +589,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
-        XanaChatSocket_Waqas.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

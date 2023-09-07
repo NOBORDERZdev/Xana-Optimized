@@ -128,9 +128,18 @@ public class XanaChatSystem : MonoBehaviour
 
     public void DisplayMsg_FromSocket(string _userName,string _msg)
     {
-        this.CurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text; ;
-        this.PotriatCurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.PotriatCurrentChannelText.text;
+        //Debug.Log("<color=red> XanaOldChat: " + _userName + " : " + _userName.Length + " : " + _msg +"</color>");
 
+        if (_userName.Length > 12)
+        {
+            this.CurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
+            this.PotriatCurrentChannelText.text = "<b>" + _userName.Substring(0, 12) + "...</b>" + " : " + _msg + "\n" + this.PotriatCurrentChannelText.text;
+        }
+        else
+        {
+            this.CurrentChannelText.text = "<b>" + _userName + "</b>" + " : " + _msg + "\n" + this.CurrentChannelText.text;
+            this.PotriatCurrentChannelText.text = "<b>" + _userName + "</b>" + " : " + _msg + "\n" + this.PotriatCurrentChannelText.text;
+        }
 
         if (!chatDialogBox.activeSelf && _userName != UserName)
         {
@@ -162,7 +171,7 @@ public class XanaChatSystem : MonoBehaviour
 
     public void LoadOldChat()
     {
-        XanaChatSocket_Waqas.callApi?.Invoke();
+        XanaChatSocket.callApi?.Invoke();
         chatConfirmationPanel.SetActive(false);
     }
     void CheckIfDeviceHasNotch()
@@ -247,7 +256,7 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket_Waqas.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
+        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
         this.InputFieldChat.text = "";
     }
@@ -274,7 +283,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-            XanaChatSocket_Waqas.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine);
+            XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine);
     }
 
     #region Photon Chat Region
@@ -315,7 +324,7 @@ public class XanaChatSystem : MonoBehaviour
     //    PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
     //    Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-    //    XanaChatSocket_Waqas.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
+    //    XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
     //    ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
     //    this.InputFieldChat.text = "";
     //}
@@ -343,7 +352,7 @@ public class XanaChatSystem : MonoBehaviour
     //            this.testBytes = new byte[this.TestLength];
     //        }
 
-    //        XanaChatSocket_Waqas.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID,inputLine);
+    //        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID,inputLine);
     //    }
     //}
     //public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)

@@ -1384,6 +1384,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetInt("WalletLogin", 0);
          userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
+        XanaConstants.xanaConstants.userId = null;
+
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
         {
@@ -3730,6 +3732,8 @@ public class UserRegisterationManager : MonoBehaviour
                         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("firstTime", 1);
                         PlayerPrefs.Save();
+
+                        XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
                         //Talha Changes 
                         //if (!ComesFromLogOut)
                         //{
@@ -4429,7 +4433,7 @@ public class UserRegisterationManager : MonoBehaviour
     [System.Serializable]
     public class UserData
     {
-        public int id;
+        public string id;
         public string name;
         public string email;
         public string phoneNumber;
