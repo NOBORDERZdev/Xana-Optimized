@@ -308,7 +308,7 @@ namespace RFM
                 PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
                 SpawnHunters(roles.Item4);
-                // SpawnAiEscapees(roles.Item3);
+                SpawnAIEscapees(roles.Item3);
                 
                 photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
             }
@@ -411,7 +411,7 @@ namespace RFM
 
         private void SpawnHunters(int numOfHunters)
         {
-            Debug.LogError("numOfHunters: " + numOfHunters);
+            Debug.LogError("numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject(hunterPrefab.name,
@@ -419,6 +419,11 @@ namespace RFM
                         Random.Range(-2, 2)),
                     huntersSpawnArea.rotation);
             }
+        }
+        
+        private void SpawnAIEscapees(int numOfEscapees)
+        {
+            Debug.LogError("numOfAIEscapees: " + numOfEscapees);
         }
 
         [PunRPC]
