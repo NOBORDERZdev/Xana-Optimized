@@ -391,7 +391,7 @@ namespace RFM
         
         private void AfterTakePositionTimerHunter()
         {
-            Globals.player.gameObject.AddComponent<NPC>();
+            Globals.player.gameObject.AddComponent<PlayerHunter>();
             Globals.IsLocalPlayerHunter = true;
             huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
             countDownText.transform.parent.gameObject.SetActive(false);
