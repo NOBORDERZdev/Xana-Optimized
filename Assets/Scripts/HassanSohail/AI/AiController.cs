@@ -67,7 +67,6 @@ namespace XanaAi
                 case "Glove":
                     Destroy(wornGloves);
                     break;
-                    //bld0112 or hirotan0002@gmail.com
             }
         }
 
