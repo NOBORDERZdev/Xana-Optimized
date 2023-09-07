@@ -494,6 +494,7 @@ MonoBehaviour:
   mPlayer: {fileID: 11393113}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &11393113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3779,23 +3780,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -10717,6 +10701,7 @@ MonoBehaviour:
   mPlayer: {fileID: 231915460}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &231915460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11986,7 +11971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &254901807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12090,7 +12075,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -12964,6 +12949,7 @@ MonoBehaviour:
   mPlayer: {fileID: 273042954}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &273042954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13671,23 +13657,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -14835,6 +14804,7 @@ MonoBehaviour:
   mPlayer: {fileID: 302158139}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &302158139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16663,6 +16633,7 @@ MonoBehaviour:
   mPlayer: {fileID: 322308041}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &322308041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25147,7 +25118,7 @@ MonoBehaviour:
   url: 
   autoPlay: 1
   fullscreen: 0
-  videoPlayer: {fileID: 936751376}
+  videoPlayer: {fileID: 254901808}
   x: 0
   y: 0
   z: 0
@@ -25220,23 +25191,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 1487523113}
   imgVideoFrame4x3: {fileID: 1170491652}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -25668,23 +25622,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -27886,6 +27823,7 @@ MonoBehaviour:
   mPlayer: {fileID: 493804886}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &493804886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28393,6 +28331,7 @@ MonoBehaviour:
   mPlayer: {fileID: 499366846}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &499366846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28988,6 +28927,7 @@ MonoBehaviour:
   mPlayer: {fileID: 500285625}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &500285625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30378,6 +30318,7 @@ MonoBehaviour:
   mPlayer: {fileID: 526009943}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &526009943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32839,6 +32780,7 @@ MonoBehaviour:
   mPlayer: {fileID: 559209910}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &559209910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35416,23 +35358,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -36400,23 +36325,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -40972,6 +40880,7 @@ MonoBehaviour:
   mPlayer: {fileID: 708167093}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &708167093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41855,6 +41764,7 @@ MonoBehaviour:
   mPlayer: {fileID: 722533378}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &722533378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42543,6 +42453,7 @@ MonoBehaviour:
   mPlayer: {fileID: 729689902}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &729689902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44385,6 +44296,7 @@ MonoBehaviour:
   mPlayer: {fileID: 762149321}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &762149321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46618,23 +46530,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -49933,23 +49828,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -50463,23 +50341,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 905710925}
   imgVideoFrame4x3: {fileID: 943767656}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -51768,6 +51629,7 @@ MonoBehaviour:
   mPlayer: {fileID: 909020558}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &909020558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54015,6 +53877,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 959568860}
     - target: {fileID: 2390234235687242723, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
+      propertyPath: ratioReferences.Array.data[2].l_Aurthur
+      value: 
+      objectReference: {fileID: 959568839}
+    - target: {fileID: 2390234235687242723, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
       propertyPath: worldInfos.Array.data[0].Des.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -54926,12 +54792,24 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8780414859038229204, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8780414859149462480, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
       propertyPath: m_text
       value: Title
       objectReference: {fileID: 0}
     - target: {fileID: 8780414859218775775, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780414859449884880, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780414859563311136, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8780414860099937262, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
@@ -54991,6 +54869,7 @@ PrefabInstance:
     - {fileID: 8780414858519670894, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
     - {fileID: 1054672491948762202, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
     - {fileID: 7242575427467649531, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
+    - {fileID: 4243061747234542536, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
 --- !u!1 &959568836 stripped
 GameObject:
@@ -57905,6 +57784,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1040990149}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1040990149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58904,23 +58784,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 551003385}
   imgVideoFrame4x3: {fileID: 1991432961}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -59140,10 +59003,10 @@ MonoBehaviour:
   is3DLayoutVideo: 0
   layout3d: 0
   mainCamera: {fileID: 0}
-  videoPlayer: {fileID: 936751376}
+  videoPlayer: {fileID: 254901808}
   mPlayer: {fileID: 0}
   playInAVPRO: 0
-  audioPlayer: {fileID: 0}
+  audioPlayer: {fileID: 254901808}
   debug: 0
   ignoreTimeout: 0
   _skipOnDrop: 1
@@ -61219,6 +61082,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1111277777}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1111277777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63811,6 +63675,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1141123455}
   rotateScreen: 1
   rotateScreenValue: {x: 180, y: 0, z: 0}
+  videoPlayerParent: {fileID: 1839156209}
 --- !u!114 &1141123455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64299,6 +64164,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1141854474}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1141854474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64665,23 +64531,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -71367,6 +71216,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1281928567}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1281928567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72317,6 +72167,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1297733369}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1297733369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72859,23 +72710,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -73060,6 +72894,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1301642328}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1301642328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75077,6 +74912,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1331124102}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1331124102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76353,6 +76189,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1350460108}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1350460108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78445,6 +78282,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1393010541}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1393010541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78943,6 +78781,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1398263555}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1398263555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79822,6 +79661,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1412736932}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1412736932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80533,23 +80373,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -82195,23 +82018,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -84562,23 +84368,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -85835,23 +85624,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -88906,6 +88678,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1611178070}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1611178070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90406,6 +90179,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1634872384}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1634872384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91392,23 +91166,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -91872,6 +91629,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1662878193}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1662878193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93220,6 +92978,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1687916964}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1687916964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94051,23 +93810,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -94407,6 +94149,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1696505165}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1696505165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95372,23 +95115,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -97671,6 +97397,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1757764864}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1757764864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98362,23 +98089,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 1183269190}
   imgVideoFrame4x3: {fileID: 1347493600}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -98598,6 +98308,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1766471708}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1766471708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102379,23 +102090,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 1
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -104813,6 +104507,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1892264021}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1892264021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106339,23 +106034,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -108299,6 +107977,7 @@ MonoBehaviour:
   mPlayer: {fileID: 1944054835}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &1944054835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113098,6 +112777,7 @@ MonoBehaviour:
   mPlayer: {fileID: 2017125125}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &2017125125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114111,23 +113791,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -115357,6 +115020,7 @@ MonoBehaviour:
   mPlayer: {fileID: 2051157191}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &2051157191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115896,6 +115560,7 @@ MonoBehaviour:
   mPlayer: {fileID: 2053353620}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &2053353620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117694,23 +117359,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 1998861052}
   imgVideoFrame4x3: {fileID: 585618824}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -118849,23 +118497,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  spriteObject: {fileID: 0}
-  NewFrame: {fileID: 0}
-  frame: {fileID: 0}
-  FrameMat: {fileID: 0}
-  framePrefab: {fileID: 0}
-  spotLightPrefab: {fileID: 0}
-  spotLightObj: {fileID: 0}
-  spotLightPrefabPos: {x: 0, y: 0, z: 0}
-  frameLocalScale: {x: 0, y: 0, z: 0}
-  frameLocalPos: {x: 0, y: 0, z: 0}
-  spotLightPos: {x: 0, y: 0, z: 0}
-  colliderSize: {x: 0, y: 0, z: 0}
-  coliderPos: {x: 0, y: 0, z: 0}
-  CreateDynamicFrames: 0
-  squareSize: 
-  potraiteSize: 
-  landscapeSize: 
   isCreateFrame: 0
   museumType: 0
   roomNumber: 1
@@ -119169,6 +118800,7 @@ MonoBehaviour:
   mPlayer: {fileID: 2121049590}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &2121049590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120224,6 +119856,7 @@ MonoBehaviour:
   mPlayer: {fileID: 2145713225}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
+  videoPlayerParent: {fileID: 0}
 --- !u!114 &2145713225
 MonoBehaviour:
   m_ObjectHideFlags: 0

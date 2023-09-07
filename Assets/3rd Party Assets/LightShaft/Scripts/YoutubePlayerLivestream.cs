@@ -22,6 +22,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
     public bool rotateScreen = true;
 
     public Vector3 rotateScreenValue;
+
+    public GameObject videoPlayerParent;
     void Start()
     {
         if (!rotateScreen)
@@ -209,6 +211,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 else if (json["streamingData"]["hlsManifestUrl"] == null)
                 {
                     Debug.Log("<color=red> Key Not Found .</color>");
+                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
                 }
                 else
                 {

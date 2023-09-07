@@ -316,6 +316,13 @@ public class JjInfoManager : MonoBehaviour
 
     }
 
+    public void LoadPrerecordedIfNoLongerLive(GameObject obj, string precorderUrl)
+    { 
+        worldInfos[obj.GetComponent<JJVideoAndImage>().id].VideoLink = precorderUrl;
+        worldInfos[obj.GetComponent<JJVideoAndImage>().id].videoType = VideoTypeRes.prerecorded;
+        obj.GetComponent<JJVideoAndImage>().InitData(null, precorderUrl, worldInfos[obj.GetComponent<JJVideoAndImage>().id].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+    }
+
     IEnumerator GetSprite(string path, int index, System.Action<Sprite, int> callback)
     {
         while (Application.internetReachability == NetworkReachability.NotReachable)
