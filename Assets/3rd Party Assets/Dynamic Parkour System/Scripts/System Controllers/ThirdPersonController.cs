@@ -136,10 +136,19 @@ namespace Climbing
         {
             Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
 
-            //Gets direction of movement relative to the camera rotation
-            freeCamera.eulerAngles = new Vector3(0, mainCamera.eulerAngles.y, 0);
-            Vector3 translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
-            translation.y = 0;
+
+            Vector3 translation;
+            if (!freeCamera)
+            {
+                translation = Vector3.zero;
+            }
+            else
+            {
+                //Gets direction of movement relative to the camera rotation
+                freeCamera.eulerAngles = new Vector3(0, mainCamera.eulerAngles.y, 0);
+                /*Vector3 */translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
+                translation.y = 0;
+            }
 
             //Detects if player is moving to any direction
             if (translation.magnitude > 0)
