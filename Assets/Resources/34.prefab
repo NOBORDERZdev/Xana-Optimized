@@ -4371,7 +4371,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -4435,7 +4435,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1419179164607386639
@@ -7210,6 +7210,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6465556621358029463}
+  - component: {fileID: 2716766233648052159}
   m_Layer: 22
   m_Name: Hips
   m_TagString: Untagged
@@ -7236,6 +7237,102 @@ Transform:
   m_Father: {fileID: 6467913230337449374}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2716766233648052159
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2628827747842527908}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2669336583240099418
 GameObject:
   m_ObjectHideFlags: 0
@@ -7608,7 +7705,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -7672,7 +7769,7 @@ MonoBehaviour:
   m_margin: {x: -1.9392984, y: 0.25139192, z: -1.855501, w: -1.6092674}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &4188578815985498965
@@ -11451,6 +11548,9 @@ GameObject:
   - component: {fileID: 5728444763738270525}
   - component: {fileID: 5436968773894372362}
   - component: {fileID: 300990757756869482}
+  - component: {fileID: 8357973693737612267}
+  - component: {fileID: 1868599478022124912}
+  - component: {fileID: 49617900000299018}
   m_Layer: 22
   m_Name: 34
   m_TagString: PhotonLocalPlayer
@@ -11904,7 +12004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
+  m_SynchronizeScale: 1
   m_UseLocal: 0
 --- !u!114 &7995145044901425214
 MonoBehaviour:
@@ -11921,7 +12021,7 @@ MonoBehaviour:
   logLevel: 3
   ignoreGlobalLogLevel: 0
   recorderInUse: {fileID: 0}
-  speakerInUse: {fileID: 0}
+  speakerInUse: {fileID: 7056889640682846599}
   AutoCreateRecorderIfNotFound: 0
   UsePrimaryRecorder: 1
   SetupDebugSpeaker: 0
@@ -12115,7 +12215,7 @@ CapsuleCollider:
   m_Radius: 0.4
   m_Height: 1.7
   m_Direction: 1
-  m_Center: {x: 0.0044188797, y: 0.76728195, z: 0}
+  m_Center: {x: 0.0044188797, y: 76728190, z: 0}
 --- !u!114 &5728444763738270525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12179,6 +12279,58 @@ MonoBehaviour:
   blinkingSpeed: 0.15
   isBlinking: 1
   isCoroutineRunning: 1
+--- !u!114 &8357973693737612267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0866d026f27f0e14eb7a69ce297625ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StepAudio: {fileID: 2716766233648052159}
+  StepsVolume: 0.07
+  isplayer: 0
+  sandclips:
+  - {fileID: 8300000, guid: ec0e869c144b594438ea12854fa5e1cf, type: 3}
+  stoneClips:
+  - {fileID: 8300000, guid: 2932f4ec555e6e74389c377e961454c7, type: 3}
+  waterClips:
+  - {fileID: 8300000, guid: 6c96107add5aa0a48a01373a9d3a3149, type: 3}
+  metalClips:
+  - {fileID: 8300000, guid: 7005a346be277324fac5fdcfaaeb6950, type: 3}
+  snowClips:
+  - {fileID: 8300000, guid: bcafa0cc5e6ad8a4e847f501037591c5, type: 3}
+  wetClips:
+  - {fileID: 8300000, guid: 88b503d163157bf41b2f7920aac1289b, type: 3}
+  floorClips:
+  - {fileID: 8300000, guid: b2cbe6a0cb047e946b5ceeb39526d0b5, type: 3}
+  grassClips:
+  - {fileID: 8300000, guid: 198b5672c9b39264b90780e65cbaffca, type: 3}
+--- !u!114 &1868599478022124912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6a0a9c374cded459ce413b69a46d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RangeVolSpeaker: {fileID: 4745365908476068343}
+--- !u!81 &49617900000299018
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0
@@ -18507,7 +18659,7 @@ GameObject:
   - component: {fileID: 4745365908476068343}
   - component: {fileID: 7056889640682846599}
   m_Layer: 22
-  m_Name: Speaker
+  m_Name: RangeVolumeSpeaker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18520,7 +18672,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8538310469038373701}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18549,7 +18701,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 30
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -18559,8 +18711,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.33519554
-      value: 1.0165405
+      time: 0.17362022
+      value: 1.0007133
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -18568,8 +18720,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.33746636
-      value: 0.66493326
+      time: 0.17589104
+      value: 0.6464701
       inSlope: -0.022613814
       outSlope: -0.022613814
       tangentMode: 0
@@ -18577,8 +18729,8 @@ AudioSource:
       inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6644472
-      value: 0.65831035
+      time: 0.33769548
+      value: 0.64512676
       inSlope: -0.031921677
       outSlope: -0.031921677
       tangentMode: 0
@@ -18586,8 +18738,8 @@ AudioSource:
       inWeight: 0.3160555
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6749708
-      value: 0.30415547
+      time: 0.342848
+      value: 0.3226186
       inSlope: 0.02003433
       outSlope: 0.02003433
       tangentMode: 0
@@ -18595,8 +18747,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.2855934
     - serializedVersion: 3
-      time: 0.9999764
-      value: 0.3059954
+      time: 0.504493
+      value: 0.319179
       inSlope: -0.028519781
       outSlope: -0.028519781
       tangentMode: 0
@@ -18604,7 +18756,7 @@ AudioSource:
       inWeight: 0.2995476
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.5062561
       value: 0
       inSlope: 0
       outSlope: 0
@@ -18620,7 +18772,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -20500,8 +20652,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: abc
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

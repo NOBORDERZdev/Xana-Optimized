@@ -88,6 +88,10 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
+
+
+        yield return new WaitForSeconds(2f);
+
         _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
 
         defaultJumpHeight = _playerControllerNew.JumpVelocity;
@@ -103,10 +107,6 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
-
-        yield return new WaitForSeconds(2f);
-
-        //_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
         //Initializing
         playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
         playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
@@ -388,7 +388,10 @@ public class BuildingDetect : MonoBehaviour
     {
         StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
+        RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
+        if (cameraAnimator == null) cameraAnimator=GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }
     IEnumerator WaitForEffect()

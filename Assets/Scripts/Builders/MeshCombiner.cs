@@ -45,7 +45,7 @@ public class MeshCombiner : MonoBehaviour
 
     IEnumerator Meshes()
     {
-        yield return new WaitForSeconds(10);
+        yield return null;
         targetMaterial = new Material[allRenderers.Count];
         for (int i = 0; i < allRenderers.Count; i++)
         {

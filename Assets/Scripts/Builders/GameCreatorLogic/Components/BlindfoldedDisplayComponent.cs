@@ -87,6 +87,9 @@ public class BlindfoldedDisplayComponent : ItemComponent
             skinMesh[i].enabled = false;
         }
 
+        GamificationComponentData.instance.buildingDetect.playerFreeCamConsole.enabled = false;
+        GamificationComponentData.instance.buildingDetect.playerFreeCamConsoleOther.enabled = false;
+
         RingbufferFootSteps ringbufferFootStep = shoes.gameObject.GetComponentInChildren<RingbufferFootSteps>();
         //for (int i = 0; i < ringbufferFootSteps.Length; i++)
         //{
@@ -137,6 +140,9 @@ public class BlindfoldedDisplayComponent : ItemComponent
             skinMesh[i].enabled = true;
         }
 
+
+        GamificationComponentData.instance.buildingDetect.playerFreeCamConsole.enabled = true;
+        GamificationComponentData.instance.buildingDetect.playerFreeCamConsoleOther.enabled = true;
         rr.enabled = false;
         rr.transform.GetChild(0).gameObject.SetActive(false);
 

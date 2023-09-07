@@ -39,10 +39,6 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     #endregion
     internal string response;
-    //Orientation Changer
-    public CanvasGroup landscapeCanvas;
-    public CanvasGroup potraitCanvas;
-    bool isPotrait = false;
 
     List<XanaItem> xanaItems = new List<XanaItem>();
 
@@ -52,14 +48,6 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch += OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
-
-        //ChangeOrientation
-        BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
-
-        //OnSelfiActive
-        BuilderEventManager.UIToggle += UIToggle;
-
-        OrientationChange(false);
     }
 
     private void OnDisable()
@@ -68,12 +56,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
-
-        BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
-        BuilderEventManager.UIToggle -= UIToggle;
         Addressables.Release(loadSkyBox);
-
-
     }
 
     private void Start()
@@ -92,66 +75,6 @@ public class BuilderMapDownload : MonoBehaviour
     #endregion
 
     #region PRIVATE_METHODS
-
-    #region OrientationChange
-    void OrientationChange(bool orientation)
-    {
-        StartCoroutine(ChangeOrientation(orientation));
-    }
-
-    IEnumerator ChangeOrientation(bool orientation)
-    {
-        isPotrait = orientation;
-        landscapeCanvas.DOKill();
-        landscapeCanvas.alpha = 0;
-        landscapeCanvas.blocksRaycasts = false;
-        landscapeCanvas.interactable = false;
-        potraitCanvas.DOKill();
-        potraitCanvas.alpha = 0;
-        potraitCanvas.blocksRaycasts = false;
-        potraitCanvas.interactable = false;
-        //potraitCanvas.gameObject.SetActive(true);
-        //landscapeCanvas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        if (isPotrait)
-        {
-            potraitCanvas.DOFade(1, 0.5f);
-            potraitCanvas.blocksRaycasts = true;
-            potraitCanvas.interactable = true;
-            //landscapeCanvas.gameObject.SetActive(false);
-            //Screen.orientation = ScreenOrientation.Portrait;
-        }
-        else
-        {
-            landscapeCanvas.DOFade(1, 0.5f);
-            landscapeCanvas.blocksRaycasts = true;
-            landscapeCanvas.interactable = true;
-            //potraitCanvas.gameObject.SetActive(false);
-            //Screen.orientation = ScreenOrientation.LandscapeLeft;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
-    }
-
-    void UIToggle(bool state)
-    {
-        if (state)
-        {
-            landscapeCanvas.DOKill();
-            landscapeCanvas.alpha = 0;
-            landscapeCanvas.blocksRaycasts = false;
-            landscapeCanvas.interactable = false;
-            potraitCanvas.DOKill();
-            potraitCanvas.alpha = 0;
-            potraitCanvas.blocksRaycasts = false;
-            potraitCanvas.interactable = false;
-        }
-        else
-            StartCoroutine(ChangeOrientation(isPotrait));
-    }
-    #endregion
-
 
     void OnBuilderDataFetch(int id, string token)
     {
@@ -253,7 +176,7 @@ public class BuilderMapDownload : MonoBehaviour
     {
         xanaItems.Clear();
         int count = levelData.otherItems.Count;
-        progressPlusValue /= count;
+        progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
         for (int i = 0; i < count; i++)
         {
@@ -269,7 +192,7 @@ public class BuilderMapDownload : MonoBehaviour
                 GetObject(_async, levelData.otherItems[i]);
             }
 
-            LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
+            LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
         }
         CallBack();
     }
@@ -486,13 +409,16 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
+        GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
         //Set Hierarchy same as builder
         SetObjectHirarchy();
+
+        BuilderEventManager.CombineMeshes?.Invoke();
         GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.5f;
         mainPlayerCharacterController.height = 1f;
+        mainPlayerCharacterController.radius = 0.15f;
         mainPlayerCharacterController.stepOffset = 1f;
 
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
@@ -501,7 +427,7 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
         playerCollider.height = 1.5f;
         playerCollider.center = Vector3.up * (playerCollider.height / 2);
-        CharacterController playerCharacterController=GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
+        CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
         playerCharacterController.height = playerCollider.height;
         playerCharacterController.center = playerCollider.center;
 

@@ -10,6 +10,8 @@ public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
 
+    public static bool isAddressableCatalogDownload;
+
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
 
@@ -23,6 +25,7 @@ public class XanaConstants : MonoBehaviour
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
+    public GameObject _lastAvatarClickedBtn;
     public GameObject _curretClickedBtn;
     public bool IsMuseum = false;
     public bool IsDeemoNFT = false;

@@ -754,6 +754,21 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                if (b)
+                    StartCoroutine(nameof(ThrowEnd));
+                else
+                    isThrowPose = true;
+            }
+        }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
@@ -1060,7 +1075,7 @@ public class PlayerControllerNew : MonoBehaviour
             canDoubleJump = true;
             gravityVector.y = JumpVelocity * 2;
         }
-       
+
 
     }
 
@@ -1072,7 +1087,7 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 jumpNow = true;
                 IsJumping = true;
-               
+
                 //tpsJumpAnim();
                 //Debug.Log("JumpAllowed");
                 //jump camera start...
@@ -1117,7 +1132,7 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAnimation();
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
-        
+
     }
 
     public void JumpNotAllowed()
@@ -1233,6 +1248,7 @@ public class PlayerControllerNew : MonoBehaviour
     //update player jump according to builder setting 
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
+        sprintSpeed = 5;
         JumpVelocity += (jumpValue - 1);
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;
@@ -1573,27 +1589,29 @@ public class PlayerControllerNew : MonoBehaviour
         isThrowModeActive = false;
         if (throwMainCo != null)
             throwMainCo = null;
+        BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
         NinjaCo = StartCoroutine(NinjaComponentTimer(time));
     }
     public IEnumerator NinjaComponentTimer(float time)
     {
         isDrawSword = false;
-        if (swordModel)
+        if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
             swordModel.SetActive(true);
         }
-        yield return new WaitForSecondsRealtime(time);
+        yield return new WaitForSeconds(time);
         isNinjaMotion = false;
         if (swordModel)
         {
             swordModel.SetActive(false);
         }
-        animator.SetBool("NinjaJump", true);
+        animator.SetBool("NinjaJump", false);
         animator.SetBool("isNinjaMotion", false);
-
+        animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
+        animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
@@ -1748,7 +1766,7 @@ public class PlayerControllerNew : MonoBehaviour
         StopCoroutine(throwAction);
         throwAction = null;
     }
-    IEnumerator ThrowEnd()
+    public IEnumerator ThrowEnd()
     {
         Debug.Log("Throw End Co");
         yield return new WaitForSeconds(0f);
@@ -1763,7 +1781,8 @@ public class PlayerControllerNew : MonoBehaviour
 
         yield return new WaitForSeconds(01.3f);
         isMovementAllowed = true;
-        StopCoroutine(throwEnd);
+        if (throwEnd != null)
+            StopCoroutine(throwEnd);
         throwEnd = null;
     }
 
@@ -1781,14 +1800,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        //if (state)
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.ninjaMotion;
-        //else
-        //{
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.defaultAnimation;
-        //    return;
-        //}
-
         if (swordModel == null)
         {
             swordModel = Instantiate(GamificationComponentData.instance.katanaPrefab, transform.parent);

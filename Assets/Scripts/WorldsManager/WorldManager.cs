@@ -276,6 +276,11 @@ public class WorldManager : MonoBehaviour
             try
             {
                 _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+
+                if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+                {
+                    _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                }
             }
             catch (Exception e)
             {
@@ -346,7 +351,7 @@ public class WorldManager : MonoBehaviour
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
-            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=12;
+            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top=25;
         }
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);

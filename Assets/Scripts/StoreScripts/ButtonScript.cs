@@ -56,8 +56,9 @@ public class ButtonScript : MonoBehaviour
                     }
                 }
                 //StoreManager.instance.SubmitAllItemswithSpecificSubCategory(StoreManager.instance.SubCategoriesList[Index + 8].id, true);      // AR changes
-                StoreManager.instance.UpdateStoreSelection(Index);
+                
             }
+            StoreManager.instance.UpdateStoreSelection(Index);
             // If click on the same panel Do Nothing & return
             return;
         }
