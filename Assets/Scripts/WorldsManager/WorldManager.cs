@@ -824,6 +824,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         public string entityType;
         public string status;
         public string createdBy;
+        public string[] tags;
         public UserInfo user;
     }
 

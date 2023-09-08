@@ -29,6 +29,11 @@ public class FeedEventPrefab : MonoBehaviour
     public string updatedAt = "00";
     public string entityType = "None";
 
+    [Header("Tags and Category")]
+    public Transform tagsParent;
+    public GameObject tagsPrefab;
+    public string[] worldTags;
+
     [Header("WorldNameAndDescription")]
     public TextMeshProUGUI m_WorldName;
     public Text m_WorldNameTH;
@@ -589,6 +594,9 @@ public class FeedEventPrefab : MonoBehaviour
         if (userProfile.sprite == null)
             UpdateUserProfile();
         //m_timestamp = uploadTimeStamp;
+
+        InstantiateWorldtags();
+
         loginPageManager.SetPanelToBottom();
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         //XanaConstants.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
@@ -693,6 +701,17 @@ public class FeedEventPrefab : MonoBehaviour
             isBannerLoaded= true;
         }
 
+    }
+
+
+    void InstantiateWorldtags()
+    {
+        for(int i=0;i<worldTags.Length;i++)
+        {
+            GameObject temp = Instantiate(tagsPrefab, tagsParent);
+            temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+        }
     }
 
 }
