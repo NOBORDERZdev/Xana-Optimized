@@ -13,6 +13,9 @@ namespace RFM
 
         public static string LOCAL_PLAYER_TAG = "PhotonLocalPlayer";
         public static string PLAYER_TAG = "Player";
+        public static string HUNTER_NPC_TAG = "HunterNPC";
+        public static string ESCAPEE_NPC_TAG = "EscapeeNPC";
+        public static string HUNTER_PLAYER_TAG = "HunterPLAYER";
         public static string CANVAS_TAG = "NewCanvas";
         public static string MAIN_CAMERA_TAG = "MainCamera";
 
