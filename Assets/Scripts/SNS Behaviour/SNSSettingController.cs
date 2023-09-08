@@ -169,6 +169,8 @@ public class SNSSettingController : MonoBehaviour
         if (UserRegisterationManager.instance != null)
         {
             UserRegisterationManager.instance.LogoutAccount();
+            //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
+            SimultaneousConnectionButton();
         }
     }
 
