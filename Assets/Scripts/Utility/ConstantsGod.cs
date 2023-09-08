@@ -113,6 +113,11 @@ public class ConstantsGod
     public static string GetVersion = "/item/get-version";
     public static string MaintenanceAPI = "/item/get-version/";
 
+
+
+    // Xana Lobby WOrlds
+    public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
+
     #endregion
 
     #region SNS Managers    
