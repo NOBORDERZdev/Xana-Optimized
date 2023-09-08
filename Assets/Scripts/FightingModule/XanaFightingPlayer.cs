@@ -49,6 +49,8 @@ public class XanaFightingPlayer : MonoBehaviour
             {
                 if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
                 {
+                    avatarController.isLoadStaticClothFromJson = true;
+                    avatarController.staticPlayer = false;
                     controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
                 }
                 else
