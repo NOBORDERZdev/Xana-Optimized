@@ -14,7 +14,7 @@ using Photon.Realtime;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
-
+using SimpleJSON;
 
 #endif
 
@@ -89,6 +89,9 @@ public class XanaChatSystem : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+            this.isPanelConfirmationRequire = instance.isPanelConfirmationRequire;
+
         instance = this;
     }
 
@@ -217,6 +220,7 @@ public class XanaChatSystem : MonoBehaviour
     }
 
     private bool isChatOpen;
+
     public void OpenCloseChatDialog()
     {
         isChatOpen = !isChatOpen;
@@ -229,8 +233,17 @@ public class XanaChatSystem : MonoBehaviour
 
             if (!isPanelConfirmationRequire)
             {
-                isPanelConfirmationRequire = true;
-                chatConfirmationPanel.SetActive(true);
+                if (!string.IsNullOrEmpty(XanaChatSocket.instance.oldChatResponse))
+                {
+                    JSONNode jsonNode = JSON.Parse(XanaChatSocket.instance.oldChatResponse);
+                    int countValue = jsonNode["count"].AsInt;
+
+                    if (countValue > 0)
+                    {
+                        isPanelConfirmationRequire = true;
+                        chatConfirmationPanel.SetActive(true);
+                    }
+                }
             }
         }
         else

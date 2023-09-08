@@ -23,15 +23,17 @@ public class XanaChatSocket : MonoBehaviour
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
     public string fetchAllMsgApi = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
 
-    int worldId, 
+    int worldId,
         eventId = 1,
         pageNumber = 1, // API Parameters
         dataLimit = 200;
 
     public string socketId;
+    public string oldChatResponse;
     public ChatUserData receivedMsgForTesting;
     bool isJoinRoom = false;
 
+    public static XanaChatSocket instance;
 
     #region Summery
 
@@ -57,6 +59,10 @@ public class XanaChatSocket : MonoBehaviour
     public static Action callApi;
 
 
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         if (!address.EndsWith("/"))
@@ -67,9 +73,10 @@ public class XanaChatSocket : MonoBehaviour
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
-        
+
         // Custom Method
-         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        StartCoroutine(FetchOldMessages());
     }
     private void OnEnable()
     {
@@ -82,7 +89,7 @@ public class XanaChatSocket : MonoBehaviour
         onJoinRoom -= UserJoinRoom;
         onSendMsg -= SendMsg;
         callApi -= CallApiForMessages;
-      
+
         // Switch Off This Socket
         Manager.Close();
     }
@@ -95,7 +102,11 @@ public class XanaChatSocket : MonoBehaviour
         socketId = resp.sid;
         Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
-        //Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+
+        //socket.Off("event", listener);
+        //Manager.Socket.Off();
+
+
 
         // is it reconnected or First time
         if (isJoinRoom)
@@ -121,6 +132,7 @@ public class XanaChatSocket : MonoBehaviour
         XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
 
+
     void UserJoinRoom(string _worldId)
     {
         worldId = int.Parse(_worldId);
@@ -131,8 +143,6 @@ public class XanaChatSocket : MonoBehaviour
         isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
-
-
     void SendMsg(string world_Id, string msg)
     {
         if (string.IsNullOrEmpty(msg))
@@ -184,28 +194,32 @@ public class XanaChatSocket : MonoBehaviour
         }
         XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
     }
-
     bool CheckUserNameIsValid(string _UserName)
     {
-        if (string.IsNullOrEmpty(_UserName) || 
+        if (string.IsNullOrEmpty(_UserName) ||
             _UserName.All(c => char.IsWhiteSpace(c)) ||
-            _UserName.Contains("null") || 
+            _UserName.Contains("null") ||
             _UserName.Contains("Null"))
             return true;
         else
             return false;
     }
 
-   
+    #endregion
 
     //To fetch Old Messages from a server against any world
     public void CallApiForMessages()
     {
         Debug.Log("Calling API");
-        StartCoroutine(FetchOldMessages());
+        //StartCoroutine(FetchOldMessages());
+
+
+        DisplayOldChat(oldChatResponse);
     }
     IEnumerator FetchOldMessages()
     {
+        yield return new WaitForSeconds(5f);
+
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
@@ -229,7 +243,10 @@ public class XanaChatSocket : MonoBehaviour
         {
             //oldMsgRec.text = www.downloadHandler.text;
             Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
-            DisplayOldChat(www.downloadHandler.text);
+
+            // Locally Save the Response
+            oldChatResponse = www.downloadHandler.text;
+            //DisplayOldChat(www.downloadHandler.text);
         }
         else
             Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
@@ -278,7 +295,7 @@ public class XanaChatSocket : MonoBehaviour
 
     }
 
-    #endregion
+
 
 }
 
