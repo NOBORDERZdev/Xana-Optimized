@@ -32,27 +32,36 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
         StartCoroutine(IEDelay());
         IEnumerator IEDelay()
         {
-        FightingGameManager.instance.GetPlayerData();
+            FightingGameManager.instance.GetPlayerData();
             player1RawImage.gameObject.SetActive(false);
             player2RawImage.gameObject.SetActive(false);
             yield return new WaitForSeconds(.1f);
-            player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
-            player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = false;
+                player1.GetComponent<AvatarController>().staticPlayer = true;
+                player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
             }
             else
             {
-                player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
-            }
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
-            {
-                player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
-            }
-            else
-            {
-                player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+                player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                }
+                else
+                {
+                    player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                }
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                }
+                else
+                {
+                    player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                }
             }
             yield return new WaitForSeconds(.1f);
             player1.GetComponent<AvatarController>().OnEnable();
@@ -97,13 +106,20 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
                 if (this.namePlayer1 != null)
                 {
                     //this.namePlayer1.text = UFE.config.player1Character.characterName;
-                    if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    if (UFE.gameMode == GameMode.TrainingRoom)
                     {
-                        this.namePlayer1.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                        this.namePlayer1.text = PlayerPrefs.GetString("PlayerName");
                     }
                     else
                     {
-                        this.namePlayer1.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                        if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        {
+                            this.namePlayer1.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                        }
+                        else
+                        {
+                            this.namePlayer1.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                        }
                     }
                 }
             }
@@ -122,13 +138,20 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
                 if (this.namePlayer2 != null)
                 {
                     //this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();
-                    if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                    if (UFE.gameMode == GameMode.TrainingRoom)
                     {
-                        this.namePlayer2.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                        this.namePlayer2.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
                     }
                     else
                     {
-                        this.namePlayer2.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                        if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                        {
+                            this.namePlayer2.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                        }
+                        else
+                        {
+                            this.namePlayer2.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                        }
                     }
                 }
             }

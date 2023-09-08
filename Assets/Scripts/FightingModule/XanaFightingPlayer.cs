@@ -25,28 +25,44 @@ public class XanaFightingPlayer : MonoBehaviour
             Debug.LogError("playernum: " + controlsScript.playerNum + " actor number: " + PhotonNetwork.LocalPlayer.ActorNumber);
             if (controlsScript.playerNum == 1)
             {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
                 {
-                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
-                    controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name;
+                    avatarController.isLoadStaticClothFromJson = false;
+                    avatarController.staticPlayer = true;
+                    controlsScript.myInfo.characterName = PlayerPrefs.GetString("PlayerName").ToUpper();
                 }
                 else
                 {
-                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
-                    controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name;
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    {
+                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                        controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name.ToUpper();
+                    }
+                    else
+                    {
+                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                        controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name.ToUpper();
+                    }
                 }
             }
             else
             {
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
                 {
-                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
-                    controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name;
+                    controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
                 }
                 else
                 {
-                    controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name;
-                    cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                    {
+                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                        controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name.ToUpper();
+                    }
+                    else
+                    {
+                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                        controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name.ToUpper();
+                    }
                 }
             }
             avatarController.OnEnable();

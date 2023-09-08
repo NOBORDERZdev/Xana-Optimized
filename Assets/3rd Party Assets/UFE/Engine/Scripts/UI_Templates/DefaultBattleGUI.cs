@@ -524,26 +524,40 @@ public class DefaultBattleGUI : BattleGUI
         if (this.player1GUI != null && this.player1GUI.name != null)
         {
             //this.player1GUI.name.text = cPlayer1.myInfo.characterName;
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+            if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                this.player1GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
             }
             else
             {
-                this.player1GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                {
+                    this.player1GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                }
+                else
+                {
+                    this.player1GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                }
             }
         }
 
         if (this.player2GUI != null && this.player2GUI.name != null)
         {
             //this.player2GUI.name.text = cPlayer2.myInfo.characterName.ToString().ToUpper();
-            if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+            if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                this.player2GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                this.player2GUI.name.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
             }
             else
             {
-                this.player2GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    this.player2GUI.name.text = FightingGameManager.instance.player1Data.name.ToUpper();
+                }
+                else
+                {
+                    this.player2GUI.name.text = FightingGameManager.instance.player2Data.name.ToUpper();
+                }
             }
         }
 
@@ -553,13 +567,20 @@ public class DefaultBattleGUI : BattleGUI
             if (cPlayer1.myInfo.profilePictureSmall != null)
             {
                 this.player1GUI.portrait.gameObject.SetActive(true);
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                if (UFE.gameMode == GameMode.TrainingRoom)
                 {
-                    setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player1GUI.portrait);
+                    setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
                 }
                 else
                 {
-                    setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player1GUI.portrait);
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    {
+                        setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player1GUI.portrait);
+                    }
+                    else
+                    {
+                        setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player1GUI.portrait);
+                    }
                 }
                 /*this.player1GUI.portrait.sprite = Sprite.Create(
 					cPlayer1.myInfo.profilePictureSmall,
@@ -579,13 +600,20 @@ public class DefaultBattleGUI : BattleGUI
             {
                 this.player2GUI.portrait.gameObject.SetActive(true);
 
-                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                if (UFE.gameMode == GameMode.TrainingRoom)
                 {
-                    setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player2GUI.portrait);
+                    setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
                 }
                 else
                 {
-                    setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player2GUI.portrait);
+                    if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                    {
+                        setPlayerIcon(FightingGameManager.instance.player1Data.NFT, this.player2GUI.portrait);
+                    }
+                    else
+                    {
+                        setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player2GUI.portrait);
+                    }
                 }
                 /*if (UFE.gameMode == GameMode.VersusMode)
                 {
