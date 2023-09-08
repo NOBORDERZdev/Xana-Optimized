@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 3356664687364860266}
   - component: {fileID: 988462962091409216}
   - component: {fileID: 6422098105351099236}
+  - component: {fileID: 779887921061732430}
   m_Layer: 0
   m_Name: XANAGuy 1
   m_TagString: Untagged
@@ -2437,6 +2438,20 @@ MonoBehaviour:
   blinkingSpeed: 0.15
   isBlinking: 1
   isCoroutineRunning: 1
+--- !u!114 &779887921061732430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069319171809847178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f29f9fb586a81264f9f8155e2c5f3806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatarController: {fileID: 8826553340878133359}
+  cloth: 
 --- !u!1 &1097293561741775567
 GameObject:
   m_ObjectHideFlags: 0
