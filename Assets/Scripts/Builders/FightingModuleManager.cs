@@ -14,7 +14,6 @@ public class FightingModuleManager : MonoBehaviour
     public string environmentLabel;
     public string player1Icon;
     public string player2Icon;
-
     public static FightingModuleManager Instance;
 
     private void Awake()
@@ -42,66 +41,10 @@ public class FightingModuleManager : MonoBehaviour
         if (PlayerPrefs.HasKey(UsernamePrefs))
         {
             UserName = PlayerPrefs.GetString(UsernamePrefs);
-            /*if (UserName.Contains("Guest") || UserName.Contains("ゲスト"))
-            {
-                if (GameManager.currentLanguage == "ja")
-                {
-                    UserName = "ゲスト" + UserName.Substring(UserName.Length - 4);
-                }
-                else if (GameManager.currentLanguage == "en")
-                {
-                    UserName = "Guest" + UserName.Substring(UserName.Length - 4);
-                }
-            }*/
         }
         Debug.LogError("UserName: " + UserName);
 
         yield return new WaitForSeconds(.1f);
         SceneManager.LoadScene("Demo_Fighter3D - Type 2");
-    }
-
-    public void LoadGamePlayScene()
-    {
-        StartCoroutine(IELoadGamePlayscene());
-    }
-
-    public IEnumerator IELoadGamePlayscene()
-    {
-        if (!isEnvLoaded)
-        {
-            if (environmentLabel.Contains(" : "))
-            {
-                string name = environmentLabel.Replace(" : ", string.Empty);
-                environmentLabel = name;
-            }
-            //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
-            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Single, false);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-            LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
-            yield return handle;
-            addressableSceneName = environmentLabel;
-            //...
-
-            //One way to handle manual scene activation.
-            if (handle.Status == AsyncOperationStatus.Succeeded)
-            {
-                yield return handle.Result.ActivateAsync();
-                isEnvLoaded = true;
-            }
-            else // error occur 
-            {
-                AssetBundle.UnloadAllAssetBundles(false);
-                Resources.UnloadUnusedAssets();
-
-                //HomeBtn.onClick.Invoke();
-            }
-        }
-        else
-        {
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
-
-            //RespawnPlayer();
-        }
     }
 }

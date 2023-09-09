@@ -56,21 +56,6 @@ public class AvatarController : MonoBehaviour
         {
             SetAvatarClothDefault(this.gameObject);
         }
-        if (UFE.gameMode == UFE3D.GameMode.VersusMode && transform.parent != null)
-        {
-            if (transform.parent.GetComponent<ControlsScript>())
-            {
-                Debug.LogError("parent: " + transform.parent);
-                if (transform.parent.GetComponent<ControlsScript>().playerNum == 2)
-                {
-                    isLoadStaticClothFromJson = true;
-                }
-                else
-                {
-                    staticPlayer = true;
-                }
-            }
-        }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
         //if (!currScene.Contains("Main")) // call for worlds only

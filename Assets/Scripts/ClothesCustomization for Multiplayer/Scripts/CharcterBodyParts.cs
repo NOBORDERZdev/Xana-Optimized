@@ -189,11 +189,11 @@ public class CharcterBodyParts : MonoBehaviour
         //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
 
         //set dafault texture for shader to not impact on any other property like skin color 
-        RemoveTattoo(null,null,CurrentTextureType.FaceTattoo);
+        RemoveTattoo(null, null, CurrentTextureType.FaceTattoo);
         RemoveTattoo(null, null, CurrentTextureType.ChestTattoo);
         RemoveTattoo(null, null, CurrentTextureType.LegsTattoo);
         RemoveTattoo(null, null, CurrentTextureType.ArmTattoo);
-        RemoveMustacheTexture(null,null);
+        RemoveMustacheTexture(null, null);
         RemoveEyeLidTexture(null, null);
 
 
@@ -690,7 +690,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ChangeHairColor(Color color)
     {
-       // print("Change Hair From Slider : " + color);
+        // print("Change Hair From Slider : " + color);
         if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
         {
             // For Band using Eye Shader so variable name is Changed 
@@ -1360,7 +1360,7 @@ public class CharcterBodyParts : MonoBehaviour
         SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>();
         //blend shapes
 
-        for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount-1; i++)
+        for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
             if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
             {
