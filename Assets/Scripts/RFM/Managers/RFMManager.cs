@@ -424,6 +424,13 @@ namespace RFM
         private void SpawnAIEscapees(int numOfEscapees)
         {
             Debug.LogError("numOfAIEscapees: " + numOfEscapees);
+            for (int i = 0; i < numOfEscapees; i++)
+            {
+                PhotonNetwork.InstantiateRoomObject("EscapeeNPC",
+                    playersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0, 
+                        Random.Range(-2, 2)),
+                    playersSpawnArea.rotation);
+            }
         }
 
         [PunRPC]
