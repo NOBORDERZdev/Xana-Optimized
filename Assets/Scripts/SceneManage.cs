@@ -61,9 +61,20 @@ public class SceneManage : MonoBehaviourPunCallbacks
             PlayerPrefs.SetInt("RequestSend", 1);
         }
     }
+    public void disableSoundXanalobby() // Disabling Audio Sources in Xana Lobby on exit to avoid sound increase on Loding screen after exit
+    {
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")) 
+        {
+            SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+        }
+    }
 
     public void LoadMain(bool changeOritentationChange)
     {
+        disableSoundXanalobby();
+
         if (exitOnce)
         {
             exitOnce = false;

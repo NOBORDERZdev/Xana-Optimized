@@ -1154,9 +1154,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ConnectingRequestToServer
-        m_Mode: 1
+        m_TargetAssemblyTypeName: WalletLogin, Assembly-CSharp
+        m_MethodName: OnLogin
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2263,7 +2263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022888184}
+  m_AnchoredPosition: {x: 0, y: 0.000045776367}
   m_SizeDelta: {x: 0, y: 0.000034332275}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &784301531551285601
@@ -2472,7 +2472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1.3999023, y: -187}
+  m_AnchoredPosition: {x: -1.3999329, y: -187}
   m_SizeDelta: {x: 0, y: 66.658264}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8251634046142533245
@@ -3002,10 +3002,10 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &2942157434690605656
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3354,11 +3354,11 @@ RectTransform:
   m_Father: {fileID: 8438905190578434611}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.8000488, y: 0}
-  m_SizeDelta: {x: 394.838, y: 35.17858}
-  m_Pivot: {x: 0, y: 0.5}
+  m_AnchorMin: {x: 0.018255245, y: 0.0676522}
+  m_AnchorMax: {x: 2.5652022, y: 0.9323478}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3710658193188193981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3434,7 +3434,7 @@ MonoBehaviour:
   toggle: {fileID: 3710658193188193981}
   imageToChange: {fileID: 7816179960327082143}
   toggleOnImage: {fileID: 21300000, guid: 7dc446fb392766548b4b956bc85629d8, type: 3}
-  toggleOffImage: {fileID: 21300000, guid: 3234f2aaf7b974aa2bed513c16729159, type: 3}
+  toggleOffImage: {fileID: 21300000, guid: b12ed08d985a0464683a40d3d409df51, type: 3}
 --- !u!1 &1434920915966205924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3700,10 +3700,10 @@ RectTransform:
   m_Father: {fileID: 6884601419478399221}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000738713, y: 0.41285646}
+  m_AnchorMin: {x: 0.000738699, y: 0.41285646}
   m_AnchorMax: {x: 0.19042039, y: 0.49077246}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.000022888184, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1279193400823423509
 CanvasRenderer:
@@ -3888,10 +3888,10 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &5746237636760865093
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7269,21 +7269,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UserRegisterationManager, Assembly-CSharp
-        m_MethodName: WalletConnectBtnClicked
-        m_Mode: 1
+        m_TargetAssemblyTypeName: WalletLogin, Assembly-CSharp
+        m_MethodName: OnLogin
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9761,10 +9749,10 @@ RectTransform:
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &8463930528127228728
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10782,7 +10770,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.20949964, y: 1.1569635}
   m_AnchorMax: {x: 0.79050034, y: 1.3557583}
-  m_AnchoredPosition: {x: 0, y: 116.000244}
+  m_AnchoredPosition: {x: 0, y: 116}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6393337680134412418
@@ -15993,7 +15981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -3.6, y: -2.2}
+  m_AnchoredPosition: {x: -3.600006, y: -2.2}
   m_SizeDelta: {x: 47, y: 47}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4644795140830168683
@@ -16024,7 +16012,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7dc446fb392766548b4b956bc85629d8, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17102,7 +17090,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.03397846, y: 0}
   m_AnchorMax: {x: 0.6929808, y: 0.99999934}
-  m_AnchoredPosition: {x: -3.6898804, y: 0}
+  m_AnchoredPosition: {x: -3.6899414, y: 0}
   m_SizeDelta: {x: -13.05896, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9011830232458820428
@@ -17515,7 +17503,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.03397846, y: 0}
   m_AnchorMax: {x: 0.6929808, y: 0.99999934}
-  m_AnchoredPosition: {x: -5.330017, y: 0}
+  m_AnchoredPosition: {x: -5.330078, y: 0}
   m_SizeDelta: {x: -10.917908, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8052520000806999755
@@ -17613,7 +17601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.0000003242413}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8684957145178815076
@@ -17935,10 +17923,10 @@ RectTransform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &4620775120311873126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18631,7 +18619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6971320251317186631, guid: 6dfe0b8d0d4864b58992a73159c6a489, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -970.2484
+      value: -1184.6704
       objectReference: {fileID: 0}
     - target: {fileID: 6971320251317186631, guid: 6dfe0b8d0d4864b58992a73159c6a489, type: 3}
       propertyPath: m_AnchoredPosition.y

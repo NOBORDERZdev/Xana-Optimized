@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class JjWorldChanger : MonoBehaviour
 {
-    [SerializeField] string WorldName;
+    public string WorldName;
     [SerializeField] bool HaveMultipleSpwanPoint;
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
     [SerializeField] bool isMusuem;
-    [SerializeField] int testNet; 
-    [SerializeField] int MainNet;
+    public int testNet; 
+    public int MainNet;
     [Header("Builder")]
     [SerializeField] bool isBuilderWorld; 
 
