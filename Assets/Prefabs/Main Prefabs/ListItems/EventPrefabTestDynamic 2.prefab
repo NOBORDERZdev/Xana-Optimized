@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 312270152}
   - component: {fileID: 312270151}
   - component: {fileID: 312270150}
+  - component: {fileID: 4739970670456992009}
   m_Layer: 5
   m_Name: 'Creator Name '
   m_TagString: Untagged
@@ -369,14 +370,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312270148}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
-  LocalizeText: {fileID: 312270151}
+  LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 0}
+--- !u!114 &4739970670456992009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312270148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a95529f9989d84d87f9f441d795899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creatorTextTMP: {fileID: 312270151}
 --- !u!1 &737501360
 GameObject:
   m_ObjectHideFlags: 0
@@ -4645,6 +4659,7 @@ GameObject:
   - component: {fileID: 8284181480114498915}
   - component: {fileID: 7846701241006216334}
   - component: {fileID: 2311483405736167447}
+  - component: {fileID: 4157443368988299977}
   m_Layer: 5
   m_Name: WorldName
   m_TagString: Untagged
@@ -4776,14 +4791,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371634546641918882}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   key: 
   LocalizeText: {fileID: 0}
-  LocalizeTextTMP: {fileID: 8284181480114498915}
+  LocalizeTextTMP: {fileID: 0}
 --- !u!114 &2311483405736167447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4797,6 +4812,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PreferredLength: 16
+--- !u!114 &4157443368988299977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371634546641918882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6534556c61318b3408b34a72ecf6ee6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorldTextTMP: {fileID: 8284181480114498915}
 --- !u!1 &1371634546658512253
 GameObject:
   m_ObjectHideFlags: 0
