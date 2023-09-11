@@ -1442,7 +1442,14 @@ public class AvatarController : MonoBehaviour
             if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
                 SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                if (isLoadStaticClothFromJson)
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+                }
+                else
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                }
                 tempBodyParts.StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
 
                 //getHairColorFormFile = false;
