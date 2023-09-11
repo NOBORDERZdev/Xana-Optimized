@@ -45,8 +45,9 @@ namespace RFM
             _money = 0;
             _scores = new Dictionary<string, int>();
             showMoney.gameObject.SetActive(true);
-            
-            InvokeRepeating(nameof(AddMoney), Globals.GainingMoneyTimeInterval, Globals.GainingMoneyTimeInterval);
+
+            InvokeRepeating(nameof(AddMoney), RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval,
+                RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval);
         }
 
         private void RestartingGame()
@@ -77,7 +78,7 @@ namespace RFM
 
         private void AddMoney()
         {
-            _money += Globals.MoneyPerInterval;
+            _money += RFMManager.Instance.CurrentGameConfiguration.MoneyPerInterval;
             showMoney.text = _money.ToString("F0") + "";
             moneyScaleShaker.Play();
         }

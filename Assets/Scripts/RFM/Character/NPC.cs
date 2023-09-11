@@ -96,7 +96,7 @@ namespace RFM
                 int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
                 
                 // Uncomment for player hunter
-                 RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
+                // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 killVFX.SetActive(true);
                 EventsManager.PlayerCaught(this);
             }
