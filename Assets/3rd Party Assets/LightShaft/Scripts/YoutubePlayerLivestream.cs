@@ -193,6 +193,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if(string.IsNullOrEmpty(player_response))
         {
             Debug.Log("<color=red> Player Json is Null .</color>");
+            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
         {

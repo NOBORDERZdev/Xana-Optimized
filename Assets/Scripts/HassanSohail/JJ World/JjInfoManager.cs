@@ -323,6 +323,13 @@ public class JjInfoManager : MonoBehaviour
         obj.GetComponent<JJVideoAndImage>().InitData(null, precorderUrl, worldInfos[obj.GetComponent<JJVideoAndImage>().id].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
     }
 
+    public void LoadLiveIfFirstTimeNotLoaded(GameObject obj, string url)
+    {
+        worldInfos[obj.GetComponent<JJVideoAndImage>().id].VideoLink = url;
+        worldInfos[obj.GetComponent<JJVideoAndImage>().id].videoType = VideoTypeRes.islive;
+        obj.GetComponent<JJVideoAndImage>().InitData(null, url, worldInfos[obj.GetComponent<JJVideoAndImage>().id].JjRatio, DataType.Video, VideoTypeRes.islive);
+    }
+
     IEnumerator GetSprite(string path, int index, System.Action<Sprite, int> callback)
     {
         while (Application.internetReachability == NetworkReachability.NotReachable)

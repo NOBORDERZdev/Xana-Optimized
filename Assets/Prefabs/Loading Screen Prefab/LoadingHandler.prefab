@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -9.199829, y: 0}
+  m_AnchoredPosition: {x: -9.19986, y: 0}
   m_SizeDelta: {x: 18.472626, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1992706805203075835
@@ -4326,6 +4326,8 @@ MonoBehaviour:
   loadingSlider: {fileID: 4343778718589252691}
   loadingText: {fileID: 4343778718043801130}
   loadingPercentageText: {fileID: 4343778718501788946}
+  JJLoadingSlider: {fileID: 8082687548573240992}
+  JJLoadingPercentageText: {fileID: 742893129749009690}
   loadingBgImage: {fileID: 4343778717741194664}
   loadingBgImageAlter: {fileID: 4343778717695981417}
   loadingSprites:
@@ -11478,6 +11480,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1796991303705016583}
     m_Modifications:
+    - target: {fileID: 96631115652564050, guid: 7caf0b85d4ace4abe9bca4b7928be2bf, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+    - target: {fileID: 96631115652564050, guid: 7caf0b85d4ace4abe9bca4b7928be2bf, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 96631115788954950, guid: 7caf0b85d4ace4abe9bca4b7928be2bf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -11675,6 +11685,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
+--- !u!114 &742893129749009690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7081076877324057128, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
+  m_PrefabInstance: {fileID: 7496875699683553074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!225 &2377629185401262992 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 5257189087669189794, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
@@ -11695,6 +11716,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 509456226095600178, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
   m_PrefabInstance: {fileID: 7496875699683553074}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8082687548573240992 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1738733856435675538, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
+  m_PrefabInstance: {fileID: 7496875699683553074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7496875700318613392
 PrefabInstance:
   m_ObjectHideFlags: 0
