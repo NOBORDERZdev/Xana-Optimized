@@ -13,6 +13,7 @@ using Photon.Pun.Demo.PunBasics;
 public class FeedEventPrefab : MonoBehaviour
 {
     public static string m_EnvName;
+    public static string m_CreaName;
     //public static string m_EnvDownloadLink;
     //public static string m_timestamp;
     [Header("WorldNameAndLinks")]
@@ -580,6 +581,7 @@ public class FeedEventPrefab : MonoBehaviour
         //m_EnvDownloadLink = m_FileLink;
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
+        m_CreaName = creatorName;
         XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
