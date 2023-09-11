@@ -250,6 +250,28 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
+            if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+            {
+                YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
+
+                //#if UNITY_ANDROID || UNITY_EDITOR
+                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+
+                //#else
+                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+                //#endif
+
+                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+
+                YoutubeStreamPlayer.SetActive(false);
+                if (YoutubeStreamPlayer)
+                {
+                    YoutubeStreamPlayer.SetActive(true);
+                }
+            }
         }
     }
     void CharacterLightCulling()
