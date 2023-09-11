@@ -11,7 +11,7 @@ public class ObjectSpawner : MonoBehaviour
     [Space(5)]
     public TMP_Dropdown type;
     [Space(10)]
-    public GameObject[] objectsForSpawn;
+    public MeshRenderer[] objectsForSpawn;
 
     private int numOfObjectToSpawn;
 
@@ -23,7 +23,7 @@ public class ObjectSpawner : MonoBehaviour
 
     private int maxDistance = 48;
 
-    private GameObject spawnedObject;
+    private MeshRenderer spawnedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -103,15 +103,17 @@ public class ObjectSpawner : MonoBehaviour
 
     public void SpawnObject()
     {
-        if(TestWorldCanvasManager.Instance.parentObj == null)
+        int numSharedMesh = Mathf.CeilToInt(numOfObjectToSpawn * 0.1f);
+        int numUniqueMesh = numOfObjectToSpawn - numSharedMesh;
+
+        if (TestWorldCanvasManager.Instance.parentObj == null)
         {
             Debug.Log("<color=red> Parent object is null </color>");
             TestWorldCanvasManager.Instance.parentObj = Instantiate(new GameObject("TestObjectsParent"), Vector3.zero, Quaternion.identity);
             TestWorldCanvasManager.Instance.parentObj.transform.SetParent(null);
         }
-        //sizeY / 2
         
-        for (int i=0; i< numOfObjectToSpawn; i++)
+        for (int i=0; i< numSharedMesh; i++)
         {
             Vector3 randPos = new Vector3(Random.Range(-maxDistance, maxDistance), sizeY / 2, Random.Range(-maxDistance, maxDistance));
             spawnedObject = Instantiate(objectsForSpawn[objectType]); //, randPos, Quaternion.identity
@@ -121,6 +123,29 @@ public class ObjectSpawner : MonoBehaviour
             spawnedObject.transform.rotation = Quaternion.Euler(-90f, rotationAngle, 0f);
             spawnedObject.transform.parent = TestWorldCanvasManager.Instance.parentObj.transform;
         }
+
+        for (int i = 0; i < numUniqueMesh; i++)
+        {
+            Vector3 randPos = new Vector3(Random.Range(-maxDistance, maxDistance), sizeY / 2, Random.Range(-maxDistance, maxDistance));
+            spawnedObject = Instantiate(objectsForSpawn[objectType]);
+
+            // Get the MeshFilter component from the spawned object
+            MeshFilter meshFilter = spawnedObject.GetComponent<MeshFilter>();
+
+            // Clone the mesh from the original prefab and apply it to this object so it can be unique
+            Mesh originalMesh = objectsForSpawn[objectType].GetComponent<MeshFilter>().sharedMesh;
+            Mesh newMesh = Instantiate(originalMesh);
+
+            // Assign the cloned mesh to the MeshFilter component
+            meshFilter.sharedMesh = newMesh;
+
+            spawnedObject.transform.localScale = new Vector3(sizeX, sizeY, sizeZ);
+            spawnedObject.transform.position = randPos;
+            float rotationAngle = UnityEngine.Random.Range(0f, 360f);
+            spawnedObject.transform.rotation = Quaternion.Euler(-90f, rotationAngle, 0f);
+            spawnedObject.transform.parent = TestWorldCanvasManager.Instance.parentObj.transform;
+        }
+
         TestWorldCanvasManager.Instance.AddPolyCount(numOfObjectToSpawn * objectPolyCount);
         Debug.Log($"<color=red> Object spawned </color>");
     }

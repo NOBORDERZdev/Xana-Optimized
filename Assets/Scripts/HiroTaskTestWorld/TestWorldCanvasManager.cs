@@ -18,6 +18,15 @@ public class TestWorldCanvasManager : Singleton<TestWorldCanvasManager>
         ClearAll();
     }
 
+    private void Start()
+    {
+        //make this canvas scale to 2.5, if PC, then 1.0
+        if (UnityEngine.Device.Application.isMobilePlatform) //returns FALSE for iPad Safari, but true for iPad Chrome
+            GetComponent<CanvasScaler>().scaleFactor = 2.5f;
+        else
+            GetComponent<CanvasScaler>().scaleFactor = 1f;
+    }
+
     internal void AddPolyCount(int v)
     {
         int count = int.Parse(polygonCountText.text);
