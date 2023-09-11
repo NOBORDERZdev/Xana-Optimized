@@ -311,7 +311,7 @@ public class PremiumUsersDetails : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", AuthToken);
         yield return request.SendWebRequest();
-        //Debug.Log(request.downloadHandler.text);
+        Debug.Log("features response :-"+request.downloadHandler.text);
         MainClass mainClassObj = new MainClass();
         mainClassObj = JsonUtility.FromJson<MainClass>(request.downloadHandler.text);
         if (!request.isHttpError && !request.isNetworkError)

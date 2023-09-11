@@ -16467,6 +16467,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ring_22
       objectReference: {fileID: 0}
+    - target: {fileID: 1031474781, guid: abc00000000014330414060857728980, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1031474782, guid: abc00000000014330414060857728980, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -41023,6 +41027,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XanaFestivalPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4294505633651047613, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: b6630e096387c2745816b3257353ca11, type: 3}
     - target: {fileID: 4294505633885410225, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
       propertyPath: Shader
       value: 
@@ -41039,10 +41047,18 @@ PrefabInstance:
       propertyPath: _shader
       value: 
       objectReference: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4732646159888516108, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
+    - target: {fileID: 7022605134603065234, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
     - target: {fileID: 7637697490305562510, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 5060444177187149915, guid: 88abfbc7d387334478edb3528d27f58a, type: 3}
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
 --- !u!1 &4294505633885410223 stripped
@@ -41077,6 +41093,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4294505633885410224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+--- !u!1 &4294505633885410227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8084584351005901000, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+  m_PrefabInstance: {fileID: 4294505633885410222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4294505633885410228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294505633885410227}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
