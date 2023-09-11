@@ -107,10 +107,16 @@ public class ConstantsGod
     public static string ForgetPasswordResetAPI = "/auth/reset-password";
     //[Header("Guest API")]
     public static string guestAPI = "/auth/login-as-guest";
-    public static string GetAllAnimatons = "/item/animations";
+    //  public static string GetAllAnimatons = "/item/animations";
+    public static string GetAllAnimatons = "/item/v2/animations";
     public static string GetAllReactions = "/item/get-all-reactions";
     public static string GetVersion = "/item/get-version";
     public static string MaintenanceAPI = "/item/get-version/";
+
+
+
+    // Xana Lobby WOrlds
+    public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
 
     #endregion
 
