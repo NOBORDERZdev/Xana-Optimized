@@ -1522,6 +1522,8 @@ public class AvatarController : MonoBehaviour
                 break;
             case "Glove":
                 wornGloves = item;
+                Material m = new Material(wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
+                wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m;
                 wornGlovesId = itemId;
                 break;
         }
