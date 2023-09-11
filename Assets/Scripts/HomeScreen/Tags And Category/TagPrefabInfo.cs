@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class TagPrefabInfo : MonoBehaviour
 {
@@ -13,5 +14,12 @@ public class TagPrefabInfo : MonoBehaviour
     {
         hightLighter.SetActive(true);
         WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
+        StartCoroutine(DisableHighlighter());
+    }
+
+    IEnumerator DisableHighlighter()
+    {
+        yield return new WaitForSeconds(1);
+        hightLighter.SetActive(false);
     }
 }

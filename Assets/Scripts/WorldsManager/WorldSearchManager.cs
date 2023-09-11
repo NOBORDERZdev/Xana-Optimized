@@ -110,7 +110,7 @@ public class WorldSearchManager : MonoBehaviour
     {
         if(isFromTag)
         {
-            return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + searchKey + "/" + pageNumb + "/" + pageSize;
+            return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + "/" + searchKey + "/" + pageNumb + "/" + pageSize;
         }
         else
         {
@@ -245,15 +245,15 @@ public class WorldSearchManager : MonoBehaviour
         }
         XanaLobbySearchPrefab.SetActive(false);
         SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
-        Debug.Log("SearchWorld");
+        //Debug.Log("SearchWorld");
         pageNumb = 1;
         pageSize = 15;
         if (searchworldCoroutine == null)
         {
-            Debug.Log("SearchWorld coroutine");
+            //Debug.Log("SearchWorld coroutine");
             //StopCoroutine(IESearchWorld());
             searchWorldSTR = searchWorldInput.Text;
-            searchworldCoroutine = StartCoroutine(IESearchWorld());
+            searchworldCoroutine = StartCoroutine(IESearchWorld(isFromTag));
         }
         /*string searchWorldStr = searchWorldInput.Text;
         if (string.IsNullOrEmpty(searchWorldStr))

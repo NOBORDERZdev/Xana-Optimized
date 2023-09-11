@@ -30,6 +30,7 @@ public class FeedEventPrefab : MonoBehaviour
     public string entityType = "None";
 
     [Header("Tags and Category")]
+    public GameObject tagScroller;
     public Transform tagsParent;
     public GameObject tagsPrefab;
     public string[] worldTags;
@@ -78,7 +79,7 @@ public class FeedEventPrefab : MonoBehaviour
     bool isNotLoaded = true;
     public LoginPageManager loginPageManager;
     UserAnalyticsHandler userAnalyticsHandler;
-    bool isBannerLoaded =false; 
+    bool isBannerLoaded = false;
     private void Awake()
     {
         loginPageManager = GetComponent<LoginPageManager>();
@@ -113,7 +114,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-        
+
     }
 
     int cnt = 0;
@@ -242,7 +243,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else if (isImageSuccessDownloadAndSave)
         {
-            LoadFileAgain:
+        LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
                 //Debug.Log("01");
@@ -506,7 +507,7 @@ public class FeedEventPrefab : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     callBack(false, null);
-                   Debug.Log("Network Error");
+                    Debug.Log("Network Error");
                 }
                 else
                 {
@@ -550,7 +551,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else
         {
-            
+
         }
         m_BannerSprite[1].sprite = m_FadeImage.sprite;
         m_BannerSprite[2].sprite = m_FadeImage.sprite;
@@ -698,7 +699,7 @@ public class FeedEventPrefab : MonoBehaviour
             Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2());
             m_BannerSprite[0].sprite = sprite;
-            isBannerLoaded= true;
+            isBannerLoaded = true;
         }
 
     }
@@ -706,7 +707,9 @@ public class FeedEventPrefab : MonoBehaviour
 
     void InstantiateWorldtags()
     {
-        for(int i=0;i<worldTags.Length;i++)
+        if (worldTags.Length > 0)
+            tagScroller.SetActive(true);
+        for (int i = 0; i < worldTags.Length; i++)
         {
             GameObject temp = Instantiate(tagsPrefab, tagsParent);
             temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
