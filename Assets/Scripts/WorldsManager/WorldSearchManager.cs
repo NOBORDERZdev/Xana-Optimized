@@ -24,6 +24,7 @@ public class WorldSearchManager : MonoBehaviour
     public GameObject FindWorldScreen;
 
     public static WorldSearchManager Instance;
+    public static Action<string> OpenSearchPanel;
     [SerializeField] GameObject XanaLobbySearchPrefab;
     bool isXanaLobbyFound = false;
     private void Awake()
@@ -33,10 +34,16 @@ public class WorldSearchManager : MonoBehaviour
             Instance = this;
         }
     }
-    private void Start()
+    private void OnEnable()
     {
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
             eventPrefab = eventPrefabTab;
+        OpenSearchPanel += OpenSearchPanelFromTag;
+    }
+
+    private void OnDisable()
+    {
+        OpenSearchPanel -= OpenSearchPanelFromTag;
     }
     public void OnClickBackButton()
     {
@@ -81,13 +88,44 @@ public class WorldSearchManager : MonoBehaviour
         // }
     }
 
+    void OpenSearchPanelFromTag(string tagName)
+    {
+        FindWorldScreen.SetActive(true);
+        searchWorldInput.Clear();
+        searchWorldInput.Text = tagName;
+        searchWorldInput.ManualDeselect();
+        searchWorldInput.ReadOnly=true;
+        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        {
+            UIManager.Instance.FindScetion.constraintCount = 4;
+            UIManager.Instance.FindScetion.padding.left = 12;
+            UIManager.Instance.FindScetion.padding.right = 12;
+            UIManager.Instance.FindScetion.cellSize = new Vector2(320, 320);
+        }
+
+        SearchWorld(true);
+    }
+
+    string PrePareURL(bool isFromTag,string searchKey)
+    {
+        if(isFromTag)
+        {
+            return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + searchKey + "/" + pageNumb + "/" + pageSize;
+        }
+        else
+        {
+            return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + searchKey + "/" + pageNumb + "/" + pageSize;
+        }
+    }
+
     public string searchdata;
-    public IEnumerator IESearchWorld()
+    public IEnumerator IESearchWorld(bool isFromTag=false)
     {
         string searchWorldStr = searchWorldInput.Text;
         if (!string.IsNullOrEmpty(searchWorldStr))
         {
-            using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + searchWorldStr + "/" + pageNumb + "/" + pageSize))
+            string ApiURL = PrePareURL(isFromTag,searchWorldStr);
+            using (UnityWebRequest www = UnityWebRequest.Get(ApiURL))
             {
                 www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
                 yield return www.SendWebRequest();
@@ -199,7 +237,7 @@ public class WorldSearchManager : MonoBehaviour
     }
     public Coroutine searchworldCoroutine;
     public string searchWorldSTR;
-    public void SearchWorld()
+    public void SearchWorld(bool isFromTag=false)
     {
         foreach (Transform world in SearchWorldParent)
         {

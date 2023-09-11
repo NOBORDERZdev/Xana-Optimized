@@ -9,5 +9,9 @@ public class TagPrefabInfo : MonoBehaviour
 
     public GameObject hightLighter;
 
-    
+    public void ClickOnTag()
+    {
+        hightLighter.SetActive(true);
+        WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
+    }
 }

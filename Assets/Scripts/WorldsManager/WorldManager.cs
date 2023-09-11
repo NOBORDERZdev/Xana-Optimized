@@ -17,22 +17,28 @@ public class WorldManager : MonoBehaviour
     public GameObject eventPrefab;
     public GameObject eventPrefabLobby;
     public GameObject eventPrefabTab;
+    public GameObject descriptionParentPanel;
     [Header("Home Page Scrollviews")]
     public Transform listParentHotSection;
     public Transform listParentAllWorlds;
     public Transform listParentMyWorlds;
+    public Transform listParentGameWorlds;
+    public Transform listParentEventWorlds;
     private Transform listParent;
 
     [Header("world Page Scrollviews")]
     public Transform world_HotScroll;
     public Transform world_NewScroll;
     public Transform world_myworldScroll;
+    public Transform world_GameWorldScroll;
+    public Transform world_EventWorldScroll;
 
     [Header("Full World List")]
     private List<GameObject> hotWorldList = new List<GameObject>();
     private List<GameObject> newWorldList = new List<GameObject>();
     private List<GameObject> myworldWorldList = new List<GameObject>();
-
+    private List<GameObject> gameWorldList = new List<GameObject>();
+    private List<GameObject> eventWorldList = new List<GameObject>();
 
     [HideInInspector]
     public bool orientationchanged = false;
@@ -43,6 +49,8 @@ public class WorldManager : MonoBehaviour
     private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
+    private int pageNumberGameWorld = 1;
+    private int pageNumberEventWorld = 1;
     private int pageCount = 200;
     private bool loadOnce = true;
     private bool dataIsFatched = false;
@@ -150,6 +158,20 @@ public class WorldManager : MonoBehaviour
                 else
                     listParent = world_myworldScroll;
                 break;
+            case APIURL.GameWorld:
+                aPIURLGlobal = APIURL.GameWorld;
+                if (isHomePage)
+                    listParent = listParentGameWorlds;
+                else
+                    listParent = world_GameWorldScroll;
+                break;
+            case APIURL.EventWorld:
+                aPIURLGlobal = APIURL.EventWorld;
+                if (isHomePage)
+                    listParent = listParentEventWorlds;
+                else
+                    listParent = world_EventWorldScroll;
+                break;
             default:
                 aPIURLGlobal = APIURL.Hot;
                 listParent = listParentHotSection;
@@ -168,6 +190,10 @@ public class WorldManager : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.ALLBUILDERWORLDS + status + "/" + pageNumberAllWorld + "/" + pageCount;
             case APIURL.MyWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + pageNumberMyWorld + "/" + pageCount;
+            case APIURL.GameWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberGameWorld + "/" + pageCount + "/" + status + "/GAME";
+            case APIURL.EventWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -185,6 +211,12 @@ public class WorldManager : MonoBehaviour
                 return;
             case APIURL.MyWorld:
                 pageNumberMyWorld += 1;
+                return;
+            case APIURL.GameWorld:
+                pageNumberGameWorld += 1;
+                return;
+            case APIURL.EventWorld:
+                pageNumberEventWorld += 1;
                 return;
             default:
                 pageNumberHot += 1;
@@ -228,7 +260,7 @@ public class WorldManager : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-            //Debug.Log(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);
@@ -253,11 +285,8 @@ public class WorldManager : MonoBehaviour
                  isLobbyActive=true;
                  TempObject  = eventPrefabLobby;
                  TempObject.transform.SetParent(listParent.transform.parent);
-                 //TempObject.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.00012207f,344.261f);
                  TempObject.transform.SetAsFirstSibling();
-                 //TempObject.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                 //TempObject.transform.GetComponent<RectTransform>().localPosition = new Vector3(-6.65151f,1493.0f,0);
-                 //TempObject.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0,283.57f);
+                
             }
             else
             {
@@ -293,6 +322,7 @@ public class WorldManager : MonoBehaviour
             _event.updatedAt = _WorldInfo.data.rows[i].updatedAt;
             _event.createdAt = _WorldInfo.data.rows[i].createdAt;
 
+            _event.worldTags = _WorldInfo.data.rows[i].tags;
 
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
@@ -304,48 +334,26 @@ public class WorldManager : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
                     _event.creatorName = _WorldInfo.data.rows[i].creator;
-               //else if (_event.m_EnvironmentName == "Genesis ART Metaverse Museum")
-               //     _event.creatorName = "KOGAKEN";
                 else
                     _event.creatorName = "XANA";
-
-
-                
-
                 _event.userLimit = _WorldInfo.data.rows[i].user_limit;
             }
-            /*if (!WorldSearchManager.Instance.AllWorldsInfoList.Contains(_WorldInfo.data.rows[i]))
-            {
-                if (string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.name))
-                {
-                    Debug.Log("_WorldInfo user data is null");
-                    _WorldInfo.data.rows[i].user.name = "XANA";
-                }
-                else
-                {
-                    Debug.Log("_WorldInfo user data is not null");
-                }
-                WorldSearchManager.Instance.AllWorldsInfoList.Add(_WorldInfo.data.rows[i]);
-            }*/
-
-            //    _event.uploadTimeStamp = _WorldInfo.data.rows[i].upload_timestamp;
-
-            //#if UNITY_ANDROID
-            //            _event.m_FileLink = _WorldInfo.data.rows[i].android_file;
-            //#endif
-            //#if UNITY_IOS
-            //                _event.m_FileLink = _WorldInfo.data.rows[i].ios_file;
-            //#endif
+           
 
             TempObject.transform.localScale = new Vector3(1, 1, 1);
             _event.Init();
-             if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby")){ 
+             if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
+            { 
                 if (aPIURLGlobal == APIURL.Hot)
                     hotWorldList.Add(TempObject);
                 else if (aPIURLGlobal == APIURL.AllWorld)
                     newWorldList.Add(TempObject);
                 else if (aPIURLGlobal == APIURL.MyWorld)
                     myworldWorldList.Add(TempObject);
+                else if (aPIURLGlobal == APIURL.GameWorld)
+                    gameWorldList.Add(TempObject);
+                else if (aPIURLGlobal == APIURL.EventWorld)
+                    eventWorldList.Add(TempObject);
             }
         }
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
@@ -710,6 +718,17 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             myworldWorldList[i].gameObject.transform.SetParent(world_myworldScroll.transform);
         }
 
+        for (int i = 0; i < gameWorldList.Count; i++)
+        {
+            gameWorldList[i].gameObject.transform.SetParent(world_GameWorldScroll.transform);
+        }
+
+        for (int i = 0; i < eventWorldList.Count; i++)
+        {
+            eventWorldList[i].gameObject.transform.SetParent(world_EventWorldScroll.transform);
+        }
+
+
         m_AllWorldManage.WorldHotPage();
     }
 
@@ -728,6 +747,16 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         for (int i = 0; i < myworldWorldList.Count; i++)
         {
             myworldWorldList[i].gameObject.transform.SetParent(listParentMyWorlds.transform);
+        }
+
+        for (int i = 0; i < gameWorldList.Count; i++)
+        {
+            gameWorldList[i].gameObject.transform.SetParent(listParentGameWorlds.transform);
+        }
+
+        for (int i = 0; i < eventWorldList.Count; i++)
+        {
+            eventWorldList[i].gameObject.transform.SetParent(listParentEventWorlds.transform);
         }
     }
 
@@ -885,7 +914,7 @@ public class WorldUser
 }
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld
+    Hot, AllWorld, MyWorld,GameWorld,EventWorld
 }
 
 public enum WorldType
