@@ -61,7 +61,7 @@ public class ConstantsGod
 
     public static string GETENVIRONMENTSAPINew = "/item/environment/1/30";
     public static string GetAllMuseumsAPI = "/item/museums/2/1/25";
-    public static string SearchWorldAPI = "/item/search-worlds";
+    
     // public static string GetAllMuseumsAPI = "/item/museums/v2/1/20";
     public static string BACKGROUNDFILES = "/item/background-files";
     public static string ANIMATIONFILES = "/item/animations";
@@ -218,5 +218,8 @@ public class ConstantsGod
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
+    public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
+    public static string SearchWorldAPI = "/item/search-worlds";
+    public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag";  //:tag/:pageNumber/:pageSize
     #endregion
 }
