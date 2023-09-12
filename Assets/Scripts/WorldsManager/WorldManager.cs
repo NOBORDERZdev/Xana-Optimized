@@ -63,6 +63,12 @@ public class WorldManager : MonoBehaviour
     ScrollRect s1;
     ScrollSnapRect s2;
 
+
+    [SerializeField]
+    List<string> AutoSwtichWorldList;
+
+    static int AutoSwtichIndex=0;
+
     private void Awake()
     {
         if (instance == null)
@@ -105,7 +111,18 @@ public class WorldManager : MonoBehaviour
         OnWorldTabChange(APIURL.Hot, true);
         GetBuilderWorlds(APIURL.Hot, (a) => { });
 
+        Invoke(nameof(SetAutoSwtichStreaming),2);
+        
         Invoke(nameof(LoadJjworld), 5);
+    }
+
+    void SetAutoSwtichStreaming(){ 
+         if (XanaConstants.xanaConstants.isCameraMan)
+        {
+            XanaConstants.xanaConstants.JjWorldSceneChange= true;
+            XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex];
+            AutoSwtichIndex++;
+        }    
     }
 
     private void OnDestroy()
