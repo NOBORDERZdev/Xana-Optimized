@@ -431,6 +431,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
+            if(!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         else
@@ -489,11 +490,22 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
-          if(XanaConstants.xanaConstants.isCameraMan){ 
-            StreamingCamera.instance.TriggerStreamCam(); 
+          if(XanaConstants.xanaConstants.isCameraMan){
+            if (StreamingCamera.instance)
+            {
+                StreamingCamera.instance.TriggerStreamCam(); 
+            }
+            StartCoroutine(BackToMainmenuforAutoSwtiching());
         }
     }
 
+    [SerializeField] int autoSwitchTime;
+    IEnumerator BackToMainmenuforAutoSwtiching(){ 
+        print("AUTO BACK CALL");
+            yield return new WaitForSecondsRealtime(30);
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+         _uiReferences.LoadMain(false);
+    }
 
 
     public IEnumerator SpawnPlayerForBuilderScene()

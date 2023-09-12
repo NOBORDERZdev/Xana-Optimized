@@ -79,7 +79,8 @@ public class StreamingCamera : MonoBehaviour
         }
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
-       LoadingHandler.Instance.HideLoading();
+      // LoadingHandler.Instance.HideLoading();
+      LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
 
    
