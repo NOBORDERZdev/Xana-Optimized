@@ -424,9 +424,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        LoadingHandler.Instance.HideLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        LoadingHandler.Instance.UpdateLoadingStatusText("");
+        if(!XanaConstants.xanaConstants.isCameraMan){ 
+            LoadingHandler.Instance.HideLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
@@ -448,13 +450,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         if (XanaConstants.xanaConstants.isCameraMan)
         {
-            ReferrencesForDynamicMuseum.instance.randerCamera.enabled=false;
-            ReferrencesForDynamicMuseum.instance.FirstPersonCam.GetComponent<Camera>().enabled=false;
-            ReferrencesForDynamicMuseum.instance.PlayerParent.gameObject.SetActive(false);
+            ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
+            ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
+            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
         }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
-        LoadingHandler.Instance.HideLoading();
+        if (!XanaConstants.xanaConstants.isCameraMan)
+            LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
         try
         {
@@ -486,7 +489,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
-
+          if(XanaConstants.xanaConstants.isCameraMan){ 
+            StreamingCamera.instance.TriggerStreamCam(); 
+        }
     }
 
 
@@ -597,6 +602,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+      
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

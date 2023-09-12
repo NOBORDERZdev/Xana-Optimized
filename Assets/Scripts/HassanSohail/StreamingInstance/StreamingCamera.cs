@@ -10,21 +10,27 @@ public class StreamingCamera : MonoBehaviour
 {
     [SerializeField]
     List<Camera> Cameras;
-
+   static public StreamingCamera instance;
     List<int> avatarCount = new List<int>();
-    IEnumerator Start()
+    private void Awake()
+    {
+        if (instance == null)
+	    {
+		    instance = this;
+	    }
+	    else
+	    {
+		    Destroy(gameObject);
+		    return;
+	    } 
+    }
+
+    void Start()
     {
         turnOffCameras();
-        yield return new WaitForSeconds(3);
-        
+        //yield return new WaitForSeconds(2);
     }
 
-    public void ButtonCall(){ 
-        if (XanaConstants.xanaConstants.isCameraMan)
-        {
-          Cameras[checkCameras()].gameObject.SetActive(true);
-        }
-    }
 
     /// <summary>
     /// To turn of all streaming cameras 
@@ -37,11 +43,17 @@ public class StreamingCamera : MonoBehaviour
         }    
     }
 
+    public void TriggerStreamCam(){ 
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
+            StartCoroutine(checkCameras());
+        }    
+    }
 
     /// <summary>
     /// To check how much player is in cameras
     /// </summary>
-    int checkCameras(){
+    IEnumerator checkCameras(){
        
         avatarCount.Clear();
         int visibleCount;
@@ -49,14 +61,15 @@ public class StreamingCamera : MonoBehaviour
         { 
             visibleCount=0;
             cam.gameObject.SetActive(true);
+            yield return new WaitForSeconds(2f);
             foreach (var avatar in Launcher.instance.playerobjects)
             {
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
-                    print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                    if (avatar.GetComponent<AvatarController>().isVisibleOnCam)
+                   // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
+                    if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
                     {
-                        print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
+                       // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
                         visibleCount++;
                     }
                 }
@@ -65,17 +78,9 @@ public class StreamingCamera : MonoBehaviour
             avatarCount.Add(visibleCount);
         }
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
-        return crowdedCamIndex;
+       Cameras[crowdedCamIndex].gameObject.SetActive(true);
+       LoadingHandler.Instance.HideLoading();
     }
 
-    //int CountInstanceInCam()
-    //{
-    //    instance.Clear();
-
-    //    //for (int i = 0; i < length; i++)
-    //    //{
-
-    //    //}
-    //}
-
+   
 }

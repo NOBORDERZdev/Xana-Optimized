@@ -1488,4 +1488,13 @@ public class CharcterBodyParts : MonoBehaviour
         Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, PresetGredientColor);
     }
 
+
+    /// <summary>
+    /// To hide player meshes
+    /// </summary>
+    public void HidePlayer(){ 
+        Body.gameObject.SetActive(false);
+        //.gameObject.SetActive(false);
+    }
+
 }
