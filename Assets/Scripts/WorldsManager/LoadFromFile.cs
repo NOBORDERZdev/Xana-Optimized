@@ -446,6 +446,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
 
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
+            ReferrencesForDynamicMuseum.instance.randerCamera.enabled=false;
+            ReferrencesForDynamicMuseum.instance.FirstPersonCam.GetComponent<Camera>().enabled=false;
+            ReferrencesForDynamicMuseum.instance.PlayerParent.gameObject.SetActive(false);
+        }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
         LoadingHandler.Instance.HideLoading();
@@ -480,6 +486,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+
     }
 
 
