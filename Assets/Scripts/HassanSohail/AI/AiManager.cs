@@ -50,16 +50,25 @@ namespace XanaAi
                 //aiTemp.transform.position = temp.position;
                 //SpwanedAi.Add(aiTemp.GetComponent<AiController>());
                 SpwanPoints.RemoveAt(rand);
-                apperance.StartCoroutine( apperance.GetAppearance(aiTemp.GetComponent<AiController>()) );
+                SpwanedAi.Add(aiTemp.GetComponent<AiController>());
+                //apperance.StartCoroutine( apperance.GetAppearance(aiTemp.GetComponent<AiController>()) );
                 rand = Random.Range(0, aiNames.Count);
                 aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
                 SpwanedAiCount++;
-                yield return new WaitForSeconds(7f);
+                //yield return new WaitForSeconds(0f);
             }
-           
+            StartCoroutine(WearClothes());
+            yield return null;
         }
 
-       
+       IEnumerator WearClothes()
+        {
+            foreach (var item in SpwanedAi)
+            {
+                apperance.StartCoroutine(apperance.GetAppearance(item));
+                yield return new WaitForSeconds(7f);
+            }
+        }
        
         public IEnumerator DownloadAddressableWearableWearable( string key, string ObjectType,AiController ai)
         {
