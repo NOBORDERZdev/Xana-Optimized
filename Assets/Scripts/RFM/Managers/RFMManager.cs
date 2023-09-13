@@ -12,7 +12,6 @@ using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 
 namespace RFM
 {
