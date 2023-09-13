@@ -119,9 +119,10 @@ public class WorldManager : MonoBehaviour
 
     void SetAutoSwtichStreaming(){ 
          if (XanaConstants.xanaConstants.isCameraMan)
-        {
+         {
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
             XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
+            XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].mainnetId.ToString();
@@ -138,7 +139,7 @@ public class WorldManager : MonoBehaviour
             {
                 AutoSwtichIndex=0;
             }
-        }    
+         }    
     }
 
     private void OnDestroy()
@@ -861,6 +862,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 [Serializable]
 class AutoSwtichEnv{ 
     public string name;
+    public bool isMussuem= false;
     public int mainnetId;
     public int testnetId;
 }
