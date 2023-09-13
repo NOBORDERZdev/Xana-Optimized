@@ -338,36 +338,39 @@ namespace Photon.Pun.Demo.PunBasics
                 
                 //roomNames.Add(info.Name);
             }
-            if (XanaConstants.xanaConstants.isCameraMan &&roomList.Count>0)
+            if (XanaConstants.xanaConstants.isCameraMan)
             {
-                List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
-                tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
-                //PhotonNetwork.JoinRoom(tempRooms[0].Name);
-                CameraManRoomName= tempRooms[0].Name;
-                //print(" VALUE IS "+tempRooms);
-                //Debug.Log("Is cameraman :--" + XanaConstants.xanaConstants.isCameraMan);
-                //if (!roomNames.Contains(info.Name)) // create new room btn
-                //{
-                //    Debug.Log("Initiate Room");
-                //    LoadingHandler.Instance.GetComponent<ManualRoomController>().InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                //}
-                //else// update previous room data
-                //{
-                //    if (info.PlayerCount > 0)
-                //    {
-                //        LoadingHandler.Instance.GetComponent<ManualRoomController>().UpdateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                //    }
-                //    else
-                //    {
-                //        LoadingHandler.Instance.GetComponent<ManualRoomController>().DeleteRoomBtn(info.Name);
-                //    }
-                //}
+                if (roomList.Count>0)
+                {
+                    List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
+                    tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+                    //PhotonNetwork.JoinRoom(tempRooms[0].Name);
+                    CameraManRoomName= tempRooms[0].Name;
+                    //print(" VALUE IS "+tempRooms);
+                    //Debug.Log("Is cameraman :--" + XanaConstants.xanaConstants.isCameraMan);
+                    //if (!roomNames.Contains(info.Name)) // create new room btn
+                    //{
+                    //    Debug.Log("Initiate Room");
+                    //    LoadingHandler.Instance.GetComponent<ManualRoomController>().InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
+                    //}
+                    //else// update previous room data
+                    //{
+                    //    if (info.PlayerCount > 0)
+                    //    {
+                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().UpdateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
+                    //    }
+                    //    else
+                    //    {
+                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().DeleteRoomBtn(info.Name);
+                    //    }
+                    //}
+                } else
+                { 
+                    // there is no room for stremaing so move to main menu to switch other world
+                    LoadFromFile.instance._uiReferences.LoadMain(false); 
+                }
             }
-            else
-            { 
-                // there is no room for stremaing so move to main menu to switch other world
-                LoadFromFile.instance._uiReferences.LoadMain(false); 
-            }
+           
             if (joinedRoom == false)
             {
                 Debug.Log("Player has not joined any room "+ XanaConstants.xanaConstants.isCameraMan);
@@ -382,6 +385,7 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                    // List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
                    // tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+                   if(!CameraManRoomName.IsNullOrEmpty())
                     PhotonNetwork.JoinRoom(CameraManRoomName);
                 }
             }
@@ -416,7 +420,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             print("Launcher " + "OnJoinRandomFailed");
-            if (XanaConstants.xanaConstants.isCameraMan)
+            if (!XanaConstants.xanaConstants.isCameraMan)
             {
                 PhotonNetwork.CreateRoom(null, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
             }

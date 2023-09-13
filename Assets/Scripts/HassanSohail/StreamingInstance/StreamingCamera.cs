@@ -46,7 +46,15 @@ public class StreamingCamera : MonoBehaviour
     public void TriggerStreamCam(){ 
         if (XanaConstants.xanaConstants.isCameraMan)
         {
-            StartCoroutine(checkCameras());
+           
+            if (Cameras.Count>0)
+            {
+                StartCoroutine(checkCameras());
+            }
+            else // there is no any streaming camera in scene so back to main menu
+            {
+                  LoadFromFile.instance._uiReferences.LoadMain(false);
+            }
         }    
     }
 
@@ -80,7 +88,9 @@ public class StreamingCamera : MonoBehaviour
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
       // LoadingHandler.Instance.HideLoading();
-      LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+       ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+       ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+       LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
 
    
