@@ -20343,6 +20343,7 @@ Transform:
   - {fileID: 1302081984}
   - {fileID: 296829226}
   - {fileID: 1846136993}
+  - {fileID: 1810451784}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31923,6 +31924,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8377094, y: 0.00897789, z: 0.84736776}
   m_Center: {x: 0.0017163754, y: -0.019222021, z: 0.009659052}
+--- !u!1 &1810451783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1810451784}
+  - component: {fileID: 1810451785}
+  m_Layer: 0
+  m_Name: Stairs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1810451784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810451783}
+  m_LocalRotation: {x: 0.38668922, y: -0, z: -0, w: 0.92221016}
+  m_LocalPosition: {x: 8.707, y: 2.31, z: -9.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 884424453}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 45.497, y: 0, z: 0}
+--- !u!65 &1810451785
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810451783}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.6308012, y: 0.5412832, z: 3.8176384}
+  m_Center: {x: 0.09725618, y: -0.2293586, z: -0.7036128}
 --- !u!1 &1824969803
 GameObject:
   m_ObjectHideFlags: 0
