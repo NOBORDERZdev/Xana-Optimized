@@ -382,6 +382,7 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                    // List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
                    // tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+                   if(!CameraManRoomName.IsNullOrEmpty())
                     PhotonNetwork.JoinRoom(CameraManRoomName);
                 }
             }

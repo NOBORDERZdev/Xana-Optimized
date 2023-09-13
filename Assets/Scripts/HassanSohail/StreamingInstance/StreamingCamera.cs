@@ -79,6 +79,7 @@ public class StreamingCamera : MonoBehaviour
         }
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
+       ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
       // LoadingHandler.Instance.HideLoading();
       LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
