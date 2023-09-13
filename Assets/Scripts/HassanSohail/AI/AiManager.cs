@@ -13,7 +13,7 @@ namespace XanaAi
 {
     public class AiManager : MonoBehaviour
     {
-        //public TMP_InputField inputField;
+        public TMP_InputField inputField;
         #region public 
         [HideInInspector]
         public int SpwanedAiCount = 0;
@@ -42,8 +42,9 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            aiPrefab = Resources.Load("Ai") as GameObject;
-            //inputField.text = "2";
+            aiPrefab = Resources.Load("NPC_1") as GameObject; // Resources.Load("Ai") as GameObject;
+
+            inputField.text = "1";
             yield return new WaitForSeconds(2f);
             StartCoroutine(IntAis());
         }
@@ -72,13 +73,13 @@ namespace XanaAi
 
                 yield return new WaitForSeconds(7f);
 
-                //int integerValue;
-                //string data = inputField.text;
-                //if (int.TryParse(data, out integerValue))
-                //{
-                //    // Successfully converted to an integer
-                //    AiCountToSpwaned = integerValue;
-                //}
+                int integerValue;
+                string data = inputField.text;
+                if (int.TryParse(data, out integerValue))
+                {
+                    // Successfully converted to an integer
+                    AiCountToSpwaned = integerValue;
+                }
             }
         }
 

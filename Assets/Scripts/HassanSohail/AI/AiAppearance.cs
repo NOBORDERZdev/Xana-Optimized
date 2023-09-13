@@ -7,8 +7,8 @@ namespace XanaAi
 {
     public class AiAppearance : MonoBehaviour
     {
-        //public Toggle wearableToggle;
-        //public bool isWearableOrNot;
+        public Toggle wearableToggle;
+        public bool isWearableOrNot;
 
         [Header("Wearable items")]
         [SerializeField] public List<string> Uppers;
@@ -28,10 +28,10 @@ namespace XanaAi
 
         }
 
-        //public void ToggleUpdate()
-        //{
-        //    isWearableOrNot = wearableToggle;
-        //}
+        public void ToggleUpdate()
+        {
+            isWearableOrNot = wearableToggle;
+        }
 
         public IEnumerator GetAppearance(AiController ai)
         {
@@ -50,8 +50,8 @@ namespace XanaAi
 
         private void DecorateAI(AiController ai)
         {
-            //if (isWearableOrNot)
-            //{
+            if (isWearableOrNot)
+            {
                 int rand = Random.Range(0, Uppers.Count);
                 switch (tempCounter)
                 {
@@ -82,7 +82,7 @@ namespace XanaAi
                         Shoes.RemoveAt(rand);
                         break;
                 }
-            //}
+            }
         }
 
         public void CheckMoreAIDresses(AiController ai)

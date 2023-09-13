@@ -18,7 +18,7 @@ namespace XanaAi
         [SerializeField] AiReaction aiReaction;
         [SerializeField] AIJump aIJump;
         [SerializeField] AiFreeCam freeCam;
-        [SerializeField] EyesBlinking blinking;
+        //[SerializeField] EyesBlinking blinking;
         bool isNewlySpwaned =true;
         Coroutine emoteCoroutine;
         [HideInInspector]
@@ -33,9 +33,9 @@ namespace XanaAi
 
         private void Start()
         {
-            blinking.StoreBlendShapeValues();          // enabling blinking
-            blinking.isBlinking = true;
-            StartCoroutine(blinking.BlinkingStartRoutine()); 
+            //blinking.StoreBlendShapeValues();          // enabling blinking
+            //blinking.isBlinking = true;
+            //StartCoroutine(blinking.BlinkingStartRoutine()); 
         }
 
         /// <summary>
