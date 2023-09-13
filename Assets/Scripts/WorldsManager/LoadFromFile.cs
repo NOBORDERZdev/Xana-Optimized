@@ -493,7 +493,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
           if(XanaConstants.xanaConstants.isCameraMan){
             if (StreamingCamera.instance)
             {
-                StreamingCamera.instance.TriggerStreamCam(); 
+                StreamingCamera.instance.TriggerStreamCam();
+            }
+            else // sterming cam's not found so switching to main menu 
+            {
+                _uiReferences.LoadMain(false);
             }
             StartCoroutine(BackToMainmenuforAutoSwtiching());
         }
