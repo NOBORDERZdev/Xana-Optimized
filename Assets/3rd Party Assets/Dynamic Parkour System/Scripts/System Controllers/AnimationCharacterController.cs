@@ -29,7 +29,7 @@ namespace Climbing
     public class AnimationCharacterController : MonoBehaviour
     {
         private ThirdPersonController controller;
-        private Vector3 animVelocity;
+        public Vector3 animVelocity;
 
         [HideInInspector] public Animator animator;
         public SwitchCameras switchCameras;

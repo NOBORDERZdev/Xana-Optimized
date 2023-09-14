@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Climbing;
 using Photon.Pun;
 using Photon.Pun.Demo.Hub;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace RFM
         [SerializeField] private Animator npcAnim;
         [SerializeField] private string velocityNameX, velocityNameY;
         private NavMeshAgent navMeshAgent;
+        public InputCharacterController NPCRFMInputCharacterController;
         private float maxSpeed;
 
         private List<GameObject> _players;
@@ -69,8 +71,9 @@ namespace RFM
 
             var animVector = new Vector2(xVal, yVal) * speed / maxSpeed;
 
-            npcAnim.SetFloat(velocityNameX, animVector.x);
-            npcAnim.SetFloat(velocityNameY, animVector.y);
+            NPCRFMInputCharacterController.movement = animVector;
+            /*npcAnim.SetFloat(velocityNameX, animVector.x);
+            npcAnim.SetFloat(velocityNameY, animVector.y);*/
         }
 
         public void FollowTarget(Vector3 targetPosition)
@@ -87,6 +90,7 @@ namespace RFM
 
         private void OnTriggerEnter(Collider other)
         {
+            Debug.LogError("Triggered with: " + other.gameObject.name);
             if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
                 if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
@@ -104,7 +108,7 @@ namespace RFM
 
         private void GameOver()
         {
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject.transform.parent.parent.gameObject);
         }
     }
 }

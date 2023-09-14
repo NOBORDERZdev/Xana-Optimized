@@ -102,6 +102,17 @@ namespace RFM
             {
                 CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
             }
+            CurrentGameConfiguration = new GameConfiguration
+            {
+                MatchMakingTime = 10,
+                TakePositionTime = 5,
+                GameplayTime = 60,
+                GameRestartWaitTime = 5000,
+                MaxPlayersInRoom = 10,
+                EscapeesToHuntersRatio = Vector2.one,
+                GainingMoneyTimeInterval = 1,
+                MoneyPerInterval = 5,
+            };
         }
 
         private void Awake()

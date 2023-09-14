@@ -112,7 +112,10 @@ namespace Climbing
                     ApplyInputMovement();
                 }
             }
-
+            /*if (GetComponent<ThirdPersonController>().isNPC)
+            {
+                ApplyInputMovement();
+            }*/
             //Grant movement while falling
             if (!controller.dummy && controller.isJumping && controller.characterInput.movement != Vector2.zero && !controller.isVaulting)
             {
@@ -135,14 +138,14 @@ namespace Climbing
         }
 
         #region Movement
-
+        public float velMag;
         public void ApplyInputMovement()
         {
             if (GetState() == MovementState.Running)
             {
                 velocity.Normalize();
             }
-
+            velMag = velocity.magnitude;
             if (velocity.magnitude > 0.3f)
             {
                 //Applies Input Movement to the RigidBody
@@ -167,14 +170,20 @@ namespace Climbing
                 AutoStep();
 
                 //Sets velocity for movement animations
-                controller.characterAnimation.SetAnimVelocity(rb.velocity);
+                //if (!GetComponent<ThirdPersonController>().isNPC)
+                {
+                    controller.characterAnimation.SetAnimVelocity(rb.velocity);
+                }
             }
             else
             {
                 //Lerp down with current velocity of the rigidbody when no input detected
                 smoothSpeed = Mathf.SmoothStep(smoothSpeed, 0, Time.fixedDeltaTime * 20);
                 rb.velocity = new Vector3(rb.velocity.normalized.x * smoothSpeed, rb.velocity.y, rb.velocity.normalized.z * smoothSpeed);
-                controller.characterAnimation.SetAnimVelocity(controller.characterAnimation.GetAnimVelocity().normalized * smoothSpeed);
+                //if (!GetComponent<ThirdPersonController>().isNPC)
+                {
+                    controller.characterAnimation.SetAnimVelocity(controller.characterAnimation.GetAnimVelocity().normalized * smoothSpeed);
+                }
             }
 
             //Apply fall multiplier as gravity
@@ -269,8 +278,9 @@ namespace Climbing
             return false;
         }
 
-        public Vector3 GetVelocity() { 
-            return rb.velocity; 
+        public Vector3 GetVelocity()
+        {
+            return rb.velocity;
         }
 
         public void SetVelocity(Vector3 value)
@@ -447,7 +457,7 @@ namespace Climbing
             }
             else if (controller.characterDetection.ThrowRayOnDirection(transform.position + offset, transform.TransformDirection(new Vector3(-1.5f, 0, 1)), controller.slidingCapsuleCollider.radius + 0.1f, out hit))
             {
-                if (!controller.characterDetection.ThrowRayOnDirection(transform.position + offset + new Vector3(0, controller.stepHeight, 0), transform.TransformDirection(new Vector3(-1.5f,0,1)), controller.slidingCapsuleCollider.radius + 0.2f, out hit))
+                if (!controller.characterDetection.ThrowRayOnDirection(transform.position + offset + new Vector3(0, controller.stepHeight, 0), transform.TransformDirection(new Vector3(-1.5f, 0, 1)), controller.slidingCapsuleCollider.radius + 0.2f, out hit))
                 {
                     rb.position += new Vector3(0, controller.stepVelocity, 0);
                 }
