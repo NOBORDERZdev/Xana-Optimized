@@ -9,7 +9,12 @@ public class StreamingLoadingText : MonoBehaviour
 
     private void OnEnable()
     {
-        if (XanaConstants.xanaConstants.isCameraMan)
+
+    }
+
+    public void UpdateLoadingText()
+    {
+         if (XanaConstants.xanaConstants.isCameraMan)
         {
             TmpText.text= loadingScreenTxt+XanaConstants.xanaConstants.JjWorldTeleportSceneName.ToString();
         }
@@ -19,6 +24,6 @@ public class StreamingLoadingText : MonoBehaviour
         }
     }
 
-    
+
 
 }

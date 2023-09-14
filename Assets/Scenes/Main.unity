@@ -873,7 +873,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 339.3181, y: 445}
+  m_CellSize: {x: 1116.1145, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 339.3181, y: 445}
+  m_CellSize: {x: 1116.1145, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -1583,14 +1583,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-    - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
+    - target: {fileID: 2377629185401262992, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2377629185401263020, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791715670407879108, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_text
+      value: ' Loading'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791715670680288187, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -0.000030518
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791715670680288187, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4343778718239381664, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: streamingLoading
+      value: 
+      objectReference: {fileID: 1295923812}
     - target: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_Name
       value: LoadingHandler
@@ -5588,7 +5604,7 @@ PrefabInstance:
       objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
     - target: {fileID: 1371634546378056587, guid: f7b067b605435b549985056f905f0b08, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 8.499939
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1371634546469875777, guid: f7b067b605435b549985056f905f0b08, type: 3}
       propertyPath: m_FontData.m_Font
@@ -5882,7 +5898,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 339.3181, y: 445}
+  m_CellSize: {x: 1116.1145, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -10140,6 +10156,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1295923812 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2499fbea497cc4ebc4e175cb0c35d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1298951182 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8761832015439735908, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
@@ -10969,7 +10996,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 344.65146, y: 284.68967}
+  m_CellSize: {x: 1121.4479, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -13253,7 +13280,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 344.65146, y: 284.68967}
+  m_CellSize: {x: 1121.4479, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -15411,7 +15438,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 339.3181, y: 339.3181}
+  m_CellSize: {x: 1116.1145, y: 1116.1145}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19105,7 +19132,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 344.65146, y: 284.68967}
+  m_CellSize: {x: 1121.4479, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19594,7 +19621,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 344.65146, y: 284.68967}
+  m_CellSize: {x: 1121.4479, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19647,7 +19674,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 339.3181, y: 339.3181}
+  m_CellSize: {x: 1116.1145, y: 1116.1145}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -22356,7 +22383,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 341.3181, y: 341.3181}
+  m_CellSize: {x: 1118.1145, y: 1118.1145}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -23337,7 +23364,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 344.65146, y: 344.65146}
+  m_CellSize: {x: 1121.4476, y: 1121.4476}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
