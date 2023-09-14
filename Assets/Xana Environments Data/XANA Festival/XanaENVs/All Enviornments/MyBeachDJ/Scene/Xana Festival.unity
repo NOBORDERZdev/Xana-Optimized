@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 681969165}
-  m_IndirectSpecularColor: {r: 0.093013905, g: 0.09311431, b: 0.22100487, a: 1}
+  m_IndirectSpecularColor: {r: 0.09301842, g: 0.09311833, b: 0.22100851, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -460,6 +460,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3219643408599954545, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.4383006
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219643408599954545, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.4383
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219643408599954545, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.4383
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219643408599954545, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.91
       objectReference: {fileID: 0}
@@ -502,6 +514,14 @@ PrefabInstance:
     - target: {fileID: 3219643408599954548, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
       propertyPath: m_Name
       value: Floor_Lamp_04_Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219643408599954548, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219643408599954548, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80dc4dab9756d9843a7e2da961844dd9, type: 3}
@@ -2870,7 +2890,7 @@ ReflectionProbe:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 39
+    m_Bits: 268435495
   m_IntensityMultiplier: 1
   m_BlendDistance: 1
   m_HDR: 0
@@ -3858,7 +3878,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 62914359
+    m_Bits: 331349815
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -7116,24 +7136,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5711052370896006010, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_Layer
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: -5711052370896006010, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_TagString
-      value: Footsteps/metal
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5711052370896006010, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -5178572685375073934, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_Layer
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: -5178572685375073934, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_TagString
-      value: Footsteps/metal
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5178572685375073934, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7158,10 +7178,6 @@ PrefabInstance:
     - target: {fileID: -1336173236795831452, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -1336173236795831452, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_TagString
-      value: Footsteps/metal
       objectReference: {fileID: 0}
     - target: {fileID: -1336173236795831452, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7194,10 +7210,6 @@ PrefabInstance:
     - target: {fileID: 7374882268768488105, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7374882268768488105, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
-      propertyPath: m_TagString
-      value: Footsteps/metal
       objectReference: {fileID: 0}
     - target: {fileID: 7374882268768488105, guid: fef6dfafe974aa947962578ea7c499c0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11614,7 +11626,7 @@ GameObject:
   - component: {fileID: 3138817359263958068}
   m_Layer: 0
   m_Name: MyBeachLightsEmission
-  m_TagString: Footsteps/metal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
