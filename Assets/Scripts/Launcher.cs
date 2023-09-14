@@ -270,6 +270,8 @@ namespace Photon.Pun.Demo.PunBasics
                 print("OnConnectedToMaster: Next -> try to Join Random Room");
 
             }
+
+
         }
 
         public override void OnJoinedLobby()

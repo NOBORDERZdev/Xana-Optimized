@@ -13,6 +13,7 @@ using Photon.Pun.Demo.PunBasics;
 public class FeedEventPrefab : MonoBehaviour
 {
     public static string m_EnvName;
+    public static string m_CreaName;
     //public static string m_EnvDownloadLink;
     //public static string m_timestamp;
     [Header("WorldNameAndLinks")]
@@ -28,6 +29,12 @@ public class FeedEventPrefab : MonoBehaviour
     //public string uploadTimeStamp;
     public string updatedAt = "00";
     public string entityType = "None";
+
+    [Header("Tags and Category")]
+    public GameObject tagScroller;
+    public Transform tagsParent;
+    public GameObject tagsPrefab;
+    public string[] worldTags;
 
     [Header("WorldNameAndDescription")]
     public TextMeshProUGUI m_WorldName;
@@ -73,7 +80,7 @@ public class FeedEventPrefab : MonoBehaviour
     bool isNotLoaded = true;
     public LoginPageManager loginPageManager;
     UserAnalyticsHandler userAnalyticsHandler;
-    bool isBannerLoaded =false; 
+    bool isBannerLoaded = false;
     private void Awake()
     {
         loginPageManager = GetComponent<LoginPageManager>();
@@ -108,7 +115,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-        
+
     }
 
     int cnt = 0;
@@ -237,7 +244,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else if (isImageSuccessDownloadAndSave)
         {
-            LoadFileAgain:
+        LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
                 //Debug.Log("01");
@@ -501,7 +508,7 @@ public class FeedEventPrefab : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     callBack(false, null);
-                   Debug.Log("Network Error");
+                    Debug.Log("Network Error");
                 }
                 else
                 {
@@ -545,7 +552,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else
         {
-            
+
         }
         m_BannerSprite[1].sprite = m_FadeImage.sprite;
         m_BannerSprite[2].sprite = m_FadeImage.sprite;
@@ -580,6 +587,7 @@ public class FeedEventPrefab : MonoBehaviour
         //m_EnvDownloadLink = m_FileLink;
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
+        m_CreaName = creatorName;
         XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
@@ -589,6 +597,9 @@ public class FeedEventPrefab : MonoBehaviour
         if (userProfile.sprite == null)
             UpdateUserProfile();
         //m_timestamp = uploadTimeStamp;
+
+        InstantiateWorldtags();
+
         loginPageManager.SetPanelToBottom();
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         //XanaConstants.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
@@ -690,9 +701,22 @@ public class FeedEventPrefab : MonoBehaviour
             Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2());
             m_BannerSprite[0].sprite = sprite;
-            isBannerLoaded= true;
+            isBannerLoaded = true;
         }
 
+    }
+
+
+    void InstantiateWorldtags()
+    {
+        if (worldTags.Length > 0)
+            tagScroller.SetActive(true);
+        for (int i = 0; i < worldTags.Length; i++)
+        {
+            GameObject temp = Instantiate(tagsPrefab, tagsParent);
+            temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+        }
     }
 
 }
