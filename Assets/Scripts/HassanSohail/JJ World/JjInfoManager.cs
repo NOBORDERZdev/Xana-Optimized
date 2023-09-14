@@ -213,7 +213,7 @@ public class JjInfoManager : MonoBehaviour
                     {
 
                         worldInfos[i].Type = DataType.Image;
-                        NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[j].asset_link, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
+                        NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(worldData[j].asset_link+compersionPrfex, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
 
                         //if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
                         //{
