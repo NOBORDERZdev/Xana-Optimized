@@ -6,17 +6,15 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
-using TMPro;
 using UnityEngine.AI;
 
 namespace XanaAi
 {
     public class AiManager : MonoBehaviour
     {
-        public TMP_InputField inputField;
-
         #region public 
         public static AiManager instance;
+        [HideInInspector]
         public int decoratedAi = 0;
         [HideInInspector]
         public int SpwanedAiCount = 0;
@@ -25,18 +23,15 @@ namespace XanaAi
         #region private
         [Space(5)]
         [SerializeField] int aiCountToSpwan;
-        [SerializeField] List<AiController> SpwanedAi;
+        //[SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
 
         private CharcterBodyParts charcterBody;
-        public GameObject[] aiPrefabs;
-        public List<GameObject> spawnedNpc;
+        private GameObject[] aiPrefabs;
+        private List<GameObject> spawnedNpc;
         private int typesOfAICharacter = 3;
         private int rand;
-
-        //List<string> EmotesLink;
-
         #endregion
 
         private void Awake()
@@ -49,19 +44,9 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            //aiPrefab = Resources.Load("NPC_1") as GameObject;   // NPC_1 // Ai
-
-            //// my work for testing start
-            //inputField.text = "5";
-            //int integerValue;
-            //string data = inputField.text;
-            //if (int.TryParse(data, out integerValue))
-            //{
-            //    // Successfully converted to an integer
-            //    aiCountToSpwan = integerValue;
-            //}
-            //// my work end
             aiPrefabs = new GameObject[typesOfAICharacter];
+            spawnedNpc = new List<GameObject>();
+
             for (int i =0; i< typesOfAICharacter; i++) 
                 aiPrefabs[i] = Resources.Load("NPC/NPC_" + (i+1)) as GameObject;
 
@@ -83,11 +68,6 @@ namespace XanaAi
         public void InitilizeAI()
         {
             if (decoratedAi >= aiCountToSpwan) return;
-
-            //// Generate a random point on the NavMesh
-            //Vector3 temp = RandomNavMeshPoint();
-            //GameObject aiTemp = Instantiate(aiPrefab, temp, Quaternion.identity);
-
             StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
         }
 
@@ -168,7 +148,6 @@ namespace XanaAi
             }
         }
 
-        //public int counter = 0;
         private void OnLoadCompleted(AsyncOperationHandle<GameObject> handle, string ObjectType, AiController ai)
         {
 
@@ -195,12 +174,8 @@ namespace XanaAi
                 Debug.LogError("Failed to load addressable: " + handle.OperationException);
             }
 
-            //counter++;
-            //if (counter >= 4)
-            //{
             //    // Release the handle when you're done to free up resources.
             //    Addressables.Release(handle);
-            //}
         }
 
         void WearDefault(string type, AiController ai)

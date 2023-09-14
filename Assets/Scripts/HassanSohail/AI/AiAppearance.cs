@@ -24,7 +24,6 @@ namespace XanaAi
 
         private void Start()
         {
-            //aiManager = GetComponent<AiManager>();
 
         }
 
@@ -97,6 +96,7 @@ namespace XanaAi
             }
             DecorateAI(ai);
         }
+
 
     }
 }
