@@ -130,7 +130,8 @@ namespace RFM
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
+                XanaConstants.xanaConstants.userLimit = CurrentGameConfiguration.MaxPlayersInRoom.ToString();
+                // PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
             }
             
             Globals.gameState = Globals.GameState.InLobby;
@@ -382,7 +383,8 @@ namespace RFM
 
                 //play VFX
                 playerSpawnVFX.SetActive(true);
-                Destroy(playerSpawnVFX, 10f);
+                // Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart. Should be instantiated or disabled.
+                
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
