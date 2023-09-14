@@ -13,7 +13,6 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
-using DG.Tweening;
 using UnityEngine.Rendering.Universal;
 
 public class BuilderMapDownload : MonoBehaviour
@@ -39,8 +38,6 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     #endregion
     internal string response;
-
-    List<XanaItem> xanaItems = new List<XanaItem>();
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -174,7 +171,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
-        xanaItems.Clear();
+        GamificationComponentData.instance.xanaItems.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
@@ -200,12 +197,12 @@ public class BuilderMapDownload : MonoBehaviour
     //Set Hierarchy same as builder
     private void SetObjectHirarchy()
     {
-        foreach (XanaItem xanaItem in xanaItems)
+        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             if (!xanaItem.itemData.ParentID.Equals(""))
             {
                 string parentId = xanaItem.itemData.ParentID;
-                XanaItem parentItem = xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
+                XanaItem parentItem = GamificationComponentData.instance.xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
                 if (parentItem != null)
                 {
                     xanaItem.transform.SetParent(parentItem.transform);
@@ -405,7 +402,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void XanaSetItemData()
     {
-        foreach (XanaItem xanaItem in xanaItems)
+        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             xanaItem.SetData(xanaItem.itemData);
         }
@@ -474,6 +471,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
+        //objectTobeInstantiate.AddComponent<PhotonView>();
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
         Rigidbody rb = null;
         newObj.TryGetComponent(out rb);
@@ -500,7 +498,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Add game object into List for Hirarchy
-        xanaItems.Add(xanaItem);
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
 
 
         if (!_itemData.isVisible)
