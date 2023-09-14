@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Models;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -54,6 +56,14 @@ public class GamificationComponentData : MonoBehaviour
     internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
 
     public static Action WarpComponentLocationUpdate;
+
+    public List<GameObject> AvatarChangerModels;
+
+    internal bool isNight;
+    internal bool isBlindToogle;
+    internal int previousSkyID;
+
+    internal List<XanaItem> xanaItems = new List<XanaItem>();
 
     private void Awake()
     {
@@ -150,43 +160,6 @@ public class GamificationComponentData : MonoBehaviour
     }
     #endregion
 
-    //    void UpdateWarpFunctionData()
-    //    {
-    //        foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
-    //        {
-    //            foreach (WarpFunctionComponent warpFunctionComponent2 in warpComponentList)
-    //            {
-    //                if (warpFunctionComponent1 == warpFunctionComponent2)
-    //                    continue;
-
-    //                if(warpFunctionComponent1.warpFunctionComponentData.isWarpPortalStart)
-    //                {
-    //                    string startKey = warpFunctionComponent1.warpFunctionComponentData.warpPortalStartKeyValue;
-
-    //if (startKey == warpFunctionComponent2.warpFunctionComponentData.warpPortalEndKeyValue)
-    //                    {
-    //                        PortalSystemEndPoint  portalSystemEndPoint= warpFunctionComponent1.warpFunctionComponentData.warpPortalDataEndPoint.Find(x => x.indexPortalEndKey == startKey);
-    //                        portalSystemEndPoint.portalEndLocation = warpFunctionComponent2.transform.localPosition;
-    //                        PortalSystemStartPoint portalSystemStartPoint = warpFunctionComponent2.warpFunctionComponentData.warpPortalDataStartPoint.Find(x => x.indexPortalStartKey == startKey);
-    //                        portalSystemStartPoint.portalStartLocation = warpFunctionComponent1.transform.localPosition;
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    string endKey = warpFunctionComponent1.warpFunctionComponentData.warpPortalEndKeyValue;
-
-    //                    if (endKey == warpFunctionComponent2.warpFunctionComponentData.warpPortalStartKeyValue)
-    //                    {
-    //                        PortalSystemEndPoint portalSystemEndPoint = warpFunctionComponent2.warpFunctionComponentData.warpPortalDataEndPoint.Find(x => x.indexPortalEndKey == endKey);
-    //                        portalSystemEndPoint.portalEndLocation = warpFunctionComponent1.transform.localPosition;
-    //                        PortalSystemStartPoint portalSystemStartPoint = warpFunctionComponent1.warpFunctionComponentData.warpPortalDataStartPoint.Find(x => x.indexPortalStartKey == endKey);
-    //                        portalSystemStartPoint.portalStartLocation = warpFunctionComponent2.transform.localPosition;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -241,4 +214,32 @@ public class GamificationComponentData : MonoBehaviour
         PortalSystemEndPoint portalSystemEndPoint = endPoints.Find(x => x.indexPortalEndKey == key);
         portalSystemEndPoint.portalEndLocation = location;
     }
+
+    //All components for multiplayer
+
+    //[PunRPC]
+    //public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
+    //{
+    //    var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
+    //    if (componentType == Constants.ItemComponentType.none)
+    //    {
+    //        item.gameObject.SetActive(false);
+    //        return;
+    //    }
+
+    //    RestrictionComponents(componentType);
+
+
+    //    if (item != null)
+    //    {
+    //        var component = item.GetComponent(componentType.ToString()) as ItemComponent;
+    //        if (component != null)
+    //            component.PlayBehaviour();
+    //    }
+    //}
+
+    //void RestrictionComponents(Constants.ItemComponentType componentType)
+    //{
+    //    BuilderEventManager.onComponentActivated?.Invoke(componentType);
+    //}
 }
