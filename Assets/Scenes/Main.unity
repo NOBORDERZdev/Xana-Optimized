@@ -710,10 +710,10 @@ RectTransform:
   m_Father: {fileID: 1160399926}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1237.5, y: -18.1085}
-  m_SizeDelta: {x: 275, y: 36.217}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 36.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &74650920
 MonoBehaviour:
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1294.2223, y: 445}
+  m_CellSize: {x: 338.506, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1294.2223, y: 445}
+  m_CellSize: {x: 338.506, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -3765,6 +3765,7 @@ MonoBehaviour:
   mic: 0
   minimap: 0
   userName: 0
+  userId: 
   CurrentSceneName: 
   EnviornmentName: 
   userLimit: 
@@ -5881,7 +5882,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1294.2223, y: 445}
+  m_CellSize: {x: 338.506, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -5977,10 +5978,10 @@ RectTransform:
   m_Father: {fileID: 1160399926}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 962.5, y: -18.1085}
-  m_SizeDelta: {x: 275, y: 36.217}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 36.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &645628081
 MonoBehaviour:
@@ -10968,7 +10969,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1299.5555, y: 284.68967}
+  m_CellSize: {x: 343.83936, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -13252,7 +13253,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1299.5555, y: 284.68967}
+  m_CellSize: {x: 343.83936, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -15410,7 +15411,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1294.2223, y: 1294.2223}
+  m_CellSize: {x: 338.506, y: 338.506}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -17032,7 +17033,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -17635,6 +17636,27 @@ MonoBehaviour:
       rows: []
     msg: 
   m_AllWorldManage: {fileID: 1996021825}
+  AutoSwtichWorldList:
+  - name: Astroboy x Tottori Metaverse Museum
+    isMussuem: 1
+    mainnetId: 13
+    testnetId: 350
+  - name: Pool Side
+    isMussuem: 0
+    mainnetId: 5
+    testnetId: 371
+  - name: Xana Festival
+    isMussuem: 0
+    mainnetId: 48
+    testnetId: 390
+  - name: Beach
+    isMussuem: 0
+    mainnetId: 1
+    testnetId: 370
+  - name: Crypto Ninja village
+    isMussuem: 0
+    mainnetId: 41
+    testnetId: 386
   worldstr: 
 --- !u!114 &64211639564321974 stripped
 MonoBehaviour:
@@ -18489,11 +18511,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8761832015439735931, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_CellSize.x
-      value: 303.35135
+      value: 1307.5555
       objectReference: {fileID: 0}
     - target: {fileID: 8761832015439735931, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_CellSize.y
-      value: 303.35135
+      value: 1307.5555
       objectReference: {fileID: 0}
     - target: {fileID: 8761832015662084770, guid: 7bbfd6b88fbe857488471424c1daeee9, type: 3}
       propertyPath: m_Name
@@ -19083,7 +19105,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1299.5555, y: 284.68967}
+  m_CellSize: {x: 343.83936, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19572,7 +19594,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1299.5555, y: 284.68967}
+  m_CellSize: {x: 343.83936, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19625,7 +19647,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1294.2223, y: 1294.2223}
+  m_CellSize: {x: 338.506, y: 338.506}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -21128,10 +21150,10 @@ RectTransform:
   m_Father: {fileID: 1160399926}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 687.5, y: -18.1085}
-  m_SizeDelta: {x: 275, y: 36.217}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 36.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1485264394709498304
 CanvasRenderer:
@@ -22334,7 +22356,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1296.2223, y: 1296.2223}
+  m_CellSize: {x: 340.506, y: 340.506}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -22698,10 +22720,10 @@ RectTransform:
   m_Father: {fileID: 1160399926}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 137.5, y: -18.1085}
-  m_SizeDelta: {x: 275, y: 36.217}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 36.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &2625461663793420952
 Transform:
@@ -23315,7 +23337,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 1299.5555, y: 1299.5555}
+  m_CellSize: {x: 343.83936, y: 343.83936}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -24239,10 +24261,10 @@ RectTransform:
   m_Father: {fileID: 1160399926}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 412.5, y: -18.1085}
-  m_SizeDelta: {x: 275, y: 36.217}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 36.217}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4216497988639380221
 MonoBehaviour:
@@ -34779,11 +34801,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3073043291370528187, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: m_CellSize.x
-      value: 1836.335
+      value: 1307.5555
       objectReference: {fileID: 0}
     - target: {fileID: 3073043291370528187, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: m_CellSize.y
-      value: 1836.335
+      value: 1307.5555
       objectReference: {fileID: 0}
     - target: {fileID: 3073043292826499812, guid: b515e9490f1f0ae4795aefd9cea5afb5, type: 3}
       propertyPath: thirdPanel
