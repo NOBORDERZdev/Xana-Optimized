@@ -57,6 +57,7 @@ public static class BuilderEventManager
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
+    public static Action OnQuizComponentColse;
 
     //Special Item Component
     public static Action<float> OnSpecialItemComponentCollisionEnter;
@@ -85,7 +86,10 @@ public static class BuilderEventManager
 
     //Blind Component
     public static Action<float> OnBlindComponentTriggerEnter;
-    public static Action<Constants.ItemComponentType> ResetComponentUI;
+
+    //Avatar change Component
+    public static Action<float> OnAvatarChangeComponentTriggerEnter;
+    public static Action<bool> StopAvatarChangeComponent;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float,bool> ChangeNinja_ThrowUIPosition;
@@ -93,6 +97,10 @@ public static class BuilderEventManager
 
     //UI toggle
     public static Action<bool> UIToggle;
-
+    public static Action<Constants.ItemComponentType> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
+
+    //Component Restriction
+    public static Action<Constants.ItemComponentType> onComponentActivated;
+    public static Action<IComponentBehaviour> AddItemComponent;
 }
