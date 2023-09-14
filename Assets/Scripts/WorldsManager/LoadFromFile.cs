@@ -450,9 +450,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         yield return new WaitForSeconds(.5f);
 
         if (XanaConstants.xanaConstants.isCameraMan)
-        {
+        { 
             ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
             ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
+            XanaConstants.xanaConstants.StopMic();
+            XanaVoiceChat.instance.TurnOffMic();
             //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
         }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
@@ -499,15 +501,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 _uiReferences.LoadMain(false);
             }
-            StartCoroutine(BackToMainmenuforAutoSwtiching());
+           
         }
     }
 
     [SerializeField] int autoSwitchTime;
-    IEnumerator BackToMainmenuforAutoSwtiching(){ 
+    public IEnumerator BackToMainmenuforAutoSwtiching(){ 
         print("AUTO BACK CALL");
             yield return new WaitForSecondsRealtime(30);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        XanaConstants.xanaConstants.JjWorldSceneChange= true;
          _uiReferences.LoadMain(false);
     }
 

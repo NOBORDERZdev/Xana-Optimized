@@ -121,6 +121,7 @@ public class WorldManager : MonoBehaviour
          if (XanaConstants.xanaConstants.isCameraMan)
          {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
+            
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
             XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
             XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
