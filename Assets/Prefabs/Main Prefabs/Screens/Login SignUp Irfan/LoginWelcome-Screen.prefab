@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 5288105763010136722}
   - component: {fileID: 5288105763010136721}
   - component: {fileID: 5288105763010136720}
+  - component: {fileID: 3922270428019877777}
   m_Layer: 5
   m_Name: SignUpW-Email-Btn
   m_TagString: Untagged
@@ -483,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+  m_Color: {r: 0.98039216, g: 0.98039216, b: 0.98039216, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -580,6 +581,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3922270428019877777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288105763010136718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0187191a24e774fa12651c37b715c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activebtn: {fileID: 21300000, guid: a430e6014e7e14e49b84182012da18ae, type: 3}
+  UnActivebtn: {fileID: 21300000, guid: d6f9f15e609068c4fad7aeccc4895dea, type: 3}
+  myimage: {fileID: 5288105763010136721}
+  TexttoChange: {fileID: 5288105764187524474}
 --- !u!1 &5288105763722149872
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -880,6 +897,7 @@ GameObject:
   - component: {fileID: 5288105764144757282}
   - component: {fileID: 5288105764144757281}
   - component: {fileID: 5288105764144757280}
+  - component: {fileID: 811065873}
   m_Layer: 5
   m_Name: AlreadyAccount-Btn
   m_TagString: Untagged
@@ -936,7 +954,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a430e6014e7e14e49b84182012da18ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 45075d965ea77bc478ebe7415905daee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1014,6 +1032,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &811065873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288105764144757278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc0187191a24e774fa12651c37b715c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Activebtn: {fileID: 21300000, guid: a430e6014e7e14e49b84182012da18ae, type: 3}
+  UnActivebtn: {fileID: 21300000, guid: d6f9f15e609068c4fad7aeccc4895dea, type: 3}
+  myimage: {fileID: 5288105764144757281}
+  TexttoChange: {fileID: 5288105764084679814}
 --- !u!1 &5288105764187524472
 GameObject:
   m_ObjectHideFlags: 0
