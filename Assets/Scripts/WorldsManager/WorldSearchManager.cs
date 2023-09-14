@@ -171,6 +171,11 @@ public class WorldSearchManager : MonoBehaviour
                             try
                             {
                                 _event.m_ThumbnailDownloadURL = searchworldRoot.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+
+                                if (searchworldRoot.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+                                {
+                                    _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                                }
                             }
                             catch (Exception e)
                             {
