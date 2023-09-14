@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.UI;
 
 namespace XanaAi
 {
     public class AiAppearance : MonoBehaviour
     {
+        //public Toggle wearableToggle;
+        //public bool isWearableOrNot;
+
         [Header("Wearable items")]
         [SerializeField] public List<string> Uppers;
         [SerializeField] public List<string> Lower;
@@ -16,52 +20,84 @@ namespace XanaAi
         [SerializeField] public List<string> EyeBrrow;
         [SerializeField] public List<string> EyeLashes;
         public AiManager aiManager;
+        public int tempCounter = 0;
 
         private void Start()
         {
-            //aiManager = GetComponent<AiManager>();
 
         }
+
+        //public void ToggleUpdate()
+        //{
+        //    isWearableOrNot = wearableToggle;
+        //}
 
         public IEnumerator GetAppearance(AiController ai)
         {
+            DecorateAI(ai);
             yield return new WaitForSeconds(0.2f);
-            int rand = Random.Range(0, Uppers.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Uppers[rand], "Chest", ai));
-            Uppers.RemoveAt(rand);
-            rand = Random.Range(0, Lower.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Lower[rand], "Legs", ai));
-            Lower.RemoveAt(rand);
-            rand = Random.Range(0, Hair.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Hair[rand], "Hair", ai));
-            Hair.RemoveAt(rand);
-            rand = Random.Range(0, Shoes.Count);
-            aiManager.StartCoroutine(aiManager.DownloadAddressableWearableWearable( Shoes[rand], "Feet", ai));
-            Shoes.RemoveAt(rand);
 
-            //rand = Random.Range(0, Makeup.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture(Makeup[rand], "Makeup", ai));
-            //rand = Random.Range(0, EyeTexture.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture( EyeTexture[rand], "EyeTexture", ai));
-            //rand = Random.Range(0, EyeBrrow.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture( EyeBrrow[rand], "EyeBrrow", ai));
-            //rand = Random.Range(0, EyeLashes.Count);
-            //aiManager.StartCoroutine(aiManager.DownloadAddressableTexture(EyeLashes[rand], "EyeLashes", ai));
-
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //rand = Random.Range(0, ai.GetComponent<CharcterBodyParts>().lipColor.Count);
-            //ai.GetComponent<CharcterBodyParts>().ChangeLipColor(rand);
-            //yield return new WaitForSeconds(Random.Range(1,2));
+            // perform ai actions
             ai.isPerformingAction = false;
-            if (ai.ActionCoroutine !=null)
+            if (ai.ActionCoroutine != null)
             {
                 ai.StopCoroutine(ai.ActionCoroutine);
             }
-            ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
+            ai.ActionCoroutine = ai.StartCoroutine(ai.PerformAction());
         }
+
+
+        private void DecorateAI(AiController ai)
+        {
+            //if (isWearableOrNot)
+            //{
+                int rand = Random.Range(0, Uppers.Count);
+                switch (tempCounter)
+                {
+                    case 0:
+                        //yield return StartCoroutine(aiManager.DownloadAddressableWearableWearable(Uppers[rand], "Chest", ai));
+                        aiManager.DownloadAddressableWearableWearable(Uppers[rand], "Chest", ai);
+                        Uppers.RemoveAt(rand);
+                        break;
+
+                    case 1:
+                        rand = Random.Range(0, Lower.Count);
+                        //yield return StartCoroutine(aiManager.DownloadAddressableWearableWearable(Lower[rand], "Legs", ai));
+                        aiManager.DownloadAddressableWearableWearable(Lower[rand], "Legs", ai);
+                        Lower.RemoveAt(rand);
+                        break;
+
+                    case 2:
+                        rand = Random.Range(0, Hair.Count);
+                        //yield return StartCoroutine(aiManager.DownloadAddressableWearableWearable(Hair[rand], "Hair", ai));
+                        aiManager.DownloadAddressableWearableWearable(Hair[rand], "Hair", ai);
+                        Hair.RemoveAt(rand);
+                        break;
+
+                    case 3:
+                        rand = Random.Range(0, Shoes.Count);
+                        //yield return StartCoroutine(aiManager.DownloadAddressableWearableWearable(Shoes[rand], "Feet", ai));
+                        aiManager.DownloadAddressableWearableWearable(Shoes[rand], "Feet", ai);
+                        Shoes.RemoveAt(rand);
+                        break;
+                }
+            //}
+        }
+
+        public void CheckMoreAIDresses(AiController ai)
+        {
+            tempCounter++;
+            if (tempCounter >= 4)
+            {
+                tempCounter = 0;
+                aiManager.decoratedAi++;
+                aiManager.InitilizeAI();
+                return;
+            }
+            DecorateAI(ai);
+        }
+
 
     }
 }
+
