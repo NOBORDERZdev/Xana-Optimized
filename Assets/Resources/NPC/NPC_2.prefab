@@ -1607,9 +1607,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4279829758110740594}
-  m_LocalRotation: {x: 0.5734399, y: -0.6515608, z: -0.10137314, w: 0.4861673}
-  m_LocalPosition: {x: 2.2160013, y: -0.1079998, z: 0.10099992}
-  m_LocalScale: {x: 1.4456255, y: 1.4456265, z: 1.4456259}
+  m_LocalRotation: {x: 0.5734398, y: -0.65156084, z: -0.10137314, w: 0.48616743}
+  m_LocalPosition: {x: 0.123, y: -0.108, z: 0.101}
+  m_LocalScale: {x: 1.4456258, y: 1.4456258, z: 1.4456258}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1413333984668377260}
@@ -2525,9 +2525,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4975839737452673873}
-  m_LocalRotation: {x: 6.705744e-14, y: -1, z: 0.00000010058284, w: -0.00000010714044}
+  m_LocalRotation: {x: -1.03916875e-13, y: -1, z: 0.00000010058284, w: -0.00000010714042}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.06794117, y: 0.06794113, z: 0.06794115}
+  m_LocalScale: {x: 0.06794117, y: 0.067941144, z: 0.06794117}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7402775018513984366}
@@ -2539,7 +2539,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 2.4623528, y: -0.30767658}
+  m_AnchoredPosition: {x: 0, y: -0.30767658}
   m_SizeDelta: {x: 33.79094, y: 2.6897812}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8630310804864641212
@@ -4610,9 +4610,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8424647191019311677}
-  m_LocalRotation: {x: -0.5750071, y: -0.41173127, z: -0.56924754, w: -0.41928685}
-  m_LocalPosition: {x: 2.2223008, y: -0.015200138, z: -0.040400058}
-  m_LocalScale: {x: 0.60900044, y: 0.6090003, z: 0.6090003}
+  m_LocalRotation: {x: -0.575007, y: -0.41173145, z: -0.56924754, w: -0.4192868}
+  m_LocalPosition: {x: 0.12930006, y: -0.015200019, z: -0.040400036}
+  m_LocalScale: {x: 0.60900027, y: 0.6090002, z: 0.6090002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5974672688004533547}
@@ -4801,9 +4801,6 @@ GameObject:
   - component: {fileID: 8267335052923496746}
   - component: {fileID: 2619781862005814096}
   - component: {fileID: 6176546236965289570}
-  - component: {fileID: 1917501313207923930}
-  - component: {fileID: 754529260370772683}
-  - component: {fileID: 3817803406868048076}
   - component: {fileID: 5380725694867396691}
   - component: {fileID: 2392516581435173648}
   - component: {fileID: 2700858596263722108}
@@ -5084,164 +5081,6 @@ MonoBehaviour:
   defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 1}
---- !u!114 &1917501313207923930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8786709520300880784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 754529260370772683}
-  - {fileID: 3817803406868048076}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &754529260370772683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8786709520300880784}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 0
-    Name: Blend
-  - Type: 9
-    SynchronizeType: 0
-    Name: normal
-  - Type: 9
-    SynchronizeType: 0
-    Name: happy
-  - Type: 9
-    SynchronizeType: 0
-    Name: angry
-  - Type: 9
-    SynchronizeType: 0
-    Name: dead
-  - Type: 4
-    SynchronizeType: 0
-    Name: headset
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsJumping
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsEmote
-  - Type: 9
-    SynchronizeType: 0
-    Name: Jump
-  - Type: 4
-    SynchronizeType: 0
-    Name: isSelfie
-  - Type: 4
-    SynchronizeType: 0
-    Name: standJump
-  - Type: 1
-    SynchronizeType: 0
-    Name: BlendY
-  - Type: 4
-    SynchronizeType: 0
-    Name: Idle
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsGrounded
-  - Type: 1
-    SynchronizeType: 0
-    Name: GroundDistance
-  - Type: 4
-    SynchronizeType: 0
-    Name: OnlyJump
-  - Type: 4
-    SynchronizeType: 0
-    Name: MoveJump
-  - Type: 4
-    SynchronizeType: 0
-    Name: IsFalling
-  - Type: 4
-    SynchronizeType: 0
-    Name: freecam
-  - Type: 4
-    SynchronizeType: 0
-    Name: EtcAnimStart
-  - Type: 4
-    SynchronizeType: 0
-    Name: moveToNextAnim
-  - Type: 4
-    SynchronizeType: 0
-    Name: Stand
-  - Type: 1
-    SynchronizeType: 0
-    Name: BlendNX
-  - Type: 1
-    SynchronizeType: 0
-    Name: BlendNY
-  - Type: 4
-    SynchronizeType: 0
-    Name: throw
-  - Type: 4
-    SynchronizeType: 0
-    Name: throwfalse
-  - Type: 4
-    SynchronizeType: 0
-    Name: throwing
-  - Type: 4
-    SynchronizeType: 0
-    Name: isNinjaMotion
-  - Type: 4
-    SynchronizeType: 0
-    Name: idleNinjaAnimation3
-  - Type: 4
-    SynchronizeType: 0
-    Name: idleNinjaAnimation2
-  - Type: 4
-    SynchronizeType: 0
-    Name: NinjaJump
-  - Type: 4
-    SynchronizeType: 0
-    Name: NinjaThrow
-  m_SynchronizeLayers:
-  - SynchronizeType: 0
-    LayerIndex: 0
-  - SynchronizeType: 0
-    LayerIndex: 1
-  - SynchronizeType: 0
-    LayerIndex: 2
---- !u!114 &3817803406868048076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8786709520300880784}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!114 &5380725694867396691
 MonoBehaviour:
   m_ObjectHideFlags: 0

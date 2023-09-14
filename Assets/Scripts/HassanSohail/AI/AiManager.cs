@@ -23,7 +23,6 @@ namespace XanaAi
         #region private
         [Space(5)]
         [SerializeField] int aiCountToSpwan;
-        //[SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
 
