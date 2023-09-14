@@ -17,6 +17,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
 
+  
     public string mainScene= "Main";
 
     private AsyncOperation asyncLoading;
@@ -26,7 +27,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-       
+       mainScene= "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
