@@ -20,8 +20,7 @@ namespace XanaAi
         public static AiManager instance;
         #endregion
         #region private
-        [SerializeField] int AiCountToSpwaned;
-        /*[SerializeField]*/
+        [SerializeField] int aiCountToSpwan;
         private GameObject aiPrefab;
         [SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
@@ -42,46 +41,39 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            aiPrefab = Resources.Load("NPC_1") as GameObject; // Resources.Load("Ai") as GameObject;
+            aiPrefab = Resources.Load("NPC_1") as GameObject;   // NPC_1 // Ai
 
-            inputField.text = "1";
+            inputField.text = "5";
             yield return new WaitForSeconds(2f);
-            StartCoroutine(IntAis());
+            StartCoroutine(ReactScreen.Instance.getAllReactions());
+            SpawnNpcs();
         }
 
-        IEnumerator IntAis()
+        public void SpawnNpcs()
         {
-            int rand;
-            StartCoroutine(ReactScreen.Instance.getAllReactions());
-            for (int i = 0; i < AiCountToSpwaned; i++)
+            // my work for testing start
+            int integerValue;
+            string data = inputField.text;
+            if (int.TryParse(data, out integerValue))
             {
-                //rand = Random.Range(0, SpwanPoints.Count);
-                //Transform temp = SpwanPoints[rand];
+                // Successfully converted to an integer
+                aiCountToSpwan = integerValue;
+            }
+            // my work end
+
+            if (SpwanedAiCount >= aiCountToSpwan) return;
 
                 // Generate a random point on the NavMesh
                 Vector3 temp = RandomNavMeshPoint();
-
                 GameObject aiTemp = Instantiate(aiPrefab, temp, Quaternion.identity);
-                //aiTemp.transform.position = temp.position;
-                //SpwanedAi.Add(aiTemp.GetComponent<AiController>());
 
-                //SpwanPoints.RemoveAt(rand);
-                StartCoroutine(apperance.GetAppearance(aiTemp.GetComponent<AiController>()));
-                rand = Random.Range(0, aiNames.Count);
-                aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
-                SpwanedAiCount++;
-
-                yield return new WaitForSeconds(7f);
-
-                int integerValue;
-                string data = inputField.text;
-                if (int.TryParse(data, out integerValue))
-                {
-                    // Successfully converted to an integer
-                    AiCountToSpwaned = integerValue;
-                }
-            }
+                    StartCoroutine(apperance.GetAppearance(aiTemp.GetComponent<AiController>()));
+                    int rand;
+                    rand = Random.Range(0, aiNames.Count);
+                    aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
+                    SpwanedAiCount++;
         }
+
 
         Vector3 RandomNavMeshPoint()
         {
