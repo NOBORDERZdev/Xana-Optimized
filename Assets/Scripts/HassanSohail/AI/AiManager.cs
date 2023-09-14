@@ -14,20 +14,28 @@ namespace XanaAi
     public class AiManager : MonoBehaviour
     {
         public TMP_InputField inputField;
+
         #region public 
+        public static AiManager instance;
+        public int decoratedAi = 0;
         [HideInInspector]
         public int SpwanedAiCount = 0;
-        public static AiManager instance;
         #endregion
+
         #region private
+        [Space(5)]
         [SerializeField] int aiCountToSpwan;
-        private GameObject aiPrefab;
         [SerializeField] List<AiController> SpwanedAi;
         [SerializeField] AiAppearance apperance;
-        //[SerializeField] List<Transform> SpwanPoints;
         [SerializeField] List<string> aiNames;
-        CharcterBodyParts charcterBody;
-        List<string> EmotesLink;
+
+        private CharcterBodyParts charcterBody;
+        public GameObject[] aiPrefabs;
+        public List<GameObject> spawnedNpc;
+        private int typesOfAICharacter = 3;
+        private int rand;
+
+        //List<string> EmotesLink;
 
         #endregion
 
@@ -41,37 +49,46 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            aiPrefab = Resources.Load("NPC_1") as GameObject;   // NPC_1 // Ai
+            //aiPrefab = Resources.Load("NPC_1") as GameObject;   // NPC_1 // Ai
 
-            inputField.text = "5";
-            yield return new WaitForSeconds(2f);
+            //// my work for testing start
+            //inputField.text = "5";
+            //int integerValue;
+            //string data = inputField.text;
+            //if (int.TryParse(data, out integerValue))
+            //{
+            //    // Successfully converted to an integer
+            //    aiCountToSpwan = integerValue;
+            //}
+            //// my work end
+            aiPrefabs = new GameObject[typesOfAICharacter];
+            for (int i =0; i< typesOfAICharacter; i++) 
+                aiPrefabs[i] = Resources.Load("NPC/NPC_" + (i+1)) as GameObject;
+
+            for (int i = 0; i < aiCountToSpwan; i++)
+            {
+                Vector3 temp = RandomNavMeshPoint();
+                spawnedNpc.Add(Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity));
+                SpwanedAiCount++;
+
+                rand = Random.Range(0, aiNames.Count);
+                spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);
+            }
+
             StartCoroutine(ReactScreen.Instance.getAllReactions());
-            SpawnNpcs();
+            yield return new WaitForSeconds(1f);
+            InitilizeAI();
         }
 
-        public void SpawnNpcs()
+        public void InitilizeAI()
         {
-            // my work for testing start
-            int integerValue;
-            string data = inputField.text;
-            if (int.TryParse(data, out integerValue))
-            {
-                // Successfully converted to an integer
-                aiCountToSpwan = integerValue;
-            }
-            // my work end
+            if (decoratedAi >= aiCountToSpwan) return;
 
-            if (SpwanedAiCount >= aiCountToSpwan) return;
+            //// Generate a random point on the NavMesh
+            //Vector3 temp = RandomNavMeshPoint();
+            //GameObject aiTemp = Instantiate(aiPrefab, temp, Quaternion.identity);
 
-                // Generate a random point on the NavMesh
-                Vector3 temp = RandomNavMeshPoint();
-                GameObject aiTemp = Instantiate(aiPrefab, temp, Quaternion.identity);
-
-                    StartCoroutine(apperance.GetAppearance(aiTemp.GetComponent<AiController>()));
-                    int rand;
-                    rand = Random.Range(0, aiNames.Count);
-                    aiTemp.GetComponent<AiController>().SetAiName(aiNames[rand]);
-                    SpwanedAiCount++;
+            StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
         }
 
 

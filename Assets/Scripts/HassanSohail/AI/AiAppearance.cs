@@ -91,7 +91,8 @@ namespace XanaAi
             if (tempCounter >= 4)
             {
                 tempCounter = 0;
-                aiManager.SpawnNpcs();
+                aiManager.decoratedAi++;
+                aiManager.InitilizeAI();
                 return;
             }
             DecorateAI(ai);
