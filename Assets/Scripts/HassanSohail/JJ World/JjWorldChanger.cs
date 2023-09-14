@@ -20,6 +20,7 @@ public class JjWorldChanger : MonoBehaviour
 
     bool reSetCollider=false;
 
+    private GameObject triggerObject;
     private void Start()
     {
         collider = GetComponent<Collider>(); 
@@ -29,15 +30,31 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine)
         {
-            collider.enabled = false;
-            if (checkWorldComingSoon(WorldName) || isBuilderWorld)
+            if (JjInfoManager.Instance.IsJjWorld)
             {
-                this.StartCoroutine(swtichScene(WorldName));
+                triggerObject = other.gameObject;
+                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
             }
             else
             {
-              this.StartCoroutine(ResetColider());
+                collider.enabled = false;
+                if (checkWorldComingSoon(WorldName) || isBuilderWorld)
+                {
+                    this.StartCoroutine(swtichScene(WorldName));
+                }
+                else
+                {
+                    this.StartCoroutine(ResetColider());
+                }
             }
+        }
+    }
+
+    public void RedirectToWorld()
+    {
+        if (triggerObject.GetComponent<PhotonView>().IsMine)
+        {
+            this.StartCoroutine(swtichScene(WorldName));
         }
     }
 

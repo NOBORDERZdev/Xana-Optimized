@@ -34,6 +34,7 @@ public class JJMuseumInfoManager : MonoBehaviour
                     JjInfoManager.Instance.worldInfos[i].Title = new string[0];
                     JjInfoManager.Instance.worldInfos[i].Aurthor = new string[0];
                     JjInfoManager.Instance.worldInfos[i].Des = new string[0];
+                    JjInfoManager.Instance.worldInfos[i].url = null;
                     JjInfoManager.Instance.worldInfos[i].WorldImage = null;
                     JjInfoManager.Instance.worldInfos[i].VideoLink = null;
                     JjInfoManager.Instance.worldInfos[i].isAWSVideo = false;

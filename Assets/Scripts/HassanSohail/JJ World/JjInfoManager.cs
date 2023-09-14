@@ -48,6 +48,7 @@ public class JjInfoManager : MonoBehaviour
     string _Title;
     string _Aurthor;
     string _Des;
+    string _URL;
     Texture2D _image;
     DataType _Type;
     string _VideoLink;
@@ -220,6 +221,7 @@ public class JjInfoManager : MonoBehaviour
                             worldInfos[i].Title = worldData[j].title;
                             worldInfos[i].Aurthor = worldData[j].authorName;
                             worldInfos[i].Des = worldData[j].description;
+                            worldInfos[i].url = worldData[j].descriptionHyperlink;
 
                         //}
                         //else
@@ -279,6 +281,7 @@ public class JjInfoManager : MonoBehaviour
                                 worldInfos[i].Title = worldData[j].title;
                                 worldInfos[i].Aurthor = worldData[j].authorName;
                                 worldInfos[i].Des = worldData[j].description;
+                                worldInfos[i].url = worldData[j].descriptionHyperlink;
                             //}
                             //else
                             //{
@@ -373,19 +376,21 @@ public class JjInfoManager : MonoBehaviour
     //    }
     //}
 
-    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType, int nftId = 0, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
+    public void SetInfo(JjRatio ratio, string title, string aurthur, string des, string url, Texture2D image, DataType type, string videoLink, VideoTypeRes videoType, int nftId = 0, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
         nftTitle = title;
         _Ratio = ratio;
         _Title = title;
         _Aurthor = aurthur;
         _Des = des;
+        _URL = url;
         _image = image;
         _Type = type;
         _VideoLink = videoLink;
         _videoType = videoType;
 
         ratioId = ((int)ratio);
+
         //renderTexture.Release();
         // Setting Landscape Data
         ratioReferences[ratioId].l_image.gameObject.SetActive(true);
@@ -394,7 +399,7 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
         ratioReferences[ratioId].l_Title.text = title;
         ratioReferences[ratioId].l_Aurthur.text = aurthur;
-        ratioReferences[ratioId].l_Description.text = des;
+        ratioReferences[ratioId].l_Description.text = des + "\n" + "<link="+url+"><u>"+url+"</u></link>";
         if (type == DataType.Image)
         {
             ratioReferences[ratioId].l_image.texture = image;
@@ -409,7 +414,7 @@ public class JjInfoManager : MonoBehaviour
         // Setting Potraite Data
         ratioReferences[ratioId].p_Title.text = title;
         ratioReferences[ratioId].p_Aurthur.text = aurthur;
-        ratioReferences[ratioId].p_Description.text = des;
+        ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
         ratioReferences[ratioId].p_image.texture = image;
         if (type == DataType.Image)
         {
@@ -599,7 +604,7 @@ public class JjInfoManager : MonoBehaviour
         if (videoRetry <= RetryChances)
         {
             videoRetry++;
-            SetInfo(_Ratio, _Title, _Aurthor, _Des, _image, _Type, _VideoLink, _videoType);
+            SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType);
         }
         else
         {
@@ -630,6 +635,7 @@ public class JJWorldInfo
     public string[] Title;
     public string[] Aurthor;
     public string[] Des;
+    public string url;
     public DataType Type;
     public Sprite WorldImage;
     public string VideoLink;
@@ -718,6 +724,7 @@ public class JjAsset
     public bool check;
     public string[] authorName;
     public string[] description;
+    public string descriptionHyperlink;
     public string[] title;
     public string ratio;
     public string thumbnail;

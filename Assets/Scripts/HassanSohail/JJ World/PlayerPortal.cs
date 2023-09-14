@@ -22,6 +22,8 @@ public class PlayerPortal : MonoBehaviour
     private ReferrencesForDynamicMuseum referrencesForDynamicMuseum;
     Collider colider;
     string firebaseEventName = "";
+
+    private GameObject triggerObject;
     #endregion
     #region PrivateFunc
     string customFirebaseEvent = "";
@@ -62,13 +64,18 @@ public class PlayerPortal : MonoBehaviour
                     customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
             }
 
-            if (other.GetComponent<PhotonView>().IsMine)
-            {
-                SendFirebaseEvent(customFirebaseEvent);
-                //CallAnalyticsEvent();
-                this.StartCoroutine(Teleport());
-            }
-          
+            triggerObject = other.gameObject;
+            CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
+        }
+    }
+
+    public void RedirectToWorld()
+    {
+        if (triggerObject.GetComponent<PhotonView>().IsMine)
+        {
+            SendFirebaseEvent(customFirebaseEvent);
+            //CallAnalyticsEvent();
+            this.StartCoroutine(Teleport());
         }
     }
 

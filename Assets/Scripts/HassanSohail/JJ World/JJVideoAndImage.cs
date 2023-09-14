@@ -90,8 +90,8 @@ public class JJVideoAndImage : MonoBehaviour
         else if (dataType == DataType.Video)
             SetVideo();
 
-        if(isCreateFrame)
-            CreateFrame();   //create frame
+        //if(isCreateFrame)
+        //    CreateFrame();   //create frame
     }
 
     void SetImage()
@@ -205,6 +205,9 @@ public class JJVideoAndImage : MonoBehaviour
                 }
             }
         }));
+
+        if (isCreateFrame)
+            CreateFrame();   //create frame
     }
 
     void EnableImageVideoFrame(GameObject frameToEnable)
@@ -419,6 +422,10 @@ public class JJVideoAndImage : MonoBehaviour
                 }
             }
         }
+
+        if (isCreateFrame)
+            CreateFrame();   //create frame
+
         if (JjInfoManager.Instance && renderTexture_temp != null)
             JjInfoManager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
     }
@@ -451,11 +458,11 @@ public class JJVideoAndImage : MonoBehaviour
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
             {
-                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);       
+                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].url, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);       
             }
             else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
+                JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].url, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
 
             }
         }

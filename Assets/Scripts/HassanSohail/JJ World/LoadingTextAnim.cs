@@ -11,15 +11,17 @@ public class LoadingTextAnim : MonoBehaviour
     //[SerializeField] float startPoint;
     [SerializeField] float speed;
     [SerializeField] List<string> texts;
+    string initialLoadingtext;
     int i = 0;
     private void Start()
     {
+        initialLoadingtext = LoadingText.text;
         InvokeRepeating(nameof(changeTxt),speed,1);
     }
 
     void changeTxt()
     {
-        LoadingText.text = texts[i];
+        LoadingText.text = initialLoadingtext + texts[i].ToString();
         if (i < texts.Count - 1)
         {
             i++;
