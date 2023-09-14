@@ -446,11 +446,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        LoadingHandler.Instance.HideLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        LoadingHandler.Instance.UpdateLoadingStatusText("");
+        if(!XanaConstants.xanaConstants.isCameraMan){ 
+            LoadingHandler.Instance.HideLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
+            if(!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         else
@@ -468,9 +471,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
 
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
+            ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
+            ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
+            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
+        }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
-        LoadingHandler.Instance.HideLoading();
+        if (!XanaConstants.xanaConstants.isCameraMan)
+            LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
         try
         {
@@ -485,8 +495,43 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+
+        // Join Room Activate Chat
+        //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            string worldId = 0.ToString();
+            if (XanaEventDetails.eventDetails.environmentId != 0)
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+            }
+            else
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+            }
+        }
+
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+          if(XanaConstants.xanaConstants.isCameraMan){
+            if (StreamingCamera.instance)
+            {
+                StreamingCamera.instance.TriggerStreamCam();
+            }
+            else // sterming cam's not found so switching to main menu 
+            {
+                _uiReferences.LoadMain(false);
+            }
+            StartCoroutine(BackToMainmenuforAutoSwtiching());
+        }
     }
 
+    [SerializeField] int autoSwitchTime;
+    IEnumerator BackToMainmenuforAutoSwtiching(){ 
+        print("AUTO BACK CALL");
+            yield return new WaitForSecondsRealtime(30);
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+         _uiReferences.LoadMain(false);
+    }
 
 
     public IEnumerator SpawnPlayerForBuilderScene()
@@ -594,6 +639,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+      
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

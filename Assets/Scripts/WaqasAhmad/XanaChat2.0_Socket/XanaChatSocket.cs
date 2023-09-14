@@ -1,0 +1,388 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using TMPro;
+
+
+using BestHTTP.SocketIO3;
+using BestHTTP.SocketIO3.Events;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+
+public class XanaChatSocket : MonoBehaviour
+{
+    // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
+
+    // Test-Net
+    // https://chat-testing.xana.net/
+    // https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/
+
+    // Main-Net
+    // https://chat-prod.xana.net/
+    // https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/
+
+    string socketTestnet = "https://chat-testing.xana.net/";
+    string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+
+    string socketMainnet = "https://chat-prod.xana.net/";
+    string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
+
+
+    public SocketManager Manager;
+    
+    string address;
+    string fetchAllMsgApi;
+
+    int worldId,
+        eventId = 1,
+        pageNumber = 1, // API Parameters
+        dataLimit = 200;
+
+    public string socketId;
+    public string oldChatResponse;
+    public ChatUserData receivedMsgForTesting;
+    bool isJoinRoom = false;
+
+    public static XanaChatSocket instance;
+
+    #region Summery
+
+    // Join Room : socket.emit('joinRoom', { username, room });
+    //             Params: username : user id
+    //                     room: world id
+
+    // Sending Message : socket.emit('chatMessage', {username, event_id, room, msg});
+    //                   Params: username : user id
+    //                    username : user id
+    //                    event_id : event id in the specific world (if there is no event id then send 1 as a default)
+    //                        room : world id
+    //                         msg : message
+
+    // Receiving Message : socket.on('message', function)
+    //           Keyword : message
+    //          function : Function which invoke when callback received
+
+    #endregion
+
+    public static Action<string> onJoinRoom;
+    public static Action<string, string> onSendMsg;
+    public static Action callApi;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    void Start()
+    {
+        if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            address = socketMainnet;
+            fetchAllMsgApi = fetchApiMainnet;
+        }
+        else
+        {
+            address = socketTestnet;
+            fetchAllMsgApi = fetchApiTestnet;
+        }
+
+
+
+        if (!address.EndsWith("/"))
+            address = address + "/";
+
+        // Default Method
+        Manager = new SocketManager(new Uri((address)));
+        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+
+        // Custom Method
+        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        StartCoroutine(FetchOldMessages());
+    }
+    private void OnEnable()
+    {
+        onJoinRoom += UserJoinRoom;
+        onSendMsg += SendMsg;
+        callApi += CallApiForMessages;
+    }
+    private void OnDisable()
+    {
+        onJoinRoom -= UserJoinRoom;
+        onSendMsg -= SendMsg;
+        callApi -= CallApiForMessages;
+
+        // Switch Off This Socket
+        Manager.Close();
+    }
+
+
+    #region Socket Calls Handling
+
+    void OnConnected(ConnectResponse resp)
+    {
+        socketId = resp.sid;
+        Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
+        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
+
+        //socket.Off("event", listener);
+        //Manager.Socket.Off();
+
+
+
+        // is it reconnected or First time
+        if (isJoinRoom)
+        {
+            // Socket ID Update After Reconnect 
+            // Need To Emit joinRoom again with new Socket Id
+
+            onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+        }
+    }
+    void OnError(CustomError args)
+    {
+        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+    }
+    void Onresult(CustomError args)
+    {
+        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+    }
+    void OnSocketDisconnect(CustomError args)
+    {
+        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+    }
+
+
+    void UserJoinRoom(string _worldId)
+    {
+        worldId = int.Parse(_worldId);
+        string userId = XanaConstants.xanaConstants.userId;
+        var data = new { username = userId, room = _worldId };
+        Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
+
+        isJoinRoom = true;
+        Manager.Socket.Emit("joinRoom", data);
+    }
+    void SendMsg(string world_Id, string msg)
+    {
+        if (string.IsNullOrEmpty(msg))
+        {
+            Debug.Log("<color=blue> XanaChat -- EmptyMsg </color>");
+            return;
+        }
+
+        if (msg.All(c => char.IsWhiteSpace(c)))
+        {
+            Debug.Log("<color=blue> XanaChat -- EmptySpacedMsg </color>");
+            return;
+        }
+
+        string userId = XanaConstants.xanaConstants.userId;
+        string event_Id = "1";
+
+        // Checking For Event
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            event_Id = XanaEventDetails.eventDetails.id.ToString();
+        }
+        eventId = int.Parse(event_Id);
+        Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
+
+
+        var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        Manager.Socket.Emit("chatMessage", data);
+
+
+    }
+    void ReceiveMsgs(ChatUserData msg)
+    {
+        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+
+        if (string.IsNullOrEmpty(msg.message))
+            return;
+
+        if (eventId != msg.event_id)
+            return;
+
+        string tempUser = msg.username;
+        receivedMsgForTesting = msg;
+
+        if (CheckUserNameIsValid(tempUser))
+        {
+            //tempUser = msg.socket_id;
+            tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
+        }
+        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
+    }
+    bool CheckUserNameIsValid(string _UserName)
+    {
+        if (string.IsNullOrEmpty(_UserName) ||
+            _UserName.All(c => char.IsWhiteSpace(c)) ||
+            _UserName.Contains("null") ||
+            _UserName.Contains("Null"))
+            return true;
+        else
+            return false;
+    }
+
+    #endregion
+
+    //To fetch Old Messages from a server against any world
+    public void CallApiForMessages()
+    {
+        Debug.Log("Calling API");
+        //StartCoroutine(FetchOldMessages());
+
+
+        DisplayOldChat(oldChatResponse);
+    }
+    IEnumerator FetchOldMessages()
+    {
+        yield return new WaitForSeconds(5f);
+
+        string token = ConstantsGod.AUTH_TOKEN;
+        WWWForm form = new WWWForm();
+
+        string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
+        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+
+        UnityWebRequest www;
+        www = UnityWebRequest.Get(api);
+
+
+        //www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            //oldMsgRec.text = www.downloadHandler.text;
+            Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
+
+            // Locally Save the Response
+            oldChatResponse = www.downloadHandler.text;
+            //DisplayOldChat(www.downloadHandler.text);
+        }
+        else
+            Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+
+        www.Dispose();
+    }
+
+    void DisplayOldChat(string OldChat)
+    {
+        //if(!string.IsNullOrEmpty(OldChat))
+
+        //OldChatOutPut myChat = JsonUtility.FromJson<OldChatOutPut>(OldChat);
+        ////JsonUtility.FromJson<S3NftDetail>(jsonData);
+        //if (myChat.count > 0)
+        //{
+        //    string tempUserName = "";
+        //    for (int i = myChat.data.Count - 1; i > -1; i--)
+        //    {
+        //        if (string.IsNullOrEmpty(myChat.data[i].username))
+        //            tempUserName = "Xana";
+        //        else
+        //            tempUserName = myChat.data[i].username;
+
+        //        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, myChat.data[i].message);
+        //    }
+        //}
+
+
+        RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
+        if (rootData.count > 0)
+        {
+            //string tempUserName = "";
+            for (int i = rootData.data.Count - 1; i > -1; i--)
+            {
+                string tempUser = rootData.data[i].name;
+
+                if (string.IsNullOrEmpty(tempUser) || tempUser.Contains("null"))
+                {
+                    tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
+                }
+
+                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
+            }
+        }
+
+
+    }
+
+
+
+}
+
+
+[System.Serializable]
+public class ChatUserData
+{
+    public string socket_id;
+    public string username;
+    public string avatar;
+    public string message;
+    public string world;
+    public int event_id;
+    public int world_id;
+    public long time;
+}
+//{
+//    socket_id: _socketId,
+//    username: _username,
+//    avatar: _avatar,
+//    message: _text,
+//    world: _worldName,
+//    event_id: _eventId,
+//    world_id: _worldId,
+//    time: Date.now()
+//  }
+
+
+//[System.Serializable]
+//public class OldChatOutPut
+//{
+//    public bool success;
+//    public List<OldChatMessage> data;
+//    public int count;
+//}
+
+//[System.Serializable]
+//public class OldChatMessage
+//{
+//    public string username;
+//    public string avatar;
+//    public string message;
+//    public DateTime time;
+//    public DateTime createdAt;
+//}
+
+[System.Serializable]
+public class MessageData
+{
+    public string name;
+    public string avatar;
+    public string message;
+    public DateTime time;
+    public DateTime createdAt;
+}
+[System.Serializable]
+public class RootData
+{
+    public bool success;
+    public List<MessageData> data;
+    public int count;
+}

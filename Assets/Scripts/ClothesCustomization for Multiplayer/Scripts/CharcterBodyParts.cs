@@ -1488,4 +1488,32 @@ public class CharcterBodyParts : MonoBehaviour
         Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, PresetGredientColor);
     }
 
+
+    /// <summary>
+    /// To hide player meshes for camera man account
+    /// </summary>
+    public void HidePlayer(){ 
+        if(Body)
+        Body.gameObject.SetActive(false);
+         if(Head)
+        Head.gameObject.SetActive(false);
+         if(avatarController.wornHair)
+        avatarController.wornHair.SetActive(false);
+         if(avatarController.wornPant)
+        avatarController.wornPant.SetActive(false);
+         if(avatarController.wornShirt)
+        avatarController.wornShirt.SetActive(false);
+         if(avatarController.wornShose)
+        avatarController.wornShose.SetActive(false);
+         if(avatarController.wornEyewearable)
+        avatarController.wornEyewearable.SetActive(false);
+        if(avatarController.wornGloves)
+        avatarController.wornGloves.SetActive(false);
+         if(avatarController.wornChain)
+        avatarController.wornChain.SetActive(false);
+
+        avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(false);
+        //.gameObject.SetActive(false);
+    }
+
 }
