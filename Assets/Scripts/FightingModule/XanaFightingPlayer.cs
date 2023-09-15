@@ -31,6 +31,12 @@ public class XanaFightingPlayer : MonoBehaviour
                     avatarController.staticPlayer = true;
                     controlsScript.myInfo.characterName = PlayerPrefs.GetString("PlayerName").ToUpper();
                 }
+                else if (UFE.gameMode==UFE3D.GameMode.VersusMode)
+                {
+                    avatarController.isLoadStaticClothFromJson = false;
+                    avatarController.staticPlayer = true;
+                    controlsScript.myInfo.characterName = PlayerPrefs.GetString("PlayerName").ToUpper();
+                }
                 else
                 {
                     if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
@@ -48,6 +54,12 @@ public class XanaFightingPlayer : MonoBehaviour
             else
             {
                 if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
+                {
+                    avatarController.isLoadStaticClothFromJson = true;
+                    avatarController.staticPlayer = false;
+                    controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+                }
+                else if (UFE.gameMode==UFE3D.GameMode.VersusMode)
                 {
                     avatarController.isLoadStaticClothFromJson = true;
                     avatarController.staticPlayer = false;

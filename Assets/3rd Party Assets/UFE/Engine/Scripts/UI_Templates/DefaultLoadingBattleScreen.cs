@@ -40,6 +40,12 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 				player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = false;
 				player1.GetComponent<AvatarController>().staticPlayer = true;
 				player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+            }
+            else if (UFE.gameMode==GameMode.VersusMode)
+            {
+				player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = false;
+				player1.GetComponent<AvatarController>().staticPlayer = true;
+				player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
 			}
 			else
 			{
@@ -99,6 +105,10 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
 						this.namePlayer1.text = PlayerPrefs.GetString("PlayerName");
+                    }
+                    else if (UFE.gameMode==GameMode.VersusMode)
+                    {
+						this.namePlayer1.text = PlayerPrefs.GetString("PlayerName");
 					}
 					else
 					{
@@ -127,6 +137,10 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 					//this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();	
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
+						this.namePlayer2.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+                    }
+                    else if (UFE.gameMode==GameMode.VersusMode)
+                    {
 						this.namePlayer2.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
 					}
 					else

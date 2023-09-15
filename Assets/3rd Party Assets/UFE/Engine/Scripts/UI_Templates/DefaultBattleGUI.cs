@@ -455,6 +455,10 @@ public class DefaultBattleGUI : BattleGUI{
 			if (UFE.gameMode == GameMode.TrainingRoom)
 			{
 				this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
+            }
+            else if (UFE.gameMode==GameMode.VersusMode)
+            {
+				this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
 			}
 			else
 			{
@@ -476,6 +480,10 @@ public class DefaultBattleGUI : BattleGUI{
 			{
 				this.player2GUI.name.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
 			}
+            else if (UFE.gameMode==GameMode.VersusMode)
+            {
+				this.player2GUI.name.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+			}
 			else
 			{
 				if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
@@ -495,6 +503,10 @@ public class DefaultBattleGUI : BattleGUI{
 				this.player1GUI.portrait.gameObject.SetActive(true);
 				if (UFE.gameMode == GameMode.TrainingRoom)
 				{
+					setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
+                }
+                else if (UFE.gameMode==GameMode.VersusMode)
+                {
 					setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
 				}
 				else
@@ -523,6 +535,10 @@ public class DefaultBattleGUI : BattleGUI{
 				this.player2GUI.portrait.gameObject.SetActive(true);
 				if (UFE.gameMode == GameMode.TrainingRoom)
 				{
+					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
+				}
+                else if (UFE.gameMode==GameMode.VersusMode)
+                {
 					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
 				}
 				else
