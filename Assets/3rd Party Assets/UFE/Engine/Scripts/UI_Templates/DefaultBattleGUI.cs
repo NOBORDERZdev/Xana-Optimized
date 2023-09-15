@@ -57,6 +57,7 @@ public class DefaultBattleGUI : BattleGUI{
 	public AlertGUI mainAlert = new AlertGUI();
 	public Text info;
 	public Text timer;
+	public Image timerImage; //Attizaz
 	public float lifeDownSpeed = 500f;
 	public float lifeUpSpeed = 900f;
     public UFEScreen pauseScreen;
@@ -378,10 +379,15 @@ public class DefaultBattleGUI : BattleGUI{
 	}
 	#endregion
 
+	ControlsScript P1;
+	ControlsScript P2;
+
 	#region protected override methods
 	protected override void OnGameBegin (ControlsScript cPlayer1, ControlsScript cPlayer2, StageOptions stage){
 		base.OnGameBegin (cPlayer1, cPlayer2, stage);
-
+		print("GAME BEGINS");
+		P1 = cPlayer1;
+		P2 = cPlayer2;
 		// Mubashir Code
 		OnlineExit scriptInstance = FindObjectOfType<OnlineExit>();
 		if (scriptInstance != null)
@@ -442,11 +448,10 @@ public class DefaultBattleGUI : BattleGUI{
 				);
 			}
 		}
-
+		
 		// Set the character names
 		if (this.player1GUI != null && this.player1GUI.name != null)
 		{
-			//this.player1GUI.name.text = cPlayer1.myInfo.characterName;	
 			if (UFE.gameMode == GameMode.TrainingRoom)
 			{
 				this.player1GUI.name.text = PlayerPrefs.GetString("PlayerName");
@@ -463,6 +468,7 @@ public class DefaultBattleGUI : BattleGUI{
 				}
 			}
 		}
+
 		if (this.player2GUI != null && this.player2GUI.name != null)
 		{
 			//this.player2GUI.name.text = cPlayer2.myInfo.characterName.ToString().ToUpper();	
@@ -749,6 +755,31 @@ public class DefaultBattleGUI : BattleGUI{
             spriteRenderer.sprite = networkPlayerPointer;
             Destroy(pointer, pointerTimer);
         }
+
+		print("New Round");
+		//P1.ResetGauge();
+		//P2.ResetGauge();
+
+
+		if (UFE.config.gameGUI.hasGauge)
+		{
+			for (int i = 0; i < this.player1GUI.gauges.Length; i++)
+			{
+				if (this.player1.controlsScript.myInfo.hideGauges[i]) continue;
+				this.player1GUI.gauges[i].gameObject.SetActive(true);
+				P1.currentGaugesPoints[i] = 0;
+				this.player1GUI.gauges[i].fillAmount = (float)P1.currentGaugesPoints[i] / UFE.config.player1Character.maxGaugePoints;
+			}
+
+			for (int i = 0; i < this.player2GUI.gauges.Length; i++)
+			{
+				if (this.player2.controlsScript.myInfo.hideGauges[i]) continue;
+				this.player2GUI.gauges[i].gameObject.SetActive(true);
+				P2.currentGaugesPoints[i] = 0;
+				this.player2GUI.gauges[i].fillAmount = (float)P2.currentGaugesPoints[i] / UFE.config.player2Character.maxGaugePoints;
+			}
+		}
+
 	}
 
 	protected override void OnRoundEnd (ControlsScript winner, ControlsScript loser){
@@ -850,9 +881,15 @@ public class DefaultBattleGUI : BattleGUI{
         }
 	}
 
+
 	protected override void OnTimer (FPLibrary.Fix64 time){
 		base.OnTimer (time);
 		if (this.timer != null) this.timer.text = Mathf.Round((float)time).ToString().Replace("Infinity", "∞");
+
+
+		//Attizaz
+		float fillAmount = (float)time / (float)UFE.config.roundOptions._timer;
+		timerImage.fillAmount = fillAmount;
 	}
 
 	protected override void OnTimeOver(){
@@ -895,6 +932,7 @@ public class DefaultBattleGUI : BattleGUI{
             AddViewerInput(activeIconList, player);
 		}
 	}
+
 	#endregion
 	/*
 	// DEBUG INFORMATION

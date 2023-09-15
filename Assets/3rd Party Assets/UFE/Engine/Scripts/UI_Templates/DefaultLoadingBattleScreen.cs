@@ -27,6 +27,7 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 	#region public override methods
 	public override void OnShow (){
 		base.OnShow ();
+
 		StartCoroutine(IEDelay());
 		IEnumerator IEDelay()
 		{
@@ -69,35 +70,31 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 			player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = true;
 			player1RawImage.gameObject.SetActive(true);
 			player2RawImage.gameObject.SetActive(true);
-			if (this.music != null)
-			{
-				UFE.DelayLocalAction(delegate () { UFE.PlayMusic(this.music); }, this.delayBeforeMusic);
-			}
 
-			if (this.stopPreviousSoundEffectsOnLoad)
-			{
-				UFE.StopSounds();
-			}
+			if (this.music != null){
+			UFE.DelayLocalAction(delegate(){UFE.PlayMusic(this.music);}, this.delayBeforeMusic);
+		}
+		
+		if (this.stopPreviousSoundEffectsOnLoad){
+			UFE.StopSounds();
+		}
+		
+		if (this.onLoadSound != null){
+			UFE.DelayLocalAction(delegate(){UFE.PlaySound(this.onLoadSound);}, this.delayBeforeMusic);
+		}
 
-			if (this.onLoadSound != null)
-			{
-				UFE.DelayLocalAction(delegate () { UFE.PlaySound(this.onLoadSound); }, this.delayBeforeMusic);
-			}
 
 			FightingGameManager.instance.GetPlayerData();
-			if (UFE.config.player1Character != null)
-			{
-				if (this.portraitPlayer1 != null)
-				{
-					this.portraitPlayer1.sprite = Sprite.Create(
-						UFE.config.player1Character.profilePictureBig,
-						new Rect(0f, 0f, UFE.config.player1Character.profilePictureBig.width, UFE.config.player1Character.profilePictureBig.height),
-						new Vector2(0.5f * UFE.config.player1Character.profilePictureBig.width, 0.5f * UFE.config.player1Character.profilePictureBig.height)
-					);
-				}
+			if (UFE.config.player1Character != null){
+			if (this.portraitPlayer1 != null){
+				this.portraitPlayer1.sprite = Sprite.Create(
+					UFE.config.player1Character.profilePictureBig,
+					new Rect(0f, 0f, UFE.config.player1Character.profilePictureBig.width, UFE.config.player1Character.profilePictureBig.height),
+					new Vector2(0.5f * UFE.config.player1Character.profilePictureBig.width, 0.5f * UFE.config.player1Character.profilePictureBig.height)
+				);
+			}
 
-				if (this.namePlayer1 != null)
-				{
+			if (this.namePlayer1 != null){
 					//this.namePlayer1.text = UFE.config.player1Character.characterName;	
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
@@ -115,21 +112,18 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 						}
 					}
 				}
+		}
+
+		if (UFE.config.player2Character != null){
+			if (this.portraitPlayer2 != null){
+				this.portraitPlayer2.sprite = Sprite.Create(
+					UFE.config.player2Character.profilePictureBig,
+					new Rect(0f, 0f, UFE.config.player2Character.profilePictureBig.width, UFE.config.player2Character.profilePictureBig.height),
+					new Vector2(0.5f * UFE.config.player2Character.profilePictureBig.width, 0.5f * UFE.config.player2Character.profilePictureBig.height)
+				);
 			}
 
-			if (UFE.config.player2Character != null)
-			{
-				if (this.portraitPlayer2 != null)
-				{
-					this.portraitPlayer2.sprite = Sprite.Create(
-						UFE.config.player2Character.profilePictureBig,
-						new Rect(0f, 0f, UFE.config.player2Character.profilePictureBig.width, UFE.config.player2Character.profilePictureBig.height),
-						new Vector2(0.5f * UFE.config.player2Character.profilePictureBig.width, 0.5f * UFE.config.player2Character.profilePictureBig.height)
-					);
-				}
-
-				if (this.namePlayer2 != null)
-				{
+			if (this.namePlayer2 != null){
 					//this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();	
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
@@ -145,38 +139,36 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 						{
 							this.namePlayer2.text = FightingGameManager.instance.player2Data.name.ToUpper();
 						}
-					}
+					}	
+				}
+		}
+
+		if (UFE.config.selectedStage != null){
+			if (this.screenshotStage != null){
+				this.screenshotStage.sprite = Sprite.Create(
+					UFE.config.selectedStage.screenshot,
+					new Rect(0f, 0f, UFE.config.selectedStage.screenshot.width, UFE.config.selectedStage.screenshot.height),
+					new Vector2(0.5f * UFE.config.selectedStage.screenshot.width, 0.5f * UFE.config.selectedStage.screenshot.height)
+				);
+
+				Animator anim = this.screenshotStage.GetComponent<Animator>();
+				if (anim != null){
+					anim.enabled = UFE.gameMode != GameMode.StoryMode;
 				}
 			}
 
-			if (UFE.config.selectedStage != null)
-			{
-				if (this.screenshotStage != null)
-				{
-					this.screenshotStage.sprite = Sprite.Create(
-						UFE.config.selectedStage.screenshot,
-						new Rect(0f, 0f, UFE.config.selectedStage.screenshot.width, UFE.config.selectedStage.screenshot.height),
-						new Vector2(0.5f * UFE.config.selectedStage.screenshot.width, 0.5f * UFE.config.selectedStage.screenshot.height)
-					);
+			/*if (this.nameStage != null){
+				this.nameStage.text = UFE.config.selectedStage.stageName;
+			}*/
+		}
 
-					Animator anim = this.screenshotStage.GetComponent<Animator>();
-					if (anim != null)
-					{
-						anim.enabled = UFE.gameMode != GameMode.StoryMode;
-					}
-				}
-
-				/*if (this.nameStage != null){
-					this.nameStage.text = UFE.config.selectedStage.stageName;
-				}*/
-			}
 			yield return new WaitForSeconds(2f);
 			UFE.DelayLocalAction(UFE.PreloadBattle, this.delayBeforePreload);
 			UFE.DelayLocalAction(this.StartBattle, UFE.config._preloadingTime);
 		}
-        // If network synchornization is needed in this screen, use this instead
-        //UFE.DelaySynchronizedAction(UFE.PreloadBattle, this.delayBeforePreload);
-        //UFE.DelaySynchronizedAction(this.StartBattle, this.delayBeforePreload + UFE.config.preloadingTime + this.delayAfterPreload);
+		// If network synchornization is needed in this screen, use this instead
+		//UFE.DelaySynchronizedAction(UFE.PreloadBattle, this.delayBeforePreload);
+		//UFE.DelaySynchronizedAction(this.StartBattle, this.delayBeforePreload + UFE.config.preloadingTime + this.delayAfterPreload);
 	}
 	#endregion
 }

@@ -3798,6 +3798,15 @@ public class ControlsScript : MonoBehaviour {
         if (currentGaugesPoints[targetGauge] > myInfo.maxGaugePoints) currentGaugesPoints[targetGauge] = myInfo.maxGaugePoints;
 
         UFE.FireGaugeChange(targetGauge, currentGaugesPoints[targetGauge], this);
+        
+        //Attizaz BUTTON ON OFF MECHANISM
+
+        //print("Gaining Gauge : "+ currentGaugesPoints[targetGauge]);
+
+        //if (currentGaugesPoints[targetGauge] == 400) {
+        //    GameObject Button6 = GameObject.Find("Button-6");
+        //    if (Button6) { Button6.transform.GetChild(0).gameObject.SetActive(true); } else { print("Button6 is null"); }
+        //}
     }
 
     private void RemoveGauge(Fix64 gaugeLoss, int targetGauge) {
@@ -3831,6 +3840,10 @@ public class ControlsScript : MonoBehaviour {
 	
 	private void RefillGauge(){
         for (int i = 0; i < currentGaugesPoints.Length; i++) AddGauge(myInfo.maxGaugePoints, i);
+	}
+
+    public void ResetGauge(){
+        for (int i = 0; i < currentGaugesPoints.Length; i++) AddGauge(0, i);
 	}
 
 	private bool DamageMe(Fix64 damage){

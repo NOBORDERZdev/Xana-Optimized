@@ -126,7 +126,7 @@ namespace UFE3D
             if (UFE.config.debugOptions.connectionLog) Debug.Log("OnMatchCreationError");
         }
 
-       // Attizaz Network Check Bool
+       // Attizaz's Network Check Bool
        public bool isNetworkGame;
         protected virtual void OnMatchesDiscovered(ReadOnlyCollection<MultiplayerAPI.MatchInformation> matches)
         {
@@ -184,15 +184,9 @@ namespace UFE3D
                 }
                 if (UFE.config.debugOptions.connectionLog) Debug.Log("Matches Found (available/total): " + unique + "/" + matches.Count);
             }
-            //if (unique == 0 || _currentSearchTime == 5)
-            //{
-            //    if (unique == 0) //Attizaz
-            //    {
-            //        this.TryConnect(); //Attizaz instead of above statements by default it was calling this statement
-            //    }
-            //}
+      
 
-            if (unique > 0 || _currentSearchTime >= 5) //Attizaz instead of 30 it was maxSearchTimes which used to wait for 5 seconds for match
+            if (unique > 0 || _currentSearchTime >= maxSearchTimes) //Attizaz instead of 30 it was maxSearchTimes which used to wait for 5 seconds for match
             {
                 if (_currentSearchTime >=5&&!isNetworkGame)//Attizaz by default there was no condition just this code
                 {
@@ -200,17 +194,17 @@ namespace UFE3D
                     {
                         StopCoroutine(increamentCoroutine);
                     }
-                    UFE.gameMode = GameMode.VersusMode;
-                    UFE.StartPlayerVersusCpu(); //Attizaz
+                    //UFE.gameMode = GameMode.VersusMode;
+                    //UFE.StartPlayerVersusCpu(); //Attizaz
                     print("The wait is over start match with AI");
                     
                 }
                 else //if(isNetworkGame)
                 {
-                    if (increamentCoroutine != null)
-                    {
-                        StopCoroutine(increamentCoroutine);
-                    }
+                    //if (increamentCoroutine != null)
+                    //{
+                    //    StopCoroutine(increamentCoroutine);
+                    //}
                     this.TryConnect(); //Attizaz instead of above statements by default it was calling this statement
                 }
             }
@@ -248,6 +242,14 @@ namespace UFE3D
 
             currentValue = targetValue;
             uiText.text = currentValue.ToString("F0") + "%";
+
+            if (currentValue == 100)
+            {
+                UFE.DisconnectFromGame();
+                this.StopSearchingMatchGames(); 
+                UFE.gameMode = GameMode.VersusMode;
+                UFE.StartPlayerVersusCpu(); //Attizaz
+            }
         }
 
         protected virtual void OnMatchDiscoveryError()

@@ -69,7 +69,7 @@ MonoBehaviour:
     draw: DRAW
     defaultSelection: 1
   gameGUI:
-    hasGauge: 0
+    hasGauge: 1
     screenFadeDuration:
       _serializedValue: 4294967296
     gameFadeDuration:
@@ -83,7 +83,7 @@ MonoBehaviour:
     canvasScaler:
       defaultSpriteDPI: 96
       fallbackScreenDPI: 96
-      matchWidthOrHeight: 0.5
+      matchWidthOrHeight: 1
       physicalUnit: 3
       referencePixelsPerUnit: 1
       referenceResolution: {x: 1920, y: 1080}
@@ -1304,8 +1304,8 @@ MonoBehaviour:
     emulateNetwork: 1
     trainingModeDebugger: 0
     preloadedObjects: 1
-    inputsToggle: 1
-    networkToggle: 1
+    inputsToggle: 0
+    networkToggle: 0
     recordToggle: 0
     hitboxColorsToggle: 0
     displayCollisionMassGizmos: 0
@@ -1324,7 +1324,7 @@ MonoBehaviour:
     displayInputsStoryMode: 0
     displayInputsChallengeMode: 0
     p1DebugInfo:
-      toggle: 1
+      toggle: 0
       currentMove: 1
       position: 1
       lifePoints: 1
@@ -1338,7 +1338,7 @@ MonoBehaviour:
       buttonSequence: 0
       aiWeightList: 0
     p2DebugInfo:
-      toggle: 1
+      toggle: 0
       currentMove: 1
       position: 1
       lifePoints: 1
@@ -1358,9 +1358,9 @@ MonoBehaviour:
     p1StartingGauge: 0
     p2StartingGauge: 0
     p1Life: 0
-    p1Gauge: 1
+    p1Gauge: 2
     p2Life: 0
-    p2Gauge: 1
+    p2Gauge: 2
     refillTime: 3
   challengeModeOptions:
   - challengeName: Challenge 1
@@ -1647,9 +1647,9 @@ MonoBehaviour:
     synchronizationMessageFrequency: 0
     synchronizationAction: 1
   music: 1
-  musicVolume: 0.74817324
+  musicVolume: 0.14007272
   soundfx: 1
-  soundfxVolume: 0.8554386
+  soundfxVolume: 0.14774562
   colorStateOne: {r: 1, g: 0, b: 0, a: 1}
   colorIsHit: {r: 1, g: 0, b: 1, a: 1}
   colorBodyCollider: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
