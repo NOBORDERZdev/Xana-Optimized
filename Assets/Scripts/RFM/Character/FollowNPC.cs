@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RFM
@@ -22,7 +20,7 @@ namespace RFM
         {
             if (!target) return;
 
-            transform.position += (target.position - transform.position) * followSpeed * Time.deltaTime;
+            transform.position += (target.position - transform.position) * (followSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation, followSpeed * Time.deltaTime);
         }
     }

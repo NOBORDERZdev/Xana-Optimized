@@ -12,7 +12,6 @@ using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Serialization;
 
 namespace RFM
 {
@@ -69,12 +68,12 @@ namespace RFM
 
         public static int NumOfActivePlayers;
 
-        public GameConfiguration CurrentGameConfiguration;
+        [HideInInspector] public GameConfiguration CurrentGameConfiguration;
 
         //the api is set we just have to get the map
         private IEnumerator FetchConfigDataFromServer()
         {
-            var url = "https://muneebullah.com/test.json";
+            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
             using UnityWebRequest www = UnityWebRequest.Get(url);
             // www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
@@ -88,13 +87,13 @@ namespace RFM
                 
                 CurrentGameConfiguration = new GameConfiguration
                 {
-                    MatchMakingTime = 60,
-                    TakePositionTime = 20,
-                    GameplayTime = 60,
-                    GameRestartWaitTime = 10000,
+                    MatchMakingTime = 30,
+                    TakePositionTime = 10,
+                    GameplayTime = 30,
+                    GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     EscapeesToHuntersRatio = Vector2.one,
-                    GainingMoneyTimeInterval = 2,
+                    GainingMoneyTimeInterval = 1,
                     MoneyPerInterval = 15,
                 };
             }
@@ -383,7 +382,8 @@ namespace RFM
 
                 //play VFX
                 playerSpawnVFX.SetActive(true);
-                Destroy(playerSpawnVFX, 10f);
+                // Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart. Should be instantiated or disabled.
+                
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
