@@ -186,13 +186,13 @@ public class JjInfoManager : MonoBehaviour
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                             worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
-                            compersionPrfex = "?width=500&height=600";
+                            compersionPrfex = "?width=535&height=300";//"?width=500&height=600";
                             break;
                         case "9:16":
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                             worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
-                            compersionPrfex = "?width=700&height=500";
+                            compersionPrfex = "?width=300&height=535"; //"?width=700&height=500";
                             break;
                         case "4:3":
                             if (JJFrameManager.instance)
