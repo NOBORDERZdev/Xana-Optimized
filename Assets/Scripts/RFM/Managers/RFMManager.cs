@@ -73,7 +73,7 @@ namespace RFM
         //the api is set we just have to get the map
         private IEnumerator FetchConfigDataFromServer()
         {
-            var url = "https://muneebullah.com/test.json";
+            var url = "asd";
             using UnityWebRequest www = UnityWebRequest.Get(url);
             // www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
@@ -87,13 +87,13 @@ namespace RFM
                 
                 CurrentGameConfiguration = new GameConfiguration
                 {
-                    MatchMakingTime = 60,
-                    TakePositionTime = 20,
-                    GameplayTime = 60,
-                    GameRestartWaitTime = 10000,
+                    MatchMakingTime = 30,
+                    TakePositionTime = 10,
+                    GameplayTime = 30,
+                    GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     EscapeesToHuntersRatio = Vector2.one,
-                    GainingMoneyTimeInterval = 2,
+                    GainingMoneyTimeInterval = 1,
                     MoneyPerInterval = 15,
                 };
             }
@@ -130,8 +130,7 @@ namespace RFM
 
             if (PhotonNetwork.IsMasterClient)
             {
-                XanaConstants.xanaConstants.userLimit = CurrentGameConfiguration.MaxPlayersInRoom.ToString();
-                // PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
+                PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
             }
             
             Globals.gameState = Globals.GameState.InLobby;

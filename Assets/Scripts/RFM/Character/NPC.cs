@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Pun.Demo.Hub;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -49,11 +47,16 @@ namespace RFM
             // if (_target) return;
             
             _players = new List<GameObject>(GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
+            _players.AddRange(new List<GameObject>(GameObject.FindGameObjectsWithTag(Globals.ESCAPEE_NPC_TAG)));
 
             if (_players.Count > 0)
             {
                 _target = _players[Random.Range(0, _players.Count)].transform;
                 FollowTarget(_target.position);
+            }
+            else
+            {
+                navMeshAgent.isStopped = true;
             }
         }
 
