@@ -73,7 +73,7 @@ namespace RFM
         //the api is set we just have to get the map
         private IEnumerator FetchConfigDataFromServer()
         {
-            var url = "asd";
+            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
             using UnityWebRequest www = UnityWebRequest.Get(url);
             // www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
