@@ -186,13 +186,13 @@ public class JjInfoManager : MonoBehaviour
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                             worldInfos[i].JjRatio = JjRatio.SixteenXNineWithDes;
-                            compersionPrfex = "?width=535&height=300";//"?width=500&height=600";
+                            compersionPrfex = "?width=640&height=360";//"?width=500&height=600";
                             break;
                         case "9:16":
                             if (JJFrameManager.instance)
                                 JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                             worldInfos[i].JjRatio = JjRatio.NineXSixteenWithDes;
-                            compersionPrfex = "?width=300&height=535"; //"?width=700&height=500";
+                            compersionPrfex = "?width=360&height=640"; //"?width=700&height=500";
                             break;
                         case "4:3":
                             if (JJFrameManager.instance)
@@ -266,7 +266,7 @@ public class JjInfoManager : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[j].asset_link;
                                 worldInfos[i].videoType = VideoTypeRes.aws;
-                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[j].asset_link, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+                                NftPlaceholderList[i].GetComponent<JJVideoAndImage>().InitData(null, worldData[j].asset_link+ compersionPrfex, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
