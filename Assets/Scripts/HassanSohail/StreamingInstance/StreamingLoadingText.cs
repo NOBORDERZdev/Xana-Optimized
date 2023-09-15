@@ -12,18 +12,22 @@ public class StreamingLoadingText : MonoBehaviour
 
     }
 
-    public void UpdateLoadingText()
+    public void UpdateLoadingText(bool movingToWorld)
     {
-         if (XanaConstants.xanaConstants.isCameraMan)
-        {
-            TmpText.text= loadingScreenTxt+XanaConstants.xanaConstants.JjWorldTeleportSceneName.ToString();
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
+       
+            if (XanaConstants.xanaConstants.isCameraMan)
+            {
+                 if (movingToWorld)
+                TmpText.text= loadingScreenTxt+XanaConstants.xanaConstants.JjWorldTeleportSceneName.ToString();
+                 else
+                TmpText.text = "Switching world";
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
     }
 
-
+    
 
 }
