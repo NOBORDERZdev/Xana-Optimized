@@ -68,7 +68,7 @@ namespace RFM
 
         public static int NumOfActivePlayers;
 
-        public GameConfiguration CurrentGameConfiguration;
+        [HideInInspector] public GameConfiguration CurrentGameConfiguration;
 
         //the api is set we just have to get the map
         private IEnumerator FetchConfigDataFromServer()
