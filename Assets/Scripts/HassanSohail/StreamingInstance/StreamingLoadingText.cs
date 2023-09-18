@@ -9,9 +9,11 @@ public class StreamingLoadingText : MonoBehaviour
 
     private void OnEnable()
     {
-
+        if (!XanaConstants.xanaConstants.isCameraMan)
+        {
+            gameObject.SetActive(false);
+        }
     }
-
     public void UpdateLoadingText(bool movingToWorld)
     {
        
