@@ -8,7 +8,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviour
+public class GamificationComponentData : MonoBehaviourPun
 {
     public static GamificationComponentData instance;
 
@@ -217,29 +217,31 @@ public class GamificationComponentData : MonoBehaviour
 
     //All components for multiplayer
 
-    //[PunRPC]
-    //public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
-    //{
-    //    var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
-    //    if (componentType == Constants.ItemComponentType.none)
-    //    {
-    //        item.gameObject.SetActive(false);
-    //        return;
-    //    }
+    [PunRPC]
+    public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
+        if(componentType==Constants.ItemComponentType.none)
+        {
+            item.gameObject.SetActive(false);
+            return;
+        }
 
-    //    RestrictionComponents(componentType);
+        RestrictionComponents(componentType);
 
 
-    //    if (item != null)
-    //    {
-    //        var component = item.GetComponent(componentType.ToString()) as ItemComponent;
-    //        if (component != null)
-    //            component.PlayBehaviour();
-    //    }
-    //}
+        if (item != null)
+        {
+            var component = item.GetComponent(componentType.ToString()) as ItemComponent;
+            if (component != null)
+            {
+                component.PlayBehaviour();
+            }
+        }
+    }
 
-    //void RestrictionComponents(Constants.ItemComponentType componentType)
-    //{
-    //    BuilderEventManager.onComponentActivated?.Invoke(componentType);
-    //}
+    void RestrictionComponents(Constants.ItemComponentType componentType)
+    {
+        BuilderEventManager.onComponentActivated?.Invoke(componentType);
+    }
 }

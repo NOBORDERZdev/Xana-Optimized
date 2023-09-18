@@ -2,22 +2,72 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 
-public class ThrowThingsComponent : MonoBehaviour
+public class ThrowThingsComponent : ItemComponent
 {
     ThrowThingsComponentData throwThingsComponentData;
+    string RuntimeItemID = "";
 
     public void Init(ThrowThingsComponentData throwThingsComponentData)
     {
         this.throwThingsComponentData = throwThingsComponentData;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);
-            BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
-            Destroy(gameObject);
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        GamificationComponentData.instance.playerControllerNew.Ninja_Throw(false, 1);
+        BuilderEventManager.OnThrowThingsComponentCollisionEnter?.Invoke();
+    }
+    private void StopComponent()
+    {
+        // This Stop Cannot Work because the Item is Destroyed when player touch it
+        StartCoroutine(GamificationComponentData.instance.playerControllerNew.ThrowEnd());
+        GamificationComponentData.instance.playerControllerNew.isThrow = false;
+        GamificationComponentData.instance.playerControllerNew.isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.ThrowThingsComponent;
+    }
+
+    #endregion
 }
