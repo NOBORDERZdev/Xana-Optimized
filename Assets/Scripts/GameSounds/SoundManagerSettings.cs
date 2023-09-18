@@ -72,7 +72,7 @@ public class SoundManagerSettings : MonoBehaviour
         }
        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
         //PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
-        PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
+        PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
     }
     IEnumerator LiveVideoInstancs(float value)
     {

@@ -298,7 +298,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         {
             if (totalCounter != null)
             {
-                if (FeedEventPrefab.m_EnvName.Contains("Xana Festival")) // for Xana Festival
+                if (/*FeedEventPrefab.m_EnvName.Contains("Xana Festival")*/ true) // for Xana Festival
                 {
                     if (XanaConstants.xanaConstants.isCameraManInRoom || XanaConstants.xanaConstants.isCameraMan)
                     {

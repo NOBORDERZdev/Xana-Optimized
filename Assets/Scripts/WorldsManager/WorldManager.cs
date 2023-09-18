@@ -63,6 +63,13 @@ public class WorldManager : MonoBehaviour
     ScrollRect s1;
     ScrollSnapRect s2;
 
+
+    [SerializeField]
+    [NonReorderable]
+    List<AutoSwtichEnv> AutoSwtichWorldList;
+
+    static int AutoSwtichIndex=0;
+
     private void Awake()
     {
         if (instance == null)
@@ -105,7 +112,37 @@ public class WorldManager : MonoBehaviour
         OnWorldTabChange(APIURL.Hot, true);
         GetBuilderWorlds(APIURL.Hot, (a) => { });
 
+        //Invoke(nameof(SetAutoSwtichStreaming),2);
+        
         Invoke(nameof(LoadJjworld), 5);
+    }
+
+    void SetAutoSwtichStreaming(){ 
+         if (XanaConstants.xanaConstants.isCameraMan)
+         {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            
+            XanaConstants.xanaConstants.JjWorldSceneChange = true;
+            XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
+            XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
+            if (APIBaseUrlChange.instance.IsXanaLive)
+            {
+                XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].mainnetId.ToString();
+            }
+            else
+            {
+                XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
+            }
+            if (AutoSwtichIndex< AutoSwtichWorldList.Count-1)
+            {
+                AutoSwtichIndex++;
+            }
+            else
+            {
+                AutoSwtichIndex=0;
+            }
+            LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
+         }    
     }
 
     private void OnDestroy()
@@ -790,6 +827,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
     /// </summary>
     public void LoadJjworld()
     {
+        SetAutoSwtichStreaming();
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
@@ -824,6 +862,14 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
     }
 
 }
+[Serializable]
+class AutoSwtichEnv{ 
+    public string name;
+    public bool isMussuem= false;
+    public int mainnetId;
+    public int testnetId;
+}
+
 [System.Serializable]
 public class WorldsInfo
 {
