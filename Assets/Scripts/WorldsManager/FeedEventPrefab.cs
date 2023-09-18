@@ -449,7 +449,7 @@ public class FeedEventPrefab : MonoBehaviour
         {
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
-        eviroment_Name.text = eviroment_Name.text.ToUpper();
+        eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;
         UpdateWorldPanel();
 
