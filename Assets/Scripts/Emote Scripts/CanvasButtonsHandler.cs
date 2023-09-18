@@ -39,6 +39,8 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
+    public Text JJPortalPopupText;
+    public string[] JJPortalPopupTextData;
     private void Start()
     {
         if (rotateOrientationLand)
@@ -96,8 +98,9 @@ public class CanvasButtonsHandler : MonoBehaviour
         GamePlayButtonEvents.inst.OnInviteClick();
     }
 
-    public void EnableJJPortalPopup(GameObject obj)
+    public void EnableJJPortalPopup(GameObject obj, int indexForText)
     {
+        JJPortalPopupText.text = JJPortalPopupTextData[indexForText].ToString();
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
     }

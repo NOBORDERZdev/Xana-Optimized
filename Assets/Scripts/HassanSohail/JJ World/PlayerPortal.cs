@@ -65,7 +65,11 @@ public class PlayerPortal : MonoBehaviour
             }
 
             triggerObject = other.gameObject;
-            CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
+
+            if(currentPortal == PortalType.Enter || currentPortal == PortalType.Teleport)
+                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,2);
+            else if(currentPortal == PortalType.Exit)
+                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
         }
     }
 

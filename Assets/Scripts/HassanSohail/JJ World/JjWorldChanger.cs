@@ -21,6 +21,7 @@ public class JjWorldChanger : MonoBehaviour
     bool reSetCollider=false;
 
     private GameObject triggerObject;
+    public bool isEnteringPopup;
     private void Start()
     {
         collider = GetComponent<Collider>(); 
@@ -33,7 +34,10 @@ public class JjWorldChanger : MonoBehaviour
             if (JjInfoManager.Instance.IsJjWorld)
             {
                 triggerObject = other.gameObject;
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
+                if(isEnteringPopup)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,0);
+                else
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,1);
             }
             else
             {
