@@ -120,6 +120,8 @@ public class WorldManager : MonoBehaviour
     void SetAutoSwtichStreaming(){ 
          if (XanaConstants.xanaConstants.isCameraMan)
          {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
             XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
             XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
@@ -139,6 +141,7 @@ public class WorldManager : MonoBehaviour
             {
                 AutoSwtichIndex=0;
             }
+            LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
          }    
     }
 
