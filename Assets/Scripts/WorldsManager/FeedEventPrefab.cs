@@ -714,6 +714,8 @@ public class FeedEventPrefab : MonoBehaviour
     {
         if (worldTags.Length > 0)
             tagScroller.SetActive(true);
+        else
+            return;
 
         if (tagsParent.transform.childCount > 0)
         {
