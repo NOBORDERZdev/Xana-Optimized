@@ -187,6 +187,10 @@ public class WorldSearchManager : MonoBehaviour
                             _event.m_PressedIndex = searchworldRoot.data.rows[i].id;
                             _event.updatedAt = searchworldRoot.data.rows[i].updatedAt.ToString();
                             _event.createdAt = searchworldRoot.data.rows[i].createdAt.ToString();
+
+                            if (searchworldRoot.data.rows[i].tags != null)
+                                _event.worldTags = searchworldRoot.data.rows[i].tags;
+
                             if (searchworldRoot.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
                             {
                                 _event.creatorName = searchworldRoot.data.rows[i].user.name;

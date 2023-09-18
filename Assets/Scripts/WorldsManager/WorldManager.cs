@@ -946,6 +946,7 @@ public class SearchWorld
     public string status;
     public string? creator;
     public object users;
+    public string[] tags;
     public string map_json_link;
     public string map_code;
     public object nft_token_id;
