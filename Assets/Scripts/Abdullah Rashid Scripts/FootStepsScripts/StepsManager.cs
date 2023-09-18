@@ -28,7 +28,7 @@ public class StepsManager : MonoBehaviour
                 {
                     if (StepAudio && ReferrencesForDynamicMuseum.instance.playerControllerNew._IsGrounded)
                     {
-                        Debug.LogError(footRay.collider.tag);
+                        //Debug.LogError(footRay.collider.tag);
                         switch (footRay.collider.tag)
                         {
 
