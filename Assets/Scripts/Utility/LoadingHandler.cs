@@ -63,6 +63,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
     public ManualRoomController manualRoomController;
+    public StreamingLoadingText streamingLoading;
 
     private void Awake()
     {
