@@ -763,11 +763,13 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else if (isThrowModeActive)
             {
-                if (b)
-                    StartCoroutine(nameof(ThrowEnd));
-                else
-                    isThrowPose = true;
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
             }
+
+            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
         }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
@@ -1585,8 +1587,12 @@ public class PlayerControllerNew : MonoBehaviour
         }
         //else
         //    return;
-        isThrow = false;
-        isThrowModeActive = false;
+        if (isThrowModeActive)
+        {
+            isThrow = false;
+            isThrowModeActive = false;
+        }
+
         if (throwMainCo != null)
             throwMainCo = null;
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
@@ -1608,7 +1614,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             swordModel.SetActive(false);
         }
-        animator.SetBool("NinjaJump", false);
+        animator.SetBool("NinjaJump", true);
         animator.SetBool("isNinjaMotion", false);
         animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
         animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
@@ -1641,10 +1647,13 @@ public class PlayerControllerNew : MonoBehaviour
     {
         trajectoryController = this.GetComponent<TrajectoryController>();
         throwLineRenderer = this.GetComponent<LineRenderer>();
-        NinjaComponentTimerStart(0);
-        isNinjaMotion = false;
-        animator.SetBool("isNinjaMotion", false);
-        isThrow = true;
+        if (isNinjaMotion)
+        {
+            NinjaComponentTimerStart(0);
+            isNinjaMotion = false;
+            animator.SetBool("isNinjaMotion", false);
+            isThrow = true;
+        }
         isThrowModeActive = true;
         if (throwMainCo == null)
             throwMainCo = StartCoroutine(Throw());
@@ -1654,7 +1663,7 @@ public class PlayerControllerNew : MonoBehaviour
     private Coroutine throwStart, throwEnd, throwAction;
     bool isThrowReady = false;
     public Vector3 curveOffset;
-    bool isThrowPose = true;
+    internal bool isThrowPose = true;
 
     IEnumerator Throw()
     {

@@ -16,12 +16,27 @@ using System.Collections.Generic;
 
 public class XanaChatSocket : MonoBehaviour
 {
-    //"https://chat-testing.xana.net/";
-    public string address = "https://chat-testing.xana.net/";
-    public SocketManager Manager;
-
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
-    public string fetchAllMsgApi = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+
+    // Test-Net
+    // https://chat-testing.xana.net/
+    // https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/
+
+    // Main-Net
+    // https://chat-prod.xana.net/
+    // https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/
+
+    string socketTestnet = "https://chat-testing.xana.net/";
+    string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+
+    string socketMainnet = "https://chat-prod.xana.net/";
+    string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
+
+
+    public SocketManager Manager;
+    
+    string address;
+    string fetchAllMsgApi;
 
     int worldId,
         eventId = 1,
@@ -65,6 +80,19 @@ public class XanaChatSocket : MonoBehaviour
     }
     void Start()
     {
+        if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            address = socketMainnet;
+            fetchAllMsgApi = fetchApiMainnet;
+        }
+        else
+        {
+            address = socketTestnet;
+            fetchAllMsgApi = fetchApiTestnet;
+        }
+
+
+
         if (!address.EndsWith("/"))
             address = address + "/";
 
