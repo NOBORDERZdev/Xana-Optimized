@@ -32,11 +32,8 @@ namespace XanaAi
         //    isWearableOrNot = wearableToggle;
         //}
 
-        public IEnumerator GetAppearance(AiController ai)
+        public void StartWandering(AiController ai)
         {
-            DecorateAI(ai);
-            yield return new WaitForSeconds(0.2f);
-
             // perform ai actions
             ai.isPerformingAction = false;
             if (ai.ActionCoroutine != null)
@@ -46,8 +43,16 @@ namespace XanaAi
             ai.ActionCoroutine = ai.StartCoroutine(ai.PerformAction());
         }
 
+        //public IEnumerator GetAppearance(AiController ai)
+        //{
+        //    DecorateAI(ai);
+        //    //yield return new WaitForSeconds(0.2f);
+        //    //StartWandering(ai);
+        //    yield return null;
+        //}
 
-        private void DecorateAI(AiController ai)
+
+        public void DecorateAI(AiController ai)
         {
             //if (isWearableOrNot)
             //{

@@ -57,6 +57,7 @@ namespace XanaAi
 
                 rand = Random.Range(0, aiNames.Count);
                 spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);
+                apperance.StartWandering(spawnedNpc[i].GetComponent<AiController>());
             }
 
             StartCoroutine(ReactScreen.Instance.getAllReactions());
@@ -67,7 +68,8 @@ namespace XanaAi
         public void InitilizeAI()
         {
             if (decoratedAi >= aiCountToSpwan) return;
-            StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
+            //StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
+            apperance.DecorateAI(spawnedNpc[decoratedAi].GetComponent<AiController>());
         }
 
 
@@ -128,21 +130,22 @@ namespace XanaAi
                 //}
                 #endregion
 
-                try
-                {
-                    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                    loadObj.Completed += operationHandle =>
-                    {
-                        OnLoadCompleted(operationHandle, ObjectType, ai);
-                    };
-                }
-                catch (System.Exception)
-                {
-                    Handheld.Vibrate();
-                    WearDefault(ObjectType, ai); // wear default cloth
-                    apperance.CheckMoreAIDresses(ai);
-                    throw new Exception("Error occur in loading addressable. Wear DefaultAvatar");
-                }
+                //try
+                //{
+                //    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                //    loadObj.Completed += operationHandle =>
+                //    {
+                //        OnLoadCompleted(operationHandle, ObjectType, ai);
+                //    };
+                //}
+                //catch (System.Exception)
+                //{
+                //    Handheld.Vibrate();
+                      WearDefault(ObjectType, ai); // wear default cloth
+                                        apperance.CheckMoreAIDresses(ai);         // remove it later
+                //    apperance.CheckMoreAIDresses(ai);
+                //    throw new Exception("Error occur in loading addressable. Wear DefaultAvatar");
+                //}
                 //yield return null;
             }
         }
@@ -174,7 +177,7 @@ namespace XanaAi
             }
 
             //    // Release the handle when you're done to free up resources.
-            //    Addressables.Release(handle);
+                //Addressables.Release(handle);
         }
 
         void WearDefault(string type, AiController ai)
