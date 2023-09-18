@@ -35,14 +35,17 @@ public class SubBottons : MonoBehaviour
         if (ClothBool)
         {
             StoreManager.instance.OpenClothContainerPanel(m_Index);
-
+            
+            print("~~~~~~~~~~~~");
             if (m_Index == 2)
             {
                 CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
             }
             else
             {
                 CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
             }
         }
         else if (AvatarBool)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Animator))]
 
@@ -10,6 +11,8 @@ public class FaceIK : MonoBehaviour {
 
     public bool ikActive = false;
     public Transform lookObj = null;
+    
+    [SerializeField] List<LookAngle> lookAngles;
 
     void Start ()
     {
@@ -37,4 +40,15 @@ public class FaceIK : MonoBehaviour {
             }
         }
     }    
+
+    public void SetLookPos(int id){ 
+        lookObj = lookAngles[id].obj.transform;
+        lookObj.position= lookAngles[id].obj.transform.position;
+    }
+}
+
+[Serializable]
+class LookAngle{ 
+    public string name;    
+    public GameObject obj;
 }

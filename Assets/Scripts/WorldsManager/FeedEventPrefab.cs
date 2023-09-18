@@ -35,8 +35,10 @@ public class FeedEventPrefab : MonoBehaviour
     public Transform tagsParent;
     public GameObject tagsPrefab;
     public string[] worldTags;
+    public bool tagsInstantiated;
 
     [Header("WorldNameAndDescription")]
+    public GameObject descriptionPanelParent;
     public TextMeshProUGUI m_WorldName;
     public Text m_WorldNameTH;
     public TextMeshProUGUI m_WorldDescriptionTxt;
@@ -447,7 +449,7 @@ public class FeedEventPrefab : MonoBehaviour
         {
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
-        eviroment_Name.text = eviroment_Name.text.ToUpper();
+        eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;
         UpdateWorldPanel();
 
@@ -598,7 +600,8 @@ public class FeedEventPrefab : MonoBehaviour
             UpdateUserProfile();
         //m_timestamp = uploadTimeStamp;
 
-        InstantiateWorldtags();
+        if (!tagsInstantiated)
+            InstantiateWorldtags();
 
         loginPageManager.SetPanelToBottom();
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
@@ -711,12 +714,23 @@ public class FeedEventPrefab : MonoBehaviour
     {
         if (worldTags.Length > 0)
             tagScroller.SetActive(true);
+        else
+            return;
+
+        if (tagsParent.transform.childCount > 0)
+        {
+            foreach (Transform t in tagsParent)
+                Destroy(t.gameObject);
+        }
+
         for (int i = 0; i < worldTags.Length; i++)
         {
             GameObject temp = Instantiate(tagsPrefab, tagsParent);
             temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
             temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+            temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
         }
+        tagsInstantiated = true;
     }
 
 }
