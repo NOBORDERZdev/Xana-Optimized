@@ -22,13 +22,14 @@ namespace XanaAi
 
         #region private
         [Space(5)]
-        [SerializeField] int aiCountToSpwan;
+        //[SerializeField] int aiCountToSpwan;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
 
         private CharcterBodyParts charcterBody;
+        [SerializeField]
         private GameObject[] aiPrefabs;
-        private List<GameObject> spawnedNpc;
+        //private List<GameObject> spawnedNpc;
         private int typesOfAICharacter = 3;
         private int rand;
         #endregion
@@ -43,33 +44,32 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            aiPrefabs = new GameObject[typesOfAICharacter];
-            spawnedNpc = new List<GameObject>();
+            //aiPrefabs = new GameObject[typesOfAICharacter];
+            //spawnedNpc = new List<GameObject>();
 
-            for (int i =0; i< typesOfAICharacter; i++) 
-                aiPrefabs[i] = Resources.Load("NPC/NPC_" + (i+1)) as GameObject;
+            //for (int i =0; i< typesOfAICharacter; i++) 
+            //    aiPrefabs[i] = Resources.Load("NPC/NPC_" + /*(i+1)*/) as GameObject;
 
-            for (int i = 0; i < aiCountToSpwan; i++)
+            for (int i = 0; i < aiPrefabs.Length; i++)
             {
                 Vector3 temp = RandomNavMeshPoint();
-                spawnedNpc.Add(Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity));
+                //spawnedNpc.Add(Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity));
+                //Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity);
+                aiPrefabs[i].transform.position = temp;
+                aiPrefabs[i].transform.rotation = Quaternion.identity;
                 SpwanedAiCount++;
 
                 rand = Random.Range(0, aiNames.Count);
-                spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);
+                aiPrefabs[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
+                apperance.StartWandering(aiPrefabs[i].GetComponent<AiController>());      // start perform action
             }
 
             StartCoroutine(ReactScreen.Instance.getAllReactions());
-            yield return new WaitForSeconds(1f);
-            InitilizeAI();
-        }
 
-        public void InitilizeAI()
-        {
-            if (decoratedAi >= aiCountToSpwan) return;
-            StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
+            yield return null;
+            //yield return new WaitForSeconds(1f);
+            //InitilizeAI();
         }
-
 
         Vector3 RandomNavMeshPoint()
         {
@@ -94,40 +94,18 @@ namespace XanaAi
             return randomPoint;
         }
 
+        #region ClotheWearableRegion
+        public void InitilizeAI()
+        {
+            //if (decoratedAi >= aiCountToSpwan) return;
+            //StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
+            apperance.DecorateAI(aiPrefabs[decoratedAi].GetComponent<AiController>());
+        }
 
         public void DownloadAddressableWearableWearable(string key, string ObjectType, AiController ai)
         {
-            //Resources.UnloadUnusedAssets();
-            //CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                #region commentedSection
-                //AsyncOperationHandle<GameObject> loadObj;
-                //try
-                //{
-                //    loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                //}
-                //catch (System.Exception)
-                //{
-                //    WearDefault(ObjectType, ai); // wear default cloth
-                //    throw;
-                //}
-
-                //while (!loadObj.IsDone /*|| loadTex.IsDone*/)
-                //    yield return null; // loadObj;
-
-                //if (loadObj.Status == AsyncOperationStatus.Failed)
-                //{
-                //    WearDefault(ObjectType, ai); // wear default cloth
-
-                //    yield break;
-                //}
-                //else if (loadObj.Status == AsyncOperationStatus.Succeeded)
-                //{
-                //    ai.StichItem(-1, (GameObject)(object)loadObj.Result, ObjectType, ai.gameObject, false);
-                //}
-                #endregion
-
                 try
                 {
                     AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
@@ -138,12 +116,11 @@ namespace XanaAi
                 }
                 catch (System.Exception)
                 {
-                    Handheld.Vibrate();
-                    WearDefault(ObjectType, ai); // wear default cloth
+                      WearDefault(ObjectType, ai); // wear default cloth
+                                        //apperance.CheckMoreAIDresses(ai);         // remove it later
                     apperance.CheckMoreAIDresses(ai);
                     throw new Exception("Error occur in loading addressable. Wear DefaultAvatar");
                 }
-                //yield return null;
             }
         }
 
@@ -174,8 +151,9 @@ namespace XanaAi
             }
 
             //    // Release the handle when you're done to free up resources.
-            //    Addressables.Release(handle);
+                //Addressables.Release(handle);
         }
+
 
         void WearDefault(string type, AiController ai)
         {
@@ -198,6 +176,8 @@ namespace XanaAi
 
             }
         }
+
+        #endregion
 
         #region UnusedMethod
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
