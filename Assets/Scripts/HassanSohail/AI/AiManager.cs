@@ -22,13 +22,14 @@ namespace XanaAi
 
         #region private
         [Space(5)]
-        [SerializeField] int aiCountToSpwan;
+        //[SerializeField] int aiCountToSpwan;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
 
         private CharcterBodyParts charcterBody;
+        [SerializeField]
         private GameObject[] aiPrefabs;
-        private List<GameObject> spawnedNpc;
+        //private List<GameObject> spawnedNpc;
         private int typesOfAICharacter = 3;
         private int rand;
         #endregion
@@ -43,21 +44,24 @@ namespace XanaAi
 
         IEnumerator Start()
         {
-            aiPrefabs = new GameObject[typesOfAICharacter];
-            spawnedNpc = new List<GameObject>();
+            //aiPrefabs = new GameObject[typesOfAICharacter];
+            //spawnedNpc = new List<GameObject>();
 
-            for (int i =0; i< typesOfAICharacter; i++) 
-                aiPrefabs[i] = Resources.Load("NPC/NPC_" + (i+1)) as GameObject;
+            //for (int i =0; i< typesOfAICharacter; i++) 
+            //    aiPrefabs[i] = Resources.Load("NPC/NPC_" + /*(i+1)*/) as GameObject;
 
-            for (int i = 0; i < aiCountToSpwan; i++)
+            for (int i = 0; i < aiPrefabs.Length; i++)
             {
                 Vector3 temp = RandomNavMeshPoint();
-                spawnedNpc.Add(Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity));
+                //spawnedNpc.Add(Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity));
+                //Instantiate(aiPrefabs[Random.Range(0, aiPrefabs.Length)], temp, Quaternion.identity);
+                aiPrefabs[i].transform.position = temp;
+                aiPrefabs[i].transform.rotation = Quaternion.identity;
                 SpwanedAiCount++;
 
                 rand = Random.Range(0, aiNames.Count);
-                spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
-                apperance.StartWandering(spawnedNpc[i].GetComponent<AiController>());      // start perform action
+                aiPrefabs[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
+                apperance.StartWandering(aiPrefabs[i].GetComponent<AiController>());      // start perform action
             }
 
             StartCoroutine(ReactScreen.Instance.getAllReactions());
@@ -93,9 +97,9 @@ namespace XanaAi
         #region ClotheWearableRegion
         public void InitilizeAI()
         {
-            if (decoratedAi >= aiCountToSpwan) return;
+            //if (decoratedAi >= aiCountToSpwan) return;
             //StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
-            apperance.DecorateAI(spawnedNpc[decoratedAi].GetComponent<AiController>());
+            apperance.DecorateAI(aiPrefabs[decoratedAi].GetComponent<AiController>());
         }
 
         public void DownloadAddressableWearableWearable(string key, string ObjectType, AiController ai)
