@@ -525,6 +525,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
            
         }
+
+        if (FeedEventPrefab.m_EnvName.Contains("ConcertHall"))    // Added by Ali Hamza
+            CheckCharacterType();
+    }
+
+    private void CheckCharacterType()
+    {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterType>().SetPlayerType(GetComponent<CheckCharacterType>().emailData);  // set player type
     }
 
     [SerializeField] int autoSwitchTime;

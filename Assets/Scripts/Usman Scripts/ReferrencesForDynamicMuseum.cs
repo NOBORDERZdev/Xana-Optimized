@@ -32,6 +32,12 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public int RoomMaxPlayerCount=0;
     public int PlayerCount = 0;
 
+
+    [Header("Singing Reality Show")]
+    public GameObject judgeBtnScreen;
+    public Button judgeBtn1, judgeBtn2, judgeBtn3, judgeBtn4, judgeBtn5, judgeBtn6;
+    public Button startShowBtn;
+
     // Start is called before the first frame update
     void Awake()
     {

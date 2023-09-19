@@ -75,6 +75,11 @@ public class XanaConstants : MonoBehaviour
 
     public String MuseumID;
 
+    [Header("Singing Reality Show")]
+    public string cameraManEmailAddress;
+    public string[] JudgesEmailAddresses;
+    [Space(10)]
+
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
