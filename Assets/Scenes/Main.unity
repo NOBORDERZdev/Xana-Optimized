@@ -17750,104 +17750,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 64211638169632172, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: ListContent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 64211638169632172, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: ListContentWorldPage
-      value: 
-      objectReference: {fileID: 9186107287146992092}
     - target: {fileID: 64211638169632173, guid: 85e493498674a8443badd13925ab5e36, type: 3}
       propertyPath: m_Name
       value: '[Worlds Manager]'
       objectReference: {fileID: 0}
-    - target: {fileID: 8839039712347473553, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: tapholdworld
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: world_HotScroll
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8839039712347473553, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: Tapcreatorname
+      objectReference: {fileID: 9186107287146992092}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: world_NewScroll
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8839039712347473553, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: taphold_profile
+      objectReference: {fileID: 1890055979}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: eventPrefabLobby
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8839039712347473553, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-      propertyPath: m_TapAndHoldPanel
+      objectReference: {fileID: 961919545}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: m_AllWorldManage
       value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      objectReference: {fileID: 1996021825}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: listParentMyWorlds
+      value: 
+      objectReference: {fileID: 1055034196251023448}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: listParentAllWorlds
+      value: 
+      objectReference: {fileID: 1055034194598854774}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: world_myworldScroll
+      value: 
+      objectReference: {fileID: 624460432}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: listParentGameWorlds
+      value: 
+      objectReference: {fileID: 1417251111}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: listParentHotSection
+      value: 
+      objectReference: {fileID: 3217246730821518536}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: listParentEventWorlds
+      value: 
+      objectReference: {fileID: 1637049737}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: world_GameWorldScroll
+      value: 
+      objectReference: {fileID: 76216854}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: descriptionParentPanel
+      value: 
+      objectReference: {fileID: 1547632418}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: world_EventWorldScroll
+      value: 
+      objectReference: {fileID: 177367614}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e493498674a8443badd13925ab5e36, type: 3}
---- !u!1 &64211639564321972 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 64211638169632173, guid: 85e493498674a8443badd13925ab5e36, type: 3}
-  m_PrefabInstance: {fileID: 64211639564321971}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &64211639564321973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64211639564321972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ddd724fb8528194a80bd554173bc5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventPrefab: {fileID: 3238374975130361925, guid: 6a92f9f8b85fd954cabca62e3e85109e, type: 3}
-  eventPrefabLobby: {fileID: 961919545}
-  eventPrefabTab: {fileID: 3238374975130361925, guid: 03128e8d5b38644cdba2d229489efe3e, type: 3}
-  descriptionParentPanel: {fileID: 1547632418}
-  listParentHotSection: {fileID: 3217246730821518536}
-  listParentAllWorlds: {fileID: 1055034194598854774}
-  listParentMyWorlds: {fileID: 1055034196251023448}
-  listParentGameWorlds: {fileID: 1417251111}
-  listParentEventWorlds: {fileID: 1637049737}
-  world_HotScroll: {fileID: 9186107287146992092}
-  world_NewScroll: {fileID: 1890055979}
-  world_myworldScroll: {fileID: 624460432}
-  world_GameWorldScroll: {fileID: 76216854}
-  world_EventWorldScroll: {fileID: 177367614}
-  orientationchanged: 0
-  _WorldInfo:
-    success: 0
-    data:
-      count: 0
-      rows: []
-    msg: 
-  m_AllWorldManage: {fileID: 1996021825}
-  AutoSwtichWorldList:
-  - name: Astroboy x Tottori Metaverse Museum
-    isMussuem: 1
-    mainnetId: 10
-    testnetId: 350
-  - name: Pool Side
-    isMussuem: 0
-    mainnetId: 14
-    testnetId: 371
-  - name: Xana Festival
-    isMussuem: 0
-    mainnetId: 35
-    testnetId: 360
-  - name: Beach
-    isMussuem: 0
-    mainnetId: 13
-    testnetId: 370
-  - name: Crypto Ninja village
-    isMussuem: 0
-    mainnetId: 29
-    testnetId: 386
-  worldstr: 
 --- !u!114 &64211639564321974 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1643207911, guid: 85e493498674a8443badd13925ab5e36, type: 3}
   m_PrefabInstance: {fileID: 64211639564321971}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64211639564321972}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 919342d273e42d44ab4f6058e8067b1f, type: 3}
