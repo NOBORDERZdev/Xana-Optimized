@@ -839,7 +839,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             LoadingHandler.Instance.loadingPanel.SetActive(false);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.4f, 0.6f), 0.5f, true);
+            //LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.4f, 0.7f), 0.5f, true);
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
