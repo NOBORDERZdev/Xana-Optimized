@@ -56,22 +56,16 @@ namespace XanaAi
                 SpwanedAiCount++;
 
                 rand = Random.Range(0, aiNames.Count);
-                spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);
-                apperance.StartWandering(spawnedNpc[i].GetComponent<AiController>());
+                spawnedNpc[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
+                apperance.StartWandering(spawnedNpc[i].GetComponent<AiController>());      // start perform action
             }
 
             StartCoroutine(ReactScreen.Instance.getAllReactions());
-            yield return new WaitForSeconds(1f);
-            InitilizeAI();
-        }
 
-        public void InitilizeAI()
-        {
-            if (decoratedAi >= aiCountToSpwan) return;
-            //StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
-            apperance.DecorateAI(spawnedNpc[decoratedAi].GetComponent<AiController>());
+            yield return null;
+            //yield return new WaitForSeconds(1f);
+            //InitilizeAI();
         }
-
 
         Vector3 RandomNavMeshPoint()
         {
@@ -96,57 +90,33 @@ namespace XanaAi
             return randomPoint;
         }
 
+        #region ClotheWearableRegion
+        public void InitilizeAI()
+        {
+            if (decoratedAi >= aiCountToSpwan) return;
+            //StartCoroutine(apperance.GetAppearance(spawnedNpc[decoratedAi].GetComponent<AiController>()));
+            apperance.DecorateAI(spawnedNpc[decoratedAi].GetComponent<AiController>());
+        }
 
         public void DownloadAddressableWearableWearable(string key, string ObjectType, AiController ai)
         {
-            //Resources.UnloadUnusedAssets();
-            //CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
-                #region commentedSection
-                //AsyncOperationHandle<GameObject> loadObj;
-                //try
-                //{
-                //    loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                //}
-                //catch (System.Exception)
-                //{
-                //    WearDefault(ObjectType, ai); // wear default cloth
-                //    throw;
-                //}
-
-                //while (!loadObj.IsDone /*|| loadTex.IsDone*/)
-                //    yield return null; // loadObj;
-
-                //if (loadObj.Status == AsyncOperationStatus.Failed)
-                //{
-                //    WearDefault(ObjectType, ai); // wear default cloth
-
-                //    yield break;
-                //}
-                //else if (loadObj.Status == AsyncOperationStatus.Succeeded)
-                //{
-                //    ai.StichItem(-1, (GameObject)(object)loadObj.Result, ObjectType, ai.gameObject, false);
-                //}
-                #endregion
-
-                //try
-                //{
-                //    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                //    loadObj.Completed += operationHandle =>
-                //    {
-                //        OnLoadCompleted(operationHandle, ObjectType, ai);
-                //    };
-                //}
-                //catch (System.Exception)
-                //{
-                //    Handheld.Vibrate();
+                try
+                {
+                    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                    loadObj.Completed += operationHandle =>
+                    {
+                        OnLoadCompleted(operationHandle, ObjectType, ai);
+                    };
+                }
+                catch (System.Exception)
+                {
                       WearDefault(ObjectType, ai); // wear default cloth
-                                        apperance.CheckMoreAIDresses(ai);         // remove it later
-                //    apperance.CheckMoreAIDresses(ai);
-                //    throw new Exception("Error occur in loading addressable. Wear DefaultAvatar");
-                //}
-                //yield return null;
+                                        //apperance.CheckMoreAIDresses(ai);         // remove it later
+                    apperance.CheckMoreAIDresses(ai);
+                    throw new Exception("Error occur in loading addressable. Wear DefaultAvatar");
+                }
             }
         }
 
@@ -180,6 +150,7 @@ namespace XanaAi
                 //Addressables.Release(handle);
         }
 
+
         void WearDefault(string type, AiController ai)
         {
             switch (type)
@@ -201,6 +172,8 @@ namespace XanaAi
 
             }
         }
+
+        #endregion
 
         #region UnusedMethod
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
