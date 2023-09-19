@@ -1493,7 +1493,6 @@ public class CharcterBodyParts : MonoBehaviour
     /// To hide player meshes for camera man account
     /// </summary>
     public void HidePlayer(){ 
-        print("hide call");
         if(Body)
         Body.gameObject.SetActive(false);
          if(Head)
@@ -1523,7 +1522,6 @@ public class CharcterBodyParts : MonoBehaviour
     /// To Show the player
     /// </summary>
      public void ShowPlayer(){ 
-        print("show call");
         if(Body)
         Body.gameObject.SetActive(true);
          if(Head)
