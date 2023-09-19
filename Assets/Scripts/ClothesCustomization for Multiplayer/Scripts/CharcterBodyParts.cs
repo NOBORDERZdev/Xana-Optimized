@@ -1516,4 +1516,30 @@ public class CharcterBodyParts : MonoBehaviour
         //.gameObject.SetActive(false);
     }
 
+
+
+    /// <summary>
+    /// To Show the player
+    /// </summary>
+     public void ShowPlayer(){ 
+        if(Body)
+        Body.gameObject.SetActive(true);
+         if(Head)
+        Head.gameObject.SetActive(true);
+         if(avatarController.wornHair)
+        avatarController.wornHair.SetActive(true);
+         if(avatarController.wornPant)
+        avatarController.wornPant.SetActive(true);
+         if(avatarController.wornShirt)
+        avatarController.wornShirt.SetActive(true);
+         if(avatarController.wornShose)
+        avatarController.wornShose.SetActive(true);
+         if(avatarController.wornEyewearable)
+        avatarController.wornEyewearable.SetActive(true);
+        if(avatarController.wornGloves)
+        avatarController.wornGloves.SetActive(true);
+         if(avatarController.wornChain)
+        avatarController.wornChain.SetActive(true);
+        avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(true);
+    }
 }
