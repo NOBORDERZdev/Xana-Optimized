@@ -10,6 +10,7 @@ using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
+using RFM.Character;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 
@@ -36,7 +37,6 @@ namespace RFM
 
         public Transform lobbySpawnPoint;
         [SerializeField] public Transform playersSpawnArea;
-        [SerializeField] private GameObject hunterPrefab;
         [SerializeField] private GameObject huntersCage;
         [SerializeField] private FollowNPC npcCameraPrefab;
         [SerializeField] public Transform huntersSpawnArea;
@@ -88,9 +88,9 @@ namespace RFM
                 
                 CurrentGameConfiguration = new GameConfiguration
                 {
-                    MatchMakingTime = 30,
+                    MatchMakingTime = 10,
                     TakePositionTime = 10,
-                    GameplayTime = 30,
+                    GameplayTime = 60,
                     GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     EscapeesToHuntersRatio = Vector2.one,
@@ -396,7 +396,7 @@ namespace RFM
             Debug.LogError("numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
-                PhotonNetwork.InstantiateRoomObject(hunterPrefab.name,
+                PhotonNetwork.InstantiateRoomObject("HunterNPC",
                     huntersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0, 
                         Random.Range(-2, 2)),
                     huntersSpawnArea.rotation);
@@ -532,7 +532,7 @@ namespace RFM
             }
         }
 
-        private void PlayerCaught(NPC catcher)
+        private void PlayerCaught(NPCHunter catcher)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
         
