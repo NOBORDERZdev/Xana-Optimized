@@ -129,7 +129,7 @@ public class XanaChatSocket : MonoBehaviour
     {
         socketId = resp.sid;
         Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
-        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
+        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
 
         //socket.Off("event", listener);
         //Manager.Socket.Off();
@@ -148,7 +148,7 @@ public class XanaChatSocket : MonoBehaviour
     void OnError(CustomError args)
     {
         Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
     void Onresult(CustomError args)
     {
@@ -157,7 +157,7 @@ public class XanaChatSocket : MonoBehaviour
     void OnSocketDisconnect(CustomError args)
     {
         Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
 
 
@@ -274,7 +274,7 @@ public class XanaChatSocket : MonoBehaviour
 
             // Locally Save the Response
             oldChatResponse = www.downloadHandler.text;
-            //DisplayOldChat(www.downloadHandler.text);
+            DisplayOldChat(www.downloadHandler.text);
         }
         else
             Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");

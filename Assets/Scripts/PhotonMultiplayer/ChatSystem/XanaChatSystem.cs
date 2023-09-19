@@ -175,7 +175,7 @@ public class XanaChatSystem : MonoBehaviour
     public void LoadOldChat()
     {
         XanaChatSocket.callApi?.Invoke();
-        chatConfirmationPanel.SetActive(false);
+        //chatConfirmationPanel.SetActive(false);
     }
     void CheckIfDeviceHasNotch()
     {
@@ -231,20 +231,21 @@ public class XanaChatSystem : MonoBehaviour
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
 
-            if (!isPanelConfirmationRequire)
-            {
-                if (!string.IsNullOrEmpty(XanaChatSocket.instance.oldChatResponse))
-                {
-                    JSONNode jsonNode = JSON.Parse(XanaChatSocket.instance.oldChatResponse);
-                    int countValue = jsonNode["count"].AsInt;
+            // Confirmation Panel Not Require
+            //if (!isPanelConfirmationRequire)
+            //{
+            //    if (!string.IsNullOrEmpty(XanaChatSocket.instance.oldChatResponse))
+            //    {
+            //        JSONNode jsonNode = JSON.Parse(XanaChatSocket.instance.oldChatResponse);
+            //        int countValue = jsonNode["count"].AsInt;
 
-                    if (countValue > 0)
-                    {
-                        isPanelConfirmationRequire = true;
-                        chatConfirmationPanel.SetActive(true);
-                    }
-                }
-            }
+            //        if (countValue > 0)
+            //        {
+            //            isPanelConfirmationRequire = true;
+            //            chatConfirmationPanel.SetActive(true);
+            //        }
+            //    }
+            //}
         }
         else
         {

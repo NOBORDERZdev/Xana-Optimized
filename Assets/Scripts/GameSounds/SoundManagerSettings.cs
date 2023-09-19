@@ -70,9 +70,14 @@ public class SoundManagerSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
         }
-       // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
+        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
         //PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
-        PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+        //PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+        if (PlayerPrefs.GetInt("DefaultSensivity") == 0)
+        {
+            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+            PlayerPrefs.SetInt("DefaultSensivity", 1);
+        }
     }
     IEnumerator LiveVideoInstancs(float value)
     {
