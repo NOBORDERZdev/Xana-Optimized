@@ -11881,6 +11881,7 @@ GameObject:
   - component: {fileID: 7060358380975461327}
   - component: {fileID: 1347400806}
   - component: {fileID: 3521468939922802170}
+  - component: {fileID: 7525798025043118391}
   m_Layer: 23
   m_Name: Main GamePlay
   m_TagString: Untagged
@@ -11935,6 +11936,7 @@ MonoBehaviour:
   spiritText: {fileID: 8790753331608098889}
   overlay: {fileID: 8796452644789848138}
   runIcon: {fileID: 474770874055849949}
+  RFMInputController: {fileID: 0}
   slideBtn: {fileID: 7045409707698919709}
   runBtn: {fileID: 2386714397441532002}
   favouriteBtn: {fileID: 7269477068502716338}
@@ -11993,6 +11995,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2185985444943424396}
   m_CullTransparentMesh: 1
+--- !u!114 &7525798025043118391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185985444943424396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03299303644b4884b8abcb2fb669fafa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToHide:
+  - {fileID: 5723684449772586278}
+  - {fileID: 2452571441569123087}
+  - {fileID: 7269477068502716338}
 --- !u!1 &2185985445933653397
 GameObject:
   m_ObjectHideFlags: 0

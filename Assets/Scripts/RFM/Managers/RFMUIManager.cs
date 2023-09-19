@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RFM
@@ -5,8 +6,18 @@ namespace RFM
     public class RFMUIManager : MonoBehaviour
     {
         [SerializeField] private GameObject helpPanel;
-    
-        public void ToggleHelpPanel()
+
+        private void OnEnable()
+        {
+            RFM.EventsManager.onToggleHelpPanel += ToggleHelpPanel;
+        }
+        
+        private void OnDisable()
+        {
+            RFM.EventsManager.onToggleHelpPanel -= ToggleHelpPanel;
+        }
+
+        private void ToggleHelpPanel()
         {
             helpPanel.SetActive(!helpPanel.activeInHierarchy);
         }

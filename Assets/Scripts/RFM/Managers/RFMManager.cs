@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-using System.Linq;
+// using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
@@ -73,7 +73,8 @@ namespace RFM
         //the api is set we just have to get the map
         private IEnumerator FetchConfigDataFromServer()
         {
-            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
+            // var url = "https://api.npoint.io/2b73c02e13403750bcb0";
+            var url = "";
             using UnityWebRequest www = UnityWebRequest.Get(url);
             // www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
@@ -105,6 +106,8 @@ namespace RFM
 
         private void Awake()
         {
+            RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
+            
             Instance = this;
             missionsManager = GetComponent<RFMMissionsManager>();
             EventsManager.OnHideCanvasElements();
@@ -158,23 +161,7 @@ namespace RFM
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
-
-            // var roles = CalculateRoles(20, 2, new Vector2(1, 1));
-            // Debug.LogError("Escapees: " + roles.Item1);
-            // Debug.LogError("Hunters: " + roles.Item2);
-            // Debug.LogError("AI Escapees: " + roles.Item3);
-            // Debug.LogError("AI Hunters: " + roles.Item4);
         }
-
-        #region Public Methods
-
-        private void AddLeaderboardEntry(string name, int amount)
-        {
-            var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            entry.Init(name, amount.ToString());
-        }
-
-        #endregion
 
         #region Private Methods
 
@@ -277,11 +264,6 @@ namespace RFM
 
             NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
 
-            yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(
-                /*CurrentGameConfiguration.MatchMakingTime*/10,
-                null, countDownText, AfterEachSecondCountdownTimer));
-            
-
             if (PhotonNetwork.IsMasterClient)
             {
                 int roomLimit = PhotonNetwork.CurrentRoom.MaxPlayers;
@@ -289,34 +271,34 @@ namespace RFM
 
                 var roles = CalculateRoles(roomLimit, numberOfPlayers,
                     CurrentGameConfiguration.EscapeesToHuntersRatio);
-                
-                // int numberOfPlayerHunters = 0;
-                //
-                // for (int i = 0; i < numberOfPlayers; i++)
-                // {
-                //     if (i < numberOfPlayers / 2)
-                //     {
-                //         numberOfPlayerHunters++;
-                //     }
-                // }
-
-                // var numberOfEscapees = numberOfPlayers - numberOfHunters;
-                // numberOfPlayerHunters = 0; // delete this line to enable player hunters.
 
                 Hashtable properties = new Hashtable { { "numberOfPlayerHunters", roles.Item2 } };
                 PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
                 SpawnHunters(roles.Item4);
                 SpawnAIEscapees(roles.Item3);
-                
+            }
+
+            yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null, 
+                countDownText, AfterEachSecondCountdownTimer));
+
+            if (PhotonNetwork.IsMasterClient)
+            {
                 photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
             }
         }
 
         [PunRPC]
-        private void CreateLeaderboardEntry(Dictionary<string, int> entry)
+        private void CreateLeaderboardEntry(/*Dictionary<string, int> entry*/string nickName, int money)
         {
-            AddLeaderboardEntry(entry.ElementAt(0).Key, entry.ElementAt(0).Value);
+            // AddLeaderboardEntry(entry.ElementAt(0).Key, entry.ElementAt(0).Value);
+            AddLeaderboardEntry(nickName, money);
+        }
+        
+        private void AddLeaderboardEntry(string nickName, int amount)
+        {
+            var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
+            entry.Init(nickName, amount.ToString());
         }
 
         [PunRPC]
@@ -466,11 +448,10 @@ namespace RFM
 
         private void AfterEachSecondCountdownTimer(float time)
         {
-            //Debug.LogError("RFM gameplay time 1 second passed" + time);
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
-
+            
             //camera logic
-            if (Globals.gameState == Globals.GameState.TakePosition) 
+            if (Globals.gameState == Globals.GameState.Countdown) 
             {
                 if (time < 7)
                     rfmCameraManager.SwtichCamera(0);
@@ -494,8 +475,13 @@ namespace RFM
             // Calculate local player's score.
             gameOverPanel.SetActive(true);
 
-            var dict = new Dictionary<string, int>() { { PhotonNetwork.LocalPlayer.NickName, missionsManager.Money } };
-            photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, dict);
+            // var dict = new Dictionary<string, int>()
+            // {
+            //     { PhotonNetwork.LocalPlayer.NickName, missionsManager.Money }
+            // };
+            
+            photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, 
+                PhotonNetwork.LocalPlayer.NickName, missionsManager.Money/*dict*/);
 
             await Task.Delay(CurrentGameConfiguration.GameRestartWaitTime); 
             
