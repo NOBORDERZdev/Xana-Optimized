@@ -67,7 +67,6 @@ public class FeedEventPrefab : MonoBehaviour
 
     //public bool isMuseum;
 
-
     [Space]
     public bool isImageSuccessDownloadAndSave = false;
     public bool isReleaseFromMemoryOrNot = false;
@@ -117,7 +116,6 @@ public class FeedEventPrefab : MonoBehaviour
 
 
     }
-
     int cnt = 0;
     private void OnEnable()
     {
@@ -128,7 +126,7 @@ public class FeedEventPrefab : MonoBehaviour
         cnt += 1;
 
         UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
-
+        StartCoroutine(UpdateCoroutine());
         UpdateUserCount();
     }
 
@@ -210,15 +208,23 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
     }
-    private void Update()//delete image after object out of screen
+    WaitForSeconds UpdateTime = new WaitForSeconds(0.5f);
+    IEnumerator UpdateCoroutine()
     {
-        lastUpdateCallTime += Time.deltaTime;
-        if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
-        {
+        yield return UpdateTime;
+    //private void LateUpdate()
+    //{
+        
+    //}
+    //private void Update()//delete image after object out of screen
+    //{
+       // lastUpdateCallTime += Time.deltaTime;
+       // if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
+      //  {
             Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
             Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);
 
-            if (mousePosNR.y >= -0.1f && mousePosNR.y <= 1.1f)
+            if (mousePosNR.y >= -3.5f && mousePosNR.y <= 3.5f)
             {
                 isOnScreen = true;
             }
@@ -227,26 +233,29 @@ public class FeedEventPrefab : MonoBehaviour
                 isOnScreen = false;
             }
 
-            lastUpdateCallTime = 0;
-        }
+          //  lastUpdateCallTime = 0;
+       // }
 
         if (isVisible && isOnScreen && !string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
+   // Debug.LogError("Runing Shit 1");
             isVisible = false;
             //Debug.Log("Image download starting one time");
-            DownloadAndLoadFeed();
+            StartCoroutine(DownloadAndLoadFeed());
             if (!string.IsNullOrEmpty(creatorName))
             {
                 if (!creatorName.Equals("XANA"))
-                    UpdateUserProfile();
+                    StartCoroutine(UpdateUserProfile());
             }
             //Debug.Log("2");
         }
         else if (isImageSuccessDownloadAndSave)
         {
-        LoadFileAgain:
+        //LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
+               // Debug.LogError("Runing Shit 2");
+
                 //Debug.Log("01");
                 if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
                 {
@@ -287,9 +296,10 @@ public class FeedEventPrefab : MonoBehaviour
             {
                 //Debug.Log("here we are loading it again.");
                 isNotLoaded = true;
-                goto LoadFileAgain;
+              //  goto LoadFileAgain;
             }
         }
+        StartCoroutine(UpdateCoroutine());
     }
 
 
@@ -300,19 +310,27 @@ public class FeedEventPrefab : MonoBehaviour
     //        isNotLoaded = true;
     //    }
     //}
-    public void DownloadAndLoadFeed()
+    // public void DownloadAndLoadFeed() ---- Sannan
+    //
+    WaitForSeconds DownloadTime = new WaitForSeconds(0.5f);
+
+    public IEnumerator DownloadAndLoadFeed()
     {
+        yield return DownloadTime;
         AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
         {
             if (success)
             {
                 AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                 isImageSuccessDownloadAndSave = true;
+               // Debug.LogError(m_EnvironmentName.ToString()+"  "+AssetCache.Instance.GetAssetSize(m_ThumbnailDownloadURL));
             }
         });
     }
-    public void UpdateUserProfile()
+    //public void UpdateUserProfile()
+    IEnumerator UpdateUserProfile()
     {
+        yield return DownloadTime;
         if (!string.IsNullOrEmpty(userAvatarURL))
         {
             //Debug.Log("02"); 
@@ -334,13 +352,15 @@ public class FeedEventPrefab : MonoBehaviour
         }
 
     }
-    private void OnAnimatorIK(int layerIndex)
-    {
+    //private void OnAnimatorIK(int layerIndex)
+    //{
 
-    }
+    //}
 
     private void OnDisable()
     {
+        StopCoroutine(UpdateCoroutine());
+
         AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
         if (!string.IsNullOrEmpty(userAvatarURL))
         {
@@ -595,7 +615,7 @@ public class FeedEventPrefab : MonoBehaviour
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
         if (userProfile.sprite == null)
-            UpdateUserProfile();
+            StartCoroutine( UpdateUserProfile());
         //m_timestamp = uploadTimeStamp;
 
         InstantiateWorldtags();

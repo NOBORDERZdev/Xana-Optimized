@@ -207,7 +207,7 @@ public class WorldSearchManager : MonoBehaviour
                                 _event.userLimit = searchworldRoot.data.rows[i].user_limit.ToString();
                             }
                             _event.Init();
-                            _event.DownloadAndLoadFeed();
+                          StartCoroutine(  _event.DownloadAndLoadFeed());
                             _event.DownloadPrefabSprite();
                         }
                         //yield return new WaitForSeconds(.5f);

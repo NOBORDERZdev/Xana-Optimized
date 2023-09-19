@@ -295,7 +295,7 @@ public class WorldManager : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-            Debug.Log(www.downloadHandler.text);
+            Debug.LogError("Response = "+www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);
@@ -339,12 +339,25 @@ public class WorldManager : MonoBehaviour
             _event.m_EnvironmentName = _WorldInfo.data.rows[i].name;
             try
             {
-                _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-
-                if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+                // Debug.LogError("---------------------------------");
+                // Debug.LogError(" Environment ID "+ _WorldInfo.data.rows[i].id);
+                if (_WorldInfo.data.rows[i].entityType != null)
                 {
+
+                    // Debug.LogError("( Before Replace )" + _WorldInfo.data.rows[i].thumbnail);
+                    _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+               // Debug.LogError("( After Replace 1 )" + _event.m_ThumbnailDownloadURL);
+               // Debug.LogError(" entityType " + _WorldInfo.data.rows[i].entityType);
+                
+                    /*== WorldType.USER_WORLD.ToString() ||
+                     _WorldInfo.data.rows[i].entityType == "MUSEUM" ||
+                     _WorldInfo.data.rows[i].entityType == "ENVIRONMENT"*/
                     _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    // Debug.LogError("( After Replace W&H )" + _event.m_ThumbnailDownloadURL);
+
+                    //  Debug.LogError("---------------------------------");
                 }
+
             }
             catch (Exception e)
             {
