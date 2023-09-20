@@ -108,6 +108,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                // print("RECALLING DOWNLOAD " + itemId + key + type + applyOn+mulitplayerHairColor );
                // StartCoroutine(DownloadAddressableObj(itemId,key,type,applyOn,mulitplayerHairColor));
                applyOn.WearDefaultItem(type,applyOn.gameObject);
+               yield break;
             }
 
             if (loadOp.Status == AsyncOperationStatus.Failed  )
@@ -283,6 +284,8 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                             }
                             break;
                     }
+                 yield break;
+
                 }
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                     {
