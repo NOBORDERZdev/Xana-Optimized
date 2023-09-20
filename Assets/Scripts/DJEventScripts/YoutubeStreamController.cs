@@ -96,7 +96,7 @@ public class YoutubeStreamController : MonoBehaviour
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        if (FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
