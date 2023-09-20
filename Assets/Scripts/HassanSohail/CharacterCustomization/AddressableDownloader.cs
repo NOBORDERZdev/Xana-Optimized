@@ -87,7 +87,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             AsyncOperationHandle<GameObject> loadOp;
             loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
-           // Comment for cloth issue testing //SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
+           SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
 
             //if (!key.Contains("Fighter") && !key.Contains("FullCostume"))
             //{
