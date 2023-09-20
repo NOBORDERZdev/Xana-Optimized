@@ -416,6 +416,7 @@ MonoBehaviour:
   uberShader: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
   landscapeCanvas: {fileID: 1864747888935569928}
   potraitCanvas: {fileID: 1652738247}
+  AvatarChangerModels: []
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
@@ -438,22 +439,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6483270558756243561, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 7965747545503586477, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7965747545624217506, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7965747545624217507, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: ppRefreshType
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 7965747545624217528, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
       propertyPath: m_Name
       value: Plane_Player
@@ -502,8 +487,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7965747545624217506, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
 --- !u!1 &828786216 stripped
 GameObject:
@@ -513,11 +497,6 @@ GameObject:
 --- !u!1 &828786217 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7965747545503586478, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-  m_PrefabInstance: {fileID: 828786215}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &828786218 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7965747545503586477, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
   m_PrefabInstance: {fileID: 828786215}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &920890879
@@ -2706,51 +2685,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2079489483
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2079489484}
-  - component: {fileID: 2079489485}
-  m_Layer: 27
-  m_Name: CinemachineColliderLayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2079489484
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079489483}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 828786218}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2079489485
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2079489483}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 0, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!224 &1864747888935569920
 RectTransform:
   m_ObjectHideFlags: 0

@@ -120,6 +120,8 @@ public class WorldManager : MonoBehaviour
     void SetAutoSwtichStreaming(){ 
          if (XanaConstants.xanaConstants.isCameraMan)
          {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
             XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
             XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
@@ -139,6 +141,7 @@ public class WorldManager : MonoBehaviour
             {
                 AutoSwtichIndex=0;
             }
+            LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
          }    
     }
 
@@ -823,6 +826,7 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             LoadingHandler.Instance.loadingPanel.SetActive(false);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            //LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.4f, 0.7f), 0.5f, true);
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
@@ -930,6 +934,7 @@ public class SearchWorld
     public string status;
     public string? creator;
     public object users;
+    public string[] tags;
     public string map_json_link;
     public string map_code;
     public object nft_token_id;

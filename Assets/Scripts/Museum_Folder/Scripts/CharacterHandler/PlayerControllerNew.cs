@@ -107,6 +107,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField]
     CinemachineFreeLook cinemachineFreeLook;
 
+    internal float animationBlendValue = 0;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -615,6 +616,10 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetBool("standJump", false);
             jumpNow = false;
         }*/
+
+        float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     /// <summary>
@@ -1016,6 +1021,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     bool lastSelfieCanClick = false;
@@ -1796,6 +1803,7 @@ public class PlayerControllerNew : MonoBehaviour
     }
 
     bool throwBallPositionSet, throwBall;
+
     void BallPositionSet()
     {
         if (throwAction == null)

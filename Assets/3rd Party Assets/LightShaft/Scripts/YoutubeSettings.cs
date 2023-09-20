@@ -727,7 +727,7 @@ namespace LightShaft.Scripts
 
         void FixedUpdate()
         {
-            Debug.Log("projectionType: " + projectionType);
+           // Debug.Log("projectionType: " + projectionType);
             if (videoPlayer != null)
             {
                 if (videoPlayer.isPlaying)

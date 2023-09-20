@@ -18,6 +18,9 @@ public class LoadingHandler : MonoBehaviour
     public Text loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
+    public Image JJLoadingSlider;
+    public TextMeshProUGUI JJLoadingPercentageText;
+
     [Header("Loading BG Elements")]
     public Image loadingBgImage;
     public Image loadingBgImageAlter;
@@ -63,6 +66,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
     public ManualRoomController manualRoomController;
+    public StreamingLoadingText streamingLoading;
 
     private void Awake()
     {
@@ -159,7 +163,21 @@ public class LoadingHandler : MonoBehaviour
             ChangeHelpScreenUI(false);
         }*/
     }
-
+    public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
+    {
+        value = value * 100;
+        value = value - (value % 5f);
+        value = value / 100;
+        if (doLerp)
+        {
+            JJLoadingSlider.DOFillAmount(value, fillSpeed);
+        }
+        else
+        {
+            JJLoadingSlider.fillAmount = value;
+        }
+        JJLoadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
+    }
     public void ShowLoading()
     {
         if (/*XanaConstants.xanaConstants.JjWorldSceneChange*/teleportFeader.gameObject.activeInHierarchy)
