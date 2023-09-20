@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine;
 using TMPro;
 using MoreMountains.Feedbacks;
+using RFM.Character;
 
 namespace RFM
 {
@@ -55,7 +56,7 @@ namespace RFM
             showMoney.gameObject.SetActive(false);
         }
 
-        private void OnPlayerCaught(NPC catcher)
+        private void OnPlayerCaught(NPCHunter catcher)
         {
             OnGameEnded();
         }

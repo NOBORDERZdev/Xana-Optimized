@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace RFM
+namespace RFM.Character
 {
     public class NPCEscapee : MonoBehaviour
     {
@@ -65,7 +66,6 @@ namespace RFM
             for (int k = 0; k < huntersTrasnforms.Count; k++) 
             {
                 float distance = Vector3.Distance(this.transform.position, huntersTrasnforms[k].position);
-                print("distance " + distance);
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -77,10 +77,13 @@ namespace RFM
             {
                 Vector3 dirToSelf = transform.position - closestHunterTransform.position;
                 Vector3 newPost = transform.position + dirToSelf;
-                print("newPost " + newPost);
                 navMeshAgent.SetDestination(newPost);
-
             }
+        }
+        
+        public void AIEscapeeCaught()
+        {
+            PhotonNetwork.Destroy(this.gameObject);
         }
 
     }

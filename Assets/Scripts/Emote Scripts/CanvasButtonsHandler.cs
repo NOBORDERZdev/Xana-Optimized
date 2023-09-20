@@ -142,6 +142,13 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void OnHelpButtonClick(bool isOn)
     {
+        if (RFM.Globals.IsRFMWorld) // Muneeb
+        {
+            RFM.EventsManager.OnToggleHelpPanel();
+            return;
+        }
+        
+        Debug.LogError("3");
         gamePlayUIParent.SetActive(!isOn);//rik.......
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
     }

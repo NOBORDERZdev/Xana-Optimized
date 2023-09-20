@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using RFM.Character;
 
 namespace RFM
 {
@@ -8,7 +9,7 @@ namespace RFM
     {
         private GameObject[] players;
         private List<PhotonView> playersPhotonViews = new();
-        private NPC[] npcs;
+        private NPCHunter[] npcs;
 
         private void Start()
         {
@@ -20,7 +21,7 @@ namespace RFM
             // players.Clear();
             playersPhotonViews.Clear();
 
-            npcs = FindObjectsOfType<NPC>()/*.ToList()*/;
+            npcs = FindObjectsOfType<NPCHunter>()/*.ToList()*/;
 
             players = GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG);
             
