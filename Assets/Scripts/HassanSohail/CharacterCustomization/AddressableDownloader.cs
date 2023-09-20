@@ -66,6 +66,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
     /// <param name="name">tag or key of a addressable object</param>
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
+       // print("Addressable download object call for " + itemId + " key" +key+ " type" + type+ " applyOn" +  applyOn);
         Resources.UnloadUnusedAssets();
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -86,7 +87,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             AsyncOperationHandle<GameObject> loadOp;
             loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
-            SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
+           // Comment for cloth issue testing //SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
 
             //if (!key.Contains("Fighter") && !key.Contains("FullCostume"))
             //{
@@ -96,32 +97,47 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             //{
             //    loadOp = Addressables.LoadAssetAsync<GameObject>(key);
             //}
-
-            while (!loadOp.IsDone)
-                yield return loadOp;
-            if (loadOp.Status == AsyncOperationStatus.Failed)
+           // print("~~~~ "+ key.ToLower());
+            yield return loadOp;
+            //while (!loadOp.IsDone)
+            //    yield return loadOp;
+            ///  print("~~~~~~LOG~~~~~~~~~~");
+           // print("~~~~~~LOG" + loadOp.Result);
+            if (loadOp.Result== null)
             {
+               // print("RECALLING DOWNLOAD " + itemId + key + type + applyOn+mulitplayerHairColor );
+               // StartCoroutine(DownloadAddressableObj(itemId,key,type,applyOn,mulitplayerHairColor));
+               applyOn.WearDefaultItem(type,applyOn.gameObject);
+            }
+
+            if (loadOp.Status == AsyncOperationStatus.Failed  )
+            {
+               // print("LOAD OP FAILED ");
                 if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
                     StoreManager.instance.loaderForItems.SetActive(false);
-
-                GameManager.Instance.isStoreAssetDownloading = false;
+                if(GameManager.Instance != null)
+                    GameManager.Instance.isStoreAssetDownloading = false;
                 DisableLoadingPanel();
                 yield break;
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                loadOp.Result.name = key;
+               //  print("loadOp.Result :" + loadOp.Result +" ~  " +loadOp.Result.name);
+                //loadOp.Result.name = key;
                 if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
+                 //   print("~~~~~ not preset" + PlayerPrefs.GetInt("presetPanel"));
                     if (callFromMultiplayer)
                     {
+                    //    print("CALL FROM MULTIPLAYER for : "+ applyOn.name);
                         applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject,mulitplayerHairColor);
                     }
                     else
                     {
                         applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject, applyHairColor);
                     }
-                    GameManager.Instance.isStoreAssetDownloading = false;
+                    if(GameManager.Instance != null)
+                        GameManager.Instance.isStoreAssetDownloading = false;
                     DisableLoadingPanel();
                 }
                 else
@@ -207,50 +223,100 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                     // This Texture Store in Reference no need to download this texture
                     applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Color_Texture, applyOn);
                     GameManager.Instance.isStoreAssetDownloading = false;
+                   // print("~~~~~~~ in eye color  texture if ");
                     yield return null;
                 }
                 //else
                 //{
+               // print("!!!!!!!!!!!! texture downloading "+ key);
                 if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
                     StoreManager.instance.loaderForItems.SetActive(true);
                 AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
+                yield return loadOp;
 
-                while (!loadOp.IsDone)
+                //while (!loadOp.IsDone)
+                //{
+                //    yield return loadOp;
+                //}
+              
+                if (loadOp.Result== null)
                 {
-                    yield return loadOp;
+                   // print("~~~ in texture fail" + nFTOjectType + "key "+ key );
+                    switch (nFTOjectType)
+                    {
+                        case CurrentTextureType.EyeLense:
+                        //    print("~~~~ in EyeLense");
+                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
+                            break;
+                        case CurrentTextureType.EyeLashes:
+                          //   print("~~~~ in EyeLashes");
+                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+                            break;
+                        case CurrentTextureType.EyeBrows:
+                          //  print("~~~~ in EyeBrows");
+                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+                            break;
+                        case CurrentTextureType.Makeup:
+                           //  print("~~~~ in Makeup");
+                            applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+                            break;
+                        default:
+                            if ( key.Contains("brow", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                             //    print("~~~~ in if brow");
+                                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+                            }
+                            else if (key.Contains("lashes", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                              //   print("~~~~ in if lashes");
+                                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+                            }
+                            else if (key.Contains("makeup", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                // print("~~~~ in if makeup");
+                                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+                            }
+                            else if ( key.Contains("eyelense", StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                 //print("~~~~ in if eyelense");
+                                  applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
+                            }
+                            break;
+                    }
                 }
                 if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    if (PlayerPrefs.GetInt("presetPanel") != 1)
                     {
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+                        if (PlayerPrefs.GetInt("presetPanel") != 1)
+                        {
+                            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+                                StoreManager.instance.loaderForItems.SetActive(false);
+
+                            GameManager.Instance.isStoreAssetDownloading = false;
+                            DisableLoadingPanel();
+                        }
+                        yield break;
+                    }
+                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        //if (key.Contains("eyebrow"))
+                        //{
+                        //    print("EyeBrows");
+                        //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(loadOp.Result, applyOn);
+                        //}
+                        //else if (key.Contains("eyelash"))
+                        //{
+                        //    print("Eyelashes");
+                        //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
+                        //}
+                        //else
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result, applyOn);
+                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
                             StoreManager.instance.loaderForItems.SetActive(false);
 
                         GameManager.Instance.isStoreAssetDownloading = false;
-                        DisableLoadingPanel();
+                        //isTextureDownloaded = true;
                     }
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    //if (key.Contains("eyebrow"))
-                    //{
-                    //    print("EyeBrows");
-                    //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(loadOp.Result, applyOn);
-                    //}
-                    //else if (key.Contains("eyelash"))
-                    //{
-                    //    print("Eyelashes");
-                    //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
-                    //}
-                    //else
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result, applyOn);
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                    //isTextureDownloaded = true;
-                }
+          
                 //}
             }
             else if (nFTOjectType == CurrentTextureType.EyeBrows || key.Contains("brow", StringComparison.CurrentCultureIgnoreCase))
