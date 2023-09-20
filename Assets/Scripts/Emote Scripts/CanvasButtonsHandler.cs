@@ -38,6 +38,10 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject jumpBtn;
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
+
+    [Header("Singing Reality Show")]
+    public GameObject[] objectToDisableForContestant;
+
     private void Start()
     {
         if (rotateOrientationLand)
