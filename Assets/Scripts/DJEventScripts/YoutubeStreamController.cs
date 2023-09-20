@@ -16,6 +16,7 @@ public class YoutubeStreamController : MonoBehaviour
     private YoutubeAPIHandler APIHandler;
     private YoutubeStreamController Instance;
     public AudioSource videoPlayerAudioSource;
+    public AudioSource mediaPlayerAudioSource;
 
     private string PrevURL;
     private bool IsOldURL = true;
@@ -55,16 +56,25 @@ public class YoutubeStreamController : MonoBehaviour
         Instance = this;
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
+            if (videoPlayerAudioSource)
+            {
+                SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
+                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+            }
+            if (mediaPlayerAudioSource)
+            {
+                SoundManager.Instance.videoPlayerSource = mediaPlayerAudioSource;
+                SoundManagerSettings.soundManagerSettings.videoSource = mediaPlayerAudioSource;
+            }
             SoundManager.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
-            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
     private void Start()
     {
-        videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
+        if (videoPlayerAudioSource)
+            videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
