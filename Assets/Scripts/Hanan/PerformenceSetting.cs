@@ -9,17 +9,18 @@ public class PerformenceSetting : MonoBehaviour
     void Awake()
     {
         if (CapFPS)
-        StartCoroutine(Init());
+            StartCoroutine(Init());
     }
     IEnumerator Init()
     {
         yield return new WaitForSeconds(0.5f);
-        #if !UNITY_EDITOR
-		Application.targetFrameRate = 30;
+#if !UNITY_EDITOR
+		//Application.targetFrameRate = 60;
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
         QualitySettings.vSyncCount= 0;
         //Screen.SetResolution(1280, 720, true);
         // PlayerSettings.gcIncremental = true;
-        #endif
+#endif
+        Debug.LogError("Target Frame Rate " + Application.targetFrameRate);
     }
-
 }
