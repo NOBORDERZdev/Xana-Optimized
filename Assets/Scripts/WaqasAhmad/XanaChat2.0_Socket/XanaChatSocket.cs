@@ -310,8 +310,11 @@ public class XanaChatSocket : MonoBehaviour
             for (int i = rootData.data.Count - 1; i > -1; i--)
             {
                 string tempUser = rootData.data[i].name;
-
-                if (string.IsNullOrEmpty(tempUser) || tempUser.Contains("null"))
+                if (rootData.data[i].guest)
+                {
+                    tempUser = rootData.data[i].guest_username;
+                }
+                else if (string.IsNullOrEmpty(tempUser) || tempUser.Contains("null"))
                 {
                     tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
                 }
@@ -378,6 +381,8 @@ public class MessageData
     public string message;
     public DateTime time;
     public DateTime createdAt;
+    public bool guest;
+    public string guest_username;
 }
 [System.Serializable]
 public class RootData
