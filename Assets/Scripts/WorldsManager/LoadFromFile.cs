@@ -250,6 +250,28 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
+            if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+            {
+                YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
+
+                //#if UNITY_ANDROID || UNITY_EDITOR
+                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+
+                //#else
+                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+                //#endif
+
+                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+
+                YoutubeStreamPlayer.SetActive(false);
+                if (YoutubeStreamPlayer)
+                {
+                    YoutubeStreamPlayer.SetActive(true);
+                }
+            }
         }
     }
     void CharacterLightCulling()
@@ -424,11 +446,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        LoadingHandler.Instance.HideLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        LoadingHandler.Instance.UpdateLoadingStatusText("");
+        if(!XanaConstants.xanaConstants.isCameraMan){ 
+            LoadingHandler.Instance.HideLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
+            if(!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         else
@@ -446,9 +471,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
 
+        if (XanaConstants.xanaConstants.isCameraMan)
+        { 
+            ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
+            ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
+            XanaConstants.xanaConstants.StopMic();
+            XanaVoiceChat.instance.TurnOffMic();
+            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
+        }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
-        LoadingHandler.Instance.HideLoading();
+        if (!XanaConstants.xanaConstants.isCameraMan)
+            LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
         try
         {
@@ -463,8 +497,45 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+
+        // Join Room Activate Chat
+        //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            string worldId = 0.ToString();
+            if (XanaEventDetails.eventDetails.environmentId != 0)
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+            }
+            else
+            {
+                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+            }
+        }
+
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+          if(XanaConstants.xanaConstants.isCameraMan){
+            if (StreamingCamera.instance)
+            {
+                StreamingCamera.instance.TriggerStreamCam();
+            }
+            else // sterming cam's not found so switching to main menu 
+            {
+                _uiReferences.LoadMain(false);
+            }
+           
+        }
     }
 
+    [SerializeField] int autoSwitchTime;
+    public IEnumerator BackToMainmenuforAutoSwtiching(){ 
+        print("AUTO BACK CALL");
+            yield return new WaitForSecondsRealtime(30);
+        LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        XanaConstants.xanaConstants.JjWorldSceneChange= true;
+         _uiReferences.LoadMain(false);
+    }
 
 
     public IEnumerator SpawnPlayerForBuilderScene()
@@ -572,6 +643,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+      
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

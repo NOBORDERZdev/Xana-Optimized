@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 64211638169632147}
   - component: {fileID: 1643207911}
   - component: {fileID: 895531123}
+  - component: {fileID: 64211639564321973}
   m_Layer: 0
   m_Name: '[Worlds Manager]'
   m_TagString: Untagged
@@ -91,3 +92,59 @@ MonoBehaviour:
   taphold_profile: {fileID: 0}
   t_Scroll_discription: {fileID: 0}
   scrollActivity: {fileID: 0}
+--- !u!114 &64211639564321973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64211638169632173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ddd724fb8528194a80bd554173bc5c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventPrefab: {fileID: 3238374975130361925, guid: 6a92f9f8b85fd954cabca62e3e85109e, type: 3}
+  eventPrefabLobby: {fileID: 0}
+  eventPrefabTab: {fileID: 3238374975130361925, guid: 03128e8d5b38644cdba2d229489efe3e, type: 3}
+  descriptionParentPanel: {fileID: 0}
+  listParentHotSection: {fileID: 0}
+  listParentAllWorlds: {fileID: 0}
+  listParentMyWorlds: {fileID: 0}
+  listParentGameWorlds: {fileID: 0}
+  listParentEventWorlds: {fileID: 0}
+  world_HotScroll: {fileID: 0}
+  world_NewScroll: {fileID: 0}
+  world_myworldScroll: {fileID: 0}
+  world_GameWorldScroll: {fileID: 0}
+  world_EventWorldScroll: {fileID: 0}
+  orientationchanged: 0
+  _WorldInfo:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  m_AllWorldManage: {fileID: 0}
+  AutoSwtichWorldList:
+  - name: Astroboy x Tottori Metaverse Museum
+    isMussuem: 1
+    mainnetId: 10
+    testnetId: 350
+  - name: Pool Side
+    isMussuem: 0
+    mainnetId: 14
+    testnetId: 371
+  - name: Xana Festival
+    isMussuem: 0
+    mainnetId: 35
+    testnetId: 360
+  - name: Beach
+    isMussuem: 0
+    mainnetId: 13
+    testnetId: 370
+  - name: Crypto Ninja village
+    isMussuem: 0
+    mainnetId: 29
+    testnetId: 386
+  worldstr: 
