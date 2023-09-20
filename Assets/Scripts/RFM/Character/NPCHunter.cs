@@ -44,7 +44,7 @@ namespace RFM.Character
 
         private void SearchForTarget()
         {
-            // if (_target) return;
+            if (_target) return;
             
             _players = new List<GameObject>(
                 GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
@@ -64,6 +64,11 @@ namespace RFM.Character
 
         private void Update()
         {
+            if (_target)
+            {
+                FollowTarget(_target.position);
+            }
+            
             Vector3 velocity = _navMeshAgent.velocity;
             Vector2 velocityDir = new Vector2(velocity.x, velocity.z); 
             Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
@@ -95,6 +100,7 @@ namespace RFM.Character
             if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
             {
                 _players.Remove(other.gameObject);
+                _target = null;
                 killVFX.SetActive(true);
                 other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
             }
@@ -103,6 +109,7 @@ namespace RFM.Character
             {
                 // if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
                 _players.Remove(other.gameObject);
+                _target = null;
 
                 // PhotonView is on the parent of the gameobject that has a collider.
                 // int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;

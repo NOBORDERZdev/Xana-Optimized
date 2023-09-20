@@ -291,14 +291,16 @@ namespace RFM
         private void CreateLeaderboardEntry(/*Dictionary<string, int> entry*/string nickName, int money)
         {
             // AddLeaderboardEntry(entry.ElementAt(0).Key, entry.ElementAt(0).Value);
-            AddLeaderboardEntry(nickName, money);
+            // AddLeaderboardEntry(nickName, money);
+            var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
+            entry.Init(nickName, money.ToString());
         }
         
-        private void AddLeaderboardEntry(string nickName, int amount)
-        {
-            var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            entry.Init(nickName, amount.ToString());
-        }
+        // private void AddLeaderboardEntry(string nickName, int amount)
+        // {
+        //     var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
+        //     entry.Init(nickName, amount.ToString());
+        // }
 
         [PunRPC]
         private void ResetPosition()
@@ -392,7 +394,7 @@ namespace RFM
 
         private void SpawnHunters(int numOfHunters)
         {
-            Debug.LogError("numOfAIHunters: " + numOfHunters);
+            Debug.LogError("RFM numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("HunterNPC",
@@ -404,7 +406,7 @@ namespace RFM
         
         private void SpawnAIEscapees(int numOfEscapees)
         {
-            Debug.LogError("numOfAIEscapees: " + numOfEscapees);
+            Debug.LogError("RFM numOfAIEscapees: " + numOfEscapees);
             for (int i = 0; i < numOfEscapees; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("EscapeeNPC",
