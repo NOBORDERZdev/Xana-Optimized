@@ -563,8 +563,8 @@ public class FeedEventPrefab : MonoBehaviour
 
     }
 
-    ///--** 
-    /*void InstantiateWorldtags()
+    
+    void InstantiateWorldtags()
     {
         if (worldTags.Length > 0)
             tagScroller.SetActive(true);
