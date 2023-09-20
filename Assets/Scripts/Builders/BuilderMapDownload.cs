@@ -175,6 +175,7 @@ public class BuilderMapDownload : MonoBehaviour
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
+        
         for (int i = 0; i < count; i++)
         {
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
@@ -188,8 +189,11 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 GetObject(_async, levelData.otherItems[i]);
             }
-
-            LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
+            if (XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f,.1f);
+            }else
+                LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
         }
         CallBack();
     }
@@ -535,8 +539,14 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-        LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        if (XanaConstants.xanaConstants.isFromXanaLobby)
+        {
+            LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f,.9f), 0.1f);
+        }else
+        {
+            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        }
     }
 
     #endregion

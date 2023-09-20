@@ -235,5 +235,7 @@ namespace XanaAi
         public void SetAiName(string name){ 
             NameTxt.text = name;
         }
+
+
     }
 }

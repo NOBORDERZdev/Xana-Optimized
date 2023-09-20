@@ -125,6 +125,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
      private IEnumerator LobbySceneSwitch()
      {
+        LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.3f, 0.7f), .1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
