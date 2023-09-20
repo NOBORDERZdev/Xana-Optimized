@@ -486,25 +486,21 @@ namespace RFM
 
             await Task.Delay(CurrentGameConfiguration.GameRestartWaitTime); 
             
-            gameOverPanel.SetActive(false);
+            ///gameOverPanel.SetActive(false);
             EventsManager.GameRestarting();
             
             // destroy all entries of leaderboard
-            foreach (Transform entry in leaderboardEntryContainer)
-            {
-                Destroy(entry.gameObject);
-            }
+            /// foreach (Transform entry in leaderboardEntryContainer)
+            // {
+            //     Destroy(entry.gameObject);
+            // }
             //
             
-            // if (Globals.gameState == Globals.GameState.GameOver
-            //     && PhotonNetwork.CurrentRoom.PlayerCount >= CurrentGameConfiguration.MinNumberOfPlayers)
+            
+            /// if (Globals.gameState == Globals.GameState.GameOver)
             // {
-            //     StartCoroutine(StartRFM());
+            //     StartCoroutine(Start());
             // }
-            if (Globals.gameState == Globals.GameState.GameOver)
-            {
-                StartCoroutine(Start());
-            }
         }
         
         [PunRPC]

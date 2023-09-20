@@ -21,5 +21,15 @@ namespace RFM
         {
             helpPanel.SetActive(!helpPanel.activeInHierarchy);
         }
+
+        public void HomeButtonClicked()
+        {
+            var sceneManage = FindObjectOfType<SceneManage>();
+
+            if (sceneManage)
+            {
+                sceneManage.ReturnToHome(true);
+            }
+        }
     }
 }
