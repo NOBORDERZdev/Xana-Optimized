@@ -231,7 +231,7 @@ public class FeedEventPrefab : MonoBehaviour
     int CheckServerForID()
     {
         if (APIBaseUrlChange.instance.IsXanaLive)
-            return 77; // Xana Lobby Id Mainnet
+            return 38; // Xana Lobby Id Mainnet
         else
             return 406; // Xana Lobby Id Testnet
     }
