@@ -164,9 +164,9 @@ public class GameManager : MonoBehaviour
     }
     public void AvatarMenuBtnPressed()
     {
-       UIManager.Instance.AvaterButtonCustomPushed();
+        UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
- 
+        //mainCharacter.GetComponent<FaceIK>().ikActive= false;
         if (UserRegisterationManager.instance.LoggedIn||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
         {
             UIManager.Instance.HomePage.SetActive(false);

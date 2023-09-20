@@ -17,6 +17,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
 
+  
     public string mainScene= "Main";
 
     private AsyncOperation asyncLoading;
@@ -26,7 +27,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-       
+       mainScene= "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
@@ -124,6 +125,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
      private IEnumerator LobbySceneSwitch()
      {
+        LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.3f, 0.7f), .1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;

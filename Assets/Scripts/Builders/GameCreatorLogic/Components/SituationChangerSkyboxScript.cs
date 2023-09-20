@@ -26,6 +26,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     {
         instance = this;
         CreateDictionaryFromScriptable();
+        AsyncOperationHandle<Material> darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+        AsyncOperationHandle<Material> blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
     }
 
 
@@ -70,7 +72,9 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     }
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
-        RenderSettings.skybox = obj.Result;
+        Material _mat = obj.Result;
+        _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
+        RenderSettings.skybox = _mat;
         directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
         ppVolume.profile = skyBoxesData.skyBoxes[indexx].ppVolumeProfile;
         DirectionLightColorChange(indexx);
@@ -95,8 +99,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
     void DirectionLightColorChange(int skyID)
     {
-
-
         LensFlareData lensFlareData = new LensFlareData();
         if (skyID == -1)
         {
