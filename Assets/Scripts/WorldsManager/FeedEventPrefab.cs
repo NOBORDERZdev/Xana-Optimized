@@ -103,7 +103,6 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         if (m_EnvironmentName.Contains("XANA Lobby"))
@@ -113,8 +112,6 @@ public class FeedEventPrefab : MonoBehaviour
                 StartCoroutine(DownloadAndLoadBanner());
             }
         }
-
-
     }
     int cnt = 0;
     private void OnEnable()
@@ -132,7 +129,6 @@ public class FeedEventPrefab : MonoBehaviour
 
     void UpdateUserCount(string UserDetails)
     {
-        //Debug.Log("Yes, TriggerData " + UserDetails);
         joinedUserCount.text = "0";
         if (string.IsNullOrEmpty(UserDetails))
         {
@@ -169,7 +165,6 @@ public class FeedEventPrefab : MonoBehaviour
     }
     void UpdateUserCount()
     {
-        //Debug.Log("Yes, Init " + userAnalyticsHandler.userDataString);
         joinedUserCount.text = "0";
         if (userAnalyticsHandler == null)
         {
@@ -193,7 +188,6 @@ public class FeedEventPrefab : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    //Debug.Log("Yes Matched : " + m_EnvironmentName);
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
@@ -208,132 +202,96 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
     }
-    WaitForSeconds UpdateTime = new WaitForSeconds(0.5f);
+   // WaitForSeconds UpdateTime = new WaitForSeconds(0.5f);
     IEnumerator UpdateCoroutine()
     {
-        yield return UpdateTime;
-    //private void LateUpdate()
-    //{
-        
-    //}
-    //private void Update()//delete image after object out of screen
-    //{
-       // lastUpdateCallTime += Time.deltaTime;
-       // if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
-      //  {
-            Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);
+        while(true)
+        {
+         //   Debug.LogError("Running " + eviroment_Name.text);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.4f, 0.7f));
 
-            if (mousePosNR.y >= -3.5f && mousePosNR.y <= 3.5f)
-            {
-                isOnScreen = true;
-            }
-            else
-            {
-                isOnScreen = false;
-            }
+       // Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(
+            new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z));
 
-          //  lastUpdateCallTime = 0;
-       // }
-
+        isOnScreen = mousePosNR.y >= -3f && mousePosNR.y <= 3f ? true : false;
+ 
         if (isVisible && isOnScreen && !string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
-   // Debug.LogError("Runing Shit 1");
             isVisible = false;
-            //Debug.Log("Image download starting one time");
             StartCoroutine(DownloadAndLoadFeed());
-            if (!string.IsNullOrEmpty(creatorName))
+            if (!string.IsNullOrEmpty(creatorName) && userProfile.gameObject.activeInHierarchy)
             {
                 if (!creatorName.Equals("XANA"))
                     StartCoroutine(UpdateUserProfile());
             }
-            //Debug.Log("2");
         }
         else if (isImageSuccessDownloadAndSave)
         {
-        //LoadFileAgain:
+        LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
-               // Debug.LogError("Runing Shit 2");
-
-                //Debug.Log("01");
                 if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
                 {
-                    //Debug.Log("02"); 
                     if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
                     {
-                        //Debug.Log("03");
                         isNotLoaded = false;
+                        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f,0.5f));
                         AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                     }
                 }
-                if (!string.IsNullOrEmpty(userAvatarURL))
+                if (!string.IsNullOrEmpty(userAvatarURL) && userProfile.gameObject.activeInHierarchy)
                 {
                     if (AssetCache.Instance.HasFile(userAvatarURL))
                     {
+                        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
                         AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
                     }
                 }
             }
             else if (!isOnScreen && worldIcon.sprite && !isNotLoaded)
             {
-                //Debug.Log("1");
                 //realse from memory 
                 isReleaseFromMemoryOrNot = true;
                 isNotLoaded = true;
-                //Debug.Log("remove from memory");
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
                 AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
-                if (!string.IsNullOrEmpty(userAvatarURL))
-                {
-                    AssetCache.Instance.RemoveFromMemory(userAvatarURL, true);
-                }
                 worldIcon.sprite = null;
                 worldIcon.sprite = dummyThumbnail;
                 WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
-
             }
             else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == dummyThumbnail))
             {
-                //Debug.Log("here we are loading it again.");
+              //  Debug.LogError("here we are loading it again.");
                 isNotLoaded = true;
-              //  goto LoadFileAgain;
+                goto LoadFileAgain;
             }
+
         }
-        StartCoroutine(UpdateCoroutine());
+        }
+        //StartCoroutine(UpdateCoroutine());
     }
 
-
-    //private void LateUpdate()
-    //{
-    //    if(worldIcon.sprite==null)
-    //    {
-    //        isNotLoaded = true;
-    //    }
-    //}
-    // public void DownloadAndLoadFeed() ---- Sannan
-    //
-    WaitForSeconds DownloadTime = new WaitForSeconds(0.5f);
+   // WaitForSeconds DownloadTime = new WaitForSeconds(0.5f);
 
     public IEnumerator DownloadAndLoadFeed()
     {
-        yield return DownloadTime;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.6f)); 
         AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
         {
             if (success)
             {
                 AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                 isImageSuccessDownloadAndSave = true;
-               // Debug.LogError(m_EnvironmentName.ToString()+"  "+AssetCache.Instance.GetAssetSize(m_ThumbnailDownloadURL));
             }
         });
     }
-    //public void UpdateUserProfile()
     IEnumerator UpdateUserProfile()
     {
-        yield return DownloadTime;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.6f));
+
         if (!string.IsNullOrEmpty(userAvatarURL))
         {
-            //Debug.Log("02"); 
             if (AssetCache.Instance.HasFile(userAvatarURL))
             {
                 AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
@@ -352,24 +310,20 @@ public class FeedEventPrefab : MonoBehaviour
         }
 
     }
-    //private void OnAnimatorIK(int layerIndex)
-    //{
-
-    //}
-
     private void OnDisable()
     {
-        StopCoroutine(UpdateCoroutine());
 
         AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
-        if (!string.IsNullOrEmpty(userAvatarURL))
-        {
-            AssetCache.Instance.RemoveFromMemory(userAvatarURL, true);
-        }
+        //if (!string.IsNullOrEmpty(userAvatarURL))
+        //{
+        //    AssetCache.Instance.RemoveFromMemory(userAvatarURL, true);
+        //}
         worldIcon.sprite = null;
         worldIcon.sprite = dummyThumbnail;
         WorldManager.instance.ResourcesUnloadAssetFile();
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
+        //StopCoroutine(UpdateCoroutine());
+        StopAllCoroutines();
 
     }
 
@@ -389,7 +343,6 @@ public class FeedEventPrefab : MonoBehaviour
             isMuseumScene = true;
         }
     }
-
 
     public void DownloadPrefabSprite()
     {
@@ -440,8 +393,6 @@ public class FeedEventPrefab : MonoBehaviour
         }
     }
 
-
-
     string folderName;
     public IEnumerator DownloadImage(string l_imgUrl)
     {
@@ -471,34 +422,6 @@ public class FeedEventPrefab : MonoBehaviour
         gameObject.GetComponent<Button>().interactable = true;
         UpdateWorldPanel();
 
-
-        //CheckForDirectoryCreation(folderName);
-
-        //StartCoroutine(DownloadTexture(folderName, l_imgUrl, (downloadedSucessfully, ImageRawData) =>
-        //{
-        //    if (downloadedSucessfully)
-        //    {
-        //        Texture2D texture = new Texture2D(1, 1);
-
-        //        texture.LoadImage(ImageRawData);
-        //        Sprite l_sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(1f, 1f));
-        //        worldIcon.sprite = l_sprite;
-        //        m_FadeImage.sprite = l_sprite;
-        //        //BY Abdullah :Changing Xana Festival stage in Dubai to Xana Festival Stage 
-        //        if (m_EnvironmentName.Contains("Dubai"))
-        //        {
-        //            eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-        //            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
-        //        }
-        //        else
-        //        {
-        //            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
-        //        }
-        //        eviroment_Name.text = eviroment_Name.text.ToUpper();
-        //        gameObject.GetComponent<Button>().interactable = true;
-        //        UpdateWorldPanel();
-        //    }
-        //}));
         yield return null;
     }
 
@@ -543,7 +466,6 @@ public class FeedEventPrefab : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
 
-
     void DeleteOldData(string filePath)
     {
         try
@@ -565,42 +487,12 @@ public class FeedEventPrefab : MonoBehaviour
         if (!m_EnvironmentName.Contains("XANA Lobby"))
         {
             m_BannerSprite[0].sprite = m_FadeImage.sprite;
-            //if (!isBannerLoaded)
-            //{
-            //    StartCoroutine(DownloadAndLoadBanner());
-            //}
         }
-        else
-        {
 
-        }
         m_BannerSprite[1].sprite = m_FadeImage.sprite;
+        if(m_BannerSprite.Length>2)
         m_BannerSprite[2].sprite = m_FadeImage.sprite;
     }
-    //private int PreferdStringSize = 22;
-
-    //int textWidth;
-
-    //public void SetStringSize()
-    //{
-
-    //    textWidth = tempWorldName.Length;
-
-    //    if (textWidth > PreferdStringSize)
-    //    {
-
-    //        tempWorldName = tempWorldName.Remove(PreferdStringSize);
-
-    //        tempWorldName = string.Concat(tempWorldName, "...");
-
-
-    //        m_WorldName.text = tempWorldName;
-
-    //    }
-
-    //}
-
-    //string tempWorldName;
 
     public void OnClickPrefab()
     {
@@ -618,7 +510,7 @@ public class FeedEventPrefab : MonoBehaviour
             StartCoroutine( UpdateUserProfile());
         //m_timestamp = uploadTimeStamp;
 
-        InstantiateWorldtags();
+       ////--** InstantiateWorldtags();  ---->>> Commented as not In Use
 
         loginPageManager.SetPanelToBottom();
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
@@ -643,70 +535,12 @@ public class FeedEventPrefab : MonoBehaviour
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         //SetStringSize();
 
-        //if (m_EnvName.Contains("GOZ : Animator Haruna Gouzu Gallery 2021"))
-        //{
-
-        //  m_WorldName.GetComponent<TextLocalization>().LocalizeTextText("GOZANIMATOR HARUNA ...");
-
-        //}
-
-
-        //m_SetPressedIndex = m_PressedIndex;
-        //if (!isMuseumScene)
-        //{
-        //    if (m_EnvName.Contains("Crypto Ninja village"))
-        //    {
-        //        creator_Name.text = "Metaverse Ninja";
-        //    }
-
-        //}
-        //else if (isMuseumScene)
-        //{
-        //    if (m_EnvName.Contains("THE RHETORIC STAR"))
-        //    {
-        //        creator_Name.text = "World Name";
-        //        creator_Name.GetComponent<TextLocalization>().LocalizeTextText(creator_Name.text);
-        //    }
-        //}
-        //else
-        //{
-        //    if (m_EnvironmentName.Contains("ROCK’N"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "GekkoSan");
-        //    }
-        //    else if (m_EnvironmentName.Contains("Gouzu Gallarey"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "GOZMuseum");
-        //    }
-        //    else if (m_EnvironmentName.Contains("Aurora Art"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "Aurora");
-        //    }
-        //    else if (m_EnvironmentName.Contains("Hokusai"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "Hokusai");
-        //    }
-        //    else if (m_EnvironmentName.Contains("Yukinori"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "Yukinori");
-        //    }
-        //    else if (m_EnvironmentName.Contains("NFT Museum"))
-        //    {
-        //        PlayerPrefs.SetString("ScenetoLoad", "THE RHETORIC STAR");
-        //    }
-        //}
-
         // For Analitics & User Count
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount);
     }
 
-    //private void OnValidate()
-    //{
-    //    UpdeteUserCount();
-    //}
 
-    Sprite BannerSprite;
     IEnumerator DownloadAndLoadBanner()
     {
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(m_BannerLink);
@@ -726,8 +560,8 @@ public class FeedEventPrefab : MonoBehaviour
 
     }
 
-
-    void InstantiateWorldtags()
+    ///--** 
+    /*void InstantiateWorldtags()
     {
         if (worldTags.Length > 0)
             tagScroller.SetActive(true);
@@ -737,6 +571,6 @@ public class FeedEventPrefab : MonoBehaviour
             temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
             temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
         }
-    }
+    }*/
 
 }

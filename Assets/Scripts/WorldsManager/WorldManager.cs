@@ -339,27 +339,13 @@ public class WorldManager : MonoBehaviour
             _event.m_EnvironmentName = _WorldInfo.data.rows[i].name;
             try
             {
-                // Debug.LogError("---------------------------------");
-                // Debug.LogError(" Environment ID "+ _WorldInfo.data.rows[i].id);
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-
-                    // Debug.LogError("( Before Replace )" + _WorldInfo.data.rows[i].thumbnail);
                     _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-               // Debug.LogError("( After Replace 1 )" + _event.m_ThumbnailDownloadURL);
-               // Debug.LogError(" entityType " + _WorldInfo.data.rows[i].entityType);
-                
-                    /*== WorldType.USER_WORLD.ToString() ||
-                     _WorldInfo.data.rows[i].entityType == "MUSEUM" ||
-                     _WorldInfo.data.rows[i].entityType == "ENVIRONMENT"*/
                     _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
-                    // Debug.LogError("( After Replace W&H )" + _event.m_ThumbnailDownloadURL);
-
-                    //  Debug.LogError("---------------------------------");
                 }
-
             }
-            catch (Exception e)
+            catch
             {
                 _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail;
             }
@@ -388,7 +374,6 @@ public class WorldManager : MonoBehaviour
                 _event.userLimit = _WorldInfo.data.rows[i].user_limit;
             }
 
-
             TempObject.transform.localScale = new Vector3(1, 1, 1);
             _event.Init();
             if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
@@ -415,9 +400,6 @@ public class WorldManager : MonoBehaviour
 
         TutorialsManager.instance.ShowTutorials();
     }
-
-
-
 
     private void CreateLightingAsset(FeedEventPrefab _event)
     {
@@ -465,7 +447,6 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            print("play btnn here");
             if (PlayerPrefs.HasKey("Equiped"))
             {
                 Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
@@ -480,12 +461,10 @@ public class WorldManager : MonoBehaviour
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
 
-
                     return;
                 }
                 else
                 {
-
                     print("NFT is in your OwnerShip Enjoy");
                 }
             }
@@ -638,8 +617,6 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
     }
 
-
-
     private IEnumerator Check_Orientation(Action CallBack)
     {
     CheckAgain:
@@ -683,9 +660,6 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             }
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
-
-
-
 
         // Added By WaqasAhmad [20 July 23]
         AssetBundle.UnloadAllAssetBundles(false);
