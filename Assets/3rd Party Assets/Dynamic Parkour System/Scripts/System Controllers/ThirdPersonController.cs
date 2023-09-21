@@ -41,13 +41,13 @@ namespace Climbing
         [HideInInspector] public AnimationCharacterController characterAnimation;
         [HideInInspector] public DetectionCharacterController characterDetection;
         [HideInInspector] public VaultingController vaultingController;
-        [HideInInspector] public bool isGrounded = false;
-        [HideInInspector] public bool allowMovement = true;
-        [HideInInspector] public bool onAir = false;
-        [HideInInspector] public bool isJumping = false;
-        [HideInInspector] public bool inSlope = false;
-        [HideInInspector] public bool isVaulting = false;
-        [HideInInspector] public bool dummy = false;
+        public bool isGrounded = false;
+        public bool allowMovement = true;
+        public bool onAir = false;
+        public bool isJumping = false;
+        public bool inSlope = false;
+        public bool isVaulting = false;
+        public bool dummy = false;
 
         [Header("Cameras")]
         public CameraController cameraController;
@@ -78,6 +78,10 @@ namespace Climbing
             if (photonView.IsMine)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
+            }
+            else
+            {
+                characterInput = GetComponent<InputCharacterController>();
             }
             characterMovement = GetComponent<MovementCharacterController>();
             characterAnimation = GetComponent<AnimationCharacterController>();

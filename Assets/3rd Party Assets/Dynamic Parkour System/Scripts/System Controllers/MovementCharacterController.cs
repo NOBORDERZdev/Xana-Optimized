@@ -88,13 +88,11 @@ namespace Climbing
 
                 if (!controller.isGrounded)
                 {
-                    //Fall();
-                    GetComponent<PhotonView>().RPC("Fall", RpcTarget.All);
+                    Fall();
                 }
                 else if (controller.isGrounded && controller.onAir)
                 {
-                    GetComponent<PhotonView>().RPC("Landed", RpcTarget.All);
-                    //Landed();
+                    Landed();
                 }
             }
         }
@@ -333,7 +331,6 @@ namespace Climbing
             rb.velocity += Vector3.up * -0.300f;
         }
 
-        [PunRPC]
         public void Fall()
         {
             controller.onAir = true;
@@ -348,7 +345,6 @@ namespace Climbing
             OnFall();
         }
 
-        [PunRPC]
         public void Landed()
         {
             if (!GetComponent<PhotonView>().IsMine)

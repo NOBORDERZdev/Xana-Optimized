@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
   - component: {fileID: 6600868634286491041}
+  - component: {fileID: 6399635851196118119}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -246,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e4e8fc79c695540bc086f95f326b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   rb: {fileID: 0}
   limitMovement: 0
   stopMotion: 0
@@ -478,6 +479,23 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6399635851196118119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3ccb252414bc46a44e428b27b1c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOtherPlayer: 1
+  movement: {x: 0, y: 0}
+  run: 0
+  jump: 1
+  drop: 1
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
