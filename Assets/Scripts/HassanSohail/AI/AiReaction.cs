@@ -14,10 +14,11 @@ namespace XanaAi
         private void Start()
         {
             StartCoroutine(ApplyReact());
-           // Invoke(nameof(ApplyReact),1/*Random.Range(minReactionTime, maxReactionTime)*/);
+            // Invoke(nameof(ApplyReact),1/*Random.Range(minReactionTime, maxReactionTime)*/);
         }
 
-        public IEnumerator ApplyReact(){
+        public IEnumerator ApplyReact()
+        {
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(minReactionTime, maxReactionTime));
@@ -26,7 +27,7 @@ namespace XanaAi
 
                 if (ReactScreen.Instance != null && ReactScreen.Instance.reactDataClass.Count > 0)
                 {
-                    int rand = Random.Range(0, ReactScreen.Instance.reactDataClass.Count);
+                    int rand = Random.Range(0, (ReactScreen.Instance.reactDataClass.Count / 2));
                     if (rand < ReactScreen.Instance.reactDataClass.Count)
                     {
                         string iconUrl = ReactScreen.Instance.reactDataClass[rand].thumb;
@@ -47,12 +48,12 @@ namespace XanaAi
                         }
                     }
                 }
-                
+
             }
 
         }
 
-   
+
 
     }
 }
