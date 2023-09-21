@@ -34,8 +34,8 @@ namespace XanaAi
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
                 int rand;
-                rand = UnityEngine.Random.Range(0, (EmoteAnimationPlay.Instance.emoteAnim.Count/12)); // EmoteAnimationPlay.Instance.emoteAnim.Count
-
+                rand = UnityEngine.Random.Range(0, (EmoteAnimationPlay.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationPlay.Instance.emoteAnim.Count)); // EmoteAnimationPlay.Instance.emoteAnim.Count
+                Debug.Log("<color=red> rand: " + rand + "</color>");
                 if (EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Dance") || EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Moves"))
                 {
                     string BundleUrl;

@@ -27,7 +27,7 @@ namespace XanaAi
 
                 if (ReactScreen.Instance != null && ReactScreen.Instance.reactDataClass.Count > 0)
                 {
-                    int rand = Random.Range(0, (ReactScreen.Instance.reactDataClass.Count / 2));
+                    int rand = Random.Range(0, (ReactScreen.Instance.reactDataClass.Count > 5 ? 5 : ReactScreen.Instance.reactDataClass.Count));
                     if (rand < ReactScreen.Instance.reactDataClass.Count)
                     {
                         string iconUrl = ReactScreen.Instance.reactDataClass[rand].thumb;
