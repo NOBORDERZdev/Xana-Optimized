@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,11 +88,13 @@ namespace Climbing
 
                 if (!controller.isGrounded)
                 {
-                    Fall();
+                    //Fall();
+                    GetComponent<PhotonView>().RPC("Fall", RpcTarget.All);
                 }
                 else if (controller.isGrounded && controller.onAir)
                 {
-                    Landed();
+                    GetComponent<PhotonView>().RPC("Landed", RpcTarget.All);
+                    //Landed();
                 }
             }
         }
@@ -329,12 +332,14 @@ namespace Climbing
             rb.velocity += Vector3.up * -0.300f;
         }
 
+        [PunRPC]
         public void Fall()
         {
             controller.onAir = true;
             OnFall();
         }
 
+        [PunRPC]
         public void Landed()
         {
             OnLanded();

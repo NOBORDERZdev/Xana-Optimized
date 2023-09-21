@@ -51,8 +51,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 7942164388486371721}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -109,6 +108,7 @@ GameObject:
   - component: {fileID: 5556358534646836584}
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
+  - component: {fileID: 6600868634286491041}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -408,16 +408,16 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Velocity
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: LHandCurve
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: RHandCurve
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: LeftFootCurve
   - Type: 1
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: RightFootCurve
   - Type: 4
     SynchronizeType: 2
@@ -455,6 +455,29 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &6600868634286491041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7942164388486371721}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
