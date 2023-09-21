@@ -5,6 +5,7 @@ using UnityEngine;
 using WebSocketSharp;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
+using LightShaft.Scripts;
 
 public class YoutubeStreamController : MonoBehaviour
 {
@@ -56,16 +57,17 @@ public class YoutubeStreamController : MonoBehaviour
         Instance = this;
         if (SoundManager.Instance)
         {
-            if (videoPlayerAudioSource)
-            {
-                SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
-                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
-            }
-            if (mediaPlayerAudioSource)
+            if (NormalPlayer.GetComponent<YoutubeSimplified>().player.GetComponent<YoutubePlayer>().playInAVPRO)
             {
                 SoundManager.Instance.videoPlayerSource = mediaPlayerAudioSource;
                 SoundManagerSettings.soundManagerSettings.videoSource = mediaPlayerAudioSource;
             }
+            else
+            {
+                SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
+                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+            }
+            
             SoundManager.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
             SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
