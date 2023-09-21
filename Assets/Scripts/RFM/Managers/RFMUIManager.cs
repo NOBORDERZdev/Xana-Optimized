@@ -6,7 +6,10 @@ namespace RFM
     public class RFMUIManager : MonoBehaviour
     {
         [SerializeField] private GameObject helpPanel;
+        [SerializeField] private GameObject instructionsPanelPanel;
 
+        private bool _wasInstructionsPanelActive;
+        
         private void OnEnable()
         {
             RFM.EventsManager.onToggleHelpPanel += ToggleHelpPanel;
@@ -17,9 +20,27 @@ namespace RFM
             RFM.EventsManager.onToggleHelpPanel -= ToggleHelpPanel;
         }
 
-        private void ToggleHelpPanel()
+        public void ToggleHelpPanel()
         {
-            helpPanel.SetActive(!helpPanel.activeInHierarchy);
+            if (helpPanel.activeInHierarchy)
+            {
+                helpPanel.SetActive(false);
+
+                if (_wasInstructionsPanelActive)
+                {
+                    instructionsPanelPanel.SetActive(true);
+                    _wasInstructionsPanelActive = false;
+                }
+            }
+            else
+            {
+                helpPanel.SetActive(true);
+                if (instructionsPanelPanel.activeInHierarchy)
+                {
+                    instructionsPanelPanel.SetActive(false);
+                    _wasInstructionsPanelActive = true;
+                }
+            }
         }
 
         public void HomeButtonClicked()
