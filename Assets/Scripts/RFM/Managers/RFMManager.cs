@@ -18,6 +18,13 @@ namespace RFM
 {
     public class RFMManager : MonoBehaviourPunCallbacks
     {
+        public TextMeshProUGUI debugText;
+
+        private void Update()
+        {
+            debugText.text = Globals.gameState.ToString();
+        }
+
         [Serializable]
         public class GameConfiguration
         {
