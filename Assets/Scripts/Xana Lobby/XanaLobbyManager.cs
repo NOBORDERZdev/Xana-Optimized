@@ -85,7 +85,7 @@ public class XanaLobbyManager : MonoBehaviour
                     //    worldsInfo[i].JjRatio = JjRatio.OneXOneWithDes;
                     //}
                     placedWorldsList[i].SetActive(true);
-                    if (worldsData[j].media_type == "IMAGE")
+                    if (!worldsData[j].thumbnail.IsNullOrEmpty())
                     {
                         //worldsInfo[i].Type = MediaType.Image;
                         placedWorldsList[i].GetComponent<XLWorldInfo>().InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
@@ -94,6 +94,7 @@ public class XanaLobbyManager : MonoBehaviour
                             placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.MainNet = worldsData[i].world_id;
                         else
                             placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.testNet = worldsData[i].world_id;
+                        if(worldsData[j].entity_type==)
                         //worldsInfo[i].Title = worldsData[i].title;
                         //worldsInfo[i].Aurthor = worldsData[i].authorName;
                         //worldsInfo[i].Des = worldsData[i].description;
@@ -191,6 +192,10 @@ public enum MediaType
 {
     Image
 }
+public enum EntityType
+{
+    MUSEUMS,ENVIRONMENTS,USER_WORLD
+}
 public class XanaLobbyJson
 {
     public bool success;
@@ -208,12 +213,14 @@ public class XanaLobbyData
     public int id;
     public int world_id;
     public int index;
-    public List<String> authorName;
-    public List<String> description;
-    public List<String> title;
-    public string ratio;
+    //public List<String> authorName;
+    //public List<String> description;
+    //public List<String> title;
+    //public string ratio;
+    public string world_name;
+    public string description;
     public string thumbnail;
-    public string media_type;
+    //public string media_type;
     public string entity_type;
     public string creator_type;
     public DateTime createdAt;
