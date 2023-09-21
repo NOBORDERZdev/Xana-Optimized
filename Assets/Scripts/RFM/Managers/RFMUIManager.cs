@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace RFM
@@ -7,8 +8,15 @@ namespace RFM
         [SerializeField] private GameObject helpPanel;
         [SerializeField] private GameObject instructionsPanelPanel;
 
+        private GameObject _controlsCanvas; // 375
+
         private bool _wasInstructionsPanelActive;
-        
+
+        private void Awake()
+        {
+            _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
+        }
+
         private void OnEnable()
         {
             RFM.EventsManager.onToggleHelpPanel += ToggleHelpPanel;
@@ -30,6 +38,7 @@ namespace RFM
         {
             if (helpPanel.activeInHierarchy)
             {
+                _controlsCanvas.SetActive(true);
                 helpPanel.SetActive(false);
 
                 if (_wasInstructionsPanelActive)
@@ -40,6 +49,7 @@ namespace RFM
             }
             else
             {
+                _controlsCanvas.SetActive(false);
                 helpPanel.SetActive(true);
                 if (instructionsPanelPanel.activeInHierarchy)
                 {
