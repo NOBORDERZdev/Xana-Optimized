@@ -124,7 +124,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
                //  print("loadOp.Result :" + loadOp.Result +" ~  " +loadOp.Result.name);
-                //loadOp.Result.name = key;
+                loadOp.Result.name = key;
                 if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
                  //   print("~~~~~ not preset" + PlayerPrefs.GetInt("presetPanel"));
@@ -213,312 +213,145 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
 
     public IEnumerator DownloadAddressableTexture(string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
     {
+        CurrentTextureType type = 0;
+        if (nFTOjectType == 0)
+        {
+            if (key.Contains("eyelense", StringComparison.CurrentCultureIgnoreCase))
+            {
+                type = CurrentTextureType.EyeLense;
+            }
+            else if (key.Contains("lashes", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.EyeLashes;
+            }
+            else if (key.Contains("brow", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.EyeBrows;
+            }
+            else if (key.Contains("makeup", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.Makeup;
+            }
+            else if ( key.Contains("FaceTattoo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.FaceTattoo;
+            }
+            else if ( key.Contains("ChestTattoo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                  type = CurrentTextureType.ChestTattoo;
+            }
+            else if ( key.Contains("LegsTattoo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                  type = CurrentTextureType.LegsTattoo;
+            }
+            else if (  key.Contains("ArmTattoo", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.ArmTattoo;
+            }
+            else if ( key.Contains("Mustache", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.Mustache;
+            }
+            else if (  key.Contains("EyeLid", StringComparison.CurrentCultureIgnoreCase))
+            {
+                 type = CurrentTextureType.EyeLid;
+            }
+            
+        }
+        else
+        {
+           type = nFTOjectType;
+        }
         //isTextureDownloaded = false;
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
-            if (nFTOjectType == CurrentTextureType.EyeLense || key.Contains("eyelense", StringComparison.CurrentCultureIgnoreCase))
+
+            key = key.ToLower();
+            if (key == "eye_color_texture")
             {
-                key = key.ToLower();
-                if (key == "eye_color_texture")
+                // This Texture Store in Reference no need to download this texture
+                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Color_Texture, applyOn);
+                GameManager.Instance.isStoreAssetDownloading = false;
+               // print("~~~~~~~ in eye color  texture if ");
+                yield return null;
+            }
+            //else
+            //{
+           // print("!!!!!!!!!!!! texture downloading "+ key);
+            if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+                StoreManager.instance.loaderForItems.SetActive(true);
+            AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
+            yield return loadOp;
+
+            if (loadOp.Result== null)
+            {
+                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
+                yield break;
+            }
+            if (loadOp.Status == AsyncOperationStatus.Failed)
+            {
+             //   print("~~~~~~~ TEXTURE FAIL ");
+                if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
-                    // This Texture Store in Reference no need to download this texture
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Color_Texture, applyOn);
+                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+                        StoreManager.instance.loaderForItems.SetActive(false);
+
                     GameManager.Instance.isStoreAssetDownloading = false;
-                   // print("~~~~~~~ in eye color  texture if ");
-                    yield return null;
+                    DisableLoadingPanel();
                 }
-                //else
-                //{
-               // print("!!!!!!!!!!!! texture downloading "+ key);
-                if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                    StoreManager.instance.loaderForItems.SetActive(true);
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                yield return loadOp;
-
-                //while (!loadOp.IsDone)
-                //{
-                //    yield return loadOp;
-                //}
-              
-                if (loadOp.Result== null)
+                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
+                yield break;
+            }
+            else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            {
+               // print("~~~~~~~ TEXTURE Succeded " + loadOp.Result);
+                // Applying texture when successful downloaded.
+                switch (type)
                 {
-                   // print("~~~ in texture fail" + nFTOjectType + "key "+ key );
-                    switch (nFTOjectType)
-                    {
-                        case CurrentTextureType.EyeLense:
-                        //    print("~~~~ in EyeLense");
-                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
-                            break;
-                        case CurrentTextureType.EyeLashes:
-                          //   print("~~~~ in EyeLashes");
-                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
-                            break;
-                        case CurrentTextureType.EyeBrows:
-                          //  print("~~~~ in EyeBrows");
-                            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
-                            break;
-                        case CurrentTextureType.Makeup:
-                           //  print("~~~~ in Makeup");
-                            applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
-                            break;
-                        default:
-                            if ( key.Contains("brow", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                             //    print("~~~~ in if brow");
-                                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
-                            }
-                            else if (key.Contains("lashes", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                              //   print("~~~~ in if lashes");
-                                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
-                            }
-                            else if (key.Contains("makeup", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                // print("~~~~ in if makeup");
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
-                            }
-                            else if ( key.Contains("eyelense", StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                 //print("~~~~ in if eyelense");
-                                  applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
-                            }
-                            break;
-                    }
-                 yield break;
-
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                    {
-                        if (PlayerPrefs.GetInt("presetPanel") != 1)
-                        {
-                            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                                StoreManager.instance.loaderForItems.SetActive(false);
-
-                            GameManager.Instance.isStoreAssetDownloading = false;
-                            DisableLoadingPanel();
-                        }
-                        yield break;
-                    }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                    {
-                        //if (key.Contains("eyebrow"))
-                        //{
-                        //    print("EyeBrows");
-                        //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(loadOp.Result, applyOn);
-                        //}
-                        //else if (key.Contains("eyelash"))
-                        //{
-                        //    print("Eyelashes");
-                        //    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
-                        //}
-                        //else
+                    case CurrentTextureType.Null:
+                        break;
+                    case CurrentTextureType.FaceTattoo:
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.FaceTattoo);
+                        break;
+                    case CurrentTextureType.ChestTattoo:
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ChestTattoo);
+                        break;
+                    case CurrentTextureType.LegsTattoo:
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.LegsTattoo);
+                        break;
+                    case CurrentTextureType.ArmTattoo:
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ArmTattoo);
+                        break;
+                    case CurrentTextureType.Mustache:
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result, applyOn);
+                        break;
+                    case CurrentTextureType.EyeLid:
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result, applyOn);
+                        break;
+                    case CurrentTextureType.EyeLense:
                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result, applyOn);
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                            StoreManager.instance.loaderForItems.SetActive(false);
+                        break;
+                    case CurrentTextureType.EyeLashes:
+                           applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
+                        break;
+                    case CurrentTextureType.EyeBrows:
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result, applyOn);
+                        break;
+                    case CurrentTextureType.Skin:
+                        break;
+                    case CurrentTextureType.Lip:
+                        break;
+                    case CurrentTextureType.Makeup:
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result, applyOn);
+                        break;
+                    default:
+                        break;
+                }
+                if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+                    StoreManager.instance.loaderForItems.SetActive(false);
 
-                        GameManager.Instance.isStoreAssetDownloading = false;
-                        //isTextureDownloaded = true;
-                    }
-          
-                //}
-            }
-            else if (nFTOjectType == CurrentTextureType.EyeBrows || key.Contains("brow", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                    StoreManager.instance.loaderForItems.SetActive(true);
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-
-                while (!loadOp.IsDone)
-                {
-                    yield return loadOp;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result, applyOn);
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.EyeLashes || key.Contains("lashes", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                    StoreManager.instance.loaderForItems.SetActive(true);
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-
-                while (!loadOp.IsDone)
-                {
-                    yield return loadOp;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                    DisableLoadingPanel();
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.Makeup || key.Contains("makeup", StringComparison.CurrentCultureIgnoreCase))
-            {
-                print("makeup download call");
-                key = key.ToLower();
-                if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                    StoreManager.instance.loaderForItems.SetActive(true);
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-
-                while (!loadOp.IsDone)
-                {
-                    yield return loadOp;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                    DisableLoadingPanel();
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result, applyOn);
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
-
-                    GameManager.Instance.isStoreAssetDownloading = false;
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.FaceTattoo || key.Contains("FaceTattoo", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveTattoo(loadOp.Result, applyOn, CurrentTextureType.FaceTattoo);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.FaceTattoo);
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.ChestTattoo || key.Contains("ChestTattoo", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveTattoo(loadOp.Result, applyOn, CurrentTextureType.ChestTattoo);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ChestTattoo);
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.LegsTattoo || key.Contains("LegsTattoo", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveTattoo(loadOp.Result, applyOn, CurrentTextureType.LegsTattoo);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.LegsTattoo);
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.ArmTattoo || key.Contains("ArmTattoo", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveTattoo(loadOp.Result, applyOn, CurrentTextureType.ArmTattoo);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ArmTattoo);
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.Mustache || key.Contains("Mustache", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(loadOp.Result, applyOn);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result, applyOn);
-                }
-            }
-            else if (nFTOjectType == CurrentTextureType.EyeLid || key.Contains("EyeLid", StringComparison.CurrentCultureIgnoreCase))
-            {
-                key = key.ToLower();
-                AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-                while (!loadOp.IsDone)
-                {
-                    yield return null;
-                }
-                if (loadOp.Status == AsyncOperationStatus.Failed)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(loadOp.Result, applyOn);
-                    yield break;
-                }
-                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
-                {
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result, applyOn);
-                }
+                GameManager.Instance.isStoreAssetDownloading = false;
+                //isTextureDownloaded = true;
             }
         }
     }
