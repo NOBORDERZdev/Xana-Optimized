@@ -71,6 +71,7 @@ public class XanaConstants : MonoBehaviour
     public bool isPresetHairColor = false;
     public bool isCameraMan;
     public bool isCameraManInRoom = false;
+    public bool isBackfromSns = false;
 
 
     public String MuseumID;

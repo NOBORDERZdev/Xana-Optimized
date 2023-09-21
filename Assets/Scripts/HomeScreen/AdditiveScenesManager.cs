@@ -15,6 +15,7 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     public GameObject SNSMessage;
     
+    public BottomTabManager homeBottomTab;
 
     private void Awake()
     {
@@ -96,6 +97,11 @@ public class AdditiveScenesManager : MonoBehaviour
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
         {
             Screen.orientation = ScreenOrientation.Portrait;
+        }
+        if (XanaConstants.xanaConstants.isBackfromSns)
+        {
+            homeBottomTab.OnClickFeedButton();
+            XanaConstants.xanaConstants.isBackfromSns=false;
         }
         //if (LoadingHandler.Instance != null)
         //{
