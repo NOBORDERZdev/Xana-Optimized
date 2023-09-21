@@ -300,6 +300,8 @@ namespace RFM
                 SpawnAIEscapees(roles.Item3);
             }
 
+            gameplayTimeText.gameObject.SetActive(false); // new
+            
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null, 
                 countDownText, AfterEachSecondCountdownTimer));
 
@@ -444,6 +446,7 @@ namespace RFM
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
+            gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
             statusBG.SetActive(false);
             statusMMFPlayer.PlayFeedbacks();

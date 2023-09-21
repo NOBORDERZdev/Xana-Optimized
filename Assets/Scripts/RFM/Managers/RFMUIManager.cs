@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace RFM
@@ -13,11 +12,18 @@ namespace RFM
         private void OnEnable()
         {
             RFM.EventsManager.onToggleHelpPanel += ToggleHelpPanel;
+            RFM.EventsManager.onCountdownStart += OnCountdownStart;
         }
-        
+
         private void OnDisable()
         {
             RFM.EventsManager.onToggleHelpPanel -= ToggleHelpPanel;
+            RFM.EventsManager.onCountdownStart -= OnCountdownStart;
+        }
+        
+        private void OnCountdownStart()
+        {
+            instructionsPanelPanel.SetActive(false);
         }
 
         public void ToggleHelpPanel()
