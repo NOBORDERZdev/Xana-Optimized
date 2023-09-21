@@ -262,6 +262,7 @@ namespace RFM
         private void StartRFMRPC()
         {
             StartCoroutine(StartRFM());
+            CancelInvoke(nameof(CheckForGameStartCondition));
         }
 
 
