@@ -13,7 +13,7 @@ public class SkyBoxesData : ScriptableObject
     {
         //foreach (SkyBoxItem item in skyBoxes)
         //{
-        //    item.shaderName = item.skyMaterial.shader.name;
+        //    Debug.LogError(item.skyId+" "+item.shaderName);
         //}
     }
 }
