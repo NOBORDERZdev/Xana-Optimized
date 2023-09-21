@@ -146,7 +146,11 @@ namespace RFM
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
                 {
-                    StartCoroutine(StartRFM());
+                    // StartCoroutine(StartRFM());
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                    }
                     CancelInvoke(nameof(CheckForGameStartCondition));
                 }
                 
@@ -175,7 +179,11 @@ namespace RFM
             if (PhotonNetwork.CurrentRoom.PlayerCount /*>*/== PhotonNetwork.CurrentRoom.MaxPlayers/*CurrentGameConfiguration.MinNumberOfPlayers*/)
             {
                 if (Globals.gameState != Globals.GameState.InLobby) return;
-                StartCoroutine(StartRFM());
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                }
+                // StartCoroutine(StartRFM());
             }
             else
             {
@@ -243,6 +251,13 @@ namespace RFM
             return (numberOfEscapees, numberOfHunters, numberOfAIEscapees, numberOfAIHunters);
         }
 
+        [PunRPC]
+        private void StartRFMRPC()
+        {
+            StartCoroutine(StartRFM());
+            CancelInvoke(nameof(CheckForGameStartCondition));
+        }
+
 
         private IEnumerator StartRFM()
         {
@@ -278,6 +293,8 @@ namespace RFM
                 SpawnAIEscapees(roles.Item3);
             }
 
+            gameplayTimeText.gameObject.SetActive(false); // new
+            
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null, 
                 countDownText, AfterEachSecondCountdownTimer));
 
@@ -422,6 +439,7 @@ namespace RFM
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
+            gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
             statusBG.SetActive(false);
             statusMMFPlayer.PlayFeedbacks();
