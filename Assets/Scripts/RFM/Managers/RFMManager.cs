@@ -146,7 +146,11 @@ namespace RFM
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
                 {
-                    StartCoroutine(StartRFM());
+                    // StartCoroutine(StartRFM());
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                    }
                     CancelInvoke(nameof(CheckForGameStartCondition));
                 }
                 
@@ -175,7 +179,11 @@ namespace RFM
             if (PhotonNetwork.CurrentRoom.PlayerCount /*>*/== PhotonNetwork.CurrentRoom.MaxPlayers/*CurrentGameConfiguration.MinNumberOfPlayers*/)
             {
                 if (Globals.gameState != Globals.GameState.InLobby) return;
-                StartCoroutine(StartRFM());
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                }
+                // StartCoroutine(StartRFM());
             }
             else
             {
@@ -241,6 +249,12 @@ namespace RFM
             }
 
             return (numberOfEscapees, numberOfHunters, numberOfAIEscapees, numberOfAIHunters);
+        }
+
+        [PunRPC]
+        private void StartRFMRPC()
+        {
+            StartCoroutine(StartRFM());
         }
 
 
