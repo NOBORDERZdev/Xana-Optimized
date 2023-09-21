@@ -28,8 +28,11 @@ public class JjWorldChanger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         triggerObject = other.gameObject;
-        CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
-       
+        if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
+        {
+            CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
+        }
+
     }
     public void RedirectToWorld()
     {
