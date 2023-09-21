@@ -68,7 +68,7 @@ public class WorldManager : MonoBehaviour
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
 
-    static int AutoSwtichIndex=0;
+    static int AutoSwtichIndex = 0;
 
     private void Awake()
     {
@@ -265,6 +265,8 @@ public class WorldManager : MonoBehaviour
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
+        Debug.LogError("Final URL " + finalAPIURL);
+        
         loadOnce = false;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
@@ -315,11 +317,14 @@ public class WorldManager : MonoBehaviour
     bool isLobbyActive = false;
     void InstantiateWorlds()
     {
+        Debug.LogError("InstantiateWorlds Called = "+ _WorldInfo.data.rows.Count);
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
+           // Debug.LogError("Name " + _WorldInfo.data.rows[i].name);
             GameObject TempObject;
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
+                Debug.LogError(i+ " --- XANA Lobby --");
                 isLobbyActive = true;
                 TempObject = eventPrefabLobby;
                 TempObject.transform.SetParent(listParent.transform.parent);
