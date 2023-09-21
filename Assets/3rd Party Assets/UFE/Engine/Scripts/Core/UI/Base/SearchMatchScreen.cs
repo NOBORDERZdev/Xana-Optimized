@@ -133,6 +133,10 @@ namespace UFE3D
             int unique = 0;
             if (matches != null)
             {
+                if (increamentCoroutine == null)
+                {
+                    increamentCoroutine = StartCoroutine(IncrementValueOverTime());
+                }
                 for (int i = 0; i < matches.Count; ++i)
                 {
                     if (matches[i] != null)
