@@ -103,12 +103,12 @@ namespace Climbing
 
         public void JumpAction(bool jump)
         {
-            photonView.RPC("JumpRPC", RpcTarget.All, jump);
+            GetComponent<PhotonView>().RPC("JumpRPC", RpcTarget.All, jump);
         }
 
         public void SlideAction(bool slide)
         {
-            photonView.RPC("SlideRPC", RpcTarget.All, slide);
+            GetComponent<PhotonView>().RPC("SlideRPC", RpcTarget.All, slide);
         }
         [PunRPC]
         public void JumpRPC(bool isJump)
