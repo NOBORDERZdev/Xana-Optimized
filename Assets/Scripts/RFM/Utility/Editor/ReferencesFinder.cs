@@ -63,10 +63,10 @@ public class ReferencesFinder : MonoBehaviour
                     {
                         Debug.LogError("Reference found on: " + field, component);
                     }
-                    else
-                    {
-                        Debug.LogError("No references found");
-                    }
+                    // else
+                    // {
+                    //     Debug.LogError("No references found");
+                    // }
                 }
             }
         }
