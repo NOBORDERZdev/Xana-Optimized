@@ -99,6 +99,15 @@ public class ScrollActivity : MonoBehaviour
     }
     public void WaitForOpenWorldPage()
     {
-        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+        //ScrollController.transform.DOPunchPosition();
+       DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0.95f, 0.1f).SetEase(Ease.InSine).OnComplete(BounceBack);
+
     }
+
+    void BounceBack(){ 
+        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.OutSine).OnComplete(()=> { 
+        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+        } ); 
+    }
+
 }
