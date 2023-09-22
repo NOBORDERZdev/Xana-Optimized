@@ -55,6 +55,7 @@ public class CinemachineTouchControls : MonoBehaviour
         }
 
         // Handle pinch-to-zoom
+        /*
         if (Input.touchCount == 2)
         {
             Touch touch0 = Input.GetTouch(0);
@@ -70,6 +71,7 @@ public class CinemachineTouchControls : MonoBehaviour
             freeLookCamera.m_Lens.FieldOfView -= zoomDifference * zoomSpeed * Time.deltaTime;
             freeLookCamera.m_Lens.FieldOfView = Mathf.Clamp(freeLookCamera.m_Lens.FieldOfView, minZoom, maxZoom);
         }
+        */
     }
 
     private bool IsTouchOverImage(Vector2 touchPosition)
