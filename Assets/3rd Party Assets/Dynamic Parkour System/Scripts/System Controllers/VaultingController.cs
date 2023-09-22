@@ -91,7 +91,7 @@ namespace Climbing
 
         void Update()
         {
-            if (!controller.photonView.IsMine) return;
+            //if (!controller.photonView.IsMine) return;
             
             if (!controller.isVaulting)
             {
