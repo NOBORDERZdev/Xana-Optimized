@@ -11,7 +11,7 @@ namespace XanaAi
 {
     public class AiEmote : MonoBehaviour
     {
-        [SerializeField]AiController ai;
+        [SerializeField] AiController ai;
         [SerializeField] Animator animationController;
         public RuntimeAnimatorController controller;
         GameObject spawnCharacterObjectRemote;
@@ -19,12 +19,10 @@ namespace XanaAi
         [SerializeField] int maxAnimTime;
         [SerializeField] WanderingAI wandering;
         [SerializeField] NavMeshAgent agent;
-        //[SerializeField] List<string> EmoteUrl;
+        private Coroutine emotCoroutine;
+
         private void Awake()
         {
-           // ai = GetComponent<AiController>();
-            //animationController = GetComponent<Animator>();
-            //wandering = GetComponent<WanderingAI>();
             controller = EmoteAnimationPlay.Instance.controller;
             spawnCharacterObjectRemote = EmoteAnimationPlay.Instance.spawnCharacterObjectRemote;
         }
@@ -36,22 +34,23 @@ namespace XanaAi
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
                 int rand;
-                rand= UnityEngine.Random.Range(0, EmoteAnimationPlay.Instance.emoteAnim.Count);
-                //print("PLAYING EMOTE WITH RNAD "+ rand);
-                if (EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Dance") ||EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Moves"))
+                rand = UnityEngine.Random.Range(0, (EmoteAnimationPlay.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationPlay.Instance.emoteAnim.Count)); // EmoteAnimationPlay.Instance.emoteAnim.Count
+                Debug.Log("<color=red> rand: " + rand + "</color>");
+                if (EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Dance") || EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Moves"))
                 {
-                    string BundleUrl ;
+                    string BundleUrl;
                     string name = EmoteAnimationPlay.Instance.emoteAnim[rand].name;
-                #if UNITY_ANDROID
+#if UNITY_ANDROID
                     BundleUrl = /*"https://cdn.xana.net/apitestxana/Defaults/1647854961406_animation.android"*/ EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
-                #elif UNITY_IOS
+#elif UNITY_IOS
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].ios_file;
-                #elif UNITY_EDITOR
+#elif UNITY_EDITOR
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
-                #endif
+#endif
                     string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
-                    if (EmoteAnimationPlay.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d"))){
-                        StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
+                    if (EmoteAnimationPlay.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")))
+                    {
+                        emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
                     }
                     else
                     {
@@ -102,11 +101,11 @@ namespace XanaAi
                                 {
                                     print(" EXCEPTION OCCUR ");
                                     ai.isPerformingAction = false;
-                                    if (ai.ActionCoroutine !=null)
+                                    if (ai.ActionCoroutine != null)
                                     {
                                         ai.StopCoroutine(ai.ActionCoroutine);
                                     }
-                                    ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
+                                    ai.ActionCoroutine = ai.StartCoroutine(ai.PerformAction());
                                     throw;
                                 }
                             }
@@ -116,17 +115,17 @@ namespace XanaAi
                 else
                 {
                     ai.isPerformingAction = false;
-                    if (ai.ActionCoroutine !=null)
+                    if (ai.ActionCoroutine != null)
                     {
                         ai.StopCoroutine(ai.ActionCoroutine);
                     }
-                    ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
+                    ai.ActionCoroutine = StartCoroutine(ai.PerformAction());
                 }
             }
         }
 
-        IEnumerator LoadAssetBundleFromStorage(string bundlePath){
-            
+        IEnumerator LoadAssetBundleFromStorage(string bundlePath)
+        {
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
@@ -135,38 +134,22 @@ namespace XanaAi
             if (assetBundle == null)
             {
                 Debug.Log("Failed to load AssetBundle!");
-                 ai.isPerformingAction = false;
-                if (ai.ActionCoroutine !=null)
+                ai.isPerformingAction = false;
+                if (ai.ActionCoroutine != null)
                 {
-                    ai.StopCoroutine(ai.ActionCoroutine);
+                    StopCoroutine(ai.ActionCoroutine);
                 }
-                ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
+                ai.ActionCoroutine = StartCoroutine(ai.PerformAction());
                 yield break;
             }
-            else 
+            else
             {
                 AssetBundleRequest newRequest = assetBundle.LoadAllAssetsAsync<GameObject>();
                 while (!newRequest.isDone)
                 {
                     yield return null;
                 }
-                if (newRequest.isDone)
-                {
 
-                    //if (currentAnimationTab.Equals("Etc"))
-                    //{
-                    //    if (animatorremote.GetBool("EtcAnimStart"))
-                    //    {
-                    //        animatorremote.SetBool("EtcAnimStart", false);
-                    //        //animatorremote.SetBool("moveToNextAnim", true);
-                    //    }
-                    //    else
-                    //    {
-                    //        //animatorremote.SetBool("moveToNextAnim", false);
-                    //        animatorremote.SetBool("EtcAnimStart", true);
-                    //        animatorremote.SetBool("Stand", false);
-                    //    }
-                }
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
                 {
@@ -186,7 +169,6 @@ namespace XanaAi
                             animationController.runtimeAnimatorController = overrideController;
                             animationController.SetBool("IsEmote", true);
                         }
-
                     }
                     else
                     {
@@ -195,61 +177,55 @@ namespace XanaAi
                     }
                 }
                 Invoke(nameof(StopAiEmote), UnityEngine.Random.Range(minAnimTime, maxAnimTime));
-                if(assetBundle != null)
+                if (assetBundle != null)
                     assetBundle.Unload(false);
             }
-         }
 
-        void SaveAssetBundle(byte[] data, string name ){
-        //Create the Directory if it does not exist
-        string path = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
-        if (!Directory.Exists(Path.GetDirectoryName(path)))
+            emotCoroutine = null;
+        }
+
+        void SaveAssetBundle(byte[] data, string name)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            //Create the Directory if it does not exist
+            string path = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+            try
+            {
+                File.WriteAllBytes(path, data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Failed To Save Data to: " + path.Replace("/", "\\"));
+                Debug.LogWarning("Error: " + e.Message);
+            }
         }
 
-        try
+        void StopAiEmote()
         {
-            File.WriteAllBytes(path, data);
-            //if (id.GetComponent<PhotonView>().IsMine)
-            //{
-            //    MyAnimLoader = false;
-            //    isFetchingAnim = false;
-            //    isAnimRunning = true;
-
-            //    if (AnimObject != null)
-            //    {
-            //        AnimObject.transform.GetChild(3).gameObject.SetActive(false);
-            //    }
-            //    AnimationStarted?.Invoke(remoteUrlAnimationName);
-            //}
-        }
-        catch (Exception e)
-        {
-            Debug.LogWarning("Failed To Save Data to: " + path.Replace("/", "\\"));
-            Debug.LogWarning("Error: " + e.Message);
-        }
-        }
-
-        void StopAiEmote(){
             animationController.runtimeAnimatorController = controller;
             animationController.SetBool("IsGrounded", true);
-            animationController.SetBool("IsEmote",false); 
+            animationController.SetBool("IsEmote", false);
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             ai.isPerformingAction = false;
-            if (ai.ActionCoroutine !=null)
-            {
-                ai.StopCoroutine(ai.ActionCoroutine);
-            }
-            ai.ActionCoroutine =  ai.StartCoroutine( ai.PerformAction());
+
+            if (ai.ActionCoroutine != null)
+                StopCoroutine(ai.ActionCoroutine);
+
+            ai.ActionCoroutine = StartCoroutine(ai.PerformAction());
         }
 
-        public void ForceFullyStopEmote(){ 
-                        
+        public void ForceFullyStopEmote()
+        {
+            if (emotCoroutine != null)
+                StopCoroutine(emotCoroutine);
+
             animationController.runtimeAnimatorController = controller;
             animationController.SetBool("IsGrounded", true);
-            animationController.SetBool("IsEmote",false); 
+            animationController.SetBool("IsEmote", false);
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
         }
