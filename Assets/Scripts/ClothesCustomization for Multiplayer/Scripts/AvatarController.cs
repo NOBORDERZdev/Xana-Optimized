@@ -245,7 +245,11 @@ public class AvatarController : MonoBehaviour
                                 //getHairColorFormFile = true;
                                 if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                 {
-                                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj
+                                        (
+                                        _CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, 
+                                        this.gameObject.GetComponent<AvatarController>(), Color.clear)
+                                        );
                                 }
                                 else
                                 {

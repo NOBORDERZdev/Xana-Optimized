@@ -175,7 +175,10 @@ public class BuilderMapDownload : MonoBehaviour
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
-        
+        while (!XanaConstants.isAddressableCatalogDownload)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
         for (int i = 0; i < count; i++)
         {
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");

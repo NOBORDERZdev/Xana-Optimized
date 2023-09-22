@@ -835,6 +835,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (!isEnvLoaded)
         {
+            while (!XanaConstants.isAddressableCatalogDownload)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
             if (environmentLabel.Contains(" : "))
             {
                 string name = environmentLabel.Replace(" : ", string.Empty);

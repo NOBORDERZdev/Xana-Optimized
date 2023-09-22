@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.Exceptions;
 
 public class AddressableDownloader : MonoBehaviour
 {
@@ -38,11 +41,12 @@ public class AddressableDownloader : MonoBehaviour
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
             catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
-            AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath);
+            AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath,true);
             DownloadingCatalog.Completed += OnCatalogDownload;
 #else
 BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
-        AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
+        AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath,true);
+            Debug.LogError(buildScriptableObject.addressableCatalogFilePath);
         DownloadingCatalog.Completed += OnCatalogDownload;
 #endif
 
@@ -52,12 +56,39 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
 
     void OnCatalogDownload(AsyncOperationHandle handle)
     {
+        Debug.LogError("Status == "+handle.Status);
         if (handle.Status == AsyncOperationStatus.Succeeded)
-            XanaConstants.isAddressableCatalogDownload = true;
-        else
-            isDownloading = false;
-    }
+        {
+            //XanaConstants.isAddressableCatalogDownload = true;
+        XanaConstants.isAddressableCatalogDownload = true;
 
+            //StartCoroutine(CheckCatalogs());
+        }
+        else
+        {
+            XanaConstants.isAddressableCatalogDownload = true;
+            isDownloading = false;
+        }
+
+    }
+    IEnumerator CheckCatalogs()
+    {
+        List<string> catalogsToUpdate = new List<string>();
+        AsyncOperationHandle<List<string>> checkForUpdateHandle;
+        checkForUpdateHandle = Addressables.CheckForCatalogUpdates();
+        checkForUpdateHandle.Completed += op => { catalogsToUpdate.AddRange(op.Result); };
+        yield return checkForUpdateHandle;
+
+        if (catalogsToUpdate.Count > 0)
+        {
+            AsyncOperationHandle<List<IResourceLocator>> updateHandle = Addressables.UpdateCatalogs(catalogsToUpdate);
+            yield return updateHandle;
+            Addressables.Release(updateHandle);
+        }
+        Debug.LogError("catalogsToUpdate.Count == " + catalogsToUpdate.Count);
+        Addressables.Release(checkForUpdateHandle);
+        XanaConstants.isAddressableCatalogDownload = true;
+    }
     //public int appliedItemsInPresets = 0;
     //public bool isTextureDownloaded = false;
     /// <summary>
@@ -66,7 +97,12 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
     /// <param name="name">tag or key of a addressable object</param>
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
-       // print("Addressable download object call for " + itemId + " key" +key+ " type" + type+ " applyOn" +  applyOn);
+        while (!XanaConstants.isAddressableCatalogDownload)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // print("Addressable download object call for " + itemId + " key" +key+ " type" + type+ " applyOn" +  applyOn);
         Resources.UnloadUnusedAssets();
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -101,17 +137,22 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             yield return loadOp;
             //while (!loadOp.IsDone)
             //    yield return loadOp;
-            ///  print("~~~~~~LOG~~~~~~~~~~");
-           // print("~~~~~~LOG" + loadOp.Result);
+            Debug.LogError("~~~~~~LOG~~~~~~~~~~");
+            Debug.LogError("~~~~~~LOG" + loadOp.Result);
             if (loadOp.Result== null)
             {
-               // print("RECALLING DOWNLOAD " + itemId + key + type + applyOn+mulitplayerHairColor );
-               // StartCoroutine(DownloadAddressableObj(itemId,key,type,applyOn,mulitplayerHairColor));
-               applyOn.WearDefaultItem(type,applyOn.gameObject);
-               yield break;
+                AsyncOperationHandle < bool > checker = Addressables.ClearDependencyCacheAsync(key,false);
+                yield return checker;
+                Debug.LogError("~~~~~~LOG" + checker.Result);
+
+                StartCoroutine (DownloadAddressableObj(itemId,  key, type,  applyOn,  mulitplayerHairColor,  applyHairColor,  callFromMultiplayer));
+                // print("RECALLING DOWNLOAD " + itemId + key + type + applyOn+mulitplayerHairColor );
+                // StartCoroutine(DownloadAddressableObj(itemId,key,type,applyOn,mulitplayerHairColor));
+                //applyOn.WearDefaultItem(type,applyOn.gameObject);
+                yield break;
             }
 
-            if (loadOp.Status == AsyncOperationStatus.Failed  )
+            if (loadOp.Status == AsyncOperationStatus.Failed)
             {
                // print("LOAD OP FAILED ");
                 if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
@@ -213,6 +254,10 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
 
     public IEnumerator DownloadAddressableTexture(string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
     {
+        while (!XanaConstants.isAddressableCatalogDownload)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
         CurrentTextureType type = 0;
         if (nFTOjectType == 0)
         {
@@ -282,10 +327,16 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                 StoreManager.instance.loaderForItems.SetActive(true);
             AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
             yield return loadOp;
-
-            if (loadOp.Result== null)
+            if (loadOp.Result == null)
             {
-                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
+                Debug.LogError("~~~~~~LOG~~~~~~~~~~");
+                Debug.LogError("~~~~~~LOG" + loadOp.Result);
+                Addressables.ClearDependencyCacheAsync(key);
+               // Addressables.CleanBundleCache(key);
+              //  Addressables.cl
+                yield return new WaitForSeconds(2f);
+                StartCoroutine(DownloadAddressableTexture(key, applyOn, nFTOjectType));
+               // applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
                 yield break;
             }
             if (loadOp.Status == AsyncOperationStatus.Failed)
@@ -301,6 +352,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                 }
                 applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
                 yield break;
+                
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
