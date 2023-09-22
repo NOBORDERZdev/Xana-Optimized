@@ -121,7 +121,6 @@ namespace Climbing
         }
 
         [PunRPC]
-
         public void SlideRPC(bool isDrop, int photonViewId)
         {
             Debug.LogError("SlideRPC Called: " + isDrop + "  " + photonViewId + "  " + GetComponent<PhotonView>().ViewID);
