@@ -74,15 +74,18 @@ namespace Climbing
         private void Awake()
         {
             photonView = transform.parent.GetComponent<PhotonView>();
-            
+
             if (photonView.IsMine)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
+                CanvasButtonsHandler.inst.jumpAction += JumpAction;
+                CanvasButtonsHandler.inst.slideAction += SlideAction;
             }
             else
             {
                 characterInput = GetComponent<InputCharacterController>();
             }
+
             characterMovement = GetComponent<MovementCharacterController>();
             characterAnimation = GetComponent<AnimationCharacterController>();
             characterDetection = GetComponent<DetectionCharacterController>();
@@ -98,11 +101,39 @@ namespace Climbing
             characterMovement.OnFall += characterAnimation.Fall;
         }
 
+        public void JumpAction(bool jump)
+        {
+            photonView.RPC("JumpRPC", RpcTarget.All, jump);
+        }
+
+        public void SlideAction(bool slide)
+        {
+            photonView.RPC("SlideRPC", RpcTarget.All, slide);
+        }
+        [PunRPC]
+        public void JumpRPC(bool isJump)
+        {
+            if (!photonView.IsMine)
+            {
+                characterInput.jump = isJump;
+            }
+        }
+
+        [PunRPC]
+
+        public void SlideRPC(bool isDrop)
+        {
+            if (!photonView.IsMine)
+            {
+                characterInput.drop = isDrop;
+            }
+        }
+
         void Update()
         {
             //Detect if Player is on Ground
             isGrounded = OnGround();
-            
+
             if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
 
             //Get Input if controller and movement are not disabled
@@ -150,7 +181,8 @@ namespace Climbing
             {
                 //Gets direction of movement relative to the camera rotation
                 freeCamera.eulerAngles = new Vector3(0, mainCamera.eulerAngles.y, 0);
-                /*Vector3 */translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
+                /*Vector3 */
+                translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
                 translation.y = 0;
             }
 
