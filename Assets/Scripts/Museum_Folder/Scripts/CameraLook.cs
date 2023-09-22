@@ -187,7 +187,6 @@ public class CameraLook : MonoBehaviour
         }
         
         float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
-        print("~~~~~ Dist" + dist);
         if (dist< 0.2f)
         {
             charcterBody.HidePlayer();
