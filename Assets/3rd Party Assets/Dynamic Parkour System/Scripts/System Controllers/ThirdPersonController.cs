@@ -113,6 +113,7 @@ namespace Climbing
         [PunRPC]
         public void JumpRPC(bool isJump)
         {
+            Debug.LogError("JumpRPC Called: " + isJump);
             if (!photonView.IsMine)
             {
                 characterInput.jump = isJump;
@@ -123,6 +124,7 @@ namespace Climbing
 
         public void SlideRPC(bool isDrop)
         {
+            Debug.LogError("SlideRPC Called: " + isDrop);
             if (!photonView.IsMine)
             {
                 characterInput.drop = isDrop;
