@@ -58,7 +58,7 @@ public class CameraLook : MonoBehaviour
     public bool isRotatingScreen = false;
 
     CharcterBodyParts charcterBody;
-    GameObject playermesh;
+    [SerializeField] GameObject pointObj;
     GameObject camRender;
     private void OnEnable()
     {
@@ -174,11 +174,11 @@ public class CameraLook : MonoBehaviour
     /// To check is camera in player mesh
     /// </summary>
     void CameraPlayerMeshCollosionFind(){
-        if (charcterBody == null || playermesh  == null )
+        if (charcterBody == null || pointObj  == null )
         {
             if(ReferrencesForDynamicMuseum.instance.m_34player){ 
                 charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
-                playermesh = charcterBody.Body.gameObject;
+               // pointObj = charcterBody.Body.gameObject;
             }
             else
             {
@@ -186,8 +186,9 @@ public class CameraLook : MonoBehaviour
             }
         }
         
-        float dist = Vector3.Distance(camRender.transform.position, playermesh.transform.position);
-        if (dist< 1.4f)
+        float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
+        print("~~~~~ Dist" + dist);
+        if (dist< 0.2f)
         {
             charcterBody.HidePlayer();
         }
