@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,10 @@ public class AdditiveScenesManager : MonoBehaviour
     private void Start()
     {
         //StartCoroutine(LoadScenes());
+
+        if (XanaConstants.xanaConstants != null && XanaConstants.xanaConstants.isBackFromWorld && LoadingHandler.Instance != null)
+            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.Portrait);
+
         StartCoroutine(AddDelay(sceneDelay));
         StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
         StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
@@ -92,11 +97,17 @@ public class AdditiveScenesManager : MonoBehaviour
             yield return null;
         }
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        LoadingHandler.Instance.HideLoading();
+
+        
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
         {
-            Screen.orientation = ScreenOrientation.Portrait;
+            //Debug.LogError("~~~~~ Waqas_ AdditiveSceneManager ~~~~~~~~~~~");
+            if (!XanaConstants.xanaConstants.isBackFromWorld)
+            {
+                Screen.orientation = ScreenOrientation.Portrait;
+            }
         }
+        LoadingHandler.Instance.HideLoading();
         //if (LoadingHandler.Instance != null)
         //{
         //    if (Screen.orientation == ScreenOrientation.Landscape)
