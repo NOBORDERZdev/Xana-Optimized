@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-// using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
@@ -18,6 +18,12 @@ namespace RFM
 {
     public class RFMManager : MonoBehaviourPunCallbacks
     {
+        #region Photon Events Codes
+
+        public const byte ResetPositionEventCode = 6;
+
+        #endregion
+        
         [Serializable]
         public class GameConfiguration
         {
@@ -66,7 +72,7 @@ namespace RFM
         private PlayerControllerNew player;
         private RFMMissionsManager missionsManager;
 
-        public static int NumOfActivePlayers;
+        // public static int NumOfActivePlayers;
 
         [HideInInspector] public GameConfiguration CurrentGameConfiguration;
 
@@ -117,6 +123,8 @@ namespace RFM
             base.OnEnable();
             EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onRestarting += ActivatePlayer;
+
+            PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
 
         public override void OnDisable()
@@ -124,6 +132,8 @@ namespace RFM
             base.OnDisable();
             EventsManager.onPlayerCaught -= PlayerCaught;
             EventsManager.onRestarting -= ActivatePlayer;
+            
+            PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
         private IEnumerator Start()
@@ -276,7 +286,7 @@ namespace RFM
                 PhotonNetwork.CurrentRoom.IsOpen = false;
             }
 
-            NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
+            // NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -300,26 +310,21 @@ namespace RFM
 
             if (PhotonNetwork.IsMasterClient)
             {
-                photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
+                // photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
+                PhotonNetwork.RaiseEvent(ResetPositionEventCode, null,
+                    new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                    SendOptions.SendReliable);
             }
         }
 
         [PunRPC]
-        private void CreateLeaderboardEntry(/*Dictionary<string, int> entry*/string nickName, int money)
+        private void CreateLeaderboardEntry(string nickName, int money)
         {
-            // AddLeaderboardEntry(entry.ElementAt(0).Key, entry.ElementAt(0).Value);
-            // AddLeaderboardEntry(nickName, money);
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
             entry.Init(nickName, money.ToString());
         }
-        
-        // private void AddLeaderboardEntry(string nickName, int amount)
-        // {
-        //     var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-        //     entry.Init(nickName, amount.ToString());
-        // }
 
-        [PunRPC]
+        // [PunRPC]
         private void ResetPosition()
         {
             int numOfHunters = 0;
@@ -603,6 +608,18 @@ namespace RFM
         }
 
         #endregion
+
+        private void ReceivePhotonEvents(EventData photonEvent)
+        {
+            switch (photonEvent.Code)
+            {
+                case ResetPositionEventCode:
+                {
+                    ResetPosition();
+                    break;
+                }
+            }
+        }
 
         #region Photon Callbacks
 
