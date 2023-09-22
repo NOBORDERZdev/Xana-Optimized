@@ -51,8 +51,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 7942164388486371721}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -109,6 +108,9 @@ GameObject:
   - component: {fileID: 5556358534646836584}
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
+  - component: {fileID: 6600868634286491041}
+  - component: {fileID: 6399635851196118119}
+  - component: {fileID: 6710238650612245467}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -246,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e4e8fc79c695540bc086f95f326b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   rb: {fileID: 0}
   limitMovement: 0
   stopMotion: 0
@@ -420,19 +422,19 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: RightFootCurve
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Released
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Run
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Jump
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: onAir
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Land
   - Type: 4
     SynchronizeType: 1
@@ -450,11 +452,68 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: Crouch
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: PredictedJump
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &6600868634286491041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7942164388486371721}
+  - {fileID: 6710238650612245467}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6399635851196118119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3ccb252414bc46a44e428b27b1c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOtherPlayer: 1
+  movement: {x: 0, y: 0}
+  run: 0
+  jump: 0
+  drop: 0
+--- !u!114 &6710238650612245467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -976,11 +1035,19 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8197348955215640157, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4103329689062137058, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
     - {fileID: 7964837646991022719, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
     - {fileID: 2723799861303128060, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
     - {fileID: 3930308123448640186, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+    - {fileID: 4903118000794749444, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+    - {fileID: 7980377504355385946, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+    - {fileID: 4317905207048552268, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+    - {fileID: 5926118722746936117, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
 --- !u!1 &2039897580762485415 stripped
 GameObject:

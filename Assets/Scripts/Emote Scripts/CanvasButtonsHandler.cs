@@ -7,6 +7,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.InputSystem.OnScreen;
 using Climbing;
+using System;
 
 public class CanvasButtonsHandler : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject runBtn;
     public GameObject favouriteBtn;
 
+
+    public Action<bool> jumpAction;
+    public Action<bool> slideAction;
     [Header("FPS Button Reference")]
     public GameObject fPSButton;
 
@@ -71,6 +75,15 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     }
 
+    public void HandleJumpBtnAction(bool jump)
+    {
+        jumpAction?.Invoke(jump);
+    }
+
+    public void HandleSlideBtnAction(bool slide)
+    {
+        slideAction?.Invoke(slide);
+    }
     public void OnSpiritButtonDown()
     {
         if (isSpiritInUse)

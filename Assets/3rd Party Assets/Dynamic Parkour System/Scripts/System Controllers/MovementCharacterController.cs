@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -269,8 +270,9 @@ namespace Climbing
             return false;
         }
 
-        public Vector3 GetVelocity() { 
-            return rb.velocity; 
+        public Vector3 GetVelocity()
+        {
+            return rb.velocity;
         }
 
         public void SetVelocity(Vector3 value)
@@ -332,11 +334,27 @@ namespace Climbing
         public void Fall()
         {
             controller.onAir = true;
+            if (!GetComponent<PhotonView>().IsMine)
+            {
+                Debug.Log("Fall RPC Call for other");
+            }
+            else
+            {
+                Debug.Log("Fall RPC Call for me");
+            }
             OnFall();
         }
 
         public void Landed()
         {
+            if (!GetComponent<PhotonView>().IsMine)
+            {
+                Debug.Log("Landed RPC Call for other");
+            }
+            else
+            {
+                Debug.Log("Landed RPC Call for me");
+            }
             OnLanded();
             controller.isJumping = false;
             controller.onAir = false;
@@ -447,7 +465,7 @@ namespace Climbing
             }
             else if (controller.characterDetection.ThrowRayOnDirection(transform.position + offset, transform.TransformDirection(new Vector3(-1.5f, 0, 1)), controller.slidingCapsuleCollider.radius + 0.1f, out hit))
             {
-                if (!controller.characterDetection.ThrowRayOnDirection(transform.position + offset + new Vector3(0, controller.stepHeight, 0), transform.TransformDirection(new Vector3(-1.5f,0,1)), controller.slidingCapsuleCollider.radius + 0.2f, out hit))
+                if (!controller.characterDetection.ThrowRayOnDirection(transform.position + offset + new Vector3(0, controller.stepHeight, 0), transform.TransformDirection(new Vector3(-1.5f, 0, 1)), controller.slidingCapsuleCollider.radius + 0.2f, out hit))
                 {
                     rb.position += new Vector3(0, controller.stepVelocity, 0);
                 }
