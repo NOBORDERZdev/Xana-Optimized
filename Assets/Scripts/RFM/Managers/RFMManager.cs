@@ -327,6 +327,8 @@ namespace RFM
         // [PunRPC]
         private void ResetPosition()
         {
+            Debug.LogError("RFM ResetPosition()");
+            
             int numOfHunters = 0;
             
             if (PhotonNetwork.MasterClient.CustomProperties.TryGetValue("numberOfPlayerHunters", out var x))
@@ -611,6 +613,8 @@ namespace RFM
 
         private void ReceivePhotonEvents(EventData photonEvent)
         {
+            Debug.LogError("RFM Photon Event Received with code: " + photonEvent.Code);
+            
             switch (photonEvent.Code)
             {
                 case ResetPositionEventCode:

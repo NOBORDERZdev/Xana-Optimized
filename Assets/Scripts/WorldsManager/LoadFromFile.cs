@@ -408,7 +408,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
         {
-            RFM.Globals.player = player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
+            
             PlayerCamera.gameObject.SetActive(false);
             environmentCameraRender.gameObject.SetActive(false);
             mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
@@ -504,7 +506,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
         {
-            RFM.Globals.player = player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj.
+            
             PlayerCamera.gameObject.SetActive(false);
             environmentCameraRender.gameObject.SetActive(false);
             Debug.LogError("entered in RFMDummy Scene");
