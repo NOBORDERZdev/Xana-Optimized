@@ -15,6 +15,8 @@ namespace RFM
         private void Awake()
         {
             _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
+            
+            ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
         }
 
         private void OnEnable()
