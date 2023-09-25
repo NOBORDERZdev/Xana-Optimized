@@ -12,12 +12,14 @@ public class BlindfoldedDisplayComponent : ItemComponent
     SkinnedMeshRenderer[] skinMesh;
     Collider[] childCollider;
     MeshRenderer[] childMesh;
+    string RuntimeItemID = "";
 
     bool notTriggerOther = false;
 
     public void Init(BlindfoldedDisplayComponentData blindfoldedDisplayComponentData)
     {
         this.blindfoldedDisplayComponentData = blindfoldedDisplayComponentData;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void Start()
@@ -32,26 +34,13 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
-            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
-            GamificationComponentData.instance.playerControllerNew.isThrow = false;
-            BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
-            raycast = GamificationComponentData.instance.raycast;
-
-            Physics.IgnoreLayerCollision(9, 22, true);
-
-            if (blindfoldedDisplayComponentData.footprintPaintAvatar)
-            {
-                SetFootPrinting(other.gameObject);
-            }
-            else if (blindfoldedDisplayComponentData.invisibleAvatar)
-            {
-                SetAvatarInvisibility();
-            }
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.OthersBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
     }
 
-    private void SetFootPrinting(GameObject other)
+    private void SetFootPrinting()
     {
         Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
         //shoes.localPosition = Vector3.forward * 0.761f;
@@ -153,8 +142,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
             Physics.IgnoreLayerCollision(9, 22, false);
         }
         notTriggerOther = false;
-
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
     IEnumerator BackToAvatarVisiblityHologram()
@@ -183,6 +171,66 @@ public class BlindfoldedDisplayComponent : ItemComponent
             Physics.IgnoreLayerCollision(9, 22, false);
         }
         notTriggerOther = false;
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
+
+    #region BehaviourControl
+
+    private void StartComponent()
+    {
+        //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
+        //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
+        //GamificationComponentData.instance.playerControllerNew.isThrow = false;
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
+        raycast = GamificationComponentData.instance.raycast;
+
+        Physics.IgnoreLayerCollision(9, 22, true);
+
+        if (blindfoldedDisplayComponentData.footprintPaintAvatar)
+        {
+            SetFootPrinting();
+        }
+        else if (blindfoldedDisplayComponentData.invisibleAvatar)
+        {
+            SetAvatarInvisibility();
+        }
+    }
+    private void StopComponent()
+    {
+        //ther is no Stop because in this case the player have no colliders they are invisible
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.BlindfoldedDisplayComponent;
+    }
+
+    #endregion
 }
