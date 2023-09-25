@@ -106,7 +106,7 @@ public class CharacterType : MonoBehaviourPunCallbacks
                 if (ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterType>().playerType == PlayerType.Judge)
                     ReferrencesForDynamicMuseum.instance.startShowBtn.gameObject.SetActive(true);
             }
-            else if (Launcher.instance.playerobjects[i].GetComponent<CharacterType>().playerType == CharacterType.PlayerType.Judge)
+            else if (Launcher.instance.playerobjects[i].GetComponent<CharacterType>().playerType == CharacterType.PlayerType.Contestents)
             {
                 if (ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterType>().playerType == PlayerType.Contestents)
                 {
