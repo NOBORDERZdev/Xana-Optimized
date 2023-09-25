@@ -26,7 +26,7 @@ public class AdditiveScenesManager : MonoBehaviour
     {
         //StartCoroutine(LoadScenes());
 
-        if (XanaConstants.xanaConstants != null && XanaConstants.xanaConstants.isBackFromWorld && LoadingHandler.Instance != null)
+        if (!XanaConstants.xanaConstants.JjWorldSceneChange && XanaConstants.xanaConstants != null && XanaConstants.xanaConstants.isBackFromWorld && LoadingHandler.Instance != null)
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.Portrait);
 
         StartCoroutine(AddDelay(sceneDelay));
