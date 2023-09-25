@@ -118,11 +118,11 @@ public class XLWorldInfo : MonoBehaviour
         {
             if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
             {
-                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].description, _texture,MediaType.Image);
+                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture,MediaType.Image);
             }
             else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].description, _texture, MediaType.Image);
+                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture, MediaType.Image);
             }
         }
     }

@@ -89,12 +89,24 @@ public class XanaLobbyManager : MonoBehaviour
                     {
                         //worldsInfo[i].Type = MediaType.Image;
                         placedWorldsList[i].GetComponent<XLWorldInfo>().InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
-                        placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.WorldName = worldsData[i].metaverseWorld.world_name;
+                        placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.WorldName = worldsData[i].world_name;
                         if(APIBaseUrlChange.instance.IsXanaLive)
                             placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.MainNet = worldsData[i].world_id;
                         else
                             placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.testNet = worldsData[i].world_id;
-                        if(worldsData[j].entity_type==)
+                        if (worldsData[j].entity_type == EntityType.USER_WORLD.ToString())
+                        {
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = true;
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = false;
+                        }else if (worldsData[j].entity_type == EntityType.MUSEUMS.ToString())
+                        {
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = false;
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = true;
+                        }else
+                        {
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = false;
+                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = false;
+                        }
                         //worldsInfo[i].Title = worldsData[i].title;
                         //worldsInfo[i].Aurthor = worldsData[i].authorName;
                         //worldsInfo[i].Des = worldsData[i].description;
@@ -225,10 +237,10 @@ public class XanaLobbyData
     public string creator_type;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public MetaverseWorld metaverseWorld;
+    public Users users;
 }
 [Serializable]
-public class MetaverseWorld
+public class Users
 {
-    public string world_name;
+    public string name;
 }

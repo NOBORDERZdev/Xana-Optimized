@@ -10,11 +10,11 @@ public class JjWorldChanger : MonoBehaviour
     [SerializeField] bool HaveMultipleSpwanPoint;
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
-    [SerializeField] bool isMusuem;
+    public bool isMusuem;
     public int testNet; 
     public int MainNet;
     [Header("Builder")]
-    [SerializeField] bool isBuilderWorld; 
+    public bool isBuilderWorld; 
 
     Collider collider;
 
@@ -60,7 +60,11 @@ public class JjWorldChanger : MonoBehaviour
     /// </summary>
     private IEnumerator swtichScene(string worldName)
     {
-        
+        if (worldName.Contains(" : "))
+        {
+            string name = worldName.Replace(" : ", string.Empty);
+            worldName = name;
+        }
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
