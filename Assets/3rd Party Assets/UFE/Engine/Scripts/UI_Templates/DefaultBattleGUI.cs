@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UFE3D;
 using Photon.Pun;
 using System.Collections;
+using System.IO;
 
 public class DefaultBattleGUI : BattleGUI{
 	#region public class definitions
@@ -501,7 +502,7 @@ public class DefaultBattleGUI : BattleGUI{
 		if (this.player1GUI != null && this.player1GUI.portrait != null){
 			if (cPlayer1.myInfo.profilePictureSmall != null){
 				this.player1GUI.portrait.gameObject.SetActive(true);
-				if (UFE.gameMode == GameMode.TrainingRoom)
+				/*if (UFE.gameMode == GameMode.TrainingRoom)
 				{
 					setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
                 }
@@ -519,13 +520,18 @@ public class DefaultBattleGUI : BattleGUI{
 					{
 						setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player1GUI.portrait);
 					}
-				}
+				}*/
+
+					Texture2D pt1= NativeGallery.LoadImageAtPath(Path.Combine(Application.persistentDataPath + "player1.png"));
+                this.player1GUI.portrait.sprite = Sprite.Create(pt1, new Rect(0, 0, pt1.width, pt1.height), Vector2.zero, 100, 0, SpriteMeshType.FullRect, Vector4.zero, false);
+
 				/*this.player1GUI.portrait.sprite = Sprite.Create(
 					cPlayer1.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer1.myInfo.profilePictureSmall.width, cPlayer1.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer1.myInfo.profilePictureSmall.width, 0.5f * cPlayer1.myInfo.profilePictureSmall.height)
 				);*/
-			}else{
+			}
+			else{
 				this.player1GUI.portrait.gameObject.SetActive(false);
 			}
 		}
@@ -533,7 +539,7 @@ public class DefaultBattleGUI : BattleGUI{
 		if (this.player2GUI != null && this.player2GUI.portrait != null){
 			if (cPlayer2.myInfo.profilePictureSmall != null){
 				this.player2GUI.portrait.gameObject.SetActive(true);
-				if (UFE.gameMode == GameMode.TrainingRoom)
+				/*if (UFE.gameMode == GameMode.TrainingRoom)
 				{
 					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
 				}
@@ -551,13 +557,18 @@ public class DefaultBattleGUI : BattleGUI{
 					{
 						setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player2GUI.portrait);
 					}
-				}
+				}*/
+				Texture2D pt2 = NativeGallery.LoadImageAtPath(Path.Combine(Application.persistentDataPath + "player2.png"));
+				this.player2GUI.portrait.sprite = Sprite.Create(pt2, new Rect(0, 0, pt2.width, pt2.height), Vector2.zero, 100, 0, SpriteMeshType.FullRect, Vector4.zero, false);
+
 				/*this.player2GUI.portrait.sprite = Sprite.Create(
 					cPlayer2.myInfo.profilePictureSmall,
 					new Rect(0f, 0f, cPlayer2.myInfo.profilePictureSmall.width, cPlayer2.myInfo.profilePictureSmall.height),
 					new Vector2(0.5f * cPlayer2.myInfo.profilePictureSmall.width, 0.5f * cPlayer2.myInfo.profilePictureSmall.height)
 				);*/
-			}else{
+			}
+			else
+			{
 				this.player2GUI.portrait.gameObject.SetActive(false);
 			}
 		}
