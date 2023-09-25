@@ -150,16 +150,20 @@ public class GameManager : MonoBehaviour
     public void NotNowOfSignManager()
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-        UIManager.Instance.IsWorldClicked();
+       
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
-
         BGPlane.SetActive(true);
-        if(!WorldBool && !BottomAvatarButtonBool)
-            StoreManager.instance.SignUpAndLoginPanel(2);
+        if (LoginPageManager.m_WorldIsClicked || LoginPageManager.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+            UIManager.Instance.IsWorldClicked();
         else
         {
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            if (!WorldBool && !BottomAvatarButtonBool)
+                StoreManager.instance.SignUpAndLoginPanel(2);
+            else
+            {
+                StoreManager.instance.SignUpAndLoginPanel(3);
+            }
         }
     }
     public void AvatarMenuBtnPressed()
