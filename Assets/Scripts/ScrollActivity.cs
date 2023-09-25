@@ -100,7 +100,7 @@ public class ScrollActivity : MonoBehaviour
     public void WaitForOpenWorldPage()
     {
         //ScrollController.transform.DOPunchPosition();
-       DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0.95f, 0.1f).SetEase(Ease.InSine).OnComplete(BounceBack);
+       DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0.97f, 0.1f).SetEase(Ease.InSine).OnComplete(BounceBack);
 
     }
 
