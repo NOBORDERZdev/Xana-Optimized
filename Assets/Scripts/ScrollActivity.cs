@@ -10,7 +10,8 @@ public class ScrollActivity : MonoBehaviour
     public GameObject btnback;
     public float normalized;
     private int lastindex = 1;
-
+    [SerializeField] 
+    CanvasGroup canvasGroup;
     private void Awake()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
@@ -86,12 +87,16 @@ public class ScrollActivity : MonoBehaviour
     public IEnumerator IEBottomToTop()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
+        canvasGroup.alpha= 0;
+        canvasGroup.DOFade(1,0.2f);
         yield return new WaitForSeconds(0.2f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.2f).SetEase(Ease.Linear).OnComplete(WaitForOpenWorldPage);
         IEBottomToTopCoroutine = null;
     }
     IEnumerator ExampleCoroutine()
     {
+        canvasGroup.alpha= 1;
+        canvasGroup.DOFade(0,0.1f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
