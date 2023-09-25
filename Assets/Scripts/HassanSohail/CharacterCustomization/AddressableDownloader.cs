@@ -60,8 +60,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             //XanaConstants.isAddressableCatalogDownload = true;
-        XanaConstants.isAddressableCatalogDownload = true;
-
+            XanaConstants.isAddressableCatalogDownload = true;
             //StartCoroutine(CheckCatalogs());
         }
         else
@@ -69,7 +68,6 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             XanaConstants.isAddressableCatalogDownload = true;
             isDownloading = false;
         }
-
     }
     IEnumerator CheckCatalogs()
     {
