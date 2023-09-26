@@ -149,7 +149,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             if (FeedEventPrefab.m_EnvName.Contains("J&J WORLD_5"))
             {
                 if (XanaConstants.xanaConstants.minimap == 1)
+                {
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+                }
                 else
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
             }
@@ -158,7 +160,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         else
         {
             if (XanaConstants.xanaConstants.minimap == 1)
+            {
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+            }
             else
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
         }

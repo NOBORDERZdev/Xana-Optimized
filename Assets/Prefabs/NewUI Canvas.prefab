@@ -5832,6 +5832,34 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1440768809}
+          m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+          m_MethodName: HandleJumpBtnAction
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1440768809}
+          m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+          m_MethodName: HandleJumpBtnAction
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &613305895886774644
 GameObject:
   m_ObjectHideFlags: 0
@@ -11830,7 +11858,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 815, y: 375}
+  m_ReferenceResolution: {x: 815, y: 458}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -37583,10 +37611,26 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: PlayerControllerNew, Assembly-CSharp
-          m_MethodName: Jump
-          m_Mode: 1
+        - m_Target: {fileID: 1440768809}
+          m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+          m_MethodName: HandleSlideBtnAction
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1440768809}
+          m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+          m_MethodName: HandleSlideBtnAction
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

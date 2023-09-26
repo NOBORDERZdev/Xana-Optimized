@@ -20,7 +20,7 @@ namespace RFM
         {
             if (other.CompareTag(Globals.PLAYER_TAG/*Globals.LOCAL_PLAYER_TAG*/))
             {
-                if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
+                // if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
                 _players.Remove(other.gameObject);
 
                 // PhotonView is on the parent of the gameobject that has a collider.

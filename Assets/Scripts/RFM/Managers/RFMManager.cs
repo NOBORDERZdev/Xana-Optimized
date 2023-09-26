@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-// using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 using MoreMountains.Feedbacks;
@@ -18,6 +18,12 @@ namespace RFM
 {
     public class RFMManager : MonoBehaviourPunCallbacks
     {
+        #region Photon Events Codes
+
+        public const byte ResetPositionEventCode = 6;
+
+        #endregion
+        
         [Serializable]
         public class GameConfiguration
         {
@@ -66,7 +72,7 @@ namespace RFM
         private PlayerControllerNew player;
         private RFMMissionsManager missionsManager;
 
-        public static int NumOfActivePlayers;
+        // public static int NumOfActivePlayers;
 
         [HideInInspector] public GameConfiguration CurrentGameConfiguration;
 
@@ -117,6 +123,8 @@ namespace RFM
             base.OnEnable();
             EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onRestarting += ActivatePlayer;
+
+            PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
 
         public override void OnDisable()
@@ -124,6 +132,8 @@ namespace RFM
             base.OnDisable();
             EventsManager.onPlayerCaught -= PlayerCaught;
             EventsManager.onRestarting -= ActivatePlayer;
+            
+            PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
         private IEnumerator Start()
@@ -146,7 +156,11 @@ namespace RFM
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
                 {
-                    StartCoroutine(StartRFM());
+                    // StartCoroutine(StartRFM());
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                    }
                     CancelInvoke(nameof(CheckForGameStartCondition));
                 }
                 
@@ -175,7 +189,11 @@ namespace RFM
             if (PhotonNetwork.CurrentRoom.PlayerCount /*>*/== PhotonNetwork.CurrentRoom.MaxPlayers/*CurrentGameConfiguration.MinNumberOfPlayers*/)
             {
                 if (Globals.gameState != Globals.GameState.InLobby) return;
-                StartCoroutine(StartRFM());
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
+                }
+                // StartCoroutine(StartRFM());
             }
             else
             {
@@ -243,6 +261,13 @@ namespace RFM
             return (numberOfEscapees, numberOfHunters, numberOfAIEscapees, numberOfAIHunters);
         }
 
+        [PunRPC]
+        private void StartRFMRPC()
+        {
+            StartCoroutine(StartRFM());
+            CancelInvoke(nameof(CheckForGameStartCondition));
+        }
+
 
         private IEnumerator StartRFM()
         {
@@ -261,7 +286,7 @@ namespace RFM
                 PhotonNetwork.CurrentRoom.IsOpen = false;
             }
 
-            NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
+            // NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -278,31 +303,28 @@ namespace RFM
                 SpawnAIEscapees(roles.Item3);
             }
 
+            gameplayTimeText.gameObject.SetActive(false); // new
+            
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null, 
                 countDownText, AfterEachSecondCountdownTimer));
 
             if (PhotonNetwork.IsMasterClient)
             {
-                photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
+                // photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
+                PhotonNetwork.RaiseEvent(ResetPositionEventCode, null,
+                    new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                    SendOptions.SendReliable);
             }
         }
 
         [PunRPC]
-        private void CreateLeaderboardEntry(/*Dictionary<string, int> entry*/string nickName, int money)
+        private void CreateLeaderboardEntry(string nickName, int money)
         {
-            // AddLeaderboardEntry(entry.ElementAt(0).Key, entry.ElementAt(0).Value);
-            // AddLeaderboardEntry(nickName, money);
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
             entry.Init(nickName, money.ToString());
         }
-        
-        // private void AddLeaderboardEntry(string nickName, int amount)
-        // {
-        //     var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-        //     entry.Init(nickName, amount.ToString());
-        // }
 
-        [PunRPC]
+        // [PunRPC]
         private void ResetPosition()
         {
             int numOfHunters = 0;
@@ -422,6 +444,7 @@ namespace RFM
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
+            gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
             statusBG.SetActive(false);
             statusMMFPlayer.PlayFeedbacks();
@@ -554,7 +577,7 @@ namespace RFM
 
         private void ActivatePlayer()
         {
-            Globals.player.transform.root.gameObject.SetActive(true);
+            // Globals.player.transform.root.gameObject.SetActive(true);
             mainCam.SetActive(true);
             gameCanvas.SetActive(true);
 
@@ -585,6 +608,18 @@ namespace RFM
         }
 
         #endregion
+
+        private void ReceivePhotonEvents(EventData photonEvent)
+        {
+            switch (photonEvent.Code)
+            {
+                case ResetPositionEventCode:
+                {
+                    ResetPosition();
+                    break;
+                }
+            }
+        }
 
         #region Photon Callbacks
 

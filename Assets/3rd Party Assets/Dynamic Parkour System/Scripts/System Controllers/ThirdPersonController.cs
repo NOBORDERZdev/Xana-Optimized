@@ -41,13 +41,13 @@ namespace Climbing
         [HideInInspector] public AnimationCharacterController characterAnimation;
         [HideInInspector] public DetectionCharacterController characterDetection;
         [HideInInspector] public VaultingController vaultingController;
-        [HideInInspector] public bool isGrounded = false;
-        [HideInInspector] public bool allowMovement = true;
-        [HideInInspector] public bool onAir = false;
-        [HideInInspector] public bool isJumping = false;
-        [HideInInspector] public bool inSlope = false;
-        [HideInInspector] public bool isVaulting = false;
-        [HideInInspector] public bool dummy = false;
+        public bool isGrounded = false;
+        public bool allowMovement = true;
+        public bool onAir = false;
+        public bool isJumping = false;
+        public bool inSlope = false;
+        public bool isVaulting = false;
+        public bool dummy = false;
 
         [Header("Cameras")]
         public CameraController cameraController;
@@ -74,11 +74,18 @@ namespace Climbing
         private void Awake()
         {
             photonView = transform.parent.GetComponent<PhotonView>();
-            
+
             if (photonView.IsMine)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
+                CanvasButtonsHandler.inst.jumpAction += JumpAction;
+                CanvasButtonsHandler.inst.slideAction += SlideAction;
             }
+            else
+            {
+                characterInput = GetComponent<InputCharacterController>();
+            }
+
             characterMovement = GetComponent<MovementCharacterController>();
             characterAnimation = GetComponent<AnimationCharacterController>();
             characterDetection = GetComponent<DetectionCharacterController>();
@@ -94,11 +101,40 @@ namespace Climbing
             characterMovement.OnFall += characterAnimation.Fall;
         }
 
+        public void JumpAction(bool jump)
+        {
+            GetComponent<PhotonView>().RPC("JumpRPC", RpcTarget.Others, jump, GetComponent<PhotonView>().ViewID);
+        }
+
+        public void SlideAction(bool slide)
+        {
+            GetComponent<PhotonView>().RPC("SlideRPC", RpcTarget.Others, slide, GetComponent<PhotonView>().ViewID);
+        }
+        [PunRPC]
+        public void JumpRPC(bool isJump, int photonViewId)
+        {
+            Debug.LogError("JumpRPC Called: " + isJump + "  " + photonViewId + "  " + GetComponent<PhotonView>().ViewID);
+            if (GetComponent<PhotonView>().ViewID == photonViewId)
+            {
+                characterInput.jump = isJump;
+            }
+        }
+
+        [PunRPC]
+        public void SlideRPC(bool isDrop, int photonViewId)
+        {
+            Debug.LogError("SlideRPC Called: " + isDrop + "  " + photonViewId + "  " + GetComponent<PhotonView>().ViewID);
+            if (GetComponent<PhotonView>().ViewID == photonViewId)
+            {
+                characterInput.drop = isDrop;
+            }
+        }
+
         void Update()
         {
             //Detect if Player is on Ground
             isGrounded = OnGround();
-            
+
             if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
 
             //Get Input if controller and movement are not disabled
@@ -146,7 +182,8 @@ namespace Climbing
             {
                 //Gets direction of movement relative to the camera rotation
                 freeCamera.eulerAngles = new Vector3(0, mainCamera.eulerAngles.y, 0);
-                /*Vector3 */translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
+                /*Vector3 */
+                translation = freeCamera.transform.forward * input.y + freeCamera.transform.right * input.x;
                 translation.y = 0;
             }
 
