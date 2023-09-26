@@ -534,7 +534,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         print("AUTO BACK CALL");
-        yield return new WaitForSecondsRealtime(30);
+        yield return new WaitForSecondsRealtime(1800); // 1000 secs = 30 mins 
         LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         XanaConstants.xanaConstants.JjWorldSceneChange = true;

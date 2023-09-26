@@ -5,13 +5,20 @@ using UnityEngine;
 public class StreamingLoadingText : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_Text TmpText;
-    [SerializeField]  string loadingScreenTxt;
-
+    [SerializeField] string loadingScreenTxt;
+    [SerializeField] List<GameObject> OffObjs;
     private void OnEnable()
     {
         if (!XanaConstants.xanaConstants.isCameraMan)
         {
             gameObject.SetActive(false);
+        }
+        else
+        {
+            foreach (var item in OffObjs)
+            {
+                item.SetActive(false);
+            }
         }
     }
     public void UpdateLoadingText(bool movingToWorld)
