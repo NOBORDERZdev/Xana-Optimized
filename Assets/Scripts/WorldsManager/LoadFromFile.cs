@@ -475,8 +475,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         if (XanaConstants.xanaConstants.isCameraMan)
         {
-            ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
-            //ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
+            //ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
+            ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
             XanaConstants.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
             //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
@@ -536,8 +536,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         //print("AUTO BACK CALL");
-        yield return new WaitForSecondsRealtime(1800); // 1000 secs = 30 mins 
+        yield return new WaitForSecondsRealtime(10); // 1000 secs = 30 mins 
         LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
+        LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         _uiReferences.LoadMain(false);

@@ -106,6 +106,7 @@ public class XanaConstants : MonoBehaviour
     // Tutorials
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
+    public bool newStreamEntery = true;
     public string r_EmoteStoragePersistentPath
     {
         get

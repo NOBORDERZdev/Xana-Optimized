@@ -119,17 +119,59 @@ public class StreamingCamera : MonoBehaviour
                 {
                     list[index].cam.AddComponent<StreamingCameraPaining>();
                 }
-                if (!list[index].cam.GetComponent<CinemachineCollider>())
+                //if (!list[index].cam.GetComponent<CinemachineCollider>())
+                //{
+                //    list[index].cam.AddComponent<CinemachineCollider>();
+                //}
+                //if (!list[index].cam.GetComponent<CinemachineFreeLook>())
+                //{
+                //    list[index].cam.AddComponent<CinemachineFreeLook>();
+                //}
+                //// Random player look;
+                //list[index].cam.GetComponent<CinemachineFreeLook>().LookAt = ReferrencesForDynamicMuseum.instance.m_34player.transform;
+                //list[index].cam.GetComponent<CinemachineFreeLook>().Follow = ReferrencesForDynamicMuseum.instance.m_34player.transform;
+                if (list[index].cam.GetComponent<StreamingCameraPaining>().lookObj == null)
                 {
-                    list[index].cam.AddComponent<CinemachineCollider>();
+                    if (list[index].cam.GetComponent<StreamingCameraPaining>().focusOnScreen)
+                    {
+                        if (XanaConstants.xanaConstants.EnviornmentName== "Xana Festival")
+                        {
+                            GameObject screen = GameObject.Find("XanaFestivalPlayer(Clone)");
+                            if (screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer.activeInHierarchy)
+                            {
+                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer;
+                            }
+                            else
+                            {
+                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().NormalPlayer;
+
+                            }
+                            }
+                            else if (XanaConstants.xanaConstants.EnviornmentName== "BreakingDown Arena")
+                            {
+
+                            }
+                            else
+                            {
+                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                            }
+                        }
+                        else
+                        {
+                            list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                        }
+                    }
+
+                if (XanaConstants.xanaConstants.newStreamEntery)
+                {
+                    XanaConstants.xanaConstants.newStreamEntery =false;
+                    ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+                    LoadingHandler.Instance.streamingLoading.FullFillBar();
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+                    LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
                 }
-                // Random player look;
-                
-                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
-                ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-                LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+               
                 if (index< list.Count-1)
                 {
                     index++;

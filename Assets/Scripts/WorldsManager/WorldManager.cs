@@ -142,6 +142,7 @@ public class WorldManager : MonoBehaviour
                 AutoSwtichIndex=0;
             }
             LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
+            XanaConstants.xanaConstants.newStreamEntery=true;
          }    
     }
 

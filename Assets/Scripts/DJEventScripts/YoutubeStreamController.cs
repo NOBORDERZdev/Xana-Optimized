@@ -12,7 +12,7 @@ public class YoutubeStreamController : MonoBehaviour
     [SerializeField]
     public GameObject LiveStreamPlayer;
     [SerializeField]
-    private GameObject NormalPlayer;
+    public GameObject NormalPlayer;
     [SerializeField]
     private YoutubeAPIHandler APIHandler;
     private YoutubeStreamController Instance;
