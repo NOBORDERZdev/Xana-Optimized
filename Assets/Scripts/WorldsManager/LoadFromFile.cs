@@ -434,14 +434,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
-        
+
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-        if (player.GetComponent<StepsManager>()) {
+        if (player.GetComponent<StepsManager>())
+        {
             player.GetComponent<StepsManager>().isplayer = true;
-         }
+        }
         GetComponent<ChecklPostProcessing>().SetPostProcessing();
 
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
@@ -451,15 +452,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        if(!XanaConstants.xanaConstants.isCameraMan){ 
+        if (!XanaConstants.xanaConstants.isCameraMan)
+        {
             LoadingHandler.Instance.HideLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            if(!XanaConstants.xanaConstants.isCameraMan)
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            if (!XanaConstants.xanaConstants.isCameraMan)
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
@@ -477,7 +479,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         yield return new WaitForSeconds(.5f);
 
         if (XanaConstants.xanaConstants.isCameraMan)
-        { 
+        {
             ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
             ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
             XanaConstants.xanaConstants.StopMic();
@@ -489,15 +491,17 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
-        try
+        // Commented By WaqasAhmad
         {
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //try
+            //{
+            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.Log("<color = red>Exception here..............</color>");
+            //}
         }
-        catch (System.Exception e)
-        {
-            Debug.Log("<color = red>Exception here..............</color>");
-        }
-
         // Yes Join APi Call Here
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
@@ -519,7 +523,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
 
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
-          if(XanaConstants.xanaConstants.isCameraMan){
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
             if (StreamingCamera.instance)
             {
                 StreamingCamera.instance.TriggerStreamCam();
@@ -528,18 +533,19 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 _uiReferences.LoadMain(false);
             }
-           
+
         }
     }
 
     [SerializeField] int autoSwitchTime;
-    public IEnumerator BackToMainmenuforAutoSwtiching(){ 
+    public IEnumerator BackToMainmenuforAutoSwtiching()
+    {
         print("AUTO BACK CALL");
-            yield return new WaitForSecondsRealtime(30);
+        yield return new WaitForSecondsRealtime(30);
         LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        XanaConstants.xanaConstants.JjWorldSceneChange= true;
-         _uiReferences.LoadMain(false);
+        XanaConstants.xanaConstants.JjWorldSceneChange = true;
+        _uiReferences.LoadMain(false);
     }
 
 
@@ -623,13 +629,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
-        try
+        // Commented By WaqasAhmad
         {
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-        }
-        catch (System.Exception e)
-        {
-            Debug.Log("<color = red> Exception here..............</color>");
+            //try
+            //{
+            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.Log("<color = red> Exception here..............</color>");
+            //}
         }
 
         SetAddressableSceneActive();
@@ -638,6 +647,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
 
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
+
+        while (!GamificationComponentData.instance.isSkyLoaded)
+            yield return new WaitForSeconds(0.5f);
+
         yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0, true);
@@ -649,7 +662,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
-      
+
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
