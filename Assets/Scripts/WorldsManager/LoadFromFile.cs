@@ -486,15 +486,17 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
-        try
+        // Commented By WaqasAhmad
         {
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //try
+            //{
+            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.Log("<color = red>Exception here..............</color>");
+            //}
         }
-        catch (System.Exception e)
-        {
-            Debug.Log("<color = red>Exception here..............</color>");
-        }
-
         // Yes Join APi Call Here
         //Debug.Log("Waqas : Room Joined.");
         Debug.Log("<color=green> Analytics -- Joined </color>");
@@ -622,13 +624,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
-        try
+        // Commented By WaqasAhmad
         {
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-        }
-        catch (System.Exception e)
-        {
-            Debug.Log("<color = red> Exception here..............</color>");
+            //try
+            //{
+            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //}
+            //catch (System.Exception e)
+            //{
+            //    Debug.Log("<color = red> Exception here..............</color>");
+            //}
         }
 
         SetAddressableSceneActive();
