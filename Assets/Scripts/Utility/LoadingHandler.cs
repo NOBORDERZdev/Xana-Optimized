@@ -222,17 +222,17 @@ public class LoadingHandler : MonoBehaviour
     {
         //Debug.LogError("~~~~~~~  Fadder Time ~~~~~~~ " + oriantation);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
-        {
-            Screen.orientation = oriantation;
+
 #if !UNITY_EDITOR
+            blackScreen.DOFade(1, 0f);
+            Screen.orientation = oriantation;
             orientationchanged = false;
             StartCoroutine(Check_Orientation(oriantation));
 #else
 
-            Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
+        Screen.orientation = oriantation;
 #endif
-        });
+       
             
     }
     public void HideFadderAfterOriantationChanged(float delay = 0)
