@@ -781,6 +781,7 @@ MonoBehaviour:
   HomeBtn: {fileID: 6408302776192530263}
   eventRemainingTime: 0
   _uiReferences: {fileID: 4338721142732702075}
+  autoSwitchTime: 0
 --- !u!4 &79798789
 Transform:
   m_ObjectHideFlags: 0
@@ -5629,6 +5630,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1231922862386011972}
     m_Modifications:
+    - target: {fileID: 5642671535758670273, guid: 473b32cdb1aa9494ba9ff464ae1e11ba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5829670864157050554, guid: 473b32cdb1aa9494ba9ff464ae1e11ba, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9330,6 +9335,7 @@ MonoBehaviour:
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
+  pointObj: {fileID: 0}
 --- !u!114 &1272852912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17843,6 +17849,7 @@ MonoBehaviour:
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
+  pointObj: {fileID: 1808683681801906610}
 --- !u!1 &360146154038492714
 GameObject:
   m_ObjectHideFlags: 0
@@ -18113,7 +18120,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0022524043, y: 0.0007814906, z: -0.000001758375, w: 0.9999972}
+  m_LocalRotation: {x: 0.002252409, y: 0.0007814925, z: -0.0000017583831, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -416,7 +416,15 @@ MonoBehaviour:
   uberShader: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
   landscapeCanvas: {fileID: 1864747888935569928}
   potraitCanvas: {fileID: 1652738247}
-  AvatarChangerModels: []
+  AvatarChangerModels:
+  - {fileID: 6687291654992960596, guid: b94e08f739c52e043a64551e0839f02a, type: 3}
+  - {fileID: 8365891145879477920, guid: 2a1eda20f6458435baf862072aa42779, type: 3}
+  - {fileID: 1836379662250711913, guid: a66a78495759744f09e8d2d0a8174500, type: 3}
+  - {fileID: 4201701320197669937, guid: 66d592442d7d54427acdf63ec0598010, type: 3}
+  - {fileID: 11786647638656522, guid: bbcd8dd5c4d114bd38bd1a59f2c4b1d4, type: 3}
+  - {fileID: 2717537263524051389, guid: 0d79df70e5ca543b283c31bca6a5129b, type: 3}
+  aiSkyMaterial: {fileID: 2100000, guid: afcc95ce3ebcf4a5092b5d61d6418503, type: 2}
+  aiPPVolumeProfile: {fileID: 11400000, guid: 313c192bc6b244e6f871ec28dc3ba0d6, type: 2}
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
@@ -1588,6 +1596,7 @@ MonoBehaviour:
     skyName: 
     shaderName: 
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.7882353, g: 0.92941177, b: 1, a: 0}
       directionLightShadowStrength: 0.2

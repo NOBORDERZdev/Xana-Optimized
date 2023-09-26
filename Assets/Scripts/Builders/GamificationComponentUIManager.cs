@@ -837,6 +837,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(0);
             isDissapearing = false;
             //GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
+            quizComponent.gameObject.SetActive(false);
         }
         quizComponent = null;
         ResetCredentials();

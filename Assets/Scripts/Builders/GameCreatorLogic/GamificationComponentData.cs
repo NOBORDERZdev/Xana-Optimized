@@ -65,6 +65,11 @@ public class GamificationComponentData : MonoBehaviour
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
 
+    //AI Generated Skybox
+    public Material aiSkyMaterial;
+    public VolumeProfile aiPPVolumeProfile;
+    internal bool isSkyLoaded;
+
     private void Awake()
     {
         instance = this;
