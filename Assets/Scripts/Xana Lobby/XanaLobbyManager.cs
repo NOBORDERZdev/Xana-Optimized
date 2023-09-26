@@ -72,10 +72,12 @@ public class XanaLobbyManager : MonoBehaviour
     }
     public IEnumerator InitData(XanaLobbyJson data,List<GameObject> placedWorldsList)
     {
-        int placedWorldsCount = placedWorldsList.Count;
+        //int placedWorldsCount = placedWorldsList.Count;
         //List<XanaLobbyData> worldsData = data.data;
-        for (int i = 0; i < placedWorldsCount; i++)
+        XLWorldInfo xlWorldInfo;
+        for (int i = 0; i < placedWorldsList.Count; i++)
         {
+            xlWorldInfo = placedWorldsList[i].GetComponent<XLWorldInfo>();
             for (int j = 0; j < worldsData.Count; j++)
             {
                 if (i == worldsData[j].index - 1)
@@ -85,15 +87,28 @@ public class XanaLobbyManager : MonoBehaviour
                     //    worldsInfo[i].JjRatio = JjRatio.OneXOneWithDes;
                     //}
                     placedWorldsList[i].SetActive(true);
-                    if (worldsData[j].media_type == "IMAGE")
+                    if (!worldsData[j].thumbnail.IsNullOrEmpty())
                     {
                         //worldsInfo[i].Type = MediaType.Image;
-                        placedWorldsList[i].GetComponent<XLWorldInfo>().InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
-                        placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.WorldName = worldsData[i].metaverseWorld.world_name;
+                        xlWorldInfo.InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
+                        xlWorldInfo.worldChanger.WorldName = worldsData[i].world_name;
                         if(APIBaseUrlChange.instance.IsXanaLive)
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.MainNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.MainNet = worldsData[i].world_id;
                         else
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.testNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.testNet = worldsData[i].world_id;
+                        if (worldsData[j].entity_type == EntityType.USER_WORLD.ToString())
+                        {
+                            xlWorldInfo.worldChanger.isBuilderWorld = true;
+                            xlWorldInfo.worldChanger.isMusuem = false;
+                        }else if (worldsData[j].entity_type == EntityType.MUSEUMS.ToString())
+                        {
+                            xlWorldInfo.worldChanger.isBuilderWorld = false;
+                            xlWorldInfo.worldChanger.isMusuem = true;
+                        }else
+                        {
+                            xlWorldInfo.worldChanger.isBuilderWorld = false;
+                            xlWorldInfo.worldChanger.isMusuem = false;
+                        }
                         //worldsInfo[i].Title = worldsData[i].title;
                         //worldsInfo[i].Aurthor = worldsData[i].authorName;
                         //worldsInfo[i].Des = worldsData[i].description;
@@ -191,6 +206,10 @@ public enum MediaType
 {
     Image
 }
+public enum EntityType
+{
+    MUSEUMS,ENVIRONMENTS,USER_WORLD
+}
 public class XanaLobbyJson
 {
     public bool success;
@@ -208,20 +227,22 @@ public class XanaLobbyData
     public int id;
     public int world_id;
     public int index;
-    public List<String> authorName;
-    public List<String> description;
-    public List<String> title;
-    public string ratio;
+    //public List<String> authorName;
+    //public List<String> description;
+    //public List<String> title;
+    //public string ratio;
+    public string world_name;
+    public string description;
     public string thumbnail;
-    public string media_type;
+    //public string media_type;
     public string entity_type;
     public string creator_type;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public MetaverseWorld metaverseWorld;
+    public Users users;
 }
 [Serializable]
-public class MetaverseWorld
+public class Users
 {
-    public string world_name;
+    public string name;
 }
