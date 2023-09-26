@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using Cinemachine;
 public class StreamingCamera : MonoBehaviour
 {
     [SerializeField]
@@ -62,41 +62,107 @@ public class StreamingCamera : MonoBehaviour
     /// To check how much player is in cameras
     /// </summary>
     IEnumerator checkCameras(){
-        while (true)
-        {
-            avatarCount.Clear();
-            int visibleCount;
-            foreach (var cam in Cameras)
-            { 
-                visibleCount=0;
-                cam.gameObject.SetActive(true);
-                //yield return new WaitForSeconds(2f);
-                foreach (var avatar in Launcher.instance.playerobjects)
+        
+        avatarCount.Clear();
+        int visibleCount;
+        foreach (var cam in Cameras)
+        { 
+            visibleCount=0;
+            cam.gameObject.SetActive(true);
+            yield return new WaitForSeconds(1f);
+            foreach (var avatar in Launcher.instance.playerobjects)
+            {
+                if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
-                    if (!avatar.GetComponent<PhotonView>().IsMine)
+                    // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
+                    if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
                     {
-                       // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                        if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
-                        {
-                           // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
-                            visibleCount++;
-                        }
+                        // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
+                        visibleCount++;
                     }
                 }
-                cam.gameObject.SetActive(false);
-                avatarCount.Add(visibleCount);
             }
-           int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
-           Cameras[crowdedCamIndex].gameObject.SetActive(true);
-          // LoadingHandler.Instance.HideLoading();
-           ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-           ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
-           LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-           LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
-           yield return new WaitForSecondsRealtime(10);
+            cam.gameObject.SetActive(false);
+            avatarCount.Add(visibleCount);
         }
+        List<StreamCam> camSortList = new List<StreamCam>();
+       // List<int>avatarCountSort = avatarCount.OrderBy(x); 
+        for (int i = 0; i < Cameras.Count; i++)
+        {
+            camSortList.Add(new StreamCam(avatarCount[i] , Cameras[i].gameObject));
+        }
+
+        List<StreamCam> temp = new List<StreamCam>(camSortList.OrderBy(x =>x.avatarCount).ToList());
+       yield return StartCoroutine(EnableCam(temp));
+           
+        
+    }
        
+     IEnumerator EnableCam(List<StreamCam> list){
+        int index =0;
+        while (true)
+        {
+            turnOffCameras();
+            bool canCamOn = false;
+            if (list[index].avatarCount>0)
+            {
+                canCamOn=true;
+            }
+            else
+            {
+                canCamOn =false;
+            }
+
+            if (canCamOn){
+                list[index].cam.SetActive(true);
+                if (!list[index].cam.GetComponent<StreamingCameraPaining>())
+                {
+                    list[index].cam.AddComponent<StreamingCameraPaining>();
+                }
+                if (!list[index].cam.GetComponent<CinemachineCollider>())
+                {
+                    list[index].cam.AddComponent<CinemachineCollider>();
+                }
+                // Random player look;
+                
+                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+                LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+                if (index< list.Count-1)
+                {
+                    index++;
+                }
+                else
+                {
+                    index=0;
+                }
+                yield return new WaitForSecondsRealtime(10);
+            }
+            else{
+                yield return null;
+                break;
+            }
+            //int crowdedCamIndex = avatarCount.IndexOf(avatarCount.Max());
+            //Cameras[crowdedCamIndex].gameObject.SetActive(true);
+          
+        }
     }
 
-   
+
+
 }
+
+
+class StreamCam{ 
+    public int avatarCount;
+    public GameObject cam;
+
+    public  StreamCam(int _id, GameObject _cam){ 
+        avatarCount= _id;
+        cam =_cam ;
+    }
+}
+   
+  

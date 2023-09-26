@@ -904,7 +904,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 298.66666, y: 445}
+  m_CellSize: {x: 1116.3237, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -1372,7 +1372,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 298.66666, y: 445}
+  m_CellSize: {x: 1116.3237, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -1678,6 +1678,22 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: OffObjs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: OffObjs.Array.data[0]
+      value: 
+      objectReference: {fileID: 955426667}
+    - target: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: OffObjs.Array.data[1]
+      value: 
+      objectReference: {fileID: 955426666}
+    - target: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: OffObjs.Array.data[2]
+      value: 
+      objectReference: {fileID: 955426665}
     - target: {fileID: 4343778718239381664, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: JJLoadingSlider
       value: 
@@ -6056,7 +6072,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 298.66666, y: 445}
+  m_CellSize: {x: 1116.3237, y: 445}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -7750,6 +7766,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b31a3515d163b334c97c05b24ba3ebd4, type: 3}
+--- !u!1 &955426665 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4879429447214640527, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &955426666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6329041106788721842, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &955426667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5639781524024468899, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &957235406
 GameObject:
   m_ObjectHideFlags: 0
@@ -11174,7 +11205,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 304, y: 284.68967}
+  m_CellSize: {x: 1121.6571, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -13489,7 +13520,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 304, y: 284.68967}
+  m_CellSize: {x: 1121.6571, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -15658,7 +15689,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 298.66666, y: 298.66666}
+  m_CellSize: {x: 1116.3237, y: 1116.3237}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -17870,6 +17901,26 @@ PrefabInstance:
       propertyPath: world_EventWorldScroll
       value: 
       objectReference: {fileID: 177367614}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: AutoSwtichWorldList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: AutoSwtichWorldList.Array.data[0].name
+      value: Xana Festival
+      objectReference: {fileID: 0}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: AutoSwtichWorldList.Array.data[0].isMussuem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: AutoSwtichWorldList.Array.data[0].mainnetId
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
+      propertyPath: AutoSwtichWorldList.Array.data[0].testnetId
+      value: 360
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85e493498674a8443badd13925ab5e36, type: 3}
 --- !u!114 &64211639564321974 stripped
@@ -19323,7 +19374,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 303.99997, y: 284.68967}
+  m_CellSize: {x: 1121.6571, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19812,7 +19863,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 304, y: 284.68967}
+  m_CellSize: {x: 1121.6571, y: 284.68967}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -19865,7 +19916,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 298.66666, y: 298.66666}
+  m_CellSize: {x: 1116.3237, y: 1116.3237}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -22562,7 +22613,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 300.66666, y: 300.66666}
+  m_CellSize: {x: 1118.3237, y: 1118.3237}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
@@ -23551,7 +23602,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 304, y: 304}
+  m_CellSize: {x: 1121.6571, y: 1121.6571}
   m_Spacing: {x: 12, y: 12.5}
   m_Constraint: 1
   m_ConstraintCount: 3
