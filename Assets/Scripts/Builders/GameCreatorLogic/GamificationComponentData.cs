@@ -8,7 +8,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviour
+public class GamificationComponentData : MonoBehaviourPun
 {
     public static GamificationComponentData instance;
 
@@ -82,6 +82,7 @@ public class GamificationComponentData : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
         //OnSelfiActive
         BuilderEventManager.UIToggle += UICanvasToggle;
+        BuilderEventManager.RPCcallwhenPlayerJoin += GetRPC;
 
         OrientationChange(false);
         warpComponentList.Clear();
@@ -94,6 +95,8 @@ public class GamificationComponentData : MonoBehaviour
         BuilderEventManager.ReSpawnPlayer -= PlayerSpawnBlindfoldedDisplay;
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.UIToggle -= UICanvasToggle;
+        BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
+
         WarpComponentLocationUpdate -= UpdateWarpFunctionData;
 
     }
@@ -222,29 +225,88 @@ public class GamificationComponentData : MonoBehaviour
 
     //All components for multiplayer
 
-    //[PunRPC]
-    //public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
-    //{
-    //    var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
-    //    if (componentType == Constants.ItemComponentType.none)
-    //    {
-    //        item.gameObject.SetActive(false);
-    //        return;
-    //    }
+    [PunRPC]
+    public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        //store rpc data in roomoption
+        if (PhotonNetwork.IsMasterClient)
+            SetRoomData(RuntimeItemID, componentType);
 
-    //    RestrictionComponents(componentType);
+        var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
+        if (componentType == Constants.ItemComponentType.none)
+        {
+            item.gameObject.SetActive(false);
+            return;
+        }
+
+        RestrictionComponents(componentType);
 
 
-    //    if (item != null)
-    //    {
-    //        var component = item.GetComponent(componentType.ToString()) as ItemComponent;
-    //        if (component != null)
-    //            component.PlayBehaviour();
-    //    }
-    //}
+        if (item != null)
+        {
+            var component = item.GetComponent(componentType.ToString()) as ItemComponent;
+            if (component != null)
+            {
+                component.PlayBehaviour();
+            }
+        }
+    }
 
-    //void RestrictionComponents(Constants.ItemComponentType componentType)
-    //{
-    //    BuilderEventManager.onComponentActivated?.Invoke(componentType);
-    //}
+    void RestrictionComponents(Constants.ItemComponentType componentType)
+    {
+        BuilderEventManager.onComponentActivated?.Invoke(componentType);
+    }
+
+    internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        GamificationComponentRPC gamificationComponentRPC = new GamificationComponentRPC();
+        gamificationComponentRPC.RuntimeItemID = RuntimeItemID;
+        gamificationComponentRPC.componentType = componentType.ToString();
+
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+
+        GamificationComponentRPCs componentRPCs = new GamificationComponentRPCs();
+
+        // Populate your GamificationComponentRPC list here
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
+        {
+             componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
+        }
+
+        componentRPCs.rpcList.Add(gamificationComponentRPC);
+        string json = JsonUtility.ToJson(componentRPCs);
+        customProperties["gamificationComponentRPCs"] = json;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+    }
+
+    void GetRPC()
+    {
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
+        {
+            GamificationComponentRPCs componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
+
+            if (componentRPCs.rpcList != null)
+            {
+                foreach (GamificationComponentRPC gamificationComponentRPC in componentRPCs.rpcList)
+                {
+                    Constants.ItemComponentType componentType = (Constants.ItemComponentType)Enum.Parse(typeof(Constants.ItemComponentType), gamificationComponentRPC.componentType);
+
+                    GetObject(gamificationComponentRPC.RuntimeItemID, componentType);
+                }
+            }
+        }
+    }
+}
+
+[Serializable]
+public class GamificationComponentRPC
+{
+    public string RuntimeItemID = "";
+    public string componentType = "";
+}
+[Serializable]
+public class GamificationComponentRPCs
+{
+    public List<GamificationComponentRPC> rpcList=new List<GamificationComponentRPC>();
 }

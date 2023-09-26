@@ -23,7 +23,7 @@ public class TranslateComponent : ItemComponent
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
-        StartCoroutine(translateModule());
+        StartComponent();
     }
 
     private bool CheckDistance()
@@ -83,5 +83,49 @@ public class TranslateComponent : ItemComponent
         }
         yield return null;
     }
+    #endregion
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        activateTranslateComponent = true;
+        StartCoroutine(translateModule());
+    }
+    private void StopComponent()
+    {
+        activateTranslateComponent = false;
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.TranslateComponent;
+    }
+
     #endregion
 }
