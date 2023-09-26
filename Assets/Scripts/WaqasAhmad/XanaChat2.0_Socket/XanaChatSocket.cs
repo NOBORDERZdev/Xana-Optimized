@@ -34,7 +34,7 @@ public class XanaChatSocket : MonoBehaviour
 
 
     public SocketManager Manager;
-    
+
     string address;
     string fetchAllMsgApi;
 
@@ -70,7 +70,7 @@ public class XanaChatSocket : MonoBehaviour
     #endregion
 
     public static Action<string> onJoinRoom;
-    public static Action<string, string> onSendMsg;
+    public static Action<string, string, string> onSendMsg;
     public static Action callApi;
 
 
@@ -171,7 +171,7 @@ public class XanaChatSocket : MonoBehaviour
         isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
-    void SendMsg(string world_Id, string msg)
+    void SendMsg(string world_Id, string msg, string npcId = "")
     {
         if (string.IsNullOrEmpty(msg))
         {
@@ -197,11 +197,10 @@ public class XanaChatSocket : MonoBehaviour
         Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
 
-        var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        var data = new { userId = npcId != "" ? npcId : userId, eventId = event_Id, worldId = world_Id, msg = msg };
         Manager.Socket.Emit("chatMessage", data);
-
-
     }
+
     void ReceiveMsgs(ChatUserData msg)
     {
         Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
