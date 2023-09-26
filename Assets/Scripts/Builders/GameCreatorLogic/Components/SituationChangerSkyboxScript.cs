@@ -51,9 +51,15 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
         if (skyID != -1)
         {
-            string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
-            AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            loadSkyBox.Completed += LoadSkyBox_Completed;
+            bool skyBoxExist = skyBoxesData.skyBoxes.Exists(x => x.skyId == indexx);
+            if (skyBoxExist)
+            {
+                string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
+                AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                loadSkyBox.Completed += LoadSkyBox_Completed;
+            }
+            else
+                BuilderEventManager.ApplySkyoxSettings?.Invoke();
             //RenderSettings.skybox = skyBoxesData.skyBoxes[indexx].skyMaterial;
         }
         if (skyID == -1)

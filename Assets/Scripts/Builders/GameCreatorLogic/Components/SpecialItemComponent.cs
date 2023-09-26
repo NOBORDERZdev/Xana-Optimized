@@ -17,6 +17,8 @@ public class SpecialItemComponent : ItemComponent
         {
             TimeStats._intensityChangerStop?.Invoke();
             TimeStats._blindComponentStop?.Invoke();
+            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+
             // Ninja Component Stops
             PlayerControllerNew pc = GamificationComponentData.instance.playerControllerNew;
             pc.NinjaComponentTimerStart(0);
