@@ -17,7 +17,6 @@ public class CheckCam : MonoBehaviour
         if (other.CompareTag("camHandler"))
         {
             cam.nearClipPlane = normalClippingValues;
-            print("On Trigger Enter");
         }
     } 
     
@@ -26,7 +25,6 @@ public class CheckCam : MonoBehaviour
         if (other.CompareTag("camHandler"))
         {
             cam.nearClipPlane = desiredClippingValues;
-            print("On Trigger Exit");
         }
     }
 }

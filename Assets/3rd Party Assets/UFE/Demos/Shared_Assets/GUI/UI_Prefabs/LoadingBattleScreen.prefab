@@ -80,8 +80,6 @@ MonoBehaviour:
   player2RawImage: {fileID: 8713766825858834471}
   player1Cam: {fileID: 2201680135493453951}
   player2Cam: {fileID: 1834251574564100489}
-  player1RenderTexture: {fileID: 8400000, guid: a61a65e89518236419d9b1e2a318e3f3, type: 2}
-  player2RenderTexture: {fileID: 8400000, guid: de07bd206d21f04429d215cb698ae2cc, type: 2}
   player1: {fileID: 2393123550750103072}
   player2: {fileID: 175483512352643913}
   nameStage: {fileID: 11400006}
@@ -255,7 +253,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -68.9, y: -397}
-  m_SizeDelta: {x: 226, y: 43}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22200006
 CanvasRenderer:
@@ -291,12 +289,12 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 100
+    m_MaxSize: 98
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
 --- !u!114 &7794585159934396176
@@ -386,7 +384,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -76.1, y: -397}
-  m_SizeDelta: {x: 226, y: 43}
+  m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22200014
 CanvasRenderer:
@@ -426,8 +424,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
 --- !u!114 &8433528619630265598

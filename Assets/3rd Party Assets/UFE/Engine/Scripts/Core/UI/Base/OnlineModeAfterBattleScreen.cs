@@ -29,6 +29,7 @@
         public virtual void GoToSearchMatchScreen()
         {
             this.TrySelectOption((int)OnlineModeAfterBattleScreen.Option.SearchNewMatch, UFE.GetLocalPlayer(), true);
+            gameObject.SetActive(false);
         }
 
         public virtual void RepeatBattle()

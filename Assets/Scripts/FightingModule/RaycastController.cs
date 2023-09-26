@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class RaycastController : MonoBehaviour
 {
-    public float maxDistance = 100f;
-    private GameObject lastHitRing;
+    //public float maxDistance = 100f;
+    //private GameObject lastHitRing;
     #region Single RayCast
     //private void Update()
     //{
@@ -106,70 +106,33 @@ public class RaycastController : MonoBehaviour
     //}
     #endregion
 
-    #region Sphere Cast
-    //public Camera mainCamera;
-    //public float sphereRadius = 1.0f;
-    //private GameObject currentRing;
+    #region SphereCast
+    //public float radius;
+    //public LayerMask layerMask;
+    //RaycastHit hit;
+
 
     //void Update()
     //{
-    //    Vector3 cameraCenter = mainCamera.transform.position;
-    //    Ray ray = new Ray(cameraCenter, mainCamera.transform.forward);
+    //    Cast();
+    //}
 
-    //    RaycastHit hit;
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawSphere(transform.position + transform.forward * maxDistance, radius);
+    //}
 
-    //    if (Physics.SphereCast(ray, sphereRadius, out hit, maxDistance))
+    //void Cast()
+    //{
+    //    if (Physics.SphereCast(transform.position, radius, transform.forward, out RaycastHit hit, maxDistance, layerMask))
     //    {
-    //        if (hit.collider.CompareTag("ring"))
-    //        {
-    //            // If a new ring is hit, deactivate the current one (if any)
-    //            if (currentRing != null)
-    //            {
-    //                currentRing.SetActive(true);
-    //            }
-
-    //            currentRing = hit.collider.gameObject;
-    //            currentRing.SetActive(false);
-    //        }
+    //        //   Debug.Log(hit.collider.gameObject);
+    //        hit.collider.gameObject.SetActive(false);
     //    }
-    //    else
-    //    {
-    //        // If no object is hit, reactivate the current ring (if any)
-    //        if (currentRing != null)
-    //        {
-    //            currentRing.SetActive(true);
-    //            currentRing = null;
-    //        }
+    //    else {
+    //        print("NAH");
     //    }
-    //    Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
     //}
     #endregion
-
-    public float radius;
-    public LayerMask layerMask;
-    RaycastHit hit;
-
-
-    void Update()
-    {
-        Cast();
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position + transform.forward * maxDistance, radius);
-    }
-
-    void Cast()
-    {
-        if (Physics.SphereCast(transform.position, radius, transform.forward, out RaycastHit hit, maxDistance, layerMask))
-        {
-            //   Debug.Log(hit.collider.gameObject);
-            hit.collider.gameObject.SetActive(false);
-        }
-        else {
-            print("NAH");
-        }
-    }
 }

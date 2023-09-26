@@ -18,7 +18,6 @@ public class MeshRendererHandler : MonoBehaviour
     {
         if (other.CompareTag("camHandler"))
         {
-            print("Main Cam Triggered Enter");
             meshRenderer.enabled = false;
             if (this.transform.childCount > 0) {
                 for (int i = 0; i < transform.childCount; i++) {
@@ -31,7 +30,6 @@ public class MeshRendererHandler : MonoBehaviour
     {
         if (other.CompareTag("camHandler"))
         {
-            print("Main Cam Triggered Exit");
             meshRenderer.enabled = true;
             if (this.transform.childCount > 0)
             {
