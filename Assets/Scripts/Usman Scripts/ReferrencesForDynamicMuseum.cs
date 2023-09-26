@@ -327,7 +327,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     //{
                     //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     //}
-                    print("!!! PlayerCount"+ PlayerCount);
+                  // print("!!! PlayerCount"+ PlayerCount);
                 }
                 if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
                 {
