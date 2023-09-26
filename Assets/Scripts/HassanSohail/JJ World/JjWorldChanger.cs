@@ -6,20 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class JjWorldChanger : MonoBehaviour
 {
-    [SerializeField] string WorldName;
+    public string WorldName;
     [SerializeField] bool HaveMultipleSpwanPoint;
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
     [SerializeField] bool isMusuem;
-    [SerializeField] int testNet; 
-    [SerializeField] int MainNet;
+    public int testNet; 
+    public int MainNet;
     [Header("Builder")]
     [SerializeField] bool isBuilderWorld; 
 
     Collider collider;
 
     bool reSetCollider=false;
-
+    private GameObject triggerObject;
     private void Start()
     {
         collider = GetComponent<Collider>(); 
@@ -27,7 +27,16 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine)
+        triggerObject = other.gameObject;
+        if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
+        {
+            CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
+        }
+
+    }
+    public void RedirectToWorld()
+    {
+        if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
             collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
@@ -36,11 +45,10 @@ public class JjWorldChanger : MonoBehaviour
             }
             else
             {
-              this.StartCoroutine(ResetColider());
+                this.StartCoroutine(ResetColider());
             }
         }
     }
-
     IEnumerator ResetColider(){ 
          yield return new WaitForSeconds(1f);
         collider.enabled = true;
@@ -58,6 +66,7 @@ public class JjWorldChanger : MonoBehaviour
         {
             XanaConstants.xanaConstants.isFromXanaLobby =true;
         }
+        LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;

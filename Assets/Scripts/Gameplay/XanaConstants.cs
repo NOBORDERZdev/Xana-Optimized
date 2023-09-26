@@ -18,6 +18,7 @@ public class XanaConstants : MonoBehaviour
     public int mic;
     public int minimap;
     public int userName;
+    public string userId;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;
@@ -70,7 +71,7 @@ public class XanaConstants : MonoBehaviour
     public bool isPresetHairColor = false;
     public bool isCameraMan;
     public bool isCameraManInRoom = false;
-
+    public bool isBackFromWorld = false;
 
     public String MuseumID;
 
@@ -104,6 +105,7 @@ public class XanaConstants : MonoBehaviour
 
     // Tutorials
     public bool isTutorialLoaded=false;
+    public bool isLobbyTutorialLoaded = false;
     public string r_EmoteStoragePersistentPath
     {
         get

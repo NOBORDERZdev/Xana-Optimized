@@ -17,6 +17,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
 
+  
     public string mainScene= "Main";
 
     private AsyncOperation asyncLoading;
@@ -26,7 +27,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-       
+       mainScene= "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
@@ -61,9 +62,20 @@ public class SceneManage : MonoBehaviourPunCallbacks
             PlayerPrefs.SetInt("RequestSend", 1);
         }
     }
+    public void disableSoundXanalobby() // Disabling Audio Sources in Xana Lobby on exit to avoid sound increase on Loding screen after exit
+    {
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")) 
+        {
+            SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+        }
+    }
 
     public void LoadMain(bool changeOritentationChange)
     {
+        disableSoundXanalobby();
+
         if (exitOnce)
         {
             exitOnce = false;
@@ -113,6 +125,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
      private IEnumerator LobbySceneSwitch()
      {
+        LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.3f, 0.7f), .1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -190,6 +203,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         //  Caching.ClearCache();
         // GC.Collect();
         print("mian scne "+mainScene);
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             SceneManager.LoadScene("Main");

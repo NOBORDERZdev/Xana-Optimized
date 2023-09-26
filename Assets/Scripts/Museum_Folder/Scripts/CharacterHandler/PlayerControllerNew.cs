@@ -107,6 +107,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField]
     CinemachineFreeLook cinemachineFreeLook;
 
+    internal float animationBlendValue = 0;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -615,6 +616,10 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetBool("standJump", false);
             jumpNow = false;
         }*/
+
+        float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     /// <summary>
@@ -763,11 +768,13 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else if (isThrowModeActive)
             {
-                if (b)
-                    StartCoroutine(nameof(ThrowEnd));
-                else
-                    isThrowPose = true;
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
             }
+
+            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
         }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
@@ -1014,6 +1021,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     bool lastSelfieCanClick = false;
@@ -1585,8 +1594,12 @@ public class PlayerControllerNew : MonoBehaviour
         }
         //else
         //    return;
-        isThrow = false;
-        isThrowModeActive = false;
+        if (isThrowModeActive)
+        {
+            isThrow = false;
+            isThrowModeActive = false;
+        }
+
         if (throwMainCo != null)
             throwMainCo = null;
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
@@ -1608,7 +1621,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             swordModel.SetActive(false);
         }
-        animator.SetBool("NinjaJump", false);
+        animator.SetBool("NinjaJump", true);
         animator.SetBool("isNinjaMotion", false);
         animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
         animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
@@ -1641,9 +1654,12 @@ public class PlayerControllerNew : MonoBehaviour
     {
         trajectoryController = this.GetComponent<TrajectoryController>();
         throwLineRenderer = this.GetComponent<LineRenderer>();
-        NinjaComponentTimerStart(0);
-        isNinjaMotion = false;
-        animator.SetBool("isNinjaMotion", false);
+        if (isNinjaMotion)
+        {
+            NinjaComponentTimerStart(0);
+            isNinjaMotion = false;
+            animator.SetBool("isNinjaMotion", false);
+        }
         isThrow = true;
         isThrowModeActive = true;
         if (throwMainCo == null)
@@ -1654,7 +1670,7 @@ public class PlayerControllerNew : MonoBehaviour
     private Coroutine throwStart, throwEnd, throwAction;
     bool isThrowReady = false;
     public Vector3 curveOffset;
-    bool isThrowPose = true;
+    internal bool isThrowPose = true;
 
     IEnumerator Throw()
     {
@@ -1787,6 +1803,7 @@ public class PlayerControllerNew : MonoBehaviour
     }
 
     bool throwBallPositionSet, throwBall;
+
     void BallPositionSet()
     {
         if (throwAction == null)

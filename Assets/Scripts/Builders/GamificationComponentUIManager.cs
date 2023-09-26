@@ -6,6 +6,7 @@ using DG.Tweening;
 using Models;
 using System.Globalization;
 using System;
+using Photon.Pun;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -27,13 +28,15 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
         BuilderEventManager.OnBlindComponentTriggerEnter += EnableBlindComponentUI;
         BuilderEventManager.OnQuizComponentCollisionEnter += EnableQuizComponentUI;
+        BuilderEventManager.OnQuizComponentColse += ResetCredentials;
         BuilderEventManager.OnSpecialItemComponentCollisionEnter += EnableSpecialItemUI;
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter += EnableAvatarInvisibilityUI;
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter += EnableNinjaMotionUI;
         BuilderEventManager.OnThrowThingsComponentCollisionEnter += EnableThrowThingsUI;
+        BuilderEventManager.OnThrowThingsComponentDisable += DisableThrowThingUI;
         BuilderEventManager.OnHyperLinkPopupCollisionEnter += EnableHyperLinkPopupUI;
         BuilderEventManager.OnHyperLinkPopupCollisionExit += DisableHyperLinkPopupUI;
-
+        BuilderEventManager.OnAvatarChangeComponentTriggerEnter += EnableAvatarChangerComponentUI;
         BuilderEventManager.ResetComponentUI += DisableAllComponentUIObject;
 
         BuilderEventManager.ChangeNinja_ThrowUIPosition += ChangeNinja_ThrowUIPosition;
@@ -61,13 +64,16 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
         BuilderEventManager.OnBlindComponentTriggerEnter -= EnableBlindComponentUI;
         BuilderEventManager.OnQuizComponentCollisionEnter -= EnableQuizComponentUI;
+        BuilderEventManager.OnQuizComponentColse -= ResetCredentials;
         BuilderEventManager.OnSpecialItemComponentCollisionEnter -= EnableSpecialItemUI;
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter -= EnableAvatarInvisibilityUI;
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter -= EnableNinjaMotionUI;
         BuilderEventManager.OnThrowThingsComponentCollisionEnter -= EnableThrowThingsUI;
+        BuilderEventManager.OnThrowThingsComponentDisable -= DisableThrowThingUI;
 
         BuilderEventManager.OnHyperLinkPopupCollisionEnter -= EnableHyperLinkPopupUI;
         BuilderEventManager.OnHyperLinkPopupCollisionExit -= DisableHyperLinkPopupUI;
+        BuilderEventManager.OnAvatarChangeComponentTriggerEnter -= EnableAvatarChangerComponentUI;
         BuilderEventManager.ChangeNinja_ThrowUIPosition -= ChangeNinja_ThrowUIPosition;
         BuilderEventManager.PositionUpdateOnOrientationChange -= PositionUpdateOnOrientationChange;
 
@@ -830,6 +836,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             isDissapearing = true;
             yield return new WaitForSeconds(0);
             isDissapearing = false;
+            //GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
             quizComponent.gameObject.SetActive(false);
         }
         quizComponent = null;
@@ -1097,19 +1104,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     #region Blind Component
     public GameObject BlindComponentParentUI;
     public TextMeshProUGUI BlindComponentTimeText;
-    public bool isNight;
-    public bool isBlindToogle;
-    public int previousSkyID;
     public Coroutine BlindComponentCoroutine;
 
-    #region BlindComponent
-    public void BlindTimerCount(bool _toggle, int _time)
-    {
-        TimeSpan ts = TimeSpan.FromSeconds(_time);
-        BlindComponentTimeText.text = ts.ToString(@"mm\:ss");
-        BlindComponentParentUI.SetActive(_toggle);
-    }
-    #endregion
     public void EnableBlindComponentUI(float timer)
     {
         if (timer > 0)
@@ -1156,6 +1152,55 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     #endregion
 
+    #region Avatar Changer Component
+    public GameObject AvatarChangerComponentParentUI;
+    public TextMeshProUGUI AvatarChangerComponentTimeText;
+    public Coroutine AvatarChangerComponentCoroutine;
+
+    public void EnableAvatarChangerComponentUI(float timer)
+    {
+        if (timer > 0)
+        {
+            DisableAllComponentUIObject(Constants.ItemComponentType.avatarChanger);
+            if (AvatarChangerComponentCoroutine == null)
+            {
+                AvatarChangerComponentCoroutine = StartCoroutine(IEAvatarChangerComponent(timer));
+            }
+            else
+            {
+                StopCoroutine(AvatarChangerComponentCoroutine);
+                AvatarChangerComponentCoroutine = StartCoroutine(IEAvatarChangerComponent(timer));
+            }
+        }
+        else
+        {
+            AvatarChangerComponentParentUI.SetActive(false);
+            if (AvatarChangerComponentCoroutine != null)
+                StopCoroutine(AvatarChangerComponentCoroutine);
+        }
+    }
+    public IEnumerator IEAvatarChangerComponent(float timer)
+    {
+        while (timer > 0)
+        {
+            timer--;
+            AvatarChangerComponentTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            AvatarChangerComponentParentUI.SetActive(true);
+            yield return new WaitForSeconds(1f);
+        }
+        AvatarChangerComponentParentUI.SetActive(false);
+        AvatarChangerComponentTimeText.text = "00:00";
+    }
+
+    public void DisableAvatarChangerComponentUI()
+    {
+        if (AvatarChangerComponentCoroutine != null)
+            StopCoroutine(AvatarChangerComponentCoroutine);
+        AvatarChangerComponentParentUI.SetActive(false);
+        AvatarChangerComponentTimeText.text = "";
+    }
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -1198,5 +1243,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableHyperLinkPopupUI();
         if (componentType != Constants.ItemComponentType.blind)
             DisableBlindComponentUI();
+        if (componentType != Constants.ItemComponentType.avatarChanger)
+            DisableAvatarChangerComponentUI();
     }
 }

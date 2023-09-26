@@ -218,6 +218,12 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(hyperLinkComponentData);
         }
 
+        AvatarChangerComponentData avatarChangerComponentData = itemData.avatarChangerComponentData;
+        if (avatarChangerComponentData.IsActive)
+        {
+            AvatarChangerComponent itemComponent = gameObject.AddComponent<AvatarChangerComponent>();
+            itemComponent.InitAvatarChanger(avatarChangerComponentData);
+        }
         //BlindComponentData blindComponentData = itemData.blindComponentData;
         //if (blindComponentData.IsActive)
         //{

@@ -30,7 +30,7 @@ public class AvatarController : MonoBehaviour
 
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
-
+    public bool isVisibleOnCam= false;
     private void Awake()
     {
         bodyParts = this.GetComponent<CharcterBodyParts>();
@@ -1561,5 +1561,14 @@ public class AvatarController : MonoBehaviour
             }
         }
         return LightPresetNFT.DefaultSkin;
+    }
+    void OnBecameInvisible()
+    {
+        isVisibleOnCam= false;
+    }
+
+    void OnBecameVisible()
+    {
+        isVisibleOnCam= true;
     }
 }

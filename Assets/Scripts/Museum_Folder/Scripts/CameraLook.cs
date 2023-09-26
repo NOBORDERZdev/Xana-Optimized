@@ -57,6 +57,9 @@ public class CameraLook : MonoBehaviour
     [HideInInspector]
     public bool isRotatingScreen = false;
 
+    CharcterBodyParts charcterBody;
+    [SerializeField] GameObject pointObj;
+    GameObject camRender;
     private void OnEnable()
     {
         controls.Enable();
@@ -95,6 +98,7 @@ public class CameraLook : MonoBehaviour
             lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
+        camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
     }
 
     void SwitchOrientation()
@@ -162,6 +166,34 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Mobile();        // use for cam rotation using touch input
                 ZoomDetection();
             }
+        }
+       CameraPlayerMeshCollosionFind();
+    }
+
+    /// <summary>
+    /// To check is camera in player mesh
+    /// </summary>
+    void CameraPlayerMeshCollosionFind(){
+        if (charcterBody == null || pointObj  == null )
+        {
+            if(ReferrencesForDynamicMuseum.instance.m_34player){ 
+                charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
+               // pointObj = charcterBody.Body.gameObject;
+            }
+            else
+            {
+                return;
+            }
+        }
+        
+        float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
+        if (dist< 0.2f)
+        {
+            charcterBody.HidePlayer();
+        }
+        else
+        {
+            charcterBody.ShowPlayer();
         }
     }
 

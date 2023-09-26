@@ -18,6 +18,9 @@ public class LoadingHandler : MonoBehaviour
     public Text loadingText;
     public TextMeshProUGUI loadingPercentageText;
 
+    public Image JJLoadingSlider;
+    public TextMeshProUGUI JJLoadingPercentageText;
+
     [Header("Loading BG Elements")]
     public Image loadingBgImage;
     public Image loadingBgImageAlter;
@@ -63,6 +66,7 @@ public class LoadingHandler : MonoBehaviour
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
     public ManualRoomController manualRoomController;
+    public StreamingLoadingText streamingLoading;
 
     private void Awake()
     {
@@ -159,7 +163,21 @@ public class LoadingHandler : MonoBehaviour
             ChangeHelpScreenUI(false);
         }*/
     }
-
+    public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
+    {
+        value = value * 100;
+        value = value - (value % 5f);
+        value = value / 100;
+        if (doLerp)
+        {
+            JJLoadingSlider.DOFillAmount(value, fillSpeed);
+        }
+        else
+        {
+            JJLoadingSlider.fillAmount = value;
+        }
+        JJLoadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
+    }
     public void ShowLoading()
     {
         if (/*XanaConstants.xanaConstants.JjWorldSceneChange*/teleportFeader.gameObject.activeInHierarchy)
@@ -185,13 +203,66 @@ public class LoadingHandler : MonoBehaviour
         loadingPanel.SetActive(false);
 
         if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
-            Screen.orientation = ScreenOrientation.Portrait;
+        {
+           // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
+            //Screen.orientation = ScreenOrientation.Portrait;
+        }
 
         if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
+
+        if (XanaConstants.xanaConstants.isBackFromWorld)
+            HideFadderAfterOriantationChanged(1.5f);
     }
+
+    bool orientationchanged = false;
+    public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
+    {
+        //Debug.LogError("~~~~~~~  Fadder Time ~~~~~~~ " + oriantation);
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
+        {
+            Screen.orientation = oriantation;
+#if !UNITY_EDITOR
+            orientationchanged = false;
+            StartCoroutine(Check_Orientation(oriantation));
+#else
+
+            Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
+#endif
+        });
+            
+    }
+    public void HideFadderAfterOriantationChanged(float delay = 0)
+    {
+        //Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(delay);
+        XanaConstants.xanaConstants.isBackFromWorld = false;
+    }
+
+    private IEnumerator Check_Orientation(ScreenOrientation oriantation)
+    {
+    CheckAgain:
+        //Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
+        yield return new WaitForSeconds(.2f);
+        if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            if(!XanaConstants.xanaConstants.isBackFromWorld)
+                HideFadderAfterOriantationChanged();
+        }
+        else
+        {
+            Screen.orientation = oriantation;
+            goto CheckAgain;
+        }
+
+    }
+
+
+
 
     public bool GetLoadingStatus()
     {

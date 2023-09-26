@@ -138,11 +138,13 @@ public class BuildingDetect : MonoBehaviour
     {
         BuilderEventManager.ActivateAvatarInivisibility += AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility += StopAvatarInvisibility;
+        BuilderEventManager.StopAvatarChangeComponent += ToggleAvatarChangeComponent;
     }
     private void OnDisable()
     {
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
+        BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
     }
 
     #region Mubashir Avatar Work
@@ -178,25 +180,54 @@ public class BuildingDetect : MonoBehaviour
     #region Avatar Model Changing Logic
 
     int avatarIndex;
-    public void OnAvatarChangerEnter(float time, int avatarIndex)
+    public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
+        BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
         avatarChangeTime = time;
-        this.avatarIndex = avatarIndex;
+        avatarIndex = avatarIndex - 1;
         StopCoroutine(avatarChangeCoroutine);
         avatarChangeCoroutine = PlayerAvatarChange();
+
+        gangsterCharacter = new GameObject("AvatarChange");
+        gangsterCharacter.SetActive(false);
+        Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
+        CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
+        if (cc != null)
+            cc.playerControler = GamificationComponentData.instance.playerControllerNew;
+        if (avatarIndex == 2)
+        {
+            GameObject cloneObject = Instantiate(curObject);
+            Component[] components = cloneObject.GetComponents<Component>();
+            for (int i = components.Length - 1; i >= 0; i--)
+            {
+                if (!(components[i] is Transform))
+                {
+                    Destroy(components[i]);
+                }
+            }
+            cloneObject.transform.SetParent(gangsterCharacter.transform);
+            cloneObject.transform.localPosition = Vector3.zero;
+            cloneObject.transform.localEulerAngles = Vector3.zero;
+            cloneObject.SetActive(true);
+        }
+        gangsterCharacter.transform.SetParent(this.transform);
+        gangsterCharacter.transform.localPosition = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
         StartCoroutine(avatarChangeCoroutine);
     }
     float avatarTime;
+    Avatar tempAnimator;
     IEnumerator PlayerAvatarChange()
     {
         avatarTime = 0;
 
-        ToggleSkinMesh(false);
-        Animator tempAnimator = this.GetComponent<PlayerControllerNew>().animator;
-        this.GetComponent<PlayerControllerNew>().animator = gangsterCharacter.GetComponent<Animator>();
+        ToggleAvatarChangeComponent(false);
+        tempAnimator = this.GetComponent<Animator>().avatar;
+        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         gangsterCharacter.SetActive(true);
 
-
+        BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
         while (avatarChangeTime > avatarTime)
         {
             int minutes = (int)avatarChangeTime / 60;
@@ -210,16 +241,27 @@ public class BuildingDetect : MonoBehaviour
             avatarChangeTime--;
         }
 
-        this.GetComponent<PlayerControllerNew>().animator = tempAnimator;
-        ToggleSkinMesh(true);
-
-        gangsterCharacter.SetActive(false);
+        this.GetComponent<Animator>().avatar = tempAnimator;
+        ToggleAvatarChangeComponent(true);
+        Destroy(gangsterCharacter);
 
         yield return null;
     }
 
-    void ToggleSkinMesh(bool state)
+    void ToggleAvatarChangeComponent(bool state)
     {
+
+        if (state)
+        {
+            if (avatarChangeCoroutine != null)
+                StopCoroutine(avatarChangeCoroutine);
+            if (gangsterCharacter != null)
+            {
+                this.GetComponent<Animator>().avatar = tempAnimator;
+                Destroy(gangsterCharacter);
+            }
+            BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
+        }
         playerHair.enabled = state;
         playerBody.enabled = state;
         playerHead.enabled = state;
