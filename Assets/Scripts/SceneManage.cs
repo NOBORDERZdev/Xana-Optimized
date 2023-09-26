@@ -203,6 +203,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         //  Caching.ClearCache();
         // GC.Collect();
         print("mian scne "+mainScene);
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             SceneManager.LoadScene("Main");
