@@ -72,10 +72,12 @@ public class XanaLobbyManager : MonoBehaviour
     }
     public IEnumerator InitData(XanaLobbyJson data,List<GameObject> placedWorldsList)
     {
-        int placedWorldsCount = placedWorldsList.Count;
+        //int placedWorldsCount = placedWorldsList.Count;
         //List<XanaLobbyData> worldsData = data.data;
-        for (int i = 0; i < placedWorldsCount; i++)
+        XLWorldInfo xlWorldInfo;
+        for (int i = 0; i < placedWorldsList.Count; i++)
         {
+            xlWorldInfo = placedWorldsList[i].GetComponent<XLWorldInfo>();
             for (int j = 0; j < worldsData.Count; j++)
             {
                 if (i == worldsData[j].index - 1)
@@ -88,24 +90,24 @@ public class XanaLobbyManager : MonoBehaviour
                     if (!worldsData[j].thumbnail.IsNullOrEmpty())
                     {
                         //worldsInfo[i].Type = MediaType.Image;
-                        placedWorldsList[i].GetComponent<XLWorldInfo>().InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
-                        placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.WorldName = worldsData[i].world_name;
+                        xlWorldInfo.InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
+                        xlWorldInfo.worldChanger.WorldName = worldsData[i].world_name;
                         if(APIBaseUrlChange.instance.IsXanaLive)
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.MainNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.MainNet = worldsData[i].world_id;
                         else
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.testNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.testNet = worldsData[i].world_id;
                         if (worldsData[j].entity_type == EntityType.USER_WORLD.ToString())
                         {
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = true;
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = false;
+                            xlWorldInfo.worldChanger.isBuilderWorld = true;
+                            xlWorldInfo.worldChanger.isMusuem = false;
                         }else if (worldsData[j].entity_type == EntityType.MUSEUMS.ToString())
                         {
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = false;
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = true;
+                            xlWorldInfo.worldChanger.isBuilderWorld = false;
+                            xlWorldInfo.worldChanger.isMusuem = true;
                         }else
                         {
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isBuilderWorld = false;
-                            placedWorldsList[i].GetComponent<XLWorldInfo>().worldChanger.isMusuem = false;
+                            xlWorldInfo.worldChanger.isBuilderWorld = false;
+                            xlWorldInfo.worldChanger.isMusuem = false;
                         }
                         //worldsInfo[i].Title = worldsData[i].title;
                         //worldsInfo[i].Aurthor = worldsData[i].authorName;
