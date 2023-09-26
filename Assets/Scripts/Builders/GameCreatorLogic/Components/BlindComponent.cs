@@ -43,7 +43,7 @@ public class BlindComponent : ItemComponent
 
             IsAgainTouchable = false;
 
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, _componentType);
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
         }
     }
 

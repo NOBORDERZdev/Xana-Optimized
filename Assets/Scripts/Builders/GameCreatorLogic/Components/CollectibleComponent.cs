@@ -18,7 +18,9 @@ public class CollectibleComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, _componentType);
+            //BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            //PlayBehaviour();
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 

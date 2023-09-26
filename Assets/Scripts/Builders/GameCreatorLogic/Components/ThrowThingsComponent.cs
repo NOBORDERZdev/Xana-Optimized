@@ -19,7 +19,7 @@ public class ThrowThingsComponent : ItemComponent
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 
@@ -32,10 +32,7 @@ public class ThrowThingsComponent : ItemComponent
     private void StopComponent()
     {
         // This Stop Cannot Work because the Item is Destroyed when player touch it
-        StartCoroutine(GamificationComponentData.instance.playerControllerNew.ThrowEnd());
-        GamificationComponentData.instance.playerControllerNew.isThrow = false;
-        GamificationComponentData.instance.playerControllerNew.isThrowModeActive = false;
-        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+        GamificationComponentData.instance.playerControllerNew.ThrowThingsEnded();
     }
 
     public override void StopBehaviour()

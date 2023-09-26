@@ -177,6 +177,8 @@ public class BuildingDetect : MonoBehaviour
     #region Avatar Model Changing Logic
     public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
+        if (tempAnimator != null)
+            this.GetComponent<Animator>().avatar = tempAnimator;
         BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
 
         avatarChangeTime = time;
@@ -222,7 +224,8 @@ public class BuildingDetect : MonoBehaviour
         avatarTime = 0;
 
         ToggleAvatarChangeComponent(false);
-        tempAnimator = this.GetComponent<Animator>().avatar;
+        if (tempAnimator == null)
+            tempAnimator = this.GetComponent<Animator>().avatar;
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         gangsterCharacter.SetActive(true);
@@ -236,7 +239,7 @@ public class BuildingDetect : MonoBehaviour
             avatarChangeTime--;
         }
 
-        this.GetComponent<Animator>().avatar = tempAnimator;
+        //this.GetComponent<Animator>().avatar = tempAnimator;
         ToggleAvatarChangeComponent(true);
 
         Destroy(gangsterCharacter);

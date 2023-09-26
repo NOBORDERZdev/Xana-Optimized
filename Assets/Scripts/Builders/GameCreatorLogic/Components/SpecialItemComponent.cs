@@ -30,7 +30,7 @@ public class SpecialItemComponent : ItemComponent
             //this.gameObject.SetActive(false);
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 
@@ -45,7 +45,7 @@ public class SpecialItemComponent : ItemComponent
     private void StopComponent()
     {
         // this method will never Call because this object is Destroy when the player touch to it.
-        BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
+        GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
     }
 
     public override void StopBehaviour()

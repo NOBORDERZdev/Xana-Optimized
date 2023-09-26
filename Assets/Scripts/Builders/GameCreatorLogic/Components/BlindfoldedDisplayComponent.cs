@@ -34,7 +34,12 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.OthersBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GamificationComponentData.instance.SetRoomData(RuntimeItemID, Constants.ItemComponentType.none);
+            }
+
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
         }

@@ -474,6 +474,9 @@ public class BuilderMapDownload : MonoBehaviour
         playerCharacterController.center = playerCollider.center;
 
         GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+
+        //call for Execute all rpcs of this room
+        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
     }
 
 

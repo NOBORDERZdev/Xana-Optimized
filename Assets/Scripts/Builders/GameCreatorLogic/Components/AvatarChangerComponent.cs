@@ -16,11 +16,11 @@ public class AvatarChangerComponent : ItemComponent
 
     private void OnCollisionEnter(Collision _other)
     {
-        if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 
@@ -44,6 +44,7 @@ public class AvatarChangerComponent : ItemComponent
     private void StopComponent()
     {
         // this method will never Call because this object is Destroy when the player touch to it.
+        BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
     }
 
     public override void StopBehaviour()

@@ -36,7 +36,7 @@ public class DoorKeyComponent : ItemComponent
                 PlayerCanvas.Instance.ToggleKey(true);
                 //this.gameObject.SetActive(false);
                 PlayerCanvas.Instance.keyCounter.text = "x" + _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Count.ToString();
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             }
 
 
@@ -64,7 +64,7 @@ public class DoorKeyComponent : ItemComponent
                 if (isDoorFind)
                 {
                     //this.gameObject.SetActive(false);
-                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.AllBuffered, RuntimeItemID, Constants.ItemComponentType.none);
+                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
                     Toast.Show("The keys match!");
                     return;
                 }
