@@ -70,6 +70,9 @@ public class GamificationComponentData : MonoBehaviourPun
     public VolumeProfile aiPPVolumeProfile;
     internal bool isSkyLoaded;
 
+    //Gamification components with multipler
+    public bool withMultiplayer = false;
+
     private void Awake()
     {
         instance = this;
@@ -184,7 +187,7 @@ public class GamificationComponentData : MonoBehaviourPun
                 {
                     string startKey = data1.warpPortalStartKeyValue;
 
-                    if (startKey == data2.warpPortalEndKeyValue)
+                    if (startKey == data2.warpPortalEndKeyValue  && startKey!="")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
                         endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
@@ -197,7 +200,7 @@ public class GamificationComponentData : MonoBehaviourPun
                 else
                 {
                     string endKey = data1.warpPortalEndKeyValue;
-                    if (endKey == data2.warpPortalStartKeyValue)
+                    if (endKey == data2.warpPortalStartKeyValue && endKey!="")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
                         endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
@@ -214,13 +217,15 @@ public class GamificationComponentData : MonoBehaviourPun
     void UpdateStartPortalLocations(List<PortalSystemStartPoint> endPoints, string key, Vector3 location)
     {
         PortalSystemStartPoint portalSystemEndPoint = endPoints.Find(x => x.indexPortalStartKey == key);
-        portalSystemEndPoint.portalStartLocation = location;
+        if (portalSystemEndPoint != null)
+            portalSystemEndPoint.portalStartLocation = location;
     }
 
     void UpdateEndPortalLocations(List<PortalSystemEndPoint> endPoints, string key, Vector3 location)
     {
         PortalSystemEndPoint portalSystemEndPoint = endPoints.Find(x => x.indexPortalEndKey == key);
-        portalSystemEndPoint.portalEndLocation = location;
+        if (portalSystemEndPoint != null)
+            portalSystemEndPoint.portalEndLocation = location;
     }
 
     //All components for multiplayer
@@ -228,10 +233,6 @@ public class GamificationComponentData : MonoBehaviourPun
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
     {
-        //store rpc data in roomoption
-        if (PhotonNetwork.IsMasterClient)
-            SetRoomData(RuntimeItemID, componentType);
-
         var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
         if (componentType == Constants.ItemComponentType.none)
         {
@@ -241,7 +242,6 @@ public class GamificationComponentData : MonoBehaviourPun
 
         RestrictionComponents(componentType);
 
-
         if (item != null)
         {
             var component = item.GetComponent(componentType.ToString()) as ItemComponent;
@@ -250,6 +250,10 @@ public class GamificationComponentData : MonoBehaviourPun
                 component.PlayBehaviour();
             }
         }
+
+        //store rpc data in roomoption
+        if (PhotonNetwork.IsMasterClient && withMultiplayer)
+            SetRoomData(RuntimeItemID, componentType);
     }
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
@@ -271,7 +275,7 @@ public class GamificationComponentData : MonoBehaviourPun
 
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
         {
-             componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
+            componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
         }
 
         componentRPCs.rpcList.Add(gamificationComponentRPC);
@@ -282,6 +286,9 @@ public class GamificationComponentData : MonoBehaviourPun
 
     void GetRPC()
     {
+        if (!withMultiplayer)
+            return;
+
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
         {
             GamificationComponentRPCs componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
@@ -308,5 +315,5 @@ public class GamificationComponentRPC
 [Serializable]
 public class GamificationComponentRPCs
 {
-    public List<GamificationComponentRPC> rpcList=new List<GamificationComponentRPC>();
+    public List<GamificationComponentRPC> rpcList = new List<GamificationComponentRPC>();
 }

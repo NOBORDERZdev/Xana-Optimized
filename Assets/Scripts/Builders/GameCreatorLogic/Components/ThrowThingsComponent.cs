@@ -19,7 +19,10 @@ public class ThrowThingsComponent : ItemComponent
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+            if(GamificationComponentData.instance.withMultiplayer)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+            else
+                GamificationComponentData.instance.GetObject(RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 

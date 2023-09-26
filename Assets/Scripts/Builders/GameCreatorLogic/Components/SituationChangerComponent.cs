@@ -42,7 +42,10 @@ public class SituationChangerComponent : ItemComponent
 
             if (!isActivated)
                 return;
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            if(GamificationComponentData.instance.withMultiplayer)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            else
+                GamificationComponentData.instance.GetObject(RuntimeItemID, _componentType);
         }
     }
 
