@@ -15,6 +15,8 @@ public class NinjaComponent : MonoBehaviour
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             //return;
+            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+
             // Special Item Component Stops
             GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
             // Special Item Component Stops
