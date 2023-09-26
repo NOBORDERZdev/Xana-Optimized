@@ -315,95 +315,113 @@ public class WorldManager : MonoBehaviour
     }
     public string worldstr;
     bool isLobbyActive = false;
+    public WorldItemManager WorldItemManager;
     void InstantiateWorlds()
     {
         Debug.LogError("InstantiateWorlds Called = "+ _WorldInfo.data.rows.Count);
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
-           // Debug.LogError("Name " + _WorldInfo.data.rows[i].name);
-            GameObject TempObject;
+            //  WorldItemDetail worldCreateFromData = new WorldItemDetail();
+
+            // Debug.LogError("Name " + _WorldInfo.data.rows[i].name);
+            WorldItemDetail _event;
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 Debug.LogError(i+ " --- XANA Lobby --");
                 isLobbyActive = true;
-                TempObject = eventPrefabLobby;
-                TempObject.transform.SetParent(listParent.transform.parent);
-                TempObject.transform.SetAsFirstSibling();
+               
+              // . TempObject = eventPrefabLobby;
+              // TempObject.transform.SetParent(listParent.transform.parent);
+              // TempObject.transform.SetAsFirstSibling();
 
             }
             else
             {
-                TempObject = Instantiate(eventPrefab);
-                TempObject.transform.SetParent(listParent);
+                // TempObject = Instantiate(eventPrefab);
+                // TempObject.transform.SetParent(listParent);
             }
-            FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
+                _event = new WorldItemDetail();
+            // FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
+           // WorldItemView _event = TempObject.GetComponent<WorldItemView>();
 
             if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
             {
-                _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
+              //  _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
             }
 
-            _event.idOfObject = _WorldInfo.data.rows[i].id;
-            _event.m_EnvironmentName = _WorldInfo.data.rows[i].name;
+            _event.IdOfWorld = _WorldInfo.data.rows[i].id;
+            _event.EnvironmentName = _WorldInfo.data.rows[i].name;
             try
             {
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-                    _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                    _event.m_ThumbnailDownloadURL = _event.m_ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                    _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
                 }
             }
             catch
             {
-                _event.m_ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail;
+                _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail;
             }
-            _event.m_BannerLink = _WorldInfo.data.rows[i].banner;
-            _event.m_WorldDescription = _WorldInfo.data.rows[i].description;
-            _event.entityType = _WorldInfo.data.rows[i].entityType;
-            _event.m_PressedIndex = int.Parse(_WorldInfo.data.rows[i].id);
-            _event.updatedAt = _WorldInfo.data.rows[i].updatedAt;
-            _event.createdAt = _WorldInfo.data.rows[i].createdAt;
+            _event.BannerLink = _WorldInfo.data.rows[i].banner;
+            _event.WorldDescription = _WorldInfo.data.rows[i].description;
+            _event.EntityType = _WorldInfo.data.rows[i].entityType;
+            _event.PressedIndex = int.Parse(_WorldInfo.data.rows[i].id);
+            _event.UpdatedAt = _WorldInfo.data.rows[i].updatedAt;
+            _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
 
             if (_WorldInfo.data.rows[i].tags != null)
-                _event.worldTags = _WorldInfo.data.rows[i].tags;
+                _event.WorldTags = _WorldInfo.data.rows[i].tags;
 
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
-                _event.creatorName = _WorldInfo.data.rows[i].user.name;
-                _event.userAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                _event.userLimit = "10";
+                _event.CreatorName = _WorldInfo.data.rows[i].user.name;
+                _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
+                _event.UserLimit = "10";
             }
             else
             {
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
-                    _event.creatorName = _WorldInfo.data.rows[i].creator;
+                    _event.CreatorName = _WorldInfo.data.rows[i].creator;
                 else
-                    _event.creatorName = "XANA";
-                _event.userLimit = _WorldInfo.data.rows[i].user_limit;
+                    _event.CreatorName = "XANA";
+                _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
             }
 
-            TempObject.transform.localScale = new Vector3(1, 1, 1);
-            _event.Init();
-            if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
+            //TempObject.transform.localScale = new Vector3(1, 1, 1);
+            // _event.Init();
+            /*  if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
+              {
+                  if (aPIURLGlobal == APIURL.Hot)
+                      hotWorldList.Add(TempObject);
+                  else if (aPIURLGlobal == APIURL.AllWorld)
+                      newWorldList.Add(TempObject);
+                  else if (aPIURLGlobal == APIURL.MyWorld)
+                      myworldWorldList.Add(TempObject);
+                  else if (aPIURLGlobal == APIURL.GameWorld)
+                      gameWorldList.Add(TempObject);
+                  else if (aPIURLGlobal == APIURL.EventWorld)
+                      eventWorldList.Add(TempObject);
+              }*/
+            if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-                if (aPIURLGlobal == APIURL.Hot)
-                    hotWorldList.Add(TempObject);
-                else if (aPIURLGlobal == APIURL.AllWorld)
-                    newWorldList.Add(TempObject);
-                else if (aPIURLGlobal == APIURL.MyWorld)
-                    myworldWorldList.Add(TempObject);
-                else if (aPIURLGlobal == APIURL.GameWorld)
-                    gameWorldList.Add(TempObject);
-                else if (aPIURLGlobal == APIURL.EventWorld)
-                    eventWorldList.Add(TempObject);
+                Debug.LogError(i + " --- XANA Lobby --");
+                isLobbyActive = true;
+                eventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
+                // . TempObject = eventPrefabLobby;
+                // TempObject.transform.SetParent(listParent.transform.parent);
+                // TempObject.transform.SetAsFirstSibling();
+
             }
+            else
+            WorldItemManager.AddWorld(_event);
         }
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
             listParentHotSection.GetComponent<GridLayoutGroup>().padding.top = 25;
         }
-
+        WorldItemManager.DisplayWorlds();
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
 
         TutorialsManager.instance.ShowTutorials();
