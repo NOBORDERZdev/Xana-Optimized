@@ -533,10 +533,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     }
 
     [SerializeField] int autoSwitchTime;
+    [SerializeField] int StreamSwitchTime;
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         //print("AUTO BACK CALL");
-        yield return new WaitForSecondsRealtime(30); // 1000 secs = 30 mins 
+        yield return new WaitForSecondsRealtime(StreamSwitchTime); // 1000 secs = 30 mins 
         LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
         LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
