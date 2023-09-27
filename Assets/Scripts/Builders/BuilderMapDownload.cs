@@ -589,7 +589,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
         else
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+           // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
         }
     }
