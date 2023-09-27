@@ -15,7 +15,8 @@ public class AudioComponent : ItemComponent
     public void Init(AudioComponentData audioComponentData)
     {
         this.audioComponentData = audioComponentData;
-        StartCoroutine(setAudioFromUrl(this.audioComponentData.audioPath));
+        if (this.audioComponentData.audioPath != "")
+            StartCoroutine(setAudioFromUrl(this.audioComponentData.audioPath));
     }
 
     private void OnCollisionEnter(Collision _other)
