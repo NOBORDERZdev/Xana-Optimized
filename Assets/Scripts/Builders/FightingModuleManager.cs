@@ -43,7 +43,7 @@ public class FightingModuleManager : MonoBehaviour
             UserName = PlayerPrefs.GetString(UsernamePrefs);
         }
         Debug.LogError("UserName: " + UserName);
-
+        Input.multiTouchEnabled = true;
         yield return new WaitForSeconds(.1f);
         SceneManager.LoadScene("Demo_Fighter3D - Type 2");
     }
