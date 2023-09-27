@@ -539,7 +539,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //print("AUTO BACK CALL");
         yield return new WaitForSecondsRealtime(StreamSwitchTime); // 1000 secs = 30 mins 
         LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
-        LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
+        //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         _uiReferences.LoadMain(false);

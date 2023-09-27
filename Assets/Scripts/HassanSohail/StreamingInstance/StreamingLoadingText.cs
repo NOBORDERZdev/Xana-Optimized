@@ -25,7 +25,7 @@ public class StreamingLoadingText : MonoBehaviour
             {
                 item.SetActive(false);
             }
-          StartCoroutine( ResetLoadingBar());
+          //StartCoroutine( ResetLoadingBar());
         }
     }
     public void UpdateLoadingText(bool movingToWorld)
