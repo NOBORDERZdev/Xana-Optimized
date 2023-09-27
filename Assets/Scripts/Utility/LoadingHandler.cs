@@ -193,6 +193,8 @@ public class LoadingHandler : MonoBehaviour
         currentValue = 0;
         isLoadingComplete = false;
         timer = 0;
+        loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+        loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
         loadingPanel.SetActive(true);
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -379,7 +381,7 @@ public class LoadingHandler : MonoBehaviour
     public void LoadSceneByIndex(string sceneName)
     {
         //UpdateLoadingSlider(.2f);
-        StartCoroutine(IncrementSliderValue(15f));
+        StartCoroutine(IncrementSliderValue(12f));
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
     }
 
