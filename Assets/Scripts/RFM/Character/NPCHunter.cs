@@ -117,7 +117,7 @@ namespace RFM.Character
                 // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 killVFX.SetActive(true);
                 
-                other.GetComponent<PlayerEscapee>().PlayerEscapeeCaught(this);
+                other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
             }
         }
 
