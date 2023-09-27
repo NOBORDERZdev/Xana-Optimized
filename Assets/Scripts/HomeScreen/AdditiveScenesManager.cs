@@ -114,8 +114,9 @@ public class AdditiveScenesManager : MonoBehaviour
             {
                 Screen.orientation = ScreenOrientation.Portrait;
             }
-        }
+        
         LoadingHandler.Instance.HideLoading();
+
         //if (LoadingHandler.Instance != null)
         //{
         //    if (Screen.orientation == ScreenOrientation.Landscape)
