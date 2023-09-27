@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 public class StreamingLoadingText : MonoBehaviour
 {
     [SerializeField] TMPro.TMP_Text TmpText;
@@ -11,6 +12,7 @@ public class StreamingLoadingText : MonoBehaviour
     [SerializeField] GameObject barparent;
     [SerializeField] Image bar;
     [SerializeField] GameObject bufferText;
+    [SerializeField] TMP_Text percentageTxt;
     private void Start()
     {
         if (!XanaConstants.xanaConstants.isCameraMan)
@@ -49,11 +51,18 @@ public class StreamingLoadingText : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
         bufferText.SetActive(true);
-         bar.DOFillAmount(0,.001f);
+        percentageTxt.text ="0%";
+        bar.DOFillAmount(0,.001f);
         bar.gameObject.SetActive(true);
         bar.DOFillAmount(0.95f,20);
         TmpText.gameObject.SetActive(false);
     }
 
-
+    private void Update()
+    {
+        if (percentageTxt!= null)
+        {
+            percentageTxt.text = (int) (bar.fillAmount *100f) +"%";
+        }
+    }
 }

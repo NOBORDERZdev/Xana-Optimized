@@ -160,7 +160,11 @@ public class StreamingCamera : MonoBehaviour
                         {
                             list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
                         }
-                    }
+                }
+                else
+                {
+                        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                }
 
                 if (XanaConstants.xanaConstants.newStreamEntery)
                 {
