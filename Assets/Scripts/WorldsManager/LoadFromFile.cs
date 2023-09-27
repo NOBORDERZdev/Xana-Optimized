@@ -1,18 +1,13 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 using Cinemachine;
-using UnityEditor;
-using WebSocketSharp;
 using UnityEngine.SceneManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
-using Photon.Realtime;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using UnityEngine.UI;
-using System.IO;
 using UnityEngine.Rendering.Universal;
 
 public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
@@ -729,30 +724,30 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         Transform tempSpawnPoint = null;
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
-        if (RFM.Globals.IsRFMWorld) // TODO Muneeb
-        {
-            spawnPoint = RFM.RFMManager.Instance.lobbySpawnPoint.position;
-
-            if (BuilderData.spawnPoint.Count == 1)
-            {
-                RFM.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-                RFM.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-
-                var position = RFM.RFMManager.Instance.huntersSpawnArea.position;
-                position = new Vector3(
-                    position.x,
-                    position.y,
-                    position.z + 10
-                );
-                RFM.RFMManager.Instance.huntersSpawnArea.position = position;
-            }
-            else if (BuilderData.spawnPoint.Count > 1)
-            {
-                RFM.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
-                RFM.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[1].spawnObject.transform;
-            }
-        }
-        else
+        // if (RFM.Globals.IsRFMWorld) // TODO Muneeb
+        // {
+        //     spawnPoint = RFM.Managers.RFMManager.Instance.lobbySpawnPoint.position;
+        //
+        //     if (BuilderData.spawnPoint.Count == 1)
+        //     {
+        //         RFM.Managers.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //
+        //         var position = RFM.Managers.RFMManager.Instance.huntersSpawnArea.position;
+        //         position = new Vector3(
+        //             position.x,
+        //             position.y,
+        //             position.z + 10
+        //         );
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea.position = position;
+        //     }
+        //     else if (BuilderData.spawnPoint.Count > 1)
+        //     {
+        //         RFM.Managers.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[1].spawnObject.transform;
+        //     }
+        // }
+        // else
         {
             if (BuilderData.spawnPoint.Count == 1)
             {

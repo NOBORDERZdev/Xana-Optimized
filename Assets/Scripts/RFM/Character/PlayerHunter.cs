@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-namespace RFM
+namespace RFM.Character
 {
     public class PlayerHunter : MonoBehaviour
     {
@@ -24,9 +24,9 @@ namespace RFM
                 _players.Remove(other.gameObject);
 
                 // PhotonView is on the parent of the gameobject that has a collider.
-                int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
+                int colliderViewId = other.transform.parent.GetComponent<PhotonView>().ViewID;
 
-                RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
+                RFM.Managers.RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, colliderViewId);
                 killVFX.SetActive(true);
             }
         }

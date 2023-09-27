@@ -107,7 +107,6 @@ namespace RFM.Character
             
             else if (other.CompareTag(Globals.PLAYER_TAG)/*Globals.LOCAL_PLAYER_TAG*/)
             {
-                // if (Globals.player == null) Globals.player = other.GetComponent<PlayerControllerNew>().gameObject;
                 _players.Remove(other.gameObject);
                 _target = null;
 
@@ -117,7 +116,8 @@ namespace RFM.Character
                 // Uncomment for player hunter
                 // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 killVFX.SetActive(true);
-                EventsManager.PlayerCaught(this);
+                
+                other.GetComponent<PlayerEscapee>().PlayerEscapeeCaught(this);
             }
         }
 
