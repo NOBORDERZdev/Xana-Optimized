@@ -68,6 +68,10 @@ public class LoadingHandler : MonoBehaviour
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 
+    public float currentValue = 0;
+    private float timer = 0;
+    public bool isLoadingComplete = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -186,6 +190,9 @@ public class LoadingHandler : MonoBehaviour
         }
         Screen.orientation = ScreenOrientation.LandscapeLeft;
 
+        currentValue = 0;
+        isLoadingComplete = false;
+        timer = 0;
         loadingPanel.SetActive(true);
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -358,8 +365,36 @@ public class LoadingHandler : MonoBehaviour
 
     public void LoadSceneByIndex(string sceneName)
     {
-        UpdateLoadingSlider(.2f);
+        //UpdateLoadingSlider(.2f);
+        StartCoroutine(IncrementSliderValue(15f));
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+    }
+
+    public IEnumerator IncrementSliderValue(float speed, bool loadMainScene=false)
+    {
+        while (currentValue < 100)
+        {
+            timer += Time.deltaTime;
+            currentValue = Mathf.Lerp(0, 80, timer / speed);
+
+            loadingSlider.DOFillAmount((currentValue/100), 0.15f);
+            loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+
+            if (LoadFromFile.instance && !loadMainScene)
+            {
+                if (LoadFromFile.instance.isEnvLoaded)
+                {
+                    isLoadingComplete = true;
+                }
+            }
+            if (isLoadingComplete)
+            {
+                currentValue = 100;
+                loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+            }
+            yield return null;
+        }
     }
 
     public IEnumerator TeleportFader(FadeAction action)
