@@ -158,6 +158,7 @@ public class StoreManager : MonoBehaviour
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
     public GameObject backbutton_preset;
+    public Transform contentList;
 
     public GameObject faceTapButton;
     public GameObject eyeBrowTapButton;
@@ -257,6 +258,8 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+
+
     public void WalletLoggedinCall()
     {
         GetAllMainCategories();

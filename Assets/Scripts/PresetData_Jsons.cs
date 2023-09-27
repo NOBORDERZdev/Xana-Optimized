@@ -4,6 +4,8 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.UI.Extensions;
+
 using static StoreManager;
 public class PresetData_Jsons : MonoBehaviour
 {
@@ -46,8 +48,21 @@ public class PresetData_Jsons : MonoBehaviour
 
     void Start()
     {
-        gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
+        if (gameObject.GetComponent<Button>() != null) 
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
+        }
 
+
+        if (ScrollSnap.instance.ASNextButton != null) 
+        {
+            ScrollSnap.instance.ASNextButton.onClick.AddListener(ChangecharacterOnCLickFromserver);
+        }
+
+        if (ScrollSnap.instance.skipButton != null)
+        {
+            ScrollSnap.instance.skipButton.onClick.AddListener(ChangecharacterOnCLickFromserver);
+        }
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         charcterBodyParts = CharcterBodyParts.instance;
     }
@@ -57,6 +72,11 @@ public class PresetData_Jsons : MonoBehaviour
     }
     void ChangecharacterOnCLickFromserver()
     {
+        if (ScrollSnap.instance.nameData != null) 
+        {
+            JsonDataPreset = ScrollSnap.instance.nameData;
+        }
+
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
 
@@ -124,8 +144,12 @@ public class PresetData_Jsons : MonoBehaviour
                 {
                     Invoke("abcd", 5f);
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
-                    UserRegisterationManager.instance.BlackScreen.SetActive(true);
+                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                    // enable check so that it will know that index is comming from start of the game
+                    UserRegisterationManager.instance.checkbool_preser_start = false;
+                    //UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
+                    //UserRegisterationManager.instance.BlackScreen.SetActive(true);
                 }
                 else                // as a guest
                 {

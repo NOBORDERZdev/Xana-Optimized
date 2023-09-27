@@ -43,6 +43,10 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
     public GameObject BlackScreen;
+
+    //Waheed Changes
+    public GameObject setAvatarGiftPanal;
+
     //hardik changes
     public string nftlist;
     //end
@@ -179,6 +183,9 @@ public class UserRegisterationManager : MonoBehaviour
     private bool _disposedValue;
 
 
+    public GameObject EntertheWorld_Panal;
+
+
     public void ShowWelcomeScreen()
     {
         if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -215,6 +222,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
+                
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
@@ -912,7 +920,8 @@ public class UserRegisterationManager : MonoBehaviour
             //PresetData_Jsons.lastSelectedPreset = null;
             PresetData_Jsons.clickname = null;
 
-            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            EntertheWorld_Panal.SetActive(true);
+            //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             UserRegisterationManager.instance.usernamePanal.SetActive(false);
 
             if (GameManager.Instance.isStoreAssetDownloading)
@@ -1042,7 +1051,8 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 5:
                 {
-                    usernamePanal.SetActive(true);
+                    //usernamePanal.SetActive(true);
+                    setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
                     //StartCoroutine(WaitandActive());
                     //UsernameTextNew.Text = "";
@@ -1178,7 +1188,9 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
+                        
                         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+
                     }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
@@ -3574,6 +3586,7 @@ public class UserRegisterationManager : MonoBehaviour
 
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
+                        //nb
                         LoggedIn = true;
                         //OpenUIPanal(6);  
                     }
