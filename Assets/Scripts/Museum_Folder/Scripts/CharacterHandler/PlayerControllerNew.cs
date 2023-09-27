@@ -1659,8 +1659,8 @@ public class PlayerControllerNew : MonoBehaviour
             NinjaComponentTimerStart(0);
             isNinjaMotion = false;
             animator.SetBool("isNinjaMotion", false);
-            isThrow = true;
         }
+        isThrow = true;
         isThrowModeActive = true;
         if (throwMainCo == null)
             throwMainCo = StartCoroutine(Throw());

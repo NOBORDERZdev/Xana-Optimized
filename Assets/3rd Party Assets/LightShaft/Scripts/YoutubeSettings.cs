@@ -730,36 +730,36 @@ namespace LightShaft.Scripts
            // Debug.Log("projectionType: " + projectionType);
             if (videoPlayer != null)
             {
-                if (videoPlayer.isPlaying)
-                {
-                    if (!lowRes)
-                    {
-                        if (_controller.volumeSlider != null)
-                        {
-                            if (videoPlayer.GetTargetAudioSource(0).volume <= 0)
-                                videoPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                        }
-                        else
-                        {
-                            videoPlayer.GetTargetAudioSource(0).volume = 1;
-                        }
-                    }
-                    else
-                    {
-                        if (audioPlayer != null)
-                        {
-                            if (_controller.volumeSlider != null)
-                            {
-                                if (audioPlayer.GetTargetAudioSource(0).volume <= 0)
-                                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                            }
-                            else
-                            {
-                                audioPlayer.GetTargetAudioSource(0).volume = 1;
-                            }
-                        }
-                    }
-                }
+                //if (videoPlayer.isPlaying)
+                //{
+                //    if (!lowRes)
+                //    {
+                //        if (_controller.volumeSlider != null)
+                //        {
+                //            if (videoPlayer.GetTargetAudioSource(0).volume <= 0)
+                //                videoPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                //        }
+                //        else
+                //        {
+                //            videoPlayer.GetTargetAudioSource(0).volume = 1;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if (audioPlayer != null)
+                //        {
+                //            if (_controller.volumeSlider != null)
+                //            {
+                //                if (audioPlayer.GetTargetAudioSource(0).volume <= 0)
+                //                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                //            }
+                //            else
+                //            {
+                //                audioPlayer.GetTargetAudioSource(0).volume = 1;
+                //            }
+                //        }
+                //    }
+                //}
             }
 
             if (!loadYoutubeUrlsOnly)

@@ -500,31 +500,33 @@ public class WorldManager : MonoBehaviour
             GC.Collect();
             //
 
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-#if UNITY_EDITOR
-            orientationchanged = true;
-            LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            Debug.Log("loading scene");
-            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-            //StartCoroutine(DownloadFile());
-#else
-LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            StartCoroutine(Check_Orientation(() =>
-            {
+
+            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+
+//#if UNITY_EDITOR
+//            orientationchanged = true;
+//            LoadingHandler.Instance.ShowLoading();
+//            LoadingHandler.Instance.UpdateLoadingSlider(0);
+//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+//            Debug.Log("loading scene");
+//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+//            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
+//            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
+//            //StartCoroutine(DownloadFile());
+//#else
+            //StartCoroutine(Check_Orientation(() =>
+            //{
              LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
                // StartCoroutine(DownloadFile());
-            }));
-#endif
+            //}));
+//#endif
 
         }
     }
@@ -589,9 +591,9 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 
 
 
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-
+            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
 
             // Added By WaqasAhmad [20 July 23]
             AssetBundle.UnloadAllAssetBundles(false);
@@ -602,26 +604,26 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             //
 
 
-#if UNITY_EDITOR
-            LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            orientationchanged = true;
-            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "Builder";
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
-#else
-LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            StartCoroutine(Check_Orientation(()=> 
-            {
+//#if UNITY_EDITOR
+//            LoadingHandler.Instance.ShowLoading();
+//            LoadingHandler.Instance.UpdateLoadingSlider(0);
+//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+//            orientationchanged = true;
+//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+//            Photon.Pun.PhotonHandler.levelName = "Builder";
+//            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+//#else
+//LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+            //StartCoroutine(Check_Orientation(()=> 
+            //{
                 LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
+                //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
                 LoadingHandler.Instance.LoadSceneByIndex("Builder");
-            }));
-#endif
+            //}));
+//#endif
 
         }
 
@@ -687,54 +689,62 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-#if UNITY_EDITOR
-            LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            orientationchanged = true;
-            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "Builder";
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
-#else
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            StartCoroutine(Check_Orientation(()=> 
             {
+                //Screen.orientation = ScreenOrientation.LandscapeLeft;
+                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            }
+
+
+            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+//#if UNITY_EDITOR
+//            LoadingHandler.Instance.ShowLoading();
+//            LoadingHandler.Instance.UpdateLoadingSlider(0);
+//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+//            orientationchanged = true;
+//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+//            Photon.Pun.PhotonHandler.levelName = "Builder";
+//            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+//#else
+            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+            //StartCoroutine(Check_Orientation(()=> 
+            //{
                 LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
+               //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
                 LoadingHandler.Instance.LoadSceneByIndex("Builder");
-            }));
-#endif
+            //}));
+//#endif
         }
         else
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-#if UNITY_EDITOR
-            orientationchanged = true;
-            LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-#else
-LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            StartCoroutine(Check_Orientation(() =>
             {
+                //Screen.orientation = ScreenOrientation.LandscapeLeft;
+                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            }
+            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+//#if UNITY_EDITOR
+//            orientationchanged = true;
+//            LoadingHandler.Instance.ShowLoading();
+//            LoadingHandler.Instance.UpdateLoadingSlider(0);
+//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+//            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
+//            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
+//#else
+//LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+//            StartCoroutine(Check_Orientation(() =>
+//            {
              LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-            }));
-#endif
+//            }));
+//#endif
         }
     }
 
@@ -830,10 +840,15 @@ LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
         SetAutoSwtichStreaming();
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            // Commented By WaqasAhmad
+            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+           
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            
+            // Commented By WaqasAhmad
+            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             LoadingHandler.Instance.loadingPanel.SetActive(false);

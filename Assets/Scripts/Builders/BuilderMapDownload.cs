@@ -53,12 +53,14 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
-        Addressables.Release(loadSkyBox);
+        if (loadSkyBox.Result != null)
+            Addressables.Release(loadSkyBox);
     }
 
     private void Start()
     {
         BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        GamificationComponentData.instance.isSkyLoaded = false;
 
         //code to build a scene using json only locally.
         //serverData = JsonUtility.FromJson<ServerData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/Builder.json"));
@@ -175,7 +177,7 @@ public class BuilderMapDownload : MonoBehaviour
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
-        
+
         for (int i = 0; i < count; i++)
         {
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
@@ -191,8 +193,9 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if (XanaConstants.xanaConstants.isFromXanaLobby)
             {
-                LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f,.1f);
-            }else
+                LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
+            }
+            else
                 LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
         }
         CallBack();
@@ -328,27 +331,64 @@ public class BuilderMapDownload : MonoBehaviour
         Camera.main.clearFlags = CameraClearFlags.Skybox;
         if (skyProperties.skyId != -1)
         {
-            SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-            string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-            loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            while (!loadSkyBox.IsDone)
+            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
+            if (skyBoxExist)
             {
-                yield return null;
+                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                while (!loadSkyBox.IsDone)
+                {
+                    yield return null;
+                }
+                // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+
+                Material _mat = loadSkyBox.Result;
+                _mat.shader = Shader.Find(skyBoxItem.shaderName);
+                RenderSettings.skybox = _mat;
+                directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
+                characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
+                directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
+                directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
+                SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
+
+                if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
+                    SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+
             }
-            // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
+            else
+            {
+                AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
+                if (skyBoxItem.texture == null)
+                {
+                    var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+                    var imagineImageRequest = UnityWebRequest.Get(skyBoxItem.textureURL);
+                    yield return imagineImageRequest.SendWebRequest();
 
-            Material _mat = loadSkyBox.Result;
-            _mat.shader = Shader.Find(skyBoxItem.shaderName);
-            RenderSettings.skybox = _mat;
-            directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
-            characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
-            directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
-            directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
-            SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
+                    if (imagineImageRequest.result != UnityWebRequest.Result.Success)
+                    {
+                        Debug.Log("Get Imagine Image Error: " + imagineImageRequest.error);
+                        imagineImageRequest.Dispose();
+                    }
+                    else
+                    {
+                        var image = imagineImageRequest.downloadHandler.data;
+                        texture.LoadImage(image);
+                        skyBoxItem.texture = texture;
+                        imagineImageRequest.Dispose();
+                    }
+                }
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
+                RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
+                directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
+                characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
+                directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
+                directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
+                SetPostProcessProperties(GamificationComponentData.instance.aiPPVolumeProfile);
 
-            if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
-                SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
-
+                if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
+                    SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+            }
             DynamicGI.UpdateEnvironment();
         }
         else
@@ -371,6 +411,7 @@ public class BuilderMapDownload : MonoBehaviour
             characterLight.intensity = .15f;
             DynamicGI.UpdateEnvironment();
         }
+        GamificationComponentData.instance.isSkyLoaded = true;
     }
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
@@ -541,10 +582,11 @@ public class BuilderMapDownload : MonoBehaviour
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         if (XanaConstants.xanaConstants.isFromXanaLobby)
         {
-            LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f,.9f), 0.1f);
-        }else
+            LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+        }
+        else
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+           // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
         }
     }
@@ -659,6 +701,7 @@ public class SkyProperties
     public string skyColorMiddle;
     public string skyColorBottom;
     public int skyId;
+    public AISkyboxItem aISkyboxItem = new AISkyboxItem();
     #endregion
 
     public SkyProperties()
@@ -694,8 +737,23 @@ public class SkyProperties
             this.skyColorBottom = ColorUtility.ToHtmlStringRGBA(color);
             Debug.Log("skyColorBottom : " + skyColorBottom);
         }
+
+        aISkyboxItem = new AISkyboxItem();
     }
 }
+
+#region AI Skybox
+
+[Serializable]
+public class AISkyboxItem
+{
+    public string obfuscatedID;
+    public string textureURL;
+    public Texture2D texture;
+    public string skyName;
+    public DirectionalLightData directionalLightData;
+}
+#endregion
 
 [Serializable]
 public class PlayerProperties

@@ -7,6 +7,7 @@ using Metaverse;
 using System.Collections;
 using System;
 using System.IO;
+using DG.Tweening;
 
 public class SceneManage : MonoBehaviourPunCallbacks
 { 
@@ -90,7 +91,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 
                 if (changeOritentationChange)
                 {
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    //Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
                     XanaConstants.xanaConstants.JjWorldSceneChange = false;
                     XanaConstants.xanaConstants.orientationchanged = false;
                     XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
@@ -191,27 +193,34 @@ public class SceneManage : MonoBehaviourPunCallbacks
     /// </summary>
     /// <returns></returns>
     IEnumerator LoadMianScene() {
+        //StartCoroutine(LoadingHandler.Instance.IncrementSliderValue());
         yield return new WaitForSeconds(.2f);
         //yield return new WaitForSeconds(.4f);
-        LoadingHandler.Instance.UpdateLoadingSlider(0.3f);
-        yield return new WaitForSeconds(.4f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(0.3f);
+        //yield return new WaitForSeconds(.4f);
         //yield return new WaitForSeconds(.6f);
-        LoadingHandler.Instance.UpdateLoadingSlider(0.6f);
+       // LoadingHandler.Instance.UpdateLoadingSlider(0.6f);
         print("loading mainmenu");
       
         Resources.UnloadUnusedAssets();
         //  Caching.ClearCache();
         // GC.Collect();
         print("mian scne "+mainScene);
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             SceneManager.LoadScene("Main");
         }
         else
         {
-            SceneManager.LoadScene(mainScene);
+            // SceneManager.LoadScene(mainScene);
+            // Load the scene asynchronously
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(8f,true));
+            yield return new WaitForSeconds(3f);
+            SceneManager.LoadSceneAsync(mainScene);
         }
     }
+    
     void AsyncProgress()
     {
         LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);

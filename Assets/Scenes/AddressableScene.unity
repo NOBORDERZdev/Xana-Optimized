@@ -781,6 +781,7 @@ MonoBehaviour:
   HomeBtn: {fileID: 6408302776192530263}
   eventRemainingTime: 0
   _uiReferences: {fileID: 4338721142732702075}
+  autoSwitchTime: 0
 --- !u!4 &79798789
 Transform:
   m_ObjectHideFlags: 0
@@ -869,6 +870,7 @@ MonoBehaviour:
   - ZONE-X
   - ZONE X Musuem
   - BreakingDown Arena
+  - XANA Lobby
 --- !u!114 &79798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5629,6 +5631,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1231922862386011972}
     m_Modifications:
+    - target: {fileID: 5642671535758670273, guid: 473b32cdb1aa9494ba9ff464ae1e11ba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5829670864157050554, guid: 473b32cdb1aa9494ba9ff464ae1e11ba, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9330,6 +9336,7 @@ MonoBehaviour:
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
+  pointObj: {fileID: 0}
 --- !u!114 &1272852912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17412,7 +17419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.030892435, y: 0.0007811168, z: -0.00002414213, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892437, y: 0.00078112434, z: -0.000024142366, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17663,7 +17670,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.05969733, y: 0.00078011694, z: -0.00004665225, w: 0.9982163}
+  m_LocalRotation: {x: 0.05969732, y: 0.00078008266, z: -0.000046650195, w: 0.9982163}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17843,6 +17850,7 @@ MonoBehaviour:
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
+  pointObj: {fileID: 1808683681801906610}
 --- !u!1 &360146154038492714
 GameObject:
   m_ObjectHideFlags: 0
@@ -18035,7 +18043,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.030892435, y: 0.0007811173, z: -0.000024140281, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892437, y: 0.0007811211, z: -0.0000241404, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18113,7 +18121,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0022524043, y: 0.0007814906, z: -0.000001758375, w: 0.9999972}
+  m_LocalRotation: {x: 0.0022524025, y: 0.00078149175, z: -0.0000017583762, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20670,6 +20678,7 @@ GameObject:
   - component: {fileID: 1808683680640967397}
   - component: {fileID: 1808683680640967396}
   - component: {fileID: 4134801982122276580}
+  - component: {fileID: 4134801982122276581}
   m_Layer: 22
   m_Name: Main Player_parent
   m_TagString: Player
@@ -26708,6 +26717,14 @@ MonoBehaviour:
   - {fileID: 9000000, guid: a4b047ba24a6f374f9bbd3a5053e2b52, type: 3}
   - {fileID: 9000000, guid: 49f10d89ddfdd594f9ed88fa79351b6c, type: 3}
   - {fileID: 9000000, guid: c3d861774f7c51047a8eee3ef22edfeb, type: 3}
+--- !u!81 &4134801982122276581
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808683680640967398}
+  m_Enabled: 1
 --- !u!114 &4143084553292016285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31788,7 +31805,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6408302777720217561}
         m_TargetAssemblyTypeName: 

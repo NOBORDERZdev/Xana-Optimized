@@ -17,13 +17,18 @@ public class AvatarChangerComponent : ItemComponent
         if (_other.gameObject.tag == "Player" || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
         {
 
-            if (componentData.avatarIndex > 0)
-            {
-                GamificationComponentData.instance.buildingDetect.OnAvatarChangerEnter(componentData.setTimer, componentData.avatarIndex);
-                this.gameObject.SetActive(false);
-            }
-
+            GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
             GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
+            if (componentData.avatarIndex == 1)//Hunter Selected
+            {
+                Toast.Show("Coming Soon, We will update The Hunter Appearance");
+            }
+            else if (componentData.avatarIndex > 1)
+            {
+                GamificationComponentData.instance.buildingDetect.OnAvatarChangerEnter(componentData.setTimer, componentData.avatarIndex, this.gameObject);
+            }
+            this.gameObject.SetActive(false);
+
         }
     }
 }
