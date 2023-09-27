@@ -485,10 +485,10 @@ namespace RFM.Managers
             //camera logic
             if (Globals.gameState == Globals.GameState.Countdown) 
             {
-                if (time < 7)
-                    rfmCameraManager.SwtichCamera(0);
-                if (time < 4)
-                    rfmCameraManager.SwtichCamera(1);
+                //if (time < 7)
+                   // rfmCameraManager.SwtichCamera(0);
+                //if (time < 4)
+                    //rfmCameraManager.SwtichCamera(1);
                 if (time < 1)
                     rfmCameraManager.SwitchOffAllCameras();
             }
