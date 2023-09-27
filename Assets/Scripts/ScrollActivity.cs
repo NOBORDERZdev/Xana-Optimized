@@ -12,6 +12,7 @@ public class ScrollActivity : MonoBehaviour
     private int lastindex = 1;
     [SerializeField] 
     CanvasGroup canvasGroup;
+    [SerializeField] 
     Image bg;
 
     private void Awake()
