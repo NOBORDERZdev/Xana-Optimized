@@ -159,7 +159,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         callRemove = true;
-        Launcher.instance.working = ScenesList.MainMenu;
+        Launcher.instance.currentScene = ScenesList.MainMenu;
         PhotonNetwork.LeaveRoom(false);
         PhotonNetwork.LeaveLobby();
         PhotonNetwork.DestroyAll(true);
