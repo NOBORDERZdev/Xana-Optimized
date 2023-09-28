@@ -194,10 +194,12 @@ public class XanaChatSocket : MonoBehaviour
             event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
         eventId = int.Parse(event_Id);
-        Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
+        if (!npcId.IsNullOrEmpty())
+            userId = npcId;
+        Debug.Log("<color=red> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + npcId + "</color>");
 
-        var data = new { userId = npcId != "" ? npcId : userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
         Manager.Socket.Emit("chatMessage", data);
     }
 

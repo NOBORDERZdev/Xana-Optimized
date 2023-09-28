@@ -5,8 +5,8 @@ using UnityEngine.Networking;
 
 public class NpcChatSystem : MonoBehaviour
 {
+    public int id = 0;
     private string msg = "Hello";
-    private int id = 2;
 
     public class FeedData
     {
@@ -27,7 +27,7 @@ public class NpcChatSystem : MonoBehaviour
     }
     void Start()
     {
-
+        CoroutineUtils.Instance.CallHiddenCoroutine();
     }
 
     private void PlayerSendMsg(string msgData)
@@ -40,7 +40,7 @@ public class NpcChatSystem : MonoBehaviour
 
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 4f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 6f));
         string prefix = "http://182.70.242.10:8032/api/v1/";
         string url = "update_user_prompt_en?id=";
         //id = 2;
@@ -52,10 +52,10 @@ public class NpcChatSystem : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
 
-        StartCoroutine(GetResponseData(prefix, id));
+        StartCoroutine(GetResponseData(prefix));
     }
 
-    IEnumerator GetResponseData(string prefix, int id)
+    IEnumerator GetResponseData(string prefix)
     {
         string postFix = "text_from_userid_en?id=";
         string fetchUrl = prefix + postFix + id;
@@ -67,8 +67,9 @@ public class NpcChatSystem : MonoBehaviour
         if (fetchRequest.result == UnityWebRequest.Result.Success)
         {
             feed = JsonUtility.FromJson<FeedData>(fetchRequest.downloadHandler.text);
+
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, feed.id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
             Debug.Log("Communication Response: " + feed.response);
         }
         else
