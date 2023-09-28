@@ -2,18 +2,44 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 public class NpcChatSystem : MonoBehaviour
 {
+    [Serializable]
+    public class NPCAttributes
+    {
+        public string aiNames;
+        public int aiIds;
+    }
+    public List<NPCAttributes> npcAttributes;
+    public List<NPCAttributes> npcDB;
+
     public int id = 0;
     private string msg = "Hello";
+    public int numOfResponseWantToShow = 5;
+    public int counter = 0;
+    public int temp = 0 ;
 
-    public class FeedData
+    private class FeedData
     {
         public int id;
         public string response;
     }
     private FeedData feed;
+
+
+    private void Awake()
+    {
+        npcDB = new List<NPCAttributes>();
+        for (int i=0; i<numOfResponseWantToShow; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, npcAttributes.Count);
+            npcDB.Add(npcAttributes[rand]);      // Set npc names
+            npcAttributes.RemoveAt(rand);
+        }
+        temp = numOfResponseWantToShow;
+    }
 
     private void OnEnable()
     {
@@ -25,13 +51,10 @@ public class NpcChatSystem : MonoBehaviour
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
-    void Start()
-    {
-        CoroutineUtils.Instance.CallHiddenCoroutine();
-    }
 
     private void PlayerSendMsg(string msgData)
     {
+        Debug.Log("Communication API Call");
         msg = msgData;
         // Call the API request function
         StartCoroutine(SetApiData());
@@ -40,7 +63,9 @@ public class NpcChatSystem : MonoBehaviour
 
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 6f));
+        id = npcDB[counter].aiIds;
+        counter++;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 4f));
         string prefix = "http://182.70.242.10:8032/api/v1/";
         string url = "update_user_prompt_en?id=";
         //id = 2;
@@ -52,11 +77,9 @@ public class NpcChatSystem : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
 
-        StartCoroutine(GetResponseData(prefix));
-    }
-
-    IEnumerator GetResponseData(string prefix)
-    {
+        /// <summary>
+        /// Get response from api and send that response to chat socket
+        /// </summary>
         string postFix = "text_from_userid_en?id=";
         string fetchUrl = prefix + postFix + id;
 
@@ -73,8 +96,21 @@ public class NpcChatSystem : MonoBehaviour
             Debug.Log("Communication Response: " + feed.response);
         }
         else
-            Debug.LogError("Communication API Error: " + fetchRequest.error);
+            Debug.LogError("Communication API Error: " + gameObject.name + fetchRequest.error);
+
+        temp--;
+
+        if (temp > 0)
+            StartCoroutine(SetApiData());
+        else
+        {
+            counter = 0;
+            temp = numOfResponseWantToShow;
+        }
+        yield return null;
     }
+
+
 }
 
 
