@@ -32,7 +32,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     private Transform updatedSpawnpoint;
     private Vector3 spawnPoint;
     private GameObject currentEnvironment;
-    bool isEnvLoaded = false;
+    public bool isEnvLoaded = false;
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
@@ -339,7 +339,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
         else
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+           // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World..."); 
         }
         yield return new WaitForSeconds(.2f);
@@ -445,7 +445,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         GetComponent<ChecklPostProcessing>().SetPostProcessing();
 
-        LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+       // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
         InstantiateYoutubePlayer();
@@ -455,7 +455,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (!XanaConstants.xanaConstants.isCameraMan)
         {
             LoadingHandler.Instance.HideLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
@@ -626,7 +626,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
     End:
-        LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+        //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
         // Commented By WaqasAhmad
@@ -653,7 +653,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+       // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");
 
 
@@ -867,7 +867,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             else
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-                LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+                //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
             }
             yield return handle;
             addressableSceneName = environmentLabel;

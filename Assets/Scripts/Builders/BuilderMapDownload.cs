@@ -458,7 +458,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.CombineMeshes?.Invoke();
         GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up * 0.5f;
+        mainPlayerCharacterController.center = Vector3.up * 0.498f;
         mainPlayerCharacterController.height = 1f;
         mainPlayerCharacterController.radius = 0.15f;
         mainPlayerCharacterController.stepOffset = 1f;
@@ -474,6 +474,9 @@ public class BuilderMapDownload : MonoBehaviour
         playerCharacterController.center = playerCollider.center;
 
         GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+
+        //call for Execute all rpcs of this room
+        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
     }
 
 
@@ -586,7 +589,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
         else
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+           // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
         }
     }

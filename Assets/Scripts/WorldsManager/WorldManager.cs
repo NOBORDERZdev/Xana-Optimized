@@ -519,7 +519,7 @@ public class WorldManager : MonoBehaviour
             //StartCoroutine(Check_Orientation(() =>
             //{
              LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
@@ -617,7 +617,7 @@ public class WorldManager : MonoBehaviour
             //StartCoroutine(Check_Orientation(()=> 
             //{
                 LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
+                //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
@@ -709,7 +709,7 @@ public class WorldManager : MonoBehaviour
             //StartCoroutine(Check_Orientation(()=> 
             //{
                 LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
+               //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
@@ -738,7 +738,7 @@ public class WorldManager : MonoBehaviour
 //            StartCoroutine(Check_Orientation(() =>
 //            {
              LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
