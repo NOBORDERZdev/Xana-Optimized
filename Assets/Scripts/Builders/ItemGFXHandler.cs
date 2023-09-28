@@ -58,4 +58,8 @@ public class ItemGFXHandler : ItemComponent
             }
         }
     }
+
+    public override void AssignItemComponentType()
+    {
+    }
 }

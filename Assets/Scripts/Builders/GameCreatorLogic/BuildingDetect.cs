@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using TMPro;
-//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
@@ -46,7 +42,7 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultFreeCamConsoleMat;
 
     [Header("Gangster Character")]
-    public GameObject gangsterCharacter;
+    internal GameObject gangsterCharacter;
     #endregion
 
     #region Avatar invisibility materials and gameobjects
@@ -145,6 +141,7 @@ public class BuildingDetect : MonoBehaviour
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
         BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
+
     }
 
     #region Mubashir Avatar Work
@@ -178,25 +175,28 @@ public class BuildingDetect : MonoBehaviour
     #endregion
 
     #region Avatar Model Changing Logic
-
-    int avatarIndex;
     public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
+        if (tempAnimator != null)
+            this.GetComponent<Animator>().avatar = tempAnimator;
         BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+
         avatarChangeTime = time;
         avatarIndex = avatarIndex - 1;
-        StopCoroutine(avatarChangeCoroutine);
-        avatarChangeCoroutine = PlayerAvatarChange();
 
+        avatarChangeCoroutine = PlayerAvatarChange();
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.SetActive(false);
+
         Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
             cc.playerControler = GamificationComponentData.instance.playerControllerNew;
+
         if (avatarIndex == 2)
         {
             GameObject cloneObject = Instantiate(curObject);
+
             Component[] components = cloneObject.GetComponents<Component>();
             for (int i = components.Length - 1; i >= 0; i--)
             {
@@ -205,11 +205,13 @@ public class BuildingDetect : MonoBehaviour
                     Destroy(components[i]);
                 }
             }
+
             cloneObject.transform.SetParent(gangsterCharacter.transform);
             cloneObject.transform.localPosition = Vector3.zero;
             cloneObject.transform.localEulerAngles = Vector3.zero;
             cloneObject.SetActive(true);
         }
+
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
         gangsterCharacter.transform.localEulerAngles = Vector3.zero;
@@ -222,27 +224,24 @@ public class BuildingDetect : MonoBehaviour
         avatarTime = 0;
 
         ToggleAvatarChangeComponent(false);
-        tempAnimator = this.GetComponent<Animator>().avatar;
+        if (tempAnimator == null)
+            tempAnimator = this.GetComponent<Animator>().avatar;
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         gangsterCharacter.SetActive(true);
 
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
+
         while (avatarChangeTime > avatarTime)
         {
-            int minutes = (int)avatarChangeTime / 60;
-            int seconds = (int)avatarChangeTime % 60;
-
-            //_remainingText.text = $"{minutes:D2}:{seconds:D2}";
-
             avatarChangeTime = Mathf.Clamp(avatarChangeTime, 0, Mathf.Infinity);
-
             yield return new WaitForSecondsRealtime(1f);
             avatarChangeTime--;
         }
 
-        this.GetComponent<Animator>().avatar = tempAnimator;
+        //this.GetComponent<Animator>().avatar = tempAnimator;
         ToggleAvatarChangeComponent(true);
+
         Destroy(gangsterCharacter);
 
         yield return null;
@@ -250,11 +249,11 @@ public class BuildingDetect : MonoBehaviour
 
     void ToggleAvatarChangeComponent(bool state)
     {
-
         if (state)
         {
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
+
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
@@ -262,6 +261,7 @@ public class BuildingDetect : MonoBehaviour
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
         }
+
         playerHair.enabled = state;
         playerBody.enabled = state;
         playerHead.enabled = state;
@@ -432,7 +432,7 @@ public class BuildingDetect : MonoBehaviour
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
-        if (cameraAnimator == null) cameraAnimator=GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        if (cameraAnimator == null) cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
         cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }

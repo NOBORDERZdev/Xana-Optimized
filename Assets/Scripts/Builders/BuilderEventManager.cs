@@ -103,4 +103,5 @@ public static class BuilderEventManager
     //Component Restriction
     public static Action<Constants.ItemComponentType> onComponentActivated;
     public static Action<IComponentBehaviour> AddItemComponent;
+    public static Action RPCcallwhenPlayerJoin;
 }
