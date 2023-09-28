@@ -103,15 +103,15 @@ public class StreamingCamera : MonoBehaviour
         while (true)
         {
             turnOffCameras();
-            bool canCamOn = false;
-            if (list[index].avatarCount>0)
-            {
-                canCamOn=true;
-            }
-            else
-            {
-                canCamOn =false;
-            }
+            bool canCamOn = true;
+            //if (list[index].avatarCount>0)
+            //{
+            //    canCamOn=true;
+            //}
+            //else
+            //{
+            //    canCamOn =false;
+            //}
 
             if (canCamOn){
                 list[index].cam.SetActive(true);
@@ -132,39 +132,41 @@ public class StreamingCamera : MonoBehaviour
                 //list[index].cam.GetComponent<CinemachineFreeLook>().Follow = ReferrencesForDynamicMuseum.instance.m_34player.transform;
                 if (list[index].cam.GetComponent<StreamingCameraPaining>().lookObj == null)
                 {
-                    if (list[index].cam.GetComponent<StreamingCameraPaining>().focusOnScreen)
-                    {
-                        if (XanaConstants.xanaConstants.EnviornmentName== "Xana Festival")
-                        {
-                            GameObject screen = GameObject.Find("XanaFestivalPlayer(Clone)");
-                            if (screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer.activeInHierarchy)
-                            {
-                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer;
-                            }
-                            else
-                            {
-                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().NormalPlayer;
+                    list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                    //if (list[index].cam.GetComponent<StreamingCameraPaining>().focusOnScreen)
+                   // {
+                        //if (XanaConstants.xanaConstants.EnviornmentName== "Xana Festival")
+                        //{
+                        //    GameObject screen = GameObject.Find("XanaFestivalPlayer(Clone)");
+                        //    if (screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer.activeInHierarchy)
+                        //    {
+                        //        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().LiveStreamPlayer;
+                        //    }
+                        //    else
+                        //    {
+                        //        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj = screen.GetComponent<YoutubeStreamController>().NormalPlayer;
 
-                            }
-                            }
-                            else if (XanaConstants.xanaConstants.EnviornmentName== "BreakingDown Arena")
-                            {
+                        //    }
+                        //    }
+                        //    else if (XanaConstants.xanaConstants.EnviornmentName== "BreakingDown Arena")
+                        //    {
 
-                            }
-                            else
-                            {
-                                list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
-                            }
-                        }
-                        else
-                        {
-                            list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
-                        }
-                }
-                //else
-                //{
-                //        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                        //    }
+                        //    else
+                        //    {
+                        //        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                        //}
                 //}
+                    //else
+                    //{
+                    //        list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                    //}
+                }
 
                 if (XanaConstants.xanaConstants.newStreamEntery)
                 {
@@ -199,6 +201,7 @@ public class StreamingCamera : MonoBehaviour
 
 
 }
+
 
 
 class StreamCam{ 
