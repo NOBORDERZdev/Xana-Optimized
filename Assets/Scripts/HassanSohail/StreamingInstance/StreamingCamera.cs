@@ -12,6 +12,11 @@ public class StreamingCamera : MonoBehaviour
     List<Camera> Cameras;
    static public StreamingCamera instance;
     List<int> avatarCount = new List<int>();
+
+    [SerializeField] 
+    bool isDynamicMusuem;
+    [SerializeField] DynamicMuseumManager dynamicMuseumManager;
+
     private void Awake()
     {
         if (instance == null)
@@ -92,7 +97,7 @@ public class StreamingCamera : MonoBehaviour
             camSortList.Add(new StreamCam(avatarCount[i] , Cameras[i].gameObject));
         }
 
-        List<StreamCam> temp = new List<StreamCam>(camSortList.OrderBy(x =>x.avatarCount).ToList());
+        List<StreamCam> temp = new List<StreamCam>(camSortList/*.OrderBy(x =>x.avatarCount).ToList()*/);
        yield return StartCoroutine(EnableCam(temp));
            
         
@@ -102,7 +107,7 @@ public class StreamingCamera : MonoBehaviour
         int index =0;
         while (true)
         {
-            turnOffCameras();
+           
             bool canCamOn = true;
             //if (list[index].avatarCount>0)
             //{
@@ -113,7 +118,14 @@ public class StreamingCamera : MonoBehaviour
             //    canCamOn =false;
             //}
 
+            
+            if ( isDynamicMusuem && dynamicMuseumManager !=null && !dynamicMuseumManager.rooms[index].IsInUse)
+            {
+                canCamOn =false;
+            }
+
             if (canCamOn){
+                 turnOffCameras();
                 list[index].cam.SetActive(true);
                 if (!list[index].cam.GetComponent<StreamingCameraPaining>())
                 {
@@ -190,7 +202,6 @@ public class StreamingCamera : MonoBehaviour
             }
             else{
                 yield return null;
-                break;
             }
             //int crowdedCamIndex = avatarCount.IndexOf(avatarCount.Max());
             //Cameras[crowdedCamIndex].gameObject.SetActive(true);
