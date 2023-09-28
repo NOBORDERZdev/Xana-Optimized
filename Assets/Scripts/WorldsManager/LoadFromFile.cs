@@ -19,8 +19,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 {
     [Header("singleton object")]
     public static LoadFromFile instance;
-
+    [HideInInspector]
     public GameObject npcChatSystem;
+
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject YoutubeStreamPlayer;
@@ -540,6 +541,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
+        npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
         Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
