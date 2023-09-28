@@ -24,25 +24,28 @@ public class XanaChatSocket : MonoBehaviour
     // Test-Net
     // https://chat-testing.xana.net/
     // https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/
+    // https://chat-testing.xana.net/api/v1/set-device-id-against-socketId
 
     // Main-Net
     // https://chat-prod.xana.net/
     // https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/
+    // https://chat-prod.xana.net/api/v1/set-device-id-against-socketId
 
     string socketTestnet = "https://chat-testing.xana.net/";
     string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+    string apiGusetNameTestnet = "https://chat-testing.xana.net/api/v1/set-device-id-against-socketId";
+
 
     string socketMainnet = "https://chat-prod.xana.net/";
     string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
-
-    string setGuestNameToServerAPI = "https://chat-testing.xana.net/api/v1/set-device-id-against-socketId";
+    string apiGusetNameMainnet = "https://chat-prod.xana.net/api/v1/set-device-id-against-socketId";
 
 
     public SocketManager Manager;
     
     string address;
     string fetchAllMsgApi;
-
+    string setGuestNameApi;
     int worldId,
         eventId = 1,
         pageNumber = 1, // API Parameters
@@ -89,11 +92,13 @@ public class XanaChatSocket : MonoBehaviour
         {
             address = socketMainnet;
             fetchAllMsgApi = fetchApiMainnet;
+            setGuestNameApi = apiGusetNameMainnet;
         }
         else
         {
             address = socketTestnet;
             fetchAllMsgApi = fetchApiTestnet;
+            setGuestNameApi = apiGusetNameTestnet;
         }
 
         if (!address.EndsWith("/"))
@@ -348,10 +353,10 @@ public class XanaChatSocket : MonoBehaviour
 
 
         Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
-        Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameToServerAPI + "</color>");
+        Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
 
         // Create a UnityWebRequest for the POST request
-        using (UnityWebRequest request = new UnityWebRequest(setGuestNameToServerAPI, "POST"))
+        using (UnityWebRequest request = new UnityWebRequest(setGuestNameApi, "POST"))
         {
             byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonData);
             request.uploadHandler = new UploadHandlerRaw(jsonBytes);

@@ -3021,6 +3021,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
+                        XanaConstants.xanaConstants.userId = L_LoginObject.id;
                     }
                     PlayerPrefs.Save();
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);
