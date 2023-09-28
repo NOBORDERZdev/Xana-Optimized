@@ -44,4 +44,48 @@ public class HelpButtonComponent : ItemComponent
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.HelpButtonComponent;
+    }
+
+    #endregion
 }
