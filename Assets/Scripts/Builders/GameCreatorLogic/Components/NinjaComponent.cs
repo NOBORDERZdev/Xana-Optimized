@@ -40,7 +40,7 @@ public class NinjaComponent : ItemComponent
             PlayBehaviour();
             if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-            else GamificationComponentData.instance.GetObject(RuntimeItemID, Constants.ItemComponentType.none);
+            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
         }
     }
 

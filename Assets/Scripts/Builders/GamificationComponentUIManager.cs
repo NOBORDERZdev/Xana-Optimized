@@ -839,7 +839,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             if(GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
             else
-                GamificationComponentData.instance.GetObject(quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
+                GamificationComponentData.instance.GetObjectwithoutRPC(quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
         }
         quizComponent = null;
         ResetCredentials();

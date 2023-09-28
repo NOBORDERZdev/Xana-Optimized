@@ -229,9 +229,24 @@ public class GamificationComponentData : MonoBehaviourPun
     }
 
     //All components for multiplayer
-
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        if (!withMultiplayer)
+            return;
+        //store rpc data in roomoption
+        if (PhotonNetwork.IsMasterClient)
+            SetRoomData(RuntimeItemID, componentType);
+
+        GetItemFromList(RuntimeItemID, componentType);
+    }
+
+    public void GetObjectwithoutRPC(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        GetItemFromList(RuntimeItemID, componentType);
+    }
+
+    void GetItemFromList(string RuntimeItemID, Constants.ItemComponentType componentType)
     {
         var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
         if (componentType == Constants.ItemComponentType.none)
@@ -250,10 +265,6 @@ public class GamificationComponentData : MonoBehaviourPun
                 component.PlayBehaviour();
             }
         }
-
-        //store rpc data in roomoption
-        if (PhotonNetwork.IsMasterClient && withMultiplayer)
-            SetRoomData(RuntimeItemID, componentType);
     }
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
@@ -263,6 +274,7 @@ public class GamificationComponentData : MonoBehaviourPun
 
     internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)
     {
+
         GamificationComponentRPC gamificationComponentRPC = new GamificationComponentRPC();
         gamificationComponentRPC.RuntimeItemID = RuntimeItemID;
         gamificationComponentRPC.componentType = componentType.ToString();
@@ -299,7 +311,7 @@ public class GamificationComponentData : MonoBehaviourPun
                 {
                     Constants.ItemComponentType componentType = (Constants.ItemComponentType)Enum.Parse(typeof(Constants.ItemComponentType), gamificationComponentRPC.componentType);
 
-                    GetObject(gamificationComponentRPC.RuntimeItemID, componentType);
+                    GetObjectwithoutRPC(gamificationComponentRPC.RuntimeItemID, componentType);
                 }
             }
         }

@@ -177,8 +177,11 @@ public class XanaItem : MonoBehaviour
         WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
         if (warpFunctionComponentData.IsActive)
         {
-            WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
-            itemComponent.Init(warpFunctionComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            if (warpFunctionComponentData.isWarpPortalStart || warpFunctionComponentData.isWarpPortalEnd)
+            {
+                WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
+                itemComponent.Init(warpFunctionComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            }
         }
 
         SpecialItemComponentData specialItemComponentData = itemData.speicalItemComponentData;
@@ -212,9 +215,12 @@ public class XanaItem : MonoBehaviour
         AudioComponentData audioComponentData = itemData.audioComponentData;
         if (audioComponentData.IsActive)
         {
-            AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
-            itemComponent.Init(audioComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            if (audioComponentData.audioPath != "")
+            {
+                AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
+                itemComponent.Init(audioComponentData);
+                BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            }
         }
         HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
         if (hyperLinkComponentData.IsActive)

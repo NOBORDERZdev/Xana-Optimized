@@ -169,8 +169,8 @@ public class TimeStats : MonoBehaviour
             }
             GamificationComponentData.instance.isNight = false;
             isRuninig = false;
-            SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
-            scc.isActivated = false;
+            //SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
+            //scc.isActivated = false;
             SetDayMode(_light, _lightsIntensity);
         }
     }

@@ -12,7 +12,7 @@ public class SituationChangerComponent : ItemComponent
     public Light[] _light;
     public float[] _lightsIntensity;
     private bool IsAgainTouchable = true;
-
+    float time;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,20 +40,18 @@ public class SituationChangerComponent : ItemComponent
 
             IsAgainTouchable = false;
 
-            if (!isActivated)
-                return;
             if(GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             else
-                GamificationComponentData.instance.GetObject(RuntimeItemID, _componentType);
+                GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
     }
 
     IEnumerator SituationChange()
     {
-        while (situationChangerComponentData.Timer > 0)
+        while (time > 0)
         {
-            situationChangerComponentData.Timer--;
+            time--;
             yield return new WaitForSeconds(1f);
         }
     }
@@ -70,13 +68,16 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (situationChangerComponentData.Timer == 0 && !situationChangerComponentData.isOff)
-            return;
+        if (time == 0 && !situationChangerComponentData.isOff)
+        {
+            time = situationChangerComponentData.Timer;
+            situationCo = null;
+        }
 
-        if (situationCo == null && situationChangerComponentData.Timer > 0)
+        if (situationCo == null && time > 0)
             situationCo = StartCoroutine(nameof(SituationChange));
 
-        TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
+        TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, time, this.gameObject);
 
     }
     private void StopComponent()

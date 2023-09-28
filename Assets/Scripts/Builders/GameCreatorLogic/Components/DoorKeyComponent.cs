@@ -38,7 +38,7 @@ public class DoorKeyComponent : ItemComponent
                 PlayerCanvas.Instance.keyCounter.text = "x" + _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Count.ToString();
                 if(GamificationComponentData.instance.withMultiplayer)
                     GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-                else GamificationComponentData.instance.GetObject(RuntimeItemID, Constants.ItemComponentType.none);
+                else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
             }
 
 
@@ -68,7 +68,7 @@ public class DoorKeyComponent : ItemComponent
                     //this.gameObject.SetActive(false);
                     if(GamificationComponentData.instance.withMultiplayer)
                         GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-                    else GamificationComponentData.instance.GetObject(RuntimeItemID, Constants.ItemComponentType.none);
+                    else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
                     Toast.Show("The keys match!");
                     return;
                 }
