@@ -26,7 +26,21 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 	public Image screenshotStage;
     public bool stopPreviousSoundEffectsOnLoad = false;
 	#endregion
-	
+
+	public string GetFirstNameOfPlayer(string pName)
+	{
+		string playername = pName;
+		if (!string.IsNullOrEmpty(playername))
+		{
+			if (playername.Contains(" "))
+			{
+				string[] pnames = playername.Split(" ");
+				playername = pnames[0];
+			}
+		}
+		return playername;
+	}
+
 	#region public override methods
 	public override void OnShow (){
 		base.OnShow ();
@@ -107,21 +121,21 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 					//this.namePlayer1.text = UFE.config.player1Character.characterName;	
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
-						this.namePlayer1.text = PlayerPrefs.GetString("PlayerName").ToUpper();
+						this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName").ToUpper());
                     }
                     else if (UFE.gameMode==GameMode.VersusMode)
                     {
-						this.namePlayer1.text = PlayerPrefs.GetString("PlayerName").ToUpper();
+						this.namePlayer1.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName").ToUpper());
 					}
 					else
 					{
 						if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
 						{
-							this.namePlayer1.text = FightingGameManager.instance.player1Data.name.ToUpper();
+							this.namePlayer1.text = GetFirstNameOfPlayer(FightingGameManager.instance.player1Data.name.ToUpper());
 						}
 						else
 						{
-							this.namePlayer1.text = FightingGameManager.instance.player2Data.name.ToUpper();
+							this.namePlayer1.text = GetFirstNameOfPlayer(FightingGameManager.instance.player2Data.name.ToUpper());
 						}
 					}
 				}
@@ -140,21 +154,21 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 					//this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();	
 					if (UFE.gameMode == GameMode.TrainingRoom)
 					{
-						this.namePlayer2.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+						this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
                     }
                     else if (UFE.gameMode==GameMode.VersusMode)
                     {
-						this.namePlayer2.text = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+						this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
 					}
 					else
 					{
 						if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
 						{
-							this.namePlayer2.text = FightingGameManager.instance.player1Data.name.ToUpper();
+							this.namePlayer2.text = GetFirstNameOfPlayer(FightingGameManager.instance.player1Data.name.ToUpper());
 						}
 						else
 						{
-							this.namePlayer2.text = FightingGameManager.instance.player2Data.name.ToUpper();
+							this.namePlayer2.text = GetFirstNameOfPlayer(FightingGameManager.instance.player2Data.name.ToUpper());
 						}
 					}	
 				}
