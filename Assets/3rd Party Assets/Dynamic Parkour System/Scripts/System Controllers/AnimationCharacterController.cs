@@ -83,7 +83,7 @@ namespace Climbing
             animator.SetBool("Jump", false);
             animator.SetBool("onAir", false);
             animator.SetBool("Land", true);
-            controller.characterMovement.EnableFeetIK();
+            //controller.characterMovement.EnableFeetIK();
         }
 
         public void HangLedge(ClimbController.ClimbState state)

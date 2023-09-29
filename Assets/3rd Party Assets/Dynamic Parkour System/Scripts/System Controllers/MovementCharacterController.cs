@@ -320,7 +320,7 @@ namespace Climbing
         }
         public void DisableFeetIK()
         {
-            enableFeetIK = true;
+            enableFeetIK = false;
             lastPelvisPositionY = 0;
             leftFootIKPosition = Vector3.zero;
             rightFootIKPosition = Vector3.zero;
