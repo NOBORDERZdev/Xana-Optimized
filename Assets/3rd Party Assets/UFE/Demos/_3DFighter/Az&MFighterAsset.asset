@@ -795,7 +795,7 @@ MonoBehaviour:
     inputViewerIcon6: {fileID: 2800000, guid: 90523496d8897124e989ad256f109d27, type: 3}
   - inputType: 0
     inputButtonName: P1KeyboardHorizontal
-    engineRelatedButton: 1
+    engineRelatedButton: 0
     joystickAxisName: P1JoystickVertical
     cInputPositiveKeyName: P1Up
     cInputPositiveDefaultKey: W
@@ -988,7 +988,7 @@ MonoBehaviour:
   player2_Inputs:
   - inputType: 1
     inputButtonName: P2KeyboardVertical
-    engineRelatedButton: 3
+    engineRelatedButton: 2
     joystickAxisName: P2JoystickHorizontalInverted
     cInputPositiveKeyName: P2Right
     cInputPositiveDefaultKey: RightArrow
@@ -1004,7 +1004,7 @@ MonoBehaviour:
     inputViewerIcon6: {fileID: 2800000, guid: 90523496d8897124e989ad256f109d27, type: 3}
   - inputType: 0
     inputButtonName: P2KeyboardHorizontal
-    engineRelatedButton: 0
+    engineRelatedButton: 1
     joystickAxisName: P2JoystickVertical
     cInputPositiveKeyName: P2Up
     cInputPositiveDefaultKey: UpArrow
@@ -1488,7 +1488,7 @@ MonoBehaviour:
       crouchProbability: 0.5
       attackProbability: 0
     multiCoreSupport: 1
-    persistentBehavior: 1
+    persistentBehavior: 0
     difficultyToggle: 1
     difficultySettings:
     - difficultyLevel: 0
@@ -1526,7 +1526,7 @@ MonoBehaviour:
       ruleCompliance: 0.9
       overrideComboEfficiency: 0
       comboEfficiency: 1
-      startupBehavior: 3
+      startupBehavior: 4
     - difficultyLevel: 3
       overrideTimeBetweenDecisions: 1
       timeBetweenDecisions: 0.2
@@ -1538,7 +1538,7 @@ MonoBehaviour:
       ruleCompliance: 0.9
       overrideComboEfficiency: 1
       comboEfficiency: 1
-      startupBehavior: 1
+      startupBehavior: 0
     - difficultyLevel: 4
       overrideTimeBetweenDecisions: 1
       timeBetweenDecisions: 0
@@ -1563,20 +1563,20 @@ MonoBehaviour:
       overrideComboEfficiency: 1
       comboEfficiency: 1
       startupBehavior: 4
-    selectedDifficultyLevel: 3
+    selectedDifficultyLevel: 2
     selectedDifficulty:
-      difficultyLevel: 3
-      overrideTimeBetweenDecisions: 1
-      timeBetweenDecisions: 0.2
-      overrideTimeBetweenActions: 1
+      difficultyLevel: 2
+      overrideTimeBetweenDecisions: 0
+      timeBetweenDecisions: 0
+      overrideTimeBetweenActions: 0
       timeBetweenActions: 0.05
-      overrideAggressiveness: 1
-      aggressiveness: 0.6
+      overrideAggressiveness: 0
+      aggressiveness: 0.4
       overrideRuleCompliance: 0
       ruleCompliance: 0.9
-      overrideComboEfficiency: 1
+      overrideComboEfficiency: 0
       comboEfficiency: 1
-      startupBehavior: 1
+      startupBehavior: 4
   networkOptions:
     forceAnimationControl: 1
     disableRootMotion: 0
@@ -1626,9 +1626,9 @@ MonoBehaviour:
     synchronizationMessageFrequency: 0
     synchronizationAction: 1
   music: 1
-  musicVolume: 1
+  musicVolume: 0.74817324
   soundfx: 1
-  soundfxVolume: 1
+  soundfxVolume: 0.8554386
   colorStateOne: {r: 1, g: 0, b: 0, a: 1}
   colorIsHit: {r: 1, g: 0, b: 1, a: 1}
   colorBodyCollider: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
