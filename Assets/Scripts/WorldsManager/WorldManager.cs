@@ -388,7 +388,7 @@ public class WorldManager : MonoBehaviour
     public void OnClickEnterAsParticipant()
     {
         CloseFightingModulePopUp();
-        Screen.orientation = ScreenOrientation.LandscapeRight;
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         FightingModuleManager.Instance.OnClickMainMenu();
     }
 
