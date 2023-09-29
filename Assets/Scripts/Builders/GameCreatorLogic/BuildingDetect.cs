@@ -77,6 +77,8 @@ public class BuildingDetect : MonoBehaviour
     internal float defaultSmootnesshvalue;
     internal float defaultIntensityvalue;
 
+    float nameCanvasDefaultYpos;
+
     private void Awake()
     {
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
@@ -84,8 +86,6 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-
-
         yield return new WaitForSeconds(2f);
 
         _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
@@ -128,6 +128,8 @@ public class BuildingDetect : MonoBehaviour
         defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
+
+        nameCanvasDefaultYpos = ArrowManager.Instance.nameCanvas.transform.localPosition.y;
     }
 
     private void OnEnable()
@@ -183,6 +185,13 @@ public class BuildingDetect : MonoBehaviour
 
         avatarChangeTime = time;
         avatarIndex = avatarIndex - 1;
+
+        if (avatarIndex == 1)
+        {
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = -1.3f;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+        }
 
         avatarChangeCoroutine = PlayerAvatarChange();
         gangsterCharacter = new GameObject("AvatarChange");
@@ -260,6 +269,10 @@ public class BuildingDetect : MonoBehaviour
                 Destroy(gangsterCharacter);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
+
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = nameCanvasDefaultYpos;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
         }
 
         playerHair.enabled = state;
