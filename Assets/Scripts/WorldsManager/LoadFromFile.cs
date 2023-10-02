@@ -19,6 +19,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 {
     [Header("singleton object")]
     public static LoadFromFile instance;
+    [HideInInspector]
+    public GameObject npcChatSystem;
 
     public GameObject mainPlayer;
     public GameObject mainController;
@@ -335,8 +337,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public IEnumerator SpawnPlayer()
     {
-        LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-        LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+        if (XanaConstants.xanaConstants.isFromXanaLobby)
+            LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f, 0.1f);
+        else
+        {
+            LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+        }
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
@@ -530,6 +537,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
 
         }
+
+        /// <summary>
+        /// Load NPC fake chat system
+        /// </summary>
+        npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
+        Instantiate(npcChatSystem);
+        Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
     [SerializeField] int autoSwitchTime;
@@ -857,8 +871,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-            LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+            if (XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f, 0.7f), 0.1f);
+            }
+            else
+            {
+                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
+                LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+            }
             yield return handle;
             addressableSceneName = environmentLabel;
             //...

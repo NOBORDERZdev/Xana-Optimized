@@ -90,7 +90,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 
                 if (changeOritentationChange)
                 {
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    //Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
                     XanaConstants.xanaConstants.JjWorldSceneChange = false;
                     XanaConstants.xanaConstants.orientationchanged = false;
                     XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
