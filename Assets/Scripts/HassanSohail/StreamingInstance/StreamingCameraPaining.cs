@@ -35,27 +35,29 @@ public class StreamingCameraPaining : MonoBehaviour
             adjust =1;
         }
         int rand =no /*Random.Range(0,3)*/;
-        int Zoom = Random.Range(-1,2)/adjust;
+        
+        
+        float Zoom =0/* Random.Range(-0.1f,0.1f)/adjust*/;
         switch (rand)
         {
             case 0: // for left
-                temp += new Vector3(-1/adjust,0,Zoom);
+                temp += new Vector3(-.5f/adjust,0,Zoom);
                 break;
             case 1: // for right
-                temp += new Vector3(1/adjust,0,Zoom);
+                temp += new Vector3(.5f/adjust,0,Zoom);
                 break;
             case 2: // for top
-                temp += new Vector3(0, 0.5f/adjust, Zoom);
+                temp += new Vector3(0, 0, Zoom);
                 break;
             //case 3: // for bottom
             //    temp += new Vector3(0, -0.5f, Zoom);
             //    break;
             default:
-                temp += new Vector3(-1/adjust,0,Zoom);
+                temp += new Vector3(-.5f/adjust,0,Zoom);
                 break;
         }
-        gameObject.transform.DOMove(temp,1.5f/adjust,false);
-        if (no < 3)
+        gameObject.transform.DOMove(temp,1.5f,false);
+        if (no < 2)
         {
             no++;
         }
