@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 using UnityEngine.AI;
+using System.Buffers;
+using UnityEngine.InputSystem;
 
 namespace XanaAi
 {
@@ -141,6 +143,7 @@ namespace XanaAi
                     Handheld.Vibrate();
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
+               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -229,6 +232,9 @@ namespace XanaAi
                         charcterBody.ApplyMakeup(loadedObject, ai.gameObject);
                     else if (ObjectType.Contains("EyeLashes"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
+
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle);
+
                 }
                 else
                 {

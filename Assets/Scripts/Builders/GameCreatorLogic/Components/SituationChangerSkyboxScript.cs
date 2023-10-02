@@ -28,6 +28,9 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         CreateDictionaryFromScriptable();
         AsyncOperationHandle<Material> darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
         AsyncOperationHandle<Material> blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
+        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkSky);
+        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(blindSky);
+
     }
 
 
@@ -57,6 +60,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
                 string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
                 AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 loadSkyBox.Completed += LoadSkyBox_Completed;
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox);
+
             }
             else
                 BuilderEventManager.ApplySkyoxSettings?.Invoke();

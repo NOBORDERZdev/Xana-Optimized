@@ -190,6 +190,8 @@ public class BuilderMapDownload : MonoBehaviour
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async);
+
             }
             if (XanaConstants.xanaConstants.isFromXanaLobby)
             {
@@ -197,6 +199,9 @@ public class BuilderMapDownload : MonoBehaviour
             }
             else
                 LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
+
+
+           // Addressables.Release(_async);
         }
         CallBack();
     }
