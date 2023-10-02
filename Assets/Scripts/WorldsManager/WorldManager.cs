@@ -133,14 +133,14 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
-            if (AutoSwtichIndex< AutoSwtichWorldList.Count-1)
-            {
-                AutoSwtichIndex++;
-            }
-            else
-            {
-                AutoSwtichIndex=0;
-            }
+            //if (AutoSwtichIndex< AutoSwtichWorldList.Count-1)
+            //{
+            //    AutoSwtichIndex++;
+            //}
+            //else
+            //{
+            //    AutoSwtichIndex=0;
+            //}
             LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
             XanaConstants.xanaConstants.newStreamEntery=true;
          }    

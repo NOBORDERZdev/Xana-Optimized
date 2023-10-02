@@ -66,9 +66,9 @@ public class SceneManage : MonoBehaviourPunCallbacks
     {
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")) 
         {
-            SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
-            SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
-            SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+            //SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+            //SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+            //SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
         }
     }
 
