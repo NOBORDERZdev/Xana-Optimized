@@ -40,7 +40,7 @@ public class XanaChatSystem : MonoBehaviour
 {
     public static XanaChatSystem instance;
     public GameObject chatOutPutPenal;
-  
+
     private const string UsernamePrefs = "UsernamePref";
     [SerializeField]
     public string UserName { get; set; }
@@ -57,10 +57,10 @@ public class XanaChatSystem : MonoBehaviour
     public RectTransform ChatPanel;     // set in inspector (to enable/disable panel)
     public GameObject UserIdFormPanel;
     public InputField InputFieldChat;   // set in inspector
-   
+
     public TextMeshProUGUI CurrentChannelText;     // set in inspector
     public TextMeshProUGUI PotriatCurrentChannelText;     // set in inspector
-    
+
     public Toggle ChannelToggleToInstantiate; // set in inspector
     public GameObject XanaChatLand; // set in inspector
     public GameObject XanaChatPotrait; // set in inspector
@@ -68,7 +68,7 @@ public class XanaChatSystem : MonoBehaviour
 
     public ScrollRect ChatScrollRect;
 
-
+    public Action<string> npcAlert;
 
     #region Not Required
 
@@ -129,7 +129,7 @@ public class XanaChatSystem : MonoBehaviour
     }
 
 
-    public void DisplayMsg_FromSocket(string _userName,string _msg)
+    public void DisplayMsg_FromSocket(string _userName, string _msg)
     {
         //Debug.Log("<color=red> XanaOldChat: " + _userName + " : " + _userName.Length + " : " + _msg +"</color>");
 
@@ -148,12 +148,12 @@ public class XanaChatSystem : MonoBehaviour
         {
             chatNotificationIcon.SetActive(true);
         }
-        
+
         StartCoroutine(Delay());
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
-    public void DisplayErrorMsg_FromSocket(string _msg ,string errorType)
+    public void DisplayErrorMsg_FromSocket(string _msg, string errorType)
     {
 
         if (errorType.Contains("Error"))
@@ -270,10 +270,14 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
+        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
+
+        npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
+
         this.InputFieldChat.text = "";
     }
+
     public void OnClickSend()
     {
         if (this.InputFieldChat != null)
@@ -297,7 +301,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-            XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine);
+        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine, "");
     }
 
     #region Photon Chat Region

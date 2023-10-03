@@ -27,12 +27,12 @@ namespace XanaAi
         //[SerializeField] int aiCountToSpwan;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
-
+        //[SerializeField] List<int> aiIds;
         private CharcterBodyParts charcterBody;
         [SerializeField]
         private GameObject[] aiPrefabs;
         //private List<GameObject> spawnedNpc;
-        private int typesOfAICharacter = 3;
+        //private int typesOfAICharacter = 3;
         private int rand;
         #endregion
 
@@ -63,6 +63,10 @@ namespace XanaAi
 
                 rand = Random.Range(0, aiNames.Count);
                 aiPrefabs[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
+                aiNames.RemoveAt(rand);
+                //aiPrefabs[i].GetComponent<NpcChatSystem>().id = aiIds[rand];
+                //aiIds.RemoveAt(rand);
+
                 apperance.StartWandering(aiPrefabs[i].GetComponent<AiController>());      // start perform action
             }
 
