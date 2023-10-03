@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -26,10 +27,10 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     {
         instance = this;
         CreateDictionaryFromScriptable();
-        AsyncOperationHandle<Material> darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+       /* AsyncOperationHandle<Material> darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
         AsyncOperationHandle<Material> blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
-        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkSky);
-        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(blindSky);
+        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkSky, "NoMoonSky");
+        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(blindSky, "BlindSky");*/
 
     }
 
@@ -48,7 +49,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     int indexx = 0;
     public void ChangeSkyBox(int skyID)
     {
-        Debug.Log("SKY BOXX" + skyID);
 
         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
@@ -58,9 +58,13 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             if (skyBoxExist)
             {
                 string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
-                AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                AsyncOperationHandle loadSkyBox;
+                bool flag = false;
+                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                if (!flag)
+                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 loadSkyBox.Completed += LoadSkyBox_Completed;
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
 
             }
             else
@@ -81,9 +85,9 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         }
 
     }
-    private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
+    private void LoadSkyBox_Completed(AsyncOperationHandle obj)
     {
-        Material _mat = obj.Result;
+        Material _mat = obj.Result as Material;
         _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
         RenderSettings.skybox = _mat;
         directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;

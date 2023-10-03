@@ -880,7 +880,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle,environmentLabel);
 
                 yield return handle.Result.ActivateAsync();
                 DownloadCompleted();

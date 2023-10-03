@@ -74,7 +74,6 @@ public class AddressableDownloader : MonoBehaviour
     /// <param name="name">tag or key of a addressable object</param>
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
-        Debug.LogError("DownloadAddressableObj Called");
         while (!XanaConstants.isAddressableCatalogDownload)
         {
             yield return new WaitForSeconds(1f);
@@ -91,8 +90,11 @@ public class AddressableDownloader : MonoBehaviour
             {
                 StoreManager.instance.loaderForItems.SetActive(true);
             }
-            AsyncOperationHandle<GameObject> loadOp;
-            loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+            AsyncOperationHandle loadOp;
+            bool flag = false;
+            loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(),ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
            SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
             yield return loadOp;
@@ -114,17 +116,17 @@ public class AddressableDownloader : MonoBehaviour
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                loadOp.Result.name = key;
-                MemoryManager.AddToReferenceList(loadOp);
+                //loadOp.Result. = key;
+                MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                 if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
                     if (callFromMultiplayer)
                     {
-                        applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject,mulitplayerHairColor);
+                        applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject,mulitplayerHairColor);
                     }
                     else
                     {
-                        applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject, applyHairColor);
+                        applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
                     }
                     if(GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
@@ -132,7 +134,7 @@ public class AddressableDownloader : MonoBehaviour
                 }
                 else
                 {
-                    presetsItem.Add(new Item(itemId, loadOp.Result, type));
+                    presetsItem.Add(new Item(itemId, loadOp.Result as GameObject, type));
                     if (presetsItem.Count >= presetItemCount)
                     {
                         StartCoroutine(ApplyPresetItems(applyOn));
@@ -245,7 +247,12 @@ public class AddressableDownloader : MonoBehaviour
             }
             if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
                 StoreManager.instance.loaderForItems.SetActive(true);
-            AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
+            AsyncOperationHandle loadOp;
+            bool flag = false;
+
+            loadOp = MemoryManager.GetReferenceIfExist(key,ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<Texture>(key);
 
             while (!loadOp.IsDone)
                 yield return loadOp;
@@ -270,44 +277,44 @@ public class AddressableDownloader : MonoBehaviour
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-                MemoryManager.AddToReferenceList(loadOp);
+                MemoryManager.AddToReferenceList(loadOp,key);
                 switch (type)
                 {
                     case CurrentTextureType.Null:
                         break;
                     case CurrentTextureType.FaceTattoo:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.FaceTattoo);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.FaceTattoo);
                         break;
                     case CurrentTextureType.ChestTattoo:
-                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ChestTattoo);
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ChestTattoo);
                         break;
                     case CurrentTextureType.LegsTattoo:
-                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.LegsTattoo);
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.LegsTattoo);
                         break;
                     case CurrentTextureType.ArmTattoo:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ArmTattoo);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ArmTattoo);
                         break;
                     case CurrentTextureType.Mustache:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLid:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLense:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLashes:
-                           applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
+                           applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeBrows:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result, applyOn);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.Skin:
                         break;
                     case CurrentTextureType.Lip:
                         break;
                     case CurrentTextureType.Makeup:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result, applyOn);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result as Texture, applyOn);
                         break;
                     default:
                         break;

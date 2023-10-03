@@ -110,10 +110,14 @@ namespace XanaAi
             {
                 try
                 {
-                    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                    AsyncOperationHandle loadObj;//= Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                    bool flag = false;
+                    loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                    if (!flag)
+                        loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
                     loadObj.Completed += operationHandle =>
                     {
-                        OnLoadCompleted(operationHandle, ObjectType, ai);
+                        OnLoadCompleted(operationHandle, ObjectType, ai, key.ToLower());
                     };
                 }
                 catch (System.Exception)
@@ -126,13 +130,13 @@ namespace XanaAi
             }
         }
 
-        private void OnLoadCompleted(AsyncOperationHandle<GameObject> handle, string ObjectType, AiController ai)
+        private void OnLoadCompleted(AsyncOperationHandle handle, string ObjectType, AiController ai,string key)
         {
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError("Loaded Successfully");
-                GameObject loadedObject = handle.Result;
+                GameObject loadedObject = handle.Result as GameObject;
                 if (loadedObject != null)
                 {
                     ai.StichItem(-1, (GameObject)(object)loadedObject, ObjectType, ai.gameObject, false);
@@ -143,7 +147,7 @@ namespace XanaAi
                     Handheld.Vibrate();
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
-               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle);
+               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -191,10 +195,14 @@ namespace XanaAi
             {
                 try
                 {
-                    AsyncOperationHandle<Texture2D> loadObj = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
+                    AsyncOperationHandle loadObj;// = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
+                    bool flag = false;
+                    loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                    if (!flag)
+                        loadObj = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
                     loadObj.Completed += operationHandle =>
                     {
-                        OnTexLoadCompleted(operationHandle, ObjectType, ai);
+                        OnTexLoadCompleted(operationHandle, ObjectType, ai, key.ToLower());
                     };
                 }
                 catch (System.Exception)
@@ -216,12 +224,12 @@ namespace XanaAi
             }
         }
 
-        void OnTexLoadCompleted(AsyncOperationHandle<Texture2D> handle, string ObjectType, AiController ai)
+        void OnTexLoadCompleted(AsyncOperationHandle handle, string ObjectType, AiController ai,string key)
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError("Loaded Textures Successfully");
-                Texture2D loadedObject = handle.Result;
+                Texture2D loadedObject = handle.Result as Texture2D;
                 if (loadedObject != null)
                 {
                     if (ObjectType.Contains("EyeTexture"))
@@ -233,7 +241,7 @@ namespace XanaAi
                     else if (ObjectType.Contains("EyeLashes"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle);
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
 
                 }
                 else
