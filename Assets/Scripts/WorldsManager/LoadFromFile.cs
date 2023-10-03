@@ -533,8 +533,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 _uiReferences.LoadMain(false);
             }
-
         }
+
+        /// <summary>
+        /// Load NPC fake chat system
+        /// </summary>
+        GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
+        Instantiate(npcChatSystem);
+        Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
     [SerializeField] int autoSwitchTime;
