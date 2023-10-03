@@ -18,6 +18,10 @@ public class XanaConstants : MonoBehaviour
     public int mic;
     public int minimap;
     public int userName;
+    public string NFTUrl;
+    public string clothJson;
+    public string defaultFightingNFTUrl;
+    public string defaultFightingName;
     public string userId;
     public string CurrentSceneName;
     public string EnviornmentName;
