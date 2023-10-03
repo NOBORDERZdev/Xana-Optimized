@@ -86,7 +86,7 @@ public class AskForJoining : MonoBehaviour
             if (ReferrencesForDynamicMuseum.instance != null)
                 ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
