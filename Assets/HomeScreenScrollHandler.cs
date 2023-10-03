@@ -12,16 +12,8 @@ public class HomeScreenScrollHandler : ScrollRect
     protected override void Start()
     {
         DynamicGrid.Flag = false;
-        DynamicGrid.scrollSensitivity = 0;
-        scrollSensitivity = 3;
-
-    }
-    public void ActivateMainSlider()
-    {
-
-    }
-    public void ActivateMapViewSlider()
-    {
+        //DynamicGrid.scrollSensitivity = 0;
+       // scrollSensitivity = 3;
 
     }
     public bool Flag = true;
@@ -30,26 +22,27 @@ public class HomeScreenScrollHandler : ScrollRect
         yield return new WaitForSeconds(0.3f);
         Flag = true;
     }
-    public override void OnBeginDrag(PointerEventData eventData)
-    {
-        if (Flag)
-            base.OnBeginDrag(eventData);
-    }
-    public override void OnEndDrag(PointerEventData eventData)
-    {
-        if (Flag)
-            base.OnEndDrag(eventData);
-    }
+    //public override void OnBeginDrag(PointerEventData eventData)
+    //{
+    //    if (Flag)
+    //        base.OnBeginDrag(eventData);
+    //}
+    //public override void OnEndDrag(PointerEventData eventData)
+    //{
+    //    if (Flag)
+    //        base.OnEndDrag(eventData);
+    //}
     public override void OnDrag(PointerEventData eventData)
     {
         Debug.LogError("PointReached = " + verticalNormalizedPosition);
   
         if (verticalNormalizedPosition < 0.05f && Flag)
         {
-            verticalNormalizedPosition = 0.049f;
+            verticalNormalizedPosition = 0.05f;
             Flag = false;
             DynamicGrid.Flag = true;
-            DynamicGrid.scrollSensitivity = 1;
+            DynamicGrid.velocity = velocity.normalized * 10f;
+           // DynamicGrid.scrollSensitivity = 1;
 
             // base.OnDrag(eventData);
             // DynamicGrid.enabled = true;

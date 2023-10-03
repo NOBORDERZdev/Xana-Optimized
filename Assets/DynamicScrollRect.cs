@@ -78,8 +78,8 @@ namespace DynamicScrollRect
                 Debug.LogError("Top");
                 // TopScroller.enabled = true;
                 //StartCoroutine(TopScroller.GetComponent<HomeScreenScrollHandler>().StartDrag());
-                TopScroller.scrollSensitivity = 3;
-                scrollSensitivity = 0;
+                //TopScroller.scrollSensitivity = 3;
+               // scrollSensitivity = 0;
                 verticalNormalizedPosition = 0.951f;
                 TopScroller.verticalNormalizedPosition = 0.052f;
                 //TopScroller.Flag = true;
@@ -142,7 +142,11 @@ namespace DynamicScrollRect
         }
         private void OnScrollRectValueChanged(Vector2 val)
         {
-          //  Debug.LogError("OnScrollRectValueChanged");
+            if (!Flag)
+            {
+                return;
+            }
+            //  Debug.LogError("OnScrollRectValueChanged");
             if (_runningBack || _isDragging)
             {
                 return;
