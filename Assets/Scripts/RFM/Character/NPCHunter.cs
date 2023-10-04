@@ -109,12 +109,6 @@ namespace RFM.Character
             {
                 _players.Remove(other.gameObject);
                 _target = null;
-
-                // PhotonView is on the parent of the gameobject that has a collider.
-                // int Collidedviewid = other.transform.parent.GetComponent<PhotonView>().ViewID;
-                
-                // Uncomment for player hunter
-                // RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", RpcTarget.All, Collidedviewid);
                 killVFX.SetActive(true);
                 
                 other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
