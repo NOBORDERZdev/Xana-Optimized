@@ -222,7 +222,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
             // Load the scene asynchronously
             if (XanaConstants.xanaConstants.isBuilderScene)
             {
-                float _rand = UnityEngine.Random.Range(16f, 20f);
+                float _rand = UnityEngine.Random.Range(25f, 30f);
                 LoadingHandler.Instance.randCurrentValue = _rand;
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
             }

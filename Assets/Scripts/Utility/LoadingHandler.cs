@@ -396,7 +396,7 @@ public class LoadingHandler : MonoBehaviour
         else
         {
             if (isBuilder)
-                StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(16f, 20f)));
+                StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(25f, 30f)));
             else
                 StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
         }
