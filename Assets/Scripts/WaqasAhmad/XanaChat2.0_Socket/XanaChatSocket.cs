@@ -208,9 +208,10 @@ public class XanaChatSocket : MonoBehaviour
 
         if (!npcId.IsNullOrEmpty())
             userId = npcId;
-        Debug.Log("<color=red> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + npcId + "</color>");
+       // Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
 
         var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        Debug.Log("Data:::" + data);
         Manager.Socket.Emit("chatMessage", data);
     }
 
@@ -353,8 +354,8 @@ public class XanaChatSocket : MonoBehaviour
         string jsonData = JsonUtility.ToJson(requestData);
 
 
-        Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
-        Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
+       // Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
+       // Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
 
         // Create a UnityWebRequest for the POST request
         using (UnityWebRequest request = new UnityWebRequest(setGuestNameApi, "POST"))
@@ -366,16 +367,16 @@ public class XanaChatSocket : MonoBehaviour
 
             yield return request.SendWebRequest();
 
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error: " + request.error);
-            }
-            else
-            {
-                // Request was successful
-                Debug.LogError("Request Successful");
-                Debug.LogError("Response: " + request.downloadHandler.text);
-            }
+            //if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            //{
+            //    Debug.LogError("Error: " + request.error);
+            //}
+            //else
+            //{
+            //    // Request was successful
+            //    Debug.LogError("Request Successful");
+            //    Debug.LogError("Response: " + request.downloadHandler.text);
+            //}
         }
     }
 }

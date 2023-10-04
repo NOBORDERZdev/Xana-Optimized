@@ -4,6 +4,7 @@ using System;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
+
 public class NpcChatSystem : MonoBehaviour
 {
     public enum ResponseChecker { CallAfterIterationEnd, InstantlyCall };
@@ -33,6 +34,19 @@ public class NpcChatSystem : MonoBehaviour
     }
     private FeedData feed;
 
+    private class NpcApiData
+    {
+        public string worldId;
+        public int npcCount;
+    }
+    private NpcApiData npcApiData;
+
+    private class NpcSocketList
+    {
+        public bool success;
+        public string[] data;
+    }
+    private List<string> idList = new List<string>();
 
     private void Awake()
     {
@@ -57,6 +71,50 @@ public class NpcChatSystem : MonoBehaviour
             XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
 
+    #region NPC'sSocketIdGetRegion
+    private void Start()
+    {
+        StartCoroutine(GetNpcSocketIds());
+    }
+    IEnumerator GetNpcSocketIds()
+    {
+        string prefix = "https://chat-testing.xana.net/";
+        string url = "api/v1/npc-socket-info";
+        string mainURL = prefix + url;
+
+        npcApiData = new NpcApiData
+        {
+            worldId = "406",
+            npcCount = numOfResponseWantToShow
+        };
+        string jsonData = JsonUtility.ToJson(npcApiData);
+
+        using (UnityWebRequest www = new UnityWebRequest(mainURL, "POST"))
+        {
+            byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            www.uploadHandler = new UploadHandlerRaw(jsonBytes);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log("NPC Api Error: " + www.error);
+            }
+            else
+            {
+                string apiResponse = www.downloadHandler.text;
+
+                NpcSocketList socketId = new NpcSocketList();
+                socketId = JsonUtility.FromJson<NpcSocketList>(apiResponse);
+                for (int i = 0; i < socketId.data.Length; i++)
+                    idList.Add(socketId.data[i]);
+            }
+        }
+    }
+    #endregion
+
     private void PlayerSendMsg(string msgData)
     {
         if (counter != 0)
@@ -72,8 +130,6 @@ public class NpcChatSystem : MonoBehaviour
         // Call the API request function
         StartCoroutine(SetApiData());
     }
-
-
     IEnumerator SetApiData()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
@@ -81,50 +137,33 @@ public class NpcChatSystem : MonoBehaviour
             msg = playerMessages.Dequeue();
         id = npcDB[counter].aiIds;
         counter++;
-
-        string prefix = "http://182.70.242.10:8032/api/v1/";
-        string url = "update_user_prompt_en?id=";
-        //id = 2;
-        string midPart = "&prompt=";
-        //msg = "I am student";
-        string postUrl = prefix + url + id + midPart + msg;
-
-        UnityWebRequest request = UnityWebRequest.Post(postUrl, "POST");
+        //for live http://15.152.13.112:8032/
+        //for test http://182.70.242.10:8032/
+        string prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+        string url = "&id=";
+        string postUrl = prefix + msg + url + id;
+        Debug.Log("<color=red> Communication URL: " + postUrl + "</color>");
+        UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
-
-        /// <summary>
-        /// Get response from api and send that response to chat socket
-        /// </summary>
-        string postFix = "text_from_userid_en?id=";
-        string fetchUrl = prefix + postFix + id;
-
-        UnityWebRequest fetchRequest = UnityWebRequest.Get(fetchUrl);
-        fetchRequest.downloadHandler = new DownloadHandlerBuffer();
-        yield return fetchRequest.SendWebRequest();
-
-        if (fetchRequest.result == UnityWebRequest.Result.Success)
+        if (request.result == UnityWebRequest.Result.Success)
         {
-            feed = JsonUtility.FromJson<FeedData>(fetchRequest.downloadHandler.text);
+            feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
             Debug.Log("Communication Response: " + feed.response);
         }
         else
-            Debug.LogError("Communication API Error: " + gameObject.name + fetchRequest.error);
+            Debug.LogError("Communication API Error: " + gameObject.name + request.error);
 
         tempResponseNum--;
-        //prevCounter = counter;
         if (tempResponseNum > 0)
         {
-            if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd)) //playerMessages.Count is 0 &&
+            if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
                 StartCoroutine(SetApiData());
             else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
-            {
                 responseChecker = ResponseChecker.CallAfterIterationEnd;
-                //counter = 0;
-            }
         }
         else
         {
@@ -134,7 +173,7 @@ public class NpcChatSystem : MonoBehaviour
         yield return null;
     }
 
-
 }
+
 
 
