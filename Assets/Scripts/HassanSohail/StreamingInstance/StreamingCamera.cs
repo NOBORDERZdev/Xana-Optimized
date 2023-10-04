@@ -183,7 +183,7 @@ public class StreamingCamera : MonoBehaviour
                 if (XanaConstants.xanaConstants.newStreamEntery)
                 {
                     XanaConstants.xanaConstants.newStreamEntery =false;
-                    ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+                   // ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
                     ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
