@@ -433,7 +433,6 @@ public class WorldManager : MonoBehaviour
     {
         //Debug.LogError(" +++++++++++++++++++  WaqasJoinEvent +++++++++++++++");
         _callSingleTime = true;
-
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -519,7 +518,7 @@ public class WorldManager : MonoBehaviour
             //StartCoroutine(Check_Orientation(() =>
             //{
              LoadingHandler.Instance.ShowLoading();
-           // LoadingHandler.Instance.UpdateLoadingSlider(0);
+            // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
@@ -621,7 +620,7 @@ public class WorldManager : MonoBehaviour
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
-                LoadingHandler.Instance.LoadSceneByIndex("Builder");
+                LoadingHandler.Instance.LoadSceneByIndex("Builder",true);
             //}));
 //#endif
 
@@ -713,7 +712,7 @@ public class WorldManager : MonoBehaviour
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
                 Photon.Pun.PhotonHandler.levelName = "Builder";
-                LoadingHandler.Instance.LoadSceneByIndex("Builder");
+                LoadingHandler.Instance.LoadSceneByIndex("Builder",true);
             //}));
 //#endif
         }

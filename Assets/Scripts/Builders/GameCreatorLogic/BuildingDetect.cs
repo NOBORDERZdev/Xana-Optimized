@@ -65,7 +65,9 @@ public class BuildingDetect : MonoBehaviour
     float defaultJumpHeight, defaultSprintSpeed;
     float powerProviderHeight, powerProviderSpeed;
     float powerUpTime, avatarChangeTime;
-    IEnumerator powerUpCoroutine, avatarChangeCoroutine;
+    IEnumerator powerUpCoroutine;
+
+    Coroutine avatarChangeCoroutine;
 
     [Space(15)]
     public AnimatorOverrideController ninjaOverrideAnimator;
@@ -77,6 +79,8 @@ public class BuildingDetect : MonoBehaviour
     internal float defaultSmootnesshvalue;
     internal float defaultIntensityvalue;
 
+    float nameCanvasDefaultYpos;
+
     private void Awake()
     {
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
@@ -84,8 +88,6 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-
-
         yield return new WaitForSeconds(2f);
 
         _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
@@ -95,7 +97,6 @@ public class BuildingDetect : MonoBehaviour
         defaultMoveSpeed = _playerControllerNew.movementSpeed;
 
         powerUpCoroutine = playerPowerUp();
-        avatarChangeCoroutine = PlayerAvatarChange();
 
         SIpowerUpCoroutine = SIPowerUp();
         if (vignette != null)
@@ -128,6 +129,8 @@ public class BuildingDetect : MonoBehaviour
         defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
+
+        nameCanvasDefaultYpos = ArrowManager.Instance.nameCanvas.transform.localPosition.y;
     }
 
     private void OnEnable()
@@ -180,11 +183,19 @@ public class BuildingDetect : MonoBehaviour
         if (tempAnimator != null)
             this.GetComponent<Animator>().avatar = tempAnimator;
         BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-
+        //StopCoroutine(avatarChangeCoroutine);
         avatarChangeTime = time;
         avatarIndex = avatarIndex - 1;
 
-        avatarChangeCoroutine = PlayerAvatarChange();
+        if (avatarIndex == 1)
+        {
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = -1.3f;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+        }
+
+        if (avatarChangeCoroutine != null)
+            StopCoroutine(avatarChangeCoroutine);
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.SetActive(false);
 
@@ -215,7 +226,7 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
         gangsterCharacter.transform.localEulerAngles = Vector3.zero;
-        StartCoroutine(avatarChangeCoroutine);
+        avatarChangeCoroutine = StartCoroutine(PlayerAvatarChange());
     }
     float avatarTime;
     Avatar tempAnimator;
@@ -226,11 +237,14 @@ public class BuildingDetect : MonoBehaviour
         ToggleAvatarChangeComponent(false);
         if (tempAnimator == null)
             tempAnimator = this.GetComponent<Animator>().avatar;
-        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
+        yield return new WaitForSecondsRealtime(0.01f);
+        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
         gangsterCharacter.SetActive(true);
 
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
+
 
         while (avatarChangeTime > avatarTime)
         {
@@ -241,8 +255,6 @@ public class BuildingDetect : MonoBehaviour
 
         //this.GetComponent<Animator>().avatar = tempAnimator;
         ToggleAvatarChangeComponent(true);
-
-        Destroy(gangsterCharacter);
 
         yield return null;
     }
@@ -260,6 +272,13 @@ public class BuildingDetect : MonoBehaviour
                 Destroy(gangsterCharacter);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
+
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = nameCanvasDefaultYpos;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+            if (avatarChangeCoroutine != null)
+                StopCoroutine(avatarChangeCoroutine);
+            avatarChangeCoroutine = null;
         }
 
         playerHair.enabled = state;

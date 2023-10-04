@@ -298,18 +298,18 @@ public class GamificationComponentUIManager : MonoBehaviour
         while (time >= 0 && isRunning)
         {
             TimerCountDownUIParent.SetActive(true);
-            TimerCountDownText.text = ConvertTimetoSecondsandMinute(time + 1, true);
+            TimerCountDownText.text = ConvertTimetoSecondsandMinute(time + 1);
 
             yield return new WaitForSeconds(1f);
             time--;
-            TimerCountDownText.text = ConvertTimetoSecondsandMinute(time + 1, true);
+            TimerCountDownText.text = ConvertTimetoSecondsandMinute(time + 1);
         }
         DisableTimerCounDownUI();
     }
     public void DisableTimerCounDownUI()
     {
         TimerCountDownUIParent.SetActive(false);
-        TimerCountDownText.text = "00";
+        TimerCountDownText.text = "00:00";
 
         if (TimerCountdownCoroutine != null)
             StopCoroutine(TimerCountdownCoroutine);
@@ -392,7 +392,10 @@ public class GamificationComponentUIManager : MonoBehaviour
             if (state)
                 DisplayMessageTimeText.text = ConvertTimetoSecondsandMinute(time);
             else
+            {
                 DisplayMessageTimeText.text = "";
+                DisplayMessageTimeText.transform.parent.gameObject.SetActive(false);
+            }
             //CanvasComponenetsManager._instance.timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             yield return new WaitForSeconds(1f);
             time--;
@@ -407,6 +410,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisplayMessageParentUI.SetActive(false);
         DisplayMessageText.text = "";
         DisplayMessageTimeText.text = "00:00";
+        DisplayMessageTimeText.transform.parent.gameObject.SetActive(true);
     }
 
     public void EnableHelpButtonUI(string helpButtonTitle, string HelpTexts, GameObject obj)

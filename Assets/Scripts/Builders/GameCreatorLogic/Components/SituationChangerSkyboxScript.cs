@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,15 +24,32 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     public Light directionLight, characterDirectionLight;
     public Volume ppVolume;
     public LensFlareComponentSRP sceneLensFlare;
-    private void Start()
+
+    IEnumerator Start()
     {
         instance = this;
         CreateDictionaryFromScriptable();
-       /* AsyncOperationHandle<Material> darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
-        AsyncOperationHandle<Material> blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
-        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkSky, "NoMoonSky");
-        AddressableDownloader.Instance.MemoryManager.AddToReferenceList(blindSky, "BlindSky");*/
 
+        //Added this because of the blinking issue due to the download process when the player triggers the Situation Changer or Blind component.
+
+        AsyncOperationHandle darkSky;
+        AsyncOperationHandle blindSky;
+        bool darkSkyflag = false, blindSkyflag = false;
+        darkSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkSkyflag);
+        if (!darkSkyflag)
+            darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+        while (!darkSky.IsDone)
+        {
+            yield return null;
+        }
+
+        blindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref blindSkyflag);
+        if (!blindSkyflag)
+            blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
+        while (!blindSky.IsDone)
+        {
+            yield return null;
+        }
     }
 
 
