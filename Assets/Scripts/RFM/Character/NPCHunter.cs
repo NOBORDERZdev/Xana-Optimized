@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Photon.Pun;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -12,13 +14,20 @@ namespace RFM.Character
         [SerializeField] private GameObject killVFX;
         [SerializeField] private Animator npcAnim;
         [SerializeField] private string velocityNameX, velocityNameY;
+        
+        
         private NavMeshAgent _navMeshAgent;
         private float _maxSpeed;
-
         private List<GameObject> _players;
         private Transform _target;
 
         public Transform CameraTarget => cameraPosition;
+
+        // Catch player in range
+        [SerializeField] private float timeToCatchEscapee = 5;
+        [SerializeField] private float catchRadius = 2;
+        private float _catchTimer;
+        private GameObject _inRangePlayer;
 
         private void Awake()
         {
@@ -81,8 +90,49 @@ namespace RFM.Character
 
             npcAnim.SetFloat(velocityNameX, animVector.x);
             npcAnim.SetFloat(velocityNameY, animVector.y);
+            
+
+            // Catch player if in range of a sphere of radius = catchRadius
+            _inRangePlayer = CheckPlayerInRange();
+
+            if (_inRangePlayer == null)
+            {
+                _catchTimer = 0;
+            }
+            else
+            {
+                _catchTimer += Time.deltaTime;
+                if (_catchTimer >= timeToCatchEscapee)
+                {
+                    _catchTimer = 0;
+                    _players.Remove(_inRangePlayer);
+                    _target = null;
+                    killVFX.SetActive(true);
+                    _inRangePlayer.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                }
+            }
         }
 
+        private GameObject CheckPlayerInRange()
+        {
+            foreach (var col in Physics.OverlapSphere(transform.position, catchRadius))
+            {
+                if (col.CompareTag(Globals.PLAYER_TAG))
+                {
+                    if (_inRangePlayer == col.gameObject)
+                        return _inRangePlayer;
+                    
+                    if (col.GetComponent<PhotonView>().IsMine)
+                    {
+                        return col.gameObject;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        
         private void FollowTarget(Vector3 targetPosition)
         {
             if(Globals.gameState != Globals.GameState.Gameplay)

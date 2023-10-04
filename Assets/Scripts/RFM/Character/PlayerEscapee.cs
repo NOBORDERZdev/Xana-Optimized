@@ -34,8 +34,8 @@ namespace RFM.Character
             _showMoney.gameObject.SetActive(true);
 
             InvokeRepeating(nameof(AddMoney),
-                RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval,
-                RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval);
+                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval,
+                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval);
         }
 
         // private void OnPlayerCaught(NPCHunter catcher)
@@ -53,7 +53,7 @@ namespace RFM.Character
 
         private void AddMoney()
         {
-            Money += RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.MoneyPerInterval;
+            Money += RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.MoneyPerInterval;
             _showMoney.text = Money.ToString("F0") + "";
             _moneyScaleShaker.Play();
         }
