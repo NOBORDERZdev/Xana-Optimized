@@ -864,6 +864,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
+            while (!XanaConstants.isAddressableCatalogDownload)
+            {
+                yield return new WaitForSeconds(1f);
+            }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (XanaConstants.xanaConstants.isFromXanaLobby)
@@ -882,6 +886,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle,environmentLabel);
+
                 yield return handle.Result.ActivateAsync();
                 DownloadCompleted();
             }
@@ -892,6 +898,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 HomeBtn.onClick.Invoke();
             }
+           // Addressables.Release(handle);
         }
         else
         {
