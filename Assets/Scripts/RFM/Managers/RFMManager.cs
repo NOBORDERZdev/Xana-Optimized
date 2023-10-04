@@ -22,23 +22,8 @@ namespace RFM.Managers
         public const byte StartRFMEventCode = 7;
 
         #endregion
-        
-        [Serializable]
-        public class GameConfiguration
-        {
-            public int MatchMakingTime;
-            public int TakePositionTime;
-            public int GameplayTime;
-            public int GameRestartWaitTime;
-            public int MaxPlayersInRoom;
-            public Vector2 EscapeesToHuntersRatio;
-            public int GainingMoneyTimeInterval;
-            public int MoneyPerInterval;
-        }
-        
-        // TODO (Muneeb): Replace RPCs with RaiseEvent.
 
-        public static RFMManager Instance;
+        #region Serialized Fields
 
         public Transform lobbySpawnPoint;
         [SerializeField] public Transform playersSpawnArea;
@@ -50,93 +35,60 @@ namespace RFM.Managers
         [SerializeField] private TextMeshProUGUI gameplayTimeText, statusTMP;
         [SerializeField] private GameObject statusBG;
         [SerializeField] private GameObject gameOverPanel;
-        // [SerializeField] private RectTransform leaderboardEntryContainer;
-        // [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
-
-        //MMeffects
+        
+        //MM effects
         [SerializeField] private MMScaleShaker timerTextScaleShaker;
         [SerializeField] private MMScaleShaker countdownTimerTextScaleShaker;
         [SerializeField] private MMF_Player statusMMFPlayer;
-
+        
         //Camera Manager
         [SerializeField] private RFMCameraManager rfmCameraManager;
 
         //VFX
         [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
+        
+        #endregion
 
+        #region Fields
 
-        // private NPCManager npcManager;
-        private GameObject mainCam, gameCanvas;
-        private FollowNPC npcCamera;
-        private PlayerControllerNew player;
-        // private RFMMissionsManager missionsManager;
+        public static RFMManager Instance;
+        private GameObject _mainCam, _gameCanvas;
+        private FollowNPC _npcCamera;
+        private PlayerControllerNew _player;
+        [HideInInspector] public static GameConfiguration CurrentGameConfiguration;
 
-        // public static int NumOfActivePlayers;
+        #endregion
 
-        [HideInInspector] public GameConfiguration CurrentGameConfiguration;
-
-        //the api is set we just have to get the map
-        private IEnumerator FetchConfigDataFromServer()
-        {
-            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
-            using UnityWebRequest www = UnityWebRequest.Get(url);
-            // www.SetRequestHeader("Authorization", userToken);
-            www.SendWebRequest();
-            while (!www.isDone)
-            {
-                yield return null;
-            }
-            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
-                
-                CurrentGameConfiguration = new GameConfiguration
-                {
-                    MatchMakingTime = 10,
-                    TakePositionTime = 10,
-                    GameplayTime = 60,
-                    GameRestartWaitTime = 3000,
-                    MaxPlayersInRoom = 10,
-                    EscapeesToHuntersRatio = Vector2.one,
-                    GainingMoneyTimeInterval = 1,
-                    MoneyPerInterval = 15,
-                };
-            }
-            else
-            {
-                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
-            }
-        }
+        #region Unity Callback Methods
 
         private void Awake()
         {
             RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
-            
             Instance = this;
-            // missionsManager = GetComponent<RFMMissionsManager>();
             EventsManager.OnHideCanvasElements();
+            
+            PhotonNetwork.GameVersion = Application.version + "999"; // TODO temp
         }
 
+        
         public override void OnEnable()
         {
             base.OnEnable();
             EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
-            // EventsManager.onRestarting += ActivatePlayer;
-
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
 
+        
         public override void OnDisable()
         {
             base.OnDisable();
             EventsManager.onPlayerCaught -= PlayerCaught;
             EventsManager.onPlayerCaughtByPlayer -= PlayerCaughtByPlayer;
-            // EventsManager.onRestarting -= ActivatePlayer;
-            
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
+        
         private IEnumerator Start()
         {
             yield return StartCoroutine(FetchConfigDataFromServer());
@@ -147,20 +99,18 @@ namespace RFM.Managers
             }
             
             Globals.gameState = Globals.GameState.InLobby;
-            mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
-            gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
+            _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
+            _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             
             gameOverPanel.SetActive(false);
-            gameplayTimeText.transform.parent.gameObject.SetActive(true); // was false
+            gameplayTimeText.transform.parent.gameObject.SetActive(true);
             
             Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
                 {
-                    // StartCoroutine(StartRFM());
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        // photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
                         PhotonNetwork.RaiseEvent(StartRFMEventCode, null,
                             new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                     }
@@ -170,7 +120,7 @@ namespace RFM.Managers
             }, gameplayTimeText);
             
             photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
-            Debug.LogError("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
+            Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
             
             InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
             
@@ -178,6 +128,14 @@ namespace RFM.Managers
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
         }
+        
+        // private void OnGUI()
+        // {
+        //     GUI.Label(new Rect(10, 10, 200, 75), PhotonNetwork.IsMasterClient.ToString());
+        //     GUI.Label(new Rect(10, 30, 200, 75), Globals.gameState.ToString());
+        // }
+        
+        #endregion
 
         #region Private Methods
 
@@ -194,18 +152,15 @@ namespace RFM.Managers
                 if (Globals.gameState != Globals.GameState.InLobby) return;
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    // photonView.RPC(nameof(StartRFMRPC), RpcTarget.AllBuffered);
                     PhotonNetwork.RaiseEvent(StartRFMEventCode, null,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
-                // StartCoroutine(StartRFM());
             }
             else
             {
                 Globals.gameState = Globals.GameState.InLobby;
                 countDownText.transform.parent.gameObject.SetActive(false);
                 statusBG.SetActive(false);
-                //statusTMP.gameObject.SetActive(false);
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -214,56 +169,6 @@ namespace RFM.Managers
                 
                 StopAllCoroutines();
             }
-        }
-
-        private static (int, int, int, int) CalculateRoles(int roomLimit, int numberOfPlayers, Vector2 ratioVector)
-        {
-            // Calculate the total ratio
-            int totalRatio = (int)(ratioVector.x + ratioVector.y);
-
-            // Calculate the number of players for each role
-            int escapeeCount = (int)(roomLimit * ratioVector[0] / totalRatio);
-            int hunterCount = (int)(roomLimit * ratioVector[1] / totalRatio);
-
-            // Adjust the counts to ensure they sum up to RoomLimit
-            int totalPlayers = escapeeCount + hunterCount;
-            if (totalPlayers < roomLimit)
-            {
-                escapeeCount += roomLimit - totalPlayers;
-            }
-            else if (totalPlayers > roomLimit)
-            {
-                // This may happen due to rounding errors, so we decrease one of the counts
-                escapeeCount -= totalPlayers - roomLimit;
-            }
-            
-            
-            
-            int numberOfEscapees = escapeeCount;
-            int numberOfHunters = hunterCount;
-            int numberOfAIHunters = 0;
-            int numberOfAIEscapees = 0;
-
-            if (numberOfPlayers == roomLimit)
-            {
-                numberOfAIHunters = 0;
-            }
-                
-            else if (numberOfPlayers >= roomLimit / 2)
-            {
-                numberOfHunters = numberOfPlayers - numberOfEscapees;
-                numberOfAIHunters = roomLimit - numberOfPlayers;
-            }
-                
-            else
-            {
-                numberOfAIHunters = roomLimit / 2;
-                numberOfAIEscapees = (roomLimit / 2) - numberOfPlayers;
-                numberOfEscapees = numberOfPlayers;
-                numberOfHunters = 0;
-            }
-
-            return (numberOfEscapees, numberOfHunters, numberOfAIEscapees, numberOfAIHunters);
         }
 
 
@@ -277,7 +182,6 @@ namespace RFM.Managers
             statusTMP.text = "Countdown";
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
-            //statusTMP.gameObject.SetActive(true);
 
             huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up");
 
@@ -285,8 +189,6 @@ namespace RFM.Managers
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
             }
-
-            // NumOfActivePlayers = PhotonNetwork.PlayerList.Length;
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -303,26 +205,19 @@ namespace RFM.Managers
                 SpawnAIEscapees(roles.Item3);
             }
 
-            gameplayTimeText.gameObject.SetActive(false); // new
+            gameplayTimeText.gameObject.SetActive(false);
             
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null, 
                 countDownText, AfterEachSecondCountdownTimer));
 
             if (PhotonNetwork.IsMasterClient)
             {
-                // photonView.RPC(nameof(ResetPosition), RpcTarget.AllBuffered);
                 PhotonNetwork.RaiseEvent(ResetPositionEventCode, null,
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
         }
-
-        // [PunRPC]
-        // private void CreateLeaderboardEntry(string nickName, int money)
-        // {
-        //     var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-        //     entry.Init(nickName, money.ToString());
-        // }
+        
         
         private void ResetPosition()
         {
@@ -335,12 +230,11 @@ namespace RFM.Managers
 
             if (numOfHunters > 0)
             {
-                Debug.LogError(PhotonNetwork.NickName + " Spawning as Hunter. RFM");
+                Debug.Log(PhotonNetwork.NickName + "RFM Spawning as Hunter.");
                 
-                statusTMP.text = "Catch the Escapees!";
+                statusTMP.text = "CATCH THE <#FF36D3>ESCAPEES!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
-                //statusTMP.gameObject.SetActive(true);
 
                 Globals.gameState = Globals.GameState.TakePosition;
 
@@ -364,16 +258,13 @@ namespace RFM.Managers
 
             else // Spawning as Escapee
             {
-                Debug.LogError(PhotonNetwork.NickName + " Spawning as Escapee. RFM");
+                Debug.Log(PhotonNetwork.NickName + "RFM Spawning as Escapee.");
                 
-                statusTMP.text = "RUN FAR FROM <#FF36D3>THE HUNTERS!</color>";
+                statusTMP.text = "RUN FAR FROM THE <#FF36D3>HUNTERS!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
-                //statusTMP.gameObject.SetActive(true);
-
                 Globals.gameState = Globals.GameState.TakePosition;
-
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, 
                     AfterTakePositionTimerEscapee, countDownText,
@@ -389,8 +280,7 @@ namespace RFM.Managers
                 playerSpawnVFX.SetActive(true);
                 Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
                                               // Should be instantiated or disabled.
-                
-
+                                              
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
         }
@@ -418,7 +308,7 @@ namespace RFM.Managers
 
         private void SpawnHunters(int numOfHunters)
         {
-            Debug.LogError("RFM numOfAIHunters: " + numOfHunters);
+            Debug.Log("RFM numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("HunterNPC",
@@ -430,7 +320,7 @@ namespace RFM.Managers
         
         private void SpawnAIEscapees(int numOfEscapees)
         {
-            Debug.LogError("RFM numOfAIEscapees: " + numOfEscapees);
+            Debug.Log("RFM numOfAIEscapees: " + numOfEscapees);
             for (int i = 0; i < numOfEscapees; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("EscapeeNPC",
@@ -486,9 +376,9 @@ namespace RFM.Managers
 
             gameOverPanel.SetActive(true);
             
-            if (npcCamera != null)
+            if (_npcCamera != null)
             {
-                Destroy(npcCamera.gameObject);
+                Destroy(_npcCamera.gameObject);
             }
             
             await Task.Delay(CurrentGameConfiguration.GameRestartWaitTime);
@@ -524,38 +414,38 @@ namespace RFM.Managers
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
         
-            mainCam.SetActive(false);
-            gameCanvas.SetActive(false);
+            _mainCam.SetActive(false);
+            _gameCanvas.SetActive(false);
             statusTMP.text = "You've been caught!";
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
-            if (npcCamera == null)
+            if (_npcCamera == null)
             {
-                npcCamera = Instantiate(npcCameraPrefab);
+                _npcCamera = Instantiate(npcCameraPrefab);
             }
-            npcCamera.Init(catcher.CameraTarget);
+            _npcCamera.Init(catcher.CameraTarget);
         }
+        
         
         private void PlayerCaughtByPlayer(RFM.Character.PlayerHunter catcher)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
         
-            mainCam.SetActive(false);
-            gameCanvas.SetActive(false);
+            _mainCam.SetActive(false);
+            _gameCanvas.SetActive(false);
             statusTMP.text = "You've been caught!";
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
-            if (npcCamera == null)
+            if (_npcCamera == null)
             {
-                npcCamera = Instantiate(npcCameraPrefab);
+                _npcCamera = Instantiate(npcCameraPrefab);
             }
-            npcCamera.Init(catcher.transform/*cameraTarget*/);
+            _npcCamera.Init(catcher.transform/*cameraTarget*/);
         }
         
 
-        #endregion
 
         private void ReceivePhotonEvents(EventData photonEvent)
         {
@@ -573,6 +463,8 @@ namespace RFM.Managers
                 }
             }
         }
+        
+        #endregion
 
         #region Photon Callbacks
 
@@ -588,15 +480,123 @@ namespace RFM.Managers
 
         public override void OnPlayerLeftRoom(Player other)
         {
-            Debug.LogFormat("RFM OnPlayerLeftRoom() {0}", other.NickName); // seen when other disconnects
+            Debug.Log($"RFM OnPlayerLeftRoom() {other.NickName}"); // seen when other disconnects
+        }
+
+        #endregion
+
+        #region Static Methods
+
+        /// <summary>
+        /// Loads game configuration data from API
+        /// </summary>
+        private static IEnumerator FetchConfigDataFromServer()
+        {
+            //the api is set we just have to get the map
+            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
+            using UnityWebRequest www = UnityWebRequest.Get(url);
+            // www.SetRequestHeader("Authorization", userToken);
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
+                
+                CurrentGameConfiguration = new GameConfiguration
+                {
+                    MatchMakingTime = 10,
+                    TakePositionTime = 10,
+                    GameplayTime = 60,
+                    GameRestartWaitTime = 3000,
+                    MaxPlayersInRoom = 10,
+                    EscapeesToHuntersRatio = Vector2.one,
+                    GainingMoneyTimeInterval = 1,
+                    MoneyPerInterval = 15,
+                };
+            }
+            else
+            {
+                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+            }
+        }
+        
+        /// <summary>
+        /// Returns the number of Escapees, Hunters, NPCEscapees, and NPCHunters
+        /// </summary>
+        /// <param name="roomLimit">Max number of players allowed</param>
+        /// <param name="numberOfPlayers">Current number of connected players</param>
+        /// <param name="ratioVector">Escapee to Hunter ratio</param>
+        /// <author>Muneeb</author>
+        private static (int, int, int, int) CalculateRoles(int roomLimit, int numberOfPlayers, Vector2 ratioVector)
+        {
+            // Calculate the total ratio
+            int totalRatio = (int)(ratioVector.x + ratioVector.y);
+
+            // Calculate the number of players for each role
+            int escapeeCount = (int)(roomLimit * ratioVector[0] / totalRatio);
+            int hunterCount = (int)(roomLimit * ratioVector[1] / totalRatio);
+
+            // Adjust the counts to ensure they sum up to RoomLimit
+            int totalPlayers = escapeeCount + hunterCount;
+            if (totalPlayers < roomLimit)
+            {
+                escapeeCount += roomLimit - totalPlayers;
+            }
+            else if (totalPlayers > roomLimit)
+            {
+                // This may happen due to rounding errors, so we decrease one of the counts
+                escapeeCount -= totalPlayers - roomLimit;
+            }
+            
+            
+            
+            int numberOfEscapees = escapeeCount;
+            int numberOfHunters = hunterCount;
+            int numberOfAIHunters = 0;
+            int numberOfAIEscapees = 0;
+
+            if (numberOfPlayers == roomLimit)
+            {
+                numberOfAIHunters = 0;
+            }
+                
+            else if (numberOfPlayers >= roomLimit / 2)
+            {
+                numberOfHunters = numberOfPlayers - numberOfEscapees;
+                numberOfAIHunters = roomLimit - numberOfPlayers;
+            }
+                
+            else
+            {
+                numberOfAIHunters = roomLimit / 2;
+                numberOfAIEscapees = (roomLimit / 2) - numberOfPlayers;
+                numberOfEscapees = numberOfPlayers;
+                numberOfHunters = 0;
+            }
+
+            return (numberOfEscapees, numberOfHunters, numberOfAIEscapees, numberOfAIHunters);
         }
 
         #endregion
         
-        // private void OnGUI()
-        // {
-        //     GUI.Label(new Rect(10, 10, 200, 75), PhotonNetwork.IsMasterClient.ToString());
-        //     GUI.Label(new Rect(10, 30, 200, 75), Globals.gameState.ToString());
-        // }
+        #region Classes, Enums, and Structs
+
+        [Serializable]
+        public class GameConfiguration
+        {
+            public int MatchMakingTime;
+            public int TakePositionTime;
+            public int GameplayTime;
+            public int GameRestartWaitTime;
+            public int MaxPlayersInRoom;
+            public Vector2 EscapeesToHuntersRatio;
+            public int GainingMoneyTimeInterval;
+            public int MoneyPerInterval;
+        }
+        
+        #endregion
     }
 }

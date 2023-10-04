@@ -15,8 +15,7 @@ namespace RFM.Managers
         // Leaderboard
         [SerializeField] private RectTransform leaderboardEntryContainer;
         [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
-        // private RFMMissionsManager _missionsManager;
-        
+
         // HUD
         public TextMeshProUGUI showMoney;
 
@@ -29,8 +28,10 @@ namespace RFM.Managers
             if (Instance == null) Instance = this;
             
             _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
+            XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
-            // _missionsManager = GetComponent<RFMMissionsManager>();
+
+            showMoney.text = "00";
         }
 
         private void OnEnable()
