@@ -1,12 +1,24 @@
-using System;
+using Photon.Pun;
+using RFM.Character;
+using TMPro;
 using UnityEngine;
 
-namespace RFM
+namespace RFM.Managers
 {
     public class RFMUIManager : MonoBehaviour
     {
+        public static RFMUIManager Instance;
+        
         [SerializeField] private GameObject helpPanel;
         [SerializeField] private GameObject instructionsPanelPanel;
+        
+        // Leaderboard
+        [SerializeField] private RectTransform leaderboardEntryContainer;
+        [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
+        // private RFMMissionsManager _missionsManager;
+        
+        // HUD
+        public TextMeshProUGUI showMoney;
 
         private GameObject _controlsCanvas; // 375
 
@@ -14,21 +26,25 @@ namespace RFM
 
         private void Awake()
         {
-            _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
+            if (Instance == null) Instance = this;
             
+            _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
+            // _missionsManager = GetComponent<RFMMissionsManager>();
         }
 
         private void OnEnable()
         {
             RFM.EventsManager.onToggleHelpPanel += ToggleHelpPanel;
             RFM.EventsManager.onCountdownStart += OnCountdownStart;
+            RFM.EventsManager.onGameTimeup += OnGameOver;
         }
 
         private void OnDisable()
         {
             RFM.EventsManager.onToggleHelpPanel -= ToggleHelpPanel;
             RFM.EventsManager.onCountdownStart -= OnCountdownStart;
+            RFM.EventsManager.onGameTimeup -= OnGameOver;
         }
         
         private void OnCountdownStart()
@@ -69,6 +85,27 @@ namespace RFM
             {
                 sceneManage.ReturnToHome(true);
             }
+        }
+        
+        private void OnGameOver()
+        {
+            showMoney.gameObject.SetActive(false);
+            // RFMManager.Instance.photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, 
+            //     PhotonNetwork.LocalPlayer.NickName,
+            //     Globals.player.gameObject.GetComponent<RFM.Character.PlayerEscapee>().Money);
+        }
+
+        public void EscapeeCaught(string nickName, int money)
+        {
+            RFMManager.Instance.photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, 
+                nickName, money);
+        }
+        
+        [PunRPC]
+        private void CreateLeaderboardEntry(string nickName, int money)
+        {
+            var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
+            entry.Init(nickName, money.ToString());
         }
     }
 }
