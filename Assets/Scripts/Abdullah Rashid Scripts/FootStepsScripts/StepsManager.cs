@@ -8,19 +8,24 @@ public class StepsManager : MonoBehaviour
     public AudioClip[] sandclips, stoneClips, waterClips, metalClips, snowClips, wetClips, floorClips, grassClips = default;
     [Tooltip("Scale of the dust and track particles")]
 
+    float distance = 3;
+
     void Awake()
     {
         if (StepAudio != null)
         {
             StepAudio.volume = StepsVolume;
         }
+        //if (XanaConstants.xanaConstants.isBuilderScene)
+        //        distance = 0.2f;
     }
 
     public void EnterStep(float targetWalkSpeed)
     {
         if (isplayer)
         {
-            if (Physics.Raycast(gameObject.transform.position, Vector3.down, out RaycastHit footRay, 3))
+            Ray ray = new Ray(gameObject.transform.position, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit footRay, distance))
             {
                 float actualSpeed = ReferrencesForDynamicMuseum.instance.playerControllerNew.animationBlendValue;
 
@@ -28,7 +33,7 @@ public class StepsManager : MonoBehaviour
                 {
                     if (StepAudio && ReferrencesForDynamicMuseum.instance.playerControllerNew._IsGrounded)
                     {
-                        //Debug.LogError(footRay.collider.tag);
+                        //Debug.LogError(footRay.collider.name+" ==> "+ footRay.collider.tag);
                         switch (footRay.collider.tag)
                         {
 

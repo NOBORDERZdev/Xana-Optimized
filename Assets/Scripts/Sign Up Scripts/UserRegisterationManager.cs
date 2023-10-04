@@ -1403,13 +1403,24 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
 
+        // [Waqas] Store Guest Username Locally
+        string tempName1 = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+        string tempName2 = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
+
         int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
+
+        //[Waqas] Reset Guest Username After Delete All
+        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME,tempName1);
+        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME,tempName2);
         PlayerPrefs.SetString("publicID","");
+
+
+
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -3010,6 +3021,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
+                        XanaConstants.xanaConstants.userId = L_LoginObject.id;
                     }
                     PlayerPrefs.Save();
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);

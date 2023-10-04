@@ -1802,6 +1802,14 @@ public class PlayerControllerNew : MonoBehaviour
         throwEnd = null;
     }
 
+    internal void ThrowThingsEnded()
+    {
+        StartCoroutine(ThrowEnd());
+        isThrow = false;
+        isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+    }
+
     bool throwBallPositionSet, throwBall;
 
     void BallPositionSet()
