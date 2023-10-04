@@ -381,9 +381,9 @@ namespace RFM.Managers
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
-                    position.x + Random.Range(-1, 1),
+                    position.x + Random.Range(-2, 2),
                     position.y,
-                    position.z + Random.Range(-1, 1));
+                    position.z + Random.Range(-2, 2));
 
                 //play VFX
                 playerSpawnVFX.SetActive(true);
