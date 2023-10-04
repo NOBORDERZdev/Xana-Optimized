@@ -68,6 +68,12 @@ public class LoadingHandler : MonoBehaviour
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 
+    public float currentValue = 0;
+    private float timer = 0;
+    public bool isLoadingComplete = false;
+    public float randCurrentValue = 0f;
+    private float sliderFinalValue = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -90,7 +96,7 @@ public class LoadingHandler : MonoBehaviour
 
     private void Start()
     {
-
+        sliderFinalValue = Random.Range(80f, 95f);
         StartCoroutine(StartBGChange());
 //#if UNITY_EDITOR
 //        Debug.unityLogger.logEnabled = true;
@@ -185,8 +191,17 @@ public class LoadingHandler : MonoBehaviour
             return;
         }
         //Screen.orientation = ScreenOrientation.LandscapeLeft;
-
-        loadingPanel.SetActive(true);
+        if (!loadingPanel.activeInHierarchy && !teleportFeader.gameObject.activeInHierarchy)
+        {
+            currentValue = 0;
+            isLoadingComplete = false;
+            timer = 0;
+            loadingSlider.fillAmount = 0f;
+            loadingPercentageText.text = "0%".ToString();
+            JJLoadingSlider.fillAmount = 0f;
+            JJLoadingPercentageText.text = "0%".ToString();
+            loadingPanel.SetActive(true);
+        }
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
         {
@@ -194,6 +209,8 @@ public class LoadingHandler : MonoBehaviour
         }
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
+        AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
+
     }
 
     public void HideLoading()
@@ -369,10 +386,64 @@ public class LoadingHandler : MonoBehaviour
     }
 
 
-    public void LoadSceneByIndex(string sceneName)
+    public void LoadSceneByIndex(string sceneName, bool isBuilder = false)
     {
-        UpdateLoadingSlider(.2f);
+        //UpdateLoadingSlider(.2f);
+        if (XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(6f, 10f)));
+        }
+        else
+        {
+            if (isBuilder)
+                StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(25f, 30f)));
+            else
+                StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
+        }
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
+    }
+
+    public IEnumerator IncrementSliderValue(float speed, bool loadMainScene=false)
+    {
+        while (currentValue < 100)
+        {
+            timer += Time.deltaTime;
+            currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
+            if (XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+            }
+            else
+            {
+                loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+            }
+
+
+            if (LoadFromFile.instance && !loadMainScene)
+            {
+                if (LoadFromFile.instance.isEnvLoaded)
+                {
+                    isLoadingComplete = true;
+                }
+            }
+            if (isLoadingComplete)
+            {
+                currentValue = 100;
+                if (XanaConstants.xanaConstants.isFromXanaLobby)
+                {
+                    JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                    JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                }
+                else
+                {
+                    loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                    loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                }
+            }
+            yield return null;
+        }
     }
 
     public IEnumerator TeleportFader(FadeAction action)
@@ -397,6 +468,14 @@ public class LoadingHandler : MonoBehaviour
                 else
                 {
                     teleportFeaderLandscape.SetActive(true);
+                }
+                if (!teleportFeader.gameObject.activeInHierarchy)
+                {
+                    currentValue = 0;
+                    isLoadingComplete = false;
+                    timer = 0;
+                    JJLoadingSlider.fillAmount = 0f;
+                    JJLoadingPercentageText.text = "0%".ToString();
                 }
 
                 teleportFeader.gameObject.SetActive(true);

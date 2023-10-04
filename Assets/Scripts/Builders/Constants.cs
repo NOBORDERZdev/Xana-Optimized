@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Project Constants
 public static class Constants
@@ -154,37 +152,37 @@ public static class Constants
     #region Game Logic Creator
     public enum ItemComponentType
     {
-        collectible = 0,
-        rotator = 1,
-        transform = 2,
-        translate = 3,
-        addForce = 4,
-        timer = 5,
-        timeLimit = 6,
-        randomNumber = 7,
-        narration = 8,
-        timerCountdown = 9,
-        powerProvider = 10,
-        avatarChanger = 11,
+        CollectibleComponent = 0,
+        RotatorComponent = 1,
+        TransformComponent = 2,
+        TranslateComponent = 3,
+        AddForceComponent = 4,
+        TimerComponent = 5,
+        TimeLimitComponent = 6,
+        RandomNumberComponent = 7,
+        NarrationComponent = 8,
+        TimerCountdownComponent = 9,
+        PowerProviderComponent = 10,
+        AvatarChangerComponent = 11,
         enemyNPC = 12,
         ladder = 13,
-        doorKey = 14,
+        DoorKeyComponent = 14,
         chestKey = 15,
-        elapsedTime = 16,
-        helpButton = 17,
-        health = 18,
-        situationChanger = 19,
-        specialItem = 20,
-        throwThings = 21,
-        ninja = 22,
+        ElapsedTimeComponent = 16,
+        HelpButtonComponent = 17,
+        HealthComponent = 18,
+        SituationChangerComponent = 19,
+        SpecialItemComponent = 20,
+        ThrowThingsComponent = 21,
+        NinjaComponent = 22,
         spawner = 23,
-        displayMessages = 24,
-        quiz = 25,
-        warpFunction = 26,
-        audio = 27,
-        blindFoldedDisplay = 28,
-        hyperLinkPop = 29,
-        blind = 30,
+        DisplayMessagesComponent = 24,
+        QuizComponent = 25,
+        WarpFunctionComponent = 26,
+        AudioComponent = 27,
+        BlindfoldedDisplayComponent = 28,
+        HyperLinkPopComponent = 29,
+        BlindComponent = 30,
         none=31
     }
     #endregion

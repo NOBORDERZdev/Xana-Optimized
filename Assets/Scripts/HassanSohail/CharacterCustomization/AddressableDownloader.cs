@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class AddressableDownloader : MonoBehaviour
@@ -10,6 +12,7 @@ public class AddressableDownloader : MonoBehaviour
     public List<Item> presetsItem;
     public int presetItemCount;
     public static AddressableDownloader Instance;
+    public AddressableMemoryReleaser MemoryManager;
     private void Start()
     {
         presetItemCount = 0;
@@ -20,6 +23,7 @@ public class AddressableDownloader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            MemoryManager = GetComponent<AddressableMemoryReleaser>();
             DownloadCatalogFile();
         }
         else
@@ -27,54 +31,56 @@ public class AddressableDownloader : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
     bool isDownloading=false;
     public void DownloadCatalogFile()
     {
-        if(!isDownloading)
-        {
-            isDownloading = true;
-#if UNITY_EDITOR
-            string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
-            catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
-            catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
-            AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath);
-            DownloadingCatalog.Completed += OnCatalogDownload;
-#else
-BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
-        AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath);
-        DownloadingCatalog.Completed += OnCatalogDownload;
-#endif
-
-        }
+          if(!isDownloading)
+          {
+              isDownloading = true;
+  #if UNITY_EDITOR
+              string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
+              catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
+              catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
+              AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath,true);
+              DownloadingCatalog.Completed += OnCatalogDownload;
+  #else
+  BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+          AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath,true);
+          DownloadingCatalog.Completed += OnCatalogDownload;
+  #endif
+          }
     }
-
-
     void OnCatalogDownload(AsyncOperationHandle handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
-            XanaConstants.isAddressableCatalogDownload = true;
+        {
+            StartCoroutine(CheckCatalogs());
+        }
         else
+        {
+            XanaConstants.isAddressableCatalogDownload = true;
             isDownloading = false;
+        }
     }
+    IEnumerator CheckCatalogs()
+    {
+        yield return Addressables.InitializeAsync();
+        XanaConstants.isAddressableCatalogDownload = true;
 
-    //public int appliedItemsInPresets = 0;
-    //public bool isTextureDownloaded = false;
+    }
     /// <summary>
     /// To Download Addressable object. with call back from coroutine
     /// </summary>
     /// <param name="name">tag or key of a addressable object</param>
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
-       // print("Addressable download object call for " + itemId + " key" +key+ " type" + type+ " applyOn" +  applyOn);
-        Resources.UnloadUnusedAssets();
+        while (!XanaConstants.isAddressableCatalogDownload)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            //if (!key.Contains("FullCostume") && !key.Contains("Fighter") && !key.Contains("eyebrow") && key.Contains("_")) // To get name after '_' only
-            //{
-            //    string tempName = key.Split('_').Last();
-            //    key = tempName;
-            //}
             if (key.Contains("gambeson")) // To remove gambeson from shirt names
             {
                 string tempName = key.Replace("gambeson", "shirt");
@@ -84,36 +90,23 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             {
                 StoreManager.instance.loaderForItems.SetActive(true);
             }
-            AsyncOperationHandle<GameObject> loadOp;
-            loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+            AsyncOperationHandle loadOp;
+            bool flag = false;
+            loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(),ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
            SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
-
-            //if (!key.Contains("Fighter") && !key.Contains("FullCostume"))
-            //{
-            //    loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-            //}
-            //else
-            //{
-            //    loadOp = Addressables.LoadAssetAsync<GameObject>(key);
-            //}
-           // print("~~~~ "+ key.ToLower());
             yield return loadOp;
-            //while (!loadOp.IsDone)
-            //    yield return loadOp;
-            ///  print("~~~~~~LOG~~~~~~~~~~");
-           // print("~~~~~~LOG" + loadOp.Result);
-            if (loadOp.Result== null)
+
+            if (loadOp.Result == null)
             {
-               // print("RECALLING DOWNLOAD " + itemId + key + type + applyOn+mulitplayerHairColor );
-               // StartCoroutine(DownloadAddressableObj(itemId,key,type,applyOn,mulitplayerHairColor));
                applyOn.WearDefaultItem(type,applyOn.gameObject);
                yield break;
             }
 
             if (loadOp.Status == AsyncOperationStatus.Failed  )
             {
-               // print("LOAD OP FAILED ");
                 if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
                     StoreManager.instance.loaderForItems.SetActive(false);
                 if(GameManager.Instance != null)
@@ -123,19 +116,17 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-               //  print("loadOp.Result :" + loadOp.Result +" ~  " +loadOp.Result.name);
-                loadOp.Result.name = key;
+                //loadOp.Result. = key;
+                MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                 if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
-                 //   print("~~~~~ not preset" + PlayerPrefs.GetInt("presetPanel"));
                     if (callFromMultiplayer)
                     {
-                    //    print("CALL FROM MULTIPLAYER for : "+ applyOn.name);
-                        applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject,mulitplayerHairColor);
+                        applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject,mulitplayerHairColor);
                     }
                     else
                     {
-                        applyOn.StichItem(itemId, loadOp.Result, type, applyOn.gameObject, applyHairColor);
+                        applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
                     }
                     if(GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
@@ -143,7 +134,7 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                 }
                 else
                 {
-                    presetsItem.Add(new Item(itemId, loadOp.Result, type));
+                    presetsItem.Add(new Item(itemId, loadOp.Result as GameObject, type));
                     if (presetsItem.Count >= presetItemCount)
                     {
                         StartCoroutine(ApplyPresetItems(applyOn));
@@ -155,13 +146,8 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                         }
                     }
                 }
-                //if(PlayerPrefs.GetInt("presetPanel") == 1)
-                //appliedItemsInPresets++;
-                //yield return loadOp.Result;
             }
-
         }
-
     }
 
     void DisableLoadingPanel()
@@ -180,8 +166,6 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
         }
         presetsItem.Clear();
         AddressableDownloader.Instance.presetItemCount = 0;
-        //print(" ~~~ preset panel before "+ PlayerPrefs.GetInt("FristPresetSet"));
-        // Invoke(nameof(SavePresetFristTime), 0.2f);
         GameManager.Instance.isStoreAssetDownloading = false;
         DisableLoadingPanel();
 
@@ -189,23 +173,6 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             StoreManager.instance.loaderForItems.SetActive(false);
         yield return null;
     }
-    //public Texture DownloadAddressableTexture(string name)
-    //{
-    //    Texture temp = null;
-    //    if (name != "" || name != null)
-    //    {
-    //        name = name.ToLower();
-    //        yield return StartCoroutine(TextureCoroutine(name, (Texture callback) => {
-    //            temp = callback;
-    //        }));
-    //      //  return temp;
-    //    }
-    //    else
-    //    {
-    //        return null;
-    //    }
-    //}
-
     ///// <summary>
     ///// To Download Addressable Texture. with call back from coroutine
     ///// </summary>
@@ -213,6 +180,11 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
 
     public IEnumerator DownloadAddressableTexture(string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
     {
+        while (!XanaConstants.isAddressableCatalogDownload)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        
         CurrentTextureType type = 0;
         if (nFTOjectType == 0)
         {
@@ -262,7 +234,6 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
         {
            type = nFTOjectType;
         }
-        //isTextureDownloaded = false;
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
 
@@ -272,25 +243,27 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                 // This Texture Store in Reference no need to download this texture
                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Color_Texture, applyOn);
                 GameManager.Instance.isStoreAssetDownloading = false;
-               // print("~~~~~~~ in eye color  texture if ");
                 yield return null;
             }
-            //else
-            //{
-           // print("!!!!!!!!!!!! texture downloading "+ key);
             if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
                 StoreManager.instance.loaderForItems.SetActive(true);
-            AsyncOperationHandle<Texture> loadOp = Addressables.LoadAssetAsync<Texture>(key);
-            yield return loadOp;
+            AsyncOperationHandle loadOp;
+            bool flag = false;
 
-            if (loadOp.Result== null)
+            loadOp = MemoryManager.GetReferenceIfExist(key,ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<Texture>(key);
+
+            while (!loadOp.IsDone)
+                yield return loadOp;
+
+            if (loadOp.Result == null)
             {
                 applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
                 yield break;
             }
             if (loadOp.Status == AsyncOperationStatus.Failed)
             {
-             //   print("~~~~~~~ TEXTURE FAIL ");
                 if (PlayerPrefs.GetInt("presetPanel") != 1)
                 {
                     if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
@@ -304,45 +277,44 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
-               // print("~~~~~~~ TEXTURE Succeded " + loadOp.Result);
-                // Applying texture when successful downloaded.
+                MemoryManager.AddToReferenceList(loadOp,key);
                 switch (type)
                 {
                     case CurrentTextureType.Null:
                         break;
                     case CurrentTextureType.FaceTattoo:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.FaceTattoo);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.FaceTattoo);
                         break;
                     case CurrentTextureType.ChestTattoo:
-                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ChestTattoo);
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ChestTattoo);
                         break;
                     case CurrentTextureType.LegsTattoo:
-                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.LegsTattoo);
+                          applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.LegsTattoo);
                         break;
                     case CurrentTextureType.ArmTattoo:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result, applyOn, CurrentTextureType.ArmTattoo);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ArmTattoo);
                         break;
                     case CurrentTextureType.Mustache:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLid:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLense:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeLashes:
-                           applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result, applyOn);
+                           applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.EyeBrows:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result, applyOn);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.Skin:
                         break;
                     case CurrentTextureType.Lip:
                         break;
                     case CurrentTextureType.Makeup:
-                         applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result, applyOn);
+                         applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result as Texture, applyOn);
                         break;
                     default:
                         break;
@@ -351,7 +323,6 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
                     StoreManager.instance.loaderForItems.SetActive(false);
 
                 GameManager.Instance.isStoreAssetDownloading = false;
-                //isTextureDownloaded = true;
             }
         }
     }
@@ -359,10 +330,10 @@ BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/Build
     void SavePresetFristTime()
     {
         if (PlayerPrefs.GetInt("presetPanel") == 1 && PlayerPrefs.GetInt("FristPresetSet") == 0)
-        {   // preset panel is enable so saving preset to account 
+        {   
+            // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
             PlayerPrefs.SetInt("FristPresetSet", 1);
-            //print(" ~~~ preset panel after  " + PlayerPrefs.GetInt("FristPresetSet"));
             PlayerPrefs.Save();
             ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
         }

@@ -22,7 +22,6 @@ public class NpcChatSystem : MonoBehaviour
     private string msg = "Hello";
     private int numOfResponseWantToShow = 5;
     private int counter = 0;
-    //private int aiNameIndex = 0;
     private int tempResponseNum = 0;
 
     private Queue<string> playerMessages = new Queue<string>();
@@ -60,7 +59,6 @@ public class NpcChatSystem : MonoBehaviour
 
     private void PlayerSendMsg(string msgData)
     {
-        Debug.Log("Communication API Call");
         if (counter != 0)
             responseChecker = ResponseChecker.InstantlyCall;
 
@@ -69,7 +67,6 @@ public class NpcChatSystem : MonoBehaviour
         /// </summary>
         counter = 0;
         tempResponseNum = numOfResponseWantToShow;
-        //msg = msgData;
 
         playerMessages.Enqueue(msgData);
         // Call the API request function
@@ -119,7 +116,6 @@ public class NpcChatSystem : MonoBehaviour
 
         tempResponseNum--;
         //prevCounter = counter;
-        Debug.Log("Queue Count: " + playerMessages.Count);
         if (tempResponseNum > 0)
         {
             if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd)) //playerMessages.Count is 0 &&
