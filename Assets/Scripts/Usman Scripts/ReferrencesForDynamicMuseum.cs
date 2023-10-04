@@ -329,12 +329,12 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     //}
                   // print("!!! PlayerCount"+ PlayerCount);
                 }
-                if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+                if (/*FeedEventPrefab.m_EnvName.Contains("XANA Lobby")*/true)
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount)+ XanaAi.AiManager.instance.SpwanedAiCount;
-                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
+                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount)); /*+5)*/
                 }
-                //else
+                //elseS
                 //{
                 //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                 //    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount;
