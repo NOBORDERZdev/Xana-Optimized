@@ -189,7 +189,6 @@ public class LoadingHandler : MonoBehaviour
             return;
         }
         //Screen.orientation = ScreenOrientation.LandscapeLeft;
-
         currentValue = 0;
         isLoadingComplete = false;
         timer = 0;
@@ -203,6 +202,8 @@ public class LoadingHandler : MonoBehaviour
         }
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
+        AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
+
     }
 
     public void HideLoading()
