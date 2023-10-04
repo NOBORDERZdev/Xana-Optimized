@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5727525722268911528}
   - component: {fileID: 6064654722453747370}
+  - component: {fileID: 795303163645620554}
   m_Layer: 0
   m_Name: NpcChatSystem
   m_TagString: Untagged
@@ -44,10 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dceed4a23dec6a4685b02fe281be65c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  responseChecker: 0
   npcAttributes:
   - aiNames: Maverick
     aiIds: 7893
-  - aiNames: Blaze
+  - aiNames: blaze
     aiIds: 7896
   - aiNames: Hunter
     aiIds: 7898
@@ -75,7 +77,15 @@ MonoBehaviour:
     aiIds: 7910
   - aiNames: Willow
     aiIds: 7911
-  npcDB: []
-  id: 0
-  numOfResponseWantToShow: 5
-  counter: 0
+--- !u!114 &795303163645620554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0bd48adc70866438d856d23205278e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
