@@ -1254,7 +1254,7 @@ namespace Models
             rewritingStringList = new List<string>();
             answers = new List<int>();
             charLimit = new List<int>();
-            correctAnswerRate = 0;
+            correctAnswerRate = 100;
 
         }
         public void Reset()
@@ -1265,7 +1265,7 @@ namespace Models
             rewritingStringList = new List<string>();
             answers = new List<int>();
             charLimit = new List<int>();
-            correctAnswerRate = 0;
+            correctAnswerRate = 100;
 
         }
         public QuizComponentData(QuizComponentData data)

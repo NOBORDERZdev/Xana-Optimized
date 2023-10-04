@@ -70,9 +70,14 @@ public class SoundManagerSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
         }
-       // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
+        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
         //PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
-        PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
+        //PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+        if (PlayerPrefs.GetInt("DefaultSensivity") == 0)
+        {
+            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+            PlayerPrefs.SetInt("DefaultSensivity", 1);
+        }
     }
     IEnumerator LiveVideoInstancs(float value)
     {
@@ -159,7 +164,7 @@ public class SoundManagerSettings : MonoBehaviour
         totalVolumeSlider.onValueChanged.AddListener((float vol) =>
         {
            
-            SetBgmVolume(vol);
+            //SetBgmVolume(vol);
             SetVideoVolume(vol);
         });
         bgmSlider.onValueChanged.AddListener((float vol) =>
@@ -242,18 +247,18 @@ public class SoundManagerSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
             SetMicVolume(totalVolumeSliderPotrait.value);
             SetEffectsVolume(totalVolumeSliderPotrait.value);
-            bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+           // bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-            SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+            SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME));
         }
         else
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
             SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             SetEffectsVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-            bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+           // bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-            SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+            SetVideoVolume(PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME));
         }
     }
     public void SetBgmVolume(float Vol)
@@ -277,14 +282,17 @@ public class SoundManagerSettings : MonoBehaviour
     {
         Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
        
-            PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, Vol);
-           // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
-            videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
-            videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
+        // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
+            videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
+            videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
 
             Debug.Log("LiveVideo" + liveVideoSource);
             if (videoSource)
             {
+                if(videoSource.GetComponent<MediaPlayer>())
+                SetAudioSourceSliderValLive(videoSource.GetComponent<MediaPlayer>(), Vol);
+                else
                 SetAudioSourceSliderVal(videoSource, Vol);
             }
             if (liveVideoSource)
@@ -330,27 +338,27 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetMicVolume(float vol)
     {
-        //PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
+        PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
         Debug.Log("Volume SetMicVolume===" + vol);
         Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-        //if(totalVolumeSlider.value >= vol)
-        //{
-        //foreach (var gameobject in Launcher.instance.playerobjects)
-        //{
-        //    if (!gameobject.GetComponent<PhotonView>().IsMine)
-        //    {
-        //        gameobject.GetComponent<AudioSource>().volume = vol;
-        //    }
-        //}
-        //}
-        //else
-        //{
-        //        foreach (var gameobject in Launcher.instance.playerobjects)
-        //        {
-        //            if (!gameobject.GetComponent<PhotonView>().IsMine)
-        //            gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
-        //        }
-        //}
+        if (totalVolumeSlider.value >= vol)
+        {
+            foreach (var gameobject in Launcher.instance.playerobjects)
+            {
+                if (!gameobject.GetComponent<PhotonView>().IsMine)
+                {
+                    gameobject.GetComponent<AudioSource>().volume = vol;
+                }
+            }
+        }
+        else
+        {
+            foreach (var gameobject in Launcher.instance.playerobjects)
+            {
+                if (!gameobject.GetComponent<PhotonView>().IsMine)
+                    gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
+            }
+        }
     }
     //Setting AudioSource Volume Slider Range between 0 and 0.7
     public void SetAudioSourceSliderVal(AudioSource _audioSrcRef, float _vol)

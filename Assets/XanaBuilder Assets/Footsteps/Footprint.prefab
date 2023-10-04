@@ -449,11 +449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8410405450426771854}
-  - component: {fileID: 8417237015210394402}
-  - component: {fileID: 8427217285157557698}
   - component: {fileID: 8444310616317041804}
-  - component: {fileID: 8380706312739605512}
-  - component: {fileID: 5394943306836741376}
   m_Layer: 0
   m_Name: Footprint
   m_TagString: Untagged
@@ -478,56 +474,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8417237015210394402
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404368408049616048}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8427217285157557698
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404368408049616048}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 20084a3856baf594ba3616e1486fb16d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8444310616317041804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,50 +487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   system: {fileID: 8531749729023928048}
-  agent: {fileID: 5394943306836741376}
-  activeMat: {fileID: 2100000, guid: 20084a3856baf594ba3616e1486fb16d, type: 2}
-  selectedMat: {fileID: 2100000, guid: 64643dda7a70400428d8cb897e7512dc, type: 2}
-  activeParticleMat: {fileID: 2100000, guid: e0851a1f3662e08469f474d63398cabd, type: 2}
-  selectedParticleMat: {fileID: 2100000, guid: fd8aa3e0fa5abf84ab34015a3320bb33, type: 2}
-  clickEffect: {fileID: 0}
-  playerControllerNew: {fileID: 0}
   delta: 0.35
   gap: 0.09
---- !u!65 &8380706312739605512
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404368408049616048}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &5394943306836741376
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8404368408049616048}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 0
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1 &8404773563131204822
 GameObject:
   m_ObjectHideFlags: 0

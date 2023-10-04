@@ -1402,8 +1402,8 @@ namespace RenderHeads.Media.AVProVideo
 			ErrorCode errorCode = _controlInterface.GetLastError();
 			if (ErrorCode.None != errorCode)
 			{
-				//Debug.LogError("[AVProVideo] Error: " + Helper.GetErrorMessage(errorCode));
-				Debug.Log("<color=red> [AVProVideo] Error:  </color> " + Helper.GetErrorMessage(errorCode));
+				Debug.LogError("[AVProVideo] Error: " + Helper.GetErrorMessage(errorCode));
+
 				// Display additional information for load failures
 				if (ErrorCode.LoadFailed == errorCode)
 				{

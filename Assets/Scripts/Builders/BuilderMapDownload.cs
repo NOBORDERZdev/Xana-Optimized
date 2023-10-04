@@ -13,7 +13,9 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
-using DG.Tweening;
+using UnityEngine.Rendering.Universal;
+using System.Buffers;
+using UnityEngine.InputSystem;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -38,10 +40,6 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     #endregion
     internal string response;
-    //Orientation Changer
-    public CanvasGroup landscapeCanvas;
-    public CanvasGroup potraitCanvas;
-    bool isPotrait = false;
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -49,14 +47,6 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch += OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
-
-        //ChangeOrientation
-        BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
-
-        //OnSelfiActive
-        BuilderEventManager.SelfiActive += SelfiActive;
-
-        OrientationChange(false);
     }
 
     private void OnDisable()
@@ -65,89 +55,27 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
-
-        BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
-        BuilderEventManager.SelfiActive -= SelfiActive;
-
-
+        // if (loadSkyBox.Result != null)
+        //   Addressables.Release(loadSkyBox);
     }
 
     private void Start()
     {
         BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        GamificationComponentData.instance.isSkyLoaded = false;
 
         //code to build a scene using json only locally.
         //serverData = JsonUtility.FromJson<ServerData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/Builder.json"));
         //BuilderData.mapData = serverData;
         //PopulateLevel();
 
-        terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
+        //terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
     }
 
 
     #endregion
 
     #region PRIVATE_METHODS
-
-    #region OrientationChange
-    void OrientationChange(bool orientation)
-    {
-        StartCoroutine(ChangeOrientation(orientation));
-    }
-
-    IEnumerator ChangeOrientation(bool orientation)
-    {
-        isPotrait = orientation;
-        landscapeCanvas.DOKill();
-        landscapeCanvas.alpha = 0;
-        landscapeCanvas.blocksRaycasts = false;
-        landscapeCanvas.interactable = false;
-        potraitCanvas.DOKill();
-        potraitCanvas.alpha = 0;
-        potraitCanvas.blocksRaycasts = false;
-        potraitCanvas.interactable = false;
-        //potraitCanvas.gameObject.SetActive(true);
-        //landscapeCanvas.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        if (isPotrait)
-        {
-            potraitCanvas.DOFade(1, 0.5f);
-            potraitCanvas.blocksRaycasts = true;
-            potraitCanvas.interactable = true;
-            //landscapeCanvas.gameObject.SetActive(false);
-            //Screen.orientation = ScreenOrientation.Portrait;
-        }
-        else
-        {
-            landscapeCanvas.DOFade(1, 0.5f);
-            landscapeCanvas.blocksRaycasts = true;
-            landscapeCanvas.interactable = true;
-            //potraitCanvas.gameObject.SetActive(false);
-            //Screen.orientation = ScreenOrientation.LandscapeLeft;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        BuilderEventManager.PositionUpdateOnOrientationChange?.Invoke();
-    }
-
-    void SelfiActive(bool state)
-    {
-        if (state)
-        {
-            landscapeCanvas.DOKill();
-            landscapeCanvas.alpha = 0;
-            landscapeCanvas.blocksRaycasts = false;
-            landscapeCanvas.interactable = false;
-            potraitCanvas.DOKill();
-            potraitCanvas.alpha = 0;
-            potraitCanvas.blocksRaycasts = false;
-            potraitCanvas.interactable = false;
-        }
-        else
-            StartCoroutine(ChangeOrientation(isPotrait));
-    }
-    #endregion
-
 
     void OnBuilderDataFetch(int id, string token)
     {
@@ -173,7 +101,6 @@ public class BuilderMapDownload : MonoBehaviour
             else
             {
                 response = www.downloadHandler.text;
-                //System.IO.File.WriteAllText(Application.persistentDataPath +"/"+ "Builder.json", www.downloadHandler.text);
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());
@@ -223,7 +150,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.LogError("Failed to load json....");
+                Debug.Log("Failed to load json....");
             }));
         }
 
@@ -247,12 +174,22 @@ public class BuilderMapDownload : MonoBehaviour
 
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
+        GamificationComponentData.instance.xanaItems.Clear();
         int count = levelData.otherItems.Count;
-        progressPlusValue /= count;
+        progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
+
         for (int i = 0; i < count; i++)
         {
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
+
+            string key = prefabPrefix + levelData.otherItems[i].ItemID + "_XANA";
+            bool flag = false;
+
+            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
+            if (!flag)
+                _async = Addressables.LoadAssetAsync<GameObject>(key);
+
+
             while (!_async.IsDone)
             {
                 yield return null;
@@ -260,12 +197,35 @@ public class BuilderMapDownload : MonoBehaviour
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
+            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //{
+            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
+            //}
+            //else
+            //    LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
 
-            LoadingHandler.Instance.UpdateLoadingSlider(i * (.7f / count) + .2f);
+            // Addressables.Release(_async);
         }
-        BuilderEventManager.CombineMeshes?.Invoke();
         CallBack();
+    }
+
+    //Set Hierarchy same as builder
+    private void SetObjectHirarchy()
+    {
+        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        {
+            if (!xanaItem.itemData.ParentID.Equals(""))
+            {
+                string parentId = xanaItem.itemData.ParentID;
+                XanaItem parentItem = GamificationComponentData.instance.xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
+                if (parentItem != null)
+                {
+                    xanaItem.transform.SetParent(parentItem.transform);
+                }
+            }
+        }
     }
 
     public string DecompressString(string compressedText)
@@ -365,31 +325,113 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetPlaneScaleAndPosition(Vector3 scale, Vector3 pos)
     {
-        Debug.Log(scale + "  " + pos);
+        //Debug.Log(scale + "  " + pos);
         terrainPlane.transform.localScale = scale;
-        terrainPlane.transform.position = pos;
+        terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
+    }
+
+    AsyncOperationHandle loadSkyBox;
+    void LoadSkyBoxData(Action addressableSceneLoad)
+    {
+        StartCoroutine(LoadSkyBoxDataCO(addressableSceneLoad));
+    }
+
+    IEnumerator LoadSkyBoxDataCO(Action addressableSceneLoad)
+    {
+
+        SkyProperties skyProperties = levelData.skyProperties;
+        if (skyProperties.skyId != -1)
+        {
+            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
+            if (skyBoxExist)
+            {
+                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+                bool flag = false;
+                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                if (!flag)
+                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                while (!loadSkyBox.IsDone)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        //Load addressable scene
+        addressableSceneLoad();
     }
 
     void SetSkyProperties()
+    {
+        StartCoroutine(SetSkyPropertiesDelay());
+    }
+    IEnumerator SetSkyPropertiesDelay()
     {
         SkyProperties skyProperties = levelData.skyProperties;
         Camera.main.clearFlags = CameraClearFlags.Skybox;
         if (skyProperties.skyId != -1)
         {
-            SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-            //string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-            //AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            //loadSkyBox.Completed += LoadSkyBox_Completed;
-            RenderSettings.skybox = skyBoxItem.skyMaterial;
-            directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
-            characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
-            directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
-            directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
-            SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
+            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
+            if (skyBoxExist)
+            {
+                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
 
-            if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
-                SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+                if (loadSkyBox.Status == AsyncOperationStatus.None)
+                {
+                    Debug.Log(" ---------- NONE ------------ SKY BOXX");
+                }
+                else if (loadSkyBox.Status == AsyncOperationStatus.Failed)
+                {
+                    Debug.Log(" ----------- FAILED ----------- SKY BOXX");
+                }
+                else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
+                {
+                    Debug.Log(" ---------- Success ------------ SKY BOXX");
+                    Material _mat = loadSkyBox.Result as Material;
+                    _mat.shader = Shader.Find(skyBoxItem.shaderName);
+                    RenderSettings.skybox = _mat;
+                    directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
+                    characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
+                    directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
+                    directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
+                    SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
+                    if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
+                        SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+                }
+            }
+            else
+            {
+                AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
+                if (skyBoxItem.texture == null)
+                {
+                    var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+                    var imagineImageRequest = UnityWebRequest.Get(skyBoxItem.textureURL);
+                    yield return imagineImageRequest.SendWebRequest();
 
+                    if (imagineImageRequest.result != UnityWebRequest.Result.Success)
+                    {
+                        imagineImageRequest.Dispose();
+                    }
+                    else
+                    {
+                        var image = imagineImageRequest.downloadHandler.data;
+                        texture.LoadImage(image);
+                        skyBoxItem.texture = texture;
+                        imagineImageRequest.Dispose();
+                    }
+                }
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
+                RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
+                directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
+                characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
+                directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
+                directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
+                SetPostProcessProperties(GamificationComponentData.instance.aiPPVolumeProfile);
+
+                if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
+                    SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+            }
             DynamicGI.UpdateEnvironment();
         }
         else
@@ -412,35 +454,70 @@ public class BuilderMapDownload : MonoBehaviour
             characterLight.intensity = .15f;
             DynamicGI.UpdateEnvironment();
         }
-
+        GamificationComponentData.instance.isSkyLoaded = true;
     }
+
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
+        Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
-        //throw new NotImplementedException();
-
     }
 
     void SetLensFlareData(LensFlareDataSRP lensFlareData, float lensFlareScale)
     {
-        if (directionalLight.gameObject.GetComponent<LensFlareComponentSRP>() != null)
+
+        LensFlareComponentSRP lensFlareComponent = directionalLight.gameObject.GetComponent<LensFlareComponentSRP>();
+
+        if (lensFlareComponent == null)
         {
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
+            lensFlareComponent = directionalLight.gameObject.AddComponent<LensFlareComponentSRP>();
+            lensFlareComponent.occlusionRadius = 0.35f;
         }
-        else
-        {
-            directionalLight.gameObject.AddComponent<LensFlareComponentSRP>().occlusionRadius = 0.35f;
-            directionalLight.GetComponent<LensFlareComponentSRP>().lensFlareData = lensFlareData;
-            directionalLight.GetComponent<LensFlareComponentSRP>().scale = lensFlareScale;
-        }
+
+        lensFlareComponent.lensFlareData = lensFlareData;
+        lensFlareComponent.scale = lensFlareScale;
 
     }
 
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
+        Invoke(nameof(XanaSetItemData), 1.5f);
+    }
+
+    void XanaSetItemData()
+    {
+        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        {
+            xanaItem.SetData(xanaItem.itemData);
+        }
+        GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
+        //Set Hierarchy same as builder
+        SetObjectHirarchy();
+
+        BuilderEventManager.CombineMeshes?.Invoke();
+        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
+        mainPlayerCharacterController.center = Vector3.up * 0.498f;
+        mainPlayerCharacterController.height = 1f;
+        mainPlayerCharacterController.radius = 0.15f;
+        mainPlayerCharacterController.stepOffset = 1f;
+
+        CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
+        mainPlayerCollider.center = Vector3.up * 0.5f;
+
+        CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
+        playerCollider.height = 1.5f;
+        playerCollider.center = Vector3.up * (playerCollider.height / 2);
+        CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
+        playerCharacterController.height = playerCollider.height;
+        playerCharacterController.center = playerCollider.center;
+
+        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+
+        //call for Execute all rpcs of this room
+        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
     }
 
 
@@ -451,15 +528,23 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPostProcessProperties(VolumeProfile _postProcessVol)
     {
         postProcessVol.profile = _postProcessVol;
+        Vignette vignette;
+        postProcessVol.profile.TryGet(out vignette);
+
+        if (vignette)
+        {
+            GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
+            GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
+        }
     }
 
 
-    private void GetObject(AsyncOperationHandle<GameObject> obj, ItemData _itemData)
+    private void GetObject(AsyncOperationHandle obj, ItemData _itemData)
     {
         switch (obj.Status)
         {
             case AsyncOperationStatus.Succeeded:
-                GameObject tempObject = obj.Result;
+                GameObject tempObject = obj.Result as GameObject;
                 CreateENV(tempObject, _itemData);
                 break;
 
@@ -475,6 +560,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
+        //objectTobeInstantiate.AddComponent<PhotonView>();
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
         Rigidbody rb = null;
         newObj.TryGetComponent(out rb);
@@ -483,7 +569,8 @@ public class BuilderMapDownload : MonoBehaviour
         rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
-        xanaItem.SetData(_itemData);
+        xanaItem.itemData = _itemData;
+        newObj.transform.localScale = _itemData.Scale;
         if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
@@ -498,6 +585,13 @@ public class BuilderMapDownload : MonoBehaviour
         {
             childTransform.tag = "Item";
         }
+
+        //Add game object into List for Hirarchy
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
+
+
+        if (!_itemData.isVisible)
+            newObj.SetActive(false);
         //int count = levelData.otherItems.Count;
         //for (int i = 0; i < count; i++)
         //{
@@ -506,7 +600,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    xanaItem.SetData(levelData.otherItems[i]);
         //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
         //    {
-        //        Debug.LogError("local pos :- "+ levelData.otherItems[i].Position);
+        //        Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
         //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
         //    }
         //}
@@ -530,8 +624,15 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-        LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        //if (XanaConstants.xanaConstants.isFromXanaLobby)
+        //{
+        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+        //}
+        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        {
+            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        }
     }
 
     #endregion
@@ -633,8 +734,6 @@ public class UserMaps
 }
 
 
-
-
 [Serializable]
 public class SkyProperties
 {
@@ -644,6 +743,7 @@ public class SkyProperties
     public string skyColorMiddle;
     public string skyColorBottom;
     public int skyId;
+    public AISkyboxItem aISkyboxItem = new AISkyboxItem();
     #endregion
 
     public SkyProperties()
@@ -679,8 +779,23 @@ public class SkyProperties
             this.skyColorBottom = ColorUtility.ToHtmlStringRGBA(color);
             Debug.Log("skyColorBottom : " + skyColorBottom);
         }
+
+        aISkyboxItem = new AISkyboxItem();
     }
 }
+
+#region AI Skybox
+
+[Serializable]
+public class AISkyboxItem
+{
+    public string obfuscatedID;
+    public string textureURL;
+    public Texture2D texture;
+    public string skyName;
+    public DirectionalLightData directionalLightData;
+}
+#endregion
 
 [Serializable]
 public class PlayerProperties

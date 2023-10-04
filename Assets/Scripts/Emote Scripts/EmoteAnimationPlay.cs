@@ -57,6 +57,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     public string currentAnimationTab;
     public GameObject lastAnimClickButton;
     public bool waitForStandUp = false;
+    public bool isPreviousBundleLoad = true;
     private void Awake()
     {
         if (Instance == null)
@@ -160,7 +161,11 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     IEnumerator GetAssetBundleFromServerRemotePlayerUrl(string BundleURL, int id)
     {
-
+        if (!isPreviousBundleLoad)
+        {
+            yield return new WaitUntil(() => isPreviousBundleLoad);
+        }
+        isPreviousBundleLoad = false;
         //if (counter > 4)
         //{
         //AssetBundle.UnloadAllAssetBundles(false);
@@ -192,6 +197,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
         for (int i = 0; i < photonplayerObjects.Length; i++)
         {
+            animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
             if (photonplayerObjects[i] != null)
             {
                 if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == id)
@@ -202,7 +208,6 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                     }
                     else
                     {
-                        animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
 
                         //Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + id);
                         using (WWW www = new WWW(BundleURL))
@@ -313,7 +318,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                 animatorremote.runtimeAnimatorController = overrideController;
 
                                                 animatorremote.SetBool("IsEmote", true);
-
+                                                isPreviousBundleLoad = true;
                                                 CheckSelfieOn();
                                                 // AvatarManager.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, 0f, 0);
 
@@ -345,6 +350,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                 }
                                                 else if (CheckSpecificAnimationPlaying("Sit"))
                                                 {
+                                                    isPreviousBundleLoad = true;
                                                     break;
                                                 }
                                             }
@@ -392,6 +398,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                     animatorremote.runtimeAnimatorController = overrideController;
                                                 }
                                                 animatorremote.SetBool("IsEmote", false);
+                                                isPreviousBundleLoad = true;
                                             }
                                         }
                                     }
@@ -418,9 +425,10 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                         AnimationStarted?.Invoke(remoteUrlAnimationName);
 
                     }
+                    alreadyRuning = true;
+                    break;
                 }
             }
-            alreadyRuning = true;
             //   counter++;
 
         }
@@ -579,7 +587,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
         //Debug.Log("LoadAssetBundleFromStorageRemote:" + bundlePath);
         //  currentButton.transform.GetChild(2).gameObject.SetActive(true);
-        animatorremote = PlayerAvatar.gameObject.GetComponent<Animator>();
+        //animatorremote = PlayerAvatar.gameObject.GetComponent<Animator>();
 
         //Debug.Log("photon objects====" + PlayerAvatar);
         AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
@@ -640,6 +648,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                             animatorremote.runtimeAnimatorController = overrideController;
 
                             animatorremote.SetBool("IsEmote", true);
+                            isPreviousBundleLoad = true;
                         }
                     }
                     else
@@ -662,6 +671,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                             }
                             else if (CheckSpecificAnimationPlaying("Sit"))
                             {
+                                isPreviousBundleLoad = true;
                                 break;
                             }
                         }
@@ -709,6 +719,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                 animatorremote.runtimeAnimatorController = overrideController;
                             }
                             animatorremote.SetBool("IsEmote", false);
+                            isPreviousBundleLoad = true;
                         }
                     }
                 }

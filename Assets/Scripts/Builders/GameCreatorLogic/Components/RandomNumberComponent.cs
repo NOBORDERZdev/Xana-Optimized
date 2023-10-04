@@ -1,21 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class RandomNumberComponent : ItemComponent
 {
     float _minNumber = 0, _maxNumber = 0, GeneratedNumber = 0;
 
     [SerializeField]
     private RandomNumberComponentData randomNumberComponentData;
-
+    private bool IsAgainTouchable = true;
     private bool isActivated = false;
-
+    string RuntimeItemID = "";
 
     // Start is called before the first frame update
     void Start()
@@ -27,36 +22,87 @@ public class RandomNumberComponent : ItemComponent
 
     void GenerateNumber()
     {
-        GeneratedNumber = (int)UnityEngine.Random.Range(_minNumber, _maxNumber);
+        GeneratedNumber = (int)Random.Range(_minNumber, _maxNumber);
     }
 
     public void Init(RandomNumberComponentData randomNumberComponentData)
     {
-        Debug.Log(JsonUtility.ToJson(randomNumberComponentData));
         this.randomNumberComponentData = randomNumberComponentData;
 
         isActivated = true;
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Random Number Collision Enter: " + other.gameObject.name);
-        if (other.gameObject.CompareTag("Player") || (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            if (!IsAgainTouchable) return;
 
-            //TimeStats.canRun = false;
-            BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
-            GenerateNumber();
+            IsAgainTouchable = false;
+
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
     }
 
     //onCollsion Exit to ontrigger exit
     private void OnCollisionExit(Collision other)
     {
-        Debug.Log("Random Number Collision Exit: " + other.gameObject.name);
-        if (other.gameObject.CompareTag("Player") || (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.OnRandomCollisionExit?.Invoke();
+            IsAgainTouchable = true;
+
+            StopBehaviour();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
+        GenerateNumber();
+    }
+    private void StopComponent()
+    {
+        BuilderEventManager.OnRandomCollisionExit?.Invoke();
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.RandomNumberComponent;
+    }
+
+    #endregion
 }

@@ -20,7 +20,7 @@ public class NftDataScript : MonoBehaviour
     public GameObject ScrollerObj;
     public GameObject NftTransferedPanel;
     public GameObject NftWorldEquipPanel;
- 
+
     public List<string> EquipCollectionAddresses;
     public List<string> ComingSoonCollectionAddresses;
     public List<string> UnAvailableCollectionAddresses;
@@ -56,19 +56,19 @@ public class NftDataScript : MonoBehaviour
                 //    obj.gameObject.GetComponent<RawImage>().texture = null;
                 //}
                 //obj.gameObject.SetActive(false);
-                Destroy(obj.gameObject);  
-            }   
+                Destroy(obj.gameObject);
+            }
             Resources.UnloadUnusedAssets();
             //UserRegisterationManager.instance.NFTIDList.Clear();
             //UserRegisterationManager.instance.NFTList.Clear();
-           // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb = 1;
+            // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb = 1;
             //if (MyProfileDataManager.Instance!=null)
             //{
             //    MyProfileDataManager.Instance.OnScrollNFT();
             //}
-        }  
-    }     
-    
+        }
+    }
+
     public void getLocalStorageNft()
     {
         if (!string.IsNullOrEmpty(UserRegisterationManager.instance.XanaliaUserTokenId))
@@ -86,7 +86,7 @@ public class NftDataScript : MonoBehaviour
                     {
                         AssetBundle.UnloadAllAssetBundles(false);
                         Resources.UnloadUnusedAssets();
-                        NftData bean = JsonUtility.FromJson<NftData>(File.ReadAllText(GetStringFolderPath()));
+                        NftData bean = Gods.DeserializeJSON<NftData>(File.ReadAllText(GetStringFolderPath()));
                         if (bean.data.Count > 0)
                         {
                             for (int i = 0; i < bean.data.Count; i++)
@@ -151,7 +151,7 @@ public class NftDataScript : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError("Nft Response not parsing Error====" + e);
+                        Debug.Log("Nft Response not parsing Error====" + e);
                         NftLoadingPenal.SetActive(true);
                         NoNftyet.SetActive(true);
                         NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
@@ -164,7 +164,7 @@ public class NftDataScript : MonoBehaviour
                     {
                         AssetBundle.UnloadAllAssetBundles(false);
                         Resources.UnloadUnusedAssets();
-                        NftData bean = JsonUtility.FromJson<NftData>(UserRegisterationManager.instance.nftlist);
+                        NftData bean = Gods.DeserializeJSON<NftData>(UserRegisterationManager.instance.nftlist);
                         if (bean != null)
                         {
                             if (bean.data.Count > 0)
@@ -236,7 +236,7 @@ public class NftDataScript : MonoBehaviour
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError("Nft response not parsing error in store file====" + e);
+                        Debug.Log("Nft response not parsing error in store file====" + e);
                         NftLoadingPenal.SetActive(true);
                         NoNftyet.SetActive(true);
                         NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
@@ -330,18 +330,18 @@ public class NftDataScript : MonoBehaviour
         return (Application.persistentDataPath + "/NftData.txt");
     }
 
-    [System.Serializable]
+
     public class NftData
     {
-        public bool success;
-        public List<NftList> data;
-        public int count;
+        public bool success { get; set; }
+        public List<NftList> data { get; set; }
+        public int count { get; set; }
     }
-    [System.Serializable]
+
     public class NftList
     {
         //   public string _id { get; set; }
-        public MetaData metaData;
+        public MetaData metaData { get; set; }
         //public string tokenId { get; set; }
         //public string chain { get; set; }
         //public int approval { get; set; }
@@ -349,15 +349,15 @@ public class NftDataScript : MonoBehaviour
         //public int is_test { get; set; }
         //public int rating { get; set; }
         //public string newtokenId { get; set; }
-        public string price;
+        public string price { get; set; }
         ////  public int? sortPrice { get; set; }
         //public object sortPrice2 { get; set; }
         //public int like_count { get; set; }
         //public int like { get; set; }
-        public string thumbnailUrl;
-        public string owner;
+        public string thumbnailUrl { get; set; }
+        public string owner { get; set; }
         //public string checkMinter { get; set; }
-        public string nftLink;
+        public string nftLink { get; set; }
         //public string creator { get; set; }
         //public List<CreatorObj> creatorObj { get; set; }
         //public string en_nft_description { get; set; }
@@ -376,26 +376,26 @@ public class NftDataScript : MonoBehaviour
         //public bool? offchain { get; set; }
         //public string oldCollection { get; set; }
         //public string seriesId { get; set; }
-        public SellNFT sellNFT;
+        public SellNFT sellNFT { get; set; }
     }
-    [System.Serializable]
+
     public class Properties
     {
-        public string type;
+        public string type { get; set; }
     }
-    [System.Serializable]
+
     public class MetaData
     {
-        public string name;
-        public string description;
-        public string image;
-        public Properties properties;
+        public string name { get; set; }
+        public string description { get; set; }
+        public string image { get; set; }
+        public Properties properties { get; set; }
         //public object totalSupply { get; set; }
         //public string externalLink { get; set; }
         //public string thumbnft { get; set; }
         //public string imageOld { get; set; }
     }
-    [System.Serializable]
+
     public class SellNFT
     {
         //   public string _id { get; set; }
@@ -423,7 +423,7 @@ public class NftDataScript : MonoBehaviour
         //   public string buyCurrencyType { get; set; }
         //   public string buyCalculated { get; set; }
     }
-    [System.Serializable]
+
     public class CreatorObj
     {
         //   public string _id { get; set; }
@@ -460,7 +460,7 @@ public class NftDataScript : MonoBehaviour
         //   public bool dataShared3 { get; set; }
         //   public List<string> userNftRoleArr { get; set; }
     }
-    [System.Serializable]
+
     public class Links
     {
         //public string facebook { get; set; }

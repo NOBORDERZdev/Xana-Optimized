@@ -88,7 +88,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     {
                         _response = null;
                         Data = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
@@ -158,7 +158,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (www.isHttpError || www.isNetworkError)
                         {
                             _response = null;
-                            //Debug.LogError("Youtube API returned no result");
+                            //Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -229,7 +229,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         {
                             _response = null;
                             Data = null;
-                            Debug.LogError("Youtube API returned no result");
+                           Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -255,7 +255,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        else if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby") || FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             //{
@@ -286,6 +286,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             else
             {
                 //print("============Setting WWW data");
+               // Debug.LogError("WaqasApi============" + ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName);
                 using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName))
                 {
                     www.timeout = 10;
@@ -368,7 +369,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (www.isHttpError || www.isNetworkError)
                     {
                         _response = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {

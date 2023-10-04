@@ -51,7 +51,13 @@ public class RpcManager : MonoBehaviourPunCallbacks
             {
                 if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
+                    if (!isEnable)
+                    {
+                        Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
+                        Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
+                    }
                     Launcher.instance.playerobjects[i].GetComponent<RpcManager>().DifferentAnimClicked = isEnable;
+                    break;
                 }
             }
         }
@@ -84,6 +90,7 @@ public class RpcManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    
 
     // Update is called once per frame
     void Update()

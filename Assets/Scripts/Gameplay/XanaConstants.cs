@@ -10,21 +10,26 @@ public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
 
+    public static bool isAddressableCatalogDownload;
+
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
 
     public int mic;
     public int minimap;
     public int userName;
+    public string userId;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;
     public AssetBundle museumAssetLoaded;
-   // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
+    // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
+    public GameObject _lastAvatarClickedBtn;
     public GameObject _curretClickedBtn;
     public bool IsMuseum = false;
+    public bool IsDeemoNFT = false;
     public string hair = "";
     public string hairColoPalette = "";
     public int faceIndex = 0;
@@ -57,22 +62,25 @@ public class XanaConstants : MonoBehaviour
     public GameObject[] colorSelection;
     public bool setIdolVillaPosition = true;
     public GameObject lastSelectedButton;
-    
+
     public bool orientationchanged = false;
     public bool SelfiMovement = true;
     public GameObject ConnectionPopUpPanel;
     public int presetItemsApplied = 0;
     public bool isSkinApplied = false;
     public bool isPresetHairColor = false;
-    public bool isCameraMan ;
+    public bool isCameraMan;
     public bool isCameraManInRoom = false;
+    public bool isBackfromSns = false;
 
+    public bool isBackFromWorld = false;
 
     public String MuseumID;
-  
+
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
+    public int customWorldId;
 
     // For Firebase
     public bool isFirebaseInit = false;
@@ -94,9 +102,12 @@ public class XanaConstants : MonoBehaviour
     /// 
     public bool isBuilderScene;
     public int builderMapID;
-    public bool JjWorldSceneChange=false;
-    public bool isFromXanaLobby =false;
+    public bool JjWorldSceneChange = false;
+    public bool isFromXanaLobby = false;
 
+    // Tutorials
+    public bool isTutorialLoaded=false;
+    public bool isLobbyTutorialLoaded = false;
     public string r_EmoteStoragePersistentPath
     {
         get
@@ -110,7 +121,7 @@ public class XanaConstants : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
-    
+
     public string r_EmoteReactionPersistentPath
     {
         get
@@ -189,7 +200,7 @@ public class XanaConstants : MonoBehaviour
     }
     private void Start()
     {
-      //  StartCoroutine(LoadAddressableDependenceies());
+        //  StartCoroutine(LoadAddressableDependenceies());
     }
 
     public void StopMic()

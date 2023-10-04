@@ -1,52 +1,81 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class TimerComponent : ItemComponent
 {
 
     private bool isActivated = false;
     private TimerComponentData timerComponentData;
+    string RuntimeItemID = "";
 
     public void Init(TimerComponentData timerComponentData)
     {
         this.timerComponentData = timerComponentData;
 
         isActivated = true;
+
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
 
     private void OnCollisionEnter(Collision _other)
     {
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-
-        if (isActivated && timerComponentData.IsStart)
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
-            {
-                //StartTriggerEvent?.Invoke();
-
-                //TimeStats.canRun = false;
-                BuilderEventManager.OnTimerTriggerEnter?.Invoke("", timerComponentData.Timer + 1);
-            }
-        }
-        if (isActivated && timerComponentData.IsEnd)
-        {
-            if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
-            {
-                //EndTriggerEvent?.Invoke();
-
-                //TimeStats.canRun = false;
-                BuilderEventManager.OnTimerTriggerEnter?.Invoke("", 0);
-            }
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
     }
 
-}// End of class
+    #region BehaviourControl
+
+    private void StartComponent()
+    {
+        if (isActivated && timerComponentData.IsStart)
+        {
+            BuilderEventManager.OnTimerTriggerEnter?.Invoke("", timerComponentData.Timer + 1);
+        }
+        else if (isActivated && timerComponentData.IsEnd)
+        {
+            BuilderEventManager.OnTimerTriggerEnter?.Invoke("", 0);
+        }
+    }
+    private void StopComponent()
+    {
+        BuilderEventManager.OnTimerTriggerEnter?.Invoke("", 0);
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.TimerComponent;
+    }
+
+    #endregion
+}

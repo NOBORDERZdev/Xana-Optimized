@@ -67,7 +67,7 @@ public class SettingScreenScrolllerActivity : MonoBehaviour
     public IEnumerator IEClosePopUp()
     {
         DisableCloseButton();
-        Debug.LogError("IEClosePopUp Start");
+       Debug.Log("IEClosePopUp Start");
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1f, 0.2f);
         yield return new WaitForSeconds(.2f);
         enableDisable.ClosePopUp();

@@ -11,18 +11,22 @@ public class TimeStats : MonoBehaviour
 
     public static Action<bool, Light[], float[], float, GameObject> _intensityChanger;
     public static Action _intensityChangerStop;
+    public static Action<bool, Light[], float[], float, float, GameObject, int> _blindComponentStart;
+    public static Action _blindComponentStop;
 
     private float m_TotalTime;
     public bool IsElapsedTimeActive;
     public bool IsSituationChangerActive;
 
-    public static bool _stopTimer = false, canRun = false;
-    bool isRuninig, isNight;
+    public static bool _stopTimer = false, canRun = false, canBlindRun = false;
+    bool isRuninig, isBlindRunning;
     int previousSkyID;
     IEnumerator coroutine, dimmerCoroutine;
 
     public Light[] lights;
     public float[] Intensity;
+    public Light[] blindlights;
+    public float[] blindIntensity;
 
     private void OnEnable()
     {
@@ -30,14 +34,17 @@ public class TimeStats : MonoBehaviour
         _timeStop += StopTimer;
         _intensityChanger += SituationStarter;
         _intensityChangerStop += SituationStoper;
-    }
+        _blindComponentStart += BlindComponentStart;
+        _blindComponentStop += BlindComponentStop;
+}
     private void OnDisable()
     {
         _timeStart -= StartTimer;
         _timeStop -= StopTimer;
         _intensityChanger -= SituationStarter;
         _intensityChangerStop -= SituationStoper;
-
+        _blindComponentStart -= BlindComponentStart;
+        _blindComponentStop -= BlindComponentStop;
     }
 
     private void Start()
@@ -76,13 +83,12 @@ public class TimeStats : MonoBehaviour
     GameObject _situationChangeObject;
     public void SituationStarter(bool _isOff, Light[] _lights, float[] _intensities, float _value, GameObject _obj)
     {
-        
         if (isRuninig)
         {
             if (_situationChangeObject == _obj)
             {
-                isNight ^= true;
-                if (isNight)
+                GamificationComponentData.instance.isNight ^= true;
+                if (GamificationComponentData.instance.isNight)
                     SetNightMode();
                 else
                     SetDayMode(_lights, _intensities);
@@ -98,7 +104,7 @@ public class TimeStats : MonoBehaviour
         canRun = true;
         isRuninig = true;
         this._situationChangeObject = _obj;
-        Debug.LogError("EnableSituationChangerUI  " + _value);
+        //Debug.Log("EnableSituationChangerUI  " + _value);
         if (!_isOff)
             BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
         StartCoroutine(dimmerCoroutine);
@@ -107,10 +113,13 @@ public class TimeStats : MonoBehaviour
     public void SituationStoper()
     {
         canRun = false;
+        _situationChangeObject = null;
         BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
 
         if (dimmerCoroutine != null)
         { StopCoroutine(dimmerCoroutine); }
+
+        SetDayMode(lights, Intensity);
     }
 
 
@@ -137,8 +146,8 @@ public class TimeStats : MonoBehaviour
     {
         if (_isOff)
         {
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 SetNightMode();
             else
                 SetDayMode(_light, _lightsIntensity);
@@ -146,8 +155,8 @@ public class TimeStats : MonoBehaviour
         else
         {
             _stopTimer = true;
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 SetNightMode();
             else
                 SetDayMode(_light, _lightsIntensity);
@@ -158,10 +167,10 @@ public class TimeStats : MonoBehaviour
                 yield return null;
 
             }
-            isNight = false;
+            GamificationComponentData.instance.isNight = false;
             isRuninig = false;
-            SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
-            Destroy(scc);
+            //SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
+            //scc.isActivated = false;
             SetDayMode(_light, _lightsIntensity);
         }
     }
@@ -176,6 +185,7 @@ public class TimeStats : MonoBehaviour
         timeCheck -= Time.deltaTime;
         timeCheck = Mathf.Clamp(timeCheck, 0, Mathf.Infinity);
     }
+
     private void SetNightMode()
     {
         //EventManager.ChangeSituationToNight?.Invoke(true);
@@ -184,12 +194,106 @@ public class TimeStats : MonoBehaviour
     }
     private void SetDayMode(Light[] _light, float[] _lightsIntensity)
     {
+        previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
         //EventManager.ChangeSituationToNight?.Invoke(false);
-        for (int i = 0; i < _light.Length; i++)
+        if (_light != null)
         {
-            _light[i].intensity = _lightsIntensity[i];
+            for (int i = 0; i < _light.Length; i++)
+            {
+                _light[i].intensity = _lightsIntensity[i];
+            }
         }
 
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
+    }
+
+
+    Coroutine blindDimLightsCoroutine;
+    GameObject _blindComponentObject;
+    void BlindComponentStart(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, GameObject _obj, int _skyBoxID = 20)
+    {
+        if (isBlindRunning)
+        {
+            if (_blindComponentObject == _obj)
+            {
+                GamificationComponentData.instance.isNight ^= true;
+                if (GamificationComponentData.instance.isNight)
+                    ToggleStatus(true, _Radius, _skyBoxID);
+                else
+                    ToggleStatus(false, _Radius, _skyBoxID);
+
+                return;
+            }
+            else
+                BlindComponentStop();
+        }
+        isBlindRunning = true;
+        canBlindRun = true;
+        blindlights = _light;
+        blindIntensity = _lightsIntensity;
+        _blindComponentObject = _obj;
+        if (!_isOff)
+            BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(timeCheck);
+        blindDimLightsCoroutine = StartCoroutine(BlindDimLights(_isOff, _light, _lightsIntensity, timeCheck, _Radius, _skyBoxID));
+    }
+    IEnumerator BlindDimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, int _skyBoxID = 20)
+    {
+        if (_isOff)
+        {
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
+                ToggleStatus(true, _Radius, _skyBoxID);
+            else
+                ToggleStatus(false, _Radius, _skyBoxID);
+        }
+        else
+        {
+            _stopTimer = true;
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
+                ToggleStatus(true, _Radius, _skyBoxID);
+            else
+                ToggleStatus(false, _Radius, _skyBoxID);
+
+            while (!timeCheck.Equals(0) && canBlindRun)
+            {
+                SetTimer(ref timeCheck);
+                yield return null;
+            }
+            GamificationComponentData.instance.isNight = false;
+            isBlindRunning = false;
+            ToggleStatus(false, _Radius, _skyBoxID);
+        }
+    }
+
+    void BlindComponentStop()
+    {
+        canBlindRun = false;
+        _blindComponentObject = null;
+        BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+        if (blindDimLightsCoroutine != null)
+            StopCoroutine(blindDimLightsCoroutine);
+        ToggleStatus(false, 0, 0);
+    }
+
+    private void ToggleStatus(bool _Status, float _Radius, int _skyBoxID)
+    {
+        previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
+        if (_Status)
+        {
+            PlayerCanvas.Instance.ToggleBlindLight(true, _Radius);
+            SituationChangerSkyboxScript.instance.ChangeSkyBox(_skyBoxID);
+            return;
+        }
+
+        if (blindlights != null)
+        {
+            for (int i = 0; i < blindlights.Length; i++)
+            {
+                blindlights[i].intensity = blindIntensity[i];
+            }
+        }
+        PlayerCanvas.Instance.ToggleBlindLight(false, 300);
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
     }
 }

@@ -7,6 +7,7 @@ using Metaverse;
 using System.Collections;
 using System;
 using System.IO;
+using DG.Tweening;
 
 public class SceneManage : MonoBehaviourPunCallbacks
 { 
@@ -17,6 +18,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
 
+  
     public string mainScene= "Main";
 
     private AsyncOperation asyncLoading;
@@ -26,7 +28,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
     private void OnEnable()
     {
-       
+       mainScene= "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
@@ -61,9 +63,20 @@ public class SceneManage : MonoBehaviourPunCallbacks
             PlayerPrefs.SetInt("RequestSend", 1);
         }
     }
+    public void disableSoundXanalobby() // Disabling Audio Sources in Xana Lobby on exit to avoid sound increase on Loding screen after exit
+    {
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")) 
+        {
+            SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+            SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+        }
+    }
 
     public void LoadMain(bool changeOritentationChange)
     {
+        disableSoundXanalobby();
+
         if (exitOnce)
         {
             exitOnce = false;
@@ -78,7 +91,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 
                 if (changeOritentationChange)
                 {
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    //Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
                     XanaConstants.xanaConstants.JjWorldSceneChange = false;
                     XanaConstants.xanaConstants.orientationchanged = false;
                     XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
@@ -95,12 +109,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
                 LoadingHandler.Instance.ShowLoading();
 
-                AssetBundle.UnloadAllAssetBundles(false);
+                GC.Collect();
+                AssetBundle.UnloadAllAssetBundles(true);
                 Resources.UnloadUnusedAssets();
 
                 // Added By WaqasAhmad [20 July 23]
                 //Caching.ClearCache();
-                GC.Collect();
                 //
 
                 //   Caching.ClearCache();
@@ -113,6 +127,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
      private IEnumerator LobbySceneSwitch()
      {
+        //LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.3f, 0.7f), .1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -170,6 +185,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         //LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         //asyncLoading = SceneManager.LoadSceneAsync(mainScene);
         //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
+
         StartCoroutine(LoadMianScene());
     }
 
@@ -178,30 +194,50 @@ public class SceneManage : MonoBehaviourPunCallbacks
     /// </summary>
     /// <returns></returns>
     IEnumerator LoadMianScene() {
+        //StartCoroutine(LoadingHandler.Instance.IncrementSliderValue());
         yield return new WaitForSeconds(.2f);
         //yield return new WaitForSeconds(.4f);
-        LoadingHandler.Instance.UpdateLoadingSlider(0.3f);
-        yield return new WaitForSeconds(.4f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(0.3f);
+        //yield return new WaitForSeconds(.4f);
         //yield return new WaitForSeconds(.6f);
-        LoadingHandler.Instance.UpdateLoadingSlider(0.6f);
+       // LoadingHandler.Instance.UpdateLoadingSlider(0.6f);
         print("loading mainmenu");
       
         Resources.UnloadUnusedAssets();
         //  Caching.ClearCache();
         // GC.Collect();
         print("mian scne "+mainScene);
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
+            float _rand = UnityEngine.Random.Range(6f, 10f);
+            LoadingHandler.Instance.randCurrentValue = _rand;
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+            yield return new WaitForSeconds(3f);
             SceneManager.LoadScene("Main");
         }
         else
         {
-            SceneManager.LoadScene(mainScene);
+            // SceneManager.LoadScene(mainScene);
+            // Load the scene asynchronously
+            if (XanaConstants.xanaConstants.isBuilderScene)
+            {
+                float _rand = UnityEngine.Random.Range(25f, 30f);
+                LoadingHandler.Instance.randCurrentValue = _rand;
+                StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+            }
+            else
+            {
+                StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f), true));
+            }
+            yield return new WaitForSeconds(3f);
+            SceneManager.LoadSceneAsync(mainScene);
         }
     }
+    
     void AsyncProgress()
     {
-        LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     }
 
     //public void Dispose()

@@ -39,8 +39,8 @@ public class MainScrollController : MonoBehaviour
     void CheckHeight()
     {
         float sizeff = containerobj.rect.height - Screen.height;
-        //Debug.LogError("targetpos:" + containerobj.rect.height);
-        //Debug.LogError("targetpos1:" + containerobj.sizeDelta.y);
+        //Debug.Log("targetpos:" + containerobj.rect.height);
+        //Debug.Log("targetpos1:" + containerobj.sizeDelta.y);
     }
     public float EndPose = -700;
 
@@ -69,7 +69,7 @@ public class MainScrollController : MonoBehaviour
             }
         }
 
-        // Debug.LogError(" GetContentAnchoredPosition : " + GetContentAnchoredPosition());
+        //Debug.Log(" GetContentAnchoredPosition : " + GetContentAnchoredPosition());
         if (!isProfileScreen)
         {
             var distance = m_InitialPosition - GetContentAnchoredPosition();
@@ -92,11 +92,11 @@ public class MainScrollController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.LogError("Collide:" + collision.gameObject.name);
+       Debug.Log("Collide:" + collision.gameObject.name);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.LogError("Triggerd:" + collision);
+       Debug.Log("Triggerd:" + collision);
     }
 }

@@ -12,6 +12,7 @@ public class TranslateComponent : ItemComponent
     int counter;
     bool moveForward, moveBackward;
     bool activateTranslateComponent = false;
+    public Vector3 lookAtVector;
 
     public void InitTranslate(TranslateComponentData translateComponentData)
     {
@@ -22,8 +23,7 @@ public class TranslateComponent : ItemComponent
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
-
-        StartCoroutine(translateModule());
+        StartComponent();
     }
 
     private bool CheckDistance()
@@ -37,8 +37,16 @@ public class TranslateComponent : ItemComponent
             }
             else
             {
-                moveForward = false;
-                moveBackward = true;
+                if (translateComponentData.isLoop)
+                {
+                    counter = 0;
+                }
+                else
+                {
+                    moveForward = false;
+                    moveBackward = true;
+                }
+
             }
             if (moveBackward == true && counter > 0)
             {
@@ -66,10 +74,58 @@ public class TranslateComponent : ItemComponent
                    this.transform.position, translatePositions[counter],
                    translateComponentData.translateSpeed * Time.deltaTime
                    );
-                if (this.translateComponentData.IsFacing) this.transform.LookAt(translatePositions[counter]);
+                if (this.translateComponentData.IsFacing)
+                {
+                    this.transform.LookAt(translatePositions[counter]);
+                    this.transform.Rotate(new Vector3(0, 1, 0), 180f);
+                }
             }
         }
         yield return null;
     }
+    #endregion
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        activateTranslateComponent = true;
+        StartCoroutine(translateModule());
+    }
+    private void StopComponent()
+    {
+        activateTranslateComponent = false;
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.TranslateComponent;
+    }
+
     #endregion
 }

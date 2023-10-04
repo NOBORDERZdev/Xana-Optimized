@@ -14,40 +14,46 @@ namespace XanaAi
         private void Start()
         {
             StartCoroutine(ApplyReact());
-           // Invoke(nameof(ApplyReact),1/*Random.Range(minReactionTime, maxReactionTime)*/);
+            // Invoke(nameof(ApplyReact),1/*Random.Range(minReactionTime, maxReactionTime)*/);
         }
 
-        public IEnumerator ApplyReact(){
+        public IEnumerator ApplyReact()
+        {
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(minReactionTime, maxReactionTime));
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
-                int rand = Random.Range(0,ReactScreen.Instance.reactDataClass.Count);
-                if (rand < ReactScreen.Instance.reactDataClass.Count)
+
+                if (ReactScreen.Instance != null && ReactScreen.Instance.reactDataClass.Count > 0)
                 {
-                    string iconUrl = ReactScreen.Instance.reactDataClass[rand].thumb;
-                    if (iconUrl != "")
+                    int rand = Random.Range(0, (ReactScreen.Instance.reactDataClass.Count > 5 ? 5 : ReactScreen.Instance.reactDataClass.Count));
+                    if (rand < ReactScreen.Instance.reactDataClass.Count)
                     {
-                        AssetCache.Instance.EnqueueOneResAndWait(iconUrl, iconUrl, (success) =>
+                        string iconUrl = ReactScreen.Instance.reactDataClass[rand].thumb;
+                        if (iconUrl != "")
                         {
-                            if (success)
+                            AssetCache.Instance.EnqueueOneResAndWait(iconUrl, iconUrl, (success) =>
                             {
-                                AssetCache.Instance.LoadSpriteIntoImage(reactionDisplay, iconUrl, changeAspectRatio: true);
-                                 reactionDisplay.gameObject.SetActive(true);
-                            }
-                            else
-                            {
-                                Debug.Log("Download Failed");
-                            }
-                        });
+                                if (success)
+                                {
+                                    AssetCache.Instance.LoadSpriteIntoImage(reactionDisplay, iconUrl, changeAspectRatio: true);
+                                    reactionDisplay.gameObject.SetActive(true);
+                                }
+                                else
+                                {
+                                    Debug.Log("Download Failed");
+                                }
+                            });
+                        }
                     }
                 }
+
             }
 
         }
 
-   
+
 
     }
 }

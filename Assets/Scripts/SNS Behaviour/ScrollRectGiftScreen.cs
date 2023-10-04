@@ -245,7 +245,8 @@ public class ScrollRectGiftScreen : MonoBehaviour
 
         aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
         //_lerpTo = tabRectTransform[aPageIndex].anchoredPosition;  // _pagePositions[aPageIndex];
-        _lerpTo = tabRectTransform[aPageIndex].localPosition;
+        if(aPageIndex < tabRectTransform.Length)
+            _lerpTo = tabRectTransform[aPageIndex].localPosition;
         //Debug.Log("<color=blue>_lerpTo: " + tabRectTransform[aPageIndex].localPosition + "</color>");
         //Debug.Log("<color=blue>_lerpFrom: " + _container.localPosition + "</color>");
         _lerp = true;

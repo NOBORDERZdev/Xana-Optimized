@@ -18,7 +18,7 @@ public class menuAvatarFlowButton : MonoBehaviour
     void OnClickMenuAvatarBtn()
     {
         GameManager.Instance.AvatarMenuBtnPressed();
-
+        StoreManager.instance.SubmitUserDetailAPI();
     }
 
     //private void OnEnable()
