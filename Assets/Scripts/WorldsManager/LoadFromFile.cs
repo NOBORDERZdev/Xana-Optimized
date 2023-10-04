@@ -533,8 +533,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 _uiReferences.LoadMain(false);
             }
-
         }
+
+        /// <summary>
+        /// Load NPC fake chat system
+        /// </summary>
+        GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
+        Instantiate(npcChatSystem);
+        Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
     [SerializeField] int autoSwitchTime;
@@ -858,6 +864,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
+            while (!XanaConstants.isAddressableCatalogDownload)
+            {
+                yield return new WaitForSeconds(1f);
+            }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (XanaConstants.xanaConstants.isFromXanaLobby)
@@ -876,6 +886,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle,environmentLabel);
+
                 yield return handle.Result.ActivateAsync();
                 DownloadCompleted();
             }
@@ -886,6 +898,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 HomeBtn.onClick.Invoke();
             }
+           // Addressables.Release(handle);
         }
         else
         {

@@ -50,6 +50,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public PhotonVoiceView VoiceView;
 
+    //Gautam added for changing the position of the name canvas for avatar changer
+    public Canvas nameCanvas;
+
     private void Awake()
     {
 
