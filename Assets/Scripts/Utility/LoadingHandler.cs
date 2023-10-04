@@ -239,7 +239,7 @@ public class LoadingHandler : MonoBehaviour
     bool orientationchanged = false;
     public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
     {
-        //Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
+        Debug.Log("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOKill();
         blackScreen.DOFade(0, 0f); 
@@ -263,7 +263,7 @@ public class LoadingHandler : MonoBehaviour
     }
     public void HideFadderAfterOriantationChanged(float delay = 0)
     {
-        //Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " +delay);
+        Debug.Log("~~~~~~~  Fadder Out ~~~~~~~ " +delay);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.5f).SetDelay(delay);
         XanaConstants.xanaConstants.isBackFromWorld = false;
@@ -271,14 +271,15 @@ public class LoadingHandler : MonoBehaviour
 
     private IEnumerator Check_Orientation(ScreenOrientation oriantation)
     {
-        //Debug.LogError(" ~~~~~~~ Oriantation Coroutine Called ~~~~~~~ " + oriantation);
+        Debug.Log(" ~~~~~~~ Oriantation Coroutine Called ~~~~~~~ " + oriantation);
 
     CheckAgain:
-        //Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
+        Debug.Log(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
-            if(!XanaConstants.xanaConstants.isBackFromWorld)
+            Debug.Log(" isBackFromWorld ~~~~~~~~~~~~~~ " + XanaConstants.xanaConstants.isBackFromWorld);
+            if (!XanaConstants.xanaConstants.isBackFromWorld)
                 HideFadderAfterOriantationChanged();
         }
         else
