@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static IPFS.GetFileInfoResponse;
 
 namespace DynamicScrollRect
 {
@@ -52,8 +53,11 @@ namespace DynamicScrollRect
         public override void OnBeginDrag(PointerEventData eventData)
         {
             // Debug.LogError("OnBeginDrag");
-            if (!Flag)
+            if (!ParentSliderFlag)
+            {
+                TopScroller.OnBeginDrag(eventData);
                 return;
+            }
             base.OnBeginDrag(eventData);
             StopRunBackRoutine();
             _isDragging = true;
@@ -63,42 +67,133 @@ namespace DynamicScrollRect
                 eventData.position,
                 eventData.pressEventCamera,
                 out _dragStartingPosition);
-
             _dragCurPosition = _dragStartingPosition;
         }
-        public float SavedVerticalNormalPosition;
-        public bool Flag = false;
+        //protected override void OnEnable()
+        //{
+        //    _isDragging = true;
+        //    Invoke("DragOff", 2f);
+        //}
+        //void DragOff()
+        //{
+        //    _isDragging = false;
+        //}
+        private void Update()
+        {
+           // if (!ParentSliderFlag)
+                Debug.LogError(content.position.y + " Content " + _Content.GetFirstItemPos());
+            if (content.anchoredPosition.y + _Content.GetFirstItemPos().y <= _Content.ItemHeight + _Content.Spacing.y)
+            {
+                Debug.LogError(" Content ");
+            }
+            if (content.position.y <= 400f)
+            {
+                ParentSliderFlag = false;
+            }
+            else
+            {
+                ParentSliderFlag = true;
+            }
+        }
+        float ParentSliderLimitCheck = 0.09817484f;// 0.01001f;
+        public bool ParentSliderFlag = false;
+        int SliderStateMachine = 0;
         public override void OnDrag(PointerEventData eventData)
         {
             //   Debug.LogError("OnDrag");
-   
-            if (verticalNormalizedPosition > 0.95f && Flag)
+
+
+            /* switch(SliderStateMachine)
+             {
+                 case 0:
+                     {
+                         if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag ////0.09817484  TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck
+                         {
+                             Debug.LogError("Top");
+                             //velocity = TopScroller.velocity;
+                             //verticalNormalizedPosition = 0.99998f;
+                             // TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck;
+                            // Debug.LogError(" TOP verticalNormalizedPosition " + TopScroller.verticalNormalizedPosition);
+                             TopScroller.OnDrag(eventData);
+                             return;
+                         }
+                         else
+                         {
+                             Debug.LogError("Switch");//+ TopScroller.verticalNormalizedPosition
+                             //TopScroller.verticalNormalizedPosition=ParentSliderLimitCheck;
+                             // velocity = TopScroller.velocity;
+                             verticalNormalizedPosition = 0f;
+                             //content.position = new Vector3(content.position.x, 370f, content.position.z);
+                           //  content.position = new Vector3(content.position.x, 370f, content.position.z);
+
+                             SliderStateMachine = 1;
+                             // _isDragging = true;
+                            // base.OnDrag(eventData);
+                             ParentSliderFlag = true;
+                            // return;
+                         }
+                         break;
+                     }
+                 case 1:
+                     {
+                         if (verticalNormalizedPosition > 0.999f)//verticalNormalizedPosition > 1f
+                         {
+                             //content.position = new Vector3(content.position.x, 368.87f, content.position.z);
+                             //verticalNormalizedPosition = 1f;
+
+                             Debug.LogError("From Bottom To Top");
+                            // Debug.LogError(" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
+                             //TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.00001f;
+                             // TopScroller.velocity = velocity;
+                             //TopScroller.OnDrag(eventData);
+                             SliderStateMachine = 0;
+                             ParentSliderFlag = false;
+                             return;
+                         }
+                         //else
+                         //{
+
+                         //    Debug.LogError(content.position.y+" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
+                         //}
+                         break;
+                     }
+             }
+
+           /*  if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag
+             {
+                 Debug.LogError("Top");
+                 //velocity = TopScroller.velocity;
+                 //verticalNormalizedPosition = 0.99998f;
+                 // TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck;
+                 Debug.LogError(" TOP verticalNormalizedPosition " + TopScroller.verticalNormalizedPosition);
+                 TopScroller.OnDrag(eventData);
+                 return;
+             }
+             else 
+             {
+                 if(verticalNormalizedPosition>0.999f)
+                 {
+                     Debug.LogError("Again Top");
+                     Debug.LogError(" TOP verticalNormalizedPosition " + verticalNormalizedPosition);
+                     TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck+0.00001f;
+                    // TopScroller.velocity = velocity;
+                     ParentSliderFlag = false;
+                 }
+                 else
+                 {
+                     Debug.LogError("verticalNormalizedPosition "+ verticalNormalizedPosition);
+                     Debug.LogError("Bottom");
+                     ParentSliderFlag = true;
+                    // base.OnDrag(eventData);
+                 }
+             }*/
+               // UpdateBounds();
+            if (!ParentSliderFlag)
             {
-                Flag = false;
-                Debug.LogError("Top");
-                // TopScroller.enabled = true;
-                //StartCoroutine(TopScroller.GetComponent<HomeScreenScrollHandler>().StartDrag());
-                //TopScroller.scrollSensitivity = 3;
-               // scrollSensitivity = 0;
-                verticalNormalizedPosition = 0.951f;
-                TopScroller.verticalNormalizedPosition = 0.052f;
-                //TopScroller.Flag = true;
-               // TopScroller.OnDrag(eventData);
-               // TopScroller.velocity = this.velocity*30f;
-                // base.OnDrag(eventData);
-               // this.enabled = false;
-            }
-            if (!Flag)
+                TopScroller.OnDrag(eventData);
                 return;
+            }
             if (!_isDragging)
-            {
-                return;
-            }
-            if (eventData.button != PointerEventData.InputButton.Left)
-            {
-                return;
-            }
-            if (!IsActive())
             {
                 return;
             }
@@ -107,6 +202,7 @@ namespace DynamicScrollRect
                     eventData.position,
                     eventData.pressEventCamera, out Vector2 localCursor))
             {
+                Debug.LogError("Screen Point " + localCursor);
                 return;
             }
             StopRunBackRoutine();
@@ -128,11 +224,12 @@ namespace DynamicScrollRect
         public override void OnEndDrag(PointerEventData eventData)
         {
             //  Debug.LogError("OnEndDrag");
-            if (!Flag)
+            if (!ParentSliderFlag)
             { 
+                TopScroller.OnEndDrag(eventData);
                 return; 
             }
-                base.OnEndDrag(eventData);
+            base.OnEndDrag(eventData);
             _isDragging = false;
             if (_needRunBack)
             {
@@ -142,7 +239,7 @@ namespace DynamicScrollRect
         }
         private void OnScrollRectValueChanged(Vector2 val)
         {
-            if (!Flag)
+            if (!ParentSliderFlag)
             {
                 return;
             }
