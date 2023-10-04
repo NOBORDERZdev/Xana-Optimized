@@ -14,6 +14,8 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System.Buffers;
+using UnityEngine.InputSystem;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -53,8 +55,8 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
-        if (loadSkyBox.Result != null)
-            Addressables.Release(loadSkyBox);
+        // if (loadSkyBox.Result != null)
+        //   Addressables.Release(loadSkyBox);
     }
 
     private void Start()
@@ -99,7 +101,6 @@ public class BuilderMapDownload : MonoBehaviour
             else
             {
                 response = www.downloadHandler.text;
-                //System.IO.File.WriteAllText(Application.persistentDataPath +"/"+ "Builder.json", www.downloadHandler.text);
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());
@@ -180,23 +181,32 @@ public class BuilderMapDownload : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
+
+            string key = prefabPrefix + levelData.otherItems[i].ItemID + "_XANA";
+            bool flag = false;
+
+            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
+            if (!flag)
+                _async = Addressables.LoadAssetAsync<GameObject>(key);
+
+
             while (!_async.IsDone)
             {
                 yield return null;
             }
-            //yield return _async;
-
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 GetObject(_async, levelData.otherItems[i]);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
-            //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
-            //}
-            //else
-            //    LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
+            if (XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
+            }
+            else
+                LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
+
+            // Addressables.Release(_async);
         }
         CallBack();
     }
@@ -320,11 +330,42 @@ public class BuilderMapDownload : MonoBehaviour
         terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
 
+    AsyncOperationHandle loadSkyBox;
+    void LoadSkyBoxData(Action addressableSceneLoad)
+    {
+        StartCoroutine(LoadSkyBoxDataCO(addressableSceneLoad));
+    }
+
+    IEnumerator LoadSkyBoxDataCO(Action addressableSceneLoad)
+    {
+
+        SkyProperties skyProperties = levelData.skyProperties;
+        if (skyProperties.skyId != -1)
+        {
+            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
+            if (skyBoxExist)
+            {
+                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+                bool flag = false;
+                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                if (!flag)
+                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                while (!loadSkyBox.IsDone)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        //Load addressable scene
+        addressableSceneLoad();
+    }
+
     void SetSkyProperties()
     {
         StartCoroutine(SetSkyPropertiesDelay());
     }
-    AsyncOperationHandle<Material> loadSkyBox;
     IEnumerator SetSkyPropertiesDelay()
     {
         SkyProperties skyProperties = levelData.skyProperties;
@@ -335,26 +376,29 @@ public class BuilderMapDownload : MonoBehaviour
             if (skyBoxExist)
             {
                 SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-                while (!loadSkyBox.IsDone)
+
+                if (loadSkyBox.Status == AsyncOperationStatus.None)
                 {
-                    yield return null;
+                    Debug.Log(" ---------- NONE ------------ SKY BOXX");
                 }
-                // Debug.Log(loadSkyBox.Result.name+"---"+loadSkyBox.Status+"---"+loadSkyBox.Result.shader.name);
-
-                Material _mat = loadSkyBox.Result;
-                _mat.shader = Shader.Find(skyBoxItem.shaderName);
-                RenderSettings.skybox = _mat;
-                directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
-                characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
-                directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
-                directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
-                SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
-
-                if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
-                    SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
-
+                else if (loadSkyBox.Status == AsyncOperationStatus.Failed)
+                {
+                    Debug.Log(" ----------- FAILED ----------- SKY BOXX");
+                }
+                else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
+                {
+                    Debug.Log(" ---------- Success ------------ SKY BOXX");
+                    Material _mat = loadSkyBox.Result as Material;
+                    _mat.shader = Shader.Find(skyBoxItem.shaderName);
+                    RenderSettings.skybox = _mat;
+                    directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
+                    characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
+                    directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
+                    directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
+                    SetPostProcessProperties(skyBoxItem.ppVolumeProfile);
+                    if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
+                        SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+                }
             }
             else
             {
@@ -367,7 +411,6 @@ public class BuilderMapDownload : MonoBehaviour
 
                     if (imagineImageRequest.result != UnityWebRequest.Result.Success)
                     {
-                        Debug.Log("Get Imagine Image Error: " + imagineImageRequest.error);
                         imagineImageRequest.Dispose();
                     }
                     else
@@ -419,8 +462,6 @@ public class BuilderMapDownload : MonoBehaviour
         Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
-        //throw new NotImplementedException();
-
     }
 
     void SetLensFlareData(LensFlareDataSRP lensFlareData, float lensFlareScale)
@@ -498,12 +539,12 @@ public class BuilderMapDownload : MonoBehaviour
     }
 
 
-    private void GetObject(AsyncOperationHandle<GameObject> obj, ItemData _itemData)
+    private void GetObject(AsyncOperationHandle obj, ItemData _itemData)
     {
         switch (obj.Status)
         {
             case AsyncOperationStatus.Succeeded:
-                GameObject tempObject = obj.Result;
+                GameObject tempObject = obj.Result as GameObject;
                 CreateENV(tempObject, _itemData);
                 break;
 
@@ -583,13 +624,13 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
-        //{
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
-        //}
-        if(!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (XanaConstants.xanaConstants.isFromXanaLobby)
         {
-           // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+            LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+        }
+        else
+        {
+            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
         }
     }
@@ -691,8 +732,6 @@ public class UserMaps
 {
     public List<UserMapData> userMapList;
 }
-
-
 
 
 [Serializable]

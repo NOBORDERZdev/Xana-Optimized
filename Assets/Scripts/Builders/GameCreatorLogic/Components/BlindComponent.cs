@@ -70,10 +70,10 @@ public class BlindComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.buildingDetect.transform)
+        if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
         {
-            PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.buildingDetect.transform);
-            PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
+            PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+            PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
         }
         PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;

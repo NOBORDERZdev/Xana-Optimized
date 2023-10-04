@@ -20,10 +20,10 @@ public class DoorKeyComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (PlayerCanvas.Instance.transform.parent != _other.transform)
+            if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
             {
-                PlayerCanvas.Instance.transform.SetParent(_other.transform);
-                PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
+                PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+                PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
             }
             PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
@@ -36,7 +36,7 @@ public class DoorKeyComponent : ItemComponent
                 PlayerCanvas.Instance.ToggleKey(true);
                 //this.gameObject.SetActive(false);
                 PlayerCanvas.Instance.keyCounter.text = "x" + _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Count.ToString();
-                if(GamificationComponentData.instance.withMultiplayer)
+                if (GamificationComponentData.instance.withMultiplayer)
                     GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
                 else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
             }
@@ -66,7 +66,7 @@ public class DoorKeyComponent : ItemComponent
                 if (isDoorFind)
                 {
                     //this.gameObject.SetActive(false);
-                    if(GamificationComponentData.instance.withMultiplayer)
+                    if (GamificationComponentData.instance.withMultiplayer)
                         GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
                     else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
                     Toast.Show("The keys match!");
