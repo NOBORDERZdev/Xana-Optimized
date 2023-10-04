@@ -229,11 +229,11 @@ public class ItemDatabase : MonoBehaviour
             //}
         }
 
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
-        {
-            Debug.LogError("~~~~~ Waqas_ ItemDataBase ~~~~~~~~~~~");
-            //Screen.orientation = ScreenOrientation.Portrait;
-        }
+        //if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        //{
+        //    Debug.LogError("~~~~~ Waqas_ ItemDataBase ~~~~~~~~~~~");
+        //    //Screen.orientation = ScreenOrientation.Portrait;
+        //}
         //  }
         yield return null;
     }

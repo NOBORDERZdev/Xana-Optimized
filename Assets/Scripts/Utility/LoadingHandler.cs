@@ -194,6 +194,7 @@ public class LoadingHandler : MonoBehaviour
         timer = 0;
         loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
         loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+        //Debug.LogError("~~~~~~~~ Loading Panel Activated ~~~~~~ ");
         loadingPanel.SetActive(true);
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -210,6 +211,8 @@ public class LoadingHandler : MonoBehaviour
     {
         if (ReferrencesForDynamicMuseum.instance != null)
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
+
+        //Debug.LogError("~~~~~~~~ Loading Panel Deactivated ~~~~~~ ");
         loadingPanel.SetActive(false);
 
         if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -224,15 +227,17 @@ public class LoadingHandler : MonoBehaviour
         }
 
         if (XanaConstants.xanaConstants.isBackFromWorld)
-            HideFadderAfterOriantationChanged(1.5f);
+            HideFadderAfterOriantationChanged(0.2f);
     }
 
     bool orientationchanged = false;
     public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
     {
-       // Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
+        //Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOKill();
+        blackScreen.DOFade(0, 0f); 
+
 #if !UNITY_EDITOR
 
            // Removing Delay Time 
@@ -240,14 +245,6 @@ public class LoadingHandler : MonoBehaviour
             Screen.orientation = oriantation;
             orientationchanged = false;
             StartCoroutine(Check_Orientation(oriantation));
-
-
- //blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
- //       {
- //           Screen.orientation = oriantation;
- //           orientationchanged = false;
- //           StartCoroutine(Check_Orientation(oriantation));
- //            });
 #else
 
         Screen.orientation = oriantation;
@@ -260,7 +257,7 @@ public class LoadingHandler : MonoBehaviour
     }
     public void HideFadderAfterOriantationChanged(float delay = 0)
     {
-       // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
+        //Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " +delay);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.5f).SetDelay(delay);
         XanaConstants.xanaConstants.isBackFromWorld = false;
@@ -268,8 +265,10 @@ public class LoadingHandler : MonoBehaviour
 
     private IEnumerator Check_Orientation(ScreenOrientation oriantation)
     {
+        //Debug.LogError(" ~~~~~~~ Oriantation Coroutine Called ~~~~~~~ " + oriantation);
+
     CheckAgain:
-      //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
+        //Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
