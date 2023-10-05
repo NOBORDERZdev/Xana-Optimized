@@ -28,7 +28,7 @@ public class NpcFreeSpeech : MonoBehaviour
 
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
 
         //for live http://15.152.13.112:8032/
         //for test http://182.70.242.10:8032/
@@ -55,7 +55,7 @@ public class NpcFreeSpeech : MonoBehaviour
         else
             Debug.LogError("Communication API Error: " + gameObject.name + request.error);
 
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
         StartCoroutine(SetApiData());
     }
 
