@@ -63,7 +63,12 @@ public class AddressableMemoryReleaser : MonoBehaviour
     public void RemoveAllAddressables()
     {
         foreach (MemoryObject objj in memoryObjects)
-            Addressables.ReleaseInstance(objj.HandlerObj);
+        {
+            if(objj.HandlerObj.IsValid())
+            {
+                Addressables.ReleaseInstance(objj.HandlerObj);
+            }
+        }
         memoryObjects.Clear();
         GC.Collect();
     }
