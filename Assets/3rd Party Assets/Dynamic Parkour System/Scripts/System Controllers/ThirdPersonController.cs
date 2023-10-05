@@ -154,6 +154,21 @@ namespace Climbing
             }
         }
 
+        private void LateUpdate()
+        {
+            if (Time.frameCount % 10 == 0) // to check after every 10 frames
+            {
+                if (!RFM.Globals.player)
+                {
+                    if (photonView.IsMine)
+                    {
+                        Debug.LogError("RFM RFM.Globals.player missing. Reassigning player");
+                        RFM.Globals.player = gameObject;
+                    }
+                }
+            }
+        }
+
         private bool OnGround()
         {
             return characterDetection.IsGrounded(stepHeight);
