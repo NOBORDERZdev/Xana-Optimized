@@ -53,16 +53,7 @@ public class PresetData_Jsons : MonoBehaviour
             gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
         }
 
-
-        if (ScrollSnap.instance.ASNextButton != null) 
-        {
-            ScrollSnap.instance.ASNextButton.onClick.AddListener(ChangecharacterOnCLickFromserver);
-        }
-
-        if (ScrollSnap.instance.skipButton != null)
-        {
-            ScrollSnap.instance.skipButton.onClick.AddListener(ChangecharacterOnCLickFromserver);
-        }
+       
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         charcterBodyParts = CharcterBodyParts.instance;
     }
@@ -70,12 +61,17 @@ public class PresetData_Jsons : MonoBehaviour
     {
         clickname = "";
     }
-    void ChangecharacterOnCLickFromserver()
+   public void ChangecharacterOnCLickFromserver()
     {
-        if (ScrollSnap.instance.nameData != null) 
-        {
-            JsonDataPreset = ScrollSnap.instance.nameData;
-        }
+        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
+        //{
+            if (ScrollSnap.instance.nameData != null)
+            {
+                JsonDataPreset = ScrollSnap.instance.nameData;
+                //gameObject.name = ScrollSnap.instance.charName;
+                Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+            }
+        //}
 
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
@@ -139,25 +135,25 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
-
+                Invoke("abcd", 5f);
+                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                UserRegisterationManager.instance.usernamePanal.SetActive(true);
                 if (PlayerPrefs.GetInt("iSignup") == 1)
                 {
-                    Invoke("abcd", 5f);
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                   
                     // enable check so that it will know that index is comming from start of the game
-                    UserRegisterationManager.instance.checkbool_preser_start = false;
+                   // UserRegisterationManager.instance.checkbool_preser_start = false;
                     //UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
                     //UserRegisterationManager.instance.BlackScreen.SetActive(true);
                 }
                 else                // as a guest
                 {
-                    Invoke("abcd", 5f);
+                    //Invoke("abcd", 5f);
 
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                    //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                    //UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                    //UserRegisterationManager.instance.usernamePanal.SetActive(true);
                     // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
                 }

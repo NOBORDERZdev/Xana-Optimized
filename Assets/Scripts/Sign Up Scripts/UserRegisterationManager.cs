@@ -184,6 +184,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
     public GameObject EntertheWorld_Panal;
+    public GameObject NewSignUp_Panal;
 
 
     public void ShowWelcomeScreen()
@@ -211,6 +212,7 @@ public class UserRegisterationManager : MonoBehaviour
                 PlayerPrefs.SetInt("presetPanel", 1);
                 ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
                 StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
+                //Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
             }
         }
         else
@@ -920,8 +922,8 @@ public class UserRegisterationManager : MonoBehaviour
             //PresetData_Jsons.lastSelectedPreset = null;
             PresetData_Jsons.clickname = null;
 
-            EntertheWorld_Panal.SetActive(true);
-            //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            //EntertheWorld_Panal.SetActive(true);
+            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             UserRegisterationManager.instance.usernamePanal.SetActive(false);
 
             if (GameManager.Instance.isStoreAssetDownloading)
@@ -994,7 +996,9 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        FirstPanal.SetActive(true);
+                        //FirstPanal.SetActive(true);
+                        welcomeScreen.SetActive(true);
+                        //SignUpPanal.SetActive(false);
                     }
                     break;
                 }
@@ -1021,6 +1025,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 3:
                 {
                     OTPPanal.SetActive(true);
+                    //SignUpPanal.SetActive(false);
                     //  mainfield_for_opt.Text = "";
                     //  mainfield_for_opt.SelectOtherField();
                     mainfieldOTPNew.Text = "";
@@ -1189,8 +1194,8 @@ public class UserRegisterationManager : MonoBehaviour
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
                         
-                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-
+                        //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        EntertheWorld_Panal.SetActive(true);
                     }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
@@ -3084,9 +3089,9 @@ public class UserRegisterationManager : MonoBehaviour
     public void EnterUserName()
     {
 
-        //    print(PlayerPrefs.GetInt("shownWelcome"));
-        //  print(PlayerPrefs.GetInt("iSignup"));
-        //   print(PlayerPrefs.GetInt("IsProcessComplete"));
+        //print(PlayerPrefs.GetInt("shownWelcome")); // 0
+        //print(PlayerPrefs.GetInt("iSignup")); // 1
+        //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
 
@@ -3146,6 +3151,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             usernamePanal.SetActive(false);
+            EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
 
             //  StoreManager.instance.OnSaveBtnClicked();
@@ -3184,6 +3190,7 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithNumber myobjectOfPhone = new MyClassOfRegisterWithNumber();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
+                Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
             }
             else
             {

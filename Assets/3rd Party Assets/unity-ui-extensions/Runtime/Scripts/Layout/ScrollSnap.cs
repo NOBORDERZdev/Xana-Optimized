@@ -112,8 +112,12 @@ namespace UnityEngine.UI.Extensions
         public List<GameObject> avatarData = new List<GameObject>();
         //[HideInInspector]
         public String nameData;
+        public String charName;
+
         public Button ASNextButton, skipButton; // AS for AvatarSelected
         public Button shuffleButton;
+
+
 
         void Awake() 
         {
@@ -157,6 +161,8 @@ namespace UnityEngine.UI.Extensions
                     PreviousScreen();
                 });
             }
+
+            
             if (_scroll_rect.horizontalScrollbar != null && _scroll_rect.horizontal)
             {
                 
@@ -187,6 +193,11 @@ namespace UnityEngine.UI.Extensions
             if (avatarData != null)
             {
                 nameData = avatarData[0].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+                if (ASNextButton)
+                {
+                    ASNextButton.onClick.AddListener(avatarData[0].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                }
+                // charName = avatarData[0].gameObject.name;
             }
         }
 
@@ -393,7 +404,7 @@ namespace UnityEngine.UI.Extensions
 
                 _listContainerTransform.localPosition = Vector3.Lerp(_listContainerTransform.localPosition, _lerpTarget, 7.5f * Time.deltaTime);
 
-                if (Vector3.Distance(_listContainerTransform.localPosition, _lerpTarget) < 0.001f)
+                if (Vector3.Distance(_listContainerTransform.localPosition, _lerpTarget) < 0.01f)
                 {
                     _listContainerTransform.localPosition = _lerpTarget;
                     _lerp = false;
@@ -446,13 +457,22 @@ namespace UnityEngine.UI.Extensions
             if (CurrentPage() < _pages - 1)
             {
                 _lerp = true;
-                _lerpTarget = _pageAnchorPositions[CurrentPage() + 1];
+                _lerpTarget = _pageAnchorPositions[CurrentPage()+1];
 
+                //Debug.Log("Lerp Target "+_lerpTarget);
                 PageChanged(CurrentPage() + 1);
 
                 avatarCounter++;
                 Debug.Log("Value is " + avatarCounter);
                 nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+
+                ASNextButton.onClick.RemoveAllListeners();
+
+                ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver); 
+                //skipButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                    
+                
+
                 // Debug.Log("Value is "+ nameData);
                 if (avatarCounter == avatarData.Count - 1)
                 {
@@ -477,6 +497,10 @@ namespace UnityEngine.UI.Extensions
                 avatarCounter--;
                 Debug.Log("Value is " + avatarCounter);
                 nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+
+                ASNextButton.onClick.RemoveAllListeners();
+
+                ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
                 // Debug.Log("Value is " + nameData);
                 if (avatarCounter == 0)
                 {
@@ -615,7 +639,7 @@ namespace UnityEngine.UI.Extensions
                     }
                     
                     
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.2f);
                     }
               //  shuffleDuration = 0f;
                 yield return null;
