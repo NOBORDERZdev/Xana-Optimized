@@ -29,27 +29,27 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     {
         instance = this;
         CreateDictionaryFromScriptable();
-
+        yield return null;
         //Added this because of the blinking issue due to the download process when the player triggers the Situation Changer or Blind component.
 
-        AsyncOperationHandle darkSky;
-        AsyncOperationHandle blindSky;
-        bool darkSkyflag = false, blindSkyflag = false;
-        darkSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkSkyflag);
-        if (!darkSkyflag)
-            darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
-        while (!darkSky.IsDone)
-        {
-            yield return null;
-        }
+        /* AsyncOperationHandle darkSky;
+         AsyncOperationHandle blindSky;
+         bool darkSkyflag = false, blindSkyflag = false;
+         darkSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkSkyflag);
+         if (!darkSkyflag)
+             darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+         while (!darkSky.IsDone)
+         {
+             yield return null;
+         }
 
-        blindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref blindSkyflag);
-        if (!blindSkyflag)
-            blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
-        while (!blindSky.IsDone)
-        {
-            yield return null;
-        }
+         blindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref blindSkyflag);
+         if (!blindSkyflag)
+             blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
+         while (!blindSky.IsDone)
+         {
+             yield return null;
+         }*/
     }
 
 
