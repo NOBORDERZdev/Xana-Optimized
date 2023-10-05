@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExitGames.Client.Photon;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -80,27 +81,95 @@ namespace DynamicScrollRect
         //{
         //    _isDragging = false;
         //}
+        bool StateBlock = false;
+        void StateBlockReset()
+        {
+            StateBlock = false;
+        }
         private void Update()
         {
            // if (!ParentSliderFlag)
-                Debug.LogError(content.position.y + " Content " + _Content.GetThirdItemPos()+" ---- "+ content.anchoredPosition.y);
+               // Debug.LogError(content.position.y + " Content " + _Content.GetThirdItemPos()+" ---- "+ content.anchoredPosition.y);
+
+
+            if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag
+            {
+               // Debug.LogError("Top");
+                //velocity = TopScroller.velocity;
+                //verticalNormalizedPosition = 0.99998f;
+                // TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck;
+               // Debug.LogError(" TOP verticalNormalizedPosition " + TopScroller.verticalNormalizedPosition);
+                ParentSliderFlag = false;
+                if (content.anchoredPosition.y < 0f)
+                    content.anchoredPosition = Vector2.zero;
+                // TopScroller.OnDrag(eventData);
+                return;
+            }
+            else
+            {
+                if (verticalNormalizedPosition > 0.999f)
+                {
+                   // Debug.LogError("Again Top");
+                   // Debug.LogError(" TOP verticalNormalizedPosition " + verticalNormalizedPosition);
+                    TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.00001f;
+                    content.anchoredPosition = Vector2.zero;
+                    // TopScroller.velocity = velocity;
+                    ParentSliderFlag = false;
+                }
+                else
+                {
+                    //Debug.LogError("verticalNormalizedPosition " + verticalNormalizedPosition);
+                    //Debug.LogError("Bottom");
+                    ParentSliderFlag = true;
+                    // base.OnDrag(eventData);
+                }
+            }
+
+
+
+
+
             //if (content.anchoredPosition.y + _Content.GetThirdItemPos().y <= _Content.ItemHeight + _Content.Spacing.y)
             //{
             //    Debug.LogError(" Content ");
             //}
-            if (content.position.y <= 400f)
-            {
-                ParentSliderFlag = false;
-                //content.offsetMin = new Vector2(0f, 0f);
-                // content.offsetMax = new Vector2(0f, 0f);
-               // content.anchoredPosition = Vector2.zero;
-            }
-            else
-            {
-                ParentSliderFlag = true;
-            }
+            /*  if (content.position.y <= 400f)
+              {
+                  Debug.LogError(" State 0 ");
+                  Debug.LogError(content.position.y + " Content " + _Content.GetThirdItemPos() + " ---- " + content.anchoredPosition.y);
+                  ParentSliderFlag = false;
+                  //content.offsetMin = new Vector2(0f, 0f);
+                  // content.offsetMax = new Vector2(0f, 0f);
+                 // content.anchoredPosition = Vector2.zero;
+                 if(content.anchoredPosition.y < 0f)
+                  {
+                     // float temp = content.position.y;
+                      content.anchoredPosition = Vector2.zero;
+                      //content.position = new Vector2(content.position.x, 400f);
+                  }
+              }
+              else if(content.position.y > 400f && !StateBlock)
+              {
+                 // _isDragging = true;
+                  Debug.LogError( " State 1 " );
+                  if (content.anchoredPosition.y == 0f)
+                  {
+                      if(content.position.y > 400f)
+                      {
+                          content.anchoredPosition = Vector2.zero;
+                         // content.position = new Vector2(content.position.x, 400f);
+                          Invoke("StateBlockReset", 1f);
+                          StateBlock=true;
+                      }
+                      else
+                      {
+                        content.anchoredPosition = Vector2.zero;
+                      }
+                  }
+                  ParentSliderFlag = true;
+              }*/
         }
-        float ParentSliderLimitCheck = 0.09817484f;// 0.01001f;
+        float ParentSliderLimitCheck = 0.01817484f;// 0.01001f;
         public bool ParentSliderFlag = false;
         int SliderStateMachine = 0;
         public override void OnDrag(PointerEventData eventData)
@@ -108,61 +177,94 @@ namespace DynamicScrollRect
             //   Debug.LogError("OnDrag");
 
 
-            /* switch(SliderStateMachine)
-             {
-                 case 0:
-                     {
-                         if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag ////0.09817484  TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck
-                         {
-                             Debug.LogError("Top");
-                             //velocity = TopScroller.velocity;
-                             //verticalNormalizedPosition = 0.99998f;
-                             // TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck;
-                            // Debug.LogError(" TOP verticalNormalizedPosition " + TopScroller.verticalNormalizedPosition);
-                             TopScroller.OnDrag(eventData);
-                             return;
-                         }
-                         else
-                         {
-                             Debug.LogError("Switch");//+ TopScroller.verticalNormalizedPosition
-                             //TopScroller.verticalNormalizedPosition=ParentSliderLimitCheck;
-                             // velocity = TopScroller.velocity;
-                             verticalNormalizedPosition = 0f;
-                             //content.position = new Vector3(content.position.x, 370f, content.position.z);
-                           //  content.position = new Vector3(content.position.x, 370f, content.position.z);
+             //switch(SliderStateMachine)
+             //{
+             //    case 0:
+             //        {
 
-                             SliderStateMachine = 1;
-                             // _isDragging = true;
-                            // base.OnDrag(eventData);
-                             ParentSliderFlag = true;
-                            // return;
-                         }
-                         break;
-                     }
-                 case 1:
-                     {
-                         if (verticalNormalizedPosition > 0.999f)//verticalNormalizedPosition > 1f
-                         {
-                             //content.position = new Vector3(content.position.x, 368.87f, content.position.z);
-                             //verticalNormalizedPosition = 1f;
+             //           if (content.position.y <= 400f)
+             //           {
+             //               ParentSliderFlag = false;
+             //               //content.offsetMin = new Vector2(0f, 0f);
+             //               // content.offsetMax = new Vector2(0f, 0f);
+             //               // content.anchoredPosition = Vector2.zero;
+             //               if (content.anchoredPosition.y < 0f)
+             //               {
+             //                   content.anchoredPosition = Vector2.zero;
+             //               }
+             //           }
+             //           else
+             //           {
+             //               SliderStateMachine = 1;
+             //           }
+             //           /* if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag ////0.09817484  TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck
+             //            {
+             //                Debug.LogError("Top");
+             //                //velocity = TopScroller.velocity;
+             //                //verticalNormalizedPosition = 0.99998f;
+             //                // TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck;
+             //               // Debug.LogError(" TOP verticalNormalizedPosition " + TopScroller.verticalNormalizedPosition);
+             //                TopScroller.OnDrag(eventData);
+             //                return;
+             //            }
+             //            else
+             //            {
+             //                Debug.LogError("Switch");//+ TopScroller.verticalNormalizedPosition
+             //                //TopScroller.verticalNormalizedPosition=ParentSliderLimitCheck;
+             //                // velocity = TopScroller.velocity;
+             //                verticalNormalizedPosition = 0f;
+             //                //content.position = new Vector3(content.position.x, 370f, content.position.z);
+             //              //  content.position = new Vector3(content.position.x, 370f, content.position.z);
 
-                             Debug.LogError("From Bottom To Top");
-                            // Debug.LogError(" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
-                             //TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.00001f;
-                             // TopScroller.velocity = velocity;
-                             //TopScroller.OnDrag(eventData);
-                             SliderStateMachine = 0;
-                             ParentSliderFlag = false;
-                             return;
-                         }
-                         //else
-                         //{
+             //                SliderStateMachine = 1;
+             //                // _isDragging = true;
+             //               // base.OnDrag(eventData);
+             //                ParentSliderFlag = true;
+             //               // return;
+             //            }*/
+             //           break;
+             //        }
+             //    case 1:
+             //        {
 
-                         //    Debug.LogError(content.position.y+" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
-                         //}
-                         break;
-                     }
-             }
+             //               if (content.anchoredPosition.y == 0f)
+             //               {
+             //                   if (content.position.y > 397f)
+             //                   {
+             //                      // content.anchoredPosition = Vector2.zero;
+             //                       content.position = new Vector2(content.position.x, 400f);
+             //                   }
+             //                   else
+             //                       content.anchoredPosition = Vector2.zero;
+             //               }
+             //               if(content.position.y < 400f)
+             //               {
+             //                   SliderStateMachine = 0;
+             //               }
+             //               ParentSliderFlag = true;
+             //           /* if (verticalNormalizedPosition > 0.999f)//verticalNormalizedPosition > 1f
+             //            {
+             //                //content.position = new Vector3(content.position.x, 368.87f, content.position.z);
+             //                //verticalNormalizedPosition = 1f;
+
+             //                Debug.LogError("From Bottom To Top");
+             //               // Debug.LogError(" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
+             //                //TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.00001f;
+             //                // TopScroller.velocity = velocity;
+             //                //TopScroller.OnDrag(eventData);
+             //                SliderStateMachine = 0;
+             //                ParentSliderFlag = false;
+             //                return;
+             //            }
+             //            //else
+             //            //{
+
+             //            //    Debug.LogError(content.position.y+" Bottom verticalNormalizedPosition " + verticalNormalizedPosition);
+             //            //}
+             //           */
+             //           break;
+             //        }
+             //}
 
            /*  if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)//&& !ParentSliderFlag
              {
@@ -197,6 +299,10 @@ namespace DynamicScrollRect
             {
                 TopScroller.OnDrag(eventData);
                 return;
+            }
+            else
+            {
+                base.OnDrag(eventData);
             }
             if (!_isDragging)
             {
@@ -382,7 +488,10 @@ namespace DynamicScrollRect
         public HomeScreenScrollHandler TopScroller;
         private Vector2 CalculateSnapPosition()
         {
-           
+            if (!ParentSliderFlag)
+            {
+                return default;
+            }
             if (content.anchoredPosition.y < 0)
             {
                 Debug.LogError("CalculateSnapPosition vertical");
@@ -416,7 +525,6 @@ namespace DynamicScrollRect
             return result;
         }
 
-        // TODO : Consider Renaming
         #region Run Back Routine
         private void StartRunBackRoutine()
         {
@@ -434,6 +542,7 @@ namespace DynamicScrollRect
         }
         private IEnumerator RunBackProgress()
         {
+            Debug.LogError(" RunBackProgress ");
             _runningBack = true;
             float timePassed = 0;
             float duration = 0.25f;
@@ -441,6 +550,12 @@ namespace DynamicScrollRect
             Vector2 endPos = CalculateSnapPosition();
             while (timePassed < duration)
             {
+                if (!ParentSliderFlag)
+                {
+                    Debug.LogError(" RunBackProgress Break");
+                    StopRunBackRoutine();
+                    break;
+                }
                 timePassed += Time.deltaTime;
                 Vector2 pos = Vector2.Lerp(startPos, endPos, timePassed / duration);
               //  SetContentAnchoredPosition(pos);

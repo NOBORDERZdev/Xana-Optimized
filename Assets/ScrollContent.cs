@@ -38,12 +38,14 @@ namespace DynamicScrollRect
         List<WorldItemDetail> Worlds = new List<WorldItemDetail>();
         private List<WorldItemView> _activatedItems = new List<WorldItemView>();
         private List<WorldItemView> _deactivatedItems = new List<WorldItemView>();
-        private float _itemWidth => _ReferenceItem.RectTransform.rect.width;
-        public float ItemWidth => _itemWidth;
-        private float _itemHeight => _ReferenceItem.RectTransform.rect.height;
-        public float ItemHeight => _itemHeight;
+        public float ItemWidth = 344f;
+        public float ItemHeight = 344f;
+        [SerializeField]
+        private float _screenSizeX = 1080;
+        float AlignSpace = default;
         private void Awake()
         {
+            AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 2f;
             _ReferenceItem.gameObject.SetActive(false);
         }
         public void InitScrollContent(List<WorldItemDetail> contentDatum)
@@ -77,7 +79,6 @@ namespace DynamicScrollRect
              _fixedItemCount = (int)((contentSize.x + Spacing.x) / (ItemWidth + Spacing.x));*/
             //return new Vector2Int(_fixedItemCount, verticalItemCount);
             //
-            _fixedItemCount = 3;
             return new Vector2Int(_fixedItemCount, 9);
         }
 
@@ -119,11 +120,12 @@ namespace DynamicScrollRect
             int row = itemIndex - (col * _fixedItemCount);
             return new Vector2(row, col);
         }
+     
         private Vector2 GetAnchoredPosition(Vector2 gridPosition)
         {
             return new Vector2(
-                (gridPosition.x * _itemWidth) + (gridPosition.x * Spacing.x),
-                (-gridPosition.y * _itemHeight) - (gridPosition.y * Spacing.y));
+                AlignSpace+(gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
+                (-gridPosition.y * ItemHeight) - (gridPosition.y * Spacing.y));
         }
         private WorldItemView CreateNewScrollItem()
         {
