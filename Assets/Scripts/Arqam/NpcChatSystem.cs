@@ -34,20 +34,6 @@ public class NpcChatSystem : MonoBehaviour
     }
     private FeedData feed;
 
-    private class NpcApiData
-    {
-        public string worldId;
-        public int npcCount;
-    }
-    private NpcApiData npcApiData;
-
-    private class NpcSocketList
-    {
-        public bool success;
-        public string[] data;
-    }
-    private List<string> idList = new List<string>();
-
     private void Awake()
     {
         npcDB = new List<NPCAttributes>();
@@ -70,50 +56,6 @@ public class NpcChatSystem : MonoBehaviour
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
-
-    #region NPC'sSocketIdGetRegion
-    private void Start()
-    {
-        StartCoroutine(GetNpcSocketIds());
-    }
-    IEnumerator GetNpcSocketIds()
-    {
-        string prefix = "https://chat-testing.xana.net/";
-        string url = "api/v1/npc-socket-info";
-        string mainURL = prefix + url;
-
-        npcApiData = new NpcApiData
-        {
-            worldId = "406",
-            npcCount = numOfResponseWantToShow
-        };
-        string jsonData = JsonUtility.ToJson(npcApiData);
-
-        using (UnityWebRequest www = new UnityWebRequest(mainURL, "POST"))
-        {
-            byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            www.uploadHandler = new UploadHandlerRaw(jsonBytes);
-            www.downloadHandler = new DownloadHandlerBuffer();
-            www.SetRequestHeader("Content-Type", "application/json");
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log("NPC Api Error: " + www.error);
-            }
-            else
-            {
-                string apiResponse = www.downloadHandler.text;
-
-                NpcSocketList socketId = new NpcSocketList();
-                socketId = JsonUtility.FromJson<NpcSocketList>(apiResponse);
-                for (int i = 0; i < socketId.data.Length; i++)
-                    idList.Add(socketId.data[i]);
-            }
-        }
-    }
-    #endregion
 
     private void PlayerSendMsg(string msgData)
     {
