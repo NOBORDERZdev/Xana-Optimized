@@ -344,7 +344,7 @@ public class SoundManagerSettings : MonoBehaviour
        
             foreach (var gameobject in Launcher.instance.playerobjects)
             {
-                if (gameobject.GetComponent<PhotonView>().IsMine)
+                if (!gameobject.GetComponent<PhotonView>().IsMine)
                 {
                     gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
                 }
