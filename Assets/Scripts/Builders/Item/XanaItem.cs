@@ -54,60 +54,63 @@ public class XanaItem : MonoBehaviour
         {
             CollectibleComponent itemComponent = gameObject.AddComponent<CollectibleComponent>();
             itemComponent.Init(collectibleComponentData);
+
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         RotatorComponentData rotatorComponentData = itemData.rotatorComponentData;
         if (rotatorComponentData.IsActive)
         {
             RotatorComponent itemComponent = gameObject.AddComponent<RotatorComponent>();
             itemComponent.Init(rotatorComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         TimerCountdownComponentData timerCountdownComponentData = itemData.timerCountdownComponentData;
         if (timerCountdownComponentData.IsActive)
         {
             TimerCountdownComponent itemComponent = gameObject.AddComponent<TimerCountdownComponent>();
-            itemComponent.Init(timerCountdownComponentData);
+            itemComponent.Init(timerCountdownComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         AddForceComponentData addForceComponentData = itemData.addForceComponentData;
         if (addForceComponentData.isActive)
         {
             AddForceComponent itemComponent = gameObject.AddComponent<AddForceComponent>();
-            itemComponent.Init(addForceComponentData);
+            itemComponent.Init(addForceComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         TimerComponentData timerComponentData = itemData.timerComponentData;
         if (timerComponentData.IsActive)
         {
             TimerComponent itemComponent = gameObject.AddComponent<TimerComponent>();
-            itemComponent.Init(timerComponentData);
+            itemComponent.Init(timerComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         TimeLimitComponentData timeLimitComponentData = itemData.timeLimitComponentData;
         if (timeLimitComponentData.IsActive)
         {
             TimeLimitComponent itemComponent = gameObject.AddComponent<TimeLimitComponent>();
-            itemComponent.Init(timeLimitComponentData);
+            itemComponent.Init(timeLimitComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         RandomNumberComponentData randomNumberComponentData = itemData.randomNumberComponentData;
         if (randomNumberComponentData.IsActive)
         {
             RandomNumberComponent itemComponent = gameObject.AddComponent<RandomNumberComponent>();
-            itemComponent.Init(randomNumberComponentData);
+            itemComponent.Init(randomNumberComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         ElapsedTimeComponentData elapsedTimeComponentData = itemData.elapsedTimeComponentData;
         if (elapsedTimeComponentData.IsActive)
         {
             ElapsedTimeComponent itemComponent = gameObject.AddComponent<ElapsedTimeComponent>();
-            itemComponent.Init(elapsedTimeComponentData);
+            itemComponent.Init(elapsedTimeComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         NarrationComponentData narrationComponentData = itemData.narrationComponentData;
         if (narrationComponentData.IsActive)
         {
             NarrationComponent itemComponent = gameObject.AddComponent<NarrationComponent>();
-            itemComponent.Init(narrationComponentData);
+            itemComponent.Init(narrationComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         SituationChangerComponentData situationChangerComponentData = itemData.situationChangerComponentData;
         if (situationChangerComponentData.IsActive)
         {
             SituationChangerComponent itemComponent = gameObject.AddComponent<SituationChangerComponent>();
-            itemComponent.Init(situationChangerComponentData);
+            itemComponent.Init(situationChangerComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         //HealthComponentData healthComponentData = itemData.healthComponentData;
@@ -121,101 +124,110 @@ public class XanaItem : MonoBehaviour
         if (toFroComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitToFro(toFroComponentData);
+            itemComponent.InitToFro(toFroComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         TranslateComponentData translateComponentData = itemData.translateComponentData;
         if (translateComponentData.IsActive)
         {
             TranslateComponent itemComponent = gameObject.AddComponent<TranslateComponent>();
-            itemComponent.InitTranslate(translateComponentData);
+            itemComponent.InitTranslate(translateComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         ScalerComponentData scalerComponentData = itemData.scalerComponentData;
         if (scalerComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitScale(scalerComponentData);
+            itemComponent.InitScale(scalerComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         RotateComponentData rotateComponentData = itemData.rotateComponentData;
         if (rotateComponentData.IsActive)
         {
             TransformComponent itemComponent = gameObject.AddComponent<TransformComponent>();
-            itemComponent.InitRotate(rotateComponentData);
+            itemComponent.InitRotate(rotateComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         HelpButtonComponentData helpButtonComponentData = itemData.helpButtonComponentData;
         if (helpButtonComponentData.IsActive)
         {
             HelpButtonComponent itemComponent = gameObject.AddComponent<HelpButtonComponent>();
-            itemComponent.Init(helpButtonComponentData);
+            itemComponent.Init(helpButtonComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         DisplayMessageComponentData displayMessageComponentData = itemData.displayMessageComponentData;
         if (displayMessageComponentData.IsActive)
         {
             DisplayMessagesComponent itemComponent = gameObject.AddComponent<DisplayMessagesComponent>();
-            itemComponent.Init(displayMessageComponentData);
+            itemComponent.Init(displayMessageComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         QuizComponentData quizComponentData = itemData.quizComponentData;
         if (quizComponentData.IsActive)
         {
             QuizComponent itemComponent = gameObject.AddComponent<QuizComponent>();
-            itemComponent.Init(quizComponentData);
+            itemComponent.Init(quizComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         DoorKeyComponentData doorKeyComponentData = itemData.doorKeyComponentData;
         if (doorKeyComponentData.IsActive)
         {
             DoorKeyComponent itemComponent = gameObject.AddComponent<DoorKeyComponent>();
             itemComponent.Init(doorKeyComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
         if (warpFunctionComponentData.IsActive)
         {
-            WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
-            itemComponent.Init(warpFunctionComponentData);
+            if (warpFunctionComponentData.isWarpPortalStart || warpFunctionComponentData.isWarpPortalEnd)
+            {
+                WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
+                itemComponent.Init(warpFunctionComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            }
         }
 
         SpecialItemComponentData specialItemComponentData = itemData.speicalItemComponentData;
         if (specialItemComponentData.IsActive)
         {
             SpecialItemComponent itemComponent = gameObject.AddComponent<SpecialItemComponent>();
-            itemComponent.Init(specialItemComponentData);
+            itemComponent.Init(specialItemComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         BlindfoldedDisplayComponentData blindfoldedDisplayComponentData = itemData.blindfoldedDisplayComponentData;
         if (blindfoldedDisplayComponentData.IsActive)
         {
             BlindfoldedDisplayComponent itemComponent = gameObject.AddComponent<BlindfoldedDisplayComponent>();
-            itemComponent.Init(blindfoldedDisplayComponentData);
+            itemComponent.Init(blindfoldedDisplayComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
         if (ninjaComponentData.IsActive)
         {
             NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
-            itemComponent.Init(ninjaComponentData);
+            itemComponent.Init(ninjaComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
         if (throwThingsComponentData.IsActive)
         {
             ThrowThingsComponent itemComponent = gameObject.AddComponent<ThrowThingsComponent>();
-            itemComponent.Init(throwThingsComponentData);
+            itemComponent.Init(throwThingsComponentData); BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         AudioComponentData audioComponentData = itemData.audioComponentData;
         if (audioComponentData.IsActive)
         {
-            AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
-            itemComponent.Init(audioComponentData);
+            if (audioComponentData.audioPath != "")
+            {
+                AudioComponent itemComponent = gameObject.AddComponent<AudioComponent>();
+                itemComponent.Init(audioComponentData);
+                BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+            }
         }
         HyperLinkComponentData hyperLinkComponentData = itemData.hyperLinkComponentData;
         if (hyperLinkComponentData.IsActive)
         {
             HyperLinkPopComponent itemComponent = gameObject.AddComponent<HyperLinkPopComponent>();
             itemComponent.Init(hyperLinkComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
         AvatarChangerComponentData avatarChangerComponentData = itemData.avatarChangerComponentData;
@@ -223,47 +235,23 @@ public class XanaItem : MonoBehaviour
         {
             AvatarChangerComponent itemComponent = gameObject.AddComponent<AvatarChangerComponent>();
             itemComponent.InitAvatarChanger(avatarChangerComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
-        //BlindComponentData blindComponentData = itemData.blindComponentData;
-        //if (blindComponentData.IsActive)
-        //{
-        //    BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
-        //    itemComponent.Init(blindComponentData);
-        //}
+        BlindComponentData blindComponentData = itemData.blindComponentData;
+        if (blindComponentData.IsActive)
+        {
+            BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
+            itemComponent.Init(blindComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);
         itemGFXHandler.SetMaterialColorFromItemData(color);
-
-        //CreateBoxCollider();
-        //var renderers = transform.GetChild(0).GetComponentsInChildren<Renderer>();
-        //var bounds = new Bounds(transform.position, Vector3.zero);
-        //foreach (var r in renderers)
-        //{
-        //    bounds.Encapsulate(r.bounds);
-        //}
-        //var boxCollider = gameObject.AddComponent<BoxCollider>();
-        //var center = boxCollider.center;
-        //boxCollider.center = new Vector3(center.x + 1, center.y + bounds.size.y / 2, center.z + 1);
-        //boxCollider.size = bounds.size;
-        //boxCollider.isTrigger = true;
-
     }
     #endregion
 
     #region PRIVATE_METHODS
-
-    private void CreateBoxCollider()
-    {
-        BoxCollider tempCollider = transform.GetChild(0).gameObject.AddComponent<BoxCollider>();
-        Vector3 size = tempCollider.size + Vector3.one;
-        Vector3 center = tempCollider.center;
-        DestroyImmediate(transform.GetChild(0).GetComponent<BoxCollider>());
-        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-        boxCollider.size = size;
-        boxCollider.center = center;
-        boxCollider.isTrigger = true;
-    }
     #endregion
 
     #region COROUTINE

@@ -31,7 +31,7 @@ namespace Metaverse
 
         IEnumerator WaitForInit(GameObject character, int modelIndex, Sprite img)
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(0.9f, true);
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.9f, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("Assigning Character Values");
 
             yield return new WaitForSeconds(0.5f);

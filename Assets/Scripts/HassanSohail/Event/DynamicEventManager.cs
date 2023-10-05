@@ -504,6 +504,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         yield return new WaitForSeconds(4f);
         LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+        LoadingHandler.Instance.ShowLoading();
+        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f)));
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        yield return new WaitForSeconds(4f);
         SetSceneData();
     }
 
@@ -519,8 +523,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             XanaConstants.xanaConstants.userLimit = "15";
         }
         //Set These Settings after loading Json Data
-        LoadingHandler.Instance.ShowLoading();
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        
         if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
             FeedEventPrefab.m_EnvName = "Builder";
@@ -529,7 +532,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             //SceneManager.LoadScene("AddressableScene");
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+            LoadingHandler.Instance.LoadSceneByIndex("Builder", true);
         }
         else
         {
@@ -552,7 +555,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false); 
             SceneManager.LoadScene("AddressableScene");
         }
 

@@ -852,6 +852,10 @@ public class PlayerControllerNew : MonoBehaviour
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+            }
             allowJump = false;
             IsJumpButtonPress = false;
             //Debug.Log("call hua for 1==="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
@@ -1074,6 +1078,11 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
+
+        if (ReferrencesForDynamicMuseum.instance.m_34player)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+        }
 
         if (_IsGrounded)
         {
@@ -1800,6 +1809,14 @@ public class PlayerControllerNew : MonoBehaviour
         if (throwEnd != null)
             StopCoroutine(throwEnd);
         throwEnd = null;
+    }
+
+    internal void ThrowThingsEnded()
+    {
+        StartCoroutine(ThrowEnd());
+        isThrow = false;
+        isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
     }
 
     bool throwBallPositionSet, throwBall;

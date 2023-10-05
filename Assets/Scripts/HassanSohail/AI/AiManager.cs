@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Random = UnityEngine.Random;
 using UnityEngine.AI;
+using System.Buffers;
+using UnityEngine.InputSystem;
 
 namespace XanaAi
 {
@@ -25,12 +27,12 @@ namespace XanaAi
         //[SerializeField] int aiCountToSpwan;
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
-
+        //[SerializeField] List<int> aiIds;
         private CharcterBodyParts charcterBody;
         [SerializeField]
         private GameObject[] aiPrefabs;
         //private List<GameObject> spawnedNpc;
-        private int typesOfAICharacter = 3;
+        //private int typesOfAICharacter = 3;
         private int rand;
         #endregion
 
@@ -61,6 +63,10 @@ namespace XanaAi
 
                 rand = Random.Range(0, aiNames.Count);
                 aiPrefabs[i].GetComponent<AiController>().SetAiName(aiNames[rand]);       // Set npc names
+                aiNames.RemoveAt(rand);
+                //aiPrefabs[i].GetComponent<NpcChatSystem>().id = aiIds[rand];
+                //aiIds.RemoveAt(rand);
+
                 apperance.StartWandering(aiPrefabs[i].GetComponent<AiController>());      // start perform action
             }
 
@@ -108,10 +114,14 @@ namespace XanaAi
             {
                 try
                 {
-                    AsyncOperationHandle<GameObject> loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                    AsyncOperationHandle loadObj;//= Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                    bool flag = false;
+                    loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                    if (!flag)
+                        loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
                     loadObj.Completed += operationHandle =>
                     {
-                        OnLoadCompleted(operationHandle, ObjectType, ai);
+                        OnLoadCompleted(operationHandle, ObjectType, ai, key.ToLower());
                     };
                 }
                 catch (System.Exception)
@@ -124,13 +134,13 @@ namespace XanaAi
             }
         }
 
-        private void OnLoadCompleted(AsyncOperationHandle<GameObject> handle, string ObjectType, AiController ai)
+        private void OnLoadCompleted(AsyncOperationHandle handle, string ObjectType, AiController ai,string key)
         {
 
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError("Loaded Successfully");
-                GameObject loadedObject = handle.Result;
+                GameObject loadedObject = handle.Result as GameObject;
                 if (loadedObject != null)
                 {
                     ai.StichItem(-1, (GameObject)(object)loadedObject, ObjectType, ai.gameObject, false);
@@ -141,6 +151,7 @@ namespace XanaAi
                     Handheld.Vibrate();
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
+               AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
@@ -188,10 +199,14 @@ namespace XanaAi
             {
                 try
                 {
-                    AsyncOperationHandle<Texture2D> loadObj = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
+                    AsyncOperationHandle loadObj;// = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
+                    bool flag = false;
+                    loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                    if (!flag)
+                        loadObj = Addressables.LoadAssetAsync<Texture2D>(key.ToLower());
                     loadObj.Completed += operationHandle =>
                     {
-                        OnTexLoadCompleted(operationHandle, ObjectType, ai);
+                        OnTexLoadCompleted(operationHandle, ObjectType, ai, key.ToLower());
                     };
                 }
                 catch (System.Exception)
@@ -213,12 +228,12 @@ namespace XanaAi
             }
         }
 
-        void OnTexLoadCompleted(AsyncOperationHandle<Texture2D> handle, string ObjectType, AiController ai)
+        void OnTexLoadCompleted(AsyncOperationHandle handle, string ObjectType, AiController ai,string key)
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 Debug.LogError("Loaded Textures Successfully");
-                Texture2D loadedObject = handle.Result;
+                Texture2D loadedObject = handle.Result as Texture2D;
                 if (loadedObject != null)
                 {
                     if (ObjectType.Contains("EyeTexture"))
@@ -229,6 +244,9 @@ namespace XanaAi
                         charcterBody.ApplyMakeup(loadedObject, ai.gameObject);
                     else if (ObjectType.Contains("EyeLashes"))
                         charcterBody.ApplyEyeLashes(loadedObject, ai.gameObject);
+
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+
                 }
                 else
                 {
