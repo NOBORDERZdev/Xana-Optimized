@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static IPFS.GetFileInfoResponse;
+using static StoreManager;
 
 namespace DynamicScrollRect
 {
@@ -81,14 +83,17 @@ namespace DynamicScrollRect
         private void Update()
         {
            // if (!ParentSliderFlag)
-                Debug.LogError(content.position.y + " Content " + _Content.GetFirstItemPos());
-            if (content.anchoredPosition.y + _Content.GetFirstItemPos().y <= _Content.ItemHeight + _Content.Spacing.y)
-            {
-                Debug.LogError(" Content ");
-            }
+                Debug.LogError(content.position.y + " Content " + _Content.GetThirdItemPos()+" ---- "+ content.anchoredPosition.y);
+            //if (content.anchoredPosition.y + _Content.GetThirdItemPos().y <= _Content.ItemHeight + _Content.Spacing.y)
+            //{
+            //    Debug.LogError(" Content ");
+            //}
             if (content.position.y <= 400f)
             {
                 ParentSliderFlag = false;
+                //content.offsetMin = new Vector2(0f, 0f);
+                // content.offsetMax = new Vector2(0f, 0f);
+               // content.anchoredPosition = Vector2.zero;
             }
             else
             {
@@ -438,10 +443,10 @@ namespace DynamicScrollRect
             {
                 timePassed += Time.deltaTime;
                 Vector2 pos = Vector2.Lerp(startPos, endPos, timePassed / duration);
-                SetContentAnchoredPosition(pos);
+              //  SetContentAnchoredPosition(pos);
                 yield return null;
             }
-            SetContentAnchoredPosition(endPos);
+            //SetContentAnchoredPosition(endPos);
             _runningBack = false;
         }
         #endregion

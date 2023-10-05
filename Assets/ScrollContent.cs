@@ -165,6 +165,14 @@ namespace DynamicScrollRect
             }
             return _activatedItems[0].RectTransform.anchoredPosition;
         }
+        public Vector2 GetThirdItemPos()
+        {
+            if (_activatedItems.Count == 0)
+            {
+                return Vector2.zero;
+            }
+            return _activatedItems[4].RectTransform.anchoredPosition;
+        }
         public Vector2 GetLastItemPos()
         {
             if (_activatedItems.Count == 0)
