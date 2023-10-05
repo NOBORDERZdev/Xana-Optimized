@@ -67,7 +67,7 @@ namespace RFM.Managers
             Instance = this;
             EventsManager.OnHideCanvasElements();
             
-            PhotonNetwork.GameVersion = Application.version + "999"; // TODO temp
+            PhotonNetwork.GameVersion = Application.version + "998"; // TODO temp
         }
 
         
