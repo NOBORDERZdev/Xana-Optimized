@@ -330,37 +330,37 @@ public class BuilderMapDownload : MonoBehaviour
         terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
 
-    AsyncOperationHandle loadSkyBox;
-    void LoadSkyBoxData(Action addressableSceneLoad)
-    {
-        StartCoroutine(LoadSkyBoxDataCO(addressableSceneLoad));
-    }
+    //AsyncOperationHandle loadSkyBox;
+    //void LoadSkyBoxData(Action addressableSceneLoad)
+    //{
+    //    StartCoroutine(LoadSkyBoxDataCO(addressableSceneLoad));
+    //}
 
-    IEnumerator LoadSkyBoxDataCO(Action addressableSceneLoad)
-    {
+    //IEnumerator LoadSkyBoxDataCO(Action addressableSceneLoad)
+    //{
 
-        SkyProperties skyProperties = levelData.skyProperties;
-        if (skyProperties.skyId != -1)
-        {
-            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
-            if (skyBoxExist)
-            {
-                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-                bool flag = false;
-                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
-                if (!flag)
-                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-                while (!loadSkyBox.IsDone)
-                {
-                    yield return null;
-                }
-            }
-        }
+    //    SkyProperties skyProperties = levelData.skyProperties;
+    //    if (skyProperties.skyId != -1)
+    //    {
+    //        bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
+    //        if (skyBoxExist)
+    //        {
+    //            SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+    //            string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+    //            bool flag = false;
+    //            loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+    //            if (!flag)
+    //                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+    //            while (!loadSkyBox.IsDone)
+    //            {
+    //                yield return null;
+    //            }
+    //        }
+    //    }
 
-        //Load addressable scene
-        addressableSceneLoad();
-    }
+    //    //Load addressable scene
+    //    addressableSceneLoad();
+    //}
 
     void SetSkyProperties()
     {
@@ -375,19 +375,29 @@ public class BuilderMapDownload : MonoBehaviour
             bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
             if (skyBoxExist)
             {
-                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+                AsyncOperationHandle loadSkyBox;
 
+                SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
+                string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
+                bool flag = false;
+                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                if (!flag)
+                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                while (!loadSkyBox.IsDone)
+                {
+                    yield return null;
+                }
                 if (loadSkyBox.Status == AsyncOperationStatus.None)
                 {
-                    Debug.Log(" ---------- NONE ------------ SKY BOXX");
+                    //Debug.LogError(" ---------- NONE ------------ SKY BOXX");
                 }
                 else if (loadSkyBox.Status == AsyncOperationStatus.Failed)
                 {
-                    Debug.Log(" ----------- FAILED ----------- SKY BOXX");
+                    //Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
                 }
                 else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
                 {
-                    Debug.Log(" ---------- Success ------------ SKY BOXX");
+                   // Debug.LogError(" ---------- Success ------------ SKY BOXX");
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
                     RenderSettings.skybox = _mat;
