@@ -543,7 +543,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
-    [SerializeField] int autoSwitchTime;
+    //[SerializeField] int autoSwitchTime;
     [SerializeField] int StreamSwitchTime;
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
