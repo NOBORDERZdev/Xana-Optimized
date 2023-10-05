@@ -254,7 +254,7 @@ public class SoundManagerSettings : MonoBehaviour
         else
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
-            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
            // bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
