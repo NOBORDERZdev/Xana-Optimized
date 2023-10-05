@@ -187,7 +187,7 @@ public class StreamingCamera : MonoBehaviour
                     ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-                   // LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+                   LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
                 }
                
                 if (index< list.Count-1)
