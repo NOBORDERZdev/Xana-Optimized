@@ -3495,14 +3495,14 @@ MonoBehaviour:
           _serializedValue: 0
         z:
           _serializedValue: 0
-    clip: {fileID: 7400000, guid: 92fdc0d1bc216154c8ded34ef8c4fd36, type: 2}
+    clip: {fileID: -7854814337327811490, guid: d31974f3ca2c6024290b59035a2743eb, type: 3}
     customHitBoxDefinition: {fileID: 0}
     length:
-      _serializedValue: 4294967296
+      _serializedValue: 3006477312
     bakeSpeed: 1
     hitBoxDefinitionType: 0
   _animationSpeed:
-    _serializedValue: 10737418240
+    _serializedValue: 7301444608
   wrapMode: 0
   characterPrefab: {fileID: 1272366937168992, guid: fd64814b02364cc4c93cfc8c9717e635,
     type: 3}
@@ -3511,12 +3511,14 @@ MonoBehaviour:
   fps: 60
   ignoreGravity: 0
   ignoreFriction: 0
-  cancelMoveWheLanding: 1
+  cancelMoveWhenLanding: 1
+  landingMoveLink: {fileID: 0}
   forceMirrorLeft: 0
   forceMirrorRight: 0
   invertRotationLeft: 0
   invertRotationRight: 0
   autoCorrectRotation: 0
+  allowSideSwitch: 0
   frameWindowRotation: 0
   cooldown: 0
   cooldownFrames: 0
@@ -3554,7 +3556,7 @@ MonoBehaviour:
     buttonSequence: 00000000
     buttonExecution: 00000000
     editorToggle: 1
-    buttonSequenceToggle: 1
+    buttonSequenceToggle: 0
     buttonExecutionToggle: 0
   altInputs:
     chargeMove: 0
@@ -3592,7 +3594,9 @@ MonoBehaviour:
       movingBack: 1
       standBy: 1
       blocking: 0
+      blockStunned: 0
       stunned: 0
+      resetStunValue: 0
     basicMovesToggle: 0
     statesToggle: 1
   moveClassification:
@@ -3625,6 +3629,7 @@ MonoBehaviour:
     hitType: 0
     ignoreInputs: 0
     ignorePlayerConditions: 0
+    ignoreGauge: 0
     nextMoveStartupFrame: 1
     linkableMoves:
     - {fileID: 11400000, guid: d481f21fb71e0044898072c47f488e6b, type: 2}
@@ -3669,13 +3674,16 @@ MonoBehaviour:
   - castingFrame: 0
     resetPreviousVertical: 1
     resetPreviousHorizontal: 1
+    affectAssists: 0
+    affectCharacter: 1
     _force:
       x:
-        _serializedValue: 150323855360
+        _serializedValue: 85899345920
       y:
         _serializedValue: 0
       z:
         _serializedValue: 0
+  opAppliedForces: []
   slowMoEffects: []
   bodyPartVisibilityChanges: []
   opponentOverride: []
@@ -3703,6 +3711,10 @@ MonoBehaviour:
       width: 4
       height: 4
     _rect:
+      _x:
+        _serializedValue: 0
+      _y:
+        _serializedValue: 0
       topRight:
         x:
           _serializedValue: 0
@@ -3731,10 +3743,6 @@ MonoBehaviour:
           _serializedValue: 0
         z:
           _serializedValue: 0
-      x:
-        _serializedValue: 0
-      y:
-        _serializedValue: 0
       width:
         _serializedValue: 0
       height:
@@ -3776,12 +3784,14 @@ MonoBehaviour:
       z:
         _serializedValue: 0
   lockOnTargets: []
+  switchCharacterOptions: []
   invincibleBodyParts: []
   stateOverride: []
   armorOptions:
     activeFramesBegin: 0
     activeFramesEnds: 0
     overrideHitEffects: 0
+    blockHits: 0
     hitEffects:
       hitParticle: {fileID: 0}
       killTime: 0
@@ -3792,6 +3802,7 @@ MonoBehaviour:
       _animationSpeed:
         _serializedValue: 429496736
       autoHitStop: 1
+      sticky: 0
       _hitStop:
         _serializedValue: 429496736
       mirrorOn2PSide: 0
@@ -3806,3 +3817,4 @@ MonoBehaviour:
     damageAbsorption: 0
     nonAffectedBodyParts: 
   projectiles: []
+  rotationPreview: {x: 0, y: 90, z: 0}
