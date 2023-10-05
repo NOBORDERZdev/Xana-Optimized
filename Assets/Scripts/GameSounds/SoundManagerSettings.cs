@@ -342,13 +342,13 @@ public class SoundManagerSettings : MonoBehaviour
         //Debug.Log("Volume SetMicVolume===" + vol);
         //Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
        
-            foreach (var gameobject in Launcher.instance.playerobjects)
-            {
-                if (gameobject.GetComponent<PhotonView>().IsMine)
+            //foreach (var gameobject in Launcher.instance.playerobjects)
+            //{
+                if (ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().IsMine)
                 {
-                    gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
+                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
                 }
-            }
+            //}
        
         //else
         //{
