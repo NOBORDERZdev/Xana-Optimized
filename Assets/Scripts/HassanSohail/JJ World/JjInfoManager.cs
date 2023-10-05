@@ -567,10 +567,16 @@ public class JjInfoManager : MonoBehaviour
         else if (worldName.Contains("ZONE X Musuem"))
         {
             // we don't have this museum yet
+            string eventName = "";
+            eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
+            SendFirebaseEvent(eventName);
         }
         else if (worldName.Contains("FIVE ELEMENTS"))
         {
             // we don't have this museum yet
+            string eventName = "";
+            eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
+            SendFirebaseEvent(eventName);
         }
         else
         {

@@ -29,7 +29,12 @@ public class GlobalConstants
         CL_NFT_AtomRoom,
         CL_NFT_AtomRental,
         URL_AtomRoom,
-        URL_AtomRental
+        URL_AtomRental,
+        // Added New Items
+        CL_IMG_ZoneX,
+        CL_IMG_FiveElements, // Done
+        URL_ZoneX, 
+        URL_FiveElements
     }
 
     public static void SendFirebaseEvent(string eventName)
@@ -38,7 +43,10 @@ public class GlobalConstants
 
         string prefix = "T_";
 
-        if (APIBaseUrlChange.instance.IsXanaLive) { prefix = "L_"; environmentType = EnvironmentType.Live; }
+        if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            prefix = "L_"; environmentType = EnvironmentType.Live; 
+        }
         eventName = prefix + eventName;
         Debug.Log("<color=red>" + eventName + "</color>");
 
