@@ -55,21 +55,12 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
-        // if (loadSkyBox.Result != null)
-        //   Addressables.Release(loadSkyBox);
     }
 
     private void Start()
     {
         BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
-
-        //code to build a scene using json only locally.
-        //serverData = JsonUtility.FromJson<ServerData>(System.IO.File.ReadAllText(Application.persistentDataPath + "/Builder.json"));
-        //BuilderData.mapData = serverData;
-        //PopulateLevel();
-
-        //terrainPlane.transform.position += new Vector3(0, -0.001f, 0);
     }
 
 
@@ -330,38 +321,6 @@ public class BuilderMapDownload : MonoBehaviour
         terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
 
-    //AsyncOperationHandle loadSkyBox;
-    //void LoadSkyBoxData(Action addressableSceneLoad)
-    //{
-    //    StartCoroutine(LoadSkyBoxDataCO(addressableSceneLoad));
-    //}
-
-    //IEnumerator LoadSkyBoxDataCO(Action addressableSceneLoad)
-    //{
-
-    //    SkyProperties skyProperties = levelData.skyProperties;
-    //    if (skyProperties.skyId != -1)
-    //    {
-    //        bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == skyProperties.skyId);
-    //        if (skyBoxExist)
-    //        {
-    //            SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
-    //            string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-    //            bool flag = false;
-    //            loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
-    //            if (!flag)
-    //                loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-    //            while (!loadSkyBox.IsDone)
-    //            {
-    //                yield return null;
-    //            }
-    //        }
-    //    }
-
-    //    //Load addressable scene
-    //    addressableSceneLoad();
-    //}
-
     void SetSkyProperties()
     {
         StartCoroutine(SetSkyPropertiesDelay());
@@ -397,7 +356,8 @@ public class BuilderMapDownload : MonoBehaviour
                 }
                 else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
                 {
-                   // Debug.LogError(" ---------- Success ------------ SKY BOXX");
+                    // Debug.LogError(" ---------- Success ------------ SKY BOXX");
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
                     RenderSettings.skybox = _mat;
@@ -430,6 +390,7 @@ public class BuilderMapDownload : MonoBehaviour
                         skyBoxItem.texture = texture;
                         imagineImageRequest.Dispose();
                     }
+
                 }
                 GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
@@ -441,6 +402,7 @@ public class BuilderMapDownload : MonoBehaviour
 
                 if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
                     SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+
             }
             DynamicGI.UpdateEnvironment();
         }
@@ -596,24 +558,12 @@ public class BuilderMapDownload : MonoBehaviour
             childTransform.tag = "Item";
         }
 
-        //Add game object into List for Hirarchy
+        //Add game object into XanaItems List for Hirarchy
         GamificationComponentData.instance.xanaItems.Add(xanaItem);
 
 
         if (!_itemData.isVisible)
             newObj.SetActive(false);
-        //int count = levelData.otherItems.Count;
-        //for (int i = 0; i < count; i++)
-        //{
-        //    GameObject newObj = Instantiate(gameObjects[i], levelData.otherItems[i].Position,levelData.otherItems[i].Rotation);
-        //    XanaItem xanaItem = newObj.GetComponent<XanaItem>();
-        //    xanaItem.SetData(levelData.otherItems[i]);
-        //    if (xanaItem.itemBase.categoryId.Value.Equals("SPW"))
-        //    {
-        //        Debug.Log("local pos :- "+ levelData.otherItems[i].Position);
-        //        BuilderData.spawnPoint.Add(levelData.otherItems[i].Position);
-        //    }
-        //}
     }
     #endregion
 
