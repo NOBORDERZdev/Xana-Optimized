@@ -32,7 +32,7 @@ public class NpcFreeSpeech : MonoBehaviour
 
         //for live http://15.152.13.112:8032/
         //for test http://182.70.242.10:8032/
-        string prefix = "http://182.70.242.10:8032/api/v1/text_from_userid_en_35?id=";
+        string prefix = "http://15.152.13.112:8032/api/v1/text_from_userid_en_35?id=";
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
         int id = npcChatSystem.npcAttributes[temp].aiIds;
 
