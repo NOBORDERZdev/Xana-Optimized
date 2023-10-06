@@ -62,7 +62,7 @@ public class SoundManagerSettings : MonoBehaviour
         
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
-            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME,  0.015f);
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME,  0.08f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
         }
         else{
@@ -194,7 +194,7 @@ public class SoundManagerSettings : MonoBehaviour
         {
             SetBgmVolume(vol);
         });
-       
+
         //totalVolumeSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
         //bgmSlider.value = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
         //videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
@@ -226,6 +226,11 @@ public class SoundManagerSettings : MonoBehaviour
         //{
         //    SetBgmVolume(vol);
         //});
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
+            totalVolumeSlider.interactable = false;
+            totalVolumeSliderPotrait.interactable = false;
+        }
     }
     public void SetUsersVolume()
     {
@@ -281,13 +286,7 @@ public class SoundManagerSettings : MonoBehaviour
     public void SetVideoVolume(float Vol)
     {
         Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
-            totalVolumeSlider.interactable = false;
-            totalVolumeSliderPotrait.interactable = false;
-        }
-        else
-        {
+        
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
@@ -305,10 +304,9 @@ public class SoundManagerSettings : MonoBehaviour
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
+     
+   }
 
-        }
-      
-    }
     public void SetCameraSensitivity(float sensitivity)
     {
         PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, sensitivity);
