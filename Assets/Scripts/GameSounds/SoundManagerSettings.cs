@@ -254,7 +254,7 @@ public class SoundManagerSettings : MonoBehaviour
         else
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
-            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
            // bgmSlider.value = videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -338,27 +338,26 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetMicVolume(float vol)
     {
-        PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
-        Debug.Log("Volume SetMicVolume===" + vol);
-        Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-        if (totalVolumeSlider.value >= vol)
-        {
+        //PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
+        //Debug.Log("Volume SetMicVolume===" + vol);
+        //Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+       
             foreach (var gameobject in Launcher.instance.playerobjects)
             {
                 if (!gameobject.GetComponent<PhotonView>().IsMine)
                 {
-                    gameobject.GetComponent<AudioSource>().volume = vol;
+                    gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
                 }
             }
-        }
-        else
-        {
-            foreach (var gameobject in Launcher.instance.playerobjects)
-            {
-                if (!gameobject.GetComponent<PhotonView>().IsMine)
-                    gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
-            }
-        }
+       
+        //else
+        //{
+        //    foreach (var gameobject in Launcher.instance.playerobjects)
+        //    {
+        //        if (!gameobject.GetComponent<PhotonView>().IsMine)
+        //            gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
+        //    }
+        //}
     }
     //Setting AudioSource Volume Slider Range between 0 and 0.7
     public void SetAudioSourceSliderVal(AudioSource _audioSrcRef, float _vol)

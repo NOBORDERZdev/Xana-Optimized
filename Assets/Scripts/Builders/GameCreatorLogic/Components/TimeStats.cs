@@ -92,7 +92,8 @@ public class TimeStats : MonoBehaviour
                     SetNightMode();
                 else
                     SetDayMode(_lights, _intensities);
-
+                if (!_isOff)
+                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
                 return;
             }
             else
