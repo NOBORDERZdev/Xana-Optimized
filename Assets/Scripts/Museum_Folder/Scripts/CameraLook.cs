@@ -6,6 +6,7 @@ using TouchPhase = UnityEngine.TouchPhase;
 using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Climbing;
 
 public class CameraLook : MonoBehaviour
 {
@@ -43,7 +44,9 @@ public class CameraLook : MonoBehaviour
     //** Temp Variables
     float m_TempDistance;
     private Vector2 delta;
+    public bool isRFM;
     public PlayerControllerNew playerController;
+    public InputCharacterController RFMinputController;
 
     public Transform cameraPos;
 
@@ -69,7 +72,7 @@ public class CameraLook : MonoBehaviour
     }
     private void Awake()
     {
-        if (instance == null)
+        //if (instance == null)
         {
             instance = this;
         }
@@ -84,6 +87,10 @@ public class CameraLook : MonoBehaviour
         lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         playerController = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
+        if (isRFM)
+        {
+            RFMinputController = playerController.gameObject.GetComponent<InputCharacterController>();
+        }
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;
@@ -195,7 +202,7 @@ public class CameraLook : MonoBehaviour
             {
                 Touch t = Input.GetTouch(0);
                 Touch t1 = new Touch();
-                if(Input.touchCount > 1)
+                if (Input.touchCount > 1)
                     t1 = Input.GetTouch(1);
 
                 if (isRotatingScreen)     // screen is already rotation before joystick down
@@ -334,10 +341,20 @@ public class CameraLook : MonoBehaviour
 
     bool CheckCanZoom()
     {
-        if (playerController.horizontal != 0 && playerController.vertical != 0)
-            return false;
-        if (playerController.jumpNow)
-            return false;
+        if (isRFM)
+        {
+            if (RFMinputController.movement.x != 0 && RFMinputController.movement.y != 0)
+                return false;
+            if (RFMinputController.jump)
+                return false;
+        }
+        else
+        {
+            if (playerController.horizontal != 0 && playerController.vertical != 0)
+                return false;
+            if (playerController.jumpNow)
+                return false;
+        }
         return true;
     }
 
