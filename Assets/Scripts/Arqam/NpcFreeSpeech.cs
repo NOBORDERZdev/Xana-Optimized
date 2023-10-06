@@ -32,28 +32,37 @@ public class NpcFreeSpeech : MonoBehaviour
 
         //for live http://15.152.13.112:8032/
         //for test http://182.70.242.10:8032/
-        string prefix = "http://15.152.13.112:8032/api/v1/text_from_userid_en_35?id=";
+        string prefix = "";
+        int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
-        int id = npcChatSystem.npcAttributes[temp].aiIds;
+
+        if (!APIBaseUrlChange.instance.IsXanaLive)
+        {
+            prefix = "http://182.70.242.10:8032/api/v1/text_from_userid_en_35?id=";
+            id = npcChatSystem.npcAttributes[temp].aiIds;
+        }
+        else if (APIBaseUrlChange.instance.IsXanaLive)
+        {
+            prefix = "http://15.152.13.112:8032/api/v1/text_from_userid_en_35?id=";
+            id = npcChatSystem.npcAttributes[temp].actualAiIds;
+        }
 
         string url = prefix + id;
-        Debug.Log("<color=red> Communication URL: " + url + "</color>");
+        Debug.Log("<color=red> Communication URL(FreeAI): " + url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(url);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("<color=red> Communication URL: " + request.downloadHandler.text + "</color>");
-
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
-            Debug.Log("Communication Response: " + feed.response);
+            Debug.Log("Communication Response(FreeAI): " + feed.response);
         }
         else
-            Debug.LogError("Communication API Error: " + gameObject.name + request.error);
+            Debug.LogError("Communication API Error(FreeAI): " + gameObject.name + request.error);
 
         yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
         StartCoroutine(SetApiData());
