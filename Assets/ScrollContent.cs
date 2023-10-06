@@ -72,13 +72,6 @@ namespace DynamicScrollRect
         }
         private Vector2Int CalculateInitialGridSize()
         {
-            /* Vector2 contentSize = DynamicScrollRect.content.rect.size;
-             Debug.Log("DynamicScrollRect.content.rect.size  "+ DynamicScrollRect.content.rect.size);
-
-             int verticalItemCount = 4 + (int)(contentSize.y / (ItemHeight + Spacing.y));
-             _fixedItemCount = (int)((contentSize.x + Spacing.x) / (ItemWidth + Spacing.x));*/
-            //return new Vector2Int(_fixedItemCount, verticalItemCount);
-            //
             return new Vector2Int(_fixedItemCount, 9);
         }
 
@@ -124,7 +117,7 @@ namespace DynamicScrollRect
         private Vector2 GetAnchoredPosition(Vector2 gridPosition)
         {
             return new Vector2(
-                AlignSpace+(gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
+                AlignSpace + (gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
                 (-gridPosition.y * ItemHeight) - (gridPosition.y * Spacing.y));
         }
         private WorldItemView CreateNewScrollItem()
@@ -246,7 +239,6 @@ namespace DynamicScrollRect
             _activatedItems.Remove(item);
             _deactivatedItems.Add(item);
             item.gameObject.SetActive(false);
-
         }
     }
 }
