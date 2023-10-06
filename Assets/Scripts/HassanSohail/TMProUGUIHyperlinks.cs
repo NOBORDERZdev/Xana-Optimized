@@ -112,11 +112,14 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         {
             //// we don't have this museum yet
             //worldName = "1F_ZoneX_NFTclick";
+            eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
         }
         else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
         {
             //// worldName = "1F_FiveElement_NFTclick";
             // we don't have this museum yet
+
+            eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
         }
         else
         {
