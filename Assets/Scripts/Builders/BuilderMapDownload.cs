@@ -325,6 +325,9 @@ public class BuilderMapDownload : MonoBehaviour
     {
         StartCoroutine(SetSkyPropertiesDelay());
     }
+    Bloom bloom;
+    WhiteBalance whiteBalance;
+    ColorAdjustments colorAdjustments;
     IEnumerator SetSkyPropertiesDelay()
     {
         SkyProperties skyProperties = levelData.skyProperties;
@@ -373,6 +376,8 @@ public class BuilderMapDownload : MonoBehaviour
             else
             {
                 AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
+
+                //Debug.LogError(JsonUtility.ToJson(skyBoxItem));
                 if (skyBoxItem.texture == null)
                 {
                     var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
@@ -394,15 +399,19 @@ public class BuilderMapDownload : MonoBehaviour
                 }
                 GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
-                directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
-                characterLight.intensity = skyBoxItem.directionalLightData.character_directionLightIntensity;
-                directionalLight.shadowStrength = skyBoxItem.directionalLightData.directionLightShadowStrength;
-                directionalLight.color = skyBoxItem.directionalLightData.directionLightColor;
-                SetPostProcessProperties(GamificationComponentData.instance.aiPPVolumeProfile);
+                directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
+                characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
+                directionalLight.shadowStrength = skyBoxItem.lightPPData.directionalLightData.directionLightShadowStrength;
+                directionalLight.color = skyBoxItem.lightPPData.directionalLightData.directionLightColor;
 
-                if (skyBoxItem.directionalLightData.lensFlareData.falreData != null)
-                    SetLensFlareData(skyBoxItem.directionalLightData.lensFlareData.falreData, skyBoxItem.directionalLightData.lensFlareData.flareScale);
+                //set pp for AI generated skybox
+                GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out bloom);
+                GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out whiteBalance);
+                GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out colorAdjustments);
+                UpdateDirectionLightAndPPData(skyBoxItem);
 
+                if (skyBoxItem.lightPPData.directionalLightData.lensFlareData != null)
+                    SetLensFlareData(skyBoxItem.lightPPData.directionalLightData.lensFlareData.falreData, skyBoxItem.lightPPData.directionalLightData.lensFlareData.flareScale);
             }
             DynamicGI.UpdateEnvironment();
         }
@@ -427,6 +436,34 @@ public class BuilderMapDownload : MonoBehaviour
             DynamicGI.UpdateEnvironment();
         }
         GamificationComponentData.instance.isSkyLoaded = true;
+    }
+
+    private void UpdateDirectionLightAndPPData(AISkyboxItem currentItemData)
+    {
+        if (bloom)
+        {
+            bloom.active = currentItemData.lightPPData.ppData.PPBloomData.isBloomActive;
+            bloom.intensity.value = currentItemData.lightPPData.ppData.PPBloomData.intensity;
+            bloom.scatter.value = currentItemData.lightPPData.ppData.PPBloomData.scatter;
+            bloom.threshold.value = currentItemData.lightPPData.ppData.PPBloomData.threshold;
+        }
+
+        if (whiteBalance)
+        {
+            whiteBalance.active = currentItemData.lightPPData.ppData.PPWhiteBalData.isWhiteBalActive;
+            whiteBalance.temperature.value = currentItemData.lightPPData.ppData.PPWhiteBalData.temperature;
+            whiteBalance.tint.value = currentItemData.lightPPData.ppData.PPWhiteBalData.tint;
+        }
+
+        if (colorAdjustments)
+        {
+            colorAdjustments.active = currentItemData.lightPPData.ppData.PPColorAdjData.isColorAdjActive;
+            colorAdjustments.contrast.value = currentItemData.lightPPData.ppData.PPColorAdjData.contrast;
+            colorAdjustments.postExposure.value = currentItemData.lightPPData.ppData.PPColorAdjData.exposure;
+            colorAdjustments.saturation.value = currentItemData.lightPPData.ppData.PPColorAdjData.saturation;
+        }
+
+        SetPostProcessProperties(GamificationComponentData.instance.aiPPVolumeProfile);
     }
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
@@ -753,7 +790,79 @@ public class AISkyboxItem
     public string textureURL;
     public Texture2D texture;
     public string skyName;
+    //public DirectionalLightData directionalLightData;
+    public LightPPData lightPPData;
+    public AISkyboxItem()
+    {
+        lightPPData = new LightPPData();
+    }
+}
+
+[Serializable]
+public class LightPPData
+{
+    public int uniqueID;
+    public string name;
     public DirectionalLightData directionalLightData;
+    public PostProcessData ppData;
+    public LightPPData()
+    {
+        directionalLightData = new DirectionalLightData();
+        ppData = new PostProcessData();
+    }
+}
+[Serializable]
+public class PostProcessData
+{
+    public PPBloomData PPBloomData;
+    public PPWhiteBalData PPWhiteBalData;
+    public PPColorAdjData PPColorAdjData;
+
+    public PostProcessData()
+    {
+        PPBloomData = new PPBloomData();
+        PPWhiteBalData = new PPWhiteBalData();
+        PPColorAdjData = new PPColorAdjData();
+    }
+}
+[Serializable]
+public class PPBloomData
+{
+    public bool isBloomActive;
+    public float threshold, intensity, scatter;
+    public PPBloomData()
+    {
+        isBloomActive = true;
+        threshold = 1.5f;
+        intensity = 1f;
+        scatter = 0.7f;
+    }
+}
+[Serializable]
+public class PPWhiteBalData
+{
+    public bool isWhiteBalActive;
+    public float temperature, tint;
+    public PPWhiteBalData()
+    {
+        isWhiteBalActive = true;
+        temperature = -5f;
+        tint = 0;
+    }
+}
+[Serializable]
+public class PPColorAdjData
+{
+    public bool isColorAdjActive;
+    public float exposure, contrast, saturation;
+
+    public PPColorAdjData()
+    {
+        isColorAdjActive = true;
+        exposure = .3f;
+        contrast = 20f;
+        saturation = 2f;
+    }
 }
 #endregion
 
