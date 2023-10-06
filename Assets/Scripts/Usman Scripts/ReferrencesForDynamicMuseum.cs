@@ -359,7 +359,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             if (source != null)
             {
                 MonitorDistance = Vector3.Distance(MainPlayerParent.transform.position, source.transform.position);
-                Debug.Log("Distance is:" + MonitorDistance);
+               // Debug.Log("Distance is:" + MonitorDistance);
                 if (MonitorDistance <= 10)
                 {
                     SoundManagerSettings.soundManagerSettings.SetVideoVolume(1f);
