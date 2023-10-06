@@ -281,26 +281,32 @@ public class SoundManagerSettings : MonoBehaviour
     public void SetVideoVolume(float Vol)
     {
         Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
-       
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
+            totalVolumeSlider.interactable = false;
+            totalVolumeSliderPotrait.interactable = false;
+        }
+        else
+        {
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
-        // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
+            // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
             videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
 
             Debug.Log("LiveVideo" + liveVideoSource);
             if (videoSource)
             {
-                if(videoSource.GetComponent<MediaPlayer>())
-                SetAudioSourceSliderValLive(videoSource.GetComponent<MediaPlayer>(), Vol);
+                if (videoSource.GetComponent<MediaPlayer>())
+                    SetAudioSourceSliderValLive(videoSource.GetComponent<MediaPlayer>(), Vol);
                 else
-                SetAudioSourceSliderVal(videoSource, Vol);
+                    SetAudioSourceSliderVal(videoSource, Vol);
             }
             if (liveVideoSource)
             {
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
-        
-       
+
+        }
       
     }
     public void SetCameraSensitivity(float sensitivity)
