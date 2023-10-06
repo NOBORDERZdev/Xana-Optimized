@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ReferrencesForDynamicMuseum : MonoBehaviour
 {
     public GameObject[] overlayPanels;
@@ -355,7 +354,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            GameObject source = XanaLobbyManager.Instance.Source;
+            GameObject source = XanaAi.AiManager.instance.Source;
             if (source != null)
             {
                 MonitorDistance = Vector3.Distance(MainPlayerParent.transform.position, source.transform.position);

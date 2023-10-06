@@ -16,7 +16,6 @@ public class XanaLobbyManager : MonoBehaviour
     public List<XanaLobbyData> worldsData;
     public List<GameObject> placedWorlds;
     public List<Texture> WorldsLoadedSprites = new List<Texture>();
-    public GameObject Source;
     int ratioId;
     JjRatio _Ratio;
     string _Title;

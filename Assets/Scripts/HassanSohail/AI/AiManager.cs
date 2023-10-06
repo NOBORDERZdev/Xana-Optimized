@@ -20,6 +20,7 @@ namespace XanaAi
         public int decoratedAi = 0;
         [HideInInspector]
         public int SpwanedAiCount = 0;
+        public GameObject Source;
         #endregion
 
         #region private
