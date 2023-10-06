@@ -1366,7 +1366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701010385}
   m_Layer: 0
-  m_Name: ww
+  m_Name: ViewObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1380,7 +1380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701010384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2193967, y: 2.73, z: -8.77}
+  m_LocalPosition: {x: -0.2193967, y: 1.99, z: -7.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1474,6 +1474,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 701010384}
     - target: {fileID: 316962146197552292, guid: a5cd301d316654365873e105dfc4d014, type: 3}
+      propertyPath: focusOnScreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524238487163206034, guid: a5cd301d316654365873e105dfc4d014, type: 3}
+      propertyPath: lookObj
+      value: 
+      objectReference: {fileID: 701010384}
+    - target: {fileID: 1524238487163206034, guid: a5cd301d316654365873e105dfc4d014, type: 3}
       propertyPath: focusOnScreen
       value: 1
       objectReference: {fileID: 0}
@@ -4050,8 +4058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bbfa99719f2eb4fb11298b259ba9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookObj: {fileID: 0}
-  focusOnScreen: 0
+  lookObj: {fileID: 701010384}
+  focusOnScreen: 1
   smallPaining: 0
 --- !u!114 &1665444080
 MonoBehaviour:
