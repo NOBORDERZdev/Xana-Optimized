@@ -377,7 +377,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
 
-                Debug.LogError(JsonUtility.ToJson(skyBoxItem));
+                //Debug.LogError(JsonUtility.ToJson(skyBoxItem));
                 if (skyBoxItem.texture == null)
                 {
                     var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
