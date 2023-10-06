@@ -292,7 +292,7 @@ public class SoundManagerSettings : MonoBehaviour
             videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
             videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
 
-            Debug.Log("LiveVideo" + liveVideoSource);
+           // Debug.Log("LiveVideo" + liveVideoSource);
             if (videoSource)
             {
                 if (videoSource.GetComponent<MediaPlayer>())
