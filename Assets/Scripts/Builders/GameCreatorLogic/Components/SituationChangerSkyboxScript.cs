@@ -30,26 +30,32 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         instance = this;
         CreateDictionaryFromScriptable();
         yield return null;
+
         //Added this because of the blinking issue due to the download process when the player triggers the Situation Changer or Blind component.
 
-        /* AsyncOperationHandle darkSky;
-         AsyncOperationHandle blindSky;
-         bool darkSkyflag = false, blindSkyflag = false;
-         darkSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkSkyflag);
-         if (!darkSkyflag)
-             darkSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
-         while (!darkSky.IsDone)
-         {
-             yield return null;
-         }
+        AsyncOperationHandle darkblindSky;
+        bool darkblindSkyflag = false;
+        darkblindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkblindSkyflag);
+        if (!darkblindSkyflag)
+            darkblindSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+        while (!darkblindSky.IsDone)
+        {
+            yield return null;
+        }
+        if (darkblindSky.Status == AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkblindSky, "NoMoonSky");
 
-         blindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref blindSkyflag);
-         if (!blindSkyflag)
-             blindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
-         while (!blindSky.IsDone)
-         {
-             yield return null;
-         }*/
+        darkblindSkyflag = false;
+        darkblindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref darkblindSkyflag);
+        if (!darkblindSkyflag)
+            darkblindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
+        while (!darkblindSky.IsDone)
+        {
+            yield return null;
+        }
+        if (darkblindSky.Status == AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkblindSky, "BlindSky");
+
     }
 
 
@@ -65,6 +71,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         }
     }
     int indexx = 0;
+    string skyboxMatKey = "";
     public void ChangeSkyBox(int skyID)
     {
 
@@ -75,15 +82,13 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             bool skyBoxExist = skyBoxesData.skyBoxes.Exists(x => x.skyId == indexx);
             if (skyBoxExist)
             {
-                string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
+                skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
                 AsyncOperationHandle loadSkyBox;
                 bool flag = false;
                 loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
                 if (!flag)
                     loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 loadSkyBox.Completed += LoadSkyBox_Completed;
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
-
             }
             else
                 BuilderEventManager.ApplySkyoxSettings?.Invoke();
@@ -105,6 +110,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     }
     private void LoadSkyBox_Completed(AsyncOperationHandle obj)
     {
+        if(obj.Status==AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(obj, skyboxMatKey);
         Material _mat = obj.Result as Material;
         _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
         RenderSettings.skybox = _mat;
