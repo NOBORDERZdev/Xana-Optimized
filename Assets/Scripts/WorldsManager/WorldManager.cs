@@ -53,7 +53,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberEventWorld = 1;
     private int pageCount = 200;
     private bool loadOnce = true;
-    private bool dataIsFatched = false;
+    public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
 
@@ -106,7 +106,7 @@ public class WorldManager : MonoBehaviour
         BuilderEventManager.OnWorldTabChange += OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         //ScrollRectEx.OnDragEndVerticalCustom += CheckForReloading;
-        PixelPerfectScrollRect.OnDragEndVerticalCustom += CheckForReloading;
+        //PixelPerfectScrollRect.OnDragEndVerticalCustom += CheckForReloading;
 
 
         OnWorldTabChange(APIURL.Hot, true);
@@ -155,14 +155,14 @@ public class WorldManager : MonoBehaviour
         BuilderEventManager.OnWorldTabChange -= OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
         //ScrollRectEx.OnDragEndVerticalCustom -= CheckForReloading;
-        PixelPerfectScrollRect.OnDragEndVerticalCustom -= CheckForReloading;
+       // PixelPerfectScrollRect.OnDragEndVerticalCustom -= CheckForReloading;
     }
 
 
-    void CheckForReloading(float scrollPos)
+    public void WorldPageLoading()
     {
         //Debug.LogError(scrollPos);
-        if (scrollPos < .1f && dataIsFatched && listParent.gameObject.activeInHierarchy)
+        if (dataIsFatched)//  scrollPos < .1f &&&& listParent.gameObject.activeInHierarchy
         {
             loadOnce = true;
             dataIsFatched = false;
@@ -273,7 +273,7 @@ public class WorldManager : MonoBehaviour
         {
             if (isSucess)
             {
-                InstantiateWorlds();
+                InstantiateWorlds(aPIURL.ToString());
                 dataIsFatched = true;
                 UpdatePageNumber(aPIURL);
                 if (_WorldInfo.data.count > 0)
@@ -316,9 +316,9 @@ public class WorldManager : MonoBehaviour
     public string worldstr;
     bool isLobbyActive = false;
     public WorldItemManager WorldItemManager;
-    void InstantiateWorlds()
+    void InstantiateWorlds(string key)
     {
-        Debug.LogError("InstantiateWorlds Called = "+ _WorldInfo.data.rows.Count);
+        Debug.LogError("InstantiateWorlds Called = "+key+" --- "+ _WorldInfo.data.rows.Count);
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             //  WorldItemDetail worldCreateFromData = new WorldItemDetail();
@@ -415,14 +415,14 @@ public class WorldManager : MonoBehaviour
 
             }
             else
-            WorldItemManager.AddWorld(_event);
+            WorldItemManager.AddWorld(key,_event);
         }
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
             listParentHotSection.GetComponent<GridLayoutGroup>().padding.top = 25;
         }
-        WorldItemManager.DisplayWorlds();
+        WorldItemManager.DisplayWorlds(key);
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
 
         TutorialsManager.instance.ShowTutorials();

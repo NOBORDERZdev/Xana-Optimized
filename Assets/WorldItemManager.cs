@@ -5,24 +5,35 @@ using UnityEngine;
 
 public class WorldItemManager : MonoBehaviour
 {
-    List<WorldItemDetail> Worlds = new List<WorldItemDetail>();
+    [SerializeField]
+    Dictionary<string , List<WorldItemDetail>> Worlds= new Dictionary<string , List<WorldItemDetail>>();
+   // List<WorldItemDetail> Worlds = new List<WorldItemDetail>();
     public Transform WorldContentHolder;
     [SerializeField] private DynamicScrollRect.ScrollContent _content = null;
     [SerializeField] private int _itemCount = 50;
-    public void AddWorld(WorldItemDetail _world)
+    public void AddWorld(string key, WorldItemDetail _world)
     {
-        Worlds.Add(_world);
+        if(Worlds.ContainsKey(key))
+        {
+            Worlds[key].Add(_world);
+        }
+        else
+        {
+            Debug.LogError("Generate key");
+            Worlds.Add(key,new List<WorldItemDetail>());
+            Worlds[key].Add(_world);
+        }
     }
-    public void DisplayWorlds()
+    public void DisplayWorlds(string key)
     {
        // Application.targetFrameRate = 60;
        //List<ScrollItemDefault> contentDatas = new List<ScrollItemDefault>();
-        _content.TotalItems = Worlds.Count;
-       // for (int i = 0; i < _itemCount; i++)
-       // {
-       //     contentDatas.Add(new ScrollItemDefault(i));
-       // }
-        _content.InitScrollContent(Worlds);
+        _content.TotalItems = Worlds[key].Count;
+        // for (int i = 0; i < _itemCount; i++)
+        // {
+        //     contentDatas.Add(new ScrollItemDefault(i));
+        // }
+        _content.InitScrollContent(key,Worlds[key]);
     }
 }
 [Serializable]

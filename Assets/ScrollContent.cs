@@ -43,15 +43,28 @@ namespace DynamicScrollRect
         [SerializeField]
         private float _screenSizeX = 1080;
         float AlignSpace = default;
+        string CurrentKey;
         private void Awake()
         {
             AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 2f;
             _ReferenceItem.gameObject.SetActive(false);
         }
-        public void InitScrollContent(List<WorldItemDetail> contentDatum)
+        public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
         {
-            Worlds = contentDatum;
-            InitItemsVertical(contentDatum.Count);
+            if (Worlds.Count.Equals(0))
+            {
+                Worlds = contentDatum;
+            }
+            else if(worldKey != CurrentKey)
+            {
+                Worlds = default;
+            }
+            else
+            {
+                Worlds.AddRange(contentDatum);
+            }
+            CurrentKey = worldKey;
+            InitItemsVertical(Worlds.Count);
         }
         private void InitItemsVertical(int count)
         {
@@ -220,6 +233,12 @@ namespace DynamicScrollRect
                 return;
             }
             ActivateItem(itemIndex);
+            if(itemIndex >= (int)(TotalItems *.75))
+            {
+                Debug.LogError("Load NextPage");
+                if(WorldManager.instance.dataIsFatched)
+                WorldManager.instance.WorldPageLoading();
+            }
         }
         private void AddItemToHead()
         {
