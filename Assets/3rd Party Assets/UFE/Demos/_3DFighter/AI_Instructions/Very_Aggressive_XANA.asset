@@ -52,12 +52,12 @@ MonoBehaviour:
     jumpForwardFrequency: 0
     autoBlock: 1
     obeyHitType: 1
-    standBlockAccuracy: 5
+    standBlockAccuracy: 3
     crouchBlockAccuracy: 4
-    jumpBlockAccuracy: 3
+    jumpBlockAccuracy: 5
     autoAttack: 1
     obeyPreferableDistances: 1
-    attackFrequency: 5
+    attackFrequency: 4
     debugToggle: 0
   aiRules: []
   aiDefinitions:
@@ -68,11 +68,11 @@ MonoBehaviour:
       strong: 0.2
       veryStrong: 0.25
     distance:
-      veryClose: 0.02
-      close: 0.05
-      mid: 0.09
-      far: 0.16
-      veryFar: 0.2
+      veryClose: 0.05
+      close: 0.06
+      mid: 0.1
+      far: 0.11
+      veryFar: 0.18
     desirability:
       theWorstOption: 0
       veryUndesirable: 0.15
@@ -92,7 +92,7 @@ MonoBehaviour:
       dead: 0
     speed:
       verySlow: 0.5
-      slow: 0.6
-      normal: 0.7
-      fast: 0.8
-      veryFast: 0.9
+      slow: 1
+      normal: 3
+      fast: 5
+      veryFast: 7
