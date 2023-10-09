@@ -79,21 +79,22 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     [PunRPC]
     void CheckRpc(object[] Datasend)
     {
-        AvatarController otherPlayer;
-        string SendingPlayerID = Datasend[0].ToString();
-        OtherPlayerId = Datasend[0].ToString();
-        if (Datasend.Length > 2)
-            IsNFTCharacter = (bool)Datasend[2];
-        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-        _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
+        // string SendingPlayerID = Datasend[0].ToString();
+
 
         //for (int j = 0; j < Launcher.instance.playerobjects.Count; j++)
         //{
+        OtherPlayerId = Datasend[0].ToString();
         if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
         {
+            AvatarController otherPlayer;
+            if (Datasend.Length > 2)
+                IsNFTCharacter = (bool)Datasend[2];
+            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
             otherPlayer = GetComponent<AvatarController>();
             CharcterBodyParts bodyparts = otherPlayer.GetComponent<CharcterBodyParts>();
-            
+
             //otherPlayer._CharData = _CharacterData;
             if (IsNFTCharacter)
             {
@@ -302,7 +303,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 //    LightPresetNFT _lightPresetNFT = GetComponent<AvatarController>().GetLightPresetValue(_CharacterData.Skin);
                 //    GetComponent<SwitchToBoxerAvatar>().SwitchLight(_lightPresetNFT);
                 //}
-                
+
             }
             if (_CharacterData.EyeColor != null)
             {
@@ -364,11 +365,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 if (itemtype.Contains("Hair"))
                 {
-                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
+                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(), hairColor, true, true));
                 }
                 else
                 {
-                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(),Color.clear));
+                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(), Color.clear));
                 }
             }
             catch (Exception e)
@@ -445,9 +446,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
         }
     }
-       
-       
-   
+
+
+
 
 
     public void UnStichItem(string type)
