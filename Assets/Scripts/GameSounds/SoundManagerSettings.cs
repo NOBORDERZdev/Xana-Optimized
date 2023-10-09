@@ -62,7 +62,7 @@ public class SoundManagerSettings : MonoBehaviour
         
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
-            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME,  0.08f);
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
         }
         else{
@@ -226,11 +226,7 @@ public class SoundManagerSettings : MonoBehaviour
         //{
         //    SetBgmVolume(vol);
         //});
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
-            totalVolumeSlider.interactable = false;
-            totalVolumeSliderPotrait.interactable = false;
-        }
+       
     }
     public void SetUsersVolume()
     {

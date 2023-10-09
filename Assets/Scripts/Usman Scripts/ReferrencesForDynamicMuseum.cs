@@ -350,48 +350,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
-    public void DirectionaVolBGMMonitor()
-    {
-
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
-            GameObject source = XanaAi.AiManager.instance.Source;
-            if (source != null)
-            {
-                MonitorDistance = Vector3.Distance(MainPlayerParent.transform.position, source.transform.position);
-               // Debug.Log("Distance is:" + MonitorDistance);
-                if (MonitorDistance <= 10)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(1f);
-                }
-                else if (MonitorDistance > 10 && MonitorDistance <= 15)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.8f);
-                }
-                else if (MonitorDistance > 15 && MonitorDistance <= 20)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.6f);
-                }
-                else if (MonitorDistance > 20 && MonitorDistance <= 25)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.4f);
-                }
-                else if (MonitorDistance > 25 && MonitorDistance <= 30)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.2f);
-                }
-                else if (MonitorDistance > 30 && MonitorDistance <= 35)
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.1f);
-                }
-                else
-                {
-                    SoundManagerSettings.soundManagerSettings.SetVideoVolume(0.08f);
-                }
-            }
-        }
-    }
-
+   
 }
 
 

@@ -1060,7 +1060,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
-        ReferrencesForDynamicMuseum.instance.DirectionaVolBGMMonitor();
+        
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
