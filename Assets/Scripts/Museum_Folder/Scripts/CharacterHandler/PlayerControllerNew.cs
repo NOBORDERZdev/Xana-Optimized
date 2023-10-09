@@ -778,7 +778,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
-        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
+        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
 
         if (!b)
         {
@@ -794,7 +794,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.GetComponent<IKMuseum>().RPCForFreeCamEnable();
         }
 
-
+        if (isFirstPerson)
+            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
