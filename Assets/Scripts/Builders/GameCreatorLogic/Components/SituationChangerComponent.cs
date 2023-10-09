@@ -74,10 +74,10 @@ public class SituationChangerComponent : ItemComponent
             situationCo = null;
         }
 
-        if (situationCo == null && time > 0)
-            situationCo = StartCoroutine(nameof(SituationChange));
+        //if (situationCo == null && time > 0)
+        //    situationCo = StartCoroutine(nameof(SituationChange));
 
-        TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, time, this.gameObject);
+        TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
 
     }
     private void StopComponent()
