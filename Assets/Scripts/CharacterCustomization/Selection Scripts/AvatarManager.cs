@@ -118,6 +118,7 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
+                XanaConstants.xanaConstants.needToClearMemory = false;    
                 if (LoadingHandler.Instance)
                     LoadingHandler.Instance.HideLoading();
             GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
