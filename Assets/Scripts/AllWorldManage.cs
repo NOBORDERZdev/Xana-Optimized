@@ -27,7 +27,7 @@ public class AllWorldManage : MonoBehaviour
 
 
 
-    public void XanaWorldLoad()
+    public void XanaHotWorldLoad()
     {
         if (!ScrollObjectsList[0].activeSelf)
         {
@@ -36,6 +36,7 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = false;
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.Hot, true);
         }
@@ -43,7 +44,7 @@ public class AllWorldManage : MonoBehaviour
 
 
     bool allWorldLoaded = true;
-    public void CustomWorldLoad()
+    public void NewWorldLoad()
     {
         if (!ScrollObjectsList[1].activeSelf)
         {
@@ -62,6 +63,7 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = true;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = false;
 
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.AllWorld, true);
@@ -80,7 +82,7 @@ public class AllWorldManage : MonoBehaviour
 
     }
     bool myWorldLoaded = true;
-    public void EventWorldLoad()
+    public void MyWorldLoad()
     {
         if (!ScrollObjectsList[2].activeSelf)
         {
@@ -98,6 +100,7 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = true;
             FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = false;
 
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
@@ -143,6 +146,7 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = true;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = false;
 
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.GameWorld, true);
@@ -161,11 +165,11 @@ public class AllWorldManage : MonoBehaviour
     }
 
     bool eventWorldLoaded = true;
-    public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
+    public void EventWorldLoad()   //my worlds method name is also same so add new here for event category
     {
         if (!ScrollObjectsList[4].activeSelf)
         {
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem("EventWrolds"))
+            if (!PremiumUsersDetails.Instance.CheckSpecificItem("EventWorlds"))
             {
                 return;
             }
@@ -180,6 +184,7 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = false;
             FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = true;
 
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.EventWorld, true);
@@ -196,6 +201,46 @@ public class AllWorldManage : MonoBehaviour
             }
         }
     }
+
+
+    public void TestWorldLoad()
+    {
+        if (!ScrollObjectsList[5].activeSelf)
+        {
+            if (!PremiumUsersDetails.Instance.CheckSpecificItem("TestWorlds"))
+            {
+                return;
+            }
+            else
+            {
+                print("Horayyy you have Access");
+            }
+
+
+            ScrollEnableDisable(5);
+            FlexibleReact.GetComponent<FlexibleRectNewWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectNewCustomWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectNewEventWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectNewGameWorld>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectNewEventWorld_New>().enabled = false;
+            FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = true;
+
+            BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.TestWorld, true);
+            if (eventWorldLoaded)
+            {
+                eventWorldLoaded = false;
+                BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.TestWorld, (sucess) =>
+                {
+                    if (!sucess)
+                        SetTextForScroller("No world published yet.", ScrollerText[5]);
+                    else
+                        ScrollerText[5].gameObject.SetActive(false);
+                });
+            }
+        }
+    }
+
+
 
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
@@ -311,24 +356,17 @@ public class AllWorldManage : MonoBehaviour
             }
 
             WorldScrollEnableDisable(3);
-            if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+            BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.GameWorld, false);
+            if (myWorldLoaded)
             {
-                BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.GameWorld, false);
-                if (myWorldLoaded)
+                myWorldLoaded = false;
+                BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.GameWorld, (sucess) =>
                 {
-                    myWorldLoaded = false;
-                    BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.GameWorld, (sucess) =>
-                    {
-                        if (!sucess)
-                            WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[3]);
-                        else
-                            WorldPageText[3].gameObject.SetActive(false);
-                    });
-                }
-            }
-            else
-            {
-                WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[3]);
+                    if (!sucess)
+                        WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[3]);
+                    else
+                        WorldPageText[3].gameObject.SetActive(false);
+                });
             }
         }
     }
@@ -350,27 +388,55 @@ public class AllWorldManage : MonoBehaviour
             }
 
             WorldScrollEnableDisable(4);
-            if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+            BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.EventWorld, false);
+            if (myWorldLoaded)
             {
-                BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.EventWorld, false);
-                if (myWorldLoaded)
+                myWorldLoaded = false;
+                BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.EventWorld, (sucess) =>
                 {
-                    myWorldLoaded = false;
-                    BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.EventWorld, (sucess) =>
-                    {
-                        if (!sucess)
-                            WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[4]);
-                        else
-                            WorldPageText[4].gameObject.SetActive(false);
-                    });
-                }
+                    if (!sucess)
+                        WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[4]);
+                    else
+                        WorldPageText[4].gameObject.SetActive(false);
+                });
+            }
+
+        }
+    }
+
+
+    public void WorldTESTPage()
+    {
+        if (!worldPageScrollviews[5].activeSelf)
+        {
+
+            if (!PremiumUsersDetails.Instance.CheckSpecificItem("TestWorlds"))
+            {
+                return;
             }
             else
             {
-                WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[4]);
+                print("Horayyy you have Access");
             }
+
+            WorldScrollEnableDisable(5);
+            BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.TestWorld, false);
+            if (myWorldLoaded)
+            {
+                myWorldLoaded = false;
+                BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.TestWorld, (sucess) =>
+                {
+                    if (!sucess)
+                        WorldPageSetTextForScroller("You have not created any world yet.", WorldPageText[5]);
+                    else
+                        WorldPageText[5].gameObject.SetActive(false);
+                });
+            }
+
         }
     }
+
+
 
 
 
