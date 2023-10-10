@@ -345,7 +345,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
+                    hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing")
+                    || hit.collider.gameObject.CompareTag(RFM.Globals.PLAYER_TAG)) // For RFM player
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     goto CheckAgain;

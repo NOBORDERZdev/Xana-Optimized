@@ -29,28 +29,36 @@ namespace RFM.Character
         
         private void OnEnable()
         {
+            EventsManager.onGameStart += OnGameStarted;
             EventsManager.onGameTimeup += GameOver;
         }
         
         private void OnDisable()
         {
+            EventsManager.onGameStart -= OnGameStarted;
             EventsManager.onGameTimeup -= GameOver;
         }
 
         private void Start()
         {
             _nickName = $"Player{GetComponent<PhotonView>().ViewID}";
-            InvokeRepeating(nameof(AddMoney),
-                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval,
-                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval);
-            
             _maxSpeed = _navMeshAgent.speed;
+        }
+
+
+        private void OnGameStarted()
+        {
+            InvokeRepeating(nameof(AddMoney),
+                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
+                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+            
             InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
         }
         
+        
         private void AddMoney()
         {
-            _money += RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.MoneyPerInterval;
+            _money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
         }
 
         private void UpdateHuntersTransformList() 
@@ -106,6 +114,7 @@ namespace RFM.Character
         public void AIEscapeeCaught()
         {
             CancelInvoke(nameof(AddMoney));
+            CancelInvoke(nameof(EscapeFromHunters));
             RFM.Managers.RFMUIManager.Instance.EscapeeCaught(_nickName, _money);
             PhotonNetwork.Destroy(this.gameObject);
         }
