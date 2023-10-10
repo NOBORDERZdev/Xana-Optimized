@@ -51,20 +51,28 @@ namespace DynamicScrollRect
         }
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
         {
+            Debug.LogError("New Elements added === " + contentDatum.Count);
+
             if (Worlds.Count.Equals(0))
             {
                 Worlds = contentDatum;
+                CurrentKey = worldKey;
+                InitItemsVertical(Worlds.Count);
             }
             else if(worldKey != CurrentKey)
             {
-                Worlds = default;
+                Debug.LogError("Key Change === " + contentDatum.Count);
+                ClearContent();
+                Worlds = contentDatum;
+                CurrentKey = worldKey;
+                InitItemsVertical(Worlds.Count);
+
             }
-            else
+            /*else
             {
+                Debug.LogError("Previous Elements === " + Worlds.Count+"New Elements added === " + contentDatum.Count);
                 Worlds.AddRange(contentDatum);
-            }
-            CurrentKey = worldKey;
-            InitItemsVertical(Worlds.Count);
+            }*/
         }
         private void InitItemsVertical(int count)
         {
@@ -140,15 +148,15 @@ namespace DynamicScrollRect
             scrollItem.RectTransform.pivot = new Vector2(0, 1);
             return scrollItem;
         }
-        //public void ClearContent()
-        //{
-        //    List<WorldItemView> activatedItems = new List<WorldItemView>(_activatedItems);
+        public void ClearContent()
+        {
+            List<WorldItemView> activatedItems = new List<WorldItemView>(_activatedItems);
 
-        //    foreach (WorldItemView item in activatedItems)
-        //    {
-        //        DeactivateItem(item);
-        //    }
-        //}
+            foreach (WorldItemView item in activatedItems)
+            {
+                DeactivateItem(item);
+            }
+        }
         public bool CanAddNewItemIntoTail()
         {
             if (_activatedItems == null || _activatedItems.Count == 0)
@@ -221,6 +229,7 @@ namespace DynamicScrollRect
                 DeactivateItem(item);
             }
         }
+        int previousItems = 0;
         private void AddItemToTail()
         {
             if (!CanAddNewItemIntoTail())
@@ -233,11 +242,14 @@ namespace DynamicScrollRect
                 return;
             }
             ActivateItem(itemIndex);
-            if(itemIndex >= (int)(TotalItems *.75))
+            if(itemIndex >= (int)(TotalItems *.75) && TotalItems > previousItems)
             {
-                Debug.LogError("Load NextPage");
+                previousItems = TotalItems;
                 if(WorldManager.instance.dataIsFatched)
-                WorldManager.instance.WorldPageLoading();
+                {
+                    Debug.LogError(itemIndex+ " === Load NextPage Call === "+previousItems);
+                    WorldManager.instance.WorldPageLoading();
+                }
             }
         }
         private void AddItemToHead()

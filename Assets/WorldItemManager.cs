@@ -26,8 +26,10 @@ public class WorldItemManager : MonoBehaviour
     }
     public void DisplayWorlds(string key)
     {
-       // Application.targetFrameRate = 60;
-       //List<ScrollItemDefault> contentDatas = new List<ScrollItemDefault>();
+        Debug.LogError("Target Frame Rate " + Application.targetFrameRate);
+        Application.targetFrameRate = 120;
+        Debug.LogError("Target Frame Rate " + Application.targetFrameRate);
+        //List<ScrollItemDefault> contentDatas = new List<ScrollItemDefault>();
         _content.TotalItems = Worlds[key].Count;
         // for (int i = 0; i < _itemCount; i++)
         // {

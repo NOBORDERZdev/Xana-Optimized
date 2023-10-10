@@ -10,6 +10,7 @@ using AdvancedInputFieldPlugin;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
+using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public class WorldManager : MonoBehaviour
 {
@@ -97,8 +98,6 @@ public class WorldManager : MonoBehaviour
         }
 
     }
-
-    // Start is called before the first frame update
     void Start()
     {
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
@@ -107,17 +106,20 @@ public class WorldManager : MonoBehaviour
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         //ScrollRectEx.OnDragEndVerticalCustom += CheckForReloading;
         //PixelPerfectScrollRect.OnDragEndVerticalCustom += CheckForReloading;
+        ChangeWorldTab(APIURL.Hot);
 
-
-        OnWorldTabChange(APIURL.Hot, true);
-        GetBuilderWorlds(APIURL.Hot, (a) => { });
 
         //Invoke(nameof(SetAutoSwtichStreaming),2);
-        
+
         Invoke(nameof(LoadJjworld), 5);
     }
-
-    void SetAutoSwtichStreaming(){ 
+    public void ChangeWorldTab(APIURL tab)
+    {
+        OnWorldTabChange(tab, true);
+        GetBuilderWorlds(tab, (a) => { });
+    }
+    void SetAutoSwtichStreaming()
+    { 
          if (XanaConstants.xanaConstants.isCameraMan)
          {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -151,13 +153,11 @@ public class WorldManager : MonoBehaviour
         Resources.UnloadUnusedAssets();
         //   Caching.ClearCache();
 
-
         BuilderEventManager.OnWorldTabChange -= OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
         //ScrollRectEx.OnDragEndVerticalCustom -= CheckForReloading;
        // PixelPerfectScrollRect.OnDragEndVerticalCustom -= CheckForReloading;
     }
-
 
     public void WorldPageLoading()
     {
@@ -260,7 +260,6 @@ public class WorldManager : MonoBehaviour
                 return;
         }
     }
-
 
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
@@ -760,66 +759,66 @@ public class WorldManager : MonoBehaviour
     }
 
 
-
-    public void OpenAllWorldPage()
-    {
-        for (int i = 0; i < hotWorldList.Count; i++)
+    /*
+        public void OpenAllWorldPage()
         {
-            hotWorldList[i].gameObject.transform.SetParent(world_HotScroll.transform);
+            for (int i = 0; i < hotWorldList.Count; i++)
+            {
+                hotWorldList[i].gameObject.transform.SetParent(world_HotScroll.transform);
+            }
+
+            for (int i = 0; i < newWorldList.Count; i++)
+            {
+                newWorldList[i].gameObject.transform.SetParent(world_NewScroll.transform);
+            }
+
+            for (int i = 0; i < myworldWorldList.Count; i++)
+            {
+                myworldWorldList[i].gameObject.transform.SetParent(world_myworldScroll.transform);
+            }
+
+            for (int i = 0; i < gameWorldList.Count; i++)
+            {
+                gameWorldList[i].gameObject.transform.SetParent(world_GameWorldScroll.transform);
+            }
+
+            for (int i = 0; i < eventWorldList.Count; i++)
+            {
+                eventWorldList[i].gameObject.transform.SetParent(world_EventWorldScroll.transform);
+            }
+
+
+            m_AllWorldManage.WorldHotPage();
         }
 
-        for (int i = 0; i < newWorldList.Count; i++)
+        public void OpenXANAWorldPage()
         {
-            newWorldList[i].gameObject.transform.SetParent(world_NewScroll.transform);
+            for (int i = 0; i < hotWorldList.Count; i++)
+            {
+                hotWorldList[i].gameObject.transform.SetParent(listParentHotSection.transform);
+            }
+
+            for (int i = 0; i < newWorldList.Count; i++)
+            {
+                newWorldList[i].gameObject.transform.SetParent(listParentAllWorlds.transform);
+            }
+
+            for (int i = 0; i < myworldWorldList.Count; i++)
+            {
+                myworldWorldList[i].gameObject.transform.SetParent(listParentMyWorlds.transform);
+            }
+
+            for (int i = 0; i < gameWorldList.Count; i++)
+            {
+                gameWorldList[i].gameObject.transform.SetParent(listParentGameWorlds.transform);
+            }
+
+            for (int i = 0; i < eventWorldList.Count; i++)
+            {
+                eventWorldList[i].gameObject.transform.SetParent(listParentEventWorlds.transform);
+            }
         }
-
-        for (int i = 0; i < myworldWorldList.Count; i++)
-        {
-            myworldWorldList[i].gameObject.transform.SetParent(world_myworldScroll.transform);
-        }
-
-        for (int i = 0; i < gameWorldList.Count; i++)
-        {
-            gameWorldList[i].gameObject.transform.SetParent(world_GameWorldScroll.transform);
-        }
-
-        for (int i = 0; i < eventWorldList.Count; i++)
-        {
-            eventWorldList[i].gameObject.transform.SetParent(world_EventWorldScroll.transform);
-        }
-
-
-        m_AllWorldManage.WorldHotPage();
-    }
-
-    public void OpenXANAWorldPage()
-    {
-        for (int i = 0; i < hotWorldList.Count; i++)
-        {
-            hotWorldList[i].gameObject.transform.SetParent(listParentHotSection.transform);
-        }
-
-        for (int i = 0; i < newWorldList.Count; i++)
-        {
-            newWorldList[i].gameObject.transform.SetParent(listParentAllWorlds.transform);
-        }
-
-        for (int i = 0; i < myworldWorldList.Count; i++)
-        {
-            myworldWorldList[i].gameObject.transform.SetParent(listParentMyWorlds.transform);
-        }
-
-        for (int i = 0; i < gameWorldList.Count; i++)
-        {
-            gameWorldList[i].gameObject.transform.SetParent(listParentGameWorlds.transform);
-        }
-
-        for (int i = 0; i < eventWorldList.Count; i++)
-        {
-            eventWorldList[i].gameObject.transform.SetParent(listParentEventWorlds.transform);
-        }
-    }
-
+    */
 
     #region Clear Resource Unload Unused Asset File.......
     private int unloadUnusedFileCount;

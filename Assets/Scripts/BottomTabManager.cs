@@ -92,10 +92,8 @@ public class BottomTabManager : MonoBehaviour
 
     public void HomeSceneFooterSNSButtonIntrectableTrueFalse()
     {
-        //Debug.LogError("ParentName:" + this.transform.parent.gameObject.name);
         for (int i = 2; i < allButtonIcon.Count; i++)
         {
-            //  if (string.IsNullOrEmpty(PlayerPrefs.GetString("LoginToken")) || string.IsNullOrEmpty(PlayerPrefs.GetString("UserName")))
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
                 allButtonIcon[i].color = new Color(intractableFalseColor.r, intractableFalseColor.g, intractableFalseColor.b, 0.5f);
@@ -124,14 +122,6 @@ public class BottomTabManager : MonoBehaviour
         {
             CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
         }
-        /*if (this.gameObject.activeInHierarchy)
-        {
-            if (waitToLoadAvatarDataCo != null)
-            {
-                StopCoroutine(waitToLoadAvatarDataCo);
-            }
-            waitToLoadAvatarDataCo = StartCoroutine(waitToAvatarDataLoad());
-        }*/
     }
 
     Coroutine waitToLoadAvatarDataCo;
@@ -146,11 +136,9 @@ public class BottomTabManager : MonoBehaviour
     {
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
-        // LoaderShow(false);
         if (defaultSelection != 0)
         {
             OnSelectedClick(0);
-            //Initiate.Fade("Main", Color.black, 1.0f);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
@@ -163,23 +151,23 @@ public class BottomTabManager : MonoBehaviour
             }
 
             UIManager.Instance.Canvas.SetActive(true);
-            UIManager.Instance.HotSection.SetActive(true);
-            UIManager.Instance.WorldPage.SetActive(false);
+            UIManager.Instance.SwitchToScreen(0);
+            // UIManager.Instance.HotSection.SetActive(true);
+            // UIManager.Instance.WorldPage.SetActive(false);
 
             // EventList.instance.ReLoadImageAfterEnable();
-            WorldManager.instance.OpenXANAWorldPage();
+            //WorldManager.instance.OpenXANAWorldPage();
         }
     }
 
     public void OnClickNewWorldButton()
     {
-        if (!UIManager.Instance.WorldPage.activeSelf)
+        //if (!UIManager.Instance.WorldPage.activeSelf)
         {
             Debug.Log("World button onclick");
             if (defaultSelection != 1)
             {
                 OnSelectedClick(1);
-                //Initiate.Fade("Main", Color.black, 1.0f);
                 if (FindObjectOfType<AdditiveScenesManager>() != null)
                 {
                     FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
@@ -190,39 +178,17 @@ public class BottomTabManager : MonoBehaviour
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 1;
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
                 }
-
                 UIManager.Instance.Canvas.SetActive(true);
-                UIManager.Instance.WorldPage.SetActive(true);
-                UIManager.Instance.HotSection.SetActive(false);
-
-                //EventList.instance.ReLoadImageAfterEnable();
+               // UIManager.Instance.WorldPage.SetActive(true);
+                //UIManager.Instance.HotSection.SetActive(false);
+                UIManager.Instance.SwitchToScreen(1);
             }
-            //  GameManager.Instance.BottomAvatarBtnPressed();
-            WorldManager.instance.OpenAllWorldPage();
+          //  WorldManager.instance.OpenAllWorldPage();
         }
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         {
-            //Home Tab
-            //HotHomeSection.constraintCount = 4;
-            //HotHomeSection.cellSize = new Vector2(320, 320);
-            //NewHomeSection.constraintCount = 4;
-            //NewHomeSection.cellSize = new Vector2(320, 320);
-            //World Tab
-            //UIManager.Instance.HotWorldSection.transform.parent.GetComponent<gridsetup>().columns = 4;
             UIManager.Instance.HotWorldSection.constraintCount = 4;
-            //UIManager.Instance.HotWorldSection.cellSize = new Vector2(320, 320);
-            //UIManager.Instance.HotWorldSection.padding.left = 12;
-            //UIManager.Instance.HotWorldSection.padding.right = 12;
-            //UIManager.Instance.HotWorldSection.spacing = new Vector2(0,0);
-
-            //UIManager.Instance.HotWorldSection.cellSize = new Vector2(320, 320);
-            //UIManager.Instance.NewWorldSection.transform.parent.GetComponent<gridsetup>().columns = 4;
             UIManager.Instance.NewWorldSection.constraintCount = 4;
-            //UIManager.Instance.NewWorldSection.cellSize = new Vector2(320,320);
-            //UIManager.Instance.NewWorldSection.padding.left = 12;
-           // UIManager.Instance.NewWorldSection.padding.right = 12;
-           // UIManager.Instance.NewWorldSection.spacing = new Vector2(0, 0);
-            //UIManager.Instance.NewWorldSection.cellSize = new Vector2(320, 320);
         }
     }
 
