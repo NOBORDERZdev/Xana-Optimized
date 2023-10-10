@@ -246,7 +246,7 @@ public class SoundManagerSettings : MonoBehaviour
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
-            SetMicVolume(totalVolumeSliderPotrait.value);
+            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(totalVolumeSliderPotrait.value);
            // bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -336,20 +336,21 @@ public class SoundManagerSettings : MonoBehaviour
             }
         }
     }
-    public void SetMicVolume(float vol)
+    public void SetMicVolume(float vol) //Opponent Player Mic Volume Setting Using UserSldier&UserSliderPotrait
     {
-        //PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
-        //Debug.Log("Volume SetMicVolume===" + vol);
-        //Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-       
-            foreach (var gameobject in Launcher.instance.playerobjects)
+        PlayerPrefs.SetFloat(ConstantsGod.MIC, vol);
+        UserSlider.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
+        UserSliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
+
+        foreach (var gameobject in Launcher.instance.playerobjects)
+        {
+            if (!gameobject.GetComponent<PhotonView>().IsMine) 
             {
-                if (!gameobject.GetComponent<PhotonView>().IsMine)
-                {
-                    gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
-                }
+                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
+                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSliderPotrait.value;
             }
-       
+        }
+
         //else
         //{
         //    foreach (var gameobject in Launcher.instance.playerobjects)
