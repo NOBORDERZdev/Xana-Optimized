@@ -348,7 +348,6 @@ public class SoundManagerSettings : MonoBehaviour
             if (!gameobject.GetComponent<PhotonView>().IsMine) 
             {
                 gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
-                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSliderPotrait.value;
             }
         }
 
