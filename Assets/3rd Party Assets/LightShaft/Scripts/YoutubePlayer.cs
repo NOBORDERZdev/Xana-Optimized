@@ -145,16 +145,14 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-                if (JjInfoManager.Instance.IsJjWorld)
-                {
-                    audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
-                }
-                else { 
-                    if (_controller.volumeSlider != null)
-                        audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                    else
-                        audioPlayer.GetTargetAudioSource(0).volume = 1;
-                }
+
+                audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
+
+                //if (_controller.volumeSlider != null)
+                //    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                //else
+                //    audioPlayer.GetTargetAudioSource(0).volume = 1;
+
                 if (!noAudioAtacched)
                 {
                     audioPlayer.Play(); //TODO check other unity versions

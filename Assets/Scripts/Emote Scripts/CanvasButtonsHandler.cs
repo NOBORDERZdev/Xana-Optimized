@@ -208,4 +208,17 @@ public class CanvasButtonsHandler : MonoBehaviour
         if (jumpBtn)
             jumpBtn.transform.DOLocalMoveX((isActionShowing) ? 277f : 372.6f, 0.1f);
     }
+    public void EnableJJPortalPopup(GameObject obj)
+    {
+        currentPortalObject = obj;
+        JJPortalPopup.SetActive(true);
+    }
+    public void MoveFromPortal()
+    {
+        JJPortalPopup.SetActive(false);
+        //if (currentPortalObject.GetComponent<PlayerPortal>())
+            //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        if (currentPortalObject.GetComponent<JjWorldChanger>())
+            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+    }
 }

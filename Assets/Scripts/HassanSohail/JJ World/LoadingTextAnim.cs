@@ -11,7 +11,7 @@ public class LoadingTextAnim : MonoBehaviour
     //[SerializeField] float startPoint;
     [SerializeField] float speed;
     [SerializeField] List<string> texts;
-    string initialLoadingtext;
+    [SerializeField] List<string> textsJP;
     int i = 0;
     private void Start()
     {
@@ -21,7 +21,10 @@ public class LoadingTextAnim : MonoBehaviour
 
     void changeTxt()
     {
-        LoadingText.text = initialLoadingtext + texts[i].ToString();
+        if(!CustomLocalization.forceJapanese && GameManager.currentLanguage=="en")
+            LoadingText.text = texts[i];
+        else
+            LoadingText.text = textsJP[i];
         if (i < texts.Count - 1)
         {
             i++;

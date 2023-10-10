@@ -136,7 +136,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
         }
         else
-            Debug.Log(" <color=red>NetWorkissue </color=red>");
+            Debug.Log("<color=red> Analytics -- NetWorkissue </color>");
 
         www.Dispose();
     }

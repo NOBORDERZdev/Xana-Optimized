@@ -248,6 +248,7 @@ public class ItemDetail : MonoBehaviour
 
             string CurrentString = "";
             CurrentString = CategoriesEnumVar.ToString();
+            
             switch (CurrentString)
             {
                 case "HairAvatar":
@@ -505,9 +506,9 @@ public class ItemDetail : MonoBehaviour
     {
         if (GameManager.Instance.isStoreAssetDownloading || GetComponent<Image>().enabled is true)
             return;
-
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
+         
 
         switch (CurrentString)
         {

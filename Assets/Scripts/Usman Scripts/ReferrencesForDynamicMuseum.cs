@@ -31,6 +31,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public GameObject JoyStick;
     public int RoomMaxPlayerCount=0;
     public int PlayerCount = 0;
+    public float MonitorDistance;
 
     // Start is called before the first frame update
     void Awake()
@@ -298,7 +299,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         {
             if (totalCounter != null)
             {
-                if (FeedEventPrefab.m_EnvName.Contains("Xana Festival")) // for Xana Festival
+                if (/*FeedEventPrefab.m_EnvName.Contains("Xana Festival")*/ true) // for Xana Festival
                 {
                     if (XanaConstants.xanaConstants.isCameraManInRoom || XanaConstants.xanaConstants.isCameraMan)
                     {
@@ -327,19 +328,18 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     //{
                     //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     //}
-                    print("!!! PlayerCount"+ PlayerCount);
+                  // print("!!! PlayerCount"+ PlayerCount);
                 }
-                else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+                if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount)+ XanaAi.AiManager.instance.SpwanedAiCount;
                     totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
                 }
-                else
-                {
-                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount;
-                }
-                //        Debug.LogError("Player count====" + PhotonNetwork.CurrentRoom.PlayerCount+"------"+XanaConstants.xanaConstants.userLimit);
+                //else
+                //{
+                //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
+                //    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount;
+                //}
             }
         }
         catch (Exception e)
@@ -350,5 +350,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
-
+   
 }
+
+
