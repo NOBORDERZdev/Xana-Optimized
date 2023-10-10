@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MouseLook : MonoBehaviour
@@ -43,14 +44,20 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _allowRotation = true;
-        if (CameraLook.IsPointerOverUIObject())
-        {
-            _allowRotation = false;
-        }
         if (!playerController.isFirstPerson)
             return;
-        
+        if (IsPointerOverUI())
+        {
+            _allowRotation = false;
+            _allowSyncedControl =false;
+        }
+        else
+        {
+            _allowRotation = true;
+            //_allowSyncedControl = true;
+        }
+
+
 #if UNITY_EDITOR
         if (!isGyroOn && _allowRotation)
         {
@@ -82,7 +89,7 @@ public class MouseLook : MonoBehaviour
     {
         if (isGyroOn)
             return;
-        if (_allowSyncedControl && _allowRotation && !playerController.m_FreeFloatCam)
+        if (_allowSyncedControl && _allowRotation && !playerController.m_FreeFloatCam && playerController.isFirstPerson)
         {
             MoveCamera(delta);
         }
@@ -92,7 +99,7 @@ public class MouseLook : MonoBehaviour
             MoveCameraFreeFloat();
         }
 #if UNITY_EDITOR
-        if(_allowRotation)
+        if (_allowRotation)
             MouseMovement();
 
 #endif
@@ -137,7 +144,7 @@ public class MouseLook : MonoBehaviour
                 Touch t1 = Input.GetTouch(1);
                 Touch t2 = (t.position.x > t1.position.x) ? t : t1;
                 //Touch t2 = (t.position.x > 500) ? t : t1;
-                if (t2.phase == TouchPhase.Moved && t2.position.x > 500)// && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)// && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = t2.deltaPosition;
                     _allowSyncedControl = true;
@@ -150,7 +157,7 @@ public class MouseLook : MonoBehaviour
             else if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                if (t.phase == TouchPhase.Moved && t.position.x > 500) // && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
                     _allowSyncedControl = true;
@@ -167,7 +174,7 @@ public class MouseLook : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
-                if (t.phase == TouchPhase.Moved && t.position.x > 500) // && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
                     _allowSyncedControl = true;
@@ -183,7 +190,7 @@ public class MouseLook : MonoBehaviour
                 Touch t1 = Input.GetTouch(1);
                 Touch t2 = (t.position.x > t1.position.x) ? t : t1;
                 //Touch t2 = (t.position.x > 500) ? t : t1;
-                if (t2.phase == TouchPhase.Moved && t2.position.x > 500)// && (playerController.horizontal == 0 && playerController.vertical == 0))
+                if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)// && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = t2.deltaPosition;
                     _allowSyncedControl = true;
@@ -295,4 +302,22 @@ public class MouseLook : MonoBehaviour
         playerBody.RotateAround(transform.position, Vector3.up, -axis * Time.deltaTime);
     }
 
+
+     public  bool IsPointerOverUI(){
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        if (results.Count>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
 }

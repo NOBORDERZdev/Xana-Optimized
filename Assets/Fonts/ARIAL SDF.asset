@@ -217,6 +217,20 @@ MonoBehaviour:
       m_Height: 69
     m_Scale: 1
     m_AtlasIndex: 0
+  - m_Index: 9
+    m_Metrics:
+      m_Width: 54.09375
+      m_Height: 67.015625
+      m_HorizontalBearingX: 3.875
+      m_HorizontalBearingY: 65.515625
+      m_HorizontalAdvance: 60.03125
+    m_GlyphRect:
+      m_X: 413
+      m_Y: 803
+      m_Width: 55
+      m_Height: 68
+    m_Scale: 1
+    m_AtlasIndex: 0
   - m_Index: 10
     m_Metrics:
       m_Width: 9.015625
@@ -1533,32 +1547,18 @@ MonoBehaviour:
       m_Height: 76
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 3033
+  - m_Index: 909
     m_Metrics:
-      m_Width: 0
-      m_Height: 0
-      m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 0
-      m_HorizontalAdvance: 0
+      m_Width: 8.40625
+      m_Height: 54.9375
+      m_HorizontalBearingX: 6.453125
+      m_HorizontalBearingY: 66.625
+      m_HorizontalAdvance: 18.640625
     m_GlyphRect:
-      m_X: 0
-      m_Y: 0
-      m_Width: 0
-      m_Height: 0
-    m_Scale: 1
-    m_AtlasIndex: 0
-  - m_Index: 9
-    m_Metrics:
-      m_Width: 54.09375
-      m_Height: 67.015625
-      m_HorizontalBearingX: 3.875
-      m_HorizontalBearingY: 65.515625
-      m_HorizontalAdvance: 60.03125
-    m_GlyphRect:
-      m_X: 413
-      m_Y: 803
-      m_Width: 55
-      m_Height: 68
+      m_X: 73
+      m_Y: 742
+      m_Width: 9
+      m_Height: 56
     m_Scale: 1
     m_AtlasIndex: 0
   - m_Index: 945
@@ -1589,20 +1589,6 @@ MonoBehaviour:
       m_Height: 70
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 909
-    m_Metrics:
-      m_Width: 8.40625
-      m_Height: 54.9375
-      m_HorizontalBearingX: 6.453125
-      m_HorizontalBearingY: 66.625
-      m_HorizontalAdvance: 18.640625
-    m_GlyphRect:
-      m_X: 73
-      m_Y: 742
-      m_Width: 9
-      m_Height: 56
-    m_Scale: 1
-    m_AtlasIndex: 0
   - m_Index: 993
     m_Metrics:
       m_Width: 28.875
@@ -1615,6 +1601,20 @@ MonoBehaviour:
       m_Y: 672
       m_Width: 30
       m_Height: 53
+    m_Scale: 1
+    m_AtlasIndex: 0
+  - m_Index: 3033
+    m_Metrics:
+      m_Width: 0
+      m_Height: 0
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 0
+      m_HorizontalAdvance: 0
+    m_GlyphRect:
+      m_X: 0
+      m_Y: 0
+      m_Width: 0
+      m_Height: 0
     m_Scale: 1
     m_AtlasIndex: 0
   m_CharacterTable:
@@ -1637,6 +1637,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 37
     m_GlyphIndex: 8
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 38
+    m_GlyphIndex: 9
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 39
@@ -1971,6 +1975,22 @@ MonoBehaviour:
     m_GlyphIndex: 238
     m_Scale: 1
   - m_ElementType: 1
+    m_Unicode: 1575
+    m_GlyphIndex: 909
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 1587
+    m_GlyphIndex: 945
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 1604
+    m_GlyphIndex: 989
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 1605
+    m_GlyphIndex: 993
+    m_Scale: 1
+  - m_ElementType: 1
     m_Unicode: 8203
     m_GlyphIndex: 3033
     m_Scale: 1
@@ -2017,26 +2037,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 9829
     m_GlyphIndex: 390
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 38
-    m_GlyphIndex: 9
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 1587
-    m_GlyphIndex: 945
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 1604
-    m_GlyphIndex: 989
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 1575
-    m_GlyphIndex: 909
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 1605
-    m_GlyphIndex: 993
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: 4782537658295920981}
@@ -4392,8 +4392,8 @@ MonoBehaviour:
       m_FeatureLookupFlags: 0
   fallbackFontAssets: []
   m_FallbackFontAssetTable:
-  - {fileID: 11400000, guid: 95f1080c0bb66fc4a9aeb347a5dfce10, type: 2}
   - {fileID: 11400000, guid: ee9b4acdc6a59f54c8606ba9fc0ca0ee, type: 2}
+  - {fileID: 11400000, guid: aa7e415c128523742b9253e673cfc9bb, type: 2}
   m_CreationSettings:
     sourceFontFileName: 
     sourceFontFileGUID: e8db0ad75778c634b99860105c4811d3

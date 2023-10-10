@@ -43,6 +43,10 @@ public class ChracterPosition : MonoBehaviour
             
             if ((other.gameObject.tag == "PhotonLocalPlayer" || other.gameObject.tag == "Player") && other.GetComponent<PhotonView>().IsMine)
             {
+                if (ReferrencesForDynamicMuseum.instance.m_34player)
+                {
+                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                }
                 if (!PremiumUsersDetails.Instance.CheckSpecificItem("idol_Villa", false))
                 {
                     PremiumUsersDetails.Instance.vipPassUI.SetActive(true);

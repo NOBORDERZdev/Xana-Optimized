@@ -1718,7 +1718,8 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-           Debug.Log("Uploading profile pic :" + setImageAvatarTempPath);
+            Debug.Log("=========Uploading profile pic :" + setImageAvatarTempPath);
+            //Debug.Log("=========Uploading profile pic Temp name :" + setImageAvatarTempFilename);
             AWSHandler.Instance.PostAvatarObject(setImageAvatarTempPath, setImageAvatarTempFilename, "EditProfileAvatar");//upload avatar image on AWS.
         }
     }
@@ -2302,6 +2303,8 @@ public class MyProfileDataManager : MonoBehaviour
             }
             else
             {
+                //Debug.Log("--------Image not cropped");
+                setImageAvatarTempPath = "";
                 //croppedImageHolder.enabled = false;
                 //croppedImageSize.enabled = false;
             }

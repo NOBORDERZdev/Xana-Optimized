@@ -5,7 +5,7 @@ using System;
 using UnityEngine.SceneManagement;
 using Metaverse;
 using System.Collections;
-using UnityEngine.Serialization;
+using System.Linq;
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -54,8 +54,8 @@ namespace Photon.Pun.Demo.PunBasics
 		/// <summary>
 		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
 		/// </summary>
-        private string _gameVersion = "7";
-		private int _count;
+		string gameVersion = "9";
+		private int count;
 
 
         #endregion
@@ -251,6 +251,8 @@ namespace Photon.Pun.Demo.PunBasics
                 // LogFeedback("OnConnectedToMaster: Next -> try to Join Random Room");
                 print("Launcher OnConnectedToMaster: Next -> try to Join Random Room");
             }
+
+
         }
 
         
@@ -311,6 +313,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
             bool joinedRoom = false;
+            string CameraManRoomName=null;
             foreach (RoomInfo info in roomList)
             {
                 Debug.Log("Launcher Room List: Name: " + info.Name + ", MaxPlayers: " + info.MaxPlayers +
@@ -340,33 +343,44 @@ namespace Photon.Pun.Demo.PunBasics
                         joinedRoom = true;
                         break;
                     }
+                   
                 }
-               
-                if (XanaConstants.xanaConstants.isCameraMan)
-                {
-                    Debug.Log("Launcher Is cameraman: " + XanaConstants.xanaConstants.isCameraMan);
-                    if (!roomNames.Contains(info.Name)) // create new room btn
-                    {
-                        Debug.Log("Launcher Initiate Room");
-                        LoadingHandler.Instance.GetComponent<ManualRoomController>()
-                            .InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                    }
-                    else// update previous room data
-                    {
-                        if (info.PlayerCount > 0)
-                        {
-                            LoadingHandler.Instance.GetComponent<ManualRoomController>()
-                                .UpdateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                        }
-                        else
-                        {
-                            LoadingHandler.Instance.GetComponent<ManualRoomController>().DeleteRoomBtn(info.Name);
-                        }
-                    }
-                }
-                roomNames.Add(info.Name);
+                
+                //roomNames.Add(info.Name);
             }
-            
+            if (XanaConstants.xanaConstants.isCameraMan)
+            {
+                if (roomList.Count>0)
+                {
+                    List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
+                    tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+                    //PhotonNetwork.JoinRoom(tempRooms[0].Name);
+                    CameraManRoomName= tempRooms[0].Name;
+                    //print(" VALUE IS "+tempRooms);
+                    //Debug.Log("Is cameraman :--" + XanaConstants.xanaConstants.isCameraMan);
+                    //if (!roomNames.Contains(info.Name)) // create new room btn
+                    //{
+                    //    Debug.Log("Initiate Room");
+                    //    LoadingHandler.Instance.GetComponent<ManualRoomController>().InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
+                    //}
+                    //else// update previous room data
+                    //{
+                    //    if (info.PlayerCount > 0)
+                    //    {
+                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().UpdateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
+                    //    }
+                    //    else
+                    //    {
+                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().DeleteRoomBtn(info.Name);
+                    //    }
+                    //}
+                } else
+                { 
+                    // there is no room for stremaing so move to main menu to switch other world
+                    LoadFromFile.instance._uiReferences.LoadMain(false); 
+                }
+            }
+           
             if (joinedRoom == false)
             {
                 Debug.Log("Launcher Player has not joined any room "+ XanaConstants.xanaConstants.isCameraMan);
@@ -379,8 +393,14 @@ namespace Photon.Pun.Demo.PunBasics
                 while (roomNames.Contains(temp));
                 
                 if (!XanaConstants.xanaConstants.isCameraMan)
-                    PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(),
-                        new TypedLobby(_lobbyName, LobbyType.Default), null);
+                    PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
+                else
+                {
+                   // List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
+                   // tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+                   if(!CameraManRoomName.IsNullOrEmpty())
+                    PhotonNetwork.JoinRoom(CameraManRoomName);
+                }
             }
         }
 

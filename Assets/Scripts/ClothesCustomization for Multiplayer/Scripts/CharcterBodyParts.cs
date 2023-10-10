@@ -1488,4 +1488,104 @@ public class CharcterBodyParts : MonoBehaviour
         Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, PresetGredientColor);
     }
 
+
+    /// <summary>
+    /// To hide player meshes for camera man account
+    /// </summary>
+    public void HidePlayer(){ 
+        if(Body)
+        Body.gameObject.SetActive(false);
+         if(Head)
+        Head.gameObject.SetActive(false);
+         if(avatarController.wornHair)
+        avatarController.wornHair.SetActive(false);
+         if(avatarController.wornPant)
+        avatarController.wornPant.SetActive(false);
+         if(avatarController.wornShirt)
+        avatarController.wornShirt.SetActive(false);
+         if(avatarController.wornShose)
+        avatarController.wornShose.SetActive(false);
+         if(avatarController.wornEyewearable)
+        avatarController.wornEyewearable.SetActive(false);
+        if(avatarController.wornGloves)
+        avatarController.wornGloves.SetActive(false);
+         if(avatarController.wornChain)
+        avatarController.wornChain.SetActive(false);
+
+        avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(false);
+        //.gameObject.SetActive(false);
+    }
+
+
+
+    /// <summary>
+    /// To Show the player
+    /// </summary>
+     public void ShowPlayer(){ 
+        if(Body)
+        Body.gameObject.SetActive(true);
+         if(Head)
+        Head.gameObject.SetActive(true);
+         if(avatarController.wornHair)
+        avatarController.wornHair.SetActive(true);
+         if(avatarController.wornPant)
+        avatarController.wornPant.SetActive(true);
+         if(avatarController.wornShirt)
+        avatarController.wornShirt.SetActive(true);
+         if(avatarController.wornShose)
+        avatarController.wornShose.SetActive(true);
+         if(avatarController.wornEyewearable)
+        avatarController.wornEyewearable.SetActive(true);
+        if(avatarController.wornGloves)
+        avatarController.wornGloves.SetActive(true);
+         if(avatarController.wornChain)
+        avatarController.wornChain.SetActive(true);
+        avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(true);
+    }
+
+
+    /// <summary>
+    /// To Set Default texture on character
+    /// </summary>
+    /// <param name="type"> texture type</param>
+    /// <param name="applyOn">object on which texture is to be apply</param>
+     public void SetTextureDefault(CurrentTextureType type, GameObject applyOn){ 
+      switch (type){
+        case CurrentTextureType.Null:
+            break;
+        case CurrentTextureType.FaceTattoo:
+            break;
+        case CurrentTextureType.ChestTattoo:
+            break;
+        case CurrentTextureType.LegsTattoo:
+            break;
+        case CurrentTextureType.ArmTattoo:
+            break;
+        case CurrentTextureType.Mustache:
+            applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, applyOn);
+            break;
+        case CurrentTextureType.EyeLid:
+            break;
+        case CurrentTextureType.EyeLense:
+                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
+            break;
+        case CurrentTextureType.EyeLashes:
+            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+            break;
+        case CurrentTextureType.EyeBrows:
+            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+            break;
+        case CurrentTextureType.Skin:
+            break;
+        case CurrentTextureType.Lip:
+                applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(null, applyOn);
+            break;
+        case CurrentTextureType.Makeup:
+            applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+            break;
+        default:
+            break;
+        }   
+        
+     }
 }

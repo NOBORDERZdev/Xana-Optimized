@@ -55,6 +55,8 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject portraitJoystick;
 
     public GameObject jumpBtn;
+    public GameObject JJPortalPopup;
+    public GameObject currentPortalObject;
     private void Start()
     {
         spirit = maxSpirit;
@@ -69,7 +71,8 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     private void OnEnable()
     {
-
+        if (_inst != this)
+            _inst = this;
     }
 
     public void HandleJumpBtnAction(bool jump)
@@ -281,5 +284,18 @@ public class CanvasButtonsHandler : MonoBehaviour
         actionToggleImg.rotation = Quaternion.Euler(rot);
         if (jumpBtn)
             jumpBtn.transform.DOLocalMoveX((isActionShowing) ? 277f : 372.6f, 0.1f);
+    }
+    public void EnableJJPortalPopup(GameObject obj)
+    {
+        currentPortalObject = obj;
+        JJPortalPopup.SetActive(true);
+    }
+    public void MoveFromPortal()
+    {
+        JJPortalPopup.SetActive(false);
+        //if (currentPortalObject.GetComponent<PlayerPortal>())
+            //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        if (currentPortalObject.GetComponent<JjWorldChanger>())
+            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
     }
 }

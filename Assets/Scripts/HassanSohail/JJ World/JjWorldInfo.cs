@@ -47,6 +47,10 @@ public class JjWorldInfo : MonoBehaviour
                 {
                     JjInfoManager.Instance.SetInfo(NftRatio,JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].WorldImage, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink);
                 }
+                else if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+                {
+                    JjInfoManager.Instance.SetInfo(NftRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].WorldImage, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink);
+                }
             }
         }
     }

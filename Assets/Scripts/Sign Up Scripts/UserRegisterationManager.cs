@@ -1363,9 +1363,9 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
-            yield return new WaitForSeconds(.1f);
-            LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
-            yield return new WaitForSeconds(.1f);
+            //yield return new WaitForSeconds(.1f);
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
+            //yield return new WaitForSeconds(.1f);
             LoadingHandler.Instance.HideLoading();
             StoreManager.instance.CheckWhenUserLogin();
         }
@@ -1381,6 +1381,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetInt("WalletLogin", 0);
          userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
+        XanaConstants.xanaConstants.userId = null;
+
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
         {
@@ -1398,12 +1400,24 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
 
+        // [Waqas] Store Guest Username Locally
+        string tempName1 = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+        string tempName2 = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
+
         int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
+
+        //[Waqas] Reset Guest Username After Delete All
+        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME,tempName1);
+        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME,tempName2);
+        PlayerPrefs.SetString("publicID","");
+
+
+
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
@@ -1419,9 +1433,9 @@ public class UserRegisterationManager : MonoBehaviour
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().UpdateStoreList();
 
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
-        yield return new WaitForSeconds(.1f);
-        LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
-        yield return new WaitForSeconds(.1f);
+        //yield return new WaitForSeconds(.1f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
+        //yield return new WaitForSeconds(.1f);
         LoadingHandler.Instance.HideLoading();
         XanaConstants.xanaConstants.isCameraMan = false;
         XanaConstants.xanaConstants.IsDeemoNFT = false;
@@ -3004,6 +3018,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
+                        XanaConstants.xanaConstants.userId = L_LoginObject.id;
                     }
                     PlayerPrefs.Save();
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);
@@ -3726,6 +3741,8 @@ public class UserRegisterationManager : MonoBehaviour
                         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("firstTime", 1);
                         PlayerPrefs.Save();
+
+                        XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
                         //Talha Changes 
                         //if (!ComesFromLogOut)
                         //{
@@ -3791,7 +3808,8 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("shownWelcome", 1);
                     PlayerPrefs.SetInt("firstTime", 1);
 
-
+                    XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
+                    
                     if (!AutoLoginBool)
                     {
                         // savePasswordList.instance.saveData(LoginEmailNew.Text.Trim(), LoginPasswordShiftCode.GetText().Trim());
@@ -4423,7 +4441,7 @@ public class UserRegisterationManager : MonoBehaviour
     [System.Serializable]
     public class UserData
     {
-        public int id;
+        public string id;
         public string name;
         public string email;
         public string phoneNumber;

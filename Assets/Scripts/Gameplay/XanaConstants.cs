@@ -18,6 +18,7 @@ public class XanaConstants : MonoBehaviour
     public int mic;
     public int minimap;
     public int userName;
+    public string userId;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;
@@ -25,6 +26,7 @@ public class XanaConstants : MonoBehaviour
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
+    public GameObject _lastAvatarClickedBtn;
     public GameObject _curretClickedBtn;
     public bool IsMuseum = false;
     public bool IsDeemoNFT = false;
@@ -69,7 +71,9 @@ public class XanaConstants : MonoBehaviour
     public bool isPresetHairColor = false;
     public bool isCameraMan;
     public bool isCameraManInRoom = false;
+    public bool isBackfromSns = false;
 
+    public bool isBackFromWorld = false;
 
     public String MuseumID;
 
@@ -103,6 +107,7 @@ public class XanaConstants : MonoBehaviour
 
     // Tutorials
     public bool isTutorialLoaded=false;
+    public bool isLobbyTutorialLoaded = false;
     public string r_EmoteStoragePersistentPath
     {
         get
