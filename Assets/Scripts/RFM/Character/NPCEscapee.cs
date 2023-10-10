@@ -41,8 +41,8 @@ namespace RFM.Character
         {
             _nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             InvokeRepeating(nameof(AddMoney),
-                RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval,
-                RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.GainingMoneyTimeInterval);
+                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval,
+                RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval);
             
             _maxSpeed = _navMeshAgent.speed;
             InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
@@ -50,7 +50,7 @@ namespace RFM.Character
         
         private void AddMoney()
         {
-            _money += RFM.Managers.RFMManager.Instance.CurrentGameConfiguration.MoneyPerInterval;
+            _money += RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.MoneyPerInterval;
         }
 
         private void UpdateHuntersTransformList() 

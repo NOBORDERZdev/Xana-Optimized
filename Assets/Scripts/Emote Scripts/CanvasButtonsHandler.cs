@@ -60,11 +60,8 @@ public class CanvasButtonsHandler : MonoBehaviour
         spirit = maxSpirit;
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
-        bool RFMUI = false;
-        if (FeedEventPrefab.m_EnvName == "RFMDummy")
-        {
-            RFMUI = true;
-        }
+        
+        bool RFMUI = FeedEventPrefab.m_EnvName == "RFMDummy";
         slideBtn.gameObject.SetActive(RFMUI);
         runBtn.gameObject.SetActive(RFMUI);
         favouriteBtn.gameObject.SetActive(!RFMUI);

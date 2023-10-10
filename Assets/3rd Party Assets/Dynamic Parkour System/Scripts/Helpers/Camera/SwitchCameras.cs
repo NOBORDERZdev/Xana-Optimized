@@ -17,11 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using Cinemachine.Utility;
+using Photon.Pun;
 
 namespace Climbing
 {
@@ -70,6 +72,18 @@ namespace Climbing
             {
                 FreeLook.Priority = 0;
                 Slide.Priority = 1;
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (Time.frameCount % 10 == 0) // to check after every 10 frames
+            {
+                if (!FreeLook.Follow)
+                {
+                    Debug.LogError("RFM Reassigning player to RFMCamera");
+                    SetCameraTargets();
+                }
             }
         }
 

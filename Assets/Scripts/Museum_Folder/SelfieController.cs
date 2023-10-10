@@ -448,8 +448,8 @@ public class SelfieController : MonoBehaviour
     public void DisableSelfieFeature()
     {
 
-        m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton.SetActive(false);
-        m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton_Portait.SetActive(false);
+        m_PlayerController.GetComponent<PlayerControllerNew>()?.gyroButton.SetActive(false);
+        m_PlayerController.GetComponent<PlayerControllerNew>()?.gyroButton_Portait.SetActive(false);
 
 #if UNITY_EDITOR
 

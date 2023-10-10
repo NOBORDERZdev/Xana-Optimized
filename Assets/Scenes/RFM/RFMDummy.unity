@@ -415,6 +415,7 @@ GameObject:
   - component: {fileID: 159555526}
   - component: {fileID: 159555525}
   - component: {fileID: 159555530}
+  - component: {fileID: 159555531}
   m_Layer: 10
   m_Name: FreeLookCam
   m_TagString: Untagged
@@ -464,7 +465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159555523}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb7194dc27b9df64c8beca7482ee8e0d, type: 3}
   m_Name: 
@@ -629,7 +630,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159555523}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac6e6778b52e8cd46ba85dbab62e96ee, type: 3}
   m_Name: 
@@ -639,6 +640,38 @@ MonoBehaviour:
   minZoom: 5
   maxZoom: 15
   zoomSpeed: 0.2
+--- !u!114 &159555531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159555523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2db83d993b511a4880ef21489671f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientationType: 0
+  lookSpeed: 2
+  lookSpeedd: 0
+  cinemachine: {fileID: 0}
+  freelookup: {fileID: 0}
+  gyroCheck: 0
+  editorSensitivity: 0.05
+  lockRotation: 0
+  zoomInLimit: -2
+  zoomOutLimit: 3.2
+  zoomSensitivity: 5
+  _allowSyncedControl: 0
+  _allowRotation: 1
+  m_PressCounter: 0
+  isRFM: 1
+  playerController: {fileID: 0}
+  RFMinputController: {fileID: 0}
+  cameraPos: {fileID: 0}
+  isJoystickPressed: 0
+  isRotatingScreen: 0
 --- !u!199 &168201557
 ParticleSystemRenderer:
   serializedVersion: 6
