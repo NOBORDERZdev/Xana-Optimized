@@ -98,11 +98,11 @@ public class LoadingHandler : MonoBehaviour
     {
         sliderFinalValue = Random.Range(80f, 95f);
         StartCoroutine(StartBGChange());
-//#if UNITY_EDITOR
-//        Debug.unityLogger.logEnabled = true;
-//#else
-//                        Debug.unityLogger.logEnabled = false;
-//#endif
+        //#if UNITY_EDITOR
+        //        Debug.unityLogger.logEnabled = true;
+        //#else
+        //                        Debug.unityLogger.logEnabled = false;
+        //#endif
     }
 
     //private void Update()
@@ -184,22 +184,54 @@ public class LoadingHandler : MonoBehaviour
         }
         JJLoadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
     }
-    public void ShowLoading()
+   
+    public void ShowLoading(ScreenOrientation oriantation = ScreenOrientation.Portrait)
     {
         if (/*XanaConstants.xanaConstants.JjWorldSceneChange*/teleportFeader.gameObject.activeInHierarchy)
         {
             return;
         }
-        //Screen.orientation = ScreenOrientation.LandscapeLeft;
-        if (!loadingPanel.activeInHierarchy && !teleportFeader.gameObject.activeInHierarchy)
+        ResetLoadingValues();
+        bool isFedderActive = false;
+        //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
+        if (Screen.orientation != oriantation)
         {
-            currentValue = 0;
-            isLoadingComplete = false;
-            timer = 0;
-            loadingSlider.fillAmount = 0f;
-            loadingPercentageText.text = "0%".ToString();
-            JJLoadingSlider.fillAmount = 0f;
-            JJLoadingPercentageText.text = "0%".ToString();
+            isFedderActive = true;
+            Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            blackScreen.DOFade(1, 0.2f).OnComplete(delegate
+            {
+                Screen.orientation = oriantation;
+                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
+            });
+        }
+
+
+        StartCoroutine(CustomLoading(isFedderActive));
+    }
+
+    void ResetLoadingValues()
+    {
+        currentValue = 0;
+        isLoadingComplete = false;
+        timer = 0;
+        loadingSlider.fillAmount = 0f;
+        loadingPercentageText.text = "0%".ToString();
+        JJLoadingSlider.fillAmount = 0f;
+        JJLoadingPercentageText.text = "0%".ToString();
+    }
+    IEnumerator CustomLoading(bool needWait = false)
+    {
+        if (needWait)
+        {
+            Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            yield return new WaitForSeconds(1f);
+            blackScreen.DOFade(0, 1f);
+        }
+
+
+        if (!loadingPanel.activeInHierarchy)
+        {
+           
             loadingPanel.SetActive(true);
         }
 
@@ -210,18 +242,41 @@ public class LoadingHandler : MonoBehaviour
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
         AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
-
     }
 
-    public void HideLoading()
+
+    public void HideLoading(ScreenOrientation oriantation, bool needFader = false)
     {
+        //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
+        if (needFader && Screen.orientation != oriantation)
+        {
+            Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            blackScreen.DOFade(1, 0.2f).OnComplete(delegate
+            {
+                Screen.orientation = oriantation;
+                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ ");
+            });
+        }
+
+
+        StartCoroutine(CustomHideLoading(needFader));
+    }
+    IEnumerator CustomHideLoading(bool needWait = false)
+    {
+        if (needWait)
+        {
+            Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            yield return new WaitForSeconds(1f);
+            blackScreen.DOFade(0, 1f);
+        }
+
         if (ReferrencesForDynamicMuseum.instance != null)
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
         loadingPanel.SetActive(false);
 
         if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
         {
-           // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
+            // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
             //Screen.orientation = ScreenOrientation.Portrait;
         }
 
@@ -230,66 +285,64 @@ public class LoadingHandler : MonoBehaviour
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
 
-        if (XanaConstants.xanaConstants.isBackFromWorld)
-            HideFadderAfterOriantationChanged(1.5f);
+        //if (XanaConstants.xanaConstants.isBackFromWorld)
+        //    HideFadderAfterOriantationChanged(1.5f);
     }
 
-    bool orientationchanged = false;
-    public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
-    {
-       // Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOKill();
-#if !UNITY_EDITOR
 
-           // Removing Delay Time 
-            blackScreen.DOFade(1, 0f);
-            Screen.orientation = oriantation;
-            orientationchanged = false;
-            StartCoroutine(Check_Orientation(oriantation));
+    //bool orientationchanged = false;
+    //    public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
+    //    {
+    //        Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
+    //        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+    //        blackScreen.DOKill();
+    //#if !UNITY_EDITOR
 
-
- //blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
- //       {
- //           Screen.orientation = oriantation;
- //           orientationchanged = false;
- //           StartCoroutine(Check_Orientation(oriantation));
- //            });
-#else
-
-        Screen.orientation = oriantation;
-#endif
-
-        //Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
+    //           // Removing Delay Time 
+    //            blackScreen.DOFade(1, 0f);
+    //            Screen.orientation = oriantation;
+    //            orientationchanged = false;
+    //            StartCoroutine(Check_Orientation(oriantation));
 
 
+    // //blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
+    // //       {
+    // //           Screen.orientation = oriantation;
+    // //           orientationchanged = false;
+    // //           StartCoroutine(Check_Orientation(oriantation));
+    // //            });
+    //#else
 
-    }
-    public void HideFadderAfterOriantationChanged(float delay = 0)
-    {
-       // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(delay);
-        XanaConstants.xanaConstants.isBackFromWorld = false;
-    }
+    //        Screen.orientation = oriantation;
+    //#endif
 
-    private IEnumerator Check_Orientation(ScreenOrientation oriantation)
-    {
-    CheckAgain:
-      //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
-        yield return new WaitForSeconds(.2f);
-        if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
-        {
-            if(!XanaConstants.xanaConstants.isBackFromWorld)
-                HideFadderAfterOriantationChanged();
-        }
-        else
-        {
-            Screen.orientation = oriantation;
-            goto CheckAgain;
-        }
+    //        //Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
+    //    }
+    //    public void HideFadderAfterOriantationChanged(float delay = 0)
+    //    {
+    //       // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
+    //        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+    //        blackScreen.DOFade(0, 0.5f).SetDelay(delay);
+    //        XanaConstants.xanaConstants.isBackFromWorld = false;
+    //    }
 
-    }
+    //private IEnumerator Check_Orientation(ScreenOrientation oriantation)
+    //{
+    //CheckAgain:
+    //    //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
+    //    yield return new WaitForSeconds(.2f);
+    //    if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
+    //    {
+    //        //if(!XanaConstants.xanaConstants.isBackFromWorld)
+    //        //    HideFadderAfterOriantationChanged();
+    //    }
+    //    else
+    //    {
+    //        Screen.orientation = oriantation;
+    //        goto CheckAgain;
+    //    }
+
+    //}
 
 
 
@@ -403,7 +456,7 @@ public class LoadingHandler : MonoBehaviour
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
     }
 
-    public IEnumerator IncrementSliderValue(float speed, bool loadMainScene=false)
+    public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
         while (currentValue < 100)
         {

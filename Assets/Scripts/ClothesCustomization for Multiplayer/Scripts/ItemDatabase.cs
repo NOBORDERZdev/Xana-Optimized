@@ -114,100 +114,98 @@ public class ItemDatabase : MonoBehaviour
     public IEnumerator WaitAndDownloadFromRevert(float delay)
     {
         yield return new WaitForSeconds(delay);
-
         SavaCharacterProperties.instance.characterController.IntializeAvatar();
+
+        #region Commented Section
         //SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
-//        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-//        {
-//            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-//            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-//            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
-//            {
+        //        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+        //        {
+        //            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        //            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+        //            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+        //            {
 
-//                string currentlink = "";
-//#if UNITY_ANDROID
-//                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemLinkAndroid))
-//                    currentlink = _CharacterData.myItemObj[i].ItemLinkAndroid;
-//                else
-//                    currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
-//#else
-//        currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
-//#endif
-
-
-
-//                if ((_CharacterData.myItemObj[i].ItemID == 0 || _CharacterData.myItemObj[i].ItemID == -1) && RevertBool)
-//                {
-//                    BindDefaultItems(_CharacterData.myItemObj[i]);
-//                }
-//                else
-//                {
-//                    if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
-//                    {
-//                        //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
-//                        string _temptype = _CharacterData.myItemObj[i].Slug;
-//                        ItemDetail itemobj = new ItemDetail();
-//                        itemobj.name = _CharacterData.myItemObj[i].ItemName.ToLower();
-//                        itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
-//                        itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
-//                        itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
-
-//                        //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
-//                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
-//                        {
-//                            downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID,_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarController>()));
-//                        }
-//                        else
-//                        {
-//                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject);
-//                        }
-
-//                    }
-//                    //try
-//                    //{
-//                    //}
-//                    //catch (Exception e)
-//                    //{
-//                    //    Debug.Log(e.ToString());
-//                    //}
-//                }
-//                //  }  
-//            }
-
-//            yield return new WaitForSeconds(.05f);
-
-//        }
-//        else if (RevertBool)
-//        {
-//            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpant", 0);
-//            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "MDshoes", 7);
-//            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDshirt", 1);
-//            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "MDhairs", 2);
-
-//            // Commented By Talha Now use texture for Body
-//            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-//            // GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
-//            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-//            //GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+        //                string currentlink = "";
+        //#if UNITY_ANDROID
+        //                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemLinkAndroid))
+        //                    currentlink = _CharacterData.myItemObj[i].ItemLinkAndroid;
+        //                else
+        //                    currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
+        //#else
+        //        currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
+        //#endif
 
 
-//            //-------------------------------------
-//            // GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[1].mainTexture = DefaultLips;
-//            //Change Eye Color Here For Default
-//            // GameManager.Instance.EyeballTexture1.material.mainTexture = DefaultEyes;
-//            // GameManager.Instance.EyeballTexture2.material.mainTexture = DefaultEyes;
-//            // GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[0].mainTexture = DefaultSkin;
 
-//            // Commented By Talha Now use texture for Body
-//            //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
-//            //{
-//            //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
-//            //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
-//            //}
-//        }
-        if (LoadingHandler.Instance)
-            LoadingHandler.Instance.HideLoading();
+        //                if ((_CharacterData.myItemObj[i].ItemID == 0 || _CharacterData.myItemObj[i].ItemID == -1) && RevertBool)
+        //                {
+        //                    BindDefaultItems(_CharacterData.myItemObj[i]);
+        //                }
+        //                else
+        //                {
+        //                    if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
+        //                    {
+        //                        //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
+        //                        string _temptype = _CharacterData.myItemObj[i].Slug;
+        //                        ItemDetail itemobj = new ItemDetail();
+        //                        itemobj.name = _CharacterData.myItemObj[i].ItemName.ToLower();
+        //                        itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
+        //                        itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
+        //                        itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
 
+        //                        //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+        //                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+        //                        {
+        //                            downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID,_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarController>()));
+        //                        }
+        //                        else
+        //                        {
+        //                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject);
+        //                        }
+
+        //                    }
+        //                    //try
+        //                    //{
+        //                    //}
+        //                    //catch (Exception e)
+        //                    //{
+        //                    //    Debug.Log(e.ToString());
+        //                    //}
+        //                }
+        //                //  }  
+        //            }
+
+        //            yield return new WaitForSeconds(.05f);
+
+        //        }
+        //        else if (RevertBool)
+        //        {
+        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpant", 0);
+        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "MDshoes", 7);
+        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDshirt", 1);
+        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "MDhairs", 2);
+
+        //            // Commented By Talha Now use texture for Body
+        //            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
+        //            // GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+        //            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
+        //            //GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+
+
+        //            //-------------------------------------
+        //            // GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[1].mainTexture = DefaultLips;
+        //            //Change Eye Color Here For Default
+        //            // GameManager.Instance.EyeballTexture1.material.mainTexture = DefaultEyes;
+        //            // GameManager.Instance.EyeballTexture2.material.mainTexture = DefaultEyes;
+        //            // GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[0].mainTexture = DefaultSkin;
+
+        //            // Commented By Talha Now use texture for Body
+        //            //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
+        //            //{
+        //            //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
+        //            //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
+        //            //}
+        //        }
         // Commented By WaqasAhmad
         {
             //if (Screen.orientation == ScreenOrientation.LandscapeLeft && chkOrientation == false)
@@ -235,6 +233,12 @@ public class ItemDatabase : MonoBehaviour
         //    //Screen.orientation = ScreenOrientation.Portrait;
         //}
         //  }
+
+        #endregion
+
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+
         yield return null;
     }
     bool chkOrientation;
@@ -496,6 +500,3 @@ public class ItemDatabase : MonoBehaviour
 //        }
 //    }
 }
-
-
-
