@@ -18,9 +18,9 @@ public class CollectibleComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            //BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            //PlayBehaviour();
-            if(GamificationComponentData.instance.withMultiplayer)
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
         }
@@ -30,7 +30,7 @@ public class CollectibleComponent : ItemComponent
     public void StartComponent()
     {
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.ActionSound);
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
         //Toast.Show(XanaConstants.collectibleMsg);
     }
 
