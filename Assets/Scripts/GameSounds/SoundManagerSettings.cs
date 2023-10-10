@@ -76,6 +76,7 @@ public class SoundManagerSettings : MonoBehaviour
         if (PlayerPrefs.GetInt("DefaultSensivity") == 0)
         {
             PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+            PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
     }
