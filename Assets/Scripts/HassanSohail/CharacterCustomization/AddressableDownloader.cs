@@ -24,7 +24,7 @@ public class AddressableDownloader : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 

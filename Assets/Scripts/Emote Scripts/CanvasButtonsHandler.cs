@@ -29,7 +29,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     public ActionSelectionPanelHandler ActionSelectionPanel;
     public GameObject AnimationBtnClose;
     public Button rotateOrientationLand;
-
+    public GameObject freeCamToggle;
     public bool isSpiritInUse;
     public float spirit;
     public float maxSpirit;
@@ -62,6 +62,8 @@ public class CanvasButtonsHandler : MonoBehaviour
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
         
         bool RFMUI = FeedEventPrefab.m_EnvName == "RFMDummy";
+        rotateOrientationLand.gameObject.SetActive(!RFMUI);
+        freeCamToggle.gameObject.SetActive(!RFMUI);
         slideBtn.gameObject.SetActive(RFMUI);
         runBtn.gameObject.SetActive(RFMUI);
         favouriteBtn.gameObject.SetActive(!RFMUI);

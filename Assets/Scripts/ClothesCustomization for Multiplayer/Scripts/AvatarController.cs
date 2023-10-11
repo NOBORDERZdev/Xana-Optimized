@@ -32,6 +32,8 @@ public class AvatarController : MonoBehaviour
     public string hunterClothJson;
     public string[] escapeeNPCClothesJSON;
 
+    public AddressableDownloader addressableDownloader;
+
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
 
@@ -45,8 +47,27 @@ public class AvatarController : MonoBehaviour
         stitcher = new Stitcher();
     }
 
+    private void Start()
+    {
+        if (GetComponent<AddressableDownloader>())
+        {
+            addressableDownloader = GetComponent<AddressableDownloader>();
+        }
+        else
+        {
+            addressableDownloader = AddressableDownloader.Instance;
+        }
+    }
     private void OnEnable()
     {
+        if (GetComponent<AddressableDownloader>())
+        {
+            addressableDownloader = GetComponent<AddressableDownloader>();
+        }
+        else
+        {
+            addressableDownloader = AddressableDownloader.Instance;
+        }
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
 
@@ -192,7 +213,7 @@ public class AvatarController : MonoBehaviour
         //}
 
 
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -246,7 +267,7 @@ public class AvatarController : MonoBehaviour
                             //getHairColorFormFile = true;
                             if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                             }
                             else
                             {
@@ -332,15 +353,15 @@ public class AvatarController : MonoBehaviour
             }
             if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
             }
             if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
             }
             if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
             }
             //if (_CharacterData.eyeBrowName != "" && _CharacterData.eyeBrowName != null)
             //{
@@ -348,33 +369,33 @@ public class AvatarController : MonoBehaviour
             //}
             if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
             }
 
 
             //New texture are downloading for Boxer NFT 
             if (!string.IsNullOrEmpty(_CharacterData.faceTattooTextureName) && _CharacterData.faceTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.FaceTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.chestTattooTextureName) && _CharacterData.chestTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ChestTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.legsTattooTextureName) && _CharacterData.legsTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.LegsTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.armTattooTextureName) && _CharacterData.armTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ArmTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.mustacheTextureName) && _CharacterData.mustacheTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, this.gameObject);
 
@@ -432,7 +453,7 @@ public class AvatarController : MonoBehaviour
                             //getHairColorFormFile = true;
                             if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                             }
                             else
                             {
@@ -518,15 +539,15 @@ public class AvatarController : MonoBehaviour
             }
             if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
             }
             if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
             }
             if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
             }
             //if (_CharacterData.eyeBrowName != "" && _CharacterData.eyeBrowName != null)
             //{
@@ -534,33 +555,33 @@ public class AvatarController : MonoBehaviour
             //}
             if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
             {
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
             }
 
 
             //New texture are downloading for Boxer NFT 
             if (!string.IsNullOrEmpty(_CharacterData.faceTattooTextureName) && _CharacterData.faceTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.FaceTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.chestTattooTextureName) && _CharacterData.chestTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ChestTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.legsTattooTextureName) && _CharacterData.legsTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.LegsTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.armTattooTextureName) && _CharacterData.armTattooTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ArmTattoo);
 
             if (!string.IsNullOrEmpty(_CharacterData.mustacheTextureName) && _CharacterData.mustacheTextureName != null)
-                AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
+                addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
             else
                 this.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, this.gameObject);
 
@@ -620,7 +641,7 @@ public class AvatarController : MonoBehaviour
                                 //getHairColorFormFile = true;
                                 if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                 {
-                                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                 }
                                 else
                                 {
@@ -731,16 +752,16 @@ public class AvatarController : MonoBehaviour
                 //}
                 if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 {
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
                 }
 
                 if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                 {
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
                 }
                 if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
                 {
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
                 }
                 //if (_CharacterData.eyeBrowName != "" && _CharacterData.eyeBrowName != null)
                 //{
@@ -749,32 +770,32 @@ public class AvatarController : MonoBehaviour
 
                 if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
                 {
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
                 }
 
                 //New texture are downloading for Boxer NFT 
                 if (!string.IsNullOrEmpty(_CharacterData.faceTattooTextureName) && _CharacterData.faceTattooTextureName != null)
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
                 else
                     this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.FaceTattoo);
 
                 if (!string.IsNullOrEmpty(_CharacterData.chestTattooTextureName) && _CharacterData.chestTattooTextureName != null)
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
                 else
                     this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ChestTattoo);
 
                 if (!string.IsNullOrEmpty(_CharacterData.legsTattooTextureName) && _CharacterData.legsTattooTextureName != null)
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
                 else
                     this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.LegsTattoo);
 
                 if (!string.IsNullOrEmpty(_CharacterData.armTattooTextureName) && _CharacterData.armTattooTextureName != null)
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
                 else
                     this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ArmTattoo);
 
                 if (!string.IsNullOrEmpty(_CharacterData.mustacheTextureName) && _CharacterData.mustacheTextureName != null)
-                    AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
+                    addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
                 else
                     this.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, this.gameObject);
 
@@ -867,7 +888,7 @@ public class AvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                     }
                                     else
                                     {
@@ -960,15 +981,15 @@ public class AvatarController : MonoBehaviour
                     //}
                     if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                     {
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
                     }
                     if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
                     {
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
                     }
                     if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                     {
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
                     }
                     //if (_CharacterData.eyeBrowName != "" && _CharacterData.eyeBrowName != null)
                     //{
@@ -976,33 +997,33 @@ public class AvatarController : MonoBehaviour
                     //}
                     if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
                     {
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
                     }
 
 
                     //New texture are downloading for Boxer NFT 
                     if (!string.IsNullOrEmpty(_CharacterData.faceTattooTextureName) && _CharacterData.faceTattooTextureName != null)
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
                     else
                         this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.FaceTattoo);
 
                     if (!string.IsNullOrEmpty(_CharacterData.chestTattooTextureName) && _CharacterData.chestTattooTextureName != null)
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.chestTattooTextureName, this.gameObject, CurrentTextureType.ChestTattoo));
                     else
                         this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ChestTattoo);
 
                     if (!string.IsNullOrEmpty(_CharacterData.legsTattooTextureName) && _CharacterData.legsTattooTextureName != null)
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.legsTattooTextureName, this.gameObject, CurrentTextureType.LegsTattoo));
                     else
                         this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.LegsTattoo);
 
                     if (!string.IsNullOrEmpty(_CharacterData.armTattooTextureName) && _CharacterData.armTattooTextureName != null)
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.armTattooTextureName, this.gameObject, CurrentTextureType.ArmTattoo));
                     else
                         this.GetComponent<CharcterBodyParts>().RemoveTattoo(null, this.gameObject, CurrentTextureType.ArmTattoo);
 
                     if (!string.IsNullOrEmpty(_CharacterData.mustacheTextureName) && _CharacterData.mustacheTextureName != null)
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
+                        addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.mustacheTextureName, this.gameObject, CurrentTextureType.Mustache));
                     else
                         this.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, this.gameObject);
 
@@ -1580,7 +1601,7 @@ public class AvatarController : MonoBehaviour
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    
+
                     SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
@@ -1772,7 +1793,7 @@ public class AvatarController : MonoBehaviour
                         //getHairColorFormFile = false;
                         if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                         {
-                            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                         }
                         else
                         {
@@ -1796,23 +1817,23 @@ public class AvatarController : MonoBehaviour
         //}
         if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
         {
-            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
         }
         if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
         {
-            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
         }
         if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
         {
-            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
         }
         if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
         {
-            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
         }
         else
         {
-            AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture("nomakeup", this.gameObject, CurrentTextureType.Makeup));
+            addressableDownloader.StartCoroutine(addressableDownloader.DownloadAddressableTexture("nomakeup", this.gameObject, CurrentTextureType.Makeup));
         }
         LoadBonesData(_CharacterData, this.gameObject);
 
