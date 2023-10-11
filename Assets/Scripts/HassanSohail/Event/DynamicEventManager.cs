@@ -36,7 +36,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //    ConstantsGod.API_BASEURL = "https://app-api.xana.net";
     //  ConstantsGod.API_BASEURL = "https://api-test.xana.net";
 
-    private string EventArguments;
+    public string EventArguments;
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;
@@ -514,6 +514,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //Loading scene for event after checking date time and event data
     public void SetSceneData()
     {
+        if (XanaEventDetails.eventDetails == null)
+        {
+            return;
+        }
         if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
         {
             XanaConstants.xanaConstants.userLimit = "16";

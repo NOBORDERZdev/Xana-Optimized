@@ -101,7 +101,7 @@ namespace XanaAi{
             animator.SetFloat("Blend", 0f);
 
             int rand = Random.Range(0, 2);  
-            print("Start wander with rand : "+ rand);
+           // print("Start wander with rand : "+ rand);
             switch (rand)
             {
                 case 0: // walk

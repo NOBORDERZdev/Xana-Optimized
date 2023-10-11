@@ -16,6 +16,7 @@ public class XanaLobbyManager : MonoBehaviour
     public List<XanaLobbyData> worldsData;
     public List<GameObject> placedWorlds;
     public List<Texture> WorldsLoadedSprites = new List<Texture>();
+   
     int ratioId;
     JjRatio _Ratio;
     string _Title;
@@ -72,9 +73,8 @@ public class XanaLobbyManager : MonoBehaviour
     }
     public IEnumerator InitData(XanaLobbyJson data,List<GameObject> placedWorldsList)
     {
-        //int placedWorldsCount = placedWorldsList.Count;
-        //List<XanaLobbyData> worldsData = data.data;
         XLWorldInfo xlWorldInfo;
+        int placedWorldsCount = 0;
         for (int i = 0; i < placedWorldsList.Count; i++)
         {
             xlWorldInfo = placedWorldsList[i].GetComponent<XLWorldInfo>();
@@ -90,12 +90,13 @@ public class XanaLobbyManager : MonoBehaviour
                     if (!worldsData[j].thumbnail.IsNullOrEmpty())
                     {
                         //worldsInfo[i].Type = MediaType.Image;
-                        xlWorldInfo.InitData(worldsData[i].index, worldsData[i].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
-                        xlWorldInfo.worldChanger.WorldName = worldsData[i].world_name;
+                        xlWorldInfo.InitData(placedWorldsCount, worldsData[j].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
+                        placedWorldsCount++;
+                        xlWorldInfo.worldChanger.WorldName = worldsData[j].world_name;
                         if(APIBaseUrlChange.instance.IsXanaLive)
-                            xlWorldInfo.worldChanger.MainNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.MainNet = worldsData[j].world_id;
                         else
-                            xlWorldInfo.worldChanger.testNet = worldsData[i].world_id;
+                            xlWorldInfo.worldChanger.testNet = worldsData[j].world_id;
                         if (worldsData[j].entity_type == EntityType.USER_WORLD.ToString())
                         {
                             xlWorldInfo.worldChanger.isBuilderWorld = true;
@@ -117,10 +118,7 @@ public class XanaLobbyManager : MonoBehaviour
                 }
                 else
                 {
-                    if (j == worldsData.Count - 1)
-                    {
-                        placedWorldsList[i].SetActive(false);
-                    }
+                    placedWorldsList[i].SetActive(false);
                 }
             }
         }

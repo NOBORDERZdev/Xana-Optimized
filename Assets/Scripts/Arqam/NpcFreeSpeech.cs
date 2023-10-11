@@ -58,7 +58,7 @@ public class NpcFreeSpeech : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.FreeSpeechNpc, id.ToString());
             Debug.Log("Communication Response(FreeAI): " + feed.response);
         }
         else
