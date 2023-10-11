@@ -126,6 +126,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             if (XanaConstants.xanaConstants.isCameraMan)
             {
                 StreamingSockets.Instance.isInWorld =false;
+                StreamingSockets.Instance.isEventTriggered = false;
                 print("!!!!!!!!!!!!!! back due to event end");
                 LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
                 //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
@@ -574,6 +575,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
+             print("!!!!!!!!!!!!!! back from Auto Switch");
             _uiReferences.LoadMain(false);
         }
      }

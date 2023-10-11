@@ -122,7 +122,7 @@ public class StreamingSockets : MonoBehaviour
      public bool isInWorld= false;
     public  async void ReSetStreamingEvent(){ 
         isInEvent= false;
-        isEventTriggered =false;
+        //isEventTriggered =false;
         XanaEventDetails.eventDetails.DataIsInitialized= false;
         XanaEventDetails.eventDetails =null;
     }
