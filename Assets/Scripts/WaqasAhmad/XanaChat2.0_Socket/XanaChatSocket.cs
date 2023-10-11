@@ -7,12 +7,15 @@ using System.Collections;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using TMPro;
-
+using System.Net.Http;
+using System.Threading.Tasks;
 
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.Text;
 
 public class XanaChatSocket : MonoBehaviour
 {
@@ -21,23 +24,28 @@ public class XanaChatSocket : MonoBehaviour
     // Test-Net
     // https://chat-testing.xana.net/
     // https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/
+    // https://chat-testing.xana.net/api/v1/set-device-id-against-socketId
 
     // Main-Net
     // https://chat-prod.xana.net/
     // https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/
+    // https://chat-prod.xana.net/api/v1/set-device-id-against-socketId
 
     string socketTestnet = "https://chat-testing.xana.net/";
     string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+    string apiGusetNameTestnet = "https://chat-testing.xana.net/api/v1/set-device-id-against-socketId";
+
 
     string socketMainnet = "https://chat-prod.xana.net/";
     string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
+    string apiGusetNameMainnet = "https://chat-prod.xana.net/api/v1/set-device-id-against-socketId";
 
 
     public SocketManager Manager;
-    
+
     string address;
     string fetchAllMsgApi;
-
+    string setGuestNameApi;
     int worldId,
         eventId = 1,
         pageNumber = 1, // API Parameters
@@ -70,7 +78,7 @@ public class XanaChatSocket : MonoBehaviour
     #endregion
 
     public static Action<string> onJoinRoom;
-    public static Action<string, string> onSendMsg;
+    public static Action<string, string, string> onSendMsg;
     public static Action callApi;
 
 
@@ -84,14 +92,14 @@ public class XanaChatSocket : MonoBehaviour
         {
             address = socketMainnet;
             fetchAllMsgApi = fetchApiMainnet;
+            setGuestNameApi = apiGusetNameMainnet;
         }
         else
         {
             address = socketTestnet;
             fetchAllMsgApi = fetchApiTestnet;
+            setGuestNameApi = apiGusetNameTestnet;
         }
-
-
 
         if (!address.EndsWith("/"))
             address = address + "/";
@@ -144,6 +152,9 @@ public class XanaChatSocket : MonoBehaviour
 
             onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
         }
+
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            StartCoroutine(SubmitGuestUserNameWithJson());
     }
     void OnError(CustomError args)
     {
@@ -171,7 +182,7 @@ public class XanaChatSocket : MonoBehaviour
         isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
-    void SendMsg(string world_Id, string msg)
+    void SendMsg(string world_Id, string msg, string npcId = "")
     {
         if (string.IsNullOrEmpty(msg))
         {
@@ -194,14 +205,15 @@ public class XanaChatSocket : MonoBehaviour
             event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
         eventId = int.Parse(event_Id);
-        Debug.Log("<color=yellow> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg + "</color>");
 
-
-        var data = new { userId = userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        if (!npcId.IsNullOrEmpty())
+            userId = "npc-" + npcId;
+        // Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
+        var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
+        Debug.Log("Data:::" + data);
         Manager.Socket.Emit("chatMessage", data);
-
-
     }
+
     void ReceiveMsgs(ChatUserData msg)
     {
         Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
@@ -281,7 +293,6 @@ public class XanaChatSocket : MonoBehaviour
 
         www.Dispose();
     }
-
     void DisplayOldChat(string OldChat)
     {
         //if(!string.IsNullOrEmpty(OldChat))
@@ -326,8 +337,47 @@ public class XanaChatSocket : MonoBehaviour
 
     }
 
+    private IEnumerator SubmitGuestUserNameWithJson()
+    {
+        // Create a data object and serialize it to JSON
+        string tempDeviceID = SystemInfo.deviceUniqueIdentifier;
+        string tempUserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+        if (string.IsNullOrEmpty(tempUserName))
+        {
+            tempUserName = XanaChatSystem.instance.UserName;
+        }
 
 
+
+        ApiParameter requestData = new ApiParameter { username = tempUserName, deviceId = tempDeviceID, socketId = socketId };
+        string jsonData = JsonUtility.ToJson(requestData);
+
+
+        // Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
+        // Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
+
+        // Create a UnityWebRequest for the POST request
+        using (UnityWebRequest request = new UnityWebRequest(setGuestNameApi, "POST"))
+        {
+            byte[] jsonBytes = Encoding.UTF8.GetBytes(jsonData);
+            request.uploadHandler = new UploadHandlerRaw(jsonBytes);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            //if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            //{
+            //    Debug.LogError("Error: " + request.error);
+            //}
+            //else
+            //{
+            //    // Request was successful
+            //    Debug.LogError("Request Successful");
+            //    Debug.LogError("Response: " + request.downloadHandler.text);
+            //}
+        }
+    }
 }
 
 
@@ -390,4 +440,12 @@ public class RootData
     public bool success;
     public List<MessageData> data;
     public int count;
+}
+
+[System.Serializable]
+public class ApiParameter
+{
+    public string socketId;
+    public string deviceId;
+    public string username;
 }

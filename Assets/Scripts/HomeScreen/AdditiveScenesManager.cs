@@ -16,6 +16,7 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     public GameObject SNSMessage;
     
+    public BottomTabManager homeBottomTab;
 
     private void Awake()
     {
@@ -26,8 +27,8 @@ public class AdditiveScenesManager : MonoBehaviour
     {
         //StartCoroutine(LoadScenes());
 
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && XanaConstants.xanaConstants != null && XanaConstants.xanaConstants.isBackFromWorld && LoadingHandler.Instance != null)
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.Portrait);
+        //if (!XanaConstants.xanaConstants.JjWorldSceneChange && XanaConstants.xanaConstants != null && XanaConstants.xanaConstants.isBackFromWorld && LoadingHandler.Instance != null)
+        //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.Portrait);
 
         StartCoroutine(AddDelay(sceneDelay));
         StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
@@ -99,15 +100,23 @@ public class AdditiveScenesManager : MonoBehaviour
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
 
         
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        //if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        //{
+        //    Screen.orientation = ScreenOrientation.Portrait;
+        //}
+        if (XanaConstants.xanaConstants.isBackfromSns)
         {
-            //Debug.LogError("~~~~~ Waqas_ AdditiveSceneManager ~~~~~~~~~~~");
-            if (!XanaConstants.xanaConstants.isBackFromWorld)
-            {
-                Screen.orientation = ScreenOrientation.Portrait;
-            }
+            homeBottomTab.OnClickFeedButton();
+            XanaConstants.xanaConstants.isBackfromSns=false;
         }
-        LoadingHandler.Instance.HideLoading();
+            //Debug.LogError("~~~~~ Waqas_ AdditiveSceneManager ~~~~~~~~~~~");
+            //if (!XanaConstants.xanaConstants.isBackFromWorld)
+            //{
+            //    Screen.orientation = ScreenOrientation.Portrait;
+            //}
+        
+        LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+
         //if (LoadingHandler.Instance != null)
         //{
         //    if (Screen.orientation == ScreenOrientation.Landscape)

@@ -3717,7 +3717,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 501
+  m_SortingOrder: 503
   m_TargetDisplay: 0
 --- !u!1 &4343778717590124894
 GameObject:
@@ -4042,7 +4042,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 500
+  m_SortingOrder: 502
   m_TargetDisplay: 0
 --- !u!114 &4343778717967760938
 MonoBehaviour:
@@ -4356,6 +4356,7 @@ MonoBehaviour:
   streamingLoading: {fileID: 3791715670680288188}
   currentValue: 0
   isLoadingComplete: 0
+  randCurrentValue: 0
 --- !u!114 &1796991303705016582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4980,7 +4981,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 502
+  m_SortingOrder: 504
   m_TargetDisplay: 0
 --- !u!1 &4343778718727798757
 GameObject:
@@ -11601,6 +11602,10 @@ PrefabInstance:
       propertyPath: textsJP.Array.data[2]
       value: "\u30ED\u30FC\u30C9\u4E2D ..."
       objectReference: {fileID: 0}
+    - target: {fileID: 3327896090854416172, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
+      propertyPath: m_FillAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5257189087814559704, guid: d79ef895e3a5b4b4a8de41746215a1dc, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -11808,6 +11813,21 @@ MonoBehaviour:
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 7496875700784262514}
 --- !u!114 &2063821011715043347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496875700784262415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 7496875700784262514}
+--- !u!114 &7097956571080932030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -7,21 +7,23 @@ public class DoorKeyComponent : ItemComponent
     private DoorKeyComponentData doorKeyComponentData;
 
     private bool activateComponent = false;
+    string RuntimeItemID = "";
 
     public void Init(DoorKeyComponentData _doorKeyComponentData)
     {
         this.doorKeyComponentData = _doorKeyComponentData;
         activateComponent = true;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (PlayerCanvas.Instance.transform.parent != _other.transform)
+            if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
             {
-                PlayerCanvas.Instance.transform.SetParent(_other.transform);
-                PlayerCanvas.Instance.transform.localPosition = Vector3.up * PlayerCanvas.Instance.transform.localPosition.y;
+                PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+                PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
             }
             PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
@@ -32,8 +34,11 @@ public class DoorKeyComponent : ItemComponent
                 _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Add(this.doorKeyComponentData.selectedKey);
 
                 PlayerCanvas.Instance.ToggleKey(true);
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
                 PlayerCanvas.Instance.keyCounter.text = "x" + _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Count.ToString();
+                if (GamificationComponentData.instance.withMultiplayer)
+                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+                else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
             }
 
 
@@ -60,7 +65,10 @@ public class DoorKeyComponent : ItemComponent
 
                 if (isDoorFind)
                 {
-                    this.gameObject.SetActive(false);
+                    //this.gameObject.SetActive(false);
+                    if (GamificationComponentData.instance.withMultiplayer)
+                        GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+                    else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
                     Toast.Show("The keys match!");
                     return;
                 }
@@ -82,4 +90,48 @@ public class DoorKeyComponent : ItemComponent
         if (string.IsNullOrWhiteSpace(this.doorKeyComponentData.selectedDoorKey)) return false;
         return true;
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.DoorKeyComponent;
+    }
+
+    #endregion
 }
