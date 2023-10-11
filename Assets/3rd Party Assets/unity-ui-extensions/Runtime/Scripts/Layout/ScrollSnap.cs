@@ -114,7 +114,7 @@ namespace UnityEngine.UI.Extensions
         public String nameData;
         public String charName;
 
-        public Button ASNextButton, skipButton; // AS for AvatarSelected
+        public Button ASNextButton;//, skipButton; // AS for AvatarSelected
         public Button shuffleButton;
 
 
@@ -200,6 +200,8 @@ namespace UnityEngine.UI.Extensions
                 // charName = avatarData[0].gameObject.name;
             }
         }
+
+        
 
         public void UpdateListItemsSize()
         {
@@ -463,12 +465,12 @@ namespace UnityEngine.UI.Extensions
                 PageChanged(CurrentPage() + 1);
 
                 avatarCounter++;
-                Debug.Log("Value is " + avatarCounter);
-                nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+                
+                //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
 
-                ASNextButton.onClick.RemoveAllListeners();
+                //ASNextButton.onClick.RemoveAllListeners();
 
-                ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver); 
+                //ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver); 
                 //skipButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
                     
                 
@@ -495,12 +497,12 @@ namespace UnityEngine.UI.Extensions
 
                 PageChanged(CurrentPage() - 1);
                 avatarCounter--;
-                Debug.Log("Value is " + avatarCounter);
-                nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+                //Debug.Log("Value is " + avatarCounter);
+                //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
 
-                ASNextButton.onClick.RemoveAllListeners();
+                //ASNextButton.onClick.RemoveAllListeners();
 
-                ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                //ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
                 // Debug.Log("Value is " + nameData);
                 if (avatarCounter == 0)
                 {

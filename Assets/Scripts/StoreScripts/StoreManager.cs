@@ -258,7 +258,10 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
-
+    public void skipAvatarSelection()
+    {
+        UserRegisterationManager.instance.usernamePanal.SetActive(true);
+    }
 
     public void WalletLoggedinCall()
     {

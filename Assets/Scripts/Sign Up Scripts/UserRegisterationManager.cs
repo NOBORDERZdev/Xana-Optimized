@@ -748,11 +748,11 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void OnSignUpWalletTabPressed()
     {
-        if (WalletScreen.activeInHierarchy)
-            return;
+        //if (WalletScreen.activeInHierarchy)
+        //    return;
         emailScreen.SetActive(false);
         numberScreen.SetActive(false);
-        WalletScreen.SetActive(true);
+        //WalletScreen.SetActive(true);
         // tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
         StartCoroutine(Animate(WalletSelectedImg.rectTransform));
         WalletTabText.gameObject.GetComponent<Text>().color = HighlightedColor;
@@ -760,7 +760,7 @@ public class UserRegisterationManager : MonoBehaviour
         phoneTabText.gameObject.GetComponent<Text>().color = NormalColor;
         emailTabSelected.SetActive(false);
         phoneTabSelected.SetActive(false);
-        WalletTabSelected.SetActive(true);
+        //WalletTabSelected.SetActive(true);
         //  tabSelectorAnimator.Play("Wallet");   
     }
     private IEnumerator Animate(RectTransform targetPos)
@@ -1004,7 +1004,7 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 2:
                 {
-                    PlayerPrefs.SetInt("iSignup", 1);
+                    //PlayerPrefs.SetInt("iSignup", 1);
                     //  EmailPanal.SetActive(true);
                     SignUpPanal.SetActive(true);
                     if (!WalletScreen.activeInHierarchy)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.UI.Extensions;
-
+using DynamicScrollRect;
 public class SplashVideoPlay : MonoBehaviour
 {
     public string video_download_link;
@@ -14,7 +14,7 @@ public class SplashVideoPlay : MonoBehaviour
     public GameObject button;
     public Image Image;
     public GameObject SplashvideoObj;
-  
+    
     public void RefrenceDownloafVideo()
     {
         Image = UserRegisterationManager.instance.BlackScreen.GetComponent<Image>();
@@ -54,10 +54,10 @@ public class SplashVideoPlay : MonoBehaviour
             Image.color = new Color(0f, 0f, 0f, alpha);
         }
         UserRegisterationManager.instance.BlackScreen.SetActive(false);
-        if (ScrollSnap.instance.avatarData != null)
-        {
-            ScrollSnap.instance.nameData = ScrollSnap.instance.avatarData[0].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
-        }
+        //if (DynamicScrollRect.DynamicScrollRect.instance.avatarData != null)
+        //{
+        //    DynamicScrollRect.ScrollContent.instance.nameData = ScrollSnap.instance.avatarData[0].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+        //}
     }
     public void Onskipp() {
         SplashvideoObj.SetActive(false);

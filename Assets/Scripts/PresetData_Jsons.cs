@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.UI.Extensions;
+using DynamicScrollRect;
 
 using static StoreManager;
 public class PresetData_Jsons : MonoBehaviour
@@ -31,7 +32,7 @@ public class PresetData_Jsons : MonoBehaviour
     IEnumerator RegisterForUndoRedo()
     {
         yield return new WaitForSeconds(0.05f);
-        if (ActivePanelCallStack.obj.IsCallByBtn() && this.transform.GetChild(0).gameObject.activeInHierarchy)
+        if (ActivePanelCallStack.obj.IsCallByBtn()) //&& this.transform.GetChild(0).gameObject.activeInHierarchy)
         {
             //isAddedInUndoRedo = true;
             //Debug.Log("<color=red> Enter In Presets </color>");
@@ -53,21 +54,30 @@ public class PresetData_Jsons : MonoBehaviour
             gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
         }
 
-       
+
+        callScripts();
+    }
+
+    public void callScripts() 
+    {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         charcterBodyParts = CharcterBodyParts.instance;
     }
+
+
     public void callit()
     {
         clickname = "";
     }
    public void ChangecharacterOnCLickFromserver()
     {
+        callScripts();
         //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         //{
-            if (ScrollSnap.instance.nameData != null)
+            if (DynamicScrollRect.ScrollContent.instance != null)
             {
-                JsonDataPreset = ScrollSnap.instance.nameData;
+                JsonDataPreset = DynamicScrollRect.ScrollContent.instance.nameData;
+            Debug.Log("NAME IS "+ JsonDataPreset);
                 //gameObject.name = ScrollSnap.instance.charName;
                 Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             }
