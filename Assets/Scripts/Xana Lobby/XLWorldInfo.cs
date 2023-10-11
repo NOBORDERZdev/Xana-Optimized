@@ -32,7 +32,7 @@ public class XLWorldInfo : MonoBehaviour
     }
     public void InitData(int index,string imageurl, JjRatio imgvideores, MediaType dataType)
     {
-        id = index-1;
+        id = index;
         imageLink = imageurl;
         _imgVideoRatio = imgvideores;
         if (dataType == MediaType.Image)

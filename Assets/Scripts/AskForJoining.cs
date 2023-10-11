@@ -43,7 +43,7 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
         asyncLoading = SceneManager.LoadSceneAsync("Main");
-        InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
+        //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count
         UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
@@ -51,7 +51,7 @@ public class AskForJoining : MonoBehaviour
 
     void AsyncProgress()
     {
-        LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     }
 
     public void GoToMainMenu()
