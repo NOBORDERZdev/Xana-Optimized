@@ -43,7 +43,7 @@ public class StreamingSockets : MonoBehaviour
             isFristTime= false;
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
-               // socketAddress
+               socketAddress = "https://app-api.xana.net";
             }
             else
             {
