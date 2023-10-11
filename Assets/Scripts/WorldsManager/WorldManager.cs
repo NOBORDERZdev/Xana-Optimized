@@ -521,7 +521,7 @@ public class WorldManager : MonoBehaviour
             //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
 
 //#if UNITY_EDITOR
 //            orientationchanged = true;
@@ -536,7 +536,7 @@ public class WorldManager : MonoBehaviour
 //#else
             //StartCoroutine(Check_Orientation(() =>
             //{
-             LoadingHandler.Instance.ShowLoading();
+             LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
             // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -613,7 +613,7 @@ public class WorldManager : MonoBehaviour
 
             //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
 
             // Added By WaqasAhmad [20 July 23]
             AssetBundle.UnloadAllAssetBundles(false);
@@ -636,7 +636,7 @@ public class WorldManager : MonoBehaviour
 //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             //StartCoroutine(Check_Orientation(()=> 
             //{
-                LoadingHandler.Instance.ShowLoading();
+                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
                 //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -711,7 +711,7 @@ public class WorldManager : MonoBehaviour
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
             {
                 //Screen.orientation = ScreenOrientation.LandscapeLeft;
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+                //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             }
 
 
@@ -728,7 +728,7 @@ public class WorldManager : MonoBehaviour
             //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             //StartCoroutine(Check_Orientation(()=> 
             //{
-                LoadingHandler.Instance.ShowLoading();
+                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
                //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -739,11 +739,11 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-            {
-                //Screen.orientation = ScreenOrientation.LandscapeLeft;
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            }
+            //if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+            //{
+            //    //Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //}
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
 //#if UNITY_EDITOR
 //            orientationchanged = true;
@@ -757,7 +757,7 @@ public class WorldManager : MonoBehaviour
 //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 //            StartCoroutine(Check_Orientation(() =>
 //            {
-             LoadingHandler.Instance.ShowLoading();
+             LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
            // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
