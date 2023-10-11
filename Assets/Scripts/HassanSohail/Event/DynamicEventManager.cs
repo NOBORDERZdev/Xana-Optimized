@@ -36,7 +36,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //    ConstantsGod.API_BASEURL = "https://app-api.xana.net";
     //  ConstantsGod.API_BASEURL = "https://api-test.xana.net";
 
-    private string EventArguments;
+    public string EventArguments;
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;

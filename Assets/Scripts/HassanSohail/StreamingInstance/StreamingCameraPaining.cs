@@ -23,7 +23,7 @@ public class StreamingCameraPaining : MonoBehaviour
 
     public void Paining() // Paining
     {
-        print("CAM " +gameObject.name +"index is "+ no );
+        //print("CAM " +gameObject.name +"index is "+ no );
         Vector3 temp= gameObject.transform.position; 
         int adjust ;
         if (smallPaining)

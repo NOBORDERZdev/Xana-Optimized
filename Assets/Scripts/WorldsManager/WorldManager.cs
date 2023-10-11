@@ -118,8 +118,9 @@ public class WorldManager : MonoBehaviour
     }
 
     void SetAutoSwtichStreaming(){ 
-         if (XanaConstants.xanaConstants.isCameraMan)
+         if (XanaConstants.xanaConstants.isCameraMan )
          {
+            StreamingSockets.Instance.ConnectSockets();
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
@@ -837,6 +838,10 @@ public class WorldManager : MonoBehaviour
     /// </summary>
     public void LoadJjworld()
     {
+        if (StreamingSockets.Instance.isEventTriggered)
+        {
+            return;
+        }
         SetAutoSwtichStreaming();
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
@@ -875,6 +880,7 @@ public class WorldManager : MonoBehaviour
             Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
+        
     }
 
 }
