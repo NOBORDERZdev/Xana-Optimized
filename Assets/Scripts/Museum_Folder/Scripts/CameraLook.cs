@@ -105,7 +105,10 @@ public class CameraLook : MonoBehaviour
             lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
-        camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        if (ReferrencesForDynamicMuseum.instance != null)
+        {
+            camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        }
     }
 
     void SwitchOrientation()
@@ -174,33 +177,38 @@ public class CameraLook : MonoBehaviour
                 ZoomDetection();
             }
         }
-       CameraPlayerMeshCollosionFind();
+        CameraPlayerMeshCollosionFind();
     }
 
     /// <summary>
     /// To check is camera in player mesh
     /// </summary>
-    void CameraPlayerMeshCollosionFind(){
-        if (charcterBody == null || pointObj  == null )
+    void CameraPlayerMeshCollosionFind()
+    {
+        if (charcterBody == null || pointObj == null)
         {
-            if(ReferrencesForDynamicMuseum.instance.m_34player){ 
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
                 charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
-               // pointObj = charcterBody.Body.gameObject;
+                // pointObj = charcterBody.Body.gameObject;
             }
             else
             {
                 return;
             }
         }
-        
-        float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
-        if (dist< 0.01f)
+
+        if (camRender != null && pointObj != null)
         {
-            charcterBody.HidePlayer();
-        }
-        else
-        {
-            charcterBody.ShowPlayer();
+            float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
+            if (dist < 0.01f)
+            {
+                charcterBody.HidePlayer();
+            }
+            else
+            {
+                charcterBody.ShowPlayer();
+            }
         }
     }
 

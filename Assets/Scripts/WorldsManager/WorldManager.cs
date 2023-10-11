@@ -551,6 +551,7 @@ public class WorldManager : MonoBehaviour
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
+            RFM.Globals.IsRFMWorld = (FeedEventPrefab.m_EnvName == "RFMDummy");
             if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();

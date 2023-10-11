@@ -590,6 +590,7 @@ GameObject:
   - component: {fileID: 7049625692596731796}
   - component: {fileID: 1466823095684265310}
   - component: {fileID: 1129399602055009898}
+  - component: {fileID: 7004974986044692533}
   m_Layer: 22
   m_Name: Character
   m_TagString: Untagged
@@ -1194,6 +1195,7 @@ MonoBehaviour:
   escapeeNPCClothesJSON: []
   addressableDownloader: {fileID: 0}
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
+  isVisibleOnCam: 0
 --- !u!114 &1129399602055009898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,6 +1210,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   presetsItem: []
   presetItemCount: 0
+  MemoryManager: {fileID: 7004974986044692533}
+--- !u!114 &7004974986044692533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed6da3190180c6499aa889aec4be638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memoryObjects: []
 --- !u!1 &297846208983046426
 GameObject:
   m_ObjectHideFlags: 0

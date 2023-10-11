@@ -148,8 +148,10 @@ public class XanaChatSystem : MonoBehaviour
         {
             chatNotificationIcon.SetActive(true);
         }
-
-        StartCoroutine(Delay());
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(Delay());
+        }
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }

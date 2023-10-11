@@ -9333,7 +9333,9 @@ MonoBehaviour:
   _allowSyncedControl: 0
   _allowRotation: 1
   m_PressCounter: 0
+  isRFM: 0
   playerController: {fileID: 1808683680640967397}
+  RFMinputController: {fileID: 0}
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
@@ -17420,7 +17422,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.030892435, y: 0.0007811168, z: -0.00002414213, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892437, y: 0.00078112434, z: -0.000024142366, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17671,7 +17673,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.05969732, y: 0.0007801171, z: -0.000046652258, w: 0.9982163}
+  m_LocalRotation: {x: 0.05969733, y: 0.00078008283, z: -0.000046650206, w: 0.9982163}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17847,7 +17849,9 @@ MonoBehaviour:
   _allowSyncedControl: 0
   _allowRotation: 1
   m_PressCounter: 0
+  isRFM: 0
   playerController: {fileID: 1808683680640967397}
+  RFMinputController: {fileID: 0}
   cameraPos: {fileID: 0}
   isJoystickPressed: 0
   isRotatingScreen: 0
@@ -18044,7 +18048,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.030892435, y: 0.0007811173, z: -0.000024140281, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892437, y: 0.0007811211, z: -0.0000241404, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18122,7 +18126,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0022524016, y: 0.00078149175, z: -0.0000017583754, w: 0.9999972}
+  m_LocalRotation: {x: 0.0022524043, y: 0.00078149256, z: -0.0000017583795, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20680,6 +20684,7 @@ GameObject:
   - component: {fileID: 1808683680640967396}
   - component: {fileID: 4134801982122276580}
   - component: {fileID: 4134801982122276581}
+  - component: {fileID: 4134801982122276582}
   m_Layer: 22
   m_Name: Main Player_parent
   m_TagString: Player
@@ -26726,6 +26731,23 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808683680640967398}
   m_Enabled: 1
+--- !u!114 &4134801982122276582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808683680640967398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c3ccb252414bc46a44e428b27b1c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOtherPlayer: 0
+  movement: {x: 0, y: 0}
+  run: 0
+  jump: 0
+  drop: 0
 --- !u!114 &4143084553292016285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37370,6 +37392,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1440768809, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: freeCamToggle
+      value: 
+      objectReference: {fileID: 72722730}
+    - target: {fileID: 1440768809, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: RFMInputController
+      value: 
+      objectReference: {fileID: 4134801982122276582}
+    - target: {fileID: 1440768809, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: rotateOrientationLand
+      value: 
+      objectReference: {fileID: 415524952}
     - target: {fileID: 1954104836, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: animationSelectionPanelPotrait
       value: 

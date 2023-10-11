@@ -79,21 +79,17 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     [PunRPC]
     void CheckRpc(object[] Datasend)
     {
-        AvatarController otherPlayer;
-        string SendingPlayerID = Datasend[0].ToString();
         OtherPlayerId = Datasend[0].ToString();
-        if (Datasend.Length > 2)
-            IsNFTCharacter = (bool)Datasend[2];
-        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-        _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
-
-        for (int j = 0; j < Launcher.instance.playerobjects.Count; j++)
+        if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
         {
-            if (Launcher.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
-            {
-                otherPlayer = Launcher.instance.playerobjects[j].GetComponent<AvatarController>();
-                CharcterBodyParts bodyparts = otherPlayer.GetComponent<CharcterBodyParts>();
-            
+            AvatarController otherPlayer;
+            if (Datasend.Length > 2)
+                IsNFTCharacter = (bool)Datasend[2];
+            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
+            otherPlayer = GetComponent<AvatarController>();
+            CharcterBodyParts bodyparts = otherPlayer.GetComponent<CharcterBodyParts>();
+
             //otherPlayer._CharData = _CharacterData;
             if (IsNFTCharacter)
             {
@@ -112,43 +108,43 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
-                        if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+                    if (!otherPlayer.GetComponent<PhotonView>().IsMine)
+                    {
+                        //Update Body fate
+                        if (_CharacterData.myItemObj[i].ItemName != "")
                         {
-                            //Update Body fate
-                            if (_CharacterData.myItemObj[i].ItemName != "")
+                            string type = _CharacterData.myItemObj[i].ItemType;
+                            if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
                             {
-                                string type = _CharacterData.myItemObj[i].ItemType;
-                                if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
-                                {
-                                    WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor);
-                                }
+                                WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor);
                             }
-                            else
-                            {
-                                if (otherPlayer)
-                                {
-                                    switch (_CharacterData.myItemObj[i].ItemType)
-                                    {
-                                        case "Legs":
-                                            otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
-                                            break;
-                                        case "Chest":
-                                            otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
-                                            break;
-                                        case "Feet":
-                                            otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
-                                            break;
-                                        case "Hair":
-                                            otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-
                         }
+                        else
+                        {
+                            if (otherPlayer)
+                            {
+                                switch (_CharacterData.myItemObj[i].ItemType)
+                                {
+                                    case "Legs":
+                                        otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
+                                        break;
+                                    case "Chest":
+                                        otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
+                                        break;
+                                    case "Feet":
+                                        otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
+                                        break;
+                                    case "Hair":
+                                        otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
                     }
+                }
             }
             else // if player is all default cloths
             {
@@ -302,7 +298,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 //    LightPresetNFT _lightPresetNFT = GetComponent<AvatarController>().GetLightPresetValue(_CharacterData.Skin);
                 //    GetComponent<SwitchToBoxerAvatar>().SwitchLight(_lightPresetNFT);
                 //}
-                
+
             }
             if (_CharacterData.EyeColor != null)
             {
@@ -349,7 +345,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
                 StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
             }
-            }
         }
     }
 
@@ -364,26 +359,26 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 if (itemtype.Contains("Hair"))
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for hair");
-                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
+                        //  print("AddressableDownloader.Instance found for hair");
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(), hairColor, true, true));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
                     }
                 }
                 else
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for other objects");
+                        //  print("AddressableDownloader.Instance found for other objects");
                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(), Color.clear));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
                     }
                 }
             }
@@ -392,7 +387,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 // If Error occur in Downloading 
                 // Then wear Default
                 applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn);
-               // print("Exception : " + e);
+                // print("Exception : " + e);
             }
         }
         else
@@ -461,9 +456,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
         }
     }
-       
-       
-   
+
+
+
 
 
     public void UnStichItem(string type)
