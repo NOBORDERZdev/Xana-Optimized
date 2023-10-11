@@ -4,6 +4,10 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
+using UnityEngine.InputSystem.OnScreen;
+using Climbing;
+using System;
 
 public class CanvasButtonsHandler : MonoBehaviour
 {
@@ -25,7 +29,22 @@ public class CanvasButtonsHandler : MonoBehaviour
     public ActionSelectionPanelHandler ActionSelectionPanel;
     public GameObject AnimationBtnClose;
     public Button rotateOrientationLand;
+    public GameObject freeCamToggle;
+    public bool isSpiritInUse;
+    public float spirit;
+    public float maxSpirit;
+    public Image spiritFillImg;
+    public TextMeshProUGUI spiritText;
+    public Image overlay;
+    public Button runIcon;
+    public InputCharacterController RFMInputController;
+    public GameObject slideBtn;
+    public GameObject runBtn;
+    public GameObject favouriteBtn;
 
+
+    public Action<bool> jumpAction;
+    public Action<bool> slideAction;
     [Header("FPS Button Reference")]
     public GameObject fPSButton;
 
@@ -40,8 +59,16 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject currentPortalObject;
     private void Start()
     {
+        spirit = maxSpirit;
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        
+        bool RFMUI = FeedEventPrefab.m_EnvName == "RFMDummy";
+        rotateOrientationLand.gameObject.SetActive(!RFMUI);
+        freeCamToggle.gameObject.SetActive(!RFMUI);
+        slideBtn.gameObject.SetActive(RFMUI);
+        runBtn.gameObject.SetActive(RFMUI);
+        favouriteBtn.gameObject.SetActive(!RFMUI);
     }
 
     private void OnEnable()
@@ -49,6 +76,70 @@ public class CanvasButtonsHandler : MonoBehaviour
         if (_inst != this)
             _inst = this;
     }
+
+    public void HandleJumpBtnAction(bool jump)
+    {
+        jumpAction?.Invoke(jump);
+    }
+
+    public void HandleSlideBtnAction(bool slide)
+    {
+        slideAction?.Invoke(slide);
+    }
+    public void OnSpiritButtonDown()
+    {
+        if (isSpiritInUse)
+        {
+            RFMInputController.run = runIcon.interactable = isSpiritInUse = false;
+            if (useSpiritCoroutine != null)
+            {
+                StopCoroutine(useSpiritCoroutine);
+            }
+            addSpiritCoroutine = StartCoroutine(IEAddSpirit());
+        }
+        else
+        {
+            RFMInputController.run = runIcon.interactable = isSpiritInUse = true;
+            if (addSpiritCoroutine != null)
+            {
+                StopCoroutine(addSpiritCoroutine);
+            }
+            useSpiritCoroutine = StartCoroutine(IEUseSpirit());
+        }
+    }
+    public Coroutine useSpiritCoroutine;
+    public Coroutine addSpiritCoroutine;
+    public IEnumerator IEUseSpirit()
+    {
+        Debug.LogError("IEUseSpirit"+ ((spirit / maxSpirit * 100) > 0));
+        while ((spirit / maxSpirit * 100) > 0)
+        {
+            spirit -= Time.deltaTime;
+            spiritFillImg.fillAmount = spirit / maxSpirit;
+            spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+            yield return new WaitForUpdate();
+        }
+        overlay.gameObject.SetActive(true);
+        RFMInputController.run = runIcon.interactable = isSpiritInUse = false;
+        addSpiritCoroutine = StartCoroutine(IEAddSpirit());
+    }
+
+    public IEnumerator IEAddSpirit()
+    {
+        Debug.LogError("IEAddSpirit: "+((spirit / maxSpirit * 100) < 100));
+        while ((spirit / maxSpirit * 100) < 100)
+        {
+            if ((spirit / maxSpirit * 100) > 30)
+            {
+                overlay.gameObject.SetActive(false);
+            }
+            spirit += Time.deltaTime;
+            spiritFillImg.fillAmount = spirit / maxSpirit;
+            spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+            yield return new WaitForUpdate();
+        }
+    }
+
     void ChangeOrientation()
     {
         ChangeOrientation_waqas._instance.ChangeOrientation_editor();
@@ -66,6 +157,13 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void OnHelpButtonClick(bool isOn)
     {
+        if (RFM.Globals.IsRFMWorld) // Muneeb
+        {
+            RFM.EventsManager.OnToggleHelpPanel();
+            return;
+        }
+        
+        Debug.LogError("3");
         gamePlayUIParent.SetActive(!isOn);//rik.......
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
     }
