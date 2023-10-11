@@ -194,11 +194,11 @@ public class LoadingHandler : MonoBehaviour
         ResetLoadingValues();
         bool isFedderActive = false;
         //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
-        if (Screen.orientation != oriantation)
+        if (Screen.orientation != oriantation && !XanaConstants.xanaConstants.isFromXanaLobby)
         {
             isFedderActive = true;
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-            blackScreen.DOFade(1, 0.2f).OnComplete(delegate
+            blackScreen.DOFade(1, 0.1f).OnComplete(delegate
             {
                 Screen.orientation = oriantation;
                 //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
@@ -251,8 +251,13 @@ public class LoadingHandler : MonoBehaviour
 
     public void HideLoading(ScreenOrientation oriantation, bool needFader = false)
     {
-        //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
-        if (needFader && Screen.orientation != oriantation)
+        if (/*XanaConstants.xanaConstants.JjWorldSceneChange*/teleportFeader.gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
+        //Debug.LogError(Screen.orientation + " ~~~~~~~  Deactivated Loading ~~~~~~~ " + oriantation);
+        if (needFader && !XanaConstants.xanaConstants.isFromXanaLobby && Screen.orientation != oriantation)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOFade(1, 0.2f).OnComplete(delegate
