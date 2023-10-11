@@ -47,14 +47,14 @@ public class NpcToNpcChat : MonoBehaviour
 
     void Start()
     {
-       // StartCoroutine(FetchResponseFromWeb());
+        StartCoroutine(FetchResponseFromWeb());
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-            StartCoroutine(FetchResponseFromWeb());
-    }
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.Space))
+    //        StartCoroutine(FetchResponseFromWeb());
+    //}
 
     IEnumerator FetchResponseFromWeb()
     {
@@ -103,7 +103,7 @@ public class NpcToNpcChat : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("NpctoNpc: " + request.downloadHandler.text);
+            //Debug.Log("NpctoNpc: " + request.downloadHandler.text);
             responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
