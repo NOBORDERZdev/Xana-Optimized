@@ -156,7 +156,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             if (StoryNarrationCoroutine != null)
                 StopCoroutine(StoryNarrationCoroutine);
             isAgainCollided = true;
-            StartCoroutine(WaitDelayStatement());
+            //StartCoroutine(WaitDelayStatement());
             narrationTextUI.text = narrationText;
             narrationScroll.enabled = true;
             sliderNarrationUI.SetActive(true);

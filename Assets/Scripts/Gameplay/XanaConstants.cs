@@ -105,6 +105,8 @@ public class XanaConstants : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
 
+    [HideInInspector]
+    public bool needToClearMemory = true;
     // Tutorials
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;

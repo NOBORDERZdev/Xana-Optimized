@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5727525722268911528}
   - component: {fileID: 6064654722453747370}
   - component: {fileID: 795303163645620554}
+  - component: {fileID: -4114564411297842832}
   m_Layer: 0
   m_Name: NpcChatSystem
   m_TagString: Untagged
@@ -104,3 +105,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0bd48adc70866438d856d23205278e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4114564411297842832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78021e8b441c9144fa2ad06eb339861b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcAttributes:
+  - aiNames: Mason
+    aiIds: 8011
+    actualAiIds: 37525
+  - aiNames: Ethan
+    aiIds: 8012
+    actualAiIds: 37526
+  - aiNames: Olivia
+    aiIds: 8013
+    actualAiIds: 37527
+  - aiNames: Mia
+    aiIds: 8014
+    actualAiIds: 37528
+  - aiNames: Jolly
+    aiIds: 8015
+    actualAiIds: 37529

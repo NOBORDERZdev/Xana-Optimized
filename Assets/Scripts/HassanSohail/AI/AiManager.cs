@@ -19,9 +19,10 @@ namespace XanaAi
         [HideInInspector]
         public int decoratedAi = 0;
         [HideInInspector]
+       
         public int SpwanedAiCount = 0;
         #endregion
-
+        public GameObject Source;
         #region private
         [Space(5)]
         //[SerializeField] int aiCountToSpwan;

@@ -24,6 +24,7 @@ public class WorldManager : MonoBehaviour
     public Transform listParentMyWorlds;
     public Transform listParentGameWorlds;
     public Transform listParentEventWorlds;
+    public Transform listParentTestWorlds;
     private Transform listParent;
 
     [Header("world Page Scrollviews")]
@@ -32,6 +33,7 @@ public class WorldManager : MonoBehaviour
     public Transform world_myworldScroll;
     public Transform world_GameWorldScroll;
     public Transform world_EventWorldScroll;
+    public Transform world_TestWorldScroll;
 
     [Header("Full World List")]
     private List<GameObject> hotWorldList = new List<GameObject>();
@@ -39,6 +41,7 @@ public class WorldManager : MonoBehaviour
     private List<GameObject> myworldWorldList = new List<GameObject>();
     private List<GameObject> gameWorldList = new List<GameObject>();
     private List<GameObject> eventWorldList = new List<GameObject>();
+    private List<GameObject> testWorldList = new List<GameObject>();
 
     [HideInInspector]
     public bool orientationchanged = false;
@@ -51,6 +54,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberMyWorld = 1;
     private int pageNumberGameWorld = 1;
     private int pageNumberEventWorld = 1;
+    private int pageNumberTestWorld = 1;
     private int pageCount = 200;
     private bool loadOnce = true;
     private bool dataIsFatched = false;
@@ -211,6 +215,13 @@ public class WorldManager : MonoBehaviour
                 else
                     listParent = world_EventWorldScroll;
                 break;
+            case APIURL.TestWorld:
+                aPIURLGlobal = APIURL.TestWorld;
+                if (isHomePage)
+                    listParent = listParentTestWorlds;
+                else
+                    listParent = world_TestWorldScroll;
+                break;
             default:
                 aPIURLGlobal = APIURL.Hot;
                 listParent = listParentHotSection;
@@ -233,6 +244,8 @@ public class WorldManager : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberGameWorld + "/" + pageCount + "/" + status + "/GAME";
             case APIURL.EventWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
+            case APIURL.TestWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -256,6 +269,9 @@ public class WorldManager : MonoBehaviour
                 return;
             case APIURL.EventWorld:
                 pageNumberEventWorld += 1;
+                return;
+            case APIURL.TestWorld:
+                pageNumberTestWorld += 1;
                 return;
             default:
                 pageNumberHot += 1;
@@ -394,7 +410,9 @@ public class WorldManager : MonoBehaviour
                 else if (aPIURLGlobal == APIURL.GameWorld)
                     gameWorldList.Add(TempObject);
                 else if (aPIURLGlobal == APIURL.EventWorld)
-                    eventWorldList.Add(TempObject);
+                    eventWorldList.Add(TempObject); 
+                else if (aPIURLGlobal == APIURL.TestWorld)
+                    testWorldList.Add(TempObject);
             }
         }
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
@@ -779,6 +797,11 @@ public class WorldManager : MonoBehaviour
         }
 
 
+        for (int i = 0; i < testWorldList.Count; i++)
+        {
+            testWorldList[i].gameObject.transform.SetParent(world_TestWorldScroll.transform);
+        }
+
         m_AllWorldManage.WorldHotPage();
     }
 
@@ -807,6 +830,11 @@ public class WorldManager : MonoBehaviour
         for (int i = 0; i < eventWorldList.Count; i++)
         {
             eventWorldList[i].gameObject.transform.SetParent(listParentEventWorlds.transform);
+        }
+
+        for (int i = 0; i < testWorldList.Count; i++)
+        {
+            testWorldList[i].gameObject.transform.SetParent(listParentTestWorlds.transform);
         }
     }
 
@@ -985,7 +1013,7 @@ public class WorldUser
 }
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld
+    Hot, AllWorld, MyWorld, GameWorld, EventWorld, TestWorld
 }
 
 public enum WorldType
