@@ -341,14 +341,14 @@ public class CameraLook : MonoBehaviour
 
     bool CheckCanZoom()
     {
-        //if (isRFM)
-        //{
-        //    //if (RFMinputController.movement.x != 0 && RFMinputController.movement.y != 0)
-        //    //    return false;
-        //    if (RFMinputController.jump)
-        //        return false;
-        //}
-        //else
+        if (isRFM)
+        {
+            if (RFMinputController.movement.x != 0 && RFMinputController.movement.y != 0)
+                return false;
+            if (RFMinputController.jump)
+                return false;
+        }
+        else
         {
             if (playerController.horizontal != 0 && playerController.vertical != 0)
                 return false;
