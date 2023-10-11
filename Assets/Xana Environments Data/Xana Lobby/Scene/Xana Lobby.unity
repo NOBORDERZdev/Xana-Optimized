@@ -2030,7 +2030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &650802431
 Transform:
   m_ObjectHideFlags: 0
@@ -2131,70 +2131,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689180928}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &698997097 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1054672491948762207, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
-  m_PrefabInstance: {fileID: 959568835}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &698997098 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8902736270544046820, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
-  m_PrefabInstance: {fileID: 959568835}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &698997099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698997098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!114 &698997100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698997097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &773336105
 GameObject:
   m_ObjectHideFlags: 0
@@ -3097,8 +3033,6 @@ PrefabInstance:
     - {fileID: 8780414859905325997, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
     - {fileID: 8780414859427764549, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
     - {fileID: 8780414859698852196, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
-    - {fileID: 1054672491948762202, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
-    - {fileID: 6395771144499966734, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ed9b676613d0d5b4ebc9a3c8f70f04b2, type: 3}
 --- !u!1 &959568836 stripped
 GameObject:
@@ -5204,7 +5138,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413034373}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79f6915e7e9e4a348992f7b0ab79693f, type: 3}
   m_Name: 
@@ -5215,14 +5149,14 @@ MonoBehaviour:
     l_Title: {fileID: 413034385}
     l_Aurthur: {fileID: 413034384}
     l_Description: {fileID: 413034383}
-    l_image: {fileID: 698997100}
+    l_image: {fileID: 0}
     l_videoPlayer: {fileID: 413034382}
     l_Loader: {fileID: 413034381}
     p_obj: {fileID: 413034380}
     p_Title: {fileID: 413034379}
     p_Aurthur: {fileID: 413034378}
     p_Description: {fileID: 413034377}
-    p_image: {fileID: 698997099}
+    p_image: {fileID: 0}
     p_videoPlayer: {fileID: 413034376}
     p_Loader: {fileID: 413034374}
   LandscapeObj: {fileID: 1054619498}
@@ -5497,6 +5431,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 863353209589563776, guid: 521026f569811e04b811f5074e564836, type: 3}
+      propertyPath: Source
+      value: 
+      objectReference: {fileID: 185581103}
     - target: {fileID: 863353209589563776, guid: 521026f569811e04b811f5074e564836, type: 3}
       propertyPath: aiCountToSpwan
       value: 5
@@ -6432,6 +6370,10 @@ PrefabInstance:
     - target: {fileID: 3177375819630401093, guid: e960d1c8b8f34a449ab7739b720536b2, type: 3}
       propertyPath: m_Name
       value: Xana Lobby Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3177375819630401093, guid: e960d1c8b8f34a449ab7739b720536b2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3177375819630401095, guid: e960d1c8b8f34a449ab7739b720536b2, type: 3}
       propertyPath: m_RootOrder
