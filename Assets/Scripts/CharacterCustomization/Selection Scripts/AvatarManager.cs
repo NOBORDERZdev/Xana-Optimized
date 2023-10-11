@@ -120,14 +120,12 @@ namespace Metaverse
             {
                 XanaConstants.xanaConstants.needToClearMemory = false;    
                 if (LoadingHandler.Instance)
-                    LoadingHandler.Instance.HideLoading();
+                    LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait,false);
             GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
             InternetLost = go;
              }
 
-            if (LoadingHandler.Instance != null &&
-
-                !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+            if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 //CameraLook.instance.DisAllowControl();
                 OffSelfie();
