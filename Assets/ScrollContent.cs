@@ -51,7 +51,7 @@ namespace DynamicScrollRect
         }
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
         {
-            Debug.LogError("New Elements added === " + contentDatum.Count);
+           // Debug.LogError("New Elements added === " + contentDatum.Count);
 
             if (Worlds.Count.Equals(0))
             {
@@ -66,18 +66,14 @@ namespace DynamicScrollRect
                 Worlds = contentDatum;
                 CurrentKey = worldKey;
                 InitItemsVertical(Worlds.Count);
+                DynamicScrollRect.content.anchoredPosition = Vector2.zero;
 
             }
-            /*else
-            {
-                Debug.LogError("Previous Elements === " + Worlds.Count+"New Elements added === " + contentDatum.Count);
-                Worlds.AddRange(contentDatum);
-            }*/
         }
         private void InitItemsVertical(int count)
         {
             int itemCount = 0;
-            Vector2Int initialGridSize = CalculateInitialGridSize(); /// (3,9)
+            Vector2Int initialGridSize = CalculateInitialGridSize();
             for (int col = 0; col < initialGridSize.y; col++)
             {
                 for (int row = 0; row < initialGridSize.x; row++)
@@ -125,7 +121,6 @@ namespace DynamicScrollRect
             {
                 _activatedItems.Add(scrollItem);
             }
-            //scrollItem.Activated();
             return scrollItem;
         }
         private Vector2 GetGridPosition(int itemIndex)
@@ -270,6 +265,11 @@ namespace DynamicScrollRect
             _activatedItems.Remove(item);
             _deactivatedItems.Add(item);
             item.gameObject.SetActive(false);
+        }
+        public void ResetContent()
+        {
+            ClearContent();
+            InitItemsVertical(Worlds.Count);
         }
     }
 }

@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static IPFS.GetFileInfoResponse;
 
 public class WorldItemManager : MonoBehaviour
 {
     [SerializeField]
-    Dictionary<string , List<WorldItemDetail>> Worlds= new Dictionary<string , List<WorldItemDetail>>();
+    Dictionary<string , List<WorldItemDetail>> Worlds = new Dictionary<string , List<WorldItemDetail>>();
    // List<WorldItemDetail> Worlds = new List<WorldItemDetail>();
     public Transform WorldContentHolder;
     [SerializeField] private DynamicScrollRect.ScrollContent _content = null;
@@ -36,6 +38,28 @@ public class WorldItemManager : MonoBehaviour
         //     contentDatas.Add(new ScrollItemDefault(i));
         // }
         _content.InitScrollContent(key,Worlds[key]);
+    }
+    public void WorldPageStateHandler(bool _checkCheck)
+    {
+        _content.DynamicScrollRect.StateBlock = _checkCheck;
+        _content.DynamicScrollRect.TopScroller.vertical = !_checkCheck;
+        _content.DynamicScrollRect.content.anchoredPosition = Vector2.zero;
+    }
+    public void WorldScrollReset()
+    {
+        _content.DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
+       // _content.DynamicScrollRect.verticalNormalizedPosition = 1f;
+        _content.ResetContent();
+        _content.DynamicScrollRect.content.anchoredPosition = Vector2.zero;
+    }
+    public void ClearWorldScrollWorlds()
+    {
+        _content.DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
+        // _content.DynamicScrollRect.verticalNormalizedPosition = 1f;
+       // _content.ResetContent();
+        _content.DynamicScrollRect.content.anchoredPosition = Vector2.zero;
+        _content.ClearContent();
+        _content.InitScrollContent("SearchWorld", new List<WorldItemDetail>());
     }
 }
 [Serializable]

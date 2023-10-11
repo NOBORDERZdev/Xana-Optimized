@@ -17,97 +17,74 @@ public class WorldSearchManager : MonoBehaviour
     public int pageNumb = 1;
     public int pageSize = 15;
     public SearchworldRoot searchworldRoot = new SearchworldRoot();
-    public SearchworldRoot tempSearchworldRoot = new SearchworldRoot();
+   // public SearchworldRoot tempSearchworldRoot = new SearchworldRoot();
     public Transform SearchWorldParent;
     public ScrollRect scrollcontroller;
     public AdvancedInputField searchWorldInput;
     public GameObject FindWorldScreen;
-
-    public static WorldSearchManager Instance;
-    public static Action<string> OpenSearchPanel;
+   // public static Action<string> OpenSearchPanel;
     [SerializeField] GameObject XanaLobbySearchPrefab;
-    bool isXanaLobbyFound = false;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
+   // bool isXanaLobbyFound = false;
+
     private void OnEnable()
     {
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
             eventPrefab = eventPrefabTab;
-        OpenSearchPanel += OpenSearchPanelFromTag;
+       // OpenSearchPanel += OpenSearchPanelFromTag;
     }
 
-    private void OnDisable()
-    {
-        OpenSearchPanel -= OpenSearchPanelFromTag;
-    }
+    //private void OnDisable()
+    //{
+    //   // OpenSearchPanel -= OpenSearchPanelFromTag;
+    //}
     public void OnClickBackButton()
     {
         FindWorldScreen.SetActive(false);
         XanaLobbySearchPrefab.SetActive(false);
-        SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
+       // SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
         foreach (Transform world in SearchWorldParent)
         {
             Destroy(world.gameObject);
         }
     }
-    /*private void Update()
-    {
-        verticalNormalizedPosition = scrollcontroller.verticalNormalizedPosition;
-    }*/
-
 
     public void GetSearchBarStatus()
     {
         Debug.Log("GetSearchBarStatus => " + PremiumUsersDetails.Instance.CheckSpecificItem("WorldSearchFeature"));
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("WorldSearchFeature"))
-        //{
-        //    return;
-
-        //}
-        //else
-        //{
         FindWorldScreen.SetActive(true);
         searchWorldInput.Select();
         searchWorldInput.Clear();
-        //searchButton.gameObject.SetActive(false);
-        //searchBar.readOnly = false;
-        //searchBar.Select();
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        {
-            UIManager.Instance.FindScetion.constraintCount = 4;
-            UIManager.Instance.FindScetion.padding.left = 12;
-            UIManager.Instance.FindScetion.padding.right = 12;
-            UIManager.Instance.FindScetion.cellSize = new Vector2(320, 320);
-        }
-        print("Horayyy you have Access");
-        // }
+  
+        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        //{
+        //    UIManager.Instance.FindScetion.constraintCount = 4;
+        //    UIManager.Instance.FindScetion.padding.left = 12;
+        //    UIManager.Instance.FindScetion.padding.right = 12;
+        //    UIManager.Instance.FindScetion.cellSize = new Vector2(320, 320);
+        //}
     }
 
-    void OpenSearchPanelFromTag(string tagName)
-    {
-        FindWorldScreen.SetActive(true);
-        searchWorldInput.Clear();
-        searchWorldInput.Text = tagName;
-        searchWorldInput.ManualDeselect();
-        searchWorldInput.ReadOnly=true;
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        {
-            UIManager.Instance.FindScetion.constraintCount = 4;
-            UIManager.Instance.FindScetion.padding.left = 12;
-            UIManager.Instance.FindScetion.padding.right = 12;
-            UIManager.Instance.FindScetion.cellSize = new Vector2(320, 320);
-        }
+    //void OpenSearchPanelFromTag(string tagName)
+    //{
+    //    FindWorldScreen.SetActive(true);
+    //    searchWorldInput.Clear();
+    //    searchWorldInput.Text = tagName;
+    //    searchWorldInput.ManualDeselect();
+    //    searchWorldInput.ReadOnly=true;
+    //    if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+    //    {
+    //        UIManager.Instance.FindScetion.constraintCount = 4;
+    //        UIManager.Instance.FindScetion.padding.left = 12;
+    //        UIManager.Instance.FindScetion.padding.right = 12;
+    //        UIManager.Instance.FindScetion.cellSize = new Vector2(320, 320);
+    //    }
 
-        SearchWorld(true);
-    }
+    //    SearchWorld(true);
+    //}
 
     string PrePareURL(bool isFromTag,string searchKey)
     {
+        Debug.LogError("Tagggggg  " + isFromTag);
         if(isFromTag)
         {
             return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + "/" + searchKey + "/" + pageNumb + "/" + pageSize;
@@ -119,7 +96,7 @@ public class WorldSearchManager : MonoBehaviour
     }
 
     public string searchdata;
-    public IEnumerator IESearchWorld(bool isFromTag=false)
+    public IEnumerator IESearchWorld(bool isFromTag = false)
     {
         string searchWorldStr = searchWorldInput.Text;
         if (!string.IsNullOrEmpty(searchWorldStr))
@@ -151,10 +128,10 @@ public class WorldSearchManager : MonoBehaviour
                             GameObject TempObject;
                             if (searchworldRoot.data.rows[i].name.Contains("XANA Lobby"))
                             {
-                                isXanaLobbyFound= true;
+                                //isXanaLobbyFound= true;
                                 print("IN IF ");
                                 XanaLobbySearchPrefab.SetActive(true);
-                                SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=310;
+                                SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top = 310;
                                 TempObject = XanaLobbySearchPrefab;
                             }
                             else
@@ -211,7 +188,7 @@ public class WorldSearchManager : MonoBehaviour
                                 _event.userLimit = searchworldRoot.data.rows[i].user_limit.ToString();
                             }
                             _event.Init();
-                          StartCoroutine(  _event.DownloadAndLoadFeed());
+                            StartCoroutine(  _event.DownloadAndLoadFeed());
                             _event.DownloadPrefabSprite();
                         }
                         //yield return new WaitForSeconds(.5f);
@@ -226,16 +203,16 @@ public class WorldSearchManager : MonoBehaviour
             }
         }
     }
-    public void OnScrollSearchWorlds()
-    {
-        if (scrollcontroller.verticalNormalizedPosition < 0.01f && dataLoaded && !searchWorldInput.Selected)
-        {
-            if (SearchWorldScrollCoroutine == null)
-            {
-                SearchWorldScrollCoroutine = StartCoroutine(IEOnScrollSearchWorlds());
-            }
-        }
-    }
+    //public void OnScrollSearchWorlds()
+    //{
+    //    if (scrollcontroller.verticalNormalizedPosition < 0.01f && dataLoaded && !searchWorldInput.Selected)
+    //    {
+    //        if (SearchWorldScrollCoroutine == null)
+    //        {
+    //            SearchWorldScrollCoroutine = StartCoroutine(IEOnScrollSearchWorlds());
+    //        }
+    //    }
+    //}
     public Coroutine SearchWorldScrollCoroutine;
     public IEnumerator IEOnScrollSearchWorlds()
     {
@@ -254,76 +231,12 @@ public class WorldSearchManager : MonoBehaviour
         }
         XanaLobbySearchPrefab.SetActive(false);
         SearchWorldParent.GetComponent<GridLayoutGroup>().padding.top=12;
-        //Debug.Log("SearchWorld");
         pageNumb = 1;
         pageSize = 15;
         if (searchworldCoroutine == null)
         {
-            //Debug.Log("SearchWorld coroutine");
-            //StopCoroutine(IESearchWorld());
             searchWorldSTR = searchWorldInput.Text;
             searchworldCoroutine = StartCoroutine(IESearchWorld(isFromTag));
         }
-        /*string searchWorldStr = searchWorldInput.Text;
-        if (string.IsNullOrEmpty(searchWorldStr))
-        {
-            return;
-        }
-        TempWorldsbyName = AllWorldsInfoList.FindAll(o => o.name.StartsWith(searchWorldStr, StringComparison.InvariantCultureIgnoreCase));
-        TempWorldsbyCreator = AllWorldsInfoList.FindAll(o => o.user.name.StartsWith(searchWorldStr, StringComparison.InvariantCultureIgnoreCase));
-        List<RowList> TempWorlds = new List<RowList>();
-
-        for (int i = 0; i < TempWorldsbyName.Count; i++)
-        {
-            if (!TempWorlds.Contains(TempWorldsbyName[i]))
-            {
-                TempWorlds.Add(TempWorldsbyName[i]);
-            }
-        }
-        for (int i = 0; i < TempWorldsbyCreator.Count; i++)
-        {
-            if (!TempWorlds.Contains(TempWorldsbyCreator[i]))
-            {
-                TempWorlds.Add(TempWorldsbyCreator[i]);
-            }
-        }
-
-        for (int i = 0; i < TempWorlds.Count; i++)
-        {
-            GameObject TempObject = Instantiate(eventPrefab);
-            TempObject.transform.SetParent(SearchWorldParent);
-            TempObject.transform.localScale = Vector3.one;
-            FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
-            _event.idOfObject = TempWorlds[i].id;
-            _event.m_EnvironmentName = TempWorlds[i].name;
-            try
-            {
-                _event.m_ThumbnailDownloadURL = TempWorlds[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-            }
-            catch (Exception e)
-            {
-                _event.m_ThumbnailDownloadURL = TempWorlds[i].thumbnail;
-            }
-            _event.m_BannerLink = TempWorlds[i].thumbnail;
-            _event.m_WorldDescription = TempWorlds[i].description;
-            _event.entityType = TempWorlds[i].entityType;
-            _event.m_PressedIndex = int.Parse(TempWorlds[i].id);
-            _event.updatedAt = TempWorlds[i].updatedAt;
-            _event.createdAt = TempWorlds[i].createdAt;
-            if (TempWorlds[i].entityType == WorldType.USER_WORLD.ToString())
-            {
-                _event.creatorName = TempWorlds[i].user.name;
-                _event.userAvatarURL = TempWorlds[i].user.avatar;
-                _event.userLimit = "10";
-            }
-            else
-            {
-                _event.creatorName = "XANA";
-                _event.userLimit = TempWorlds[i].user_limit;
-            }
-            _event.Init();
-            _event.DownloadAndLoadFeed();
-            _event.DownloadPrefabSprite();
-        }*/
     }
 }

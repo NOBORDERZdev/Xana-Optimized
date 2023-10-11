@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
 using static Photon.Pun.UtilityScripts.TabViewManager;
+using System.Drawing.Printing;
+using UnityEditor.Searcher;
 
 public class WorldManager : MonoBehaviour
 {
@@ -52,11 +54,13 @@ public class WorldManager : MonoBehaviour
     private int pageNumberMyWorld = 1;
     private int pageNumberGameWorld = 1;
     private int pageNumberEventWorld = 1;
+    private int pageNumberSearchWorld = 1;
     private int pageCount = 200;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
+    public APIURL previousURL;
 
     public static WorldManager instance;
     public AllWorldManage m_AllWorldManage;
@@ -102,20 +106,17 @@ public class WorldManager : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
             eventPrefab = eventPrefabTab;
-        BuilderEventManager.OnWorldTabChange += OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
-        //ScrollRectEx.OnDragEndVerticalCustom += CheckForReloading;
-        //PixelPerfectScrollRect.OnDragEndVerticalCustom += CheckForReloading;
         ChangeWorldTab(APIURL.Hot);
-
-
-        //Invoke(nameof(SetAutoSwtichStreaming),2);
-
         Invoke(nameof(LoadJjworld), 5);
     }
     public void ChangeWorldTab(APIURL tab)
     {
-        OnWorldTabChange(tab, true);
+        if(tab != APIURL.SearchWorld)
+        {
+            previousURL=tab;
+        }
+        aPIURLGlobal = tab;
         GetBuilderWorlds(tab, (a) => { });
     }
     void SetAutoSwtichStreaming()
@@ -151,72 +152,21 @@ public class WorldManager : MonoBehaviour
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //   Caching.ClearCache();
-
-        BuilderEventManager.OnWorldTabChange -= OnWorldTabChange;
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
-        //ScrollRectEx.OnDragEndVerticalCustom -= CheckForReloading;
-       // PixelPerfectScrollRect.OnDragEndVerticalCustom -= CheckForReloading;
     }
 
     public void WorldPageLoading()
     {
-        //Debug.LogError(scrollPos);
-        if (dataIsFatched)//  scrollPos < .1f &&&& listParent.gameObject.activeInHierarchy
+        if (dataIsFatched)
         {
             loadOnce = true;
             dataIsFatched = false;
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
-
-    void OnWorldTabChange(APIURL _enumValue, bool isHomePage)
-    {
-        switch (_enumValue)
-        {
-            case APIURL.Hot:
-                aPIURLGlobal = APIURL.Hot;
-                if (isHomePage)
-                    listParent = listParentHotSection;
-                else
-                    listParent = world_HotScroll;
-                break;
-            case APIURL.AllWorld:
-                aPIURLGlobal = APIURL.AllWorld;
-                if (isHomePage)
-                    listParent = listParentAllWorlds;
-                else
-                    listParent = world_NewScroll;
-                break;
-            case APIURL.MyWorld:
-                aPIURLGlobal = APIURL.MyWorld;
-                if (isHomePage)
-                    listParent = listParentMyWorlds;
-                else
-                    listParent = world_myworldScroll;
-                break;
-            case APIURL.GameWorld:
-                aPIURLGlobal = APIURL.GameWorld;
-                if (isHomePage)
-                    listParent = listParentGameWorlds;
-                else
-                    listParent = world_GameWorldScroll;
-                break;
-            case APIURL.EventWorld:
-                aPIURLGlobal = APIURL.EventWorld;
-                if (isHomePage)
-                    listParent = listParentEventWorlds;
-                else
-                    listParent = world_EventWorldScroll;
-                break;
-            default:
-                aPIURLGlobal = APIURL.Hot;
-                listParent = listParentHotSection;
-                break;
-        }
-    }
-
-
+    public int SearchPageNumb = 1;
+    public int SearchPageSize = 15;
+    public string SearchKey = default;
     string PrepareApiURL(APIURL aPIURL)
     {
         switch (aPIURL)
@@ -231,11 +181,13 @@ public class WorldManager : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberGameWorld + "/" + pageCount + "/" + status + "/GAME";
             case APIURL.EventWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
+            case APIURL.SearchWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
+
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
     }
-
     void UpdatePageNumber(APIURL aPIURL)
     {
         switch (aPIURL)
@@ -255,12 +207,14 @@ public class WorldManager : MonoBehaviour
             case APIURL.EventWorld:
                 pageNumberEventWorld += 1;
                 return;
+            case APIURL.SearchWorld:
+                SearchPageNumb += 1;
+                return;
             default:
                 pageNumberHot += 1;
                 return;
         }
     }
-
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
@@ -387,31 +341,11 @@ public class WorldManager : MonoBehaviour
                     _event.CreatorName = "XANA";
                 _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
             }
-
-            //TempObject.transform.localScale = new Vector3(1, 1, 1);
-            // _event.Init();
-            /*  if (!_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
-              {
-                  if (aPIURLGlobal == APIURL.Hot)
-                      hotWorldList.Add(TempObject);
-                  else if (aPIURLGlobal == APIURL.AllWorld)
-                      newWorldList.Add(TempObject);
-                  else if (aPIURLGlobal == APIURL.MyWorld)
-                      myworldWorldList.Add(TempObject);
-                  else if (aPIURLGlobal == APIURL.GameWorld)
-                      gameWorldList.Add(TempObject);
-                  else if (aPIURLGlobal == APIURL.EventWorld)
-                      eventWorldList.Add(TempObject);
-              }*/
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 Debug.LogError(i + " --- XANA Lobby --");
                 isLobbyActive = true;
                 eventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
-                // . TempObject = eventPrefabLobby;
-                // TempObject.transform.SetParent(listParent.transform.parent);
-                // TempObject.transform.SetAsFirstSibling();
-
             }
             else
             WorldItemManager.AddWorld(key,_event);
@@ -426,7 +360,18 @@ public class WorldManager : MonoBehaviour
 
         TutorialsManager.instance.ShowTutorials();
     }
-
+    public void WorldPageStateHandler(bool _checkCheck)
+    {
+        WorldItemManager.WorldPageStateHandler(_checkCheck);
+    }
+    public void WorldScrollReset()
+    {
+        WorldItemManager.WorldScrollReset();
+    }
+    public void ClearWorldScrollWorlds()
+    {
+        WorldItemManager.ClearWorldScrollWorlds();
+    }
     private void CreateLightingAsset(FeedEventPrefab _event)
     {
         string path = "Assets/Resources/Environment Data/" + _event.m_EnvironmentName + "Data";
@@ -445,11 +390,8 @@ public class WorldManager : MonoBehaviour
 #endif
         }
     }
-
-
     public async void JoinEvent()
     {
-        //Debug.LogError(" +++++++++++++++++++  WaqasJoinEvent +++++++++++++++");
         _callSingleTime = true;
 
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -467,9 +409,7 @@ public class WorldManager : MonoBehaviour
                     GameManager.Instance.RequiredNFTPopUP.SetActive(true);
                     return;
                 }
-
             }
-            //////
         }
         else
         {
@@ -486,7 +426,6 @@ public class WorldManager : MonoBehaviour
                     XanaConstants.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
-
                     return;
                 }
                 else
@@ -504,45 +443,17 @@ public class WorldManager : MonoBehaviour
                     return;
                 }
             }
-            /////
-
-
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
-
-            // Added By WaqasAhmad [20 July 23]
-            //Caching.ClearCache();
             GC.Collect();
-            //
-
-            //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-
-//#if UNITY_EDITOR
-//            orientationchanged = true;
-//            LoadingHandler.Instance.ShowLoading();
-//            LoadingHandler.Instance.UpdateLoadingSlider(0);
-//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-//            Debug.Log("loading scene");
-//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-//            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-//            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-//            //StartCoroutine(DownloadFile());
-//#else
-            //StartCoroutine(Check_Orientation(() =>
-            //{
-             LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-               // StartCoroutine(DownloadFile());
-            //}));
-//#endif
-
         }
     }
     public async void JoinBuilderWorld()
@@ -562,10 +473,8 @@ public class WorldManager : MonoBehaviour
                     GameManager.Instance.RequiredNFTPopUP.SetActive(true);
                     return;
                 }
-
             }
         }
-        //////
         else
         {
             print("play btnn here");
@@ -583,13 +492,10 @@ public class WorldManager : MonoBehaviour
                     XanaConstants.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
-
-
                     return;
                 }
                 else
                 {
-
                     print("NFT is in your OwnerShip Enjoy");
                 }
                 if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -603,46 +509,19 @@ public class WorldManager : MonoBehaviour
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
-
-
-
-            //Screen.orientation = ScreenOrientation.LandscapeLeft;
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-
             // Added By WaqasAhmad [20 July 23]
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
-
-            //Caching.ClearCache();
             GC.Collect();
-            //
-
-
-//#if UNITY_EDITOR
-//            LoadingHandler.Instance.ShowLoading();
-//            LoadingHandler.Instance.UpdateLoadingSlider(0);
-//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-//            orientationchanged = true;
-//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-//            Photon.Pun.PhotonHandler.levelName = "Builder";
-//            LoadingHandler.Instance.LoadSceneByIndex("Builder");
-//#else
-//LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            //StartCoroutine(Check_Orientation(()=> 
-            //{
-                LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-                //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-                Photon.Pun.PhotonHandler.levelName = "Builder";
-                LoadingHandler.Instance.LoadSceneByIndex("Builder");
-            //}));
-//#endif
-
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+            Photon.Pun.PhotonHandler.levelName = "Builder";
+            LoadingHandler.Instance.LoadSceneByIndex("Builder");
         }
-
-
     }
 
     private IEnumerator Check_Orientation(Action CallBack)
@@ -688,138 +567,39 @@ public class WorldManager : MonoBehaviour
             }
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
-
         // Added By WaqasAhmad [20 July 23]
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //Caching.ClearCache();
         GC.Collect();
-        //
-        //Debug.LogError(" +++++++++++++++++++  WaqasPlay +++++++++++++++");
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
             {
-                //Screen.orientation = ScreenOrientation.LandscapeLeft;
                 LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             }
-
-
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-//#if UNITY_EDITOR
-//            LoadingHandler.Instance.ShowLoading();
-//            LoadingHandler.Instance.UpdateLoadingSlider(0);
-//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-//            orientationchanged = true;
-//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-//            Photon.Pun.PhotonHandler.levelName = "Builder";
-//            LoadingHandler.Instance.LoadSceneByIndex("Builder");
-//#else
-            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-            //StartCoroutine(Check_Orientation(()=> 
-            //{
-                LoadingHandler.Instance.ShowLoading();
-                LoadingHandler.Instance.UpdateLoadingSlider(0);
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-                //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-                Photon.Pun.PhotonHandler.levelName = "Builder";
-                LoadingHandler.Instance.LoadSceneByIndex("Builder");
-            //}));
-//#endif
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+            Photon.Pun.PhotonHandler.levelName = "Builder";
+            LoadingHandler.Instance.LoadSceneByIndex("Builder");
         }
         else
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
             {
-                //Screen.orientation = ScreenOrientation.LandscapeLeft;
                 LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             }
             XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
-//#if UNITY_EDITOR
-//            orientationchanged = true;
-//            LoadingHandler.Instance.ShowLoading();
-//            LoadingHandler.Instance.UpdateLoadingSlider(0);
-//            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-//            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-//            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-//            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-//#else
-//LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
-//            StartCoroutine(Check_Orientation(() =>
-//            {
-             LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
-//            }));
-//#endif
         }
     }
-
-
-    /*
-        public void OpenAllWorldPage()
-        {
-            for (int i = 0; i < hotWorldList.Count; i++)
-            {
-                hotWorldList[i].gameObject.transform.SetParent(world_HotScroll.transform);
-            }
-
-            for (int i = 0; i < newWorldList.Count; i++)
-            {
-                newWorldList[i].gameObject.transform.SetParent(world_NewScroll.transform);
-            }
-
-            for (int i = 0; i < myworldWorldList.Count; i++)
-            {
-                myworldWorldList[i].gameObject.transform.SetParent(world_myworldScroll.transform);
-            }
-
-            for (int i = 0; i < gameWorldList.Count; i++)
-            {
-                gameWorldList[i].gameObject.transform.SetParent(world_GameWorldScroll.transform);
-            }
-
-            for (int i = 0; i < eventWorldList.Count; i++)
-            {
-                eventWorldList[i].gameObject.transform.SetParent(world_EventWorldScroll.transform);
-            }
-
-
-            m_AllWorldManage.WorldHotPage();
-        }
-
-        public void OpenXANAWorldPage()
-        {
-            for (int i = 0; i < hotWorldList.Count; i++)
-            {
-                hotWorldList[i].gameObject.transform.SetParent(listParentHotSection.transform);
-            }
-
-            for (int i = 0; i < newWorldList.Count; i++)
-            {
-                newWorldList[i].gameObject.transform.SetParent(listParentAllWorlds.transform);
-            }
-
-            for (int i = 0; i < myworldWorldList.Count; i++)
-            {
-                myworldWorldList[i].gameObject.transform.SetParent(listParentMyWorlds.transform);
-            }
-
-            for (int i = 0; i < gameWorldList.Count; i++)
-            {
-                gameWorldList[i].gameObject.transform.SetParent(listParentGameWorlds.transform);
-            }
-
-            for (int i = 0; i < eventWorldList.Count; i++)
-            {
-                eventWorldList[i].gameObject.transform.SetParent(listParentEventWorlds.transform);
-            }
-        }
-    */
-
     #region Clear Resource Unload Unused Asset File.......
     private int unloadUnusedFileCount;
     public void ResourcesUnloadAssetFile()
@@ -828,43 +608,22 @@ public class WorldManager : MonoBehaviour
         {
             unloadUnusedFileCount = 0;
             Resources.UnloadUnusedAssets();
-            //  Caching.ClearCache();
-            //AssetBundle.UnloadAllAssetBundles(false);
-            //GC.Collect();
         }
         unloadUnusedFileCount += 1;
     }
-
-    public void Dispose()
-    {
-
-        //   GC.SuppressFinalize(this);
-    }
     #endregion
-
-    /// <summary>
-    /// Load jj world 
-    /// </summary>
     public void LoadJjworld()
     {
         SetAutoSwtichStreaming();
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
-            // Commented By WaqasAhmad
-            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-           
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
-            
-            // Commented By WaqasAhmad
-            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-            
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             LoadingHandler.Instance.loadingPanel.SetActive(false);
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            //LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.4f, 0.7f), 0.5f, true);
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
@@ -886,7 +645,6 @@ public class WorldManager : MonoBehaviour
             PlayWorld();
         }
     }
-
 }
 [Serializable]
 class AutoSwtichEnv{ 
@@ -989,7 +747,7 @@ public class WorldUser
 }
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld
+    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld
 }
 
 public enum WorldType

@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [Header("New World Layout References")]
     public Transform SearchHomeHolder;
     public Transform SearchWorldHolder, 
+        SearchWorldScreenHolder,
         AvatarWindowHolder,
         HomeWorldTabsHolder, 
         WorldWorldTabsHolder, 
@@ -79,28 +80,50 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(_state);
         ShowFooter(!_state);
     }
+    public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
         switch(Screen)
         {
             case 0:
                 {
+                    SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(true);
                     LobbyTabHolder.gameObject.SetActive(true);
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
+                    WorldManager.instance.WorldPageStateHandler(false);
+                    WorldManager.instance.WorldScrollReset();
+                    PreviousScreen = 0;
                     break;
                 }
             case 1:
                 {
+                    SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(true);
                     AvatarWindowHolder.gameObject.SetActive(false);
                     LobbyTabHolder.gameObject.SetActive(false);
                     HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(true);
+                    WorldManager.instance.WorldPageStateHandler(true);
+                    WorldManager.instance.WorldScrollReset();
+                    PreviousScreen = 1;
+                    break;
+                }
+            case 2:
+                {
+                    SearchWorldScreenHolder.gameObject.SetActive(true);
+                    SearchHomeHolder.gameObject.SetActive(false);
+                    SearchWorldHolder.gameObject.SetActive(false);
+                    AvatarWindowHolder.gameObject.SetActive(false);
+                    LobbyTabHolder.gameObject.SetActive(false);
+                    HomeWorldTabsHolder.gameObject.SetActive(false);
+                    WorldWorldTabsHolder.gameObject.SetActive(false);
+                    WorldManager.instance.WorldPageStateHandler(true);
+                    WorldManager.instance.WorldScrollReset();
                     break;
                 }
         }
