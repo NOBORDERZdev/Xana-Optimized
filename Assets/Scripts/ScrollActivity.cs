@@ -7,6 +7,7 @@ public class ScrollActivity : MonoBehaviour
 {
     [Header("For World Icons Scroll")]
     public ScrollRect ScrollController;
+    public Transform m_parent;
     public GameObject btnback;
     public float normalized;
     private int lastindex = 1;

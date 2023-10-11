@@ -202,7 +202,7 @@ public class AllWorldManage : MonoBehaviour
         }
     }
 
-
+    bool testWorldLoaded = true;
     public void TestWorldLoad()
     {
         if (!ScrollObjectsList[5].activeSelf)
@@ -226,9 +226,9 @@ public class AllWorldManage : MonoBehaviour
             FlexibleReact.GetComponent<FlexibleRectTestWorld>().enabled = true;
 
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.TestWorld, true);
-            if (eventWorldLoaded)
+            if (testWorldLoaded)
             {
-                eventWorldLoaded = false;
+                testWorldLoaded = false;
                 BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.TestWorld, (sucess) =>
                 {
                     if (!sucess)
@@ -357,9 +357,9 @@ public class AllWorldManage : MonoBehaviour
 
             WorldScrollEnableDisable(3);
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.GameWorld, false);
-            if (myWorldLoaded)
+            if (gameWorldLoaded)
             {
-                myWorldLoaded = false;
+                gameWorldLoaded = false;
                 BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.GameWorld, (sucess) =>
                 {
                     if (!sucess)
@@ -389,9 +389,9 @@ public class AllWorldManage : MonoBehaviour
 
             WorldScrollEnableDisable(4);
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.EventWorld, false);
-            if (myWorldLoaded)
+            if (eventWorldLoaded)
             {
-                myWorldLoaded = false;
+                eventWorldLoaded = false;
                 BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.EventWorld, (sucess) =>
                 {
                     if (!sucess)
@@ -421,9 +421,9 @@ public class AllWorldManage : MonoBehaviour
 
             WorldScrollEnableDisable(5);
             BuilderEventManager.OnWorldTabChange?.Invoke(APIURL.TestWorld, false);
-            if (myWorldLoaded)
+            if (testWorldLoaded)
             {
-                myWorldLoaded = false;
+                testWorldLoaded = false;
                 BuilderEventManager.OnBuilderWorldLoad?.Invoke(APIURL.TestWorld, (sucess) =>
                 {
                     if (!sucess)
