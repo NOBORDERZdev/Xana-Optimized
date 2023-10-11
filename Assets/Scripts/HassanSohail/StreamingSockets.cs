@@ -5,6 +5,7 @@ using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class StreamingSockets : MonoBehaviour
 {
@@ -77,6 +78,11 @@ public class StreamingSockets : MonoBehaviour
     }
 
     public async void RecvieStreamingEvent(string EventDetail){
+        if (isInEvent)
+        {
+           return;
+        }
+       
       //  print("~~~~~~~~~~~~~~ "+EventDetail);
         EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(EventDetail);
         Debug.Log("<color=green> EventDetail --  : " + eventDetails.data.id + " : " + eventDetails.data.environmentName + "</color>");
@@ -85,12 +91,8 @@ public class StreamingSockets : MonoBehaviour
         {
             StreamingSockets.Instance.isEventTriggered= true;
             print("Recive STREAMING SOCKETS " + EventDetail);
-            //if (/*!XanaConstants.xanaConstants.isBackFromWorld*/ !isInEvent)
-            //{
-            //    isInEvent =true;
-            //    DynamicEventManager.Instance.SetSceneData();
-            //}
-            if (isInWorld )
+           
+            if (isInWorld && !isInEvent)
             {
                  LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
                 //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
@@ -101,58 +103,31 @@ public class StreamingSockets : MonoBehaviour
                 return;
                 //await Task.Delay(12000);
             }
-            //else
-            //{
-            //    StreamingSockets.Instance.isEventTriggered=true;
-            //}
+            if (SceneManager.GetActiveScene().name!="Main")
+            {
+                return;
+            }
+             ReSetStreamingEvent();
             XanaEventDetails.eventDetails = eventDetails.data;
             XanaEventDetails.eventDetails.DataIsInitialized = true;
             XanaConstants.xanaConstants.newStreamEntery=true;
+            isInEvent= true;
             DynamicEventManager.Instance.SetSceneData();
         }
     }
 
-    //public void RejoinOnEventFromWorld(XanaEventDetails eventDetails){ 
-    //    if (eventDetails != null)
-    //    {
-    //        print("Rejoining from the world  " + eventDetails);
-    //       // XanaEventDetails.eventDetails = eventDetails.data;
-    //        //XanaEventDetails.eventDetails.DataIsInitialized = true;
-    //        if (/*!XanaConstants.xanaConstants.isBackFromWorld*/ true)
-    //        {
-    //            isInEvent =true;
-    //            DynamicEventManager.Instance.SetSceneData();
-    //        }
-           
-    //    }
-    //}
-
+    
+     public bool isInEvent = false;
      public bool isEventTriggered= false;
      public bool isInWorld= false;
-    public void ReSetStreamingEvent(){ 
+    public  async void ReSetStreamingEvent(){ 
+        isInEvent= false;
+        isEventTriggered =false;
+        XanaEventDetails.eventDetails.DataIsInitialized= false;
         XanaEventDetails.eventDetails =null;
-         XanaEventDetails.eventDetails.DataIsInitialized= false;
     }
 
-    //void SetSteramingEvent( params string[] worldNames){
-    //    if (worldNames.Length>0)
-    //    {
-    //        for (int i = 0; i < worldNames.Length; i++)
-    //        {
-    //            Debug.Log("<color=red> STREAMING WORLD NAME : " + worldNames[i].ToString() + "</color>");
-    //        }
-    //       // List<string> name = new List<string>();
-    //       // name.Add("list 1");
-    //       // name.Add("list 2");
-    //       ////string[] names = new string[]{"Xana Festival"};
-    //       //Manager.Socket.Emit("register_world_ai_server",/*"Xana Festival" */ worldNames/*name*/);
-    //          Manager.Socket.Emit("register_world_ai_server", new string[]{"Test 1", "test 2" });
-    //    }
-    //}
-
-    //public void TestEmit(){ 
-    //  onConnect.Invoke(WorldNames); 
-    //}
+    
 
     private void OnDisable()
     {

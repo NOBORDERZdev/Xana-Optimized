@@ -514,6 +514,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //Loading scene for event after checking date time and event data
     public void SetSceneData()
     {
+        if (XanaEventDetails.eventDetails == null)
+        {
+            return;
+        }
         if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
         {
             XanaConstants.xanaConstants.userLimit = "16";
