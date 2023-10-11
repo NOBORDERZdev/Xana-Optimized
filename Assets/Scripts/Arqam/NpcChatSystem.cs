@@ -107,7 +107,7 @@ public class NpcChatSystem : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.UserNpc, id.ToString());
             Debug.Log("Communication Response(UserAI): " + feed.response);
         }
         else
