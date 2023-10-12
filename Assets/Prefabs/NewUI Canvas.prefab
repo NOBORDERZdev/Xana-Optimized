@@ -5936,7 +5936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ControlPath: <Keyboard>/c
+  m_ControlPath: <Keyboard>/space
 --- !u!114 &6860018102757080848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5956,7 +5956,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1440768809}
           m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
-          m_MethodName: HandleSlideBtnAction
+          m_MethodName: HandleJumpBtnAction
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -5972,7 +5972,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1440768809}
           m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
-          m_MethodName: HandleSlideBtnAction
+          m_MethodName: HandleJumpBtnAction
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -51193,7 +51193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ControlPath: <Keyboard>/space
+  m_ControlPath: <Keyboard>/c
 --- !u!114 &6391302118267394110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51211,21 +51211,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: PlayerControllerNew, Assembly-CSharp
-          m_MethodName: Jump
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 1440768809}
           m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
-          m_MethodName: HandleJumpBtnAction
+          m_MethodName: HandleSlideBtnAction
           m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -51234,6 +51222,22 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1440768809}
+          m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+          m_MethodName: HandleSlideBtnAction
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &8917329744606807320
 GameObject:
