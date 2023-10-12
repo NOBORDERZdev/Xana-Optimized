@@ -165,7 +165,7 @@ public class SoundManagerSettings : MonoBehaviour
         totalVolumeSlider.onValueChanged.AddListener((float vol) =>
         {
            
-            //SetBgmVolume(vol);
+            SetBgmVolume(vol);
             SetVideoVolume(vol);
         });
         bgmSlider.onValueChanged.AddListener((float vol) =>
