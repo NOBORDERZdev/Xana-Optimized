@@ -9,6 +9,7 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -346,14 +347,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
                 if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
-                    hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing")
-                    || hit.collider.gameObject.CompareTag(RFM.Globals.PLAYER_TAG)) // For RFM player
+                    hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     goto CheckAgain;
                 } //else if()
 
-                else if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
+                if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-2, 2), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-2, 2));
                     goto CheckAgain;
@@ -405,6 +405,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
         {
+            spawnPoint += new Vector3(Random.Range(-2, 2), spawnPoint.y, Random.Range(-2, 2));
+            
             player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
             RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
             
