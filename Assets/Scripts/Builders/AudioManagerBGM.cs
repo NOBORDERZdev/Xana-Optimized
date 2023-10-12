@@ -8,6 +8,7 @@ public class AudioManagerBGM : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip currentClip;
     AudioPropertiesBGM audioPropertiesBGM;
+    bool isDownloaded = false, downloadingError=false;
 
     private void OnEnable()
     {
@@ -24,8 +25,8 @@ public class AudioManagerBGM : MonoBehaviour
     private void AudioBGM(AudioPropertiesBGM audioPropertiesBGM)
     {
         this.audioPropertiesBGM = audioPropertiesBGM;
-        if (!audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty())
-            StartCoroutine(setAudioFromUrl(audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
+        if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty())
+            StartCoroutine(setAudioFromUrl(this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
     }
 
     IEnumerator setAudioFromUrl(string file_name)
@@ -43,6 +44,7 @@ public class AudioManagerBGM : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                downloadingError = true;
             }
             else
             {
@@ -52,6 +54,7 @@ public class AudioManagerBGM : MonoBehaviour
                 currentClip = clip;
                 audioSource.loop = audioPropertiesBGM.dataAudioBGM.audioLoopBGM;
                 audioSource.volume = audioPropertiesBGM.dataAudioBGM.audioVolume;
+                isDownloaded = true;
             }
         }
     }
@@ -69,6 +72,16 @@ public class AudioManagerBGM : MonoBehaviour
 
     void BGMStart()
     {
+        StartCoroutine(nameof(WaitforDownloading));
+    }
+
+    IEnumerator WaitforDownloading()
+    {
+        while (!isDownloaded && !downloadingError)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+
         if (currentClip != null)
         {
             audioSource.clip = currentClip;

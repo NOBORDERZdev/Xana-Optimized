@@ -707,7 +707,7 @@ public class LevelData
     public SkyProperties skyProperties;
     public PlayerProperties playerProperties;
     public TerrainProperties terrainProperties;
-    public AudioPropertiesBGM audioPropertiesBGM;
+    public AudioPropertiesBGM audioPropertiesBGM = new AudioPropertiesBGM();
 }
 
 //User Map Data Model - 
@@ -736,7 +736,7 @@ public class UserMaps
 public class AudioPropertiesBGM
 {
     #region Data Variables
-    public DataAudioBGM dataAudioBGM;
+    public DataAudioBGM dataAudioBGM = new DataAudioBGM();
     #endregion
 }
 
@@ -746,7 +746,7 @@ public class DataAudioBGM
     #region Data Variables
     public string pathAudioBGM;
     public bool audioLoopBGM;
-    public float audioVolume;
+    public float audioVolume = .1f;
     #endregion
 }
 
