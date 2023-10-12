@@ -81,23 +81,28 @@ public class NpcChatSystem : MonoBehaviour
         if (counter is 0 && playerMessages.Count > 0)
             msg = playerMessages.Dequeue();
 
-        //for live http://15.152.13.112:8032/
-        //for test http://182.70.242.10:8032/
+        string ip = "";
         string prefix = "";
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].aiIds;
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://182.70.242.10:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
+            //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].actualAiIds;
-            prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://15.152.13.112:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
+            //prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
         }
         counter++;
 
-        string url = "&id=";
-        string postUrl = prefix + msg + url + id;
+        //string url = "&id=";
+        string url = "&msg=";
+        //string postUrl = prefix + msg + url + id;
+        string postUrl = prefix + id + url + msg;
         Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
