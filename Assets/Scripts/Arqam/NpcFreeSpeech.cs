@@ -30,8 +30,6 @@ public class NpcFreeSpeech : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
 
-        //for live http://15.152.13.112:8032/
-        //for test http://182.70.242.10:8032/
         string prefix = "";
         int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);

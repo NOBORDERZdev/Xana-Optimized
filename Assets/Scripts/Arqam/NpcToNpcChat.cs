@@ -126,7 +126,8 @@ public class NpcToNpcChat : MonoBehaviour
         string prefix = "";
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
+            //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
+            prefix = "http://182.70.242.10:8032/api/v1/text_from_usertext_en_35?id=";
             id = npcDB[npcCounter].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
@@ -135,8 +136,10 @@ public class NpcToNpcChat : MonoBehaviour
             id = npcDB[npcCounter].actualAiIds;
         }
 
-        string url = "&id=";
-        string postUrl = prefix + msg + url + id;
+        //string url = "&id=";
+        string url = "&msg=";
+        //string postUrl = prefix + msg + url + id;
+        string postUrl = prefix + id + url + msg;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + postUrl + "</color>");
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
