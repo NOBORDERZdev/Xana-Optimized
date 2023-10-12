@@ -81,17 +81,21 @@ public class NpcChatSystem : MonoBehaviour
         if (counter is 0 && playerMessages.Count > 0)
             msg = playerMessages.Dequeue();
 
+        string ip = "";
         string prefix = "";
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].aiIds;
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_usertext_en_35?id=";
+            ip = "http://182.70.242.10:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
             //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].actualAiIds;
-            prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://15.152.13.112:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
+            //prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
         }
         counter++;
 

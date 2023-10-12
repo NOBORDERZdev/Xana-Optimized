@@ -18,7 +18,7 @@ public class NpcToNpcChat : MonoBehaviour
     public List<NPCAttributes> npcAttributes;
     private List<NPCAttributes> npcDB;
     /// <summary>
-    /// Out data class
+    /// Output data class
     /// </summary>
     private class ResponseData
     {
@@ -49,12 +49,6 @@ public class NpcToNpcChat : MonoBehaviour
     {
         StartCoroutine(FetchResponseFromWeb());
     }
-
-    //private void Update()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.Space))
-    //        StartCoroutine(FetchResponseFromWeb());
-    //}
 
     IEnumerator FetchResponseFromWeb()
     {
@@ -123,16 +117,20 @@ public class NpcToNpcChat : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
         int id = 0;
+        string ip = "";
         string prefix = "";
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
             //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_usertext_en_35?id=";
+            ip = "http://182.70.242.10:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
             id = npcDB[npcCounter].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+            //prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://15.152.13.112:8032/";
+            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
             id = npcDB[npcCounter].actualAiIds;
         }
 
