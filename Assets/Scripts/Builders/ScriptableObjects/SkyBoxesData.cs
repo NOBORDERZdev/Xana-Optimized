@@ -53,5 +53,6 @@ public class LensFlareData
 {
     public LensFlareDataSRP falreData;
     public float flareScale = 0.6f;
+    public float flareIntensity = 1f;
 }
 

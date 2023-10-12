@@ -310,6 +310,7 @@ namespace Models
         public bool IsActive;
         public bool IsFacing;
         public bool isLoop;
+        public bool avatarTriggerToggle;
         public float translateSpeed;
         public List<GameObject> flagIns;
         public List<Vector3> translatePoints;
@@ -318,6 +319,7 @@ namespace Models
             IsActive = false;
             IsFacing = false;
             isLoop = false;
+            avatarTriggerToggle = false;
             translateSpeed = 10f;
             flagIns = new List<GameObject>();
             translatePoints = new List<Vector3>();
@@ -327,6 +329,7 @@ namespace Models
             IsActive = false;
             IsFacing = false;
             isLoop = false;
+            avatarTriggerToggle = false;
             translateSpeed = 10f;
             flagIns = new List<GameObject>();
             translatePoints = new List<Vector3>();
@@ -336,6 +339,7 @@ namespace Models
             IsActive = translateComponentData.IsActive;
             IsFacing = translateComponentData.IsFacing;
             isLoop = translateComponentData.isLoop;
+            avatarTriggerToggle = translateComponentData.avatarTriggerToggle;
             translateSpeed = translateComponentData.translateSpeed;
             flagIns = translateComponentData.flagIns;
             translatePoints = translateComponentData.translatePoints;
@@ -574,6 +578,7 @@ namespace Models
         public string narrationsData;
         public bool onTriggerNarration;
         public bool onStoryNarration;
+        public bool onCloseNarration;
 
         public float timeBwNarrations;
         public NarrationComponentData()
@@ -581,6 +586,7 @@ namespace Models
             IsActive = false;
             onTriggerNarration = false;
             onStoryNarration = false;
+            onCloseNarration = true;
             narrationsData = "";
             timeBwNarrations = 1f;
         }
@@ -589,6 +595,7 @@ namespace Models
             IsActive = false;
             onTriggerNarration = false;
             onStoryNarration = false;
+            onCloseNarration = true;
             narrationsData = "";
             timeBwNarrations = 1f;
         }
@@ -599,6 +606,7 @@ namespace Models
             narrationsData = data.narrationsData;
             onTriggerNarration = data.onTriggerNarration;
             onStoryNarration = data.onStoryNarration;
+            onCloseNarration = data.onCloseNarration;
             timeBwNarrations = data.timeBwNarrations;
         }
     }
@@ -796,13 +804,13 @@ namespace Models
         {
             IsActive = false;
             minNumber = 0;
-            maxNumber = 0;
+            maxNumber = 10;
         }
         public void Reset()
         {
             IsActive = false;
             minNumber = 0;
-            maxNumber = 0;
+            maxNumber = 10;
         }
 
         public RandomNumberComponentData(RandomNumberComponentData data)
