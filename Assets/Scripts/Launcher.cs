@@ -284,9 +284,28 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            print("Launcher " + "OnJoinRoomFailed : Returining Main" );
-            print(returnCode.ToString() + "	" + message);
-            LoadFromFile.instance._uiReferences.LoadMain(true);
+            // TODO create new room
+            if (XanaConstants.xanaConstants.EnviornmentName == "RFMDummy") // TODO improve
+            {
+                Debug.Log("Launcher Could not join RFM room. Creating new room.");
+                
+                string temp;
+                do
+                {
+                    temp = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999);
+                }
+                while (roomNames.Contains(temp));
+                
+                Debug.Log("Launcher RFM JoinOrCreateRoom(): roomName: " + temp + ", lobbyName: " + lobbyName);
+                if (!XanaConstants.xanaConstants.isCameraMan)
+                    PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(),
+                        new TypedLobby(lobbyName, LobbyType.Default), null);
+            }
+            else
+            {
+                print($"Launcher OnJoinRoomFailed with message: {returnCode}. Returning to Main");
+                LoadFromFile.instance._uiReferences.LoadMain(true);
+            }
         }
         public override void OnCreatedRoom()
         {
@@ -389,29 +408,29 @@ namespace Photon.Pun.Demo.PunBasics
                     PhotonNetwork.JoinRoom(CameraManRoomName);
                 }
             }
-    }
-
-        private void JoinRoomOrCreateRoom()
-        {
-            print("Launcher " + "JoinRoomOrCreateRoom");
         }
+
+        // private void JoinRoomOrCreateRoom()
+        // {
+        //     print("Launcher " + "JoinRoomOrCreateRoom");
+        // }
 
         public List<string> roomNames;
 
         public RoomOptions RoomOptionsRequest()
         {
-			roomOptions = new RoomOptions();
-			roomOptions.MaxPlayers = (byte)(int.Parse(XanaConstants.xanaConstants.userLimit));
-			//if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event")
-			//{
-			//	roomOptions.MaxPlayers = (byte)3;
-			//}
-			//else
-			//{
-			//	roomOptions.MaxPlayers = (byte)20;
-			//}
-			roomOptions.IsOpen = true;
-			roomOptions.IsVisible = true;
+            roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = (byte)(int.Parse(XanaConstants.xanaConstants.userLimit));
+            //if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event")
+            //{
+            //	roomOptions.MaxPlayers = (byte)3;
+            //}
+            //else
+            //{
+            //	roomOptions.MaxPlayers = (byte)20;
+            //}
+            roomOptions.IsOpen = true;
+            roomOptions.IsVisible = true;
 
             roomOptions.PublishUserId = true;
             roomOptions.CleanupCacheOnLeave = true;
@@ -518,8 +537,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public void JoinRoomManually(string name) {
             print("!! Room Name !!"+name);
-           // PhotonNetwork.JoinOrCreateRoom(name, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
-           PhotonNetwork.JoinRoom(name);
+            // PhotonNetwork.JoinOrCreateRoom(name, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
+            PhotonNetwork.JoinRoom(name);
             //PhotonNetwork.JoinRoom(PhotonNetwork.CurrentRoom.Name, true);
         }
 
