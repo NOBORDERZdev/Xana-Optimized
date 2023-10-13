@@ -15,7 +15,13 @@ namespace RFM.UI
 
         private void Update()
         {
-            if (!_cameraTransform) return;
+            if (!_cameraTransform)
+            {
+                if (Camera.main)
+                {
+                    _cameraTransform = Camera.main.transform;
+                }
+            }
         
             transform.LookAt(2 * transform.position - _cameraTransform.position);
         }
