@@ -73,6 +73,19 @@ namespace DynamicScrollRect
             _dragCurPosition = _dragStartingPosition;
         }
         public bool StateBlock = false;
+        protected override void LateUpdate()
+        {
+            base.LateUpdate();
+            if (!StateBlock)
+            {
+                if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)
+                {
+                    if (content.anchoredPosition.y < 0f)
+                        content.anchoredPosition = Vector2.zero;
+                }
+   
+            }
+        }
         private void Update()
         {
             if(!StateBlock)
@@ -88,7 +101,7 @@ namespace DynamicScrollRect
                 {
                     if (verticalNormalizedPosition > 0.999f)
                     {
-                        TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.00001f;
+                        TopScroller.verticalNormalizedPosition = ParentSliderLimitCheck + 0.001f;
                         content.anchoredPosition = Vector2.zero;
                         ParentSliderFlag = false;
                         TopScroller.vertical = true;

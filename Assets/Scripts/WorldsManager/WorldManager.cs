@@ -289,6 +289,7 @@ public class WorldManager : MonoBehaviour
                     _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
                    if(!_event.EnvironmentName.Contains("XANA Lobby"))
                     _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                   _event.ThumbnailDownloadURLHigh = _event.ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
                 }
             }
             catch
