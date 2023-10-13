@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Project Constants
 public static class Constants
@@ -154,9 +152,38 @@ public static class Constants
     #region Game Logic Creator
     public enum ItemComponentType
     {
-        collectible,
-        rotatable,
-        health
+        CollectibleComponent = 0,
+        RotatorComponent = 1,
+        TransformComponent = 2,
+        TranslateComponent = 3,
+        AddForceComponent = 4,
+        TimerComponent = 5,
+        TimeLimitComponent = 6,
+        RandomNumberComponent = 7,
+        NarrationComponent = 8,
+        TimerCountdownComponent = 9,
+        PowerProviderComponent = 10,
+        AvatarChangerComponent = 11,
+        enemyNPC = 12,
+        ladder = 13,
+        DoorKeyComponent = 14,
+        chestKey = 15,
+        ElapsedTimeComponent = 16,
+        HelpButtonComponent = 17,
+        HealthComponent = 18,
+        SituationChangerComponent = 19,
+        SpecialItemComponent = 20,
+        ThrowThingsComponent = 21,
+        NinjaComponent = 22,
+        spawner = 23,
+        DisplayMessagesComponent = 24,
+        QuizComponent = 25,
+        WarpFunctionComponent = 26,
+        AudioComponent = 27,
+        BlindfoldedDisplayComponent = 28,
+        HyperLinkPopComponent = 29,
+        BlindComponent = 30,
+        none=31
     }
     #endregion
 

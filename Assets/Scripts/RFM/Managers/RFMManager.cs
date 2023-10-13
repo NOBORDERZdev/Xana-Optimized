@@ -197,12 +197,26 @@ namespace RFM.Managers
 
                 var roles = CalculateRoles(roomLimit, numberOfPlayers,
                     CurrentGameConfiguration.EscapeesToHuntersRatio);
+                    
+                Debug.Log($"RFM roles: {roles}");
 
-                Hashtable properties = new Hashtable { { "numberOfPlayerHunters", roles.Item2 } };
-                PhotonNetwork.MasterClient.SetCustomProperties(properties);
+                // Hashtable properties = new Hashtable { { "numberOfPlayerHunters", roles.Item2 } };
+                // PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
                 SpawnHunters(roles.Item4);
                 SpawnAIEscapees(roles.Item3);
+                
+                var numberOfPlayerHunters = roles.Item2;
+
+                foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
+                {
+                    if (numberOfPlayerHunters > 0)
+                    {
+                        roomPlayer.Value.SetCustomProperties(new Hashtable
+                            { { "isHunter", true } });
+                        numberOfPlayerHunters--;
+                    }
+                }
             }
 
             gameplayTimeText.gameObject.SetActive(false);
@@ -221,16 +235,22 @@ namespace RFM.Managers
         
         private void ResetPosition()
         {
-            int numOfHunters = 0;
+            // int numOfHunters = 0;
+            // if (PhotonNetwork.MasterClient.CustomProperties.TryGetValue("numberOfPlayerHunters", out var x))
+            // {
+            //     numOfHunters = (int)x;
+            // }
             
-            if (PhotonNetwork.MasterClient.CustomProperties.TryGetValue("numberOfPlayerHunters", out var x))
+            bool isHunter = false;
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isHunter", out object _isHunter))
             {
-                numOfHunters = (int)x;
+                isHunter = (bool)_isHunter;
             }
+            
 
-            if (numOfHunters > 0)
+            if (isHunter)
             {
-                Debug.Log(PhotonNetwork.NickName + "RFM Spawning as Hunter.");
+                Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
                 
                 statusTMP.text = "CATCH THE <#FF36D3>ESCAPEES!</color>";
                 statusBG.SetActive(true);
@@ -252,13 +272,13 @@ namespace RFM.Managers
                 Destroy(hunterSpawnVFX, 10f);
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
-                Hashtable properties = new Hashtable { { "numberOfPlayerHunters", numOfHunters - 1 } };
-                PhotonNetwork.MasterClient.SetCustomProperties(properties);
+                // Hashtable properties = new Hashtable { { "numberOfPlayerHunters", numOfHunters - 1 } };
+                // PhotonNetwork.MasterClient.SetCustomProperties(properties);
             }
 
             else // Spawning as Escapee
             {
-                Debug.Log(PhotonNetwork.NickName + "RFM Spawning as Escapee.");
+                Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Escapee.");
                 
                 statusTMP.text = "RUN FAR FROM THE <#FF36D3>HUNTERS!</color>";
                 statusBG.SetActive(true);

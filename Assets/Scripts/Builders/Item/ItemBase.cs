@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -60,10 +57,13 @@ public class ItemBase : MonoBehaviour
     }
 }
 [RequireComponent(typeof(ItemBase))]
-public abstract class ItemComponent : MonoBehaviour
+public abstract class ItemComponent : MonoBehaviour, IComponentBehaviour
 {
     [SerializeField]
     private ItemBase _itemBase;
+    protected Constants.ItemComponentType _componentType;
+    Constants.ItemComponentType IComponentBehaviour.ComponentType => _componentType;
+
     public ItemBase ItemBase
     {
         get
@@ -82,6 +82,7 @@ public abstract class ItemComponent : MonoBehaviour
 
     bool init = false;
     bool activated = false;
+    protected bool isPlaying = false;
 
     public string assetId
     {
@@ -91,6 +92,8 @@ public abstract class ItemComponent : MonoBehaviour
             return ItemBase.assetId.Value;
         }
     }
+
+    public Constants.ItemComponentType ComponentType => throw new NotImplementedException();
 
     public bool CompareAssetId(string id)
     {
@@ -102,6 +105,7 @@ public abstract class ItemComponent : MonoBehaviour
     {
         if (ItemBase == null) ItemBase = GetComponent<ItemBase>();
         OnInit();
+        AssignItemComponentType();
     }
     public virtual void OnInit() { }
 
@@ -110,7 +114,7 @@ public abstract class ItemComponent : MonoBehaviour
         if (init && activated) return;
         init = true;
         activated = true;
-        if(activeObjects != null) activeObjects.SetActiveCollection(true);
+        if (activeObjects != null) activeObjects.SetActiveCollection(true);
         activeBehaviours.ForEachItem((b) => { b.enabled = true; });
         if (!enabled) enabled = true;
         OnActivate();
@@ -129,7 +133,7 @@ public abstract class ItemComponent : MonoBehaviour
         activated = false;
         if (enabled) enabled = false;
         if (activeObjects != null) activeObjects.SetActiveCollection(false);
-        if (activeBehaviours != null) activeBehaviours.ForEachItem((b) => { if(b != null) b.enabled = false; });
+        if (activeBehaviours != null) activeBehaviours.ForEachItem((b) => { if (b != null) b.enabled = false; });
         OnDeactivate();
     }
 
@@ -184,4 +188,15 @@ public abstract class ItemComponent : MonoBehaviour
         catch (Exception e) { print(e.Message); }
         return null;
     }
+
+    public virtual void PlayBehaviour() { }
+
+    public virtual void StopBehaviour() { }
+
+    public virtual void ResumeBehaviour() { }
+
+    public virtual void ToggleBehaviour() { }
+
+    public abstract void AssignItemComponentType();
+
 }

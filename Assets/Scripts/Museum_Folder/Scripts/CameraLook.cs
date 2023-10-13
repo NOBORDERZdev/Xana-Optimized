@@ -60,6 +60,9 @@ public class CameraLook : MonoBehaviour
     [HideInInspector]
     public bool isRotatingScreen = false;
 
+    CharcterBodyParts charcterBody;
+    [SerializeField] GameObject pointObj;
+    GameObject camRender;
     private void OnEnable()
     {
         controls.Enable();
@@ -101,6 +104,10 @@ public class CameraLook : MonoBehaviour
         {
             lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
+        }
+        if (ReferrencesForDynamicMuseum.instance != null)
+        {
+            camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
         }
     }
 
@@ -170,6 +177,39 @@ public class CameraLook : MonoBehaviour
                 ZoomDetection();
             }
         }
+        CameraPlayerMeshCollosionFind();
+    }
+
+    /// <summary>
+    /// To check is camera in player mesh
+    /// </summary>
+    void CameraPlayerMeshCollosionFind()
+    {
+        if (charcterBody == null || pointObj == null)
+        {
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
+                charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
+                // pointObj = charcterBody.Body.gameObject;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        if (camRender != null && pointObj != null)
+        {
+            float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
+            if (dist < 0.01f)
+            {
+                charcterBody.HidePlayer();
+            }
+            else
+            {
+                charcterBody.ShowPlayer();
+            }
+        }
     }
 
     void CameraControls_Editor()
@@ -208,7 +248,7 @@ public class CameraLook : MonoBehaviour
                 if (isRotatingScreen)     // screen is already rotation before joystick down
                 {
                     // ignore 2nd touch that will be joystick touch
-                    if (t.phase == TouchPhase.Moved && t.position.x > 500)
+                    if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/)
                     {
                         delta = Input.GetTouch(0).deltaPosition;
                         _allowSyncedControl = true;
@@ -221,7 +261,7 @@ public class CameraLook : MonoBehaviour
                 else if (!isRotatingScreen)
                 {
                     // ignore 1st touch that will be joystick touch
-                    if (t1.phase == TouchPhase.Moved && t1.position.x > 500)
+                    if (t1.phase == TouchPhase.Moved /*&& t1.position.x > 500*/)
                     {
                         delta = t1.deltaPosition;
                         _allowSyncedControl = true;
@@ -237,7 +277,7 @@ public class CameraLook : MonoBehaviour
     void OneFingureTouch()
     {
         Touch t = Input.GetTouch(0);
-        if (t.phase == TouchPhase.Moved && t.position.x > 500)
+        if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/)
         {
             delta = Input.GetTouch(0).deltaPosition;
             _allowSyncedControl = true;
@@ -253,7 +293,7 @@ public class CameraLook : MonoBehaviour
         Touch t1 = Input.GetTouch(1);
         Touch t2 = (t.position.x > t1.position.x) ? t : t1;
 
-        if (t2.phase == TouchPhase.Moved && t2.position.x > 500)
+        if (t2.phase == TouchPhase.Moved /*&& t2.position.x > 500*/)
         {
             delta = t2.deltaPosition;
             _allowSyncedControl = true;
@@ -266,7 +306,7 @@ public class CameraLook : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_allowSyncedControl && _allowRotation)
+        if (_allowSyncedControl && _allowRotation && !playerController.isFirstPerson)
         {
             MoveCamera(delta);            // Rotate camera on the base input
         }

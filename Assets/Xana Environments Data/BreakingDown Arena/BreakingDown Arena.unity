@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 12917374}
   m_Layer: 0
   m_Name: Stairs (1)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -601,6 +601,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_Name
       value: SM_ChairExit_My-imp
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1534,6 +1538,7 @@ GameObject:
   - component: {fileID: 182460265}
   - component: {fileID: 182460264}
   - component: {fileID: 182460263}
+  - component: {fileID: 182460266}
   m_Layer: 0
   m_Name: dustosmoke (3)
   m_TagString: Untagged
@@ -6347,6 +6352,21 @@ Transform:
   m_Father: {fileID: 315258620}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &182460266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182460262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 0
+  shaderName: Legacy Shaders/Particles/Alpha Blended
 --- !u!1001 &191510041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6909,9 +6929,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: abc00000000007740301374918324258, type: 2}
+    - target: {fileID: -2422315340263230684, guid: a0e34b5b4cb246c45ae31ee80e5e2371, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a0e34b5b4cb246c45ae31ee80e5e2371, type: 3}
       propertyPath: m_Name
       value: StageBack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579815516120725900, guid: a0e34b5b4cb246c45ae31ee80e5e2371, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0e34b5b4cb246c45ae31ee80e5e2371, type: 3}
@@ -7010,7 +7038,7 @@ Transform:
   - {fileID: 2009105592}
   - {fileID: 182460265}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &318404764
 GameObject:
@@ -7561,7 +7589,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447213542
 GameObject:
@@ -7802,6 +7830,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_Name
       value: SM_StairChair-imp (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9095,6 +9127,10 @@ PrefabInstance:
       value: SM_StairChair-imp
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10142,6 +10178,10 @@ PrefabInstance:
       value: SM_ChairExit_My-imp (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10514,7 +10554,7 @@ GameObject:
   - component: {fileID: 858256685}
   m_Layer: 0
   m_Name: Stairs (2)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -10794,7 +10834,7 @@ Transform:
   - {fileID: 1602018187}
   - {fileID: 1617859774}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &894759091
 GameObject:
@@ -12030,6 +12070,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -12097,6 +12141,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12168,6 +12216,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -12235,6 +12287,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12306,6 +12362,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -12373,6 +12433,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16403,6 +16467,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ring_22
       objectReference: {fileID: 0}
+    - target: {fileID: 1031474781, guid: abc00000000014330414060857728980, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1031474782, guid: abc00000000014330414060857728980, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -16450,6 +16518,10 @@ PrefabInstance:
     - target: {fileID: 1031474784, guid: abc00000000014330414060857728980, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 744262085603242279, guid: abc00000000014330414060857728980, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abc00000000014330414060857728980, type: 3}
@@ -16808,6 +16880,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -16875,6 +16951,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16946,6 +17026,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17013,6 +17097,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17084,6 +17172,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17151,6 +17243,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17222,6 +17318,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17289,6 +17389,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17360,6 +17464,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17427,6 +17535,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17498,6 +17610,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17565,6 +17681,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17636,6 +17756,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17703,6 +17827,10 @@ PrefabInstance:
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 1031472761, guid: abc00000000014652448205853505507, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -19354,7 +19482,7 @@ GameObject:
   - component: {fileID: 1242099556}
   m_Layer: 0
   m_Name: Stairs (3)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -19961,7 +20089,7 @@ GameObject:
   - component: {fileID: 1322158389}
   m_Layer: 0
   m_Name: Stairs (6)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -20111,6 +20239,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_Name
       value: SM_ChairExit_My-imp (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -20376,7 +20508,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1371565725
 GameObject:
@@ -20502,7 +20634,7 @@ GameObject:
   - component: {fileID: 1384774211}
   m_Layer: 0
   m_Name: Exit
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -20540,6 +20672,7 @@ GameObject:
   - component: {fileID: 1385313147}
   - component: {fileID: 1385313146}
   - component: {fileID: 1385313145}
+  - component: {fileID: 1385313148}
   m_Layer: 0
   m_Name: dustosmoke
   m_TagString: Untagged
@@ -25353,6 +25486,21 @@ Transform:
   m_Father: {fileID: 315258620}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1385313148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385313144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 0
+  shaderName: Legacy Shaders/Particles/Alpha Blended
 --- !u!1001 &1390316859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25411,6 +25559,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_Name
       value: SM_StairChair-imp (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -25477,7 +25629,7 @@ GameObject:
   - component: {fileID: 1429170511}
   m_Layer: 0
   m_Name: Stairs (4)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -25687,7 +25839,7 @@ GameObject:
   - component: {fileID: 1438050868}
   m_Layer: 0
   m_Name: Stairs
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -25782,6 +25934,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_Name
       value: SM_ChairExit_My-imp (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -25975,7 +26131,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 47.075, y: -199.38, z: -92.789}
 --- !u!1 &1464224439
 GameObject:
@@ -26673,7 +26829,7 @@ GameObject:
   - component: {fileID: 1553838594}
   m_Layer: 0
   m_Name: Stairs (7)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -26987,124 +27143,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
---- !u!1 &1609411665
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1609411669}
-  - component: {fileID: 1609411668}
-  - component: {fileID: 1609411667}
-  - component: {fileID: 1609411666}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1609411666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609411665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_AllowXRRendering: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
---- !u!81 &1609411667
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609411665}
-  m_Enabled: 1
---- !u!20 &1609411668
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609411665}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1609411669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609411665}
-  m_LocalRotation: {x: 0.031388238, y: 0.39654085, z: -0.013563397, w: 0.9173801}
-  m_LocalPosition: {x: -40.6, y: 0.13, z: -38.8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1612911751 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
@@ -27199,6 +27237,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_Name
       value: SM_ChairExit_My-imp (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -27858,6 +27900,7 @@ GameObject:
   - component: {fileID: 1714315380}
   - component: {fileID: 1714315379}
   - component: {fileID: 1714315378}
+  - component: {fileID: 1714315381}
   m_Layer: 0
   m_Name: dustosmoke (1)
   m_TagString: Untagged
@@ -32671,6 +32714,21 @@ Transform:
   m_Father: {fileID: 315258620}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1714315381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714315377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 0
+  shaderName: Legacy Shaders/Particles/Alpha Blended
 --- !u!1 &1714964871
 GameObject:
   m_ObjectHideFlags: 0
@@ -32969,6 +33027,10 @@ PrefabInstance:
       value: SM_ChairExit_My-imp (5)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -33112,7 +33174,7 @@ GameObject:
   - component: {fileID: 1770303334}
   m_Layer: 0
   m_Name: Stairs (8)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -34222,6 +34284,10 @@ PrefabInstance:
       value: SM_StairChair-imp (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -34635,6 +34701,7 @@ GameObject:
   - component: {fileID: 2009105592}
   - component: {fileID: 2009105591}
   - component: {fileID: 2009105590}
+  - component: {fileID: 2009105593}
   m_Layer: 0
   m_Name: dustosmoke (2)
   m_TagString: Untagged
@@ -39448,37 +39515,21 @@ Transform:
   m_Father: {fileID: 315258620}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2010380189
-GameObject:
+--- !u!114 &2009105593
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2010380193}
-  m_Layer: 0
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2010380193
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010380189}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 2009105589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 0
+  shaderName: Legacy Shaders/Particles/Alpha Blended
 --- !u!1 &2010760342
 GameObject:
   m_ObjectHideFlags: 0
@@ -39797,6 +39848,10 @@ PrefabInstance:
       value: SM_ChairExit_My-imp (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e31fbc446de49c644bb8778332e965ac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -39835,7 +39890,7 @@ GameObject:
   - component: {fileID: 2031694631}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39979,6 +40034,10 @@ PrefabInstance:
       value: SM_StairChair-imp (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
+      propertyPath: m_TagString
+      value: Footsteps/floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fc3e1db90e310cb4fb298febf225b410, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -40014,7 +40073,7 @@ GameObject:
   - component: {fileID: 2040210841}
   m_Layer: 0
   m_Name: Stairs (5)
-  m_TagString: Untagged
+  m_TagString: Footsteps/floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -40968,8 +41027,100 @@ PrefabInstance:
       propertyPath: m_Name
       value: XanaFestivalPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4294505633651047613, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: b6630e096387c2745816b3257353ca11, type: 3}
+    - target: {fileID: 4294505633885410225, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: Shader
+      value: 
+      objectReference: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4294505633885410225, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: _shader
+      value: 
+      objectReference: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4294505633885410226, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: Shader
+      value: 
+      objectReference: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4294505633885410226, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: _shader
+      value: 
+      objectReference: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4732646159888516108, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
+    - target: {fileID: 7022605134603065234, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
+    - target: {fileID: 7637697490305562510, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5060444177187149915, guid: 25d54d0c3203fec40a3912b9c3b5afc0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+--- !u!1 &4294505633885410223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3692978473443544522, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+  m_PrefabInstance: {fileID: 4294505633885410222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4294505633885410224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8157324960025731849, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+  m_PrefabInstance: {fileID: 4294505633885410222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4294505633885410225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294505633885410223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+--- !u!114 &4294505633885410226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294505633885410224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+--- !u!1 &4294505633885410227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8084584351005901000, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
+  m_PrefabInstance: {fileID: 4294505633885410222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4294505633885410228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294505633885410227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
 --- !u!4 &4510576992560763672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 360833321582002358, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}

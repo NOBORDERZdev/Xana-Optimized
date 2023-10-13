@@ -207,26 +207,32 @@ public class ItemDatabase : MonoBehaviour
 //        }
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.HideLoading();
-        if (Screen.orientation == ScreenOrientation.LandscapeLeft && chkOrientation == false)
 
+        // Commented By WaqasAhmad
         {
-            chkOrientation = true;
-            try
-            {
-                LoadingHandler.Instance.Loading_WhiteScreen.transform.GetChild(0).gameObject.SetActive(true);
-            }
-            catch (Exception e)
-            {
-                Debug.Log("Exception here............................");
-            }
+            //if (Screen.orientation == ScreenOrientation.LandscapeLeft && chkOrientation == false)
 
-            LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+            //{
+            //    chkOrientation = true;
+            //    try
+            //    {
+            //        LoadingHandler.Instance.Loading_WhiteScreen.transform.GetChild(0).gameObject.SetActive(true);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Debug.Log("Exception here............................");
+            //    }
 
-            Invoke("loadingscreenOff", 0.7f);
+            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+
+            //    Invoke("loadingscreenOff", 0.7f);
+            //}
         }
+
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
         {
-            Screen.orientation = ScreenOrientation.Portrait;
+            Debug.LogError("~~~~~ Waqas_ ItemDataBase ~~~~~~~~~~~");
+            //Screen.orientation = ScreenOrientation.Portrait;
         }
         //  }
         yield return null;
@@ -234,9 +240,11 @@ public class ItemDatabase : MonoBehaviour
     bool chkOrientation;
     void loadingscreenOff()
     {
-        LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-        chkOrientation = false;
-
+        // Commented By WaqasAhmad
+        {
+            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //chkOrientation = false;
+        }
     }
     //bool CompareWithEquipedItems(Item SavedItemObj)
     //{
@@ -307,39 +315,39 @@ public class ItemDatabase : MonoBehaviour
     //    }
     //}
 
-//    IEnumerator WaitAndDownload()
-//    {
-//        yield return new WaitForEndOfFrame();
-//        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-//        {
-//            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-//            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-//            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
-//            {
-//                string currentlink = "";
-//#if UNITY_ANDROID
-//                currentlink = _CharacterData.myItemObj[i].ItemLinkAndroid;
-//#else
-//currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
-//#endif
+    //    IEnumerator WaitAndDownload()
+    //    {
+    //        yield return new WaitForEndOfFrame();
+    //        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+    //        {
+    //            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+    //            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+    //            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+    //            {
+    //                string currentlink = "";
+    //#if UNITY_ANDROID
+    //                currentlink = _CharacterData.myItemObj[i].ItemLinkAndroid;
+    //#else
+    //currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
+    //#endif
 
 
-//                if (_CharacterData.myItemObj[i].ItemID != 0)
-//                {
-//                    yield return new WaitForSeconds(.05f);
+    //                if (_CharacterData.myItemObj[i].ItemID != 0)
+    //                {
+    //                    yield return new WaitForSeconds(.05f);
 
-//                    ItemDetail itemobj = new ItemDetail();
-//                    itemobj.name = _CharacterData.myItemObj[i].ItemName;
-//                    itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
-//                    itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
-//                    itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
-//                    StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+    //                    ItemDetail itemobj = new ItemDetail();
+    //                    itemobj.name = _CharacterData.myItemObj[i].ItemName;
+    //                    itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
+    //                    itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
+    //                    itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
+    //                    StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
 
-//                }
-//            }
-//        }
-//        yield return null;
-//    }
+    //                }
+    //            }
+    //        }
+    //        yield return null;
+    //    }
     public void BindDefaultItems(Item _getItem)
     {
 

@@ -22,10 +22,11 @@ public class ItemGFXHandler : ItemComponent
 
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _renderers[i].materials.ForEachItem((d) =>
+            for (int j = 0; j < _renderers[i].materials.Length; j++)
             {
-                d.SetColor(Constants.BaseColor, color);
-            });
+                color.a = _renderers[i].materials[j].color.a;
+                _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+            }
         }
     }
 
@@ -56,5 +57,9 @@ public class ItemGFXHandler : ItemComponent
                 }
             }
         }
+    }
+
+    public override void AssignItemComponentType()
+    {
     }
 }

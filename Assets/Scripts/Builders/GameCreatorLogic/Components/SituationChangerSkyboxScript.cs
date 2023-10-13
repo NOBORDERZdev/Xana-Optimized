@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -22,10 +24,38 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     public Light directionLight, characterDirectionLight;
     public Volume ppVolume;
     public LensFlareComponentSRP sceneLensFlare;
-    private void Start()
+
+    IEnumerator Start()
     {
         instance = this;
         CreateDictionaryFromScriptable();
+        yield return null;
+
+        //Added this because of the blinking issue due to the download process when the player triggers the Situation Changer or Blind component.
+
+        AsyncOperationHandle darkblindSky;
+        bool darkblindSkyflag = false;
+        darkblindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("NoMoonSky", ref darkblindSkyflag);
+        if (!darkblindSkyflag)
+            darkblindSky = Addressables.LoadAssetAsync<Material>("NoMoonSky");
+        while (!darkblindSky.IsDone)
+        {
+            yield return null;
+        }
+        if (darkblindSky.Status == AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkblindSky, "NoMoonSky");
+
+        darkblindSkyflag = false;
+        darkblindSky = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist("BlindSky", ref darkblindSkyflag);
+        if (!darkblindSkyflag)
+            darkblindSky = Addressables.LoadAssetAsync<Material>("BlindSky");
+        while (!darkblindSky.IsDone)
+        {
+            yield return null;
+        }
+        if (darkblindSky.Status == AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(darkblindSky, "BlindSky");
+
     }
 
 
@@ -41,17 +71,27 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         }
     }
     int indexx = 0;
+    string skyboxMatKey = "";
     public void ChangeSkyBox(int skyID)
     {
-        Debug.Log("SKY BOXX" + skyID);
 
-         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
+        indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
         {
-            string skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
-            AsyncOperationHandle<Material> loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-            loadSkyBox.Completed += LoadSkyBox_Completed;
+            bool skyBoxExist = skyBoxesData.skyBoxes.Exists(x => x.skyId == indexx);
+            if (skyBoxExist)
+            {
+                skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
+                AsyncOperationHandle loadSkyBox;
+                bool flag = false;
+                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                if (!flag)
+                    loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                loadSkyBox.Completed += LoadSkyBox_Completed;
+            }
+            else
+                BuilderEventManager.ApplySkyoxSettings?.Invoke();
             //RenderSettings.skybox = skyBoxesData.skyBoxes[indexx].skyMaterial;
         }
         if (skyID == -1)
@@ -64,13 +104,17 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             directionLight.intensity = 1f;
             directionLight.shadowStrength = .2f;
             characterDirectionLight.intensity = .15f;
+            DynamicGI.UpdateEnvironment();
         }
-        DynamicGI.UpdateEnvironment();
 
     }
-    private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
+    private void LoadSkyBox_Completed(AsyncOperationHandle obj)
     {
-        RenderSettings.skybox = obj.Result;
+        if(obj.Status==AsyncOperationStatus.Succeeded)
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(obj, skyboxMatKey);
+        Material _mat = obj.Result as Material;
+        _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
+        RenderSettings.skybox = _mat;
         directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
         ppVolume.profile = skyBoxesData.skyBoxes[indexx].ppVolumeProfile;
         DirectionLightColorChange(indexx);
@@ -95,8 +139,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
     void DirectionLightColorChange(int skyID)
     {
-
-
         LensFlareData lensFlareData = new LensFlareData();
         if (skyID == -1)
         {
@@ -122,6 +164,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.lensFlareData = null;
             sceneLensFlare.scale = 1;
         }
-        //DynamicGI.UpdateEnvironment();
+        DynamicGI.UpdateEnvironment();
     }
 }

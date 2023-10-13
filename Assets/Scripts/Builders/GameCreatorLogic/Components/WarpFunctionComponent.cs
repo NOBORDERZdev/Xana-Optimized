@@ -5,13 +5,15 @@ using Photon.Pun;
 
 public class WarpFunctionComponent : ItemComponent
 {
-    private WarpFunctionComponentData warpFunctionComponentData;
+    internal WarpFunctionComponentData warpFunctionComponentData;
     public static bool isPortalUsed;
     CharacterController characterControllerNew;
 
     public void Init(WarpFunctionComponentData warpFunctionComponentData)
     {
         this.warpFunctionComponentData = warpFunctionComponentData;
+
+        GamificationComponentData.instance.warpComponentList.Add(this);
     }
 
     private void Start()
@@ -65,4 +67,47 @@ public class WarpFunctionComponent : ItemComponent
         isPortalUsed = false;
     }
 
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.WarpFunctionComponent;
+    }
+
+    #endregion
 }

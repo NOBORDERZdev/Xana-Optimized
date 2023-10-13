@@ -19,7 +19,7 @@ public class TimeStats : MonoBehaviour
     public bool IsSituationChangerActive;
 
     public static bool _stopTimer = false, canRun = false, canBlindRun = false;
-    bool isRuninig, isNight, isBlindRunning;
+    bool isRuninig, isBlindRunning;
     int previousSkyID;
     IEnumerator coroutine, dimmerCoroutine;
 
@@ -87,12 +87,13 @@ public class TimeStats : MonoBehaviour
         {
             if (_situationChangeObject == _obj)
             {
-                isNight ^= true;
-                if (isNight)
+                GamificationComponentData.instance.isNight ^= true;
+                if (GamificationComponentData.instance.isNight)
                     SetNightMode();
                 else
                     SetDayMode(_lights, _intensities);
-
+                if (!_isOff)
+                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(_value);
                 return;
             }
             else
@@ -146,8 +147,8 @@ public class TimeStats : MonoBehaviour
     {
         if (_isOff)
         {
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 SetNightMode();
             else
                 SetDayMode(_light, _lightsIntensity);
@@ -155,8 +156,8 @@ public class TimeStats : MonoBehaviour
         else
         {
             _stopTimer = true;
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 SetNightMode();
             else
                 SetDayMode(_light, _lightsIntensity);
@@ -167,10 +168,10 @@ public class TimeStats : MonoBehaviour
                 yield return null;
 
             }
-            isNight = false;
+            GamificationComponentData.instance.isNight = false;
             isRuninig = false;
-            SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
-            Destroy(scc);
+            //SituationChangerComponent scc = _obj.GetComponent<SituationChangerComponent>();
+            //scc.isActivated = false;
             SetDayMode(_light, _lightsIntensity);
         }
     }
@@ -216,8 +217,8 @@ public class TimeStats : MonoBehaviour
         {
             if (_blindComponentObject == _obj)
             {
-                isNight ^= true;
-                if (isNight)
+                GamificationComponentData.instance.isNight ^= true;
+                if (GamificationComponentData.instance.isNight)
                     ToggleStatus(true, _Radius, _skyBoxID);
                 else
                     ToggleStatus(false, _Radius, _skyBoxID);
@@ -240,8 +241,8 @@ public class TimeStats : MonoBehaviour
     {
         if (_isOff)
         {
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 ToggleStatus(true, _Radius, _skyBoxID);
             else
                 ToggleStatus(false, _Radius, _skyBoxID);
@@ -249,8 +250,8 @@ public class TimeStats : MonoBehaviour
         else
         {
             _stopTimer = true;
-            isNight ^= true;
-            if (isNight)
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
                 ToggleStatus(true, _Radius, _skyBoxID);
             else
                 ToggleStatus(false, _Radius, _skyBoxID);
@@ -260,7 +261,7 @@ public class TimeStats : MonoBehaviour
                 SetTimer(ref timeCheck);
                 yield return null;
             }
-            isNight = false;
+            GamificationComponentData.instance.isNight = false;
             isBlindRunning = false;
             ToggleStatus(false, _Radius, _skyBoxID);
         }
@@ -273,7 +274,6 @@ public class TimeStats : MonoBehaviour
         BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
         if (blindDimLightsCoroutine != null)
             StopCoroutine(blindDimLightsCoroutine);
-
         ToggleStatus(false, 0, 0);
     }
 

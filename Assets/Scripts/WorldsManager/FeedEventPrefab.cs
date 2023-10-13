@@ -13,6 +13,7 @@ using Photon.Pun.Demo.PunBasics;
 public class FeedEventPrefab : MonoBehaviour
 {
     public static string m_EnvName;
+    public static string m_CreaName;
     //public static string m_EnvDownloadLink;
     //public static string m_timestamp;
     [Header("WorldNameAndLinks")]
@@ -29,7 +30,15 @@ public class FeedEventPrefab : MonoBehaviour
     public string updatedAt = "00";
     public string entityType = "None";
 
+    [Header("Tags and Category")]
+    public GameObject tagScroller;
+    public Transform tagsParent;
+    public GameObject tagsPrefab;
+    public string[] worldTags;
+    public bool tagsInstantiated;
+
     [Header("WorldNameAndDescription")]
+    public GameObject descriptionPanelParent;
     public TextMeshProUGUI m_WorldName;
     public Text m_WorldNameTH;
     public TextMeshProUGUI m_WorldDescriptionTxt;
@@ -73,7 +82,7 @@ public class FeedEventPrefab : MonoBehaviour
     bool isNotLoaded = true;
     public LoginPageManager loginPageManager;
     UserAnalyticsHandler userAnalyticsHandler;
-    bool isBannerLoaded =false; 
+    bool isBannerLoaded = false;
     private void Awake()
     {
         loginPageManager = GetComponent<LoginPageManager>();
@@ -108,7 +117,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-        
+
     }
 
     int cnt = 0;
@@ -133,7 +142,6 @@ public class FeedEventPrefab : MonoBehaviour
         {
             return;
         }
-
         AllWorldData allWorldData = JsonConvert.DeserializeObject<AllWorldData>(UserDetails);
         if (allWorldData != null && allWorldData.player_count.Length > 0)
         {
@@ -148,7 +156,12 @@ public class FeedEventPrefab : MonoBehaviour
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
-                    joinedUserCount.text = allWorldData.player_count[i].count.ToString();
+                    if (allWorldData.player_count[i].world_id == CheckServerForID())
+                    { // For Xana Lobby
+                        joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
+                    }
+                    else
+                        joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
                     if (allWorldData.player_count[i].count > 5)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
@@ -157,8 +170,12 @@ public class FeedEventPrefab : MonoBehaviour
 
                     break;
                 }
-
-                joinedUserCount.text = "0";
+                if(CheckServerForID().ToString()== idOfObject)
+                {
+                    joinedUserCount.text = "5";
+                }
+                else
+                    joinedUserCount.text = "0";
             }
         }
     }
@@ -190,7 +207,10 @@ public class FeedEventPrefab : MonoBehaviour
                 {
                     //Debug.Log("Yes Matched : " + m_EnvironmentName);
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
-                    joinedUserCount.text = allWorldData.player_count[i].count.ToString();
+                    if (allWorldData.player_count[i].world_id == CheckServerForID()) // For Xana Lobby
+                        joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
+                    else
+                        joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
                     if (allWorldData.player_count[i].count > 5)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
@@ -199,9 +219,21 @@ public class FeedEventPrefab : MonoBehaviour
 
                     break;
                 }
-                joinedUserCount.text = "0";
+                if (CheckServerForID().ToString() == idOfObject)
+                {
+                    joinedUserCount.text = "5";
+                }
+                else
+                    joinedUserCount.text = "0";
             }
         }
+    }
+    int CheckServerForID()
+    {
+        if (APIBaseUrlChange.instance.IsXanaLive)
+            return 38; // Xana Lobby Id Mainnet
+        else
+            return 406; // Xana Lobby Id Testnet
     }
     private void Update()//delete image after object out of screen
     {
@@ -237,7 +269,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else if (isImageSuccessDownloadAndSave)
         {
-            LoadFileAgain:
+        LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
                 //Debug.Log("01");
@@ -440,7 +472,7 @@ public class FeedEventPrefab : MonoBehaviour
         {
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
-        eviroment_Name.text = eviroment_Name.text.ToUpper();
+        eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;
         UpdateWorldPanel();
 
@@ -501,7 +533,7 @@ public class FeedEventPrefab : MonoBehaviour
                 if (www.isHttpError || www.isNetworkError)
                 {
                     callBack(false, null);
-                   Debug.Log("Network Error");
+                    Debug.Log("Network Error");
                 }
                 else
                 {
@@ -545,7 +577,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         else
         {
-            
+
         }
         m_BannerSprite[1].sprite = m_FadeImage.sprite;
         m_BannerSprite[2].sprite = m_FadeImage.sprite;
@@ -580,6 +612,7 @@ public class FeedEventPrefab : MonoBehaviour
         //m_EnvDownloadLink = m_FileLink;
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
+        m_CreaName = creatorName;
         XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
@@ -589,6 +622,10 @@ public class FeedEventPrefab : MonoBehaviour
         if (userProfile.sprite == null)
             UpdateUserProfile();
         //m_timestamp = uploadTimeStamp;
+
+        if (!tagsInstantiated)
+            InstantiateWorldtags();
+
         loginPageManager.SetPanelToBottom();
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         //XanaConstants.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
@@ -690,9 +727,33 @@ public class FeedEventPrefab : MonoBehaviour
             Texture2D texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2());
             m_BannerSprite[0].sprite = sprite;
-            isBannerLoaded= true;
+            isBannerLoaded = true;
         }
 
+    }
+
+
+    void InstantiateWorldtags()
+    {
+        if (worldTags.Length > 0)
+            tagScroller.SetActive(true);
+        else
+            return;
+
+        if (tagsParent.transform.childCount > 0)
+        {
+            foreach (Transform t in tagsParent)
+                Destroy(t.gameObject);
+        }
+
+        for (int i = 0; i < worldTags.Length; i++)
+        {
+            GameObject temp = Instantiate(tagsPrefab, tagsParent);
+            temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+            temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
+        }
+        tagsInstantiated = true;
     }
 
 }
