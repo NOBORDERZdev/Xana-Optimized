@@ -95,6 +95,7 @@ namespace DynamicScrollRect
             _CharaceterName = GameObject.Find(gameObjectName);
             _CharaceterName.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<Image>().sprite;
             AttachPresetDataScript();
+            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
             //Invoke("AttachPresetDataScript", 1f);
             //_FirstAvatar = DynamicScrollRect.content.GetChild(DynamicScrollRect.Counter).gameObject;
             //_FirstAvatar.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<Image>().sprite;
@@ -102,13 +103,13 @@ namespace DynamicScrollRect
 
         public void AttachPresetDataScript() 
         {
-            PresetData_Jsons presetScript = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<PresetData_Jsons>();
-            _CharaceterName.AddComponent(presetScript);
-            nameData = presetScript.JsonDataPreset;
+            DynamicScrollRect.instance.presetScript = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<PresetData_Jsons>();
+            _CharaceterName.AddComponent(DynamicScrollRect.instance.presetScript);
+            nameData = DynamicScrollRect.instance.presetScript.JsonDataPreset;
             Debug.Log("NAME DATA IS "+ nameData);
             if (DynamicScrollRect.ASNextButton)
             {
-                DynamicScrollRect.ASNextButton.onClick.AddListener(presetScript.ChangecharacterOnCLickFromserver);
+                DynamicScrollRect.ASNextButton.onClick.AddListener(DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver);
             }
         }
 

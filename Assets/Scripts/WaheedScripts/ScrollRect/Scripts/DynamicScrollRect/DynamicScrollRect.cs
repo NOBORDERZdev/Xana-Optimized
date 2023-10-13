@@ -901,14 +901,10 @@ namespace DynamicScrollRect
         }
 
 
-        
-        public void Next() 
+        public void ToggleNextPreviousBtnsInteractability() 
         {
-            //if (ImageCounter >= 0 && ImageCounter < content.childCount)
-            //{
-                Counter++;
-                
-                Debug.Log("Value is " + Counter);
+            if (!shufflingUI)
+            {
                 if (Counter > 0)
                 {
                     previous.interactable = true;
@@ -918,48 +914,8 @@ namespace DynamicScrollRect
                 {
                     next.interactable = false;
                 }
-            MoveContentBackward();
-            GetAvatarName();
-            //Debug.Log("Image Counter is " + ImageCounter);
-            //_Content._FirstAvatar = content.GetChild(ImageCounter).gameObject;
 
-            //_Content._FirstAvatar.GetComponent<Image>().sprite = avatarData[Counter].GetComponent<Image>().sprite;
-
-            //if (ImageCounter == 4)
-            //{
-            //    ImageCounter = -1;
-            //}
-            //if (ImageCounter == content.childCount - 1)
-            //{
-            //    ImageCounter = -1;
-            //}
-
-            //ImageCounter++;
-            //if (ImageCounter < content.childCount)
-            //{
-            //    UpdateChildImage(ImageCounter);
-            //}
-
-            //Debug.Log("Image Counter is " + ImageCounter);
-
-
-            //GetAvatarName();
-
-
-            if (Counter == DemoUI.instance._itemCount - 1)
-                {
-                    shuffled = false;
-                }
-            //}
-        }
-
-        public void Previous() 
-        {
-            //if (ImageCounter >= 0 && ImageCounter < content.childCount)
-            //{
-                Counter--;
-                //ImageCounter--;
-                if (Counter <= 0)
+                 if (Counter <= 0)
                 {
                     previous.interactable = false;
                 }
@@ -968,54 +924,49 @@ namespace DynamicScrollRect
                 {
                     next.interactable = true;
                 }
+            }
+        }
+
+
+        bool shufflingUI = false;
+        
+        public void Next() 
+        {
+                Counter++;
                 Debug.Log("Value is " + Counter);
-                MoveContentForward();
+            ToggleNextPreviousBtnsInteractability();
+            MoveContentBackward();
+            GetAvatarName();
 
-                //Debug.Log("Image Counter is " + ImageCounter);
-                //_Content._FirstAvatar = content.GetChild(ImageCounter).gameObject;
+            if (Counter == DemoUI.instance._itemCount - 1)
+                {
+                    shuffled = false;
+                }
+        }
 
-                //_Content._FirstAvatar.GetComponent<Image>().sprite = avatarData[Counter].GetComponent<Image>().sprite;
-                //string name = _Content._FirstAvatar.name;
-
-                //float num = Convert.ToSingle(name);
-
-                //Debug.Log("My NAME is "+num);
-                //GetAvatarName();
+        public void Previous() 
+        {
+            
+                Counter--;
+            //if (!shufflingUI)
+            //{
+               
+            //}
+                Debug.Log("Value is " + Counter);
+            ToggleNextPreviousBtnsInteractability();
+            MoveContentForward();
                 GetAvatarName();
-
-
-
-
-                //if (ImageCounter == 0)
-                //{
-                //    ImageCounter = 4;
-                //}
-                //ImageCounter--;
-
-                //if (ImageCounter > -1)
-                //{
-                //    UpdateChildImage(ImageCounter);
-                //}
-
-                //Debug.Log("Image Counter is " + ImageCounter);
-
-
-                //if (ImageCounter == 0)
-                //{
-                //    ImageCounter = 4;
-                //}
-
 
                 if (Counter == 0)
                 {
                     shuffled = true;
                 }
-            //}
         }
 
         public void beginShuffling() 
         {
             _isShuffling = true;
+            shufflingUI = true;
             if (Counter != DemoUI.instance._itemCount - 1) 
             {
                 shuffled = true;
@@ -1032,7 +983,8 @@ namespace DynamicScrollRect
             Debug.Log("Avatar Range is " + avatarRange);
             //while (Time.time - startTime < shuffleDuration)
             //{
-
+            previous.interactable = false;
+            next.interactable = false;
             for (int i = 0; i < avatarRange; i++)
             {
                 if (i != avatarRange)
@@ -1045,16 +997,15 @@ namespace DynamicScrollRect
                     {
                         Previous();
                     }
-
-
                     yield return new WaitForSeconds(0.1f);
                 }
-                //  shuffleDuration = 0f;
                 yield return null;
-
             }
+            shufflingUI = false;
+            ToggleNextPreviousBtnsInteractability();
+            yield return null;
         }
-        
+        public PresetData_Jsons presetScript;
         public void GetAvatarName() 
         {
             gameObjectName = Counter.ToString() + "_0";
@@ -1062,13 +1013,13 @@ namespace DynamicScrollRect
             obj.GetComponent<Image>().sprite = avatarData[Counter].GetComponent<Image>().sprite;
             //PresetData_Jsons delPreset = obj.GetComponent<PresetData_Jsons>();
             //Destroy(delPreset);
-            PresetData_Jsons presetScript = avatarData[Counter].GetComponent<PresetData_Jsons>();
+            presetScript = avatarData[Counter].GetComponent<PresetData_Jsons>();
             if (obj.GetComponent<PresetData_Jsons>() ==null) 
             {
                 obj.AddComponent(presetScript);
             }
            _Content.nameData = presetScript.JsonDataPreset;
-
+            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = obj.GetComponent<Image>().sprite;
             ASNextButton.onClick.RemoveAllListeners();
             ASNextButton.onClick.AddListener(presetScript.ChangecharacterOnCLickFromserver);
         }

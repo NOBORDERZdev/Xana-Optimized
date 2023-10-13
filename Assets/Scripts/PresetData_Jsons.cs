@@ -82,7 +82,7 @@ public class PresetData_Jsons : MonoBehaviour
                 Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             }
         //}
-
+        XanaConstants.xanaConstants.registerFirstTime = true;
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
 
@@ -213,7 +213,7 @@ public class PresetData_Jsons : MonoBehaviour
         StoreManager.instance.GreyRibbonImage.SetActive(false);
         StoreManager.instance.WhiteRibbonImage.SetActive(true);
     }
-    void GetSavedPreset()
+    public void GetSavedPreset()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // logged in from account
         {
@@ -238,7 +238,7 @@ public class PresetData_Jsons : MonoBehaviour
             }
         }
     }
-    void abcd()
+  public  void abcd()
     {
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         print("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  

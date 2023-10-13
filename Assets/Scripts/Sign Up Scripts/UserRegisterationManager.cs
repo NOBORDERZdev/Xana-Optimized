@@ -169,6 +169,8 @@ public class UserRegisterationManager : MonoBehaviour
     public bool XanaliaBool;
     public Web3APIforWeb2 _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
+    /// 
+    public int btnClickedNo = 0;
 
     #region WelcomeScreen
     public GameObject welcomeScreen;
@@ -185,6 +187,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal;
+    public GameObject LogoImage;
 
 
     public void ShowWelcomeScreen()
@@ -299,6 +302,23 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("iSignup", 0);
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
+
+        CloseLoginScreen();
+    }
+
+
+    public void CloseLoginScreen() 
+    {
+        if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("CloseLoginScreen") == 0)
+        {
+            //if () 
+            welcomeScreen.SetActive(true);
+
+        }
+        else
+        {
+            welcomeScreen.SetActive(false);
+        }
     }
 
     public void WalletConnectBtnClicked()
@@ -320,6 +340,38 @@ public class UserRegisterationManager : MonoBehaviour
         Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
     }
 
+    public void BacktoAvatarSelectionPanel() 
+    {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+    }
+
+    public void LoginScreenClicked(int btn) 
+    {
+        btnClickedNo = btn;
+    }
+
+    public void BackFromLoginScreen() 
+    {
+        if (btnClickedNo == 0) 
+        {
+            welcomeScreen.SetActive(true);
+        }
+
+        if (btnClickedNo == 1)
+        {
+            NewSignUp_Panal.SetActive(true);
+        }
+
+        LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
+        LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
+        LoginPanal.SetActive(false);
+        if (chk_forAccountALreadyLogedin)
+        {
+            chk_forAccountALreadyLogedin = false;
+            ShowWelcomeScreen();
+
+        }
+    }
 
     private async void eventcalled(string _userType)
     {
@@ -1112,7 +1164,7 @@ public class UserRegisterationManager : MonoBehaviour
 
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
-                    OnSignUpPhoneTabPressed();
+                    //OnSignUpPhoneTabPressed();
                     //  OnSignUpWalletTabPressed();
 
                     break;
@@ -1206,6 +1258,31 @@ public class UserRegisterationManager : MonoBehaviour
                         if (shownWelcome)
                             ShowWelcomeClosed();
                      }
+                    break;
+                }
+            case 17:
+                {
+                    if (shownWelcome)
+                    {
+
+                        if (PlayerPrefs.GetInt("iSignup") == 1)
+                        {
+                            PlayerPrefs.SetInt("iSignup", 0);
+
+                            welcomeScreen.SetActive(true);
+                            shownWelcome = true;
+                        }
+                        else
+                            ShowWelcomeClosed();
+
+                        //welcomeScreen.SetActive(true);
+                    }
+                    else
+                    {
+                        FirstPanal.SetActive(true);
+                       // welcomeScreen.SetActive(true);
+                        //SignUpPanal.SetActive(false);
+                    }
                     break;
                 }
         }
@@ -3035,6 +3112,7 @@ public class UserRegisterationManager : MonoBehaviour
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver();
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
@@ -3203,6 +3281,7 @@ public class UserRegisterationManager : MonoBehaviour
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
                 Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+                PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
             else
             {
@@ -3210,6 +3289,7 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(Email, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
+                PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
         }
     }
@@ -3598,10 +3678,11 @@ public class UserRegisterationManager : MonoBehaviour
                         SubmitSetDeviceToken();
                         //  print("Registration With Name Completed ");
                         LoggedInAsGuest = false;
-
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
                         ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
-
+                        Debug.Log("IS LOGGED VALUE CHANGED");
 
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
@@ -4325,7 +4406,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
-        OpenUIPanal(7);
+       // OpenUIPanal(7);
         SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         getdatafromserver();
