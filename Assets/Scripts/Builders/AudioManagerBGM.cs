@@ -27,6 +27,8 @@ public class AudioManagerBGM : MonoBehaviour
         this.audioPropertiesBGM = audioPropertiesBGM;
         if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty())
             StartCoroutine(setAudioFromUrl(this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
+        else
+            downloadingError = true;
     }
 
     IEnumerator setAudioFromUrl(string file_name)
