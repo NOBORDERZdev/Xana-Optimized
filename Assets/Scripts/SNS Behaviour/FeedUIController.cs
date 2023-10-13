@@ -2149,7 +2149,7 @@ public class FeedUIController : MonoBehaviour
         //current full feed selected item data update.......
         FeedVideoItem feedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FeedVideoItem>();
         feedVideoItem.hotFeed.commentCount += 1;
-
+        APIManager.Instance.CommentCountTextSetup(feedVideoItem.hotFeed.commentCount);
         string commentCountSTR = GetAbreviation(feedVideoItem.hotFeed.commentCount);
         if (commentCountSTR != "0")
         {
