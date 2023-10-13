@@ -12,7 +12,6 @@ using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
 using static Photon.Pun.UtilityScripts.TabViewManager;
 using System.Drawing.Printing;
-using UnityEditor.Searcher;
 
 public class WorldManager : MonoBehaviour
 {
@@ -21,27 +20,6 @@ public class WorldManager : MonoBehaviour
     public GameObject eventPrefabLobby;
     public GameObject eventPrefabTab;
     public GameObject descriptionParentPanel;
-    [Header("Home Page Scrollviews")]
-    public Transform listParentHotSection;
-    public Transform listParentAllWorlds;
-    public Transform listParentMyWorlds;
-    public Transform listParentGameWorlds;
-    public Transform listParentEventWorlds;
-    private Transform listParent;
-
-    [Header("world Page Scrollviews")]
-    public Transform world_HotScroll;
-    public Transform world_NewScroll;
-    public Transform world_myworldScroll;
-    public Transform world_GameWorldScroll;
-    public Transform world_EventWorldScroll;
-
-    [Header("Full World List")]
-    private List<GameObject> hotWorldList = new List<GameObject>();
-    private List<GameObject> newWorldList = new List<GameObject>();
-    private List<GameObject> myworldWorldList = new List<GameObject>();
-    private List<GameObject> gameWorldList = new List<GameObject>();
-    private List<GameObject> eventWorldList = new List<GameObject>();
 
     [HideInInspector]
     public bool orientationchanged = false;
@@ -61,14 +39,10 @@ public class WorldManager : MonoBehaviour
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
     public APIURL previousURL;
-
     public static WorldManager instance;
     public AllWorldManage m_AllWorldManage;
-
     ScrollRect s1;
     ScrollSnapRect s2;
-
-
     [SerializeField]
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
@@ -85,7 +59,6 @@ public class WorldManager : MonoBehaviour
 
         if (!System.IO.Directory.Exists(Application.persistentDataPath + "/MainMenuData"))
         {
-            //Debug.Log("start creating directory");
             System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/MainMenuData");
             if (!System.IO.Directory.Exists(Application.persistentDataPath + "/MainMenuData/MuseumData"))
             {
@@ -114,10 +87,32 @@ public class WorldManager : MonoBehaviour
     {
         if(tab != APIURL.SearchWorld)
         {
-            previousURL=tab;
+            previousURL = tab;
         }
         aPIURLGlobal = tab;
         GetBuilderWorlds(tab, (a) => { });
+    }
+    public string previousSearchKey;
+    public void SearchWorldCall(string searchKey)
+    {
+        if(searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
+        {
+            Debug.LogError("Search Key " + searchKey);
+            aPIURLGlobal = APIURL.SearchWorld;
+            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+            ClearWorldScrollWorlds();
+            SearchPageNumb = 1;
+            SearchPageSize = 40;
+            SearchKey = searchKey;
+            GetBuilderWorlds(aPIURLGlobal, (a) => { });
+        }
+        else
+        {
+            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+            ClearWorldScrollWorlds();
+            previousSearchKey = SearchKey = searchKey;
+            Debug.LogError("Search Key Fail ");
+        }
     }
     void SetAutoSwtichStreaming()
     { 
@@ -136,7 +131,7 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
-            if (AutoSwtichIndex< AutoSwtichWorldList.Count-1)
+            if (AutoSwtichIndex< AutoSwtichWorldList.Count - 1)
             {
                 AutoSwtichIndex++;
             }
@@ -218,7 +213,7 @@ public class WorldManager : MonoBehaviour
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
-        Debug.LogError("Final URL " + finalAPIURL);
+       // Debug.LogError("Final URL " + finalAPIURL);
         
         loadOnce = false;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
@@ -245,15 +240,14 @@ public class WorldManager : MonoBehaviour
 
     IEnumerator FetchUserMapFromServer(string apiURL, Action<bool> callback)
     {
-        Debug.Log("World API: " + apiURL);
+       // Debug.Log("World API: " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            //Debug.LogError("Token :- "+ ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-            Debug.LogError("Response = "+www.downloadHandler.text);
+           // Debug.LogError("Response = "+www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);
@@ -271,37 +265,21 @@ public class WorldManager : MonoBehaviour
     public WorldItemManager WorldItemManager;
     void InstantiateWorlds(string key)
     {
-        Debug.LogError("InstantiateWorlds Called = "+key+" --- "+ _WorldInfo.data.rows.Count);
+       // Debug.LogError("InstantiateWorlds Called = "+key+" --- "+ _WorldInfo.data.rows.Count);
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
-            //  WorldItemDetail worldCreateFromData = new WorldItemDetail();
-
-            // Debug.LogError("Name " + _WorldInfo.data.rows[i].name);
             WorldItemDetail _event;
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-                Debug.LogError(i+ " --- XANA Lobby --");
+               // Debug.LogError(i+ " --- XANA Lobby --");
                 isLobbyActive = true;
-               
-              // . TempObject = eventPrefabLobby;
-              // TempObject.transform.SetParent(listParent.transform.parent);
-              // TempObject.transform.SetAsFirstSibling();
 
             }
-            else
-            {
-                // TempObject = Instantiate(eventPrefab);
-                // TempObject.transform.SetParent(listParent);
-            }
-                _event = new WorldItemDetail();
-            // FeedEventPrefab _event = TempObject.GetComponent<FeedEventPrefab>();
-           // WorldItemView _event = TempObject.GetComponent<WorldItemView>();
-
+            _event = new WorldItemDetail();
             if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
             {
               //  _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
             }
-
             _event.IdOfWorld = _WorldInfo.data.rows[i].id;
             _event.EnvironmentName = _WorldInfo.data.rows[i].name;
             try
@@ -310,7 +288,7 @@ public class WorldManager : MonoBehaviour
                 {
                     _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
                    if(!_event.EnvironmentName.Contains("XANA Lobby"))
-                    _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
                 }
             }
             catch
@@ -323,7 +301,6 @@ public class WorldManager : MonoBehaviour
             _event.PressedIndex = int.Parse(_WorldInfo.data.rows[i].id);
             _event.UpdatedAt = _WorldInfo.data.rows[i].updatedAt;
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
-
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
 
@@ -343,19 +320,21 @@ public class WorldManager : MonoBehaviour
             }
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-                Debug.LogError(i + " --- XANA Lobby --");
+                //Debug.LogError(i + " --- XANA Lobby --");
                 isLobbyActive = true;
                 eventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
             }
             else
-            WorldItemManager.AddWorld(key,_event);
+            {
+                WorldItemManager.AddWorld(key,_event);
+            }
         }
         if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
         {
             eventPrefabLobby.SetActive(false);
-            listParentHotSection.GetComponent<GridLayoutGroup>().padding.top = 25;
         }
         WorldItemManager.DisplayWorlds(key);
+        previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
 
         TutorialsManager.instance.ShowTutorials();
@@ -372,7 +351,7 @@ public class WorldManager : MonoBehaviour
     {
         WorldItemManager.ClearWorldScrollWorlds();
     }
-    private void CreateLightingAsset(FeedEventPrefab _event)
+    private void CreateLightingAsset(WorldItemView _event)
     {
         string path = "Assets/Resources/Environment Data/" + _event.m_EnvironmentName + "Data";
         if (!Directory.Exists(path))
@@ -396,7 +375,7 @@ public class WorldManager : MonoBehaviour
 
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
                 UIManager.Instance.LoginRegisterScreen.SetActive(true);
@@ -434,7 +413,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
-            if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 if (!XanaConstants.xanaConstants.IsDeemoNFT)
                 {
@@ -446,7 +425,7 @@ public class WorldManager : MonoBehaviour
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -460,7 +439,7 @@ public class WorldManager : MonoBehaviour
     {
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (FeedEventPrefab.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
                 UIManager.Instance.LoginRegisterScreen.SetActive(true);
@@ -498,7 +477,7 @@ public class WorldManager : MonoBehaviour
                 {
                     print("NFT is in your OwnerShip Enjoy");
                 }
-                if (FeedEventPrefab.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+                if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
                 {
                     if (!XanaConstants.xanaConstants.IsDeemoNFT)
                     {
@@ -509,7 +488,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             // Added By WaqasAhmad [20 July 23]
             AssetBundle.UnloadAllAssetBundles(false);
@@ -567,7 +546,6 @@ public class WorldManager : MonoBehaviour
             }
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
-        // Added By WaqasAhmad [20 July 23]
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
         GC.Collect();
@@ -577,7 +555,7 @@ public class WorldManager : MonoBehaviour
             {
                 LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             }
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -591,7 +569,7 @@ public class WorldManager : MonoBehaviour
             {
                 LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             }
-            XanaConstants.xanaConstants.EnviornmentName = FeedEventPrefab.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -625,7 +603,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
-            FeedEventPrefab.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
+            WorldItemView.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
                 XanaConstants.xanaConstants.userLimit = "16";
@@ -653,7 +631,6 @@ class AutoSwtichEnv{
     public int mainnetId;
     public int testnetId;
 }
-
 [System.Serializable]
 public class WorldsInfo
 {
@@ -661,14 +638,12 @@ public class WorldsInfo
     public DataClass data;
     public string msg;
 }
-
 [System.Serializable]
 public class DataClass
 {
     public int count;
     public List<RowList> rows;
 }
-
 [System.Serializable]
 public class RowList
 {
@@ -688,7 +663,6 @@ public class RowList
     public string[] tags;
     public UserInfo user;
 }
-
 [System.Serializable]
 public class UserInfo
 {
@@ -697,59 +671,10 @@ public class UserInfo
     public string email;
     public string avatar;
 }
-
-[System.Serializable]
-public class SearchWorldData
-{
-    public int count;
-    public List<SearchWorld> rows = new List<SearchWorld>();
-}
-
-[System.Serializable]
-public class SearchworldRoot
-{
-    public bool success;
-    public SearchWorldData data = new SearchWorldData();
-    public string msg;
-}
-
-[System.Serializable]
-public class SearchWorld
-{
-    public int id;
-    public string name;
-    public int? user_limit;
-    public string thumbnail;
-    public string banner;
-    public string description;
-    public int? version;
-    public int orderNo;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public string entityType;
-    public string status;
-    public string? creator;
-    public object users;
-    public string[] tags;
-    public string map_json_link;
-    public string map_code;
-    public object nft_token_id;
-    public WorldUser user = new WorldUser();
-}
-
-[System.Serializable]
-public class WorldUser
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
 public enum APIURL
 {
     Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld
 }
-
 public enum WorldType
 {
     None, MUSEUM, ENVIRONMENT, USER_WORLD

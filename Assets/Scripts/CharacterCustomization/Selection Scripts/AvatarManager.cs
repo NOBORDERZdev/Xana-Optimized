@@ -388,7 +388,7 @@ namespace Metaverse
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
                     currentDummyPlayer.transform.parent = spawnPoint.transform;
                     //Debug.Log("1");
-                    if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
+                    if (WorldItemView.m_EnvName.Contains("AfterParty"))
                     {
                         //Debug.Log("2");
                         for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)

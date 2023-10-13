@@ -30,23 +30,22 @@ public class AllWorldManage : MonoBehaviour
     public void BackToPreviousScreen()
     {
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.ChangeWorldTab(WorldManager.instance.previousURL);
+        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldItemManager.DisplayWorlds(WorldManager.instance.previousURL.ToString());
+       // WorldManager.instance.ChangeWorldTab(WorldManager.instance.previousURL);
         // WorldManager.instance.ChangeWorldTab(APIURL.SearchWorld);
     }
     public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.ChangeWorldTab(APIURL.Hot);
+        WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+       // WorldManager.instance.ChangeWorldTab(APIURL.Hot);
     }
     public void GameWorldLoad()
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("GameWorlds"))
         {
             return;
-        }
-        else
-        {
-            print("Horayyy you have Access");
         }
         ScrollEnableDisable(1);
         WorldManager.instance.ChangeWorldTab(APIURL.GameWorld);
@@ -59,6 +58,7 @@ public class AllWorldManage : MonoBehaviour
         }
         ScrollEnableDisable(2);
         WorldManager.instance.ChangeWorldTab(APIURL.AllWorld);
+
     }
     public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
     {
@@ -68,6 +68,7 @@ public class AllWorldManage : MonoBehaviour
         }
         ScrollEnableDisable(3);
         WorldManager.instance.ChangeWorldTab(APIURL.EventWorld);
+
     }
     public void EventWorldLoad()
     {

@@ -132,6 +132,8 @@ public class WorldItemPreviewTab : MonoBehaviour
                 return;
             }
         }
+        GameManager.Instance.WorldBool = true;
+
     }
     public void UpdateWorldPanel()
     {

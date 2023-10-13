@@ -74,23 +74,30 @@ public class WorldItemView : MonoBehaviour
     bool isBannerLoaded = false;
     private void OnEnable()
     {
-        if (cnt > 0 && !isImageSuccessDownloadAndSave)
-        {
-            isVisible = true;
-        }
-        cnt += 1;
+        //if (cnt > 0 && !isImageSuccessDownloadAndSave)
+        //{
+        //    isVisible = true;
+        //}
+        //cnt += 1;
         UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
-        StartCoroutine(UpdateCoroutine());
+       // StartCoroutine(UpdateCoroutine());
         UpdateUserCount();
+
+
+
+        ////////
+        ///
+    
+        /////
     }
     private void OnDisable()
     {
-        AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
+        AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
         worldIcon.sprite = null;
         worldIcon.sprite = default;
         WorldManager.instance.ResourcesUnloadAssetFile();
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
-        StopAllCoroutines();
+       // StopAllCoroutines();
     }
     public void Init()
     {
@@ -105,6 +112,10 @@ public class WorldItemView : MonoBehaviour
             {
                 StartCoroutine(DownloadAndLoadBanner());
             }
+        }
+        if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
+        {
+            StartCoroutine(DownloadAndLoadFeed());
         }
     }
     int cnt = 0;
@@ -204,54 +215,54 @@ public class WorldItemView : MonoBehaviour
         else
             return 406; // Xana Lobby Id Testnet
     }
-    IEnumerator UpdateCoroutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(0.4f, 0.7f));
-            isOnScreen = true;
-            if (isVisible && isOnScreen && !string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
-            {
-                isVisible = false;
-                StartCoroutine(DownloadAndLoadFeed());
-            }
-            else if (isImageSuccessDownloadAndSave)
-            {
-            LoadFileAgain:
-                if (isOnScreen && isNotLoaded)
-                {
-                    if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
-                    {
-                        if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
-                        {
-                            isNotLoaded = false;
-                            yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
-                            AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
-                        }
-                    }
-                }
-                else if (!isOnScreen && worldIcon.sprite && !isNotLoaded)
-                {
-                    //realse from memory 
-                    isReleaseFromMemoryOrNot = true;
-                    isNotLoaded = true;
-                    yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
-                    AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
-                    worldIcon.sprite = default;
-                    WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
-                }
-                else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == default))
-                {
-                    isNotLoaded = true;
-                    goto LoadFileAgain;
-                }
+    //IEnumerator UpdateCoroutine()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(UnityEngine.Random.Range(0.4f, 0.7f));
+    //        isOnScreen = true;
+    //        if (isVisible && isOnScreen && !string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
+    //        {
+    //            isVisible = false;
+    //            StartCoroutine(DownloadAndLoadFeed());
+    //        }
+    //        else if (isImageSuccessDownloadAndSave)
+    //        {
+    //        LoadFileAgain:
+    //            if (isOnScreen && isNotLoaded)
+    //            {
+    //                if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
+    //                {
+    //                    if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
+    //                    {
+    //                        isNotLoaded = false;
+    //                        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+    //                        AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
+    //                    }
+    //                }
+    //            }
+    //            else if (!isOnScreen && worldIcon.sprite && !isNotLoaded)
+    //            {
+    //                //realse from memory 
+    //                isReleaseFromMemoryOrNot = true;
+    //                isNotLoaded = true;
+    //                yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+    //                AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
+    //                worldIcon.sprite = default;
+    //                WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //            }
+    //            else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == default))
+    //            {
+    //                isNotLoaded = true;
+    //                goto LoadFileAgain;
+    //            }
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
     public IEnumerator DownloadAndLoadFeed()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.6f));
+        yield return null;
         AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
         {
             if (success)

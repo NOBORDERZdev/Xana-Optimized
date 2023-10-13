@@ -182,8 +182,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (YoutubeStreamPlayer == null)
         {
-            Debug.Log("DJ Beach====" + FeedEventPrefab.m_EnvName);
-            if (FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+            Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
+            if (WorldItemView.m_EnvName.Contains("DJ Event"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
 
@@ -205,7 +205,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
-            if (FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage") && !FeedEventPrefab.m_EnvName.Contains("Dubai"))
+            if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
 
@@ -228,7 +228,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 }
             }
 
-            if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+            if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
 
@@ -250,7 +250,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
-            if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
 
@@ -276,7 +276,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     }
     void CharacterLightCulling()
     {
-        if ((!FeedEventPrefab.m_EnvName.Contains("Xana Festival") || !FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstants.xanaConstants.isBuilderScene)
+        if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstants.xanaConstants.isBuilderScene)
         {
             //riken
             Light[] directionalLightList = FindObjectsOfType<Light>();
@@ -340,7 +340,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
+            if (WorldItemView.m_EnvName.Contains("AfterParty"))
             {
                 if (XanaConstants.xanaConstants.setIdolVillaPosition)
                 {
@@ -386,19 +386,19 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
-            if (FeedEventPrefab.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
+            if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("Koto") || FeedEventPrefab.m_EnvName.Contains("Tottori") || FeedEventPrefab.m_EnvName.Contains("DEEMO") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+            else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
                 //Invoke(nameof(SetKotoAngle), 0.5f);
-                if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
                 }
@@ -408,16 +408,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 }
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("Genesis"))
+            else if (WorldItemView.m_EnvName.Contains("Genesis"))
             {
                 // No Need TO Rotate Player
                 StartCoroutine(setPlayerCamAngle(0, 0.75f));
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("ZONE X Musuem") || FeedEventPrefab.m_EnvName.Contains("FIVE ELEMENTS"))
+            else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
             {
                 StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
             }
-            else if (FeedEventPrefab.m_EnvName.Contains("ZONE-X"))
+            else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
@@ -451,7 +451,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
-        if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
             if(!XanaConstants.xanaConstants.isCameraMan)
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
@@ -608,7 +608,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             environmentCameraRender.farClipPlane = 1000;
             freeCam.farClipPlane = 1000;
         }
-        if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }

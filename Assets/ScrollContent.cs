@@ -44,6 +44,10 @@ namespace DynamicScrollRect
         private float _screenSizeX = 1080;
         float AlignSpace = default;
         string CurrentKey;
+        public void ClearWorldData()
+        {
+            Worlds.Clear();
+        }
         private void Awake()
         {
             AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 2f;
@@ -52,7 +56,7 @@ namespace DynamicScrollRect
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
         {
            // Debug.LogError("New Elements added === " + contentDatum.Count);
-
+           // Debug.LogError("New Elements added === " + Worlds.Count);
             if (Worlds.Count.Equals(0))
             {
                 Worlds = contentDatum;
@@ -61,13 +65,22 @@ namespace DynamicScrollRect
             }
             else if(worldKey != CurrentKey)
             {
-                Debug.LogError("Key Change === " + contentDatum.Count);
+                //Debug.LogError("Key Change === " + contentDatum.Count);
                 ClearContent();
                 Worlds = contentDatum;
                 CurrentKey = worldKey;
                 InitItemsVertical(Worlds.Count);
                 DynamicScrollRect.content.anchoredPosition = Vector2.zero;
 
+            }
+            else if(worldKey.Equals(APIURL.SearchWorld.ToString()))
+            {
+               // Debug.LogError("Abnormal Case");
+                ClearContent();
+                Worlds = contentDatum;
+                CurrentKey = worldKey;
+                InitItemsVertical(Worlds.Count);
+                DynamicScrollRect.content.anchoredPosition = Vector2.zero;
             }
         }
         private void InitItemsVertical(int count)

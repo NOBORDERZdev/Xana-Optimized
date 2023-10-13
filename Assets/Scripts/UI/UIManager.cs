@@ -44,12 +44,12 @@ public class UIManager : MonoBehaviour
     }
     public void AvaterButtonCustomPushed()
     {
-        LoginPageManager.m_WorldIsClicked = false;
-        LoginPageManager.m_MuseumIsClicked = false;
+        WorldItemPreviewTab.m_WorldIsClicked = false;
+        WorldItemPreviewTab.m_MuseumIsClicked = false;
     }
     public void IsWorldClicked()
     {
-        if(LoginPageManager.m_WorldIsClicked || LoginPageManager.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)

@@ -122,7 +122,7 @@ public class TutorialsManager : MonoBehaviour
         }
         else if (index == 2)
         {
-            worldsParent = WorldManager.instance.listParentHotSection.gameObject;
+           // worldsParent = WorldManager.instance.listParentHotSection.gameObject;
             thirdPanel.SetActive(true);
             tutorialCanvasBG.SetActive(false);
             ShowWorlds(index);
@@ -161,7 +161,7 @@ public class TutorialsManager : MonoBehaviour
         }
         else //instantiate first 6 worlds
         {
-            for (int i = 0; i < 6; i++)
+           /* for (int i = 0; i < 6; i++)
             {
                 go = Instantiate(worldsParent.transform.GetChild(i).gameObject);
                 go.transform.SetParent(tutorialsParent.transform);
@@ -169,7 +169,7 @@ public class TutorialsManager : MonoBehaviour
                 go.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = subtractSprites[1];
                 // go.transform.GetChild(0).GetChild(2).GetComponent<Image>().color = new Color(80, 80, 80,255);
                 go.GetComponent<Button>().enabled = false;
-            }
+            }*/
         }
     }
     private void SkipTutorial()

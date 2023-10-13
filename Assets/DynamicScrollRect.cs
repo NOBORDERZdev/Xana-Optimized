@@ -351,7 +351,7 @@ namespace DynamicScrollRect
         }
         private IEnumerator RunBackProgress()
         {
-            Debug.LogError(" RunBackProgress ");
+           // Debug.LogError(" RunBackProgress ");
             _runningBack = true;
             float timePassed = 0;
             float duration = 0.25f;
@@ -361,7 +361,7 @@ namespace DynamicScrollRect
             {
                 if (!ParentSliderFlag)
                 {
-                    Debug.LogError(" RunBackProgress Break");
+                  //  Debug.LogError(" RunBackProgress Break");
                     StopRunBackRoutine();
                     break;
                 }

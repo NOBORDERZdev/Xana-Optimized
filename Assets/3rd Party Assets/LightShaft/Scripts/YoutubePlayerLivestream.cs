@@ -23,7 +23,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
     {
         //GetLivestreamUrl(_livestreamUrl);
 #if UNITY_ANDROID
-        if (FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
+        if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         else
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);

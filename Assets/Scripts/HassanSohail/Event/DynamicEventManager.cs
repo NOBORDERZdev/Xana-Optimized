@@ -523,7 +523,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
-            FeedEventPrefab.m_EnvName = "Builder";
+            WorldItemView.m_EnvName = "Builder";
             XanaConstants.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
             XanaConstants.xanaConstants.isBuilderScene = true;
             //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
@@ -540,14 +540,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             if (XanaEventDetails.eventDetails.museumId.Equals(0))
             {
                 XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
-                FeedEventPrefab.m_EnvName = XanaEventDetails.eventDetails.environmentName;
+                WorldItemView.m_EnvName = XanaEventDetails.eventDetails.environmentName;
                 //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             else
             {
                 XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
-                FeedEventPrefab.m_EnvName = XanaEventDetails.eventDetails.museumName;
+                WorldItemView.m_EnvName = XanaEventDetails.eventDetails.museumName;
                 //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
