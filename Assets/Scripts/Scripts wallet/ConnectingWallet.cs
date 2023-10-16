@@ -503,7 +503,7 @@ public class ConnectingWallet : MonoBehaviour
         print(jsonObj);
         if (isWalletNewReg)
         {
-               UserRegisterationManager.instance.OpenUIPanal(5);
+               //UserRegisterationManager.instance.OpenUIPanal(5);
         }
         SuccessfulPopUp.SetActive(true);
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);

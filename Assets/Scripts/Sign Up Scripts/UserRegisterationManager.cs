@@ -20,6 +20,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 //using MoralisUnity;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public class UserRegisterationManager : MonoBehaviour
 {
@@ -71,6 +72,9 @@ public class UserRegisterationManager : MonoBehaviour
     //  public MobileInputField mainfield_for_opt;
     public AdvancedInputField mainfieldOTPNew;
     public Text[] text_to_show;
+    public Image[] image_to_Change;
+    public Sprite OTPbox_highlighter;
+    public Sprite oldOTP_Box;
     [Space(5)]
     [Header("Login-InputFields")]
     // public MobileInputField LoginEmailNew;
@@ -306,6 +310,8 @@ public class UserRegisterationManager : MonoBehaviour
         CloseLoginScreen();
     }
 
+
+   
 
     public void CloseLoginScreen() 
     {
@@ -923,6 +929,7 @@ public class UserRegisterationManager : MonoBehaviour
     // Invoked when the value of the text field changes.
     public void ValueChangeCheck()
     {
+        image_to_Change[0].sprite = OTPbox_highlighter;
         string[] myOtpTxt = new string[text_to_show.Length];
         //  char[] charArr = new char[mainfield_for_opt.Text.Length];
         char[] charArr = new char[mainfieldOTPNew.Text.Length];
@@ -930,19 +937,39 @@ public class UserRegisterationManager : MonoBehaviour
         charArr = mainfieldOTPNew.Text.ToCharArray();
         for (int i = 0; i < myOtpTxt.Length; i++)
         {
-            if (i < charArr.Length)
+            if (i == 0)
             {
+                image_to_Change[0].sprite = OTPbox_highlighter;
+            }
+            if (i < charArr.Length)//1 2 3 4
+            {
+                //Debug.Log("VALUE OF Char" + charArr.Length);
                 myOtpTxt[i] = charArr[i].ToString();
                 text_to_show[i].text = myOtpTxt[i].ToString();
-
+                if (i < 3)
+                {
+                    image_to_Change[i + 1].sprite = OTPbox_highlighter;
+                    image_to_Change[i].sprite = oldOTP_Box;
+                }
+                
             }
             else
             {
                 myOtpTxt[i] = "";
+                Debug.Log("VALUE OF OTP" + myOtpTxt[i]);
                 text_to_show[i].text = myOtpTxt[i].ToString();
+                //Debug.Log("VALUE OF I" + i);
+                //Debug.Log("VALUE OF Char" + charArr.Length);
+                //Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
+                if (charArr.Length < 4) //1 2 3 
+                {
+                    image_to_Change[charArr.Length + 1].sprite = oldOTP_Box;
+                }
 
             }
         }
+
+        
     }
 
     public void BackButtonPressedhere()
@@ -1283,6 +1310,17 @@ public class UserRegisterationManager : MonoBehaviour
                        // welcomeScreen.SetActive(true);
                         //SignUpPanal.SetActive(false);
                     }
+                    break;
+                }
+
+            case 18:
+                {
+
+                    PlayerPrefs.SetInt("iSignup", 1);// going for Wallet register user
+                    //SignUpPanal.SetActive(true);
+                    //OnSignUpPhoneTabPressed();
+                    //  OnSignUpWalletTabPressed();
+
                     break;
                 }
         }
@@ -3174,11 +3212,31 @@ public class UserRegisterationManager : MonoBehaviour
 
     // End Register User with password
 
+    public void LoadingFadeOutScreen() 
+    {
+        BlackScreen.SetActive(true);
+        StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 5));
+    }
+    IEnumerator LerpFunction(Color endValue, float duration)
+    {
+        float time = 0;
+        Color startValue = BlackScreen.GetComponent<Image>().color;
+        while (time < duration)
+        {
+            BlackScreen.GetComponent<Image>().color = Color.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        BlackScreen.GetComponent<Image>().color = endValue;
+        BlackScreen.SetActive(false);
+    }
+
+    
 
 
     public void EnterUserName()
     {
-
+        
         //print(PlayerPrefs.GetInt("shownWelcome")); // 0
         //print(PlayerPrefs.GetInt("iSignup")); // 1
         //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
@@ -3282,6 +3340,8 @@ public class UserRegisterationManager : MonoBehaviour
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
                 Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
+                //StoreManager.instance.OnSaveBtnClicked();
+
             }
             else
             {
@@ -3291,6 +3351,7 @@ public class UserRegisterationManager : MonoBehaviour
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
+            //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
         }
     }
 
