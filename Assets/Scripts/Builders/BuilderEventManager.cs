@@ -26,7 +26,7 @@ public static class BuilderEventManager
     //Gamification Module Events
 
     //Narration Component
-    public static Action<string, bool> OnNarrationCollisionEnter;
+    public static Action<string, bool, bool> OnNarrationCollisionEnter;
     public static Action OnNarrationCollisionExit;
 
     //Random Number Component
@@ -92,7 +92,7 @@ public static class BuilderEventManager
     public static Action<bool> StopAvatarChangeComponent;
 
     //ChangeNinja_ThrowUIPosition
-    public static Action<float,bool> ChangeNinja_ThrowUIPosition;
+    public static Action<float, bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
 
     //UI toggle
@@ -104,4 +104,8 @@ public static class BuilderEventManager
     public static Action<Constants.ItemComponentType> onComponentActivated;
     public static Action<IComponentBehaviour> AddItemComponent;
     public static Action RPCcallwhenPlayerJoin;
+
+    //BGM sound manager
+    public static Action<AudioPropertiesBGM> BGMDownloader;
+    public static Action BGMStart;
 }
