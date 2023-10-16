@@ -100,6 +100,10 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void EnableJJPortalPopup(GameObject obj, int indexForText)
     {
+        if(LoadingHandler.Instance != null)
+        {
+            LoadingHandler.Instance.ResetLoadingValues();
+        }
         JJPortalPopupText.text = JJPortalPopupTextData[indexForText].ToString();
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
@@ -212,13 +216,5 @@ public class CanvasButtonsHandler : MonoBehaviour
     {
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
-    }
-    public void MoveFromPortal()
-    {
-        JJPortalPopup.SetActive(false);
-        //if (currentPortalObject.GetComponent<PlayerPortal>())
-            //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
-        if (currentPortalObject.GetComponent<JjWorldChanger>())
-            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
     }
 }

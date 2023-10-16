@@ -108,8 +108,9 @@ public class PlayerPortal : MonoBehaviour
             }
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
             LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
-            LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
+            //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
             yield return new WaitForSeconds(.5f);
             RaycastHit hit;
         CheckAgain:

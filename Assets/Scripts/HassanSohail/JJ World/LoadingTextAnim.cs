@@ -15,7 +15,6 @@ public class LoadingTextAnim : MonoBehaviour
     int i = 0;
     private void Start()
     {
-        initialLoadingtext = LoadingText.text;
         InvokeRepeating(nameof(changeTxt),speed,1);
     }
 

@@ -36,21 +36,14 @@ public class JjWorldChanger : MonoBehaviour
             {
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
-            CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
-        }
-
-    }
-    public void RedirectToWorld()
-    {
-        if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
-        {
+            //CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
             if (JjInfoManager.Instance.IsJjWorld)
             {
                 triggerObject = other.gameObject;
-                if(isEnteringPopup)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,0);
+                if (isEnteringPopup)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
                 else
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,1);
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
             }
             else
             {
@@ -65,13 +58,21 @@ public class JjWorldChanger : MonoBehaviour
                 }
             }
         }
-    }
 
+    }
     public void RedirectToWorld()
     {
-        if (triggerObject.GetComponent<PhotonView>().IsMine)
+        if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            this.StartCoroutine(swtichScene(WorldName));
+            collider.enabled = false;
+            if (checkWorldComingSoon(WorldName) || isBuilderWorld)
+            {
+                this.StartCoroutine(swtichScene(WorldName));
+            }
+            else
+            {
+                this.StartCoroutine(ResetColider());
+            }
         }
     }
 
@@ -96,6 +97,7 @@ public class JjWorldChanger : MonoBehaviour
         {
             XanaConstants.xanaConstants.isFromXanaLobby =true;
         }
+        
        // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
