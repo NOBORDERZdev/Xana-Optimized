@@ -270,7 +270,7 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, "");
+        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
         npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
@@ -301,7 +301,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine, "");
+        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine, CallBy.User, "");
     }
 
     #region Photon Chat Region
