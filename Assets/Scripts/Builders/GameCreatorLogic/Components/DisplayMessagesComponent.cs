@@ -29,6 +29,8 @@ public class DisplayMessagesComponent : ItemComponent
 
     private void StartComponent()
     {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
+
         if (displayMessageComponentData.isStart)
         {
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.startDisplayMessage, displayMessageComponentData.startTimerCount, true);

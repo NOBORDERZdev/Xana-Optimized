@@ -61,6 +61,7 @@ public class GamificationComponentData : MonoBehaviourPun
 
     internal bool isNight;
     internal bool isBlindToogle;
+    internal bool isAvatarChanger;
     internal int previousSkyID;
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();

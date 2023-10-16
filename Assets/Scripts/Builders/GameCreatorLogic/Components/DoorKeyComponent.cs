@@ -70,6 +70,9 @@ public class DoorKeyComponent : ItemComponent
                         GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
                     else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
                     Toast.Show("The keys match!");
+
+                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
+
                     return;
                 }
                 if (values._dooKeyValues.Count > 0)
