@@ -91,7 +91,7 @@ public class NpcAssetLoader : MonoBehaviour
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.LogError("Loaded Successfully");
+            //Debug.LogError("Loaded Successfully");
             GameObject loadedObject = handle.Result as GameObject;
             if (loadedObject != null)
             {
@@ -112,13 +112,12 @@ public class NpcAssetLoader : MonoBehaviour
             CheckMoreAIDresses();
             Debug.LogError("Failed to load addressable: " + handle.OperationException);
         }
-
     }
 
     private void CheckMoreAIDresses()
     {
         tempCounter++;
-        if (tempCounter >= 4)
+        if (tempCounter >= 4)   // maximum ai drasses are 4
         {
             tempCounter = 0;
             return;
@@ -149,7 +148,6 @@ public class NpcAssetLoader : MonoBehaviour
 
     private void StichItem(GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
     {
-        //CharcterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharcterBodyParts>();
         UnStichItem(type);
         if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)
         {
@@ -252,7 +250,6 @@ public class NpcAssetLoader : MonoBehaviour
     {
         Body.materials[0].SetTexture(shirt_TextureName, texture);
     }
-
 
     // Set texture For 
     private void TextureForPant(Texture texture)
