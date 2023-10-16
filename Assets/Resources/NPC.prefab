@@ -2403,6 +2403,9 @@ GameObject:
   - component: {fileID: 4894719807666117185}
   - component: {fileID: 5331265068291827182}
   - component: {fileID: 5555313515213484092}
+  - component: {fileID: 7981251910029998354}
+  - component: {fileID: 6271863520875257628}
+  - component: {fileID: 1110000956223130986}
   m_Layer: 22
   m_Name: NPC
   m_TagString: PhotonLocalPlayer
@@ -2978,6 +2981,62 @@ CapsuleCollider:
   m_Height: 1.6904354
   m_Direction: 1
   m_Center: {x: -0, y: 0.8450873, z: -0.019479752}
+--- !u!195 &7981251910029998354
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 150
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.7
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6271863520875257628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a03e62528244a04a9f2119f077d2b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementController: {fileID: 1110000956223130986}
+  nameTxt: {fileID: 0}
+  isPerformingAction: 0
+--- !u!114 &1110000956223130986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bd6ed0505077a41b10abc23838b1c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRadius: 10
+  maxRadius: 30
+  agent: {fileID: 7981251910029998354}
+  animator: {fileID: 4894719807666117185}
+  npcBehaviour: {fileID: 6271863520875257628}
+  walkRotateSpeed: 10
+  isMoving: 0
 --- !u!1 &4913886486643861697
 GameObject:
   m_ObjectHideFlags: 0
