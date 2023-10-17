@@ -117,7 +117,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         //univStartDateTime = DateTime.Parse(OrdinaryUTCdateOfSystem);
         //OrdinarySystemDateTime = univStartDateTime.ToLocalTime();
-        int _eventEndSystemDateTimediff = (int)(eventlocalEndDateTime - System.DateTime.Now).TotalMinutes;
+        double _eventEndSystemDateTimediff = (double)(eventlocalEndDateTime - System.DateTime.Now).TotalMinutes;
 
         //print("===================DIFFEND : " + _eventEndSystemDateTimediff);
 
@@ -127,6 +127,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StreamingSockets.Instance.isInWorld =false;
                 StreamingSockets.Instance.isEventTriggered = false;
+                StreamingSockets.Instance.isInEvent= false;
+                XanaEventDetails.eventDetails.DataIsInitialized = false;
+                XanaEventDetails.eventDetails = null;
                 print("!!!!!!!!!!!!!! back due to event end");
                 LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
                 //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
