@@ -10,6 +10,7 @@ using AdvancedInputFieldPlugin;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
+using static GlobalConstants;
 
 public class WorldManager : MonoBehaviour
 {
@@ -546,6 +547,8 @@ public class WorldManager : MonoBehaviour
 //#endif
 
         }
+        if (FeedEventPrefab.m_EnvName == "ZONE-X")
+            SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
     public async void JoinBuilderWorld()
     {
