@@ -209,8 +209,12 @@ public class LoadingHandler : MonoBehaviour
         StartCoroutine(CustomLoading(isFedderActive));
     }
 
-    void ResetLoadingValues()
+    public  void ResetLoadingValues()
     {
+        if (LoadFromFile.instance)
+        {
+            LoadFromFile.instance.isEnvLoaded = false;
+        }
         currentValue = 0;
         isLoadingComplete = false;
         timer = 0;
@@ -471,7 +475,7 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if (XanaConstants.xanaConstants.isFromXanaLobby)
+            if (XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld))
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -489,11 +493,15 @@ public class LoadingHandler : MonoBehaviour
                 {
                     isLoadingComplete = true;
                 }
-            }
+                else if (currentValue > 75f)
+                {
+                    isLoadingComplete = true;
+                }
+            }   
             if (isLoadingComplete)
             {
                 currentValue = 100;
-                if (XanaConstants.xanaConstants.isFromXanaLobby)
+                if (XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld))
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";

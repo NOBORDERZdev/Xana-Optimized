@@ -11,6 +11,7 @@ public class NarrationComponent : ItemComponent
     public static IEnumerator currentCoroutine;
     string RuntimeItemID = "";
 
+    private bool IsAgainTouchable = true;
     public bool isCoroutineRunning = false;
     int i = 0;
 
@@ -24,9 +25,22 @@ public class NarrationComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            if (!IsAgainTouchable) return;
+
+            IsAgainTouchable = false;
+
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
     }
 
     #region BehaviourControl
@@ -41,11 +55,11 @@ public class NarrationComponent : ItemComponent
 
         if (narrationComponentData.onStoryNarration)
         {
-            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(msg, true);
+            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(msg, true, narrationComponentData.onCloseNarration);
         }
         else if (narrationComponentData.onTriggerNarration)
         {
-            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(msg, false);
+            BuilderEventManager.OnNarrationCollisionEnter?.Invoke(msg, false, narrationComponentData.onCloseNarration);
         }
     }
     private void StopComponent()

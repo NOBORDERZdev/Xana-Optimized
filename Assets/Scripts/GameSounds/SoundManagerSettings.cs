@@ -118,10 +118,17 @@ public class SoundManagerSettings : MonoBehaviour
         if (videoSource == null)
             videoSource = SoundManager.Instance.videoPlayerSource;
         YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
+        YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
         if (Videoplayer != null)
         {
             videoSource = Videoplayer.videoPlayerAudioSource;
             liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
+            Debug.Log("VideoSource Set ");
+        }
+        else if (Videoplayer2 != null)
+        {
+            //videoSource = Videoplayer.videoPlayerAudioSource;
+            liveVideoSource = Videoplayer2.mPlayer;
             Debug.Log("VideoSource Set ");
         }
         else

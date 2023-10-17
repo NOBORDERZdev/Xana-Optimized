@@ -51,7 +51,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public PhotonVoiceView VoiceView;
 
     //Gautam added for changing the position of the name canvas for avatar changer
-    public Canvas nameCanvas;
+    internal Canvas nameCanvas;
 
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
         //    PhotonUserName.enabled = false;
         //}
-
+        nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
         if (XanaChatSystem.instance.UserName.Length > 12)
         {
             PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
