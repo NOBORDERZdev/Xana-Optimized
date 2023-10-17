@@ -147,7 +147,7 @@ public class BuildingDetect : MonoBehaviour
 
     }
 
-    #region Mubashir Avatar Work
+    #region Avatar Work
     public void OnPowerProviderEnter(float time, float speed, float height)
     {
         powerUpTime = time;
@@ -227,6 +227,8 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter.transform.localPosition = Vector3.zero;
         gangsterCharacter.transform.localEulerAngles = Vector3.zero;
         avatarChangeCoroutine = StartCoroutine(PlayerAvatarChange());
+
+        GamificationComponentData.instance.isAvatarChanger = true;
     }
     float avatarTime;
     Avatar tempAnimator;
@@ -279,18 +281,22 @@ public class BuildingDetect : MonoBehaviour
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;
-        }
 
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerHead.enabled = state;
-        playerPants.enabled = state;
-        playerShirt.enabled = state;
-        playerShoes.enabled = state;
+            GamificationComponentData.instance.isAvatarChanger = false;
+        }
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        {
+            playerHair.enabled = state;
+            playerBody.enabled = state;
+            playerHead.enabled = state;
+            playerPants.enabled = state;
+            playerShirt.enabled = state;
+            playerShoes.enabled = state;
+        }
     }
     #endregion
 
-    #region Attizaz Special Item Work
+    #region Special Item Work
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
@@ -400,7 +406,7 @@ public class BuildingDetect : MonoBehaviour
     #endregion
 
     #region Avatar Invisibility 
-
+    //Hologram Material Set
     void AvatarInvisibilityApply()
     {
         playerHair.material = hologramMaterial;

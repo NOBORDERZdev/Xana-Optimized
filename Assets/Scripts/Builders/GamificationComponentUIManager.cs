@@ -743,12 +743,16 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+
                 colorString = "#36C34E";
                 break;
 
             case 1:
                 wrong++;
                 image = wrongImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+
                 break;
 
             case 2:
