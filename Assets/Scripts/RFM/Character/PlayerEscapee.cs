@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 namespace RFM.Character
@@ -7,6 +8,8 @@ namespace RFM.Character
     {
         private TMPro.TextMeshProUGUI _showMoney;
         private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
+
+        public float timeSurvived;
         public int Money { get; private set; } = 0;
         
         private void OnEnable()
@@ -32,10 +35,22 @@ namespace RFM.Character
             _showMoney.text = "00";
             Money = 0;
             _showMoney.gameObject.SetActive(true);
-
+            StartCoroutine(TimeSurvived());
             InvokeRepeating(nameof(AddMoney),
                 RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval,
                 RFM.Managers.RFMManager/*.Instance*/.CurrentGameConfiguration.GainingMoneyTimeInterval);
+        }
+
+         
+        IEnumerator TimeSurvived() 
+        {
+            timeSurvived = 0;
+            while(true) 
+            {
+                timeSurvived += 1;
+                yield return new WaitForSecondsRealtime(1);
+            }
+
         }
 
         // private void OnPlayerCaught(NPCHunter catcher)
@@ -47,7 +62,8 @@ namespace RFM.Character
         {
             // _showMoney.gameObject.SetActive(false);
             CancelInvoke(nameof(AddMoney));
-            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money);
+            StopCoroutine(TimeSurvived());
+            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
         }
 
@@ -61,7 +77,7 @@ namespace RFM.Character
         public void PlayerEscapeeCaught(NPCHunter npcHunter)
         {
             CancelInvoke(nameof(AddMoney));
-            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money);
+            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
             EventsManager.PlayerCaught(npcHunter);
         }
@@ -69,7 +85,7 @@ namespace RFM.Character
         public void PlayerEscapeeCaughtByPlayer(PlayerHunter npcHunter)
         {
             CancelInvoke(nameof(AddMoney));
-            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money);
+            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
             EventsManager.PlayerCaughtByPlayer(npcHunter);
         }

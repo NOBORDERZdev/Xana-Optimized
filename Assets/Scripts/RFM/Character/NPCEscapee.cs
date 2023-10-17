@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace RFM.Character
         private Transform _closestHunterTransform = null;
         private float _minDistance = 10f;
 
-
+        public float timeSurvived;
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
 
@@ -51,11 +52,21 @@ namespace RFM.Character
             InvokeRepeating(nameof(AddMoney),
                 RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
                 RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
-            
+            StartCoroutine(TimeSurvived());
             InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
         }
-        
-        
+
+        IEnumerator TimeSurvived()
+        {
+            timeSurvived = 0;
+            while (true)
+            {
+                timeSurvived += 1;
+                yield return new WaitForSecondsRealtime(1);
+            }
+
+        }
+
         private void AddMoney()
         {
             _money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
@@ -115,7 +126,8 @@ namespace RFM.Character
         {
             CancelInvoke(nameof(AddMoney));
             CancelInvoke(nameof(EscapeFromHunters));
-            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(_nickName, _money);
+            StopCoroutine(TimeSurvived());
+            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(_nickName, _money, timeSurvived);
             PhotonNetwork.Destroy(this.gameObject);
         }
         
