@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Text.RegularExpressions;
+using static GlobalConstants;
 
 /// <summary>
 /// This class handles basic link color behavior, supports also underline (static only)
@@ -28,6 +30,9 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
     private int hoveredLinkIndex = -1;
     private int pressedLinkIndex = -1;
     private Camera mainCamera;
+    private static bool uniqueClick = true;
+
+
 
     void Awake()
     {
@@ -73,115 +78,64 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
 
             // For Analatics URL Clicked = true;
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, true, false);
-
+            CallFirebaseEventForLinkClicked();
             Application.OpenURL(linkInfo.GetLinkID());
         }
         pressedLinkIndex = -1;
+
+
+
     }
 
-    //private void LateUpdate()
-    //{
-    //    int linkIndex = GetLinkIndex();
-    //    if (linkIndex != -1) // Was pointer intersecting a link?
-    //    {
-    //        if (linkIndex != hoveredLinkIndex) // We started hovering above link (hover can be set from OnPointerDown!)
-    //        {
-    //            if (hoveredLinkIndex != -1) ResetLinkColor(hoveredLinkIndex, startColors); // If we hovered above other link before
-    //            hoveredLinkIndex = linkIndex;
-    //            if (usedLinks.TryGetValue(linkIndex, out bool isUsed) && isUsed) // Has the link been already used?
-    //            {
-    //                // If we have pressed on link, wandered away and came back, set the pressed color
-    //                if (pressedLinkIndex == linkIndex) startColors = SetLinkColor(hoveredLinkIndex, usedPressedColor);
-    //                else startColors = SetLinkColor(hoveredLinkIndex, usedHoveredColor);
-    //            }
-    //            else
-    //            {
-    //                // If we have pressed on link, wandered away and came back, set the pressed color
-    //                if (pressedLinkIndex == linkIndex) startColors = SetLinkColor(hoveredLinkIndex, pressedColor);
-    //                else startColors = SetLinkColor(hoveredLinkIndex, hoveredColor);
-    //            }
-    //        }
-    //    }
-    //    else if (hoveredLinkIndex != -1) // If we hovered above other link before
-    //    {
-    //        ResetLinkColor(hoveredLinkIndex, startColors);
-    //        hoveredLinkIndex = -1;
-    //    }
-    //}
+    void CallFirebaseEventForLinkClicked()
+    {
+        //int maxLength = 10;
+        //string originalString = JjInfoManager.Instance.nftTitle;
+        //originalString = Regex.Replace(originalString, @"\s", "");
+        //string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+
+        //if (uniqueClick)
+        //{
+        //    uniqueClick = false;
+        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
+        //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
+        //}
+
+        string eventName = XanaConstants.xanaConstants.EnviornmentName;
+
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+        {
+            // we don't have this museum yet
+            ////worldName = "1F_Mainloby_NFTclick";
+        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+        {
+            //// we don't have this museum yet
+            //worldName = "1F_ZoneX_NFTclick";
+            eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        {
+            //// worldName = "1F_FiveElement_NFTclick";
+            // we don't have this museum yet
+
+            eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+        }
+        else
+        {
+            if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.AtomMuseum.ToString()))
+                eventName = FirebaseTrigger.URL_AtomRoom.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+            else if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.RentalSpace.ToString()))
+                eventName = FirebaseTrigger.URL_AtomRental.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+        }
+
+        if (JjInfoManager.Instance.clRoomId != 0)
+            SendFirebaseEvent(eventName);
+    }
 
     private int GetLinkIndex()
     {
         return TMP_TextUtilities.FindIntersectingLink(textMeshPro, Input.mousePosition, mainCamera);
     }
 
-    //private List<Color32[]> SetLinkColor(int linkIndex, Color32 color)
-    //{
-    //    TMP_LinkInfo linkInfo = textMeshPro.textInfo.linkInfo[linkIndex];
-
-    //    var oldVertexColors = new List<Color32[]>(); // Store the old character colors
-    //    int underlineIndex = -1;
-    //    for (int i = 0; i < linkInfo.linkTextLength; i++)
-    //    {
-    //        // For each character in the link string
-    //        int characterIndex = linkInfo.linkTextfirstCharacterIndex + i; // The current character index
-    //        var charInfo = textMeshPro.textInfo.characterInfo[characterIndex];
-    //        int meshIndex = charInfo.materialReferenceIndex; // Get the index of the material/subtext object used by this character.
-    //        int vertexIndex = charInfo.vertexIndex; // Get the index of the first vertex of this character.
-
-    //        // This array contains colors for all vertices of the mesh (might be multiple chars)
-    //        Color32[] vertexColors = textMeshPro.textInfo.meshInfo[meshIndex].colors32;
-    //        oldVertexColors.Add(new Color32[] { vertexColors[vertexIndex + 0], vertexColors[vertexIndex + 1], vertexColors[vertexIndex + 2], vertexColors[vertexIndex + 3] });
-    //        if (charInfo.isVisible)
-    //        {
-    //            vertexColors[vertexIndex + 0] = color;
-    //            vertexColors[vertexIndex + 1] = color;
-    //            vertexColors[vertexIndex + 2] = color;
-    //            vertexColors[vertexIndex + 3] = color;
-    //        }
-    //        // Each line will have its own underline mesh with different index, index == 0 means there is no underline
-    //        if (charInfo.isVisible && charInfo.underlineVertexIndex > 0 && charInfo.underlineVertexIndex != underlineIndex && charInfo.underlineVertexIndex < vertexColors.Length)
-    //        {
-    //            underlineIndex = charInfo.underlineVertexIndex;
-    //            for (int j = 0; j < 12; j++) // Underline seems to be always 3 quads == 12 vertices
-    //            {
-    //                vertexColors[underlineIndex + j] = color;
-    //            }
-    //        }
-    //    }
-
-    //    textMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-    //    return oldVertexColors;
-    //}
-
-    //private void ResetLinkColor(int linkIndex, List<Color32[]> startColors)
-    //{
-    //    TMP_LinkInfo linkInfo = textMeshPro.textInfo.linkInfo[linkIndex];
-    //    int underlineIndex = -1;
-    //    for (int i = 0; i < linkInfo.linkTextLength; i++)
-    //    {
-    //        int characterIndex = linkInfo.linkTextfirstCharacterIndex + i;
-    //        var charInfo = textMeshPro.textInfo.characterInfo[characterIndex];
-    //        int meshIndex = charInfo.materialReferenceIndex;
-    //        int vertexIndex = charInfo.vertexIndex;
-
-    //        Color32[] vertexColors = textMeshPro.textInfo.meshInfo[meshIndex].colors32;
-    //        if (charInfo.isVisible)
-    //        {
-    //            vertexColors[vertexIndex + 0] = startColors[i][0];
-    //            vertexColors[vertexIndex + 1] = startColors[i][1];
-    //            vertexColors[vertexIndex + 2] = startColors[i][2];
-    //            vertexColors[vertexIndex + 3] = startColors[i][3];
-    //        }
-    //        if (charInfo.isVisible && charInfo.underlineVertexIndex > 0 && charInfo.underlineVertexIndex != underlineIndex && charInfo.underlineVertexIndex < vertexColors.Length)
-    //        {
-    //            underlineIndex = charInfo.underlineVertexIndex;
-    //            for (int j = 0; j < 12; j++)
-    //            {
-    //                vertexColors[underlineIndex + j] = startColors[i][0];
-    //            }
-    //        }
-    //    }
-
-    //    textMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-    //}
 }
