@@ -106,7 +106,16 @@ namespace RFM.Managers
         private void CreateLeaderboardEntry(string nickName, int money)
         {
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            entry.Init(nickName, money.ToString());
+            entry.Init(nickName, money);
+
+            if (leaderboardEntryContainer.GetChild(0) != null)
+            {
+                if (money >= leaderboardEntryContainer.GetChild(0).GetComponent<LeaderboardEntry>().money)
+                {
+                    entry.transform.SetAsFirstSibling();
+                }
+
+            }
         }
     }
 }

@@ -9,10 +9,13 @@ namespace RFM
     {
         [SerializeField] private TextMeshProUGUI nameTMP, amountTMP;
 
-        public void Init(string name, string amount)
+        public int money;
+
+        public void Init(string name, int amount)
         {
+            money = amount;
             nameTMP.text = name;
-            amountTMP.text = amount;
+            amountTMP.text = money.ToString();
         }
     }
 }
