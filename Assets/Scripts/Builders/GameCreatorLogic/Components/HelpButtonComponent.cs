@@ -22,7 +22,10 @@ public class HelpButtonComponent : ItemComponent
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
             infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
+            infoPopup.scrollView.enabled = false;
+            infoPopup.scrollbar.SetActive(false);
             go.SetActive(true);
+            infoPopup.Init();
             BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
         }
     }
@@ -44,4 +47,48 @@ public class HelpButtonComponent : ItemComponent
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.HelpButtonComponent;
+    }
+
+    #endregion
 }

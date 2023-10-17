@@ -43,7 +43,7 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
         asyncLoading = SceneManager.LoadSceneAsync("Main");
-        InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
+        //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count
         UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
@@ -51,7 +51,7 @@ public class AskForJoining : MonoBehaviour
 
     void AsyncProgress()
     {
-        LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     }
 
     public void GoToMainMenu()
@@ -86,7 +86,7 @@ public class AskForJoining : MonoBehaviour
             if (ReferrencesForDynamicMuseum.instance != null)
                 ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);

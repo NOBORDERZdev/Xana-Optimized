@@ -1,13 +1,20 @@
 using System.Collections;
 using UnityEngine;
 using Models;
-public class RotatorComponent : MonoBehaviour
+public class RotatorComponent : ItemComponent
 {
     private RotatorComponentData rotatorComponentData;
+    private IEnumerator routine;
+
     public void Init(RotatorComponentData rotatorComponentData)
     {
+        InitRotate(rotatorComponentData);
+    }
+
+    public void InitRotate(RotatorComponentData rotatorComponentData)
+    {
         this.rotatorComponentData = rotatorComponentData;
-        StartCoroutine(RotateModule());
+        PlayBehaviour();
     }
 
     Vector3 currentRotation;
@@ -22,4 +29,50 @@ public class RotatorComponent : MonoBehaviour
             yield return null;
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        StopComponent();
+
+        routine = RotateModule();
+        StartCoroutine(routine);
+    }
+    private void StopComponent()
+    {
+        if (routine != null) StopCoroutine(routine);
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.RotatorComponent;
+    }
+
+    #endregion
 }

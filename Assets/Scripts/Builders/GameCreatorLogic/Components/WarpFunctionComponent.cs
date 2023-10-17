@@ -27,10 +27,12 @@ public class WarpFunctionComponent : ItemComponent
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
+            
 
             if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
             {
                 StartCoroutine(PositionUpdating());
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 isPortalUsed = true;
                 for (int i = 0; i < warpFunctionComponentData.warpPortalDataEndPoint.Count; i++)
                 {
@@ -45,6 +47,7 @@ public class WarpFunctionComponent : ItemComponent
             }
             else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
             {
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 StartCoroutine(PositionUpdating());
                 isPortalUsed = true;
                 for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)
@@ -63,7 +66,52 @@ public class WarpFunctionComponent : ItemComponent
 
     IEnumerator PositionUpdating()
     {
+
         yield return new WaitForSeconds(2);
         isPortalUsed = false;
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.WarpFunctionComponent;
+    }
+
+    #endregion
 }

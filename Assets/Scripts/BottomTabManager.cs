@@ -549,4 +549,8 @@ public class BottomTabManager : MonoBehaviour
         //Caching.ClearCache();
         //GC.Collect();
     }
+
+    public void createBackFromSns(){ 
+        XanaConstants.xanaConstants.isBackfromSns= true;    
+    }
 }

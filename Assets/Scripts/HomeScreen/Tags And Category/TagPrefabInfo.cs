@@ -12,9 +12,9 @@ public class TagPrefabInfo : MonoBehaviour
 
     public void ClickOnTag()
     {
-        hightLighter.SetActive(true);
+        //hightLighter.SetActive(true);
         WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
-        StartCoroutine(DisableHighlighter());
+        //StartCoroutine(DisableHighlighter());
         descriptionPanel.SetActive(false);
     }
 
