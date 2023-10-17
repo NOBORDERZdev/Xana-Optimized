@@ -30,6 +30,11 @@ public class AskForJoining : MonoBehaviour
     {
         XanaConstants.xanaConstants.isFromXanaLobby =false;
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
+
+        float _rand = UnityEngine.Random.Range(6f, 10f);
+        LoadingHandler.Instance.randCurrentValue = _rand;
+        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
@@ -85,7 +90,17 @@ public class AskForJoining : MonoBehaviour
         {
             if (ReferrencesForDynamicMuseum.instance != null)
                 ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-            LoadingHandler.Instance.ShowLoading();
+
+            float _rand = UnityEngine.Random.Range(6f, 10f);
+            LoadingHandler.Instance.randCurrentValue = _rand;
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+
+            LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            {
+                ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+            }
+
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();

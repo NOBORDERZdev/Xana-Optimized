@@ -184,7 +184,7 @@ public class LoadingHandler : MonoBehaviour
         }
         JJLoadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
     }
-   
+
     public void ShowLoading(ScreenOrientation oriantation = ScreenOrientation.Portrait)
     {
         if (/*XanaConstants.xanaConstants.JjWorldSceneChange*/teleportFeader.gameObject.activeInHierarchy)
@@ -225,13 +225,13 @@ public class LoadingHandler : MonoBehaviour
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             yield return new WaitForSeconds(1f);
-            blackScreen.DOFade(0, 1f);
+            blackScreen.DOFade(0, 0.2f);
         }
 
 
         if (!loadingPanel.activeInHierarchy)
         {
-           
+
             loadingPanel.SetActive(true);
         }
 
@@ -262,7 +262,16 @@ public class LoadingHandler : MonoBehaviour
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOFade(1, 0.2f).OnComplete(delegate
             {
-                Screen.orientation = oriantation;
+
+                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
+                {
+                    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
+                else
+                {
+                    Screen.orientation = oriantation;
+                }
                 //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ ");
             });
         }
