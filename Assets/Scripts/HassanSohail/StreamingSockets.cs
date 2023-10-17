@@ -78,15 +78,15 @@ public class StreamingSockets : MonoBehaviour
     }
 
     public async void RecvieStreamingEvent(string EventDetail){
+       
+      //  print("~~~~~~~~~~~~~~ "+EventDetail);
+       
+        EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(EventDetail);
+        Debug.Log("<color=green> EventDetail --  : " + eventDetails.data.id + " : " + eventDetails.data.environmentName + "</color>");
         if (isInEvent)
         {
            return;
         }
-       
-      //  print("~~~~~~~~~~~~~~ "+EventDetail);
-        EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(EventDetail);
-        Debug.Log("<color=green> EventDetail --  : " + eventDetails.data.id + " : " + eventDetails.data.environmentName + "</color>");
-
         if (EventDetail != null)
         {
             StreamingSockets.Instance.isEventTriggered= true;
@@ -107,7 +107,7 @@ public class StreamingSockets : MonoBehaviour
             {
                 return;
             }
-             ReSetStreamingEvent();
+            // ReSetStreamingEvent();
             XanaEventDetails.eventDetails = eventDetails.data;
             XanaEventDetails.eventDetails.DataIsInitialized = true;
             XanaConstants.xanaConstants.newStreamEntery=true;
@@ -121,10 +121,10 @@ public class StreamingSockets : MonoBehaviour
      public bool isEventTriggered= false;
      public bool isInWorld= false;
     public  async void ReSetStreamingEvent(){ 
-        isInEvent= false;
+        //isInEvent= false;
         //isEventTriggered =false;
-        XanaEventDetails.eventDetails.DataIsInitialized= false;
-        XanaEventDetails.eventDetails =null;
+       // XanaEventDetails.eventDetails.DataIsInitialized= false;
+        //XanaEventDetails.eventDetails =null;
     }
 
     
