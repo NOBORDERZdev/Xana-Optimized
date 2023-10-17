@@ -61,8 +61,8 @@ namespace RFM.Character
             timeSurvived = 0;
             while (true)
             {
-                timeSurvived += Time.deltaTime;
-                yield return new WaitForEndOfFrame();
+                timeSurvived += 1;
+                yield return new WaitForSecondsRealtime(1);
             }
 
         }
