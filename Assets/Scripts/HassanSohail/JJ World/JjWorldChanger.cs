@@ -11,20 +11,20 @@ public class JjWorldChanger : MonoBehaviour
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
     public bool isMusuem;
-    public int testNet; 
+    public int testNet;
     public int MainNet;
     [Header("Builder")]
-    public bool isBuilderWorld; 
+    public bool isBuilderWorld;
 
     Collider collider;
 
-    bool reSetCollider=false;
+    bool reSetCollider = false;
 
     private GameObject triggerObject;
     public bool isEnteringPopup;
     private void Start()
     {
-        collider = GetComponent<Collider>(); 
+        collider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,27 +36,11 @@ public class JjWorldChanger : MonoBehaviour
             {
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
-            //CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject);
-            if (JjInfoManager.Instance.IsJjWorld)
-            {
-                triggerObject = other.gameObject;
-                if (isEnteringPopup)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
-                else
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
-            }
+            triggerObject = other.gameObject;
+            if (isEnteringPopup)
+                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-            {
-                collider.enabled = false;
-                if (checkWorldComingSoon(WorldName) || isBuilderWorld)
-                {
-                    this.StartCoroutine(swtichScene(WorldName));
-                }
-                else
-                {
-                    this.StartCoroutine(ResetColider());
-                }
-            }
+                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
 
     }
@@ -76,8 +60,9 @@ public class JjWorldChanger : MonoBehaviour
         }
     }
 
-    IEnumerator ResetColider(){ 
-         yield return new WaitForSeconds(1f);
+    IEnumerator ResetColider()
+    {
+        yield return new WaitForSeconds(1f);
         collider.enabled = true;
     }
 
@@ -95,10 +80,10 @@ public class JjWorldChanger : MonoBehaviour
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby =true;
+            XanaConstants.xanaConstants.isFromXanaLobby = true;
         }
-        
-       // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
+
+        // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -118,7 +103,8 @@ public class JjWorldChanger : MonoBehaviour
         }
         //
 
-        if (isMusuem){
+        if (isMusuem)
+        {
             XanaConstants.xanaConstants.IsMuseum = true;
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
@@ -126,26 +112,29 @@ public class JjWorldChanger : MonoBehaviour
             }
             else
             {
-                 XanaConstants.xanaConstants.MuseumID = testNet.ToString();
+                XanaConstants.xanaConstants.MuseumID = testNet.ToString();
             }
         }
-        else if (isBuilderWorld){
-            XanaConstants.xanaConstants.isBuilderScene=true;
+        else if (isBuilderWorld)
+        {
+            XanaConstants.xanaConstants.isBuilderScene = true;
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
-               XanaConstants.xanaConstants.builderMapID = MainNet;
+                XanaConstants.xanaConstants.builderMapID = MainNet;
             }
             else
             {
-                  XanaConstants.xanaConstants.builderMapID = testNet;
+                XanaConstants.xanaConstants.builderMapID = testNet;
             }
         }
         else // FOR JJ WORLD
         {
-            if (HaveMultipleSpwanPoint){
+            if (HaveMultipleSpwanPoint)
+            {
                 XanaConstants.xanaConstants.mussuemEntry = mussuemEntry;
             }
-            else{
+            else
+            {
                 XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
             }
         }
@@ -153,8 +142,8 @@ public class JjWorldChanger : MonoBehaviour
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = worldName;
         LoadFromFile.instance._uiReferences.LoadMain(false);
-       
-       
+
+
     }
 
 
@@ -162,8 +151,8 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem(worldName, true))
         {
-       
-             return false;
+
+            return false;
         }
         else
         {
