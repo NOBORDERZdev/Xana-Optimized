@@ -86,6 +86,8 @@ public class AllWorldManage : MonoBehaviour
             SetTextForScroller("You have not created any world yet.", ScrollerText[2]);
         }
     }
+
+
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
     {
         text.text = textToChange;

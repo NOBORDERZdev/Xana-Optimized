@@ -778,7 +778,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
-        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
+        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
 
         if (!b)
         {
@@ -794,7 +794,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.GetComponent<IKMuseum>().RPCForFreeCamEnable();
         }
 
-
+        if (isFirstPerson)
+            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
@@ -852,6 +853,10 @@ public class PlayerControllerNew : MonoBehaviour
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+            }
             allowJump = false;
             IsJumpButtonPress = false;
             //Debug.Log("call hua for 1==="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
@@ -1056,6 +1061,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
+        
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
@@ -1074,6 +1080,11 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
+
+        if (ReferrencesForDynamicMuseum.instance.m_34player)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+        }
 
         if (_IsGrounded)
         {
@@ -1659,8 +1670,8 @@ public class PlayerControllerNew : MonoBehaviour
             NinjaComponentTimerStart(0);
             isNinjaMotion = false;
             animator.SetBool("isNinjaMotion", false);
-            isThrow = true;
         }
+        isThrow = true;
         isThrowModeActive = true;
         if (throwMainCo == null)
             throwMainCo = StartCoroutine(Throw());
@@ -1800,6 +1811,14 @@ public class PlayerControllerNew : MonoBehaviour
         if (throwEnd != null)
             StopCoroutine(throwEnd);
         throwEnd = null;
+    }
+
+    internal void ThrowThingsEnded()
+    {
+        StartCoroutine(ThrowEnd());
+        isThrow = false;
+        isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
     }
 
     bool throwBallPositionSet, throwBall;

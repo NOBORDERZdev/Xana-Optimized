@@ -770,6 +770,7 @@ MonoBehaviour:
   playerCameraCharacterRender: {fileID: 1272852912}
   environmentCameraRender: {fileID: 360146153501369239}
   firstPersonCamera: {fileID: 1508993052}
+  isEnvLoaded: 0
   setLightOnce: 0
   populationGenerator: {fileID: 0}
   leftJoyStick: {fileID: 0}
@@ -870,6 +871,7 @@ MonoBehaviour:
   - ZONE-X
   - ZONE X Musuem
   - BreakingDown Arena
+  - XANA Lobby
 --- !u!114 &79798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7562,7 +7564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &935340234
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17669,7 +17671,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.05969733, y: 0.00078011694, z: -0.00004665225, w: 0.9982163}
+  m_LocalRotation: {x: 0.05969732, y: 0.0007801171, z: -0.000046652258, w: 0.9982163}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17793,7 +17795,7 @@ MonoBehaviour:
   m_MinimumDistanceFromTarget: 0.02
   m_AvoidObstacles: 1
   m_DistanceLimit: 15
-  m_MinimumOcclusionTime: 1
+  m_MinimumOcclusionTime: 0
   m_CameraRadius: 0.02
   m_Strategy: 0
   m_MaximumEffort: 4
@@ -18120,7 +18122,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.002252409, y: 0.0007814925, z: -0.0000017583831, w: 0.9999972}
+  m_LocalRotation: {x: 0.0022524016, y: 0.00078149175, z: -0.0000017583754, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20677,6 +20679,7 @@ GameObject:
   - component: {fileID: 1808683680640967397}
   - component: {fileID: 1808683680640967396}
   - component: {fileID: 4134801982122276580}
+  - component: {fileID: 4134801982122276581}
   m_Layer: 22
   m_Name: Main Player_parent
   m_TagString: Player
@@ -23454,7 +23457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 534.5175, y: -160}
+  m_AnchoredPosition: {x: 534.5175, y: -70}
   m_SizeDelta: {x: 427.5, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2620792478504866626
@@ -26715,6 +26718,14 @@ MonoBehaviour:
   - {fileID: 9000000, guid: a4b047ba24a6f374f9bbd3a5053e2b52, type: 3}
   - {fileID: 9000000, guid: 49f10d89ddfdd594f9ed88fa79351b6c, type: 3}
   - {fileID: 9000000, guid: c3d861774f7c51047a8eee3ef22edfeb, type: 3}
+--- !u!81 &4134801982122276581
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808683680640967398}
+  m_Enabled: 1
 --- !u!114 &4143084553292016285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31795,7 +31806,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 6408302777720217561}
         m_TargetAssemblyTypeName: 

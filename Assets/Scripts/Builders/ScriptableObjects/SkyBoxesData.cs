@@ -13,10 +13,7 @@ public class SkyBoxesData : ScriptableObject
     {
         //foreach (SkyBoxItem item in skyBoxes)
         //{
-        //    item.directionalLightData.lightIntensity = item.lightIntensity;
-        //    item.directionalLightData.directionLightColor = item.directionLightColor;
-        //    item.directionalLightData.directionLightShadowStrength = item.directionLightShadowStrength;
-        //    item.directionalLightData.character_directionLightIntensity = item.character_directionLightIntensity;
+        //    Debug.LogError(item.skyId+" "+item.shaderName);
         //}
     }
 }
@@ -27,25 +24,28 @@ public class SkyBoxItem
     public int skyId;
     public string skyName;
     public string shaderName;
-    //public Sprite icon;
-   //public Material skyMaterial;
-    //public float lightIntensity = 1f;
-    //public Color directionLightColor;
-    //public float directionLightShadowStrength;
-    //public float character_directionLightIntensity;
+    //public Material skyMaterial;
     public DirectionalLightData directionalLightData;
     public VolumeProfile ppVolumeProfile;
-    //public bool HideInUI;
 }
 
 [System.Serializable]
 public class DirectionalLightData
 {
+    public Vector3 directionLightRot = new Vector3(50, -30);
     public float lightIntensity = 1f;
     public Color directionLightColor;
     public float directionLightShadowStrength;
     public float character_directionLightIntensity;
     public LensFlareData lensFlareData;
+    public DirectionalLightData()
+    {
+        directionLightRot = new Vector3(50, -30);
+        lightIntensity = 1f;
+        directionLightColor = new Color(0.7843137f, 0.9294118f, 1.0f);
+        directionLightShadowStrength = .5f;
+        lensFlareData = new LensFlareData();
+    }
 }
 
 [System.Serializable]
@@ -53,4 +53,6 @@ public class LensFlareData
 {
     public LensFlareDataSRP falreData;
     public float flareScale = 0.6f;
+    public float flareIntensity = 1f;
 }
+

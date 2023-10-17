@@ -21,6 +21,20 @@ public class WorldManager : MonoBehaviour
     public GameObject eventPrefabTab;
     public GameObject descriptionParentPanel;
 
+    [Header("world Page Scrollviews")]
+    public Transform world_HotScroll;
+    public Transform world_NewScroll;
+    public Transform world_myworldScroll;
+    public Transform world_GameWorldScroll;
+    public Transform world_EventWorldScroll;
+
+    [Header("Full World List")]
+    private List<GameObject> hotWorldList = new List<GameObject>();
+    private List<GameObject> newWorldList = new List<GameObject>();
+    private List<GameObject> myworldWorldList = new List<GameObject>();
+    private List<GameObject> gameWorldList = new List<GameObject>();
+    private List<GameObject> eventWorldList = new List<GameObject>();
+
     [HideInInspector]
     public bool orientationchanged = false;
 
@@ -33,6 +47,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberGameWorld = 1;
     private int pageNumberEventWorld = 1;
     private int pageNumberSearchWorld = 1;
+    private int pageNumberTestWorld = 1;
     private int pageCount = 200;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
@@ -179,6 +194,8 @@ public class WorldManager : MonoBehaviour
             case APIURL.SearchWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
 
+            case APIURL.TestWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -204,6 +221,9 @@ public class WorldManager : MonoBehaviour
                 return;
             case APIURL.SearchWorld:
                 SearchPageNumb += 1;
+                return;
+            case APIURL.TestWorld:
+                pageNumberTestWorld += 1;
                 return;
             default:
                 pageNumberHot += 1;
@@ -373,7 +393,6 @@ public class WorldManager : MonoBehaviour
     public async void JoinEvent()
     {
         _callSingleTime = true;
-
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -578,6 +597,11 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
+
+        for (int i = 0; i < testWorldList.Count; i++)
+        {
+            testWorldList[i].gameObject.transform.SetParent(listParentTestWorlds.transform);
+        }
     }
     #region Clear Resource Unload Unused Asset File.......
     private int unloadUnusedFileCount;
@@ -674,6 +698,7 @@ public class UserInfo
 }
 public enum APIURL
 {
+    Hot, AllWorld, MyWorld, GameWorld, EventWorld, TestWorld
     Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld
 }
 public enum WorldType

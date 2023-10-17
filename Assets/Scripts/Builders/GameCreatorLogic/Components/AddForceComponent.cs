@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Models;
 using Photon.Pun;
 using UnityEngine;
@@ -9,21 +9,21 @@ public class AddForceComponent : ItemComponent
     private AddForceComponentData addForceComponentData;
     Rigidbody rigidBody;
 
+    string RuntimeItemID = "";
+
     //Checks if the force be applied or not
     bool isActivated = false;
 
     int forceMultiplier = 20;
 
-    private void Start()
+    public void Init(AddForceComponentData addForceComponentData)
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.isKinematic = true;
-    }
-
-    public void Init(AddForceComponentData addForceComponentData)
-    {
         this.addForceComponentData = addForceComponentData;
         isActivated = addForceComponentData.isActive;
+
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     public void ApplyAddForce()
@@ -48,7 +48,52 @@ public class AddForceComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            ApplyAddForce();
+            if (GamificationComponentData.instance.withMultiplayer)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        ApplyAddForce();
+    }
+    private void StopComponent()
+    {
+        rigidBody.isKinematic = false;
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.AddForceComponent;
+    }
+
+    #endregion
 }

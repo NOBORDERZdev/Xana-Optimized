@@ -31,6 +31,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public GameObject JoyStick;
     public int RoomMaxPlayerCount=0;
     public int PlayerCount = 0;
+    public float MonitorDistance;
 
     // Start is called before the first frame update
     void Awake()
@@ -327,7 +328,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     //{
                     //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     //}
-                    print("!!! PlayerCount"+ PlayerCount);
+                  // print("!!! PlayerCount"+ PlayerCount);
                 }
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
@@ -349,5 +350,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
-
+   
 }
+
+
