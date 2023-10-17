@@ -924,7 +924,9 @@ namespace DynamicScrollRect
                 {
                     next.interactable = true;
                 }
+                shuffleButton.interactable = true;
             }
+            
         }
 
 
@@ -932,8 +934,8 @@ namespace DynamicScrollRect
         
         public void Next() 
         {
-                Counter++;
-                Debug.Log("Value is " + Counter);
+            Counter++;
+            Debug.Log("Value is " + Counter);
             ToggleNextPreviousBtnsInteractability();
             MoveContentBackward();
             GetAvatarName();
@@ -946,18 +948,13 @@ namespace DynamicScrollRect
 
         public void Previous() 
         {
-            
-                Counter--;
-            //if (!shufflingUI)
-            //{
-               
-            //}
-                Debug.Log("Value is " + Counter);
+            Counter--;
+            Debug.Log("Value is " + Counter);
             ToggleNextPreviousBtnsInteractability();
             MoveContentForward();
-                GetAvatarName();
+            GetAvatarName();
 
-                if (Counter == 0)
+            if (Counter == 0)
                 {
                     shuffled = true;
                 }
@@ -967,11 +964,11 @@ namespace DynamicScrollRect
         {
             _isShuffling = true;
             shufflingUI = true;
+            //shuffleButton.gameObject.GetComponent<Image>().raycastTarget = false;
             if (Counter != DemoUI.instance._itemCount - 1) 
             {
                 shuffled = true;
             }
-            
         }
 
         private IEnumerator ShuffleUIElements()
@@ -985,6 +982,7 @@ namespace DynamicScrollRect
             //{
             previous.interactable = false;
             next.interactable = false;
+            shuffleButton.interactable = false;
             for (int i = 0; i < avatarRange; i++)
             {
                 if (i != avatarRange)

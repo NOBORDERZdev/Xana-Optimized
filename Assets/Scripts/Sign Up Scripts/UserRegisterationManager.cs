@@ -20,7 +20,6 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 //using MoralisUnity;
 using System.Threading.Tasks;
-using DG.Tweening;
 
 public class UserRegisterationManager : MonoBehaviour
 {
@@ -192,7 +191,10 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal;
     public GameObject LogoImage;
-
+    public GameObject NewLoadingScreen;
+    public Text _NewLoadingText;
+    String _LoadingTitle = "";
+    public bool _IsWalletSignUp = false;
 
     public void ShowWelcomeScreen()
     {
@@ -248,6 +250,29 @@ public class UserRegisterationManager : MonoBehaviour
         // welcomeScreen.SetActive(true);
         ShowWelcomeScreen();
 
+    }
+
+    public void NewWalletSignUp() 
+    {
+        _IsWalletSignUp = true;
+    }
+
+    public void WalletLoginCheck() 
+    {
+        _IsWalletSignUp = false;
+        LoginPanal.SetActive(false);
+    }
+
+    public void NextScreenAfterWalletConnected() 
+    {
+        if (_IsWalletSignUp)
+        {
+            setAvatarGiftPanal.SetActive(true);
+        }
+        else {
+            setAvatarGiftPanal.SetActive(false);
+            
+        }
     }
 
     public void iwanto_signUp()
@@ -2900,7 +2925,8 @@ public class UserRegisterationManager : MonoBehaviour
     public void SubmitOTP()
     {
         string OTP = "";
-
+        NewLoadingScreen.SetActive(true);
+        _NewLoadingText.text = "";
         //  OTP = mainfield_for_opt.Text;
         OTP = mainfieldOTPNew.Text;
         // for (int i = 0; i < pinNew.Count; i++)
@@ -3067,7 +3093,6 @@ public class UserRegisterationManager : MonoBehaviour
             password = pass1;
 
             OpenUIPanal(5);
-
         }
         else
         {
@@ -3214,8 +3239,10 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void LoadingFadeOutScreen() 
     {
+        
         BlackScreen.SetActive(true);
-        StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 5));
+        BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+        StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
@@ -3625,6 +3652,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (myObjectForOPT.success)
                     {
                         OpenUIPanal(4);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
 
