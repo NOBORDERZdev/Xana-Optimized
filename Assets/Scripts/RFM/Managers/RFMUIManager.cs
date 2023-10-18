@@ -96,17 +96,20 @@ namespace RFM.Managers
             //     Globals.player.gameObject.GetComponent<RFM.Character.PlayerEscapee>().Money);
         }
 
-        public void EscapeeCaught(string nickName, int money)
+        public void EscapeeCaught(string nickName, int money, float timeSurvived)
         {
             RFMManager.Instance.photonView.RPC(nameof(CreateLeaderboardEntry), RpcTarget.All, 
-                nickName, money);
+                nickName, money, timeSurvived);
         }
-        
+
+        int rank = 0;
         [PunRPC]
-        private void CreateLeaderboardEntry(string nickName, int money)
+        private void CreateLeaderboardEntry(string nickName, int money, float timeSurvived)
         {
+
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            entry.Init(nickName, money);
+            rank += 1;
+            entry.Init(nickName, money, timeSurvived, rank);
 
             if (leaderboardEntryContainer.GetChild(0) != null)
             {
