@@ -928,6 +928,8 @@ public class UserRegisterationManager : MonoBehaviour
 
             }
             OpenUIPanal(Openbackint);
+            image_to_Change[0].sprite = OTPbox_highlighter;
+            image_to_Change[3].sprite = oldOTP_Box;
         }
     }
 
@@ -988,7 +990,10 @@ public class UserRegisterationManager : MonoBehaviour
                 //Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
                 if (charArr.Length < 4) //1 2 3 
                 {
-                    image_to_Change[charArr.Length + 1].sprite = oldOTP_Box;
+                    if (charArr.Length != 3)
+                    {
+                        image_to_Change[charArr.Length + 1].sprite = oldOTP_Box;
+                    }
                 }
 
             }
@@ -1346,6 +1351,11 @@ public class UserRegisterationManager : MonoBehaviour
                     //OnSignUpPhoneTabPressed();
                     //  OnSignUpWalletTabPressed();
 
+                    break;
+                }
+            case 19:
+                {
+                    PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
                     break;
                 }
         }
