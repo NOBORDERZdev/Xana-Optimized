@@ -108,8 +108,8 @@ namespace RFM.Managers
         {
 
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            rank += 1;
-            entry.Init(nickName, money, timeSurvived, rank);
+            //rank += 1;
+            entry.Init(nickName, money, timeSurvived/*, rank*/);
 
             if (leaderboardEntryContainer.GetChild(0) != null)
             {
@@ -117,7 +117,6 @@ namespace RFM.Managers
                 {
                     entry.transform.SetAsFirstSibling();
                 }
-
             }
         }
     }
