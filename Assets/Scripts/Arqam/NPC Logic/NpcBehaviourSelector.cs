@@ -7,16 +7,21 @@ using NPC;
 public class NpcBehaviourSelector : MonoBehaviour
 {
     [SerializeField] NpcMovementController movementController;
+    [SerializeField] NpcJump npcJump;
+    [SerializeField] NpcSelfie npcSelfie;
+    [SerializeField] NpcFreeCam npcFreeCam;
+    [SerializeField] NpcEmotes npcEmotes;
+    [Space(5)]
     [SerializeField] TMP_Text nameTxt;
 
     //[HideInInspector]
     public bool isPerformingAction = false;
-    [HideInInspector]
-    public Coroutine ActionCoroutine = null;    
+    //[HideInInspector]
+    public Coroutine ActionCoroutine = null;
 
     private Coroutine emoteCoroutine;
     private bool isNewlySpwaned = true;
-    private int maxNpcBehaviourAction = 5;
+    private int maxNpcBehaviourAction = 6;
 
     private void Start()
     {
@@ -35,52 +40,55 @@ public class NpcBehaviourSelector : MonoBehaviour
                 isNewlySpwaned = false;
             }
             else
-                rand = 0; // Random.Range(0, maxNpcBehaviourAction);
+                rand = Random.Range(1, maxNpcBehaviourAction);
 
 
             switch (rand)
             {
                 case 0:                     // for wandering ai
                     movementController.Wander();
-                    //selfie.ForceFullyDisableSelfie();
-                    //if (emoteCoroutine != null)
-                    //    StopCoroutine(emoteCoroutine);
-                    //aiEmote.ForceFullyStopEmote();
+                    npcSelfie.ForceFullyDisableSelfie();
+
+                    StopEmotes();
                     break;
-                //case 1:                    // for selfie control
-                //    selfie.SelfieAction();
-                //    if (emoteCoroutine != null)
-                //        StopCoroutine(emoteCoroutine);
-                //    aiEmote.ForceFullyStopEmote();
-                //    break;
-                //case 2:                   // for emotes display
-                //    if (emoteCoroutine != null)
-                //        StopCoroutine(emoteCoroutine);
-                //    emoteCoroutine = StartCoroutine(aiEmote.PlayEmote());
-                //    selfie.ForceFullyDisableSelfie();
-                //    break;
-                //case 3:                   // for jump
-                //    aIJump.AiJump();
-                //    if (emoteCoroutine != null)
-                //        StopCoroutine(emoteCoroutine);
-                //    aiEmote.ForceFullyStopEmote();
-                //    break;
-                //case 4:                  // for freeCam mode
-                //    freeCam.PerformFreeCam();
-                //    if (emoteCoroutine != null)
-                //        StopCoroutine(emoteCoroutine);
-                //    aiEmote.ForceFullyStopEmote();
-                //    break;
-                //default:                // for default case
-                //    wandering.Wander();
-                //    selfie.ForceFullyDisableSelfie();
-                //    if (emoteCoroutine != null)
-                //        StopCoroutine(emoteCoroutine);
-                //    aiEmote.ForceFullyStopEmote();
-                //    break;
+                case 1:                   // for jump
+                    npcJump.AiJump();
+
+                    StopEmotes();
+                    break;
+                case 2:                    // for selfie control
+                    npcSelfie.SelfieAction();
+
+                    StopEmotes();
+                    break;
+                case 3:                  // for freeCam mode
+                    npcFreeCam.PerformFreeCam();
+
+                    StopEmotes();
+                    break;
+                case 4:                   // for emotes display
+                    if (emoteCoroutine != null)
+                        StopCoroutine(emoteCoroutine);
+                    emoteCoroutine = StartCoroutine(npcEmotes.PlayEmote());
+                    npcSelfie.ForceFullyDisableSelfie();
+                    break;
+                default:                // for default case
+                    movementController.Wander();
+                    npcSelfie.ForceFullyDisableSelfie();
+
+                    StopEmotes();
+                    break;
             }
         }
         yield return null;
+    }
+
+    private void StopEmotes()
+    {
+        if (emoteCoroutine != null)
+            StopCoroutine(emoteCoroutine);
+
+        npcEmotes.ForceFullyStopEmote();
     }
 
     public void SetAiName(string name)

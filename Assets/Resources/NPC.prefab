@@ -2401,11 +2401,16 @@ GameObject:
   m_Component:
   - component: {fileID: 5234969575567753440}
   - component: {fileID: 4894719807666117185}
-  - component: {fileID: 5331265068291827182}
   - component: {fileID: 5555313515213484092}
   - component: {fileID: 7981251910029998354}
+  - component: {fileID: 5331265068291827182}
   - component: {fileID: 6271863520875257628}
   - component: {fileID: 1110000956223130986}
+  - component: {fileID: 2678925194682868987}
+  - component: {fileID: 9034277632190416211}
+  - component: {fileID: 643616328065951517}
+  - component: {fileID: 3006339212063398433}
+  - component: {fileID: 4589838338599843764}
   m_Layer: 22
   m_Name: NPC
   m_TagString: PhotonLocalPlayer
@@ -2440,7 +2445,7 @@ Animator:
   m_GameObject: {fileID: 4894719807666117210}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 38250a64116ade34c8ec343394068dbb, type: 3}
-  m_Controller: {fileID: 9100000, guid: d33d3787caec8ca4b9094eb59ac0103f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09abe94bb91f4224ab0e08b1fca6e083, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2450,6 +2455,42 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &5555313515213484092
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.19806433
+  m_Height: 1.6904354
+  m_Direction: 1
+  m_Center: {x: -0, y: 0.8450873, z: -0.019479752}
+--- !u!195 &7981251910029998354
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 150
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.7
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &5331265068291827182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2967,42 +3008,6 @@ MonoBehaviour:
   Body: {fileID: 8144648090035685850}
   DefaultSkinColor: {r: 1, g: 0.9372549, b: 0.88235295, a: 1}
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
---- !u!136 &5555313515213484092
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4894719807666117210}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.19806433
-  m_Height: 1.6904354
-  m_Direction: 1
-  m_Center: {x: -0, y: 0.8450873, z: -0.019479752}
---- !u!195 &7981251910029998354
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4894719807666117210}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.2
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 150
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.7
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &6271863520875257628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3016,7 +3021,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementController: {fileID: 1110000956223130986}
-  nameTxt: {fileID: 0}
+  npcJump: {fileID: 2678925194682868987}
+  npcSelfie: {fileID: 9034277632190416211}
+  npcFreeCam: {fileID: 643616328065951517}
+  npcEmotes: {fileID: 3006339212063398433}
+  nameTxt: {fileID: 4648621048255636455}
   isPerformingAction: 0
 --- !u!114 &1110000956223130986
 MonoBehaviour:
@@ -3037,6 +3046,79 @@ MonoBehaviour:
   npcBehaviour: {fileID: 6271863520875257628}
   walkRotateSpeed: 10
   isMoving: 0
+--- !u!114 &2678925194682868987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18578907b3d84d0428f6033669d77c5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 4894719807666117185}
+  npcBehaviour: {fileID: 6271863520875257628}
+--- !u!114 &9034277632190416211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2140ab5c9487f4594f951d3ba779ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelfieObject: {fileID: 8984273747753576683}
+  animator: {fileID: 4894719807666117185}
+  npcBehaviour: {fileID: 6271863520875257628}
+--- !u!114 &643616328065951517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193888dbe616e474a9a486b8a5cdbee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Controller: {fileID: 5289541439412994804}
+  npcBehaviour: {fileID: 6271863520875257628}
+  anim: {fileID: 4894719807666117185}
+--- !u!114 &3006339212063398433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc906f8c8b2024143b98ae8ca4ded09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcController: {fileID: 9100000, guid: 09abe94bb91f4224ab0e08b1fca6e083, type: 2}
+  npcBehaviour: {fileID: 6271863520875257628}
+  npcMC: {fileID: 1110000956223130986}
+  animationController: {fileID: 4894719807666117185}
+--- !u!114 &4589838338599843764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e61fa95314cd442b419a51b6ec9d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionDisplay: {fileID: 1902365783454280086}
 --- !u!1 &4913886486643861697
 GameObject:
   m_ObjectHideFlags: 0

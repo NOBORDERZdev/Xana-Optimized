@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class NpcSpawner : MonoBehaviour
 {
-    //[SerializeField]
-    private int aiStrength = 5;
 
-    public GameObject aiPrefabs;
+    [SerializeField] private int aiStrength = 5;
+    [SerializeField] List<string> aiNames;
+    
+    private GameObject aiPrefabs;
+    private int rand = 0;
 
     void Start()
     {
@@ -19,7 +21,13 @@ public class NpcSpawner : MonoBehaviour
             Vector3 temp = RandomNavMeshPoint();
             npc.transform.position = temp;
             npc.transform.rotation = Quaternion.identity;
+
+            rand = Random.Range(0, aiNames.Count);
+            npc.GetComponent<NpcBehaviourSelector>().SetAiName(aiNames[rand]);       // Set npc names
+            aiNames.RemoveAt(rand);
         }
+
+        StartCoroutine(ReactScreen.Instance.getAllReactions());
     }
 
     Vector3 RandomNavMeshPoint()

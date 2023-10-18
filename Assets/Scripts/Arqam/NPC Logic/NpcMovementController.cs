@@ -26,7 +26,7 @@ namespace NPC
         {
             timer = wanderTimer;
             agent.enabled = false;
-            animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
+            //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
             animator.SetBool("IsGrounded", true);
         }
 
@@ -42,6 +42,7 @@ namespace NPC
                         {
                             agent.updateRotation = true;
                             isMoving = false;
+                            agent.enabled = false;
                             animator.SetFloat("Blend", 0.0f);
                             animator.SetFloat("BlendY", 0.0f);
 
@@ -125,14 +126,6 @@ namespace NPC
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, walkRotateSpeed);
         }
 
-        /// <summary>
-        /// Method invoke by animation event
-        /// </summary>
-        /// <param name="targetWalkSpeed"></param>
-        public void EnterStep(float targetWalkSpeed)
-        {
-
-        }
 
     }
 }

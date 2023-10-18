@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 89d0c9b0fd44edd47bed19fbe4d2c84b, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &76616718
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,16 +3537,52 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_Size.x
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_Size.z
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
       propertyPath: m_NavMeshData
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_CollectObjects
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
       propertyPath: m_LayerMask.m_Bits
       value: 1048576
       objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_OverrideTileSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_OverrideVoxelSize
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5618566492940775947, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
       propertyPath: m_Layer
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940776181, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940776181, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -10.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618566492940776181, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
@@ -4610,7 +4646,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceee87669c5d38a49972a31ad7ea30e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiPrefabs: {fileID: 0}
+  aiNames:
+  - Maverick
+  - Blaze
+  - Hunter
+  - Jaxon
+  - Phoenix
+  - Axel
+  - Wolf
+  - Luna
+  - Nova
+  - Ember
+  - Raven
+  - Scarlett
+  - Freya
+  - Phoenix
+  - Willow
 --- !u!4 &1549717081
 Transform:
   m_ObjectHideFlags: 0
@@ -7651,7 +7702,7 @@ GameObject:
   m_Name: Center_Sofa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &7477926550367058008
@@ -7723,7 +7774,7 @@ GameObject:
   m_Name: New_sofa (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!1 &7477926550684081493
@@ -33965,7 +34016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7477926550303877957}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 2.62, z: 8.62}
+  m_LocalPosition: {x: 0.04, y: 2.61, z: 8.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
