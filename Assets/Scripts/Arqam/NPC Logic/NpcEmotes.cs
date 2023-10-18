@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace NPC {
     public class NpcEmotes : MonoBehaviour
@@ -26,8 +28,8 @@ namespace NPC {
         {
             if (!npcMC.isMoving)
             {
-                AssetBundle.UnloadAllAssetBundles(false);
-                Resources.UnloadUnusedAssets();
+                //AssetBundle.UnloadAllAssetBundles(false);
+                //Resources.UnloadUnusedAssets();
                 int rand;
                 rand = UnityEngine.Random.Range(0, (EmoteAnimationPlay.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationPlay.Instance.emoteAnim.Count)); // EmoteAnimationPlay.Instance.emoteAnim.Count
                 //Debug.Log("<color=red> rand: " + rand + "</color>");
@@ -116,8 +118,33 @@ namespace NPC {
 
         IEnumerator LoadAssetBundleFromStorage(string bundlePath)
         {
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
+            //AssetBundle.UnloadAllAssetBundles(false);
+            //Resources.UnloadUnusedAssets();
+
+
+            //List<GameObject> loadedGameObjects = new List<GameObject>();
+            //AsyncOperationHandle<IList<GameObject>> handle = Addressables.LoadAssetsAsync<GameObject>(bundlePath, null);
+            //yield return handle.Task;
+            //if (handle.Status == AsyncOperationStatus.Succeeded)
+            //{
+            //    IList<GameObject> gameObjects = handle.Result;
+            //    loadedGameObjects.AddRange(gameObjects);
+            //    if(loadedGameObjects.Count <= 0)
+            //    {
+            //        npcBehaviour.isPerformingAction = false;
+            //        if (npcBehaviour.ActionCoroutine != null)
+            //            StopCoroutine(npcBehaviour.ActionCoroutine);
+            //        npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+            //        yield break;
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.LogError("Failed to load Addressable GameObjects: " + handle.OperationException);
+            //}
+
+
+
             AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
             yield return bundle;
             AssetBundle assetBundle = bundle.assetBundle;
@@ -197,8 +224,8 @@ namespace NPC {
             animationController.runtimeAnimatorController = npcController;
             animationController.SetBool("IsGrounded", true);
             animationController.SetBool("IsEmote", false);
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
+            //AssetBundle.UnloadAllAssetBundles(false);
+            //Resources.UnloadUnusedAssets();
             npcBehaviour.isPerformingAction = false;
 
             if (npcBehaviour.ActionCoroutine != null)
@@ -215,8 +242,8 @@ namespace NPC {
             animationController.runtimeAnimatorController = npcController;
             animationController.SetBool("IsGrounded", true);
             animationController.SetBool("IsEmote", false);
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
+            //AssetBundle.UnloadAllAssetBundles(false);
+            //Resources.UnloadUnusedAssets();
         }
 
 

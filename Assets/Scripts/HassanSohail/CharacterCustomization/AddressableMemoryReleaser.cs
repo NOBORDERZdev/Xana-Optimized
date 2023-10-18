@@ -71,6 +71,8 @@ public class AddressableMemoryReleaser : MonoBehaviour
         }
         memoryObjects.Clear();
         GC.Collect();
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
     }
 }
 [Serializable]

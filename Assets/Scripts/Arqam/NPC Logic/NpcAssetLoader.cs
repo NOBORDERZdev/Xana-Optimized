@@ -79,7 +79,7 @@ public class NpcAssetLoader : MonoBehaviour
             catch (System.Exception)
             {
                 WearDefault(ObjectType); // wear default cloth
-                                         //apperance.CheckMoreAIDresses(ai);         // remove it later
+
                 CheckMoreAIDresses();
                 throw new System.Exception("Error occur in loading addressable. Wear DefaultAvatar");
             }
@@ -91,7 +91,6 @@ public class NpcAssetLoader : MonoBehaviour
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            //Debug.LogError("Loaded Successfully");
             GameObject loadedObject = handle.Result as GameObject;
             if (loadedObject != null)
             {
@@ -99,15 +98,12 @@ public class NpcAssetLoader : MonoBehaviour
                 CheckMoreAIDresses();
             }
             else
-            {
-                Handheld.Vibrate();
                 Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
-            }
+
             AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
         }
         else if (handle.Status == AsyncOperationStatus.Failed)
         {
-            Handheld.Vibrate();
             WearDefault(ObjectType); // wear default cloth
             CheckMoreAIDresses();
             Debug.LogError("Failed to load addressable: " + handle.OperationException);

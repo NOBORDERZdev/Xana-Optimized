@@ -14,9 +14,9 @@ public class NpcBehaviourSelector : MonoBehaviour
     [Space(5)]
     [SerializeField] TMP_Text nameTxt;
 
-    //[HideInInspector]
+    [HideInInspector]
     public bool isPerformingAction = false;
-    //[HideInInspector]
+    [HideInInspector]
     public Coroutine ActionCoroutine = null;
 
     private Coroutine emoteCoroutine;
