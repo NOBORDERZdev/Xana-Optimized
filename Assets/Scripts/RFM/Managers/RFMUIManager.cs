@@ -108,8 +108,16 @@ namespace RFM.Managers
         {
 
             var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            rank += 1;
-            entry.Init(nickName, money.ToString(), timeSurvived, rank);
+            //rank += 1;
+            entry.Init(nickName, money, timeSurvived/*, rank*/);
+
+            if (leaderboardEntryContainer.GetChild(0) != null)
+            {
+                if (money >= leaderboardEntryContainer.GetChild(0).GetComponent<LeaderboardEntry>().money)
+                {
+                    entry.transform.SetAsFirstSibling();
+                }
+            }
         }
     }
 }
