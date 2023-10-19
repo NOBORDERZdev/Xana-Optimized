@@ -14,8 +14,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using System.Buffers;
-using UnityEngine.InputSystem;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -160,6 +158,9 @@ public class BuilderMapDownload : MonoBehaviour
             SetWaterTexture(levelData.terrainProperties.waterTexturePath);
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
+
+        if (levelData.audioPropertiesBGM != null)
+            BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
     }
 
 
@@ -486,7 +487,6 @@ public class BuilderMapDownload : MonoBehaviour
 
         lensFlareComponent.lensFlareData = lensFlareData;
         lensFlareComponent.scale = lensFlareScale;
-
     }
 
     void SetPlayerProperties()
@@ -527,6 +527,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
+        BuilderEventManager.BGMStart?.Invoke();
     }
 
 
@@ -706,6 +707,7 @@ public class LevelData
     public SkyProperties skyProperties;
     public PlayerProperties playerProperties;
     public TerrainProperties terrainProperties;
+    public AudioPropertiesBGM audioPropertiesBGM = new AudioPropertiesBGM();
 }
 
 //User Map Data Model - 
@@ -730,6 +732,23 @@ public class UserMaps
     public List<UserMapData> userMapList;
 }
 
+[Serializable]
+public class AudioPropertiesBGM
+{
+    #region Data Variables
+    public DataAudioBGM dataAudioBGM = new DataAudioBGM();
+    #endregion
+}
+
+[Serializable]
+public class DataAudioBGM
+{
+    #region Data Variables
+    public string pathAudioBGM;
+    public bool audioLoopBGM;
+    public float audioVolume = .1f;
+    #endregion
+}
 
 [Serializable]
 public class SkyProperties
