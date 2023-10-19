@@ -128,9 +128,9 @@ namespace RFM.Character
                 _navMeshAgent.SetDestination(newPost);
             }
 
-            else
+            else // When no hunters are close
             {
-                Vector3 newPost = transform.position + Vector3.one;
+                Vector3 newPost = transform.position + new Vector3(Random.Range(-1.0f, 1.0f), 0, 1);
                 _navMeshAgent.SetDestination(newPost);
             }
         }
