@@ -424,8 +424,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
