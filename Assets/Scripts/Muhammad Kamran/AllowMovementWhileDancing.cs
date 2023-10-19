@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class AllowMovementWhileDancing : MonoBehaviour
 {
-    public static AllowMovementWhileDancing Instance;
-    private void Start()
-    {
-        Instance = this;
-    }
     public void MoveWhileDace()
     {
         if(ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck== 0) // stop dance

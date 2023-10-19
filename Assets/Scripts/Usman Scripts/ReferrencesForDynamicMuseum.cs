@@ -168,6 +168,16 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
         }
         moveWhileDanceCheck = PlayerPrefs.GetInt("dancebutton"); //add kamran
+        if (moveWhileDanceCheck == 0) 
+        {
+            landscapeMoveWhileDancingButton.SetActive(false);
+            instance.portraitMoveWhileDancingButton.SetActive(false);
+        }
+        else
+        {
+            landscapeMoveWhileDancingButton.SetActive(true);
+            instance.portraitMoveWhileDancingButton.SetActive(true);
+        }
     }
 
 
