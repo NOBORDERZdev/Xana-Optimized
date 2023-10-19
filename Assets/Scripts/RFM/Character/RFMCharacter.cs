@@ -10,17 +10,27 @@ public class RFMCharacter : MonoBehaviour
     public PhotonVoiceView voiceView;
     public RFMPlayerClass RFMPlayer;
     public bool isHunter;
-    public static Action gameStartAction;
-    void Start()
+    //public static Action gameStartAction;
+
+
+    private void OnEnable()
     {
-        gameStartAction += GameStart;
+        RFM.EventsManager.onGameStart += GameStart;
     }
+
+    private void OnDisable()
+    {
+        RFM.EventsManager.onGameStart -= GameStart;
+    }
+
+    //void Start()
+    //{
+    //    gameStartAction += GameStart;
+    //}
 
     public void GameStart()
     {
-        Debug.LogError("GameStart Ation called");
-        Debug.LogError(photonView.Owner.NickName + "player is hunter: " + 
-            photonView.Owner.CustomProperties["isHunter"].ToString());
+        Debug.Log($"RFM {photonView.Owner.NickName} + player is hunter: { photonView.Owner.CustomProperties["isHunter"]}");
         isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
 
         if (RFMManager.Instance.isPlayerHunter)

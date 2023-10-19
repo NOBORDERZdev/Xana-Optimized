@@ -204,7 +204,6 @@ namespace RFM.Managers
                 //SpawnAIEscapees(roles.Item3);
                 
                 var numberOfPlayerHunters = roles.Item2;
-                Debug.LogError("numberOfPlayerHunters: " + numberOfPlayerHunters);
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
                 {
                     if (numberOfPlayerHunters > 0)
@@ -299,8 +298,7 @@ namespace RFM.Managers
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
-            Debug.LogError("Globals.player: " + Globals.player.name);
-            RFMCharacter.gameStartAction?.Invoke();
+            //RFMCharacter.gameStartAction?.Invoke();
         }
 
         
