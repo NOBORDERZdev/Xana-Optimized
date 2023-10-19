@@ -191,11 +191,11 @@ public class WorldManager : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberGameWorld + "/" + pageCount + "/" + status + "/GAME";
             case APIURL.EventWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
+            case APIURL.TestWorld:
+                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             case APIURL.SearchWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
 
-            case APIURL.TestWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -598,10 +598,10 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
 
-        for (int i = 0; i < testWorldList.Count; i++)
-        {
-            testWorldList[i].gameObject.transform.SetParent(listParentTestWorlds.transform);
-        }
+        //for (int i = 0; i < testWorldList.Count; i++)
+        //{
+        //    testWorldList[i].gameObject.transform.SetParent(listParentTestWorlds.transform);
+        //}
     }
     #region Clear Resource Unload Unused Asset File.......
     private int unloadUnusedFileCount;
@@ -698,8 +698,7 @@ public class UserInfo
 }
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld, TestWorld
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld
+    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld
 }
 public enum WorldType
 {

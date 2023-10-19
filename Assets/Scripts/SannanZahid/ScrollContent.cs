@@ -50,7 +50,7 @@ namespace DynamicScrollRect
         }
         private void Awake()
         {
-            AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 2f;
+            AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 3.5f;
             _ReferenceItem.gameObject.SetActive(false);
         }
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
@@ -145,6 +145,7 @@ namespace DynamicScrollRect
      
         private Vector2 GetAnchoredPosition(Vector2 gridPosition)
         {
+            Debug.LogError("Spacing " + Spacing);
             return new Vector2(
                 AlignSpace + (gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
                 (-gridPosition.y * ItemHeight) - (gridPosition.y * Spacing.y));

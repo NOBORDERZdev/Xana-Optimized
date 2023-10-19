@@ -1,3 +1,4 @@
+using Photon.Voice;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,15 @@ public class WorldItemManager : MonoBehaviour
             Worlds.Add(key,new List<WorldItemDetail>());
             Worlds[key].Add(_world);
         }
+    }
+    public List<WorldItemDetail> Get6WorldsForTutorial()
+    {
+        List<WorldItemDetail> tutorialWorlds= new List<WorldItemDetail>();
+        for (int i = 0; i < 6;i++)
+        {
+            tutorialWorlds.Add(Worlds["Hot"][i]);
+        }
+        return tutorialWorlds;
     }
     public void DisplayWorlds(string key)
     {

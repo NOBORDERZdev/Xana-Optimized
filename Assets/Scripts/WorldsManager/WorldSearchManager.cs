@@ -14,6 +14,10 @@ public class WorldSearchManager : MonoBehaviour
     {
         WorldManager.instance.SearchWorldCall(UserInput);
     }
+    public void ClearInputField()
+    {
+        searchWorldInput.Clear();
+    }
     public void GetSearchBarStatus()
     {
         Debug.Log("GetSearchBarStatus => " + PremiumUsersDetails.Instance.CheckSpecificItem("WorldSearchFeature"));

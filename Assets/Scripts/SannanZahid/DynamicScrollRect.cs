@@ -119,7 +119,7 @@ namespace DynamicScrollRect
                 ParentSliderFlag = true;
             }
         }
-        float ParentSliderLimitCheck = 0.01817484f;
+        float ParentSliderLimitCheck = 0.01517484f;
         public bool ParentSliderFlag = false;
         int SliderStateMachine = 0;
         public override void OnDrag(PointerEventData eventData)

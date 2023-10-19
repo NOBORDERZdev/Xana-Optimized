@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, WorldPage, Canvas, HotSection;
     public GameObject _SplashScreen;
+    public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
     public GameObject _footerCan;
@@ -96,6 +97,7 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);
                     WorldManager.instance.WorldScrollReset();
+                    SecondSliderScrollView.GetComponent<Mask>().enabled = false;
                     PreviousScreen = 0;
                     break;
                 }
@@ -110,6 +112,8 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(true);
                     WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
+                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+
                     PreviousScreen = 1;
                     break;
                 }
@@ -124,6 +128,8 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
+                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+
                     break;
                 }
         }

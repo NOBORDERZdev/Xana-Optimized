@@ -299,59 +299,59 @@ public class LoadingHandler : MonoBehaviour
     }
 
 
-    //bool orientationchanged = false;
-    //    public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
-    //    {
-    //        Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
-    //        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-    //        blackScreen.DOKill();
-    //#if !UNITY_EDITOR
+    bool orientationchanged = false;
+    public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
+    {
+        Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOKill();
+#if !UNITY_EDITOR
 
-    //           // Removing Delay Time 
-    //            blackScreen.DOFade(1, 0f);
-    //            Screen.orientation = oriantation;
-    //            orientationchanged = false;
-    //            StartCoroutine(Check_Orientation(oriantation));
+               // Removing Delay Time 
+                blackScreen.DOFade(1, 0f);
+                Screen.orientation = oriantation;
+                orientationchanged = false;
+                StartCoroutine(Check_Orientation(oriantation));
 
 
-    // //blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
-    // //       {
-    // //           Screen.orientation = oriantation;
-    // //           orientationchanged = false;
-    // //           StartCoroutine(Check_Orientation(oriantation));
-    // //            });
-    //#else
+     //blackScreen.DOFade(1, 0.15f).OnComplete(delegate 
+     //       {
+     //           Screen.orientation = oriantation;
+     //           orientationchanged = false;
+     //           StartCoroutine(Check_Orientation(oriantation));
+     //            });
+#else
 
-    //        Screen.orientation = oriantation;
-    //#endif
+        Screen.orientation = oriantation;
+#endif
 
-    //        //Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
-    //    }
-    //    public void HideFadderAfterOriantationChanged(float delay = 0)
-    //    {
-    //       // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
-    //        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-    //        blackScreen.DOFade(0, 0.5f).SetDelay(delay);
-    //        XanaConstants.xanaConstants.isBackFromWorld = false;
-    //    }
+        //Invoke(nameof(HideFadderAfterOriantationChanged), 2f);
+    }
+    public void HideFadderAfterOriantationChanged(float delay = 0)
+    {
+        // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(delay);
+        XanaConstants.xanaConstants.isBackFromWorld = false;
+    }
 
-    //private IEnumerator Check_Orientation(ScreenOrientation oriantation)
-    //{
-    //CheckAgain:
-    //    //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
-    //    yield return new WaitForSeconds(.2f);
-    //    if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
-    //    {
-    //        //if(!XanaConstants.xanaConstants.isBackFromWorld)
-    //        //    HideFadderAfterOriantationChanged();
-    //    }
-    //    else
-    //    {
-    //        Screen.orientation = oriantation;
-    //        goto CheckAgain;
-    //    }
+    private IEnumerator Check_Orientation(ScreenOrientation oriantation)
+    {
+    CheckAgain:
+        //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
+        yield return new WaitForSeconds(.2f);
+        if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            //if(!XanaConstants.xanaConstants.isBackFromWorld)
+            //    HideFadderAfterOriantationChanged();
+        }
+        else
+        {
+            Screen.orientation = oriantation;
+            goto CheckAgain;
+        }
 
-    //}
+    }
 
 
 

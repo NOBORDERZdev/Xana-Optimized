@@ -132,6 +132,8 @@ public class WorldItemPreviewTab : MonoBehaviour
                 return;
             }
         }
+        UIManager.Instance.ShowFooter(false);
+        m_MuseumIsClicked = false;
         GameManager.Instance.WorldBool = true;
 
     }

@@ -41,6 +41,7 @@ public class AllWorldManage : MonoBehaviour
         WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
        // WorldManager.instance.ChangeWorldTab(APIURL.Hot);
     }
+
     public void GameWorldLoad()
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("GameWorlds"))
@@ -86,7 +87,16 @@ public class AllWorldManage : MonoBehaviour
             SetTextForScroller("You have not created any world yet.", ScrollerText[2]);
         }
     }
-
+    public void TestWorldLoad()
+    {
+        if (!PremiumUsersDetails.Instance.CheckSpecificItem("TestWorlds"))
+        {
+            return;
+        }
+        ScrollEnableDisable(5);
+        WorldManager.instance.ChangeWorldTab(APIURL.TestWorld);
+        // WorldManager.instance.ChangeWorldTab(APIURL.Hot);
+    }
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
     {

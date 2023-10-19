@@ -76,6 +76,10 @@ public class WorldItemView : MonoBehaviour
     {
         UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
         UpdateUserCount();
+        if(m_ThumbnailDownloadURL!="")
+        {
+            LoadImagesFromRemote();
+        }
     }
     private void OnDisable()
     {
@@ -95,6 +99,10 @@ public class WorldItemView : MonoBehaviour
         this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
+        LoadImagesFromRemote();
+    }
+    void LoadImagesFromRemote()
+    {
         if (m_EnvironmentName.Contains("XANA Lobby"))
         {
             if (!isBannerLoaded)

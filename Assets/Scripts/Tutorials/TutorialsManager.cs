@@ -20,7 +20,7 @@ public class TutorialsManager : MonoBehaviour
     public GameObject tutorialsParent;
     public GameObject lobbyParent;
     public GameObject tutorialCanvasBG;
-    public GameObject thirdPanel;
+    //public GameObject thirdPanel;
     public List<GameObject> panels;
     public List<Sprite> subtractSprites;
     private int currentPanelIndex = 0;
@@ -51,11 +51,6 @@ public class TutorialsManager : MonoBehaviour
             DisplayPanel(currentPanelIndex);
             XanaConstants.xanaConstants.isTutorialLoaded = true;
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     private void HandleButtons(int index)
     {
@@ -106,7 +101,7 @@ public class TutorialsManager : MonoBehaviour
     }
     private void DisplayPanel(int index)
     {
-        if (index == 0 || index == 1)
+        if (index == 0 || index == 1 || index == 2)
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
         else
         {
@@ -123,13 +118,13 @@ public class TutorialsManager : MonoBehaviour
         else if (index == 2)
         {
            // worldsParent = WorldManager.instance.listParentHotSection.gameObject;
-            thirdPanel.SetActive(true);
+           // thirdPanel.SetActive(true);
             tutorialCanvasBG.SetActive(false);
             ShowWorlds(index);
         }
         else
         {
-            thirdPanel.SetActive(false);
+          //  thirdPanel.SetActive(false);
             tutorialCanvasBG.SetActive(true);
         }
        
@@ -161,26 +156,36 @@ public class TutorialsManager : MonoBehaviour
         }
         else //instantiate first 6 worlds
         {
-           /* for (int i = 0; i < 6; i++)
+            List<WorldItemDetail> Worlds = WorldManager.instance.WorldItemManager.Get6WorldsForTutorial();
+            for (int i = 0; i < 6; i++)
             {
-                go = Instantiate(worldsParent.transform.GetChild(i).gameObject);
-                go.transform.SetParent(tutorialsParent.transform);
-                go.transform.localScale = Vector3.one;
-                go.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = subtractSprites[1];
-                // go.transform.GetChild(0).GetChild(2).GetComponent<Image>().color = new Color(80, 80, 80,255);
-                go.GetComponent<Button>().enabled = false;
-            }*/
+                panels[2].transform.GetChild(1).GetChild(0).GetChild(i).
+                    GetComponent<TutorialWorldItemView>().Init(
+                    Worlds[i].EnvironmentName,
+                    Worlds[i].ThumbnailDownloadURL
+                    );
+
+            }
+            /* for (int i = 0; i < 6; i++)
+             {
+                 go = Instantiate(worldsParent.transform.GetChild(i).gameObject);
+                 go.transform.SetParent(tutorialsParent.transform);
+                 go.transform.localScale = Vector3.one;
+                 go.transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = subtractSprites[1];
+                 // go.transform.GetChild(0).GetChild(2).GetComponent<Image>().color = new Color(80, 80, 80,255);
+                 go.GetComponent<Button>().enabled = false;
+             }*/
         }
     }
     private void SkipTutorial()
     {
         this.transform.GetChild(0).gameObject.SetActive(false);
-        thirdPanel.SetActive(false);
+       // thirdPanel.SetActive(false);
         //PlayerPrefs.SetInt("ShowTutorial", 0);
     }
     private void CrossButton()
     {
-        thirdPanel.SetActive(false);
+       // thirdPanel.SetActive(false);
         this.gameObject.SetActive(false);
     }
     public void CheckToggle()
