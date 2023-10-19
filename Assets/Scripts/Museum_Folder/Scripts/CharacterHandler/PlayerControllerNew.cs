@@ -795,7 +795,14 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         if (isFirstPerson)
-            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
@@ -1061,7 +1068,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
-        
+
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
