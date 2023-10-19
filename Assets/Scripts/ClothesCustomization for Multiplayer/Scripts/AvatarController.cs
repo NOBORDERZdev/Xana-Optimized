@@ -1067,7 +1067,7 @@ public class AvatarController : MonoBehaviour
         //Equipment equipment = applyOn.GetComponent<Equipment>();
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
-        float _size = 1f + ((float)bodyFat/ 100f);
+        float _size = 1f + ((float)bodyFat / 100f);
         Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size);
 
         if (bodyparts._scaleBodyParts.Count > 0)
