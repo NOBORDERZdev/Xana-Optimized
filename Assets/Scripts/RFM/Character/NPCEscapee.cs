@@ -30,12 +30,14 @@ namespace RFM.Character
         
         private void OnEnable()
         {
+            EventsManager.onTakePositionTimeStart += TakePositionTimeStarted;
             EventsManager.onGameStart += OnGameStarted;
             EventsManager.onGameTimeup += GameOver;
         }
         
         private void OnDisable()
         {
+            EventsManager.onTakePositionTimeStart -= TakePositionTimeStarted;
             EventsManager.onGameStart -= OnGameStarted;
             EventsManager.onGameTimeup -= GameOver;
         }
@@ -47,13 +49,18 @@ namespace RFM.Character
         }
 
 
+        private void TakePositionTimeStarted()
+        {
+            InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
+        }
+
+
         private void OnGameStarted()
         {
             InvokeRepeating(nameof(AddMoney),
                 RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
                 RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
             StartCoroutine(TimeSurvived());
-            InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
         }
 
         IEnumerator TimeSurvived()
@@ -118,6 +125,12 @@ namespace RFM.Character
             {
                 Vector3 dirToSelf = transform.position - _closestHunterTransform.position;
                 Vector3 newPost = transform.position + dirToSelf;
+                _navMeshAgent.SetDestination(newPost);
+            }
+
+            else
+            {
+                Vector3 newPost = transform.position + Vector3.one;
                 _navMeshAgent.SetDestination(newPost);
             }
         }
