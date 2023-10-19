@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 6600868634286491041}
   - component: {fileID: 6399635851196118119}
   - component: {fileID: 6710238650612245467}
+  - component: {fileID: 6793251032484300684}
   m_Layer: 10
   m_Name: PlayerModel
   m_TagString: Player
@@ -514,6 +515,21 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &6793251032484300684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5556358534646836578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735cca5cc9c66b14d9c3119a4daa8b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  photonView: {fileID: 6600868634286491041}
+  voiceView: {fileID: 1265562925189947652}
+  isHunter: 1
 --- !u!1001 &2237075156762427591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1088,6 +1104,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3613ca17821c64a47ac38a3c34dccd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1265562925189947652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7995145044901425214, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+  m_PrefabInstance: {fileID: 9179559559151948090}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355964908239879943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2039897580762485415 stripped
