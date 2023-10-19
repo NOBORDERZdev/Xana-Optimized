@@ -357,7 +357,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     public void NameToggle(int ToggleConstant, int id)
     {
-        if (gameObject.GetComponent<PhotonView>().ViewID == id)
+        if (/*gameObject*/transform.root.GetComponent<PhotonView>().ViewID == id)
         {
             Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
             if (ToggleConstant == 0)

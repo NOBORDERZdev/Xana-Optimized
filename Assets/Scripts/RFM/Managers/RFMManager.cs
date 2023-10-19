@@ -67,8 +67,6 @@ namespace RFM.Managers
             RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
             EventsManager.OnHideCanvasElements();
-
-            PhotonNetwork.GameVersion = Application.version + "998"; // TODO temp
         }
 
 
@@ -201,14 +199,11 @@ namespace RFM.Managers
 
                 Debug.Log($"RFM roles: {roles}");
 
-                // Hashtable properties = new Hashtable { { "numberOfPlayerHunters", roles.Item2 } };
-                // PhotonNetwork.MasterClient.SetCustomProperties(properties);
 
-                SpawnHunters(roles.Item4);
-                SpawnAIEscapees(roles.Item3);
-
+                StartCoroutine(SpawnNPCs(roles.Item4, roles.Item3));
+                //SpawnAIEscapees(roles.Item3);
+                
                 var numberOfPlayerHunters = roles.Item2;
-                Debug.LogError("numberOfPlayerHunters: " + numberOfPlayerHunters);
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
                 {
                     if (numberOfPlayerHunters > 0)
@@ -241,11 +236,7 @@ namespace RFM.Managers
 
         private void ResetPosition()
         {
-            // int numOfHunters = 0;
-            // if (PhotonNetwork.MasterClient.CustomProperties.TryGetValue("numberOfPlayerHunters", out var x))
-            // {
-            //     numOfHunters = (int)x;
-            // }
+            EventsManager.TakePositionTime();
 
             bool isHunter = false;
             if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isHunter", out object _isHunter))
@@ -254,7 +245,7 @@ namespace RFM.Managers
             }
 
 
-            if (isHunter)
+            if (isHunter) // Player spawning as Hunter
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
 
@@ -278,11 +269,9 @@ namespace RFM.Managers
                 Destroy(hunterSpawnVFX, 10f);
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
-                // Hashtable properties = new Hashtable { { "numberOfPlayerHunters", numOfHunters - 1 } };
-                // PhotonNetwork.MasterClient.SetCustomProperties(properties);
             }
 
-            else // Spawning as Escapee
+            else // Player spawning as Escapee
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Escapee.");
 
@@ -309,10 +298,10 @@ namespace RFM.Managers
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
-            Debug.LogError("Globals.player: " + Globals.player.name);
-            RFMCharacter.gameStartAction?.Invoke();
+            //RFMCharacter.gameStartAction?.Invoke();
         }
 
+        
         private void AfterTakePositionTimerHunter()
         {
             Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
@@ -334,20 +323,22 @@ namespace RFM.Managers
             StartGameplay();
         }
 
-        private void SpawnHunters(int numOfHunters)
+        private IEnumerator SpawnNPCs(int numOfHunters, int numOfEscapees)
         {
             Debug.Log("RFM numOfAIHunters: " + numOfHunters);
+            var delay = (numOfHunters + numOfEscapees) / 11; // 10 seconds countdown.
+                                                            // Need to spawn all NPCs beofre last second
+
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("HunterNPC",
                     huntersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0,
                         Random.Range(-2, 2)),
                     huntersSpawnArea.rotation);
-            }
-        }
 
-        private void SpawnAIEscapees(int numOfEscapees)
-        {
+                yield return new WaitForSeconds(delay);
+            }
+            
             Debug.Log("RFM numOfAIEscapees: " + numOfEscapees);
             for (int i = 0; i < numOfEscapees; i++)
             {
@@ -355,8 +346,11 @@ namespace RFM.Managers
                     playersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0,
                         Random.Range(-2, 2)),
                     playersSpawnArea.rotation);
+
+                yield return new WaitForSeconds(delay);
             }
         }
+
 
         [PunRPC]
         private void StartGameplay()

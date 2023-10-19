@@ -4414,6 +4414,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440557737}
   m_CullTransparentMesh: 0
+--- !u!1 &455951700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8903511442652582253, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &456511127 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6391045880019766542, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
@@ -14033,6 +14038,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789831778}
   m_CullTransparentMesh: 1
+--- !u!1 &1791659210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8327799508423129621, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1834870216
 GameObject:
   m_ObjectHideFlags: 0
@@ -17422,7 +17432,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.030892437, y: 0.00078112434, z: -0.000024142366, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892435, y: 0.0007811168, z: -0.00002414213, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17673,7 +17683,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.05969733, y: 0.00078008283, z: -0.000046650206, w: 0.9982163}
+  m_LocalRotation: {x: 0.05969733, y: 0.00078011694, z: -0.00004665225, w: 0.9982163}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18048,7 +18058,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.030892437, y: 0.0007811211, z: -0.0000241404, w: 0.99952245}
+  m_LocalRotation: {x: 0.030892435, y: 0.0007811173, z: -0.000024140281, w: 0.99952245}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -18126,7 +18136,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0022524043, y: 0.00078149256, z: -0.0000017583795, w: 0.9999972}
+  m_LocalRotation: {x: 0.002252409, y: 0.0007814925, z: -0.0000017583831, w: 0.9999972}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29176,6 +29186,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 404937339}
     - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
       propertyPath: overlayPanels.Array.data[0]
       value: 
       objectReference: {fileID: 5685236213032446030}
@@ -29263,6 +29277,18 @@ PrefabInstance:
       propertyPath: hiddenBtnObjects.Array.data[12]
       value: 
       objectReference: {fileID: 7265331069818700934}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.data[13]
+      value: 
+      objectReference: {fileID: 908864869}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.data[14]
+      value: 
+      objectReference: {fileID: 455951700}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.data[15]
+      value: 
+      objectReference: {fileID: 1791659210}
     - target: {fileID: 5112787733255262739, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
       propertyPath: m_RootOrder
       value: 15
