@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text;
 
+public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc};
 public class XanaChatSocket : MonoBehaviour
 {
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
@@ -78,9 +79,9 @@ public class XanaChatSocket : MonoBehaviour
     #endregion
 
     public static Action<string> onJoinRoom;
-    public static Action<string, string, string> onSendMsg;
+    public static Action<string, string, CallBy, string> onSendMsg;
     public static Action callApi;
-
+    public Action<string> npcSendMsg;
 
     private void Awake()
     {
@@ -182,7 +183,7 @@ public class XanaChatSocket : MonoBehaviour
         isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
     }
-    void SendMsg(string world_Id, string msg, string npcId = "")
+    void SendMsg(string world_Id, string msg, CallBy callBy, string npcId = "")
     {
         if (string.IsNullOrEmpty(msg))
         {
@@ -208,6 +209,10 @@ public class XanaChatSocket : MonoBehaviour
 
         if (!npcId.IsNullOrEmpty())
             userId = "npc-" + npcId;
+
+        if(callBy.Equals(CallBy.NpcToNpc))
+            npcSendMsg.Invoke(msg);
+
         // Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
         var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
         Debug.Log("Data:::" + data);
