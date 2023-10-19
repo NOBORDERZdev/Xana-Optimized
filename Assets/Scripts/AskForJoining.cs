@@ -34,7 +34,7 @@ public class AskForJoining : MonoBehaviour
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingHandler.Instance.randCurrentValue = _rand;
         StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
-
+        XanaConstants.xanaConstants.isBackFromWorld = true;  
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
@@ -95,7 +95,7 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
-            LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+            LoadingHandler.Instance.ShowLoading();
             if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
             {
                 ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
