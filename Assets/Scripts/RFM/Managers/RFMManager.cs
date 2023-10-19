@@ -204,8 +204,6 @@ namespace RFM.Managers
                 //SpawnAIEscapees(roles.Item3);
                 
                 var numberOfPlayerHunters = roles.Item2;
-
-                var numberOfPlayerHunters = roles.Item2;
                 Debug.LogError("numberOfPlayerHunters: " + numberOfPlayerHunters);
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
                 {
