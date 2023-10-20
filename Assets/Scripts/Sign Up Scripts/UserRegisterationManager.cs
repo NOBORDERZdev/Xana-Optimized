@@ -1234,7 +1234,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         Debug.Log("show welcome else");
                         LoggedIn = true;
-                        GameManager.Instance.SignInSignUpCompleted();
+                        //GameManager.Instance.SignInSignUpCompleted();
                     }
                     break;
                 }
@@ -3433,6 +3433,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
+   
 
     public void SubmitLoginCredentials()
     {
@@ -4167,7 +4168,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
-                        PlayerPrefs.SetInt("FristPresetSet", 1);
+                        //PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetString("PlayerName", myObject1.data.user.name);
                         PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
