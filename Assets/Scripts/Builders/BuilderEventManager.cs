@@ -15,7 +15,11 @@ public static class BuilderEventManager
 
     public static Action<float, float> ApplyPlayerProperties;
 
+    public static Action AfterMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
+
+    public static Action AfterWorldInstantiated;
+
     public static Action ReSpawnPlayer;
 
     //Mesh Combiner
