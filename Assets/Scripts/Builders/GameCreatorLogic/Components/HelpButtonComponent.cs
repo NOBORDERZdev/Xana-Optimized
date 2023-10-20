@@ -36,6 +36,8 @@ public class HelpButtonComponent : ItemComponent
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
+
             }
         }
     }
