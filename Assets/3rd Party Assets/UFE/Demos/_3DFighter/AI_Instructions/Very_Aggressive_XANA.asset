@@ -21,7 +21,7 @@ MonoBehaviour:
     aggressiveness: 0.558
     ruleCompliance: 0.9
     comboEfficiency: 1
-    movementDuration: 0.2
+    movementDuration: 0.3
     buttonSequenceInterval: 1
     attackDesirabilityCalculation: 2
     defaultDesirability: 0
@@ -52,14 +52,118 @@ MonoBehaviour:
     jumpForwardFrequency: 0
     autoBlock: 1
     obeyHitType: 1
-    standBlockAccuracy: 3
-    crouchBlockAccuracy: 4
+    standBlockAccuracy: 5
+    crouchBlockAccuracy: 6
     jumpBlockAccuracy: 5
     autoAttack: 1
     obeyPreferableDistances: 1
     attackFrequency: 4
     debugToggle: 0
-  aiRules: []
+  aiRules:
+  - ruleName: Crouch Block
+    events:
+    - enabled: 1
+      boolean: 0
+      conditions:
+      - enabled: 1
+        boolean: 0
+        targetCharacter: 1
+        conditionType: 6
+        horizontalMovement: 1
+        verticalMovement: 1
+        movementSpeed: 0
+        healthStatus: 0
+        gaugeStatus: 0
+        playerDistance: 3
+        jumping: 0
+        blocking: 1
+        moveClassification:
+          attackType: 0
+          hitType: 0
+          startupSpeed: 0
+          recoverySpeed: 0
+          hitConfirmType: 0
+          preferableDistance: 0
+          gaugeUsage: 0
+          anyAttackType: 1
+          anyHitType: 1
+          anyHitConfirmType: 1
+        moveFrameData: 0
+        moveDamage: 0
+      conditionsToggle: 0
+    reactions:
+    - reactionType: 7
+      moveClassification:
+        attackType: 0
+        hitType: 0
+        startupSpeed: 0
+        recoverySpeed: 0
+        hitConfirmType: 0
+        preferableDistance: 0
+        gaugeUsage: 0
+        anyAttackType: 1
+        anyHitType: 1
+        anyHitConfirmType: 1
+      moveDamage: 0
+      specificMove: {fileID: 0}
+      buttonPress: 4
+      behavior: 0
+      desirability: 5
+    debugToggle: 0
+    eventsToggle: 0
+    reactionsToggle: 0
+  - ruleName: Upper Block
+    events:
+    - enabled: 1
+      boolean: 0
+      conditions:
+      - enabled: 1
+        boolean: 0
+        targetCharacter: 1
+        conditionType: 6
+        horizontalMovement: 1
+        verticalMovement: 1
+        movementSpeed: 0
+        healthStatus: 0
+        gaugeStatus: 0
+        playerDistance: 3
+        jumping: 0
+        blocking: 1
+        moveClassification:
+          attackType: 0
+          hitType: 2
+          startupSpeed: 0
+          recoverySpeed: 0
+          hitConfirmType: 0
+          preferableDistance: 0
+          gaugeUsage: 0
+          anyAttackType: 1
+          anyHitType: 0
+          anyHitConfirmType: 1
+        moveFrameData: 0
+        moveDamage: 0
+      conditionsToggle: 0
+    reactions:
+    - reactionType: 8
+      moveClassification:
+        attackType: 0
+        hitType: 0
+        startupSpeed: 0
+        recoverySpeed: 0
+        hitConfirmType: 0
+        preferableDistance: 0
+        gaugeUsage: 0
+        anyAttackType: 1
+        anyHitType: 1
+        anyHitConfirmType: 1
+      moveDamage: 0
+      specificMove: {fileID: 0}
+      buttonPress: 4
+      behavior: 0
+      desirability: 6
+    debugToggle: 0
+    eventsToggle: 0
+    reactionsToggle: 0
   aiDefinitions:
     damage:
       veryWeak: 0.05

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FightingGameManager : MonoBehaviourPunCallbacks
+public class FightingGameManager : MonoBehaviour
 {
     public static FightingGameManager instance;
     public bool startDirectly = false;
@@ -17,6 +17,10 @@ public class FightingGameManager : MonoBehaviourPunCallbacks
     public PlayerDataClass player2Data = new PlayerDataClass();
     public string myName = ""; //Attizaz
     public string opponentName = "";
+
+    public AudioSource mainAudioSource;
+    public AudioClip crowdSound,menuMusic;
+
     private void Awake()
     {
         if (instance == null)
@@ -36,16 +40,16 @@ public class FightingGameManager : MonoBehaviourPunCallbacks
             UFE.SetPlayer2(P2SelectedChar);
             UFE.StartLoadingBattleScreen();
         }
-        Invoke("GetPlayerData", 5);
     }
 
-    private void Update()
+   
+
+    #region Attizaz's code
+    public void CallRPC()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            GetPlayerData();
-        }
+        PV.RPC("PlayerSelection", RpcTarget.All);
     }
+
     public void GetPlayerData()
     {
         Debug.LogError("GetPlayerData");
@@ -64,17 +68,6 @@ public class FightingGameManager : MonoBehaviourPunCallbacks
                 );
         }
     }
-
-    public override void OnJoinedRoom()
-    {
-        GetPlayerData();
-    }
-    #region Attizaz's code
-    public void CallRPC()
-    {
-        PV.RPC("PlayerSelection", RpcTarget.All);
-    }
-
     [PunRPC]
     public void PlayerSelection()
     {
@@ -101,17 +94,38 @@ public class FightingGameManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.2f);
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+
+    /////Sound Settings
+    public void PlayMenuMusic()
+    {
+        if (mainAudioSource != null)
+        {
+            mainAudioSource.Pause();
+            mainAudioSource.clip = menuMusic;
+            mainAudioSource.Play();
+        }
+    }
+
+    public void PlayCrowdSound()
+    {
+        if (mainAudioSource != null)
+        {
+            mainAudioSource.Pause();
+            mainAudioSource.clip = crowdSound;
+            mainAudioSource.Play();
+        }
+    }
+
+
     #endregion
 
 }
-
 [System.Serializable]
 public class PlayerDataClass
 {
     public string name;
     public string NFT;
     public string clothJson;
-
     public PlayerDataClass()
     {
 

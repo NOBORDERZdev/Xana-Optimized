@@ -1064,6 +1064,7 @@ public class DefaultBattleGUI : BattleGUI
                 {
                     UFE.PlaySound(this.announcer.player2Wins);
                 }
+                StartCoroutine(SetupTextToNone()); // Attizaz
             }
 
             // Finally, check if we should play any AudioClip
@@ -1091,6 +1092,13 @@ public class DefaultBattleGUI : BattleGUI
         }
     }
 
+    //Attizaz
+	// For preventing final panel and player wins text conflict
+	[SerializeField]float resetWinTextTime = 5f;
+	IEnumerator SetupTextToNone() {
+		yield return new WaitForSeconds(resetWinTextTime);
+		mainAlert.text.text = "";
+	}
 
     protected override void OnTimer(FPLibrary.Fix64 time)
     {
