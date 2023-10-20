@@ -68,6 +68,8 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+
         if (time == 0 && !situationChangerComponentData.isOff)
         {
             time = situationChangerComponentData.Timer;
