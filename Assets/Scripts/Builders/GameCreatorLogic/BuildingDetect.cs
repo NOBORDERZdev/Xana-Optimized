@@ -243,7 +243,9 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         yield return new WaitForSecondsRealtime(0.01f);
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
-        gangsterCharacter.SetActive(true);
+
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+            gangsterCharacter.SetActive(true);
 
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
 

@@ -7,7 +7,8 @@ public class Shuriken : MonoBehaviourPun
     {
         if (!(_other.gameObject.CompareTag("Player") || (_other.gameObject.CompareTag("PhotonLocalPlayer") && _other.gameObject.GetComponent<PhotonView>().IsMine)))
         {
-            PhotonNetwork.Destroy(gameObject);
+            if (this.photonView.Owner == PhotonNetwork.LocalPlayer)
+                PhotonNetwork.Destroy(gameObject);
         }
     }
 

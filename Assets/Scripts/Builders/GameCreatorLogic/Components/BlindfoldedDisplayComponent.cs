@@ -42,11 +42,13 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
+            GamificationComponentData.instance.activeComponent = this;
         }
     }
 
     private void SetFootPrinting()
     {
+        GamificationComponentData.instance.isBlindfoldedFootPrinting = true;
         Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
         //shoes.localPosition = Vector3.forward * 0.761f;
         Rigidbody rb = null;
@@ -125,6 +127,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     private void DeactivateAvatarInivisibility()
     {
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
         BuilderEventManager.DeactivateAvatarInivisibility?.Invoke();
         notTriggerOther = false;
         RaycastHit hit;
@@ -157,6 +160,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 rr.enabled = false;
                 rr.transform.GetChild(0).gameObject.SetActive(false);
             }
+            GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
+
         }
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
@@ -167,6 +172,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         }
         notTriggerOther = false;
         this.gameObject.SetActive(false);
+
     }
 
     #region BehaviourControl
@@ -202,7 +208,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         if (!isPlaying)
             return;
-        isPlaying = false;
+                isPlaying = false;
+        StopComponent();
         StopComponent();
     }
 

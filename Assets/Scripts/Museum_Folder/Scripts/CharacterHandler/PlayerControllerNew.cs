@@ -380,7 +380,8 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            if (GamificationComponentData.instance.isAvatarChanger)
+            if (GamificationComponentData.instance.isAvatarChanger ||
+                GamificationComponentData.instance.isBlindfoldedFootPrinting)
                 BuilderEventManager.StopAvatarChangeComponent?.Invoke(false);
         }
     }
@@ -765,23 +766,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
-        if (XanaConstants.xanaConstants.isBuilderScene)
-        {
-            if (isNinjaMotion)
-            {
-                isNinjaMotion = false;
-                NinjaComponentTimerStart(0);
-            }
-            else if (isThrowModeActive)
-            {
-                StartCoroutine(nameof(ThrowEnd));
-                isThrow = false;
-                isThrowModeActive = false;
-                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
-            }
-
-            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-        }
+        StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
@@ -805,6 +790,33 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
+    public void StopBuilderComponent()
+    {
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            Debug.LogError("StopBuilderComponent1");
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+            }
+            else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
+            {
+                Debug.LogError("StopBuilderComponent2");
+                if (GamificationComponentData.instance.activeComponent != null)
+                    GamificationComponentData.instance.activeComponent.StopBehaviour();
+            }
+            else if (GamificationComponentData.instance.isAvatarChanger)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        }
+    }
 
     void Move()
     {

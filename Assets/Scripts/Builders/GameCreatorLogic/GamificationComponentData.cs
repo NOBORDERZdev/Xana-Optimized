@@ -53,6 +53,8 @@ public class GamificationComponentData : MonoBehaviourPun
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
 
+    internal IComponentBehaviour activeComponent;
+
     internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
 
     public static Action WarpComponentLocationUpdate;
@@ -62,6 +64,7 @@ public class GamificationComponentData : MonoBehaviourPun
     internal bool isNight;
     internal bool isBlindToogle;
     internal bool isAvatarChanger;
+    internal bool isBlindfoldedFootPrinting;
     internal int previousSkyID;
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
