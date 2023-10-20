@@ -274,7 +274,7 @@ public class SNSSettingController : MonoBehaviour
     void UserCounterStatus(bool _status)
     {
         // Lobby Prefab
-        WorldManager.instance.eventPrefabLobby.GetComponent<WorldItemView>()
+        WorldManager.instance.EventPrefabLobby.GetComponent<WorldItemView>()
             .joinedUserCount.transform.parent.gameObject.SetActive(_status);
 
         //// Home Page => Hot

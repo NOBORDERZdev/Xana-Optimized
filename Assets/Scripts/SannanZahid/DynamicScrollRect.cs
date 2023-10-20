@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static IPFS.GetFileInfoResponse;
-using static StoreManager;
 
 namespace DynamicScrollRect
 {
@@ -44,7 +42,6 @@ namespace DynamicScrollRect
         {
             movementType = MovementType.Unrestricted;
             onValueChanged.AddListener(OnScrollRectValueChanged);
-           // vertical = !horizontal;
             base.Awake();
         }
         protected override void OnDestroy()
@@ -55,7 +52,6 @@ namespace DynamicScrollRect
         #region Event Callbacks
         public override void OnBeginDrag(PointerEventData eventData)
         {
-            // Debug.LogError("OnBeginDrag");
             if (!ParentSliderFlag)
             {
                 TopScroller.OnBeginDrag(eventData);
@@ -238,7 +234,6 @@ namespace DynamicScrollRect
             if (positiveDelta)
             {
                 Vector2 lastItemPos = _Content.GetLastItemPos();
-                // Calculate local position of last item's end position in viewport rect
                 if (!_Content.CanAddNewItemIntoTail() && 
                     content.anchoredPosition.y + viewport.rect.height + lastItemPos.y - _Content.ItemHeight > 0)
                 {
@@ -316,8 +311,6 @@ namespace DynamicScrollRect
             }
             if (content.anchoredPosition.y < 0)
             {
-                Debug.LogError("CalculateSnapPosition vertical");
-            
                 return Vector2.zero;
             }
             else
@@ -364,7 +357,6 @@ namespace DynamicScrollRect
         }
         private IEnumerator RunBackProgress()
         {
-           // Debug.LogError(" RunBackProgress ");
             _runningBack = true;
             float timePassed = 0;
             float duration = 0.25f;
@@ -374,7 +366,6 @@ namespace DynamicScrollRect
             {
                 if (!ParentSliderFlag)
                 {
-                  //  Debug.LogError(" RunBackProgress Break");
                     StopRunBackRoutine();
                     break;
                 }
@@ -383,7 +374,6 @@ namespace DynamicScrollRect
                 SetContentAnchoredPosition(pos);
                 yield return null;
             }
-            //SetContentAnchoredPosition(endPos);
             _runningBack = false;
         }
         #endregion

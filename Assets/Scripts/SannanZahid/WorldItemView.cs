@@ -66,7 +66,7 @@ public class WorldItemView : MonoBehaviour
     public bool isEnvirnomentScene = false;
     public bool isImageSuccessDownloadAndSave = false;
     public bool isReleaseFromMemoryOrNot = false;
-    public bool isOnScreen;//check object is on screen or not
+    public bool isOnScreen;
     public bool isVisible = false;
     bool isNotLoaded = true;
     public WorldItemPreviewTab worldItemPreview;
@@ -76,7 +76,7 @@ public class WorldItemView : MonoBehaviour
     {
         UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
         UpdateUserCount();
-        if(m_ThumbnailDownloadURL!="")
+        if(m_ThumbnailDownloadURL != "")
         {
             LoadImagesFromRemote();
         }
@@ -88,7 +88,7 @@ public class WorldItemView : MonoBehaviour
             AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
             worldIcon.sprite = null;
             worldIcon.sprite = default;
-            WorldManager.instance.ResourcesUnloadAssetFile();
+           // WorldManager.instance.ResourcesUnloadAssetFile();
         }
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     }
@@ -273,7 +273,7 @@ public class WorldItemView : MonoBehaviour
         gameObject.GetComponent<Button>().interactable = true;
         yield return null;
     }
-    public void OnClickPrefab()/// on button click
+    public void OnClickPrefab()
     {
         m_EnvName = m_EnvironmentName;
         m_CreaName = creatorName;

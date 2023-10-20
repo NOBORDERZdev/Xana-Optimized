@@ -4,23 +4,23 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using AdvancedInputFieldPlugin;
+using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public class AllWorldManage : MonoBehaviour
 {
     [Header("Home Page Scrollviews and Component")]
     public List<GameObject> HighlghterList = new List<GameObject>();
     public List<GameObject> HighlghterListText = new List<GameObject>();
-    public List<GameObject> ScrollObjectsList = new List<GameObject>();
     public List<TextMeshProUGUI> ScrollerText = new List<TextMeshProUGUI>();
     public GameObject FlexibleReact;
     [Header("World Page Scrollviews and Component")]
-    public Button searchButton;
-    public TMP_InputField searchBar;
-    public List<GameObject> worldPageScrollviews = new List<GameObject>();
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
-    public List<TextMeshProUGUI> WorldPageText = new List<TextMeshProUGUI>();
 
+    public void ToggleLobbyOnHomeScreen(bool flag)
+    {
+        UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);
+    }
     public void SearchScreenLoad()
     {
         UIManager.Instance.SwitchToScreen(2);
@@ -29,10 +29,13 @@ public class AllWorldManage : MonoBehaviour
     }
     public void BackToPreviousScreen()
     {
-        UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
         WorldManager.instance.ClearWorldScrollWorlds();
-        WorldManager.instance.WorldItemManager.DisplayWorlds(WorldManager.instance.previousURL.ToString());
-       // WorldManager.instance.ChangeWorldTab(WorldManager.instance.previousURL);
+        UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
+        WorldManager.instance.CheckWorldTabAndReset(APIURL.Hot);
+        // WorldManager.instance.SetaPIURLGlobal(APIURL.Hot);
+        //WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+        ScrollEnableDisable(0);
+        // WorldManager.instance.ChangeWorldTab(WorldManager.instance.previousURL);
         // WorldManager.instance.ChangeWorldTab(APIURL.SearchWorld);
     }
     public void XanaWorldLoad()
@@ -103,7 +106,7 @@ public class AllWorldManage : MonoBehaviour
         text.text = textToChange;
         text.gameObject.SetActive(true);
     }
-    void ScrollEnableDisable(int index)
+    public void ScrollEnableDisable(int index)
     {
         for (int i = 0; i < HighlghterList.Count; i++)
         {

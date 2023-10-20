@@ -12,35 +12,17 @@ using Photon.Pun.Demo.PunBasics;
 using UnityEngine.UI;
 using static Photon.Pun.UtilityScripts.TabViewManager;
 using System.Drawing.Printing;
+using UnityEngine.InputSystem;
 
 public class WorldManager : MonoBehaviour
 {
-    [Header("Main prefab")]
-    public GameObject eventPrefab;
-    public GameObject eventPrefabLobby;
-    public GameObject eventPrefabTab;
-    public GameObject descriptionParentPanel;
-
-    [Header("world Page Scrollviews")]
-    public Transform world_HotScroll;
-    public Transform world_NewScroll;
-    public Transform world_myworldScroll;
-    public Transform world_GameWorldScroll;
-    public Transform world_EventWorldScroll;
-
-    [Header("Full World List")]
-    private List<GameObject> hotWorldList = new List<GameObject>();
-    private List<GameObject> newWorldList = new List<GameObject>();
-    private List<GameObject> myworldWorldList = new List<GameObject>();
-    private List<GameObject> gameWorldList = new List<GameObject>();
-    private List<GameObject> eventWorldList = new List<GameObject>();
-
+    [Header("World View prefab")]
+    public GameObject EventPrefabLobby;
     [HideInInspector]
     public bool orientationchanged = false;
-
     [Header("Api Parameter's")]
     private string finalAPIURL;
-    private string status = "Publish";  //Publish //Draft
+    private string status = "Publish";
     private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -53,17 +35,18 @@ public class WorldManager : MonoBehaviour
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
-    public APIURL previousURL;
+    public AllWorldManage AllWorldTabReference;
+    //public APIURL previousURL;
     public static WorldManager instance;
-    public AllWorldManage m_AllWorldManage;
-    ScrollRect s1;
-    ScrollSnapRect s2;
     [SerializeField]
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
 
     static int AutoSwtichIndex = 0;
-
+    public APIURL GetCurrentTabSelected()
+    {
+        return aPIURLGlobal;
+    }
     private void Awake()
     {
         if (instance == null)
@@ -92,29 +75,42 @@ public class WorldManager : MonoBehaviour
     }
     void Start()
     {
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-            eventPrefab = eventPrefabTab;
+        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 5);
     }
+    public void CheckWorldTabAndReset(APIURL tab)
+    {
+        if(WorldItemManager.GetWorldCountPresentInMemory(tab.ToString())>0)
+        {
+            WorldItemManager.DisplayWorlds(tab.ToString());
+        }
+        else
+        {
+            ChangeWorldTab(tab);
+        }
+    }
     public void ChangeWorldTab(APIURL tab)
     {
-        if(tab != APIURL.SearchWorld)
-        {
-            previousURL = tab;
-        }
+        //if(tab != APIURL.SearchWorld)
+        //{
+        //    previousURL = tab;
+        //}
         aPIURLGlobal = tab;
         GetBuilderWorlds(tab, (a) => { });
+    }
+    public void SetaPIURLGlobal(APIURL chnager)
+    {
+        aPIURLGlobal = chnager;
     }
     public string previousSearchKey;
     public void SearchWorldCall(string searchKey)
     {
         if(searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
         {
-            Debug.LogError("Search Key " + searchKey);
             aPIURLGlobal = APIURL.SearchWorld;
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+            this.WorldItemManager.ClearListInDictionary(APIURL.SearchWorld.ToString());
             ClearWorldScrollWorlds();
             SearchPageNumb = 1;
             SearchPageSize = 40;
@@ -123,10 +119,9 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+            this.WorldItemManager.ClearListInDictionary(APIURL.SearchWorld.ToString());
             ClearWorldScrollWorlds();
             previousSearchKey = SearchKey = searchKey;
-            Debug.LogError("Search Key Fail ");
         }
     }
     void SetAutoSwtichStreaming()
@@ -160,8 +155,8 @@ public class WorldManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
     }
 
@@ -195,7 +190,6 @@ public class WorldManager : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             case APIURL.SearchWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
-
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -233,8 +227,6 @@ public class WorldManager : MonoBehaviour
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
-       // Debug.LogError("Final URL " + finalAPIURL);
-        
         loadOnce = false;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
@@ -251,6 +243,7 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError("Fail");
                 loadOnce = true;
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
@@ -260,14 +253,12 @@ public class WorldManager : MonoBehaviour
 
     IEnumerator FetchUserMapFromServer(string apiURL, Action<bool> callback)
     {
-       // Debug.Log("World API: " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
-           // Debug.LogError("Response = "+www.downloadHandler.text);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 callback(false);
@@ -285,21 +276,18 @@ public class WorldManager : MonoBehaviour
     public WorldItemManager WorldItemManager;
     void InstantiateWorlds(string key)
     {
-       // Debug.LogError("InstantiateWorlds Called = "+key+" --- "+ _WorldInfo.data.rows.Count);
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             WorldItemDetail _event;
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-               // Debug.LogError(i+ " --- XANA Lobby --");
                 isLobbyActive = true;
-
             }
             _event = new WorldItemDetail();
-            if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
-            {
-              //  _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
-            }
+            //if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
+            //{
+            //  //  _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
+            //}
             _event.IdOfWorld = _WorldInfo.data.rows[i].id;
             _event.EnvironmentName = _WorldInfo.data.rows[i].name;
             try
@@ -341,23 +329,21 @@ public class WorldManager : MonoBehaviour
             }
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
-                //Debug.LogError(i + " --- XANA Lobby --");
                 isLobbyActive = true;
-                eventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
+                EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
             }
             else
             {
                 WorldItemManager.AddWorld(key,_event);
             }
         }
-        if (!isLobbyActive) // lobby is not active so disable the lobby button from scene
+        if (!isLobbyActive)
         {
-            eventPrefabLobby.SetActive(false);
+            EventPrefabLobby.SetActive(false);
         }
         WorldItemManager.DisplayWorlds(key);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-
         TutorialsManager.instance.ShowTutorials();
     }
     public void WorldPageStateHandler(bool _checkCheck)
@@ -476,7 +462,6 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            print("play btnn here");
             if (PlayerPrefs.HasKey("Equiped"))
             {
                 Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
@@ -510,10 +495,9 @@ public class WorldManager : MonoBehaviour
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            // Added By WaqasAhmad [20 July 23]
-            AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
-            GC.Collect();
+            //AssetBundle.UnloadAllAssetBundles(false);
+            //Resources.UnloadUnusedAssets();
+            //GC.Collect();
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -566,9 +550,9 @@ public class WorldManager : MonoBehaviour
             }
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        GC.Collect();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
+        //GC.Collect();
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -597,11 +581,6 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
-
-        //for (int i = 0; i < testWorldList.Count; i++)
-        //{
-        //    testWorldList[i].gameObject.transform.SetParent(listParentTestWorlds.transform);
-        //}
     }
     #region Clear Resource Unload Unused Asset File.......
     private int unloadUnusedFileCount;

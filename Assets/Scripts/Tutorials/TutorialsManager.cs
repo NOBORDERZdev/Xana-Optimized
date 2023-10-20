@@ -15,9 +15,7 @@ public class TutorialsManager : MonoBehaviour
     private TextMeshProUGUI leftNextBtnText;
     public Button crossButton;
     public Button okButton;
-    private GameObject worldsParent;
     private GameObject xanaLobby;
-    public GameObject tutorialsParent;
     public GameObject lobbyParent;
     public GameObject tutorialCanvasBG;
     //public GameObject thirdPanel;
@@ -112,7 +110,7 @@ public class TutorialsManager : MonoBehaviour
         HandleButtons(index);
         if (index == 1)
         {
-            xanaLobby = WorldManager.instance.eventPrefabLobby;
+            xanaLobby = WorldManager.instance.EventPrefabLobby;
             ShowWorlds(index);
         }
         else if (index == 2)

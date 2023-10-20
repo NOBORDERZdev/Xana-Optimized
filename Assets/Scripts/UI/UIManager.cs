@@ -1,32 +1,28 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun.Demo.PunBasics;
-using Photon.Pun;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, WorldPage, Canvas, HotSection;
+    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
     public GameObject _SplashScreen;
     public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
     public GameObject _footerCan;
     public GameObject faceMorphPanel;
-    [Space(5)]
-    [Header("Home Section")]
-    public GridLayoutGroup HotHomeSection;
-    public GridLayoutGroup NewHomeSection;
-    [Space(5)]
-    [Header("Worlds Section")]
-    public GridLayoutGroup HotWorldSection;
-    public GridLayoutGroup NewWorldSection;
-    [Space(5)]
-    [Header("Find World Section")]
-    public GridLayoutGroup FindScetion;
+    //[Space(5)]
+    //[Header("Home Section")]
+    //public GridLayoutGroup HotHomeSection;
+    //public GridLayoutGroup NewHomeSection;
+    //[Space(5)]
+    //[Header("Worlds Section")]
+    //public GridLayoutGroup HotWorldSection;
+    //public GridLayoutGroup NewWorldSection;
+    //[Space(5)]
+    //[Header("Find World Section")]
+    //public GridLayoutGroup FindScetion;
     [Space(5)]
     [Header("New World Layout References")]
     public Transform SearchHomeHolder;
@@ -68,11 +64,11 @@ public class UIManager : MonoBehaviour
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        {
-            HotHomeSection.constraintCount = 4;
-            NewHomeSection.constraintCount = 4;
-        }
+        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        //{
+        //    HotHomeSection.constraintCount = 4;
+        //    NewHomeSection.constraintCount = 4;
+        //}
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
@@ -81,6 +77,7 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(_state);
         ShowFooter(!_state);
     }
+
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
@@ -92,7 +89,10 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(true);
-                    LobbyTabHolder.gameObject.SetActive(true);
+                   // if(WorldManager.instance.GetCurrentTabSelected().Equals(APIURL.Hot))
+                        LobbyTabHolder.gameObject.SetActive(true);
+                   // else
+                    //    LobbyTabHolder.gameObject.SetActive(false);
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);

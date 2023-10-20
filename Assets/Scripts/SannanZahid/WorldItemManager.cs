@@ -33,6 +33,14 @@ public class WorldItemManager : MonoBehaviour
     }
     public void DisplayWorlds(string key)
     {
+        foreach (string a in Worlds.Keys)
+        {
+            Debug.LogError(" History kEY === " + a + " Elements === " + Worlds[a].Count);
+        }
+        if (!Worlds.ContainsKey("SearchWorld"))
+        {
+            Worlds.Add("SearchWorld",new List<WorldItemDetail>());
+        }
         _content.TotalItems = Worlds[key].Count;
         _content.InitScrollContent(key,Worlds[key]);
     }
@@ -58,12 +66,26 @@ public class WorldItemManager : MonoBehaviour
             _content.InitScrollContent("SearchWorld", new List<WorldItemDetail>());
         }
     }
+    public int GetWorldCountPresentInMemory(string _key)
+    {
+        if (Worlds.ContainsKey(_key))
+        {
+            Debug.LogError("cOUNT === " + Worlds[_key].Count+"  kEY === "+_key);
+            return Worlds[_key].Count;
+        }
+        else return 0;
+    }
     public void ClearListInDictionary(string _key)
     {
+        foreach(string a in Worlds.Keys)
+        {
+            Debug.LogError("  kEY === " + a+" Elements === "+ Worlds[a].Count);
+        }
         if(Worlds.ContainsKey(_key))
         {
+            Debug.LogError("cOUNT === " + Worlds[_key].Count + "  kEY === " + _key);
             Worlds[_key].Clear();
-            _content.ClearWorldData();
+           // _content.ClearWorldData();
         }
     }
     //public void ClearAllListInDictionary()

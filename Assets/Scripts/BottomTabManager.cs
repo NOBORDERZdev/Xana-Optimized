@@ -152,6 +152,9 @@ public class BottomTabManager : MonoBehaviour
 
             UIManager.Instance.Canvas.SetActive(true);
             UIManager.Instance.SwitchToScreen(0);
+            WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+            WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+
             // UIManager.Instance.HotSection.SetActive(true);
             // UIManager.Instance.WorldPage.SetActive(false);
 
@@ -182,14 +185,16 @@ public class BottomTabManager : MonoBehaviour
                // UIManager.Instance.WorldPage.SetActive(true);
                 //UIManager.Instance.HotSection.SetActive(false);
                 UIManager.Instance.SwitchToScreen(1);
+                WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+                WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
           //  WorldManager.instance.OpenAllWorldPage();
         }
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        {
-            UIManager.Instance.HotWorldSection.constraintCount = 4;
-            UIManager.Instance.NewWorldSection.constraintCount = 4;
-        }
+        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        //{
+        //    //UIManager.Instance.HotWorldSection.constraintCount = 4;
+        //    //UIManager.Instance.NewWorldSection.constraintCount = 4;
+        //}
     }
 
 

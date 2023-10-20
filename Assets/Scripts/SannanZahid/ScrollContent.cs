@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 namespace DynamicScrollRect
@@ -44,10 +43,10 @@ namespace DynamicScrollRect
         private float _screenSizeX = 1080;
         float AlignSpace = default;
         string CurrentKey;
-        public void ClearWorldData()
-        {
-            Worlds.Clear();
-        }
+        //public void ClearWorldData()
+        //{
+        //    Worlds.Clear();
+        //}
         private void Awake()
         {
             AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 3.5f;
@@ -55,8 +54,6 @@ namespace DynamicScrollRect
         }
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)
         {
-           // Debug.LogError("New Elements added === " + contentDatum.Count);
-           // Debug.LogError("New Elements added === " + Worlds.Count);
             if (Worlds.Count.Equals(0))
             {
                 Worlds = contentDatum;
@@ -65,7 +62,6 @@ namespace DynamicScrollRect
             }
             else if(worldKey != CurrentKey)
             {
-                //Debug.LogError("Key Change === " + contentDatum.Count);
                 ClearContent();
                 Worlds = contentDatum;
                 CurrentKey = worldKey;
@@ -75,7 +71,6 @@ namespace DynamicScrollRect
             }
             else if(worldKey.Equals(APIURL.SearchWorld.ToString()))
             {
-               // Debug.LogError("Abnormal Case");
                 ClearContent();
                 Worlds = contentDatum;
                 CurrentKey = worldKey;
@@ -104,7 +99,6 @@ namespace DynamicScrollRect
         {
             return new Vector2Int(_fixedItemCount, 9);
         }
-
         private WorldItemView ActivateItem(int itemIndex)
         {
             Vector2 gridPos = GetGridPosition(itemIndex);
@@ -142,10 +136,8 @@ namespace DynamicScrollRect
             int row = itemIndex - (col * _fixedItemCount);
             return new Vector2(row, col);
         }
-     
         private Vector2 GetAnchoredPosition(Vector2 gridPosition)
         {
-            Debug.LogError("Spacing " + Spacing);
             return new Vector2(
                 AlignSpace + (gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
                 (-gridPosition.y * ItemHeight) - (gridPosition.y * Spacing.y));
@@ -160,7 +152,6 @@ namespace DynamicScrollRect
         public void ClearContent()
         {
             List<WorldItemView> activatedItems = new List<WorldItemView>(_activatedItems);
-
             foreach (WorldItemView item in activatedItems)
             {
                 DeactivateItem(item);
@@ -256,7 +247,6 @@ namespace DynamicScrollRect
                 previousItems = TotalItems;
                 if(WorldManager.instance.dataIsFatched)
                 {
-                    Debug.LogError(itemIndex+ " === Load NextPage Call === "+previousItems);
                     WorldManager.instance.WorldPageLoading();
                 }
             }

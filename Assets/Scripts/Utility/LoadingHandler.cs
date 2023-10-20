@@ -302,7 +302,6 @@ public class LoadingHandler : MonoBehaviour
     bool orientationchanged = false;
     public void ShowFadderWhileOriantationChanged(ScreenOrientation oriantation)
     {
-        Debug.LogError("~~~~~~~  Activated Fadder ~~~~~~~ " + oriantation);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOKill();
 #if !UNITY_EDITOR

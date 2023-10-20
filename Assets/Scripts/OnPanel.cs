@@ -43,14 +43,8 @@ public class OnPanel : MonoBehaviour
             UIManager.Instance.ShowFooter(true);//rik
         }
     }
-    private void OnEnable()
-    {
-        MainCanvas.matchWidthOrHeight = 1f;
-    }
     private void OnDisable()
     {
-        MainCanvas.matchWidthOrHeight = 0f;
-
         if (UIManager.Instance.HomePage.activeInHierarchy)
             UIManager.Instance.HomePage.SetActive(true);
 

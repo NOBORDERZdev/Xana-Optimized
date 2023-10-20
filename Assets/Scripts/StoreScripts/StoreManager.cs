@@ -878,7 +878,6 @@ public class StoreManager : MonoBehaviour
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            Debug.LogError("AUTH_TOKEN -----> "+ ConstantsGod.AUTH_TOKEN);
             request.SendWebRequest();
             while (!request.isDone)
             {
