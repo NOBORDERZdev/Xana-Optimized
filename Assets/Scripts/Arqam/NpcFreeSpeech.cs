@@ -30,20 +30,21 @@ public class NpcFreeSpeech : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
 
-        //for live http://15.152.13.112:8032/
-        //for test http://182.70.242.10:8032/
         string prefix = "";
+        string ip = "";
         int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
 
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_userid_en_35?id=";
+            ip = "http://182.70.242.10:8032/";
+            prefix = ip + "api/v1/text_from_userid_en_35?id=";
             id = npcChatSystem.npcAttributes[temp].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://15.152.13.112:8032/api/v1/text_from_userid_en_35?id=";
+            ip = "http://15.152.13.112:8032/";
+            prefix = ip + "api/v1/text_from_userid_en_35?id=";
             id = npcChatSystem.npcAttributes[temp].actualAiIds;
         }
 
@@ -58,7 +59,7 @@ public class NpcFreeSpeech : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.FreeSpeechNpc, id.ToString());
             Debug.Log("Communication Response(FreeAI): " + feed.response);
         }
         else
