@@ -33,7 +33,9 @@ public class XanaChatSocket : MonoBehaviour
     // https://chat-prod.xana.net/api/v1/set-device-id-against-socketId
 
     string socketTestnet = "https://chat-testing.xana.net/";
-    string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+    // Fetch API updated https://chat-testing.xana.net/api/v1/fetch-world-chat-byEventId/:worldId/:eventId/:userId/:page/:limit
+    //string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
+    string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byEventId/";
     string apiGusetNameTestnet = "https://chat-testing.xana.net/api/v1/set-device-id-against-socketId";
 
 
@@ -110,6 +112,13 @@ public class XanaChatSocket : MonoBehaviour
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+
+
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            eventId = XanaEventDetails.eventDetails.id;
+        }
+        
 
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
@@ -268,7 +277,7 @@ public class XanaChatSocket : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
+        string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
         Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
