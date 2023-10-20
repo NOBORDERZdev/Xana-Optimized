@@ -44,6 +44,11 @@ public class WorldManager : MonoBehaviour
     private List<GameObject> eventWorldList = new List<GameObject>();
     private List<GameObject> testWorldList = new List<GameObject>();
 
+    [Header("Fighting Module PopUp")]
+    public GameObject fightingModulePopUp;
+    public bool isCheckFightingModulePopUp;
+    public bool HaveFighterNFT;
+    
     [HideInInspector]
     public bool orientationchanged = false;
 
@@ -447,6 +452,25 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void OnClickEnterAsParticipant()
+    {
+        CloseFightingModulePopUp();
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        FightingModuleManager.Instance.OnClickMainMenu();
+    }
+
+    public void OnClickEnterAsSpectator()
+    {
+        isCheckFightingModulePopUp = true;
+        CloseFightingModulePopUp();
+        FeedEventPrefab.m_EnvName = "BreakingDown Arena";
+        JoinEvent();
+    }
+
+    public void CloseFightingModulePopUp()
+    {
+        fightingModulePopUp.SetActive(false);
+    }
 
     public async void JoinEvent()
     {
@@ -493,7 +517,24 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
+                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
 
+                    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
+
+                    if (list != null)
+                    {
+                        HaveFighterNFT = true;
+                    }
+                    else
+                    {
+                        HaveFighterNFT = false;
+                    }
+                    if (FeedEventPrefab.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                    {
+                        Debug.Log("Breaking down Arena World");
+                        fightingModulePopUp.SetActive(true);
+                        return;
+                    }
                     print("NFT is in your OwnerShip Enjoy");
                 }
             }

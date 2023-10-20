@@ -12,6 +12,7 @@ using DG.Tweening;
 public class SceneManage : MonoBehaviourPunCallbacks
 {
     public static bool callRemove;
+    public bool isAddressableScene = true;
     public GameObject AnimHighlight;
     public GameObject popupPenal;
     public GameObject spawnCharacterObject;
@@ -167,13 +168,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LeaveRoom()
     {
-        callRemove = true;
-        Launcher.instance.working = ScenesList.MainMenu;
-        PhotonNetwork.LeaveRoom(false);
-        PhotonNetwork.LeaveLobby();
-        PhotonNetwork.DestroyAll(true);
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
-        Debug.Log("Exit: Api Called");
+        if (isAddressableScene)
+        {
+            callRemove = true;
+            Launcher.instance.working = ScenesList.MainMenu;
+            PhotonNetwork.LeaveRoom(false);
+            PhotonNetwork.LeaveLobby();
+            PhotonNetwork.DestroyAll(true);
+            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+            Debug.Log("Exit: Api Called");
+        }
         StartSceneLoading();
     }
 
