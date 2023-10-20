@@ -23,6 +23,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter += EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter += EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter += EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter += EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit += DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
@@ -60,6 +61,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter -= EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter -= EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter -= EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter -= EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit -= DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
@@ -136,6 +138,10 @@ public class GamificationComponentUIManager : MonoBehaviour
     public GameObject DisplayMessageParentUI;
     public TextMeshProUGUI DisplayMessageText;
     public TextMeshProUGUI DisplayMessageTimeText;
+
+    //Door Key Component
+    public GameObject DoorKeyParentUI;
+    public TextMeshProUGUI DoorKeyText;
 
     //Help Button Component
     public GameObject HelpButtonParentUI;
@@ -743,12 +749,16 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+
                 colorString = "#36C34E";
                 break;
 
             case 1:
                 wrong++;
                 image = wrongImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+
                 break;
 
             case 2:
@@ -1249,6 +1259,45 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     #endregion
 
+    #region DoorKey Component
+    Coroutine EnableDoorKeyCoroutine;
+    public void EnableDoorKeyUI(string DisplayMessage)
+    {
+        DisableAllComponentUIObject(Constants.ItemComponentType.DoorKeyComponent);
+        if (EnableDoorKeyCoroutine == null)
+        {
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+        else
+        {
+            StopCoroutine(EnableDoorKeyCoroutine);
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+    }
+    public IEnumerator IEEnableDoorKeyUI(string DisplayMessage)
+    {
+        DisplayMessage = TextLocalization.GetLocaliseTextByKey(DisplayMessage);
+        DoorKeyText.text = DisplayMessage;
+        DoorKeyParentUI.SetActive(true);
+
+        float time = 5f;
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            time--;
+        }
+        DoorKeyParentUI.SetActive(false);
+    }
+
+    public void DisableDoorKeyUI()
+    {
+        if (EnableDoorKeyCoroutine != null)
+            StopCoroutine(EnableDoorKeyCoroutine);
+        DoorKeyParentUI.SetActive(false);
+        DoorKeyText.text = "";
+    }
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -1293,5 +1342,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
             DisableAvatarChangerComponentUI();
+        if (componentType != Constants.ItemComponentType.DoorKeyComponent)
+            DisableDoorKeyUI();
     }
 }
