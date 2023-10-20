@@ -536,7 +536,7 @@ public class WorldManager : MonoBehaviour
 //#else
             //StartCoroutine(Check_Orientation(() =>
             //{
-             LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+             LoadingHandler.Instance.ShowLoading();
             // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -636,7 +636,7 @@ public class WorldManager : MonoBehaviour
 //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             //StartCoroutine(Check_Orientation(()=> 
             //{
-                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+                LoadingHandler.Instance.ShowLoading();
                 //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -728,7 +728,7 @@ public class WorldManager : MonoBehaviour
             //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
             //StartCoroutine(Check_Orientation(()=> 
             //{
-                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+                LoadingHandler.Instance.ShowLoading();
                //LoadingHandler.Instance.UpdateLoadingSlider(0);
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
                 //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
@@ -757,7 +757,7 @@ public class WorldManager : MonoBehaviour
 //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
 //            StartCoroutine(Check_Orientation(() =>
 //            {
-             LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+             LoadingHandler.Instance.ShowLoading();
            // LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 

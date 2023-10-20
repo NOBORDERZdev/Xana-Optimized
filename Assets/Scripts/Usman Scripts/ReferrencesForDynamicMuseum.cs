@@ -32,6 +32,10 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public int RoomMaxPlayerCount=0;
     public int PlayerCount = 0;
     public float MonitorDistance;
+    //MoveWhileDancing add kamran
+    public GameObject landscapeMoveWhileDancingButton;
+    public GameObject portraitMoveWhileDancingButton;
+    public int moveWhileDanceCheck;
 
     // Start is called before the first frame update
     void Awake()
@@ -162,6 +166,17 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
             else
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
+        }
+        moveWhileDanceCheck = PlayerPrefs.GetInt("dancebutton"); //add kamran
+        if (moveWhileDanceCheck == 0) 
+        {
+            landscapeMoveWhileDancingButton.SetActive(false);
+            instance.portraitMoveWhileDancingButton.SetActive(false);
+        }
+        else
+        {
+            landscapeMoveWhileDancingButton.SetActive(true);
+            instance.portraitMoveWhileDancingButton.SetActive(true);
         }
     }
 

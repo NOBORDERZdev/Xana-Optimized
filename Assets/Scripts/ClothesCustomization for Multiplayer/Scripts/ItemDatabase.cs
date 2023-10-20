@@ -237,7 +237,7 @@ public class ItemDatabase : MonoBehaviour
         #endregion
 
         if (LoadingHandler.Instance)
-            LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+            LoadingHandler.Instance.HideLoading();
 
         yield return null;
     }
