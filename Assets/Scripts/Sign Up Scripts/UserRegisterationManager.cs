@@ -195,6 +195,7 @@ public class UserRegisterationManager : MonoBehaviour
     public Text _NewLoadingText;
     String _LoadingTitle = "";
     public bool _IsWalletSignUp = false;
+    public int SignUpButtonSelected = 0;
 
     public void ShowWelcomeScreen()
     {
@@ -273,6 +274,11 @@ public class UserRegisterationManager : MonoBehaviour
             setAvatarGiftPanal.SetActive(false);
             
         }
+        if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
+        {
+            PlayerPrefs.SetInt("CloseLoginScreen", 1);
+        }
+        
     }
 
     public void iwanto_signUp()
@@ -899,9 +905,16 @@ public class UserRegisterationManager : MonoBehaviour
     //    //end reset
 
     //}
+
+    public void SignUpMethodSelected(int btn) 
+    {
+        SignUpButtonSelected = btn;
+    }
+
+
     public void BackFtn(int Openbackint)
     {
-        print(Openbackint);
+        print(SignUpButtonSelected);
         if (ForgetPasswordBool)
         {
             OpenUIPanal(14);
@@ -909,28 +922,37 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (SignUpWithPhoneBool)
-            {
-                if (Openbackint == 2)
-                {
-                    // PhoneInputTextNew.Text = "";
-                    PhoneFieldNew.Text = "";
-                    //Openbackint = 9;
-                }
-                if (Openbackint == 8)
-                {
-                    //   PhoneInputTextNew.Text = "";
-                    PhoneFieldNew.Text = "";
-                }
+            OpenUIPanal(20);
+            //if (!WalletScreen.activeInHierarchy)
+            //{
+            //    if (SignUpButtonSelected == 1)
+            //    {
+            //        OnSignUpPhoneTabPressed();
+            //        PhoneFieldNew.Text = "";
+            //        //if (Openbackint == 2)
+            //        //{
+            //        //    // PhoneInputTextNew.Text = "";
+            //        //    PhoneFieldNew.Text = "";
+            //        //    OpenUIPanal(Openbackint);
+            //        //    //Openbackint = 9;
+            //        //}
+            //        //if (Openbackint == 8)
+            //        //{
+            //        //    //   PhoneInputTextNew.Text = "";
+            //        //    PhoneFieldNew.Text = "";
+            //        //}
+            //    }
+            //    else if (SignUpButtonSelected == 2)
+            //    {
+            //        OnSignUpEmailTabPressed();
+            //        EmailFieldNew.Text = "";
+            //    }
+            //    SignUpPanal.SetActive(true);
             }
-            else if (SignUpWithEmailBool)
-            {
-
-            }
-            OpenUIPanal(Openbackint);
+            
+            //OpenUIPanal(Openbackint);
             image_to_Change[0].sprite = OTPbox_highlighter;
             image_to_Change[3].sprite = oldOTP_Box;
-        }
     }
 
     public void GoToRegistrationScreen(int R_Integer)
@@ -1356,6 +1378,25 @@ public class UserRegisterationManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
+                    break;
+                }
+
+            case 20: 
+                {
+                    if (!WalletScreen.activeInHierarchy)
+                    {
+                        if (SignUpButtonSelected == 1)
+                        {
+                            OnSignUpPhoneTabPressed();
+                            PhoneFieldNew.Text = "";
+                        }
+                        else if (SignUpButtonSelected == 2)
+                        {
+                            OnSignUpEmailTabPressed();
+                            EmailFieldNew.Text = "";
+                        }
+                        SignUpPanal.SetActive(true);
+                    }
                     break;
                 }
         }
