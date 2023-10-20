@@ -431,8 +431,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
@@ -786,7 +789,14 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         if (isFirstPerson)
-            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
@@ -794,7 +804,6 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            Debug.LogError("StopBuilderComponent1");
             if (isNinjaMotion)
             {
                 isNinjaMotion = false;
@@ -809,7 +818,6 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
             {
-                Debug.LogError("StopBuilderComponent2");
                 if (GamificationComponentData.instance.activeComponent != null)
                     GamificationComponentData.instance.activeComponent.StopBehaviour();
             }

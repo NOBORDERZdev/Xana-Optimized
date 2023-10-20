@@ -161,6 +161,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 rr.transform.GetChild(0).gameObject.SetActive(false);
             }
             GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
+            GamificationComponentData.instance.activeComponent = null;
 
         }
 
