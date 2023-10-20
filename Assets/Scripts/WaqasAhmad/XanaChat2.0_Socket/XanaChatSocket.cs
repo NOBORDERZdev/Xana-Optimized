@@ -35,14 +35,16 @@ public class XanaChatSocket : MonoBehaviour
     string socketTestnet = "https://chat-testing.xana.net/";
     // Fetch API updated https://chat-testing.xana.net/api/v1/fetch-world-chat-byEventId/:worldId/:eventId/:userId/:page/:limit
     //string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byId/";
-    string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byEventId/";
+    //string fetchApiTestnet = "https://chat-testing.xana.net/api/v1/fetch-world-chat-byEventId/";
     string apiGusetNameTestnet = "https://chat-testing.xana.net/api/v1/set-device-id-against-socketId";
 
 
     string socketMainnet = "https://chat-prod.xana.net/";
-    string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
+    //string fetchApiMainnet = "https://chat-prod.xana.net/api/v1/fetch-world-chat-byId/";
     string apiGusetNameMainnet = "https://chat-prod.xana.net/api/v1/set-device-id-against-socketId";
 
+
+    string fetchApi = "api/v1/fetch-world-chat-byEventId/";
 
     public SocketManager Manager;
 
@@ -94,13 +96,13 @@ public class XanaChatSocket : MonoBehaviour
         if (APIBaseUrlChange.instance.IsXanaLive)
         {
             address = socketMainnet;
-            fetchAllMsgApi = fetchApiMainnet;
+            fetchAllMsgApi = address + fetchApi;
             setGuestNameApi = apiGusetNameMainnet;
         }
         else
         {
             address = socketTestnet;
-            fetchAllMsgApi = fetchApiTestnet;
+            fetchAllMsgApi = address + fetchApi;
             setGuestNameApi = apiGusetNameTestnet;
         }
 
