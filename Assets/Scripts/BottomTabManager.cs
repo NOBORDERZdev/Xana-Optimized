@@ -144,36 +144,38 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to Home button click.......
     public void OnClickHomeButton()
     {
-        GlobalVeriableClass.callingScreen = "";
-        Debug.Log("Home button onclick");
-        // LoaderShow(false);
-        if (defaultSelection != 0)
-        {
-            OnSelectedClick(0);
-            //Initiate.Fade("Main", Color.black, 1.0f);
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+        
+            GlobalVeriableClass.callingScreen = "";
+            Debug.Log("Home button onclick");
+            // LoaderShow(false);
+            if (defaultSelection != 0)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
-            }
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
-            }
+                OnSelectedClick(0);
+                //Initiate.Fade("Main", Color.black, 1.0f);
+                if (FindObjectOfType<AdditiveScenesManager>() != null)
+                {
+                    FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+                    FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                }
+                if (UIManager.Instance != null)
+                {
+                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
+                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+                }
 
-            UIManager.Instance.Canvas.SetActive(true);
-            UIManager.Instance.HotSection.SetActive(true);
-            UIManager.Instance.WorldPage.SetActive(false);
+                UIManager.Instance.Canvas.SetActive(true);
+                UIManager.Instance.HotSection.SetActive(true);
+                UIManager.Instance.WorldPage.SetActive(false);
 
-            // EventList.instance.ReLoadImageAfterEnable();
-            WorldManager.instance.OpenXANAWorldPage();
-        }
+                // EventList.instance.ReLoadImageAfterEnable();
+                WorldManager.instance.OpenXANAWorldPage();
+            }
+        
     }
 
     public void OnClickNewWorldButton()
     {
-        if (!UIManager.Instance.WorldPage.activeSelf)
+        if (!UIManager.Instance.WorldPage.activeSelf||!UIManager.Instance.Canvas.activeSelf) // Parent Canvas on kamran
         {
             Debug.Log("World button onclick");
             if (defaultSelection != 1)
