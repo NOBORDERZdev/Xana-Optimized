@@ -469,12 +469,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        //if (!XanaConstants.xanaConstants.isCameraMan)
-        //{
-        //    LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
-        //    // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        //    LoadingHandler.Instance.UpdateLoadingStatusText("");
-        //}
+        if (!XanaConstants.xanaConstants.isCameraMan)
+        {
+            LoadingHandler.Instance.HideLoading();
+            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
         if ((FeedEventPrefab.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
             if (!XanaConstants.xanaConstants.isCameraMan)
@@ -505,8 +505,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
-        //if (!XanaConstants.xanaConstants.isCameraMan)
-        //    LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+        if (!XanaConstants.xanaConstants.isCameraMan)
+            LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
         // Commented By WaqasAhmad
         {
@@ -674,9 +674,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
 
-        isEnvLoaded = true;
-        //yield return new WaitForSeconds(1.75f);
-        //LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+
+        yield return new WaitForSeconds(1.75f);
+        LoadingHandler.Instance.HideLoading();
         // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         //LoadingHandler.Instance.UpdateLoadingStatusText("");
 

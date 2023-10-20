@@ -106,8 +106,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
                     LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
                 }
                 Debug.Log("~~~~~~ LoadMain call");
-
-                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+                XanaConstants.xanaConstants.isBackFromWorld = true;
+                LoadingHandler.Instance.ShowLoading();
 
                 GC.Collect();
                 AssetBundle.UnloadAllAssetBundles(true);

@@ -1366,7 +1366,7 @@ public class UserRegisterationManager : MonoBehaviour
             //yield return new WaitForSeconds(.1f);
             //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
             //yield return new WaitForSeconds(.1f);
-            LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+            LoadingHandler.Instance.HideLoading();
             StoreManager.instance.CheckWhenUserLogin();
         }
         CallBack(false);
@@ -1439,7 +1439,7 @@ public class UserRegisterationManager : MonoBehaviour
         //yield return new WaitForSeconds(.1f);
         //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
         //yield return new WaitForSeconds(.1f);
-        LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+        LoadingHandler.Instance.HideLoading();
         XanaConstants.xanaConstants.isCameraMan = false;
         XanaConstants.xanaConstants.IsDeemoNFT = false;
         StoreManager.instance.CheckWhenUserLogin();

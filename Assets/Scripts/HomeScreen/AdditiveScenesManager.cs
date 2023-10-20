@@ -115,7 +115,7 @@ public class AdditiveScenesManager : MonoBehaviour
             //    Screen.orientation = ScreenOrientation.Portrait;
             //}
         
-        LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+        LoadingHandler.Instance.HideLoading();
 
         //if (LoadingHandler.Instance != null)
         //{
