@@ -9,6 +9,13 @@ public class HyperLinkPopComponent : ItemComponent
     public void Init(HyperLinkComponentData hyperLinkComponentData)
     {
         this.hyperLinkComponentData = hyperLinkComponentData;
+
+        // Remove leading and trailing spaces
+        string inputText = this.hyperLinkComponentData.titleHelpButtonText.Trim();
+        // Replace all spaces between lines with an empty string
+        string hyperLinkCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+
+        this.hyperLinkComponentData.titleHelpButtonText = hyperLinkCleanedText;
     }
 
     void SetHelpButtonNarration()
