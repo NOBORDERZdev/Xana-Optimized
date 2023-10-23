@@ -13,6 +13,11 @@ public class DisplayMessagesComponent : ItemComponent
     public void Init(DisplayMessageComponentData displayMessageComponentData)
     {
         this.displayMessageComponentData = displayMessageComponentData;
+        // Remove leading and trailing spaces
+        string inputText = this.displayMessageComponentData.startDisplayMessage.Trim();
+        // Replace all spaces between lines with an empty string
+        string displayMessageCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+        this.displayMessageComponentData.startDisplayMessage = displayMessageCleanedText;
     }
 
     //oncollisionEnter to OnTriggerEnter
@@ -29,6 +34,8 @@ public class DisplayMessagesComponent : ItemComponent
 
     private void StartComponent()
     {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
+
         if (displayMessageComponentData.isStart)
         {
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.startDisplayMessage, displayMessageComponentData.startTimerCount, true);

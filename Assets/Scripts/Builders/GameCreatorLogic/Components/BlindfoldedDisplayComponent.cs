@@ -15,6 +15,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
     string RuntimeItemID = "";
 
     bool notTriggerOther = false;
+    RingbufferFootSteps rr;
 
     public void Init(BlindfoldedDisplayComponentData blindfoldedDisplayComponentData)
     {
@@ -37,19 +38,17 @@ public class BlindfoldedDisplayComponent : ItemComponent
             if (GamificationComponentData.instance.withMultiplayer)
             {
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    GamificationComponentData.instance.SetRoomData(RuntimeItemID, Constants.ItemComponentType.none);
-                }
             }
-            
+
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
+            GamificationComponentData.instance.activeComponent = this;
         }
     }
 
     private void SetFootPrinting()
     {
+        GamificationComponentData.instance.isBlindfoldedFootPrinting = true;
         Transform shoes = GamificationComponentData.instance.buildingDetect.playerShoes.transform;
         //shoes.localPosition = Vector3.forward * 0.761f;
         Rigidbody rb = null;
@@ -113,8 +112,22 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     IEnumerator BackToVisible(RingbufferFootSteps rr)
     {
+        this.rr = rr;
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
+        DeactivateAvatarInivisibility();
+    }
 
+    IEnumerator BackToAvatarVisiblityHologram()
+    {
+        yield return new WaitForEndOfFrame();
+        BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
+        yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
+        DeactivateAvatarInivisibility();
+    }
+
+    private void DeactivateAvatarInivisibility()
+    {
+        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
         BuilderEventManager.DeactivateAvatarInivisibility?.Invoke();
         notTriggerOther = false;
         RaycastHit hit;
@@ -130,18 +143,27 @@ public class BlindfoldedDisplayComponent : ItemComponent
             }
         }
 
-        footstepsBool = false;
-
-        for (int i = 0; i < skinMesh.Length; i++)
+        if (blindfoldedDisplayComponentData.footprintPaintAvatar)
         {
-            skinMesh[i].enabled = true;
+            footstepsBool = false;
+
+            for (int i = 0; i < skinMesh.Length; i++)
+            {
+                skinMesh[i].enabled = true;
+            }
+
+
+            GamificationComponentData.instance.buildingDetect.playerFreeCamConsole.enabled = true;
+            GamificationComponentData.instance.buildingDetect.playerFreeCamConsoleOther.enabled = true;
+            if (rr != null)
+            {
+                rr.enabled = false;
+                rr.transform.GetChild(0).gameObject.SetActive(false);
+            }
+            GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
+            GamificationComponentData.instance.activeComponent = null;
+
         }
-
-
-        GamificationComponentData.instance.buildingDetect.playerFreeCamConsole.enabled = true;
-        GamificationComponentData.instance.buildingDetect.playerFreeCamConsoleOther.enabled = true;
-        rr.enabled = false;
-        rr.transform.GetChild(0).gameObject.SetActive(false);
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
@@ -151,35 +173,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         }
         notTriggerOther = false;
         this.gameObject.SetActive(false);
-    }
 
-    IEnumerator BackToAvatarVisiblityHologram()
-    {
-        yield return new WaitForEndOfFrame();
-        BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
-        yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
-
-        BuilderEventManager.DeactivateAvatarInivisibility?.Invoke();
-        notTriggerOther = false;
-        RaycastHit hit;
-        if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
-        {
-            if (hit.collider.CompareTag("Item"))
-            {
-                //Debug.Log("Not Null");
-                BuilderEventManager.ReSpawnPlayer?.Invoke();
-                notTriggerOther = true;
-                Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");
-            }
-        }
-
-        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
-        if (!notTriggerOther)
-        {
-            Physics.IgnoreLayerCollision(9, 22, false);
-        }
-        notTriggerOther = false;
-        this.gameObject.SetActive(false);
     }
 
     #region BehaviourControl
@@ -189,6 +183,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         //GamificationComponentData.instance.playerControllerNew.isThrow = false;
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
 
@@ -206,12 +201,16 @@ public class BlindfoldedDisplayComponent : ItemComponent
     private void StopComponent()
     {
         //ther is no Stop because in this case the player have no colliders they are invisible
-        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
+        //BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
+        DeactivateAvatarInivisibility();
     }
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
+        if (!isPlaying)
+            return;
+                isPlaying = false;
+        StopComponent();
         StopComponent();
     }
 
