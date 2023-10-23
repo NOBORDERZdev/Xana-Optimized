@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 using System;
 using System.IO;
 using UnityEditor;
-using AdvancedInputFieldPlugin;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
-using UnityEngine.UI;
-using static Photon.Pun.UtilityScripts.TabViewManager;
-using System.Drawing.Printing;
-using UnityEngine.InputSystem;
 
 public class WorldManager : MonoBehaviour
 {
@@ -36,7 +30,6 @@ public class WorldManager : MonoBehaviour
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
     public AllWorldManage AllWorldTabReference;
-    //public APIURL previousURL;
     public static WorldManager instance;
     [SerializeField]
     [NonReorderable]
@@ -82,21 +75,34 @@ public class WorldManager : MonoBehaviour
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {
-        if(WorldItemManager.GetWorldCountPresentInMemory(tab.ToString())>0)
+        if(WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
             WorldItemManager.DisplayWorlds(tab.ToString());
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
         else
         {
             ChangeWorldTab(tab);
         }
     }
+    public void ChangeWorld(APIURL tab)
+    {
+        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        WorldItemManager.DisplayWorlds("Temp");
+        StartCoroutine(WorldCall(tab));
+    }
+    IEnumerator WorldCall(APIURL tab)
+    {
+        yield return new WaitForSeconds(1f);
+        while(!dataIsFatched)
+        {
+            Debug.LogError("Clear Fetch");
+            NotProcessRequest = true;
+        }
+        CheckWorldTabAndReset(tab);
+    }
     public void ChangeWorldTab(APIURL tab)
     {
-        //if(tab != APIURL.SearchWorld)
-        //{
-        //    previousURL = tab;
-        //}
         aPIURLGlobal = tab;
         GetBuilderWorlds(tab, (a) => { });
     }
@@ -155,11 +161,8 @@ public class WorldManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        //AssetBundle.UnloadAllAssetBundles(false);
-        //Resources.UnloadUnusedAssets();
         BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
     }
-
     public void WorldPageLoading()
     {
         if (dataIsFatched)
@@ -224,6 +227,7 @@ public class WorldManager : MonoBehaviour
                 return;
         }
     }
+    bool NotProcessRequest = false;
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
@@ -231,8 +235,17 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
+           
+
             if (isSucess)
             {
+                if (NotProcessRequest)
+                {
+                    Debug.LogError("Reset Clear Fetch");
+                    dataIsFatched = true;
+                    NotProcessRequest = false;
+                    return;
+                }
                 InstantiateWorlds(aPIURL.ToString());
                 dataIsFatched = true;
                 UpdatePageNumber(aPIURL);
@@ -243,7 +256,6 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Fail");
                 loadOnce = true;
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
@@ -269,6 +281,7 @@ public class WorldManager : MonoBehaviour
                 worldstr = www.downloadHandler.text;
                 callback(true);
             }
+            www.Dispose();
         }
     }
     public string worldstr;
@@ -284,10 +297,6 @@ public class WorldManager : MonoBehaviour
                 isLobbyActive = true;
             }
             _event = new WorldItemDetail();
-            //if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) > 0)
-            //{
-            //  //  _event.joinedUserCount.transform.parent.gameObject.SetActive(true);
-            //}
             _event.IdOfWorld = _WorldInfo.data.rows[i].id;
             _event.EnvironmentName = _WorldInfo.data.rows[i].name;
             try
@@ -495,9 +504,6 @@ public class WorldManager : MonoBehaviour
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            //AssetBundle.UnloadAllAssetBundles(false);
-            //Resources.UnloadUnusedAssets();
-            //GC.Collect();
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -651,7 +657,6 @@ public class DataClass
 [System.Serializable]
 public class RowList
 {
-    // Updated By WaqasAhmad According to Swagger
     public string id;
     public string name;
     public string user_limit;

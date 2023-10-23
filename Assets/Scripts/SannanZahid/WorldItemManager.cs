@@ -1,4 +1,3 @@
-using Photon.Voice;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,9 +32,9 @@ public class WorldItemManager : MonoBehaviour
     }
     public void DisplayWorlds(string key)
     {
-        foreach (string a in Worlds.Keys)
+        if (!Worlds.ContainsKey("Temp"))
         {
-            Debug.LogError(" History kEY === " + a + " Elements === " + Worlds[a].Count);
+            Worlds.Add("Temp", new List<WorldItemDetail>());
         }
         if (!Worlds.ContainsKey("SearchWorld"))
         {
@@ -52,9 +51,10 @@ public class WorldItemManager : MonoBehaviour
     }
     public void WorldScrollReset()
     {
+        _content.DynamicScrollRect.content.anchoredPosition = Vector2.zero;
         _content.DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
         _content.ResetContent();
-        _content.DynamicScrollRect.content.anchoredPosition = Vector2.zero;
+        _content.DynamicScrollRect.velocity = Vector2.zero;
     }
     public void ClearWorldScrollWorlds()
     {
@@ -70,30 +70,17 @@ public class WorldItemManager : MonoBehaviour
     {
         if (Worlds.ContainsKey(_key))
         {
-            Debug.LogError("cOUNT === " + Worlds[_key].Count+"  kEY === "+_key);
             return Worlds[_key].Count;
         }
         else return 0;
     }
     public void ClearListInDictionary(string _key)
     {
-        foreach(string a in Worlds.Keys)
-        {
-            Debug.LogError("  kEY === " + a+" Elements === "+ Worlds[a].Count);
-        }
         if(Worlds.ContainsKey(_key))
         {
-            Debug.LogError("cOUNT === " + Worlds[_key].Count + "  kEY === " + _key);
             Worlds[_key].Clear();
-           // _content.ClearWorldData();
         }
     }
-    //public void ClearAllListInDictionary()
-    //{
-    //    foreach()
-    //        Worlds[_key].Clear();
-    //        _content.ClearWorldData();
-    //}
 }
 [Serializable]
 public class WorldItemDetail

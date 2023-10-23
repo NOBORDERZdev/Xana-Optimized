@@ -4,8 +4,6 @@ using UnityEngine;
 public class WorldSearchManager : MonoBehaviour
 {
     public AdvancedInputField searchWorldInput;
-  //  public GameObject FindWorldScreen;
-
     private void OnEnable()
     {
         searchWorldInput.OnValueChanged.AddListener(UserInput => UserInputUpdate(UserInput)) ;
@@ -22,7 +20,6 @@ public class WorldSearchManager : MonoBehaviour
     public void GetSearchBarStatus()
     {
         Debug.Log("GetSearchBarStatus => " + PremiumUsersDetails.Instance.CheckSpecificItem("WorldSearchFeature"));
-      //  FindWorldScreen.SetActive(true);
         searchWorldInput.Select();
         searchWorldInput.Clear();
     }

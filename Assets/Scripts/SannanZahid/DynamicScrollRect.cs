@@ -1,8 +1,6 @@
-﻿using ExitGames.Client.Photon;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -20,12 +18,13 @@ namespace DynamicScrollRect
         private bool _isDragging = false;
         private bool _runningBack = false;
         private bool _needRunBack = false;
-        private Vector2 _contentStartPos = Vector2.zero;
+        public  Vector2 _contentStartPos = Vector2.zero;
         private Vector2 _dragStartingPosition = Vector2.zero;
         private Vector2 _dragCurPosition = Vector2.zero;
         private Vector2 _lastDragDelta = Vector2.zero;
         private IEnumerator _runBackRoutine;
         private ScrollContent _content;
+        public Transform Burka;
         private ScrollContent _Content
         {
             get
@@ -71,6 +70,7 @@ namespace DynamicScrollRect
         public bool StateBlock = false;
         protected override void LateUpdate()
         {
+            
             base.LateUpdate();
             if (!StateBlock)
             {
@@ -82,8 +82,15 @@ namespace DynamicScrollRect
    
             }
         }
+        public bool RestrictFlag = false;
         private void Update()
         {
+            if(RestrictFlag)
+            {
+                TopScroller.vertical = false;
+                ParentSliderFlag = false;
+                return;
+            }
             if(!StateBlock)
             {
                 if (TopScroller.verticalNormalizedPosition > ParentSliderLimitCheck)

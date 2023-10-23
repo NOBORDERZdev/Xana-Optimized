@@ -25,24 +25,18 @@ public class AllWorldManage : MonoBehaviour
     {
         UIManager.Instance.SwitchToScreen(2);
         WorldManager.instance.ClearWorldScrollWorlds();
-       // WorldManager.instance.ChangeWorldTab(APIURL.SearchWorld);
     }
     public void BackToPreviousScreen()
     {
         WorldManager.instance.ClearWorldScrollWorlds();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.CheckWorldTabAndReset(APIURL.Hot);
-        // WorldManager.instance.SetaPIURLGlobal(APIURL.Hot);
-        //WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+        WorldManager.instance.ChangeWorld(APIURL.Hot);
         ScrollEnableDisable(0);
-        // WorldManager.instance.ChangeWorldTab(WorldManager.instance.previousURL);
-        // WorldManager.instance.ChangeWorldTab(APIURL.SearchWorld);
     }
     public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
-       // WorldManager.instance.ChangeWorldTab(APIURL.Hot);
+        WorldManager.instance.ChangeWorld(APIURL.Hot);
     }
 
     public void GameWorldLoad()
@@ -52,7 +46,7 @@ public class AllWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(1);
-        WorldManager.instance.ChangeWorldTab(APIURL.GameWorld);
+        WorldManager.instance.ChangeWorld(APIURL.GameWorld);
     }
     public void CustomWorldLoad()
     {
@@ -61,8 +55,7 @@ public class AllWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(2);
-        WorldManager.instance.ChangeWorldTab(APIURL.AllWorld);
-
+        WorldManager.instance.ChangeWorld(APIURL.AllWorld);
     }
     public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
     {
@@ -71,8 +64,7 @@ public class AllWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(3);
-        WorldManager.instance.ChangeWorldTab(APIURL.EventWorld);
-
+        WorldManager.instance.ChangeWorld(APIURL.EventWorld);
     }
     public void EventWorldLoad()
     {
@@ -83,7 +75,7 @@ public class AllWorldManage : MonoBehaviour
         ScrollEnableDisable(4);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            WorldManager.instance.ChangeWorldTab(APIURL.MyWorld);
+            WorldManager.instance.ChangeWorld(APIURL.MyWorld);
         }
         else
         {
@@ -97,8 +89,7 @@ public class AllWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(5);
-        WorldManager.instance.ChangeWorldTab(APIURL.TestWorld);
-        // WorldManager.instance.ChangeWorldTab(APIURL.Hot);
+        WorldManager.instance.ChangeWorld(APIURL.TestWorld);
     }
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)

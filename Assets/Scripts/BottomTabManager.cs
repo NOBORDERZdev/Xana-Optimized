@@ -16,7 +16,6 @@ public class BottomTabManager : MonoBehaviour
     public Color unSellectedColor = new Color();
     public Color intractableFalseColor = new Color();
     public int defaultSelection = 0;
-    // public GameObject loaderObj;
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
 
@@ -25,9 +24,9 @@ public class BottomTabManager : MonoBehaviour
 
     private void Awake()
     {
-        if (defaultSelection == 3)//default feed then set feed
+        if (defaultSelection == 3)
         {
-            if (GlobalVeriableClass.callingScreen == "Profile")//profile
+            if (GlobalVeriableClass.callingScreen == "Profile")
             {
                 defaultSelection = 4;
             }
@@ -37,8 +36,6 @@ public class BottomTabManager : MonoBehaviour
             }
         }
     }
-
-    // Start is called before the first frame update
     void Start()
     {
         if (UIManager.Instance != null)
@@ -59,9 +56,7 @@ public class BottomTabManager : MonoBehaviour
         {
             if (i == index)
             {
-                //allButtonIcon[i].color = sellectedColor;
                 allButtonIcon[i].sprite = allButtonSelected[i];
-                //AllTitleText[i].color = sellectedColor;
                 defaultSelection = index;
                 if (i == 2)
                 {
@@ -70,9 +65,7 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                //allButtonIcon[i].color = unSellectedColor;
                 allButtonIcon[i].sprite = allButtonUnSelected[i];
-                //AllTitleText[i].color = unSellectedColor;
                 if (i == 2)
                 {
                     allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
@@ -80,8 +73,6 @@ public class BottomTabManager : MonoBehaviour
             }
         }
     }
-
-    //this method is used to check is user login as guest then disable All SNS footer button.......
     public void CheckLoginOrNotForFooterButton()
     {
         if (UIManager.Instance != null)
@@ -107,7 +98,6 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                //allButtonIcon[i].color = unSellectedColor;
                 allButtonIcon[i].color = Color.white;
                 if (i == 2)
                 {
@@ -130,8 +120,6 @@ public class BottomTabManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         WaitToLoadAvatarData = true;
     }
-
-    //this method is used to Home button click.......
     public void OnClickHomeButton()
     {
         GlobalVeriableClass.callingScreen = "";
@@ -152,14 +140,8 @@ public class BottomTabManager : MonoBehaviour
 
             UIManager.Instance.Canvas.SetActive(true);
             UIManager.Instance.SwitchToScreen(0);
-            WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+            WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
-
-            // UIManager.Instance.HotSection.SetActive(true);
-            // UIManager.Instance.WorldPage.SetActive(false);
-
-            // EventList.instance.ReLoadImageAfterEnable();
-            //WorldManager.instance.OpenXANAWorldPage();
         }
     }
 
@@ -182,19 +164,11 @@ public class BottomTabManager : MonoBehaviour
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
                 }
                 UIManager.Instance.Canvas.SetActive(true);
-               // UIManager.Instance.WorldPage.SetActive(true);
-                //UIManager.Instance.HotSection.SetActive(false);
                 UIManager.Instance.SwitchToScreen(1);
-                WorldManager.instance.WorldItemManager.DisplayWorlds(APIURL.Hot.ToString());
+                WorldManager.instance.ChangeWorld(APIURL.Hot);
                 WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
-          //  WorldManager.instance.OpenAllWorldPage();
         }
-        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        //{
-        //    //UIManager.Instance.HotWorldSection.constraintCount = 4;
-        //    //UIManager.Instance.NewWorldSection.constraintCount = 4;
-        //}
     }
 
 
@@ -203,7 +177,6 @@ public class BottomTabManager : MonoBehaviour
         if (defaultSelection != 0)
         {
             OnSelectedClick(1);
-            //Initiate.Fade("Main", Color.black, 1.0f);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
@@ -216,7 +189,6 @@ public class BottomTabManager : MonoBehaviour
             }
 
             UIManager.Instance.Canvas.SetActive(true);
-            //EventList.instance.ReLoadImageAfterEnable();
         }
         GameManager.Instance.BottomAvatarBtnPressed();
     }
@@ -225,7 +197,6 @@ public class BottomTabManager : MonoBehaviour
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_message"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -234,27 +205,12 @@ public class BottomTabManager : MonoBehaviour
             print("Horayyy you have Access");
         }
 
-        //if (XanaConstants.xanaConstants.r_isSNSComingSoonActive)
-        //{
-        //    if (SNSNotificationManager.Instance != null)
-        //    {
-        //        SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");//this method is used to show SNS notification.......
-        //        //SNSComingSoonManager.Instance.snsComingSoonScreen.SetActive(true);
-        //        print("sns features coming soon.......");
-        //        return;
-        //    }
-        //}
 
         GlobalVeriableClass.callingScreen = "";
-        // LoaderShow(true);
-        //Debug.Log("World button onclick");
 
         if (defaultSelection != 1)
         {
             OnSelectedClick(1);
-            //defaultSelection = 1;
-            //Initiate.Fade("SNSMessageModuleScene", Color.black, 1.0f, true);
-
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 if (MessageController.Instance != null)
@@ -278,8 +234,6 @@ public class BottomTabManager : MonoBehaviour
             }
         }
     }
-
-    //this method is used to Event button click.......
     public void OnclickEventButton()
     {
         Debug.Log("OnclickEventButton");
@@ -291,11 +245,6 @@ public class BottomTabManager : MonoBehaviour
     {
         Debug.Log("Create button onclick");
 
-        /*if (!WaitToLoadAvatarData)
-        {
-            return;
-        }*/
-
         if (defaultSelection != 5)
         {
             //OnSelectedClick(5);
@@ -306,11 +255,6 @@ public class BottomTabManager : MonoBehaviour
                 XanaConstants.xanaConstants.r_MainSceneAvatar = null;
             }
             GameObject MainSceneAvatar = Instantiate(GameManager.Instance.mainCharacter);
-            /*if (MainSceneAvatar.GetComponent<Animator>() != null)
-            {
-                Destroy(MainSceneAvatar.GetComponent<Animator>());
-            }*/
-
             Transform rootRotationObj = MainSceneAvatar.transform.Find("mixamorig:Hips");
             if (rootRotationObj != null)
             {
@@ -321,10 +265,8 @@ public class BottomTabManager : MonoBehaviour
 
             DontDestroyOnLoad(MainSceneAvatar);
             MainSceneAvatar.SetActive(false);
-            //Initiate.Fade("ARModuleActionScene", Color.black, 1.0f, true);
             Initiate.Fade("ARModuleRoomScene", Color.black, 1.0f, true);
             XanaConstants.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
-            //FeedUIController.Instance.OnClickCreateFeedPickImageOrVideo();
         }
     }
 
@@ -333,7 +275,6 @@ public class BottomTabManager : MonoBehaviour
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -341,17 +282,6 @@ public class BottomTabManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-
-        //if (XanaConstants.xanaConstants.r_isSNSComingSoonActive)
-        //{
-        //    if (SNSNotificationManager.Instance != null)
-        //    {
-        //        SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");//this method is used to show SNS notification.......
-        //        //SNSComingSoonManager.Instance.snsComingSoonScreen.SetActive(true);
-        //        print("sns features coming soon.......");
-        //        return;
-        //    }
-        //}
 
         if (defaultSelection != 3)
         {
@@ -393,22 +323,6 @@ public class BottomTabManager : MonoBehaviour
                 }
             }
 
-            /*if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
-            {
-                // Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
-            }
-            else
-            {
-                if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
-                {
-                    FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
-                    FeedUIController.Instance.ResetAllFeedScreen(true);
-                    StartCoroutine(MyProfileDataManager.Instance.MyProfileSceenShow(false));//false my profile screen
-                    //  FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
-                    // FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
-                }
-            }*/
-
             if (UIManager.Instance.Canvas.activeSelf)
             {
                 UIManager.Instance.Canvas.SetActive(false);
@@ -445,28 +359,9 @@ public class BottomTabManager : MonoBehaviour
 
             if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             {
-                //FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
-                //FeedUIController.Instance.ShowLoader(true);
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
             }
-
-            /*if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
-            {
-                //Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
-            }
-            else
-            {
-                if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
-                {
-                    FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
-                    MyProfileDataManager.Instance.ProfileTabButtonClick();
-                    FeedUIController.Instance.ResetAllFeedScreen(false);
-                }
-            }*/
-
-            //Debug.Log("Profile button onclick");
-
             if (UIManager.Instance.Canvas.activeSelf)
             {
                 UIManager.Instance.Canvas.SetActive(false);
@@ -494,13 +389,6 @@ public class BottomTabManager : MonoBehaviour
                 break;
         }
     }
-
-    //public void LoaderShow(bool isActive)
-    //{
-    //    Debug.Log("Loooooooooooooooooooooooooooooooder   Activated");
-    //    loaderObj.SetActive(isActive);
-    //}  
-
     public void MessageUnReadCountSetUp(int messageUnReadCount)
     {
         if (messageUnReadCount <= 0)
@@ -517,8 +405,6 @@ public class BottomTabManager : MonoBehaviour
     void ClearUnloadAssetData()
     {
         Resources.UnloadUnusedAssets();
-        //Caching.ClearCache();
-        //GC.Collect();
     }
 
     public void createBackFromSns(){ 

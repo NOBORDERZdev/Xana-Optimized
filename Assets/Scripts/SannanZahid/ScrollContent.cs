@@ -7,7 +7,6 @@ namespace DynamicScrollRect
     {
         public Vector2 Spacing = Vector2.zero;
         [Min(1)][SerializeField] private int _fixedItemCount = 1;
-
         public int TotalItems = 0;
         private DynamicScrollRect _dynamicScrollRect;
         public DynamicScrollRect DynamicScrollRect
@@ -43,10 +42,6 @@ namespace DynamicScrollRect
         private float _screenSizeX = 1080;
         float AlignSpace = default;
         string CurrentKey;
-        //public void ClearWorldData()
-        //{
-        //    Worlds.Clear();
-        //}
         private void Awake()
         {
             AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 3.5f;
@@ -67,7 +62,6 @@ namespace DynamicScrollRect
                 CurrentKey = worldKey;
                 InitItemsVertical(Worlds.Count);
                 DynamicScrollRect.content.anchoredPosition = Vector2.zero;
-
             }
             else if(worldKey.Equals(APIURL.SearchWorld.ToString()))
             {
@@ -77,7 +71,38 @@ namespace DynamicScrollRect
                 InitItemsVertical(Worlds.Count);
                 DynamicScrollRect.content.anchoredPosition = Vector2.zero;
             }
+            switch(RestrictState)
+            {
+                case 0:
+                    {
+                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
+                        {
+                            DynamicScrollRect.RestrictFlag = true;
+                            DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
+                            RestrictState = 1;
+                        }
+                        break;
+                    }
+                case 1:
+                    {
+                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 5))
+                        {
+                            DynamicScrollRect.RestrictFlag = false;
+                            DynamicScrollRect.TopScroller.vertical = true;
+                            RestrictState = 0;
+                           
+                        }
+                        else if (UIManager.Instance.PreviousScreen == 1)
+                        {
+                            DynamicScrollRect.RestrictFlag = false;
+                            RestrictState = 0;
+                        }
+                        break;
+                    }
+            }
+            DynamicScrollRect.velocity = Vector2.zero;
         }
+        int RestrictState = 0;
         private void InitItemsVertical(int count)
         {
             int itemCount = 0;

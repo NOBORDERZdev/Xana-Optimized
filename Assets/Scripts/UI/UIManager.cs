@@ -12,17 +12,6 @@ public class UIManager : MonoBehaviour
     [Header("Footer Reference")]
     public GameObject _footerCan;
     public GameObject faceMorphPanel;
-    //[Space(5)]
-    //[Header("Home Section")]
-    //public GridLayoutGroup HotHomeSection;
-    //public GridLayoutGroup NewHomeSection;
-    //[Space(5)]
-    //[Header("Worlds Section")]
-    //public GridLayoutGroup HotWorldSection;
-    //public GridLayoutGroup NewWorldSection;
-    //[Space(5)]
-    //[Header("Find World Section")]
-    //public GridLayoutGroup FindScetion;
     [Space(5)]
     [Header("New World Layout References")]
     public Transform SearchHomeHolder;
@@ -33,7 +22,6 @@ public class UIManager : MonoBehaviour
         WorldWorldTabsHolder, 
         WorldScrollerHolder,
         LobbyTabHolder;
-
 
     private void Awake()
     {
@@ -64,11 +52,6 @@ public class UIManager : MonoBehaviour
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
-        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        //{
-        //    HotHomeSection.constraintCount = 4;
-        //    NewHomeSection.constraintCount = 4;
-        //}
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
@@ -85,24 +68,22 @@ public class UIManager : MonoBehaviour
         {
             case 0:
                 {
+                    PreviousScreen = 0;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(true);
-                   // if(WorldManager.instance.GetCurrentTabSelected().Equals(APIURL.Hot))
-                        LobbyTabHolder.gameObject.SetActive(true);
-                   // else
-                    //    LobbyTabHolder.gameObject.SetActive(false);
+                    LobbyTabHolder.gameObject.SetActive(true);
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);
                     WorldManager.instance.WorldScrollReset();
                     SecondSliderScrollView.GetComponent<Mask>().enabled = false;
-                    PreviousScreen = 0;
                     break;
                 }
             case 1:
                 {
+                    PreviousScreen = 1;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(true);
@@ -113,8 +94,6 @@ public class UIManager : MonoBehaviour
                     WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
                     SecondSliderScrollView.GetComponent<Mask>().enabled = true;
-
-                    PreviousScreen = 1;
                     break;
                 }
             case 2:

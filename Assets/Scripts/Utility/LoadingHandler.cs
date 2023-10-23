@@ -98,17 +98,8 @@ public class LoadingHandler : MonoBehaviour
     {
         sliderFinalValue = Random.Range(80f, 95f);
         StartCoroutine(StartBGChange());
-        //#if UNITY_EDITOR
-        //        Debug.unityLogger.logEnabled = true;
-        //#else
-        //                        Debug.unityLogger.logEnabled = false;
-        //#endif
     }
 
-    //private void Update()
-    //{
-    //    if(percentComplete!=downloadProgressScript.downloadprogressOutput)
-    //}
     IEnumerator StartBGChange()
     {
         loadingBgImage.sprite = loadingSprites[currentBgIndex];
@@ -160,14 +151,6 @@ public class LoadingHandler : MonoBehaviour
         }
         loadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
 
-        /*if (loadingSlider.fillAmount < 0.5f)//rik for Refresh screen on every 5-7 second.......
-        {
-            ChangeHelpScreenUI(true);
-        }
-        else
-        {
-            ChangeHelpScreenUI(false);
-        }*/
     }
     public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
     {
@@ -193,7 +176,6 @@ public class LoadingHandler : MonoBehaviour
         }
         ResetLoadingValues();
         bool isFedderActive = false;
-        //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
         if (Screen.orientation != oriantation && !XanaConstants.xanaConstants.isFromXanaLobby)
         {
             isFedderActive = true;
@@ -201,7 +183,6 @@ public class LoadingHandler : MonoBehaviour
             blackScreen.DOFade(1, 0.1f).OnComplete(delegate
             {
                 Screen.orientation = oriantation;
-                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
             });
         }
 
@@ -256,14 +237,12 @@ public class LoadingHandler : MonoBehaviour
             return;
         }
 
-        //Debug.LogError(Screen.orientation + " ~~~~~~~  Deactivated Loading ~~~~~~~ " + oriantation);
         if (needFader && !XanaConstants.xanaConstants.isFromXanaLobby && Screen.orientation != oriantation)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOFade(1, 0.2f).OnComplete(delegate
             {
                 Screen.orientation = oriantation;
-                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ ");
             });
         }
 
@@ -283,19 +262,10 @@ public class LoadingHandler : MonoBehaviour
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
         loadingPanel.SetActive(false);
 
-        if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
-        {
-            // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
-            //Screen.orientation = ScreenOrientation.Portrait;
-        }
-
         if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
-
-        //if (XanaConstants.xanaConstants.isBackFromWorld)
-        //    HideFadderAfterOriantationChanged(1.5f);
     }
 
 
