@@ -76,8 +76,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 {
                     LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
                 }
-
-                LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+                LoadingHandler.Instance.ShowLoading();
+                //LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
                 GC.Collect();
                 AssetBundle.UnloadAllAssetBundles(true);
                 Resources.UnloadUnusedAssets();

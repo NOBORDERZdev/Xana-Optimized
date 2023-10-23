@@ -59,6 +59,7 @@ public class AdditiveScenesManager : MonoBehaviour
             homeBottomTab.OnClickFeedButton();
             XanaConstants.xanaConstants.isBackfromSns=false;
         }
-        LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+        LoadingHandler.Instance.HideLoading();
+       // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
     }
 }
