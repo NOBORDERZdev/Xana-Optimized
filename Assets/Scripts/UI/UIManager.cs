@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AdvancedInputFieldPlugin;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,8 @@ public class UIManager : MonoBehaviour
         HomeWorldTabsHolder, 
         WorldWorldTabsHolder, 
         WorldScrollerHolder,
-        LobbyTabHolder;
+        LobbyTabHolder,
+        AdvanceSearchInputField;
 
     private void Awake()
     {
@@ -98,6 +100,7 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
+                    AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(false);

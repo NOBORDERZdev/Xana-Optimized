@@ -38,7 +38,6 @@ public class WorldItemView : MonoBehaviour
        entityType = detail.EntityType;
        m_BannerLink = detail.BannerLink;
        m_PressedIndex = detail.PressedIndex;
-     //  worldTags = detail.WorldTags;
        Init();
     }
 

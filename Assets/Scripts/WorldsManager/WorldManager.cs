@@ -228,6 +228,7 @@ public class WorldManager : MonoBehaviour
         }
     }
     bool NotProcessRequest = false;
+    int CallBackCheck = 0;
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
@@ -235,8 +236,6 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
-           
-
             if (isSucess)
             {
                 if (NotProcessRequest)
@@ -244,8 +243,10 @@ public class WorldManager : MonoBehaviour
                     Debug.LogError("Reset Clear Fetch");
                     dataIsFatched = true;
                     NotProcessRequest = false;
+                    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                     return;
                 }
+                CallBackCheck = 0;
                 InstantiateWorlds(aPIURL.ToString());
                 dataIsFatched = true;
                 UpdatePageNumber(aPIURL);
@@ -257,6 +258,12 @@ public class WorldManager : MonoBehaviour
             else
             {
                 loadOnce = true;
+                if(++CallBackCheck > 17)
+                {
+                    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                    CallBackCheck = 0;
+                    return;
+                }
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
             }
@@ -556,9 +563,6 @@ public class WorldManager : MonoBehaviour
             }
             UserAnalyticsHandler.onGetWorldId?.Invoke(XanaConstants.xanaConstants.customWorldId, worldType);
         }
-        //AssetBundle.UnloadAllAssetBundles(false);
-        //Resources.UnloadUnusedAssets();
-        //GC.Collect();
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             if (!XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -588,18 +592,6 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
     }
-    #region Clear Resource Unload Unused Asset File.......
-    private int unloadUnusedFileCount;
-    public void ResourcesUnloadAssetFile()
-    {
-        if (unloadUnusedFileCount >= 15)
-        {
-            unloadUnusedFileCount = 0;
-            Resources.UnloadUnusedAssets();
-        }
-        unloadUnusedFileCount += 1;
-    }
-    #endregion
     public void LoadJjworld()
     {
         SetAutoSwtichStreaming();

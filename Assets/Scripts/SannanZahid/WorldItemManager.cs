@@ -99,6 +99,4 @@ public class WorldItemDetail
     public string BannerLink;
     public int PressedIndex;
     public string[] WorldTags;
-
-
 }

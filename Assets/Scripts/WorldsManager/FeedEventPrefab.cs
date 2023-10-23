@@ -283,7 +283,7 @@ public class FeedEventPrefab : MonoBehaviour
                 AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
                 worldIcon.sprite = null;
                 worldIcon.sprite = dummyThumbnail;
-                WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+               // WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
             }
             else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == dummyThumbnail))
             {
@@ -345,7 +345,7 @@ public class FeedEventPrefab : MonoBehaviour
         //}
         worldIcon.sprite = null;
         worldIcon.sprite = dummyThumbnail;
-        WorldManager.instance.ResourcesUnloadAssetFile();
+        //WorldManager.instance.ResourcesUnloadAssetFile();
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
         //StopCoroutine(UpdateCoroutine());
         StopAllCoroutines();
