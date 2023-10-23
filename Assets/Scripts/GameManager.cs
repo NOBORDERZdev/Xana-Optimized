@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     }
     public string GetStringFolderPath()
     {
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || XanaConstants.xanaConstants.registerFirstTime)  // loged from account)
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
         {
             if (menuAvatarFlowButton._instance)   // Disable Store Btn
                 menuAvatarFlowButton._instance.StoreBtnController();
