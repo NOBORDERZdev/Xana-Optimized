@@ -24,6 +24,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public Transform assetParent;
     public TMPro.TextMeshProUGUI assetDownloadingText;
+    public TMPro.TextMeshProUGUI assetDownloadingTextPotrait;
     //public TMPro.TextMeshProUGUI sortingText;
     public MeshCombiner meshCombiner;
     public static MeshCombiner meshCombinerRef;
@@ -52,6 +53,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
+            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
         }
     }
 
@@ -61,6 +63,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
+            ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
         }
         ResetAll();
     }
@@ -297,32 +300,45 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             case "en":
                 assetDownloadingText.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
+                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
-                    assetDownloadingText.transform.parent.gameObject.SetActive(false);
+                    assetDownloadingTextPotrait.enabled = false;
+                    assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
             case "ja":
                 assetDownloadingText.text = "現在ワールドを構築中です.... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (++downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingTextPotrait.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
-                    assetDownloadingText.enabled = false;
+                    assetDownloadingTextPotrait.color = Color.green;
+                    assetDownloadingTextPotrait.enabled = false;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
+                    assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
             default:
                 assetDownloadingText.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
+                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
+                    assetDownloadingTextPotrait.enabled = false;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
+                    assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
         }
@@ -426,7 +442,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             foreach (Transform t in assetParent)
             {
-                ItemData _itemData = builderDataDictionary[t.name];
+                ItemData _itemData;
+                builderDataDictionary.TryGetValue(t.name,out _itemData);
                 t.transform.localPosition = _itemData.Position;
                 t.transform.rotation = _itemData.Rotation;
             }
@@ -434,6 +451,23 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
     }
 
+
+    void OnOrientationChange()
+    {
+        if(totalAssetCount!=downloadedTillNow)
+        {
+            if (ChangeOrientation_waqas._instance.isPotrait)
+            {
+                assetDownloadingText.transform.parent.gameObject.SetActive(false);
+                assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                assetDownloadingText.transform.parent.gameObject.SetActive(true);
+                assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+            }
+        }
+    }
 
     public void ResetAll()
     {
