@@ -8,7 +8,7 @@ using System.Collections;
 using System;
 
 public class SceneManage : MonoBehaviourPunCallbacks
-{ 
+{
     public static bool callRemove;
     public GameObject AnimHighlight;
     public GameObject popupPenal;
@@ -19,7 +19,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     bool exitOnce = true;
     private void OnEnable()
     {
-       mainScene= "Main";
+        mainScene = "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
             AvatarManager.sendDataValue = false;
@@ -41,7 +41,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void disableSoundXanalobby() // Disabling Audio Sources in Xana Lobby on exit to avoid sound increase on Loding screen after exit
     {
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")) 
+        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
             SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
@@ -57,11 +57,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
             exitOnce = false;
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
-               StartCoroutine( LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
             else
             {
-                
+
                 if (changeOritentationChange)
                 {
                     XanaConstants.xanaConstants.JjWorldSceneChange = false;
@@ -90,9 +90,9 @@ public class SceneManage : MonoBehaviourPunCallbacks
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        
+
         yield return new WaitForSeconds(1f);
-        XanaConstants.xanaConstants.isBuilderScene=false;
+        XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
         StartCoroutine(LoadMainEnumerator());
@@ -139,7 +139,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
-            float _rand = UnityEngine.Random.Range(6f, 10f);
+            float _rand;
+            if (XanaConstants.xanaConstants.isBuilderScene)
+                _rand = UnityEngine.Random.Range(25f, 30f);
+            else
+                _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
             yield return new WaitForSeconds(3f);

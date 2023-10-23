@@ -456,6 +456,8 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
+        if (FeedEventPrefab.m_EnvName == "ZONE-X")
+            SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
     public async void JoinBuilderWorld()
     {

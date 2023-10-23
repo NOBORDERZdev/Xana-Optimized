@@ -454,7 +454,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         CharacterLightCulling();
         if (!XanaConstants.xanaConstants.isCameraMan)
         {
-            LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+            LoadingHandler.Instance.HideLoading();
             // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
@@ -489,7 +489,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LoadingHandler.Instance.manualRoomController.HideRoomList();
 
         if (!XanaConstants.xanaConstants.isCameraMan)
-            LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+            LoadingHandler.Instance.HideLoading();
         //TurnOnPostCam();
         // Commented By WaqasAhmad
         {
@@ -659,7 +659,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
 
         yield return new WaitForSeconds(1.75f);
-        LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, false);
+        LoadingHandler.Instance.HideLoading();
         // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         LoadingHandler.Instance.UpdateLoadingStatusText("");
 

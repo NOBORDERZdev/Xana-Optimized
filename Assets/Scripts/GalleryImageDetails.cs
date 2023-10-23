@@ -122,6 +122,15 @@ public class GalleryImageDetails : MonoBehaviour
                 GalleryImageManager.Instance.LoadPictureDescriptionPanel(m_PictureIndex, m_IsSpecialPainting);
                 UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
             }
+
+            if(XanaConstants.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
+            {
+                DataType myType = DataType.Image;
+                if (m_IsVideo)
+                    myType = DataType.Video;
+                JjInfoManager.Instance.SendCallAnalytics(myType, "---");
+            }
+
         }
     }
 }

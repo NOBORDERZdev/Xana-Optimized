@@ -377,6 +377,13 @@ public class PlayerControllerNew : MonoBehaviour
             else if (transforms[i].GetComponent<CanvasGroup>())
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
         }
+
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (GamificationComponentData.instance.isAvatarChanger ||
+                GamificationComponentData.instance.isBlindfoldedFootPrinting)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(false);
+        }
     }
 
     // first person camera off when user switch to selfie mode
@@ -424,8 +431,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
@@ -759,23 +769,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
-        if (XanaConstants.xanaConstants.isBuilderScene)
-        {
-            if (isNinjaMotion)
-            {
-                isNinjaMotion = false;
-                NinjaComponentTimerStart(0);
-            }
-            else if (isThrowModeActive)
-            {
-                StartCoroutine(nameof(ThrowEnd));
-                isThrow = false;
-                isThrowModeActive = false;
-                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
-            }
-
-            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-        }
+        StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
@@ -795,10 +789,42 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         if (isFirstPerson)
-            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
+    public void StopBuilderComponent()
+    {
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+            }
+            else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
+            {
+                if (GamificationComponentData.instance.activeComponent != null)
+                    GamificationComponentData.instance.activeComponent.StopBehaviour();
+            }
+            else if (GamificationComponentData.instance.isAvatarChanger)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        }
+    }
 
     void Move()
     {
@@ -1061,7 +1087,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
-        
+
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
@@ -1585,14 +1611,13 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = Instantiate(_shurikenPrefab, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
-        spawned.GetComponent<Rigidbody>().AddForce((transform.forward * 3000f) * 0.25f);
-        //(cinemachineFreeLook.m_YAxis.Value<=0.1f?0.1f: cinemachineFreeLook.m_YAxis.Value));
-        //Toast.Show(cinemachineFreeLook.m_YAxis.Value+"");
+        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
+
         animator.SetBool("NinjaThrow", false);
         yield return new WaitForSeconds(0.4f);
         isMovementAllowed = true;
-        Destroy(spawned, 5f);
+
     }
 
     Coroutine NinjaCo;
@@ -1778,9 +1803,8 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        var spawned = Instantiate(GamificationComponentData.instance.ThrowBall, handBall.transform.position, handBall.transform.rotation);
-        spawned.Init(((ActiveCamera.transform.forward + curveOffset) * _force), false);
-        Destroy(spawned.gameObject, 10);
+        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
         yield return new WaitForSeconds(1f);

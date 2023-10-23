@@ -19,14 +19,21 @@ public class YoutubePlayerLivestream : MonoBehaviour
     //AVPRO
     public MediaPlayer mPlayer;
 
+    public bool rotateScreen = true;
+
+    public Vector3 rotateScreenValue;
+
+    public GameObject videoPlayerParent;
     void Start()
     {
+        if (!rotateScreen)
+            return;
         //GetLivestreamUrl(_livestreamUrl);
 #if UNITY_ANDROID
         if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         else
-            mPlayer.gameObject.transform.localRotation = Quaternion.Euler(180, 0, 0);
+            mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
     }
 
@@ -61,9 +68,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if (mPlayer.OpenMedia(check, url, true))
         {
             mPlayer.GetComponent<MeshRenderer>().material.color = Color.white;
+            if (rotateScreen)
+            {
 #if UNITY_EDITOR
-            mPlayer.transform.rotation = Quaternion.identity;
+                mPlayer.transform.rotation = Quaternion.identity;
 #endif
+            }
         }
 
         //Easy Movie Texture (Good for mobile only[sometimes stuck in editor])
@@ -183,6 +193,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if(string.IsNullOrEmpty(player_response))
         {
             Debug.Log("<color=red> Player Json is Null .</color>");
+            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
         {
@@ -201,6 +212,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 else if (json["streamingData"]["hlsManifestUrl"] == null)
                 {
                     Debug.Log("<color=red> Key Not Found .</color>");
+                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
                 }
                 else
                 {
