@@ -29,9 +29,9 @@ namespace WaheedDynamicScrollRect
     }
 
     // TODO :: Hidden Rules Between TryRestrictionMovement - GetContentPosition etc.
-    public class DynamicScrollRect : ScrollRect
+    public class WaheedDynamicScrollRect : ScrollRect
     {
-        public static DynamicScrollRect instance;
+        public static WaheedDynamicScrollRect instance;
 
         [SerializeField] private DynamicScrollRestrictionSettings _restrictionSettings = null;
 
@@ -59,6 +59,7 @@ namespace WaheedDynamicScrollRect
         public Transform _ContentReference;
         public List<Transform> avatarData = new List<Transform>();
         public static int Counter = 0;
+        public GameObject myContent;
         bool _isShuffling = false, shuffled = false;
         string gameObjectName = null;
         //public Transform[] _Avatars;
@@ -1004,10 +1005,16 @@ namespace WaheedDynamicScrollRect
             yield return null;
         }
         public PresetData_Jsons presetScript;
+        GameObject obj;
         public void GetAvatarName() 
         {
             gameObjectName = Counter.ToString() + "_0";
-            GameObject obj = GameObject.Find(gameObjectName);
+
+            //if (myContent != null)
+            //{
+                obj = myContent.transform.Find(gameObjectName).gameObject;
+                //obj = GameObject.Find(gameObjectName);
+           // }
             obj.GetComponent<Image>().sprite = avatarData[Counter].GetComponent<Image>().sprite;
             //PresetData_Jsons delPreset = obj.GetComponent<PresetData_Jsons>();
             //Destroy(delPreset);

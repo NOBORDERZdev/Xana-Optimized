@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScrollItemDefaultContent : ScrollItem<ScrollItemData>
 {
-    [SerializeField] private WaheedDynamicScrollRect.DynamicScrollRect _dynamicScroll = null;
+    [SerializeField] private WaheedDynamicScrollRect.WaheedDynamicScrollRect _dynamicScroll = null;
     
     [SerializeField] private TextMeshProUGUI _text = null;
 

@@ -23,14 +23,14 @@ namespace WaheedDynamicScrollRect
         public String nameData;
         [HideInInspector]
         public GameObject _CharaceterName;
-        private DynamicScrollRect _dynamicScrollRect;
-        public DynamicScrollRect DynamicScrollRect
+        private WaheedDynamicScrollRect _dynamicScrollRect;
+        public WaheedDynamicScrollRect DynamicScrollRect
         {
             get
             {
                 if (_dynamicScrollRect == null)
                 {
-                    _dynamicScrollRect = GetComponent<DynamicScrollRect>();
+                    _dynamicScrollRect = GetComponent<WaheedDynamicScrollRect>();
                 }
 
                 return _dynamicScrollRect;
@@ -91,9 +91,13 @@ namespace WaheedDynamicScrollRect
             //}
 
             //Debug.Log("Counter Value is "+ DynamicScrollRect.Counter);
-            string gameObjectName = DynamicScrollRect.Counter.ToString() + "_0";
-            _CharaceterName = GameObject.Find(gameObjectName);
-            _CharaceterName.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<Image>().sprite;
+            string gameObjectName = WaheedDynamicScrollRect.Counter.ToString() + "_0";
+            //if (DynamicScrollRect.myContent != null)
+            //{
+            _CharaceterName = DynamicScrollRect.myContent.transform.Find(gameObjectName).gameObject;
+           // _CharaceterName = GameObject.Find(gameObjectName);
+            //}
+            _CharaceterName.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[WaheedDynamicScrollRect.Counter].GetComponent<Image>().sprite;
             AttachPresetDataScript();
             UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
             //Invoke("AttachPresetDataScript", 1f);
@@ -103,13 +107,13 @@ namespace WaheedDynamicScrollRect
 
         public void AttachPresetDataScript() 
         {
-            DynamicScrollRect.instance.presetScript = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<PresetData_Jsons>();
-            _CharaceterName.AddComponent(DynamicScrollRect.instance.presetScript);
-            nameData = DynamicScrollRect.instance.presetScript.JsonDataPreset;
+            WaheedDynamicScrollRect.instance.presetScript = DynamicScrollRect.avatarData[WaheedDynamicScrollRect.Counter].GetComponent<PresetData_Jsons>();
+            _CharaceterName.AddComponent(WaheedDynamicScrollRect.instance.presetScript);
+            nameData = WaheedDynamicScrollRect.instance.presetScript.JsonDataPreset;
             Debug.Log("NAME DATA IS "+ nameData);
             if (DynamicScrollRect.ASNextButton)
             {
-                DynamicScrollRect.ASNextButton.onClick.AddListener(DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver);
+                DynamicScrollRect.ASNextButton.onClick.AddListener(WaheedDynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver);
             }
         }
 
