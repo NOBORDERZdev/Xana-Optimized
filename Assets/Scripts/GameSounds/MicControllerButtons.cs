@@ -15,7 +15,7 @@ public class MicControllerButtons : MonoBehaviour
 
     private void Start()
     {
-        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
         {
             if (OnStateUI)
                 OnStateUI.SetActive(false);

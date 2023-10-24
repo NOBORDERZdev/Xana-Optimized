@@ -147,7 +147,7 @@ public class BuildingDetect : MonoBehaviour
 
     }
 
-    #region Mubashir Avatar Work
+    #region Avatar Work
     public void OnPowerProviderEnter(float time, float speed, float height)
     {
         powerUpTime = time;
@@ -199,7 +199,7 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.SetActive(false);
 
-        Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
+        var AppearanceChange = Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
             cc.playerControler = GamificationComponentData.instance.playerControllerNew;
@@ -217,7 +217,7 @@ public class BuildingDetect : MonoBehaviour
                 }
             }
 
-            cloneObject.transform.SetParent(gangsterCharacter.transform);
+            cloneObject.transform.SetParent(AppearanceChange.transform);
             cloneObject.transform.localPosition = Vector3.zero;
             cloneObject.transform.localEulerAngles = Vector3.zero;
             cloneObject.SetActive(true);
@@ -226,7 +226,23 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
         gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+
+        //hide meshdata off character for FPS
+        if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        {
+            Transform[] transforms = gangsterCharacter.gameObject.GetComponentsInChildren<Transform>();
+
+            foreach (Transform childTransform in transforms)
+            {
+                if (childTransform.gameObject.GetComponent<Renderer>())
+                {
+                    childTransform.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            }
+        }
         avatarChangeCoroutine = StartCoroutine(PlayerAvatarChange());
+
+        GamificationComponentData.instance.isAvatarChanger = true;
     }
     float avatarTime;
     Avatar tempAnimator;
@@ -241,7 +257,9 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         yield return new WaitForSecondsRealtime(0.01f);
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
-        gangsterCharacter.SetActive(true);
+
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+            gangsterCharacter.SetActive(true);
 
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
 
@@ -279,18 +297,25 @@ public class BuildingDetect : MonoBehaviour
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;
-        }
 
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerHead.enabled = state;
-        playerPants.enabled = state;
-        playerShirt.enabled = state;
-        playerShoes.enabled = state;
+            GamificationComponentData.instance.isAvatarChanger = false;
+        }
+        else if (gangsterCharacter != null)
+            gangsterCharacter.SetActive(true);
+
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        {
+            playerHair.enabled = state;
+            playerBody.enabled = state;
+            playerHead.enabled = state;
+            playerPants.enabled = state;
+            playerShirt.enabled = state;
+            playerShoes.enabled = state;
+        }
     }
     #endregion
 
-    #region Attizaz Special Item Work
+    #region Special Item Work
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
@@ -400,7 +425,7 @@ public class BuildingDetect : MonoBehaviour
     #endregion
 
     #region Avatar Invisibility 
-
+    //Hologram Material Set
     void AvatarInvisibilityApply()
     {
         playerHair.material = hologramMaterial;
