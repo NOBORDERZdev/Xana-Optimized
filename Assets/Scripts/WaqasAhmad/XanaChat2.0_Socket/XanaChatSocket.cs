@@ -54,7 +54,7 @@ public class XanaChatSocket : MonoBehaviour
     int worldId,
         eventId = 1,
         pageNumber = 1, // API Parameters
-        dataLimit = 200;
+        dataLimit = 40; //200;
 
     public string socketId;
     public string oldChatResponse;
