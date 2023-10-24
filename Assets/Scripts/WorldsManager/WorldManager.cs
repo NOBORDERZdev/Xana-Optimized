@@ -507,8 +507,15 @@ public class WorldManager : MonoBehaviour
                     return;
                 }
             }
-            /////
-
+            // Added By WaqasAhmad [PMY ClassRoom Dummy Work]
+            else if (FeedEventPrefab.m_EnvName == "HOKUSAI KATSUSHIKA")
+            {
+                if(XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.activeInHierarchy)
+                {
+                    XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.SetActive(true);
+                    return;
+                }
+            }//
 
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();

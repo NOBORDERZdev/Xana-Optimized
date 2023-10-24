@@ -150,7 +150,16 @@ public class GameManager : MonoBehaviour
     public void NotNowOfSignManager()
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-       
+
+        if (FeedEventPrefab.m_EnvName == "HOKUSAI KATSUSHIKA")
+        {
+            if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.activeInHierarchy)
+            {
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.SetActive(true);
+                return;
+            }
+        }//
+
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);

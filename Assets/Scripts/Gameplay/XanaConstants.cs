@@ -123,6 +123,11 @@ public class XanaConstants : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
+    // PMY-Class Codes
+    public List<int> pmy_ClassCode;
+    public int pmy_joinedClassCode;
+    public bool pmy_isClassAvailable = false;
+
 
     public string r_EmoteReactionPersistentPath
     {
