@@ -55,7 +55,7 @@ public class WorldItemView : MonoBehaviour
     public string updatedAt = "00";
     public string entityType = "None";
     [Header("WorldNameAndDescription")]
-    public TextMeshProUGUI eviroment_Name;
+    public TextMeshProUGUI eviroment_Name,WorldCreatorName;
     public TextMeshProUGUI joinedUserCount;
     public string m_BannerLink;
     public Image worldIcon;
@@ -223,6 +223,7 @@ public class WorldItemView : MonoBehaviour
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
+        WorldCreatorName.text = creatorName;
         gameObject.GetComponent<Button>().interactable = true;
         yield return null;
     }

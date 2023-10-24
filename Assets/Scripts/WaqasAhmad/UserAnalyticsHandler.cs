@@ -5,8 +5,6 @@ using UnityEngine.Networking;
 using System;
 using System.Linq;
 using UnityEngine.SceneManagement;
-
-
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
