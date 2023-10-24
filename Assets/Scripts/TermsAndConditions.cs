@@ -74,6 +74,7 @@ public class TermsAndConditions : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
+        UserRegisterationManager.instance.welcomeScreen.SetActive(true);
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
     }
 

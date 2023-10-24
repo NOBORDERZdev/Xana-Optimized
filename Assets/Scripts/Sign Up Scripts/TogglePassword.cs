@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AdvancedInputFieldPlugin;
+using UnityEngine.UI;
 public class TogglePassword : MonoBehaviour
 {
     public AdvancedInputField Password;
     public bool OnBool;
+    public Sprite ActiveEye;
+    public Sprite UnActiveEye;
+    public Image myimage;
     
     // Start is called before the first frame update
     void Start()
     {
+        
         OnBool = true;
+       
     }
 
     
@@ -22,10 +28,14 @@ public class TogglePassword : MonoBehaviour
         if (OnBool)
         {
             Password.ContentType = ContentType.PASSWORD;
+            myimage.sprite = UnActiveEye;
+
+
         }
         else
         {
           Password.ContentType = ContentType.STANDARD;
+            myimage.sprite = ActiveEye;
         }
      
 

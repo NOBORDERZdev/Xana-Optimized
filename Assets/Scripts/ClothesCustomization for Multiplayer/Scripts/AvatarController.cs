@@ -187,7 +187,7 @@ public class AvatarController : MonoBehaviour
         //    XanaConstants.xanaConstants.isNFTEquiped = true;
         //}
 
-
+        Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         while(!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
