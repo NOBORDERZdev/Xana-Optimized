@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.UI.Extensions;
 
 public class SplashVideoPlay : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class SplashVideoPlay : MonoBehaviour
     public GameObject button;
     public Image Image;
     public GameObject SplashvideoObj;
-  
+    
     public void RefrenceDownloafVideo()
     {
         Image = UserRegisterationManager.instance.BlackScreen.GetComponent<Image>();
@@ -31,6 +32,7 @@ public class SplashVideoPlay : MonoBehaviour
 
     void End(VideoPlayer VP) {
         SplashvideoObj.SetActive(false);
+        OnAvatarSelectionPanal();
         StartCoroutine(FadeOut());
     }
     void SkipButton()
@@ -52,11 +54,18 @@ public class SplashVideoPlay : MonoBehaviour
             Image.color = new Color(0f, 0f, 0f, alpha);
         }
         UserRegisterationManager.instance.BlackScreen.SetActive(false);
-       
+        
     }
     public void Onskipp() {
         SplashvideoObj.SetActive(false);
+        OnAvatarSelectionPanal();
         StartCoroutine(FadeOut());
+    }
+
+    void OnAvatarSelectionPanal() 
+    {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        
     }
 
 }
