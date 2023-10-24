@@ -3999,10 +3999,10 @@ public class UserRegisterationManager : MonoBehaviour
                         //{
                         //    EventList.instance.GetWorldAPISNew();
                         //}
-                        if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        {
-                            StoreManager.instance.GetAllMainCategories();
-                        }
+                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
+                        //{
+                        //    StoreManager.instance.GetAllMainCategories();
+                        //}
 
                     }
                 }
@@ -4198,10 +4198,10 @@ public class UserRegisterationManager : MonoBehaviour
                         //    EventList.instance.GetWorldAPISNew();
                         //    StoreManager.instance.GetAllMainCategories();
                         //}
-                        if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        {
-                            StoreManager.instance.GetAllMainCategories();
-                        }
+                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
+                        //{
+                        //    StoreManager.instance.GetAllMainCategories();
+                        //}
                     }
                 }
             }
