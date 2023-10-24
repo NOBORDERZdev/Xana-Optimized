@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (LoginPageManager.m_WorldIsClicked || LoginPageManager.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
             UIManager.Instance.IsWorldClicked();
         else
         {

@@ -871,6 +871,10 @@ public class StoreManager : MonoBehaviour
     }
     IEnumerator HitAllMainCategoriesAPI(string url, string Jsondata)
     {
+        while (ConstantsGod.AUTH_TOKEN.Equals("AUTH_TOKEN"))
+        {
+            yield return new WaitForSecondsRealtime(1f);
+        }
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -1264,6 +1268,7 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
         if (saveStoreBtnButton.interactable == true)
