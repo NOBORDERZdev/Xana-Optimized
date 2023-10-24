@@ -67,6 +67,8 @@ public class WorldManager : MonoBehaviour
         }
 
     }
+  ///>>>> Sannan
+  
     void Start()
     {
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
@@ -357,11 +359,12 @@ public class WorldManager : MonoBehaviour
         if (!isLobbyActive)
         {
             EventPrefabLobby.SetActive(false);
+            AllWorldTabReference.LobbyInactiveCallBack();
         }
-        WorldItemManager.DisplayWorlds(key);
+       // WorldItemManager.DisplayWorlds(key);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        TutorialsManager.instance.ShowTutorials();
+      //  TutorialsManager.instance.ShowTutorials();
     }
     public void WorldPageStateHandler(bool _checkCheck)
     {
