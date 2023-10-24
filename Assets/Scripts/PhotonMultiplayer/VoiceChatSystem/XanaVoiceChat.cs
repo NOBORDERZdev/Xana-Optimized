@@ -112,7 +112,7 @@ public class XanaVoiceChat : MonoBehaviour
             }
         }
         //Debug.Log("Environment name: " + FeedEventPrefab.m_EnvName + "   " + FeedEventPrefab.m_EnvName.Contains("Xana Festival") + "   " + FeedEventPrefab.m_EnvName.Equals("Xana Festival"));
-        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament") || FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         {
             StopRecorder();
             Debug.Log("Its an Event Scene");
