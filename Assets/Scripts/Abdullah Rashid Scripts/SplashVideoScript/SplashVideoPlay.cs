@@ -45,6 +45,8 @@ public class SplashVideoPlay : MonoBehaviour
     }
     IEnumerator FadeOut()
     {
+        player.targetTexture.Release();
+
         while (alpha > 0.0f)
         {
             yield return new WaitForSeconds(0.05f);

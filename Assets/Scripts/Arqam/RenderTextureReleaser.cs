@@ -16,7 +16,7 @@ public class RenderTextureReleaser : MonoBehaviour
     {
         // optimize the render texture data     // AR changes start
         renderTexture.Release();
-        renderTexture = null;
+       // renderTexture = null;
         Resources.UnloadUnusedAssets();
         System.GC.Collect();                           // AR changes end
     }
