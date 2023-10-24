@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.UI.Extensions;
-using DynamicScrollRect;
+using WaheedDynamicScrollRect;
 
 using static StoreManager;
 public class PresetData_Jsons : MonoBehaviour
@@ -74,9 +74,9 @@ public class PresetData_Jsons : MonoBehaviour
         callScripts();
         //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         //{
-            if (DynamicScrollRect.ScrollContent.instance != null)
+            if (WaheedDynamicScrollRect.ScrollContent.instance != null)
             {
-                JsonDataPreset = DynamicScrollRect.ScrollContent.instance.nameData;
+                JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
             Debug.Log("NAME IS "+ JsonDataPreset);
                 //gameObject.name = ScrollSnap.instance.charName;
                 Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
