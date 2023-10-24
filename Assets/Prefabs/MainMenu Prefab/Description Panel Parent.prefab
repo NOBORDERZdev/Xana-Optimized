@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fabb0f09db94044aba5da8aeb300619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCanvas: {fileID: 0}
   rectInterpolate: 0
   fadeImage: {fileID: 1558925940359817586}
 --- !u!222 &1558925939985417445
@@ -173,8 +174,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScrollController: {fileID: 1558925940941367588}
+  m_parent: {fileID: 0}
   btnback: {fileID: 1558925941893886550}
   normalized: 0
+  canvasGroup: {fileID: 1558925939985417444}
+  bg: {fileID: 0}
 --- !u!1 &1558925939995633821
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,8 +3498,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -370}
-  m_SizeDelta: {x: 8, y: 932}
+  m_AnchoredPosition: {x: -1.5999756, y: -370}
+  m_SizeDelta: {x: -3.2000442, y: 932}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1558925940511880169
 CanvasRenderer:
@@ -4705,7 +4709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 89.142334}
+  m_AnchoredPosition: {x: 0, y: 89.14258}
   m_SizeDelta: {x: 0, y: 178.2849}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1558925940694880297
