@@ -186,6 +186,10 @@ public class WorldItemView : MonoBehaviour
     }
     void GetEventType(string entityType)
     {
+        isBuilderScene = false;
+        isMuseumScene = false;
+        isEnvirnomentScene = false;
+
         if (entityType == WorldType.MUSEUM.ToString())
         {
             isMuseumScene = true;
