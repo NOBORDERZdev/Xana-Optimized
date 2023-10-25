@@ -332,8 +332,8 @@ namespace RFM.Managers
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("HunterNPC",
-                    huntersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0,
-                        Random.Range(-2, 2)),
+                    huntersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
+                        Random.Range(-2.0f, 2.0f)),
                     huntersSpawnArea.rotation);
 
                 yield return new WaitForSeconds(delay);
@@ -343,8 +343,8 @@ namespace RFM.Managers
             for (int i = 0; i < numOfEscapees; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("EscapeeNPC",
-                    playersSpawnArea.position + new Vector3(Random.Range(-2, 2), 0,
-                        Random.Range(-2, 2)),
+                    playersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
+                        Random.Range(-2.0f, 2.0f)),
                     playersSpawnArea.rotation);
 
                 yield return new WaitForSeconds(delay);
@@ -403,8 +403,8 @@ namespace RFM.Managers
                 Destroy(_npcCamera.gameObject);
             }
 
-            await Task.Delay(CurrentGameConfiguration.GameRestartWaitTime);
-            EventsManager.GameRestarting();
+            await Task.Delay(1000);
+            EventsManager.ShowScores();
         }
 
         // [PunRPC]
@@ -532,7 +532,7 @@ namespace RFM.Managers
                     MatchMakingTime = 10,
                     TakePositionTime = 10,
                     GameplayTime = 60,
-                    GameRestartWaitTime = 3000,
+                    //GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     EscapeesToHuntersRatio = Vector2.one,
                     GainingMoneyTimeInterval = 1,
@@ -612,7 +612,7 @@ namespace RFM.Managers
             public int MatchMakingTime;
             public int TakePositionTime;
             public int GameplayTime;
-            public int GameRestartWaitTime;
+            //public int GameRestartWaitTime;
             public int MaxPlayersInRoom;
             public Vector2 EscapeesToHuntersRatio;
             public int GainingMoneyTimeInterval;

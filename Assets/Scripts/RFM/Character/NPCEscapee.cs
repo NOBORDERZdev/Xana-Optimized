@@ -6,10 +6,11 @@ using UnityEngine.AI;
 
 namespace RFM.Character
 {
-    public class NPCEscapee : MonoBehaviour
+    public class NPCEscapee : MonoBehaviour, IPunObservable
     {
-        private string _nickName = "Player";
-        private int _money;
+        public string nickName = "Player";
+        public int money;
+        public float timeSurvived;
         
         [SerializeField] private Animator animator;
         [SerializeField] private string velocityNameX, velocityNameY;
@@ -19,7 +20,6 @@ namespace RFM.Character
         private Transform _closestHunterTransform = null;
         private float _minDistance = 10f;
 
-        public float timeSurvived;
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
 
@@ -44,7 +44,7 @@ namespace RFM.Character
 
         private void Start()
         {
-            _nickName = $"Player{GetComponent<PhotonView>().ViewID}";
+            nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             _maxSpeed = _navMeshAgent.speed;
         }
 
@@ -57,9 +57,7 @@ namespace RFM.Character
 
         private void OnGameStarted()
         {
-            InvokeRepeating(nameof(AddMoney),
-                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
-                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+            StartCoroutine(AddMoney());
             StartCoroutine(TimeSurvived());
         }
 
@@ -74,9 +72,14 @@ namespace RFM.Character
 
         }
 
-        private void AddMoney()
+        private IEnumerator AddMoney()
         {
-            _money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(
+                    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+                money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
+            }
         }
 
         private void UpdateHuntersTransformList() 
@@ -137,10 +140,13 @@ namespace RFM.Character
         
         public void AIEscapeeCaught()
         {
-            CancelInvoke(nameof(AddMoney));
+            StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            RFM.Managers.RFMUIManager.Instance.EscapeeCaught(_nickName, _money, timeSurvived);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                RFM.Managers.RFMUIManager.Instance.EscapeeCaught(nickName, money, timeSurvived, true);
+            }
             PhotonNetwork.Destroy(this.gameObject);
         }
         
@@ -149,5 +155,18 @@ namespace RFM.Character
             AIEscapeeCaught();
         }
 
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext(money);
+                stream.SendNext(timeSurvived);
+            }
+            else
+            {
+                money = (int)stream.ReceiveNext();
+                timeSurvived = (float)stream.ReceiveNext();
+            }
+        }
     }
 }
