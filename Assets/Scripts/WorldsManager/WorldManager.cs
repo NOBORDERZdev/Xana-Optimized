@@ -410,7 +410,7 @@ public class WorldManager : MonoBehaviour
     {
         isCheckFightingModulePopUp = true;
         CloseFightingModulePopUp();
-        FeedEventPrefab.m_EnvName = "BreakingDown Arena";
+        WorldItemView.m_EnvName = "BreakingDown Arena";
         JoinEvent();
     }
     public void CloseFightingModulePopUp()
