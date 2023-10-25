@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-using Photon.Voice.Unity.Demos;
 
 public class WorldCategoryUIHandler : MonoBehaviour
 {
@@ -12,7 +9,7 @@ public class WorldCategoryUIHandler : MonoBehaviour
     [SerializeField]
     Transform WorldElement,SpawnWorldParent;
     string _categoryType;
-    float addHeight = 430f, addWidth = 321f;
+    float addHeight = 450f, addWidth = 321f;
     public void Init(string categoryName,int totalWorlds)
     {
         CategoryName.text = categoryName;
@@ -26,16 +23,33 @@ public class WorldCategoryUIHandler : MonoBehaviour
     }
     public void CalculateAndSetContentSize(int totalWorlds)
     {
+        float Parentheight = transform.parent.GetComponent<RectTransform>().sizeDelta.y;
         if (totalWorlds > 0 && totalWorlds <= 6)
         {
             SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * totalWorlds, addHeight + 30f);
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight + 30f);
+            transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, Parentheight + addHeight + 30f);
         }
         else
         {
             float sizess = totalWorlds / 2;
             SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * sizess, addHeight * 2f);
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight * 2f);
+            transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, Parentheight + addHeight + 30f);
+        }
+    }
+    public void ViewAllCategoryItems()
+    {
+        Debug.LogError("View All Items  --- " + CategoryName.text);
+        switch (CategoryName.text)
+        {
+            case "Hot": UIManager.Instance.SetWorldToDisplay(APIURL.Hot); break; 
+            case "Game": UIManager.Instance.SetWorldToDisplay(APIURL.GameWorld); break;
+            case "New": UIManager.Instance.SetWorldToDisplay(APIURL.AllWorld); break;
+            case "Event": UIManager.Instance.SetWorldToDisplay(APIURL.EventWorld); break;
+            case "Test": UIManager.Instance.SetWorldToDisplay(APIURL.TestWorld); break;
+            case "My World": UIManager.Instance.SetWorldToDisplay(APIURL.MyWorld); break;
+            default: UIManager.Instance.SetWorldToDisplay(APIURL.Hot); break;
         }
     }
 }

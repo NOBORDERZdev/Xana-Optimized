@@ -67,8 +67,8 @@ public class WorldManager : MonoBehaviour
         }
 
     }
-  ///>>>> Sannan
-  
+    ///>>>> Sannan
+    bool WorldViewFlag = false;
     void Start()
     {
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
@@ -78,7 +78,8 @@ public class WorldManager : MonoBehaviour
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {
-        if(WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
+        WorldViewFlag = true;
+        if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
             WorldItemManager.DisplayWorlds(tab.ToString());
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -358,10 +359,17 @@ public class WorldManager : MonoBehaviour
         }
         if (!isLobbyActive)
         {
-            EventPrefabLobby.SetActive(false);
-            AllWorldTabReference.LobbyInactiveCallBack();
+            if(EventPrefabLobby.gameObject.activeInHierarchy)
+            {
+                EventPrefabLobby.GetComponent<LobbyWorldViewFlagHandler>().ActivityFlag(false);
+                EventPrefabLobby.SetActive(false);
+                AllWorldTabReference.LobbyInactiveCallBack();
+            }
         }
-       // WorldItemManager.DisplayWorlds(key);
+        if(WorldViewFlag)
+        {
+            WorldItemManager.DisplayWorlds(key);
+        }
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
       //  TutorialsManager.instance.ShowTutorials();

@@ -139,8 +139,8 @@ public class BottomTabManager : MonoBehaviour
 
             UIManager.Instance.Canvas.SetActive(true);
             UIManager.Instance.SwitchToScreen(0);
-            WorldManager.instance.ChangeWorld(APIURL.Hot);
-            WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+           // WorldManager.instance.ChangeWorld(APIURL.Hot);
+           // WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
     }
 
@@ -164,8 +164,8 @@ public class BottomTabManager : MonoBehaviour
                 }
                 UIManager.Instance.Canvas.SetActive(true);
                 UIManager.Instance.SwitchToScreen(1);
-                WorldManager.instance.ChangeWorld(APIURL.Hot);
-                WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+                //WorldManager.instance.ChangeWorld(APIURL.Hot);
+               // WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
         }
     }

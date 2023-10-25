@@ -30,7 +30,7 @@ public class AllWorldManage : MonoBehaviour
     {
         WorldManager.instance.ClearWorldScrollWorlds();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
+       // WorldManager.instance.ChangeWorld(APIURL.Hot);
         ScrollEnableDisable(0);
     }
     public void XanaWorldLoad()

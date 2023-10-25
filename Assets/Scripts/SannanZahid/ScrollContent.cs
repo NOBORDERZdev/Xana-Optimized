@@ -298,7 +298,7 @@ namespace DynamicScrollRect
         public void ResetContent()
         {
             ClearContent();
-            InitItemsVertical(Worlds.Count);
+            //InitItemsVertical(Worlds.Count);
         }
     }
 }
