@@ -151,11 +151,11 @@ public class GameManager : MonoBehaviour
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
 
-        if (FeedEventPrefab.m_EnvName == "HOKUSAI KATSUSHIKA")
+        if (XanaConstants.xanaConstants.EnviornmentName == "HOKUSAI KATSUSHIKA")
         {
-            if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.activeInHierarchy)
+            if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
             {
-                XanaConstants.xanaConstants.buttonClicked.GetComponent<FeedEventPrefab>().enterClassCodePanel.SetActive(true);
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
                 return;
             }
         }//
