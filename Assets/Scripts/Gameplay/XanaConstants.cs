@@ -20,7 +20,6 @@ public class XanaConstants : MonoBehaviour
     public int userName;
     public string NFTUrl;
     public string clothJson;
-    public string defaultFightingNFTUrl;
     public string defaultFightingName;
     public string userId;
     public string CurrentSceneName;

@@ -36,6 +36,12 @@ public class WorldManager : MonoBehaviour
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
 
+    [Header("Fighting Module PopUp")]
+    public GameObject fightingModulePopUp;
+    public bool isCheckFightingModulePopUp;
+    public bool HaveFighterNFT;
+
+
     static int AutoSwtichIndex = 0;
     public APIURL GetCurrentTabSelected()
     {
@@ -393,6 +399,25 @@ public class WorldManager : MonoBehaviour
 #endif
         }
     }
+
+    public void OnClickEnterAsParticipant()
+    {
+        CloseFightingModulePopUp();
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        FightingModuleManager.Instance.OnClickMainMenu();
+    }
+    public void OnClickEnterAsSpectator()
+    {
+        isCheckFightingModulePopUp = true;
+        CloseFightingModulePopUp();
+        FeedEventPrefab.m_EnvName = "BreakingDown Arena";
+        JoinEvent();
+    }
+    public void CloseFightingModulePopUp()
+    {
+        fightingModulePopUp.SetActive(false);
+    }
+
     public async void JoinEvent()
     {
         _callSingleTime = true;
@@ -433,6 +458,22 @@ public class WorldManager : MonoBehaviour
                 else
                 {
                     print("NFT is in your OwnerShip Enjoy");
+                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
+                    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
+                    if (list != null)
+                    {
+                        HaveFighterNFT = true;
+                    }
+                    else
+                    {
+                        HaveFighterNFT = false;
+                    }
+                    if (FeedEventPrefab.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                    {
+                        Debug.Log("Breaking down Arena World");
+                        fightingModulePopUp.SetActive(true);
+                        return;
+                    }
                 }
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
