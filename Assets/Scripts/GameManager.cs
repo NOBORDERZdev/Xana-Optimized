@@ -11,30 +11,30 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [Header("Character")]
-
+ 
     public GameObject mainCharacter;
     public GameObject m_ChHead;
     [Header("Character Animator")]
     public Animator m_CharacterAnimator;
 
     RuntimeAnimatorController m_AnimControlller;
-
+    
 
     [Header("Camera's")]
     public Camera m_MainCamera;
-    //    public Camera m_UICamera;
+//    public Camera m_UICamera;
     public Camera m_RenderTextureCamera;
-    //   public Camera m_ScreenShotCamera;
+ //   public Camera m_ScreenShotCamera;
 
-
+    
 
     //[Header("Character Customizations")]
     //public CharacterCustomizationUIManager characterCustomizationUIManager;
 
-
+    
 
     [Header("Objects During Flow")]
-    //  public GameObject UIManager;  
+   //  public GameObject UIManager;  
     public GameObject BGPlane;
     public bool WorldBool;
     public bool BottomAvatarButtonBool;
@@ -63,11 +63,11 @@ public class GameManager : MonoBehaviour
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
-        /*#if UNITY_EDITOR
-                Debug.unityLogger.logEnabled = true;
-        #else
-                Debug.unityLogger.logEnabled=false;
-        #endif*/
+/*#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+        Debug.unityLogger.logEnabled=false;
+#endif*/
     }
     public string GetStringFolderPath()
     {
@@ -79,18 +79,15 @@ public class GameManager : MonoBehaviour
             //if (XanaConstants.xanaConstants.isHoldCharacterNFT && XanaConstants.xanaConstants.isNFTEquiped)
             if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
             {
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
                 return (Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
             }
             else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = true;
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
                 return (Application.persistentDataPath + "/logIn.json");
             }
         }
@@ -98,21 +95,19 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = false;
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
                 return (Application.persistentDataPath + "/loginAsGuestClass.json");
             }
         }
     }
     public void ComeFromWorld()
     {
-        StartCoroutine(WaitForInstancefromWorld());
-
+       StartCoroutine( WaitForInstancefromWorld());
+       
     }
     public IEnumerator HitReloadUnloadScene()
     {
@@ -120,22 +115,22 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("UserRegistration");
         print("Unload");
         SceneManager.LoadScene("UserRegistration", LoadSceneMode.Additive);
-        yield return new WaitForSeconds(1f);
+         yield return new WaitForSeconds(1f);
         print("wait");
         print("Loaded");
-    }
+     }  
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
-        // m_AnimControlller = mainCharacter.GetComponent<Animator>().runtimeAnimatorController;
+       // m_AnimControlller = mainCharacter.GetComponent<Animator>().runtimeAnimatorController;
         OnceGuestBool = false;
         OnceLoginBool = false;
-
-        // StartCoroutine(WaitForInstance());
+        
+       // StartCoroutine(WaitForInstance());
         //ComeFromWorld();
-
+       
     }
     //IEnumerator WaitForInstance()
     //{
@@ -146,20 +141,20 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.05f);
         SaveCharacterProperties = ItemDatabase.instance.GetComponent<SavaCharacterProperties>();
-        if (ItemDatabase.instance != null)
-            ItemDatabase.instance.DownloadFromOtherWorld();
-
+         if (ItemDatabase.instance != null)
+        ItemDatabase.instance.DownloadFromOtherWorld();
+        
     }
 
 
     public void NotNowOfSignManager()
     {
-        UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-
-        if (UIManager.Instance.HomePage.activeInHierarchy)
+      UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+       
+        if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (LoginPageManager.m_WorldIsClicked || LoginPageManager.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
             UIManager.Instance.IsWorldClicked();
         else
         {
@@ -176,7 +171,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         //mainCharacter.GetComponent<FaceIK>().ikActive= false;
-        if (UserRegisterationManager.instance.LoggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
+        Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -185,8 +181,8 @@ public class GameManager : MonoBehaviour
         else
         {
             UserRegisterationManager.instance.checkbool_preser_start = true;
-            PlayerPrefs.SetInt("IsChanged", 0);
-            UserRegisterationManager.instance.OpenUIPanal(1);
+             PlayerPrefs.SetInt("IsChanged", 0);  
+            UserRegisterationManager.instance.OpenUIPanal(17);
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);
@@ -225,17 +221,17 @@ public class GameManager : MonoBehaviour
             StoreManager.instance.SignUpAndLoginPanel(3);
 
         }
-
+ 
     }
     public void BackFromStoreofCharacterCustom()
     {
         UIManager.Instance.HomePage.SetActive(true);
-
+     
         BGPlane.SetActive(false);
     }
 
     public void ChangeCharacterAnimationState(bool l_State)
-    {
+    {    
         m_CharacterAnimator.SetBool("Idle", l_State);
     }
 
@@ -279,8 +275,7 @@ public class GameManager : MonoBehaviour
     //    return LocalizeText;
     //}
 
-    public void ReloadMainScene()
-    {
+    public void ReloadMainScene() {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             SceneManager.LoadSceneAsync("Main");

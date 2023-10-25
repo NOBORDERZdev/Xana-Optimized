@@ -21,11 +21,6 @@ public class menuAvatarFlowButton : MonoBehaviour
         StoreManager.instance.SubmitUserDetailAPI();
     }
 
-    //private void OnEnable()
-    //{
-    //    StoreBtnController();
-    //}
-  
     public void StoreBtnController()
     {
         if (XanaConstants.xanaConstants != null)
@@ -36,7 +31,6 @@ public class menuAvatarFlowButton : MonoBehaviour
                 OnNFTAvatarEnableStore();
         }
     }
-
 
     void OnNFTAvatarDisableStore()
     {
