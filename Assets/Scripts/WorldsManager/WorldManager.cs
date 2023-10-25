@@ -356,7 +356,12 @@ public class WorldManager : MonoBehaviour
         }
         if (!isLobbyActive)
         {
-            EventPrefabLobby.SetActive(false);
+            if (EventPrefabLobby.gameObject.activeInHierarchy)
+            {
+                EventPrefabLobby.GetComponent<LobbyWorldViewFlagHandler>().ActivityFlag(false);
+                EventPrefabLobby.SetActive(false);
+                AllWorldTabReference.LobbyInactiveCallBack();
+            }
         }
         WorldItemManager.DisplayWorlds(key);
         previousSearchKey = SearchKey;
