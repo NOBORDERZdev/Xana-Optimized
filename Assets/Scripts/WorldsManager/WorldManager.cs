@@ -457,8 +457,9 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
-                    print("NFT is in your OwnerShip Enjoy");
+                    print("NFT is in your OwnerShip Enjoy "+ PlayerPrefs.GetInt("Equiped"));
                     List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
+                    Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
                     List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
                     if (list != null)
                     {
@@ -468,7 +469,7 @@ public class WorldManager : MonoBehaviour
                     {
                         HaveFighterNFT = false;
                     }
-                    if (FeedEventPrefab.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                    if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
                     {
                         Debug.Log("Breaking down Arena World");
                         fightingModulePopUp.SetActive(true);
