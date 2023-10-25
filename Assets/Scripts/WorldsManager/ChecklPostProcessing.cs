@@ -93,7 +93,7 @@ public class ChecklPostProcessing : MonoBehaviour
 
     public bool CheckPostProcessEnable()
     {
-        if (m_SceneNames.Contains(FeedEventPrefab.m_EnvName))
+        if (m_SceneNames.Contains(WorldItemView.m_EnvName))
         {
             return true;
         }

@@ -274,44 +274,44 @@ public class SNSSettingController : MonoBehaviour
     void UserCounterStatus(bool _status)
     {
         // Lobby Prefab
-        WorldManager.instance.eventPrefabLobby.GetComponent<FeedEventPrefab>()
+        WorldManager.instance.EventPrefabLobby.GetComponent<WorldItemView>()
             .joinedUserCount.transform.parent.gameObject.SetActive(_status);
 
-        // Home Page => Hot
-        foreach (var item in WorldManager.instance.listParentHotSection.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// Home Page => Hot
+        //foreach (var item in WorldManager.instance.listParentHotSection.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
 
-        // Home Page => New
-        foreach (var item in WorldManager.instance.listParentAllWorlds.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// Home Page => New
+        //foreach (var item in WorldManager.instance.listParentAllWorlds.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
 
-        // Home Page => My World
-        foreach (var item in WorldManager.instance.listParentMyWorlds.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// Home Page => My World
+        //foreach (var item in WorldManager.instance.listParentMyWorlds.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
 
-        // World Page => Hot
-        foreach (var item in WorldManager.instance.world_HotScroll.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// World Page => Hot
+        //foreach (var item in WorldManager.instance.world_HotScroll.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
 
-        // World Page => New
-        foreach (var item in WorldManager.instance.world_NewScroll.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// World Page => New
+        //foreach (var item in WorldManager.instance.world_NewScroll.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
 
-        // World Page => My World
-        foreach (var item in WorldManager.instance.world_myworldScroll.GetAllChildren())
-        {
-            item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        }
+        //// World Page => My World
+        //foreach (var item in WorldManager.instance.world_myworldScroll.GetAllChildren())
+        //{
+        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
+        //}
     }
     void CheckBtnStatus(int status)
     {
