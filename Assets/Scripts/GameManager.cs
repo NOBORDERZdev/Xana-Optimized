@@ -180,7 +180,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         //mainCharacter.GetComponent<FaceIK>().ikActive= false;
-        if (UserRegisterationManager.instance.LoggedIn||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
+        Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -190,7 +191,7 @@ public class GameManager : MonoBehaviour
         {
             UserRegisterationManager.instance.checkbool_preser_start = true;
              PlayerPrefs.SetInt("IsChanged", 0);  
-            UserRegisterationManager.instance.OpenUIPanal(1);
+            UserRegisterationManager.instance.OpenUIPanal(17);
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);
