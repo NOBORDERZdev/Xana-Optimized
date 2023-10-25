@@ -222,7 +222,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
                     string jbody = JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
-                    StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     print("!!GetUserData IF");
                 }
                 else

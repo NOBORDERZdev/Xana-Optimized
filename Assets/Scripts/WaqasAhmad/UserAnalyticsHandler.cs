@@ -358,14 +358,14 @@ public class UserAnalyticsHandler : MonoBehaviour
     public void UserData(string _data)
     {
         _data = jsonPrefix + _data + "}";
-        //Debug.Log("Analytics -- Data : " + _data);
+       // Debug.LogError("Analytics -- Data : " + _data);
         //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         userDataString = _data;
         onChangeJoinUserStats?.Invoke(_data);
     }
     void UserCountUpdate(string _data)
     {
-        //Debug.Log("Analytics -- Data : " + _data);
+       // Debug.LogError("Analytics -- Data : " + _data);
         //Debug.Log("<color=green> Analytics -- Data : " + _data + "</color>");
         _data = jsonPrefix + _data + "}";
         userDataString = _data;
