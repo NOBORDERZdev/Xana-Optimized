@@ -182,16 +182,18 @@ public class LoadingHandler : MonoBehaviour
         {
             //isFedderActive = true;
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            blackScreen.DOKill();
             blackScreen.DOFade(1, 0.1f).OnComplete(delegate
             {
                 //Debug.LogError("7 ~~~~~~~~~~~~~~~~ LandscapeLeft");
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
+                CustomLoading();
                 //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
             });
         }
 
         //StartCoroutine(CustomLoading());
-        CustomLoading();
+       
     }
    
     void CustomLoading()
@@ -208,10 +210,10 @@ public class LoadingHandler : MonoBehaviour
         //}
 
 
-
+        loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(1f);
-        loadingPanel.SetActive(true);
+        
       
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -277,7 +279,7 @@ public class LoadingHandler : MonoBehaviour
 
                 XanaConstants.xanaConstants.isBackFromWorld = false;
 
-
+                CustomHideLoading();
                 //if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
                 //{
                 //    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
@@ -292,7 +294,7 @@ public class LoadingHandler : MonoBehaviour
         }
 
         //StartCoroutine(CustomHideLoading());
-        CustomHideLoading();
+       
     }
     void CustomHideLoading()
     {
