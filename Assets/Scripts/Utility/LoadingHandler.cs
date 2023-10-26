@@ -476,7 +476,9 @@ public class LoadingHandler : MonoBehaviour
         else
         {
             if (isBuilder)
+            {
                 StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(25f, 30f)));
+            }
             else
                 StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
         }
@@ -519,11 +521,15 @@ public class LoadingHandler : MonoBehaviour
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                   // yield return new WaitForSeconds(1f);
+                    //HideLoading(ScreenOrientation.Portrait);
                 }
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                    //yield return new WaitForSeconds(1f);
+                    //HideLoading(ScreenOrientation.Portrait);
                 }
             }
             yield return null;
