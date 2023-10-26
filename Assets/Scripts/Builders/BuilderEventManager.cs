@@ -52,6 +52,9 @@ public static class BuilderEventManager
     //Display Message Component
     public static Action<string, float, bool> OnDisplayMessageCollisionEnter;
 
+    //Door Key Component
+    public static Action<string> OnDoorKeyCollisionEnter;
+
     //Help Button Component
     public static Action<string, string, GameObject> OnHelpButtonCollisionEnter;
     public static Action OnHelpButtonCollisionExit;

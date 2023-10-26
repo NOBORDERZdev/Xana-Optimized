@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Models;
+using Photon.Pun;
 
 public class TranslateComponent : ItemComponent
 {
@@ -13,17 +14,36 @@ public class TranslateComponent : ItemComponent
     bool moveForward, moveBackward;
     bool activateTranslateComponent = false;
     public Vector3 lookAtVector;
+    string RuntimeItemID = "";
+    private bool IsAgainTouchable;
 
     public void InitTranslate(TranslateComponentData translateComponentData)
     {
         this.translateComponentData = translateComponentData;
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
         translatePositions = new List<Vector3>();
         translatePositions = translateComponentData.translatePoints;
         moveForward = true;
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
-        StartComponent();
+        if (!this.translateComponentData.avatarTriggerToggle)
+        {
+            PlayBehaviour();
+        }
+    }
+
+    private void OnCollisionEnter(Collision _other)
+    {
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            if (translateComponentData.avatarTriggerToggle && !IsAgainTouchable)
+            {
+                if (GamificationComponentData.instance.withMultiplayer)
+                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+                else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            }
+        }
     }
 
     private bool CheckDistance()
@@ -89,6 +109,7 @@ public class TranslateComponent : ItemComponent
     private void StartComponent()
     {
         activateTranslateComponent = true;
+        IsAgainTouchable = true;
         StartCoroutine(translateModule());
     }
     private void StopComponent()
@@ -98,7 +119,8 @@ public class TranslateComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
+                isPlaying = false;
+        StopComponent();
         StopComponent();
     }
 

@@ -732,6 +732,35 @@ namespace SuperStar.Helpers
                 return builder.ToString();
             }
         }
+        public void RemoveFromMemoryDelayCoroutine(string key, bool force)
+        {
+            StartCoroutine(RemoveFromMemoryDelay(key, force));
+        }
+        public IEnumerator RemoveFromMemoryDelay(string key, bool force)
+        {
+            yield return null;
+            if (sprites.ContainsKey(key))
+            {
+                sprites.TryGetValue(key, out SpriteCacheItem spriteCacheItem);
+                spriteCacheItem.refCnt--;
+                if ((spriteCacheItem.refCnt <= 0) || force)
+                {
+                    try
+                    {
+                        Destroy(spriteCacheItem.sprite.texture);
+                    }
+                    catch { }
+                    try
+                    {
+                        Destroy(spriteCacheItem.sprite);
+                    }
+                    catch { }
+                    sprites.Remove(key);
+                }
+            }
+        }
+
+
 
         public void RemoveFromMemory(string key, bool force)
         {

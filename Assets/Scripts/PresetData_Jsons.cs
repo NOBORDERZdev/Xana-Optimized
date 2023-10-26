@@ -4,6 +4,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.UI.Extensions;
+using WaheedDynamicScrollRect;
+
 using static StoreManager;
 public class PresetData_Jsons : MonoBehaviour
 {
@@ -29,7 +32,7 @@ public class PresetData_Jsons : MonoBehaviour
     IEnumerator RegisterForUndoRedo()
     {
         yield return new WaitForSeconds(0.05f);
-        if (ActivePanelCallStack.obj.IsCallByBtn() && this.transform.GetChild(0).gameObject.activeInHierarchy)
+        if (ActivePanelCallStack.obj.IsCallByBtn()) //&& this.transform.GetChild(0).gameObject.activeInHierarchy)
         {
             //isAddedInUndoRedo = true;
             //Debug.Log("<color=red> Enter In Presets </color>");
@@ -46,17 +49,40 @@ public class PresetData_Jsons : MonoBehaviour
 
     void Start()
     {
-        gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
+        if (gameObject.GetComponent<Button>() != null) 
+        {
+            gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
+        }
 
+
+        callScripts();
+    }
+
+    public void callScripts() 
+    {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         charcterBodyParts = CharcterBodyParts.instance;
     }
+
+
     public void callit()
     {
         clickname = "";
     }
-    void ChangecharacterOnCLickFromserver()
+   public void ChangecharacterOnCLickFromserver()
     {
+        callScripts();
+        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
+        //{
+            if (WaheedDynamicScrollRect.ScrollContent.instance != null)
+            {
+                JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
+            Debug.Log("NAME IS "+ JsonDataPreset);
+                //gameObject.name = ScrollSnap.instance.charName;
+                Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+            }
+        //}
+        XanaConstants.xanaConstants.registerFirstTime = true;
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
 
@@ -119,21 +145,25 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
-
+                Invoke("abcd", 5f);
+                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                UserRegisterationManager.instance.usernamePanal.SetActive(true);
                 if (PlayerPrefs.GetInt("iSignup") == 1)
                 {
-                    Invoke("abcd", 5f);
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
-                    UserRegisterationManager.instance.BlackScreen.SetActive(true);
+                   
+                    // enable check so that it will know that index is comming from start of the game
+                   // UserRegisterationManager.instance.checkbool_preser_start = false;
+                    //UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
+                    //UserRegisterationManager.instance.BlackScreen.SetActive(true);
                 }
                 else                // as a guest
                 {
-                    Invoke("abcd", 5f);
+                    //Invoke("abcd", 5f);
 
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                    //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                    //UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                    //UserRegisterationManager.instance.usernamePanal.SetActive(true);
                     // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
                 }
@@ -183,7 +213,7 @@ public class PresetData_Jsons : MonoBehaviour
         StoreManager.instance.GreyRibbonImage.SetActive(false);
         StoreManager.instance.WhiteRibbonImage.SetActive(true);
     }
-    void GetSavedPreset()
+    public void GetSavedPreset()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // logged in from account
         {
@@ -208,7 +238,7 @@ public class PresetData_Jsons : MonoBehaviour
             }
         }
     }
-    void abcd()
+  public  void abcd()
     {
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         print("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  

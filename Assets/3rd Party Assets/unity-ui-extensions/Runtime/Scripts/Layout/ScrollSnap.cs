@@ -10,6 +10,8 @@
 /// - fixed current page made it independent from pivot
 /// - replaced pagination with delegate function
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 namespace UnityEngine.UI.Extensions
@@ -19,6 +21,8 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Extensions/Scroll Snap")]
     public class ScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IScrollSnap
     {
+        public static ScrollSnap instance;
+
         // needed because of reversed behaviour of axis Y compared to X
         // (positions of children lower in children list in horizontal directions grows when in vertical it gets smaller)
         public enum ScrollDirection
@@ -103,11 +107,28 @@ namespace UnityEngine.UI.Extensions
 
         public ScrollDirection direction = ScrollDirection.Horizontal;
 
+
+        public static int avatarCounter = 0;
+        public List<GameObject> avatarData = new List<GameObject>();
+        //[HideInInspector]
+        public String nameData;
+        public String charName;
+
+        public Button ASNextButton;//, skipButton; // AS for AvatarSelected
+        public Button shuffleButton;
+
+
+
+        void Awake() 
+        {
+            instance = this;
+        }
+
         // Use this for initialization
         void Start()
         {
             _lerp = false;
-
+            //PresetData_Jsons.clickname = null;
             _scroll_rect = gameObject.GetComponent<ScrollRect>();
             _scrollRectTransform = gameObject.GetComponent<RectTransform>();
             _listContainerTransform = _scroll_rect.content;
@@ -118,6 +139,12 @@ namespace UnityEngine.UI.Extensions
             UpdateListItemPositions();
 
             PageChanged(CurrentPage());
+
+            if (shuffleButton) 
+            {
+                shuffleButton.onClick.AddListener(OnClickShuffleButton);
+            }
+            
 
             if (NextButton)
             {
@@ -134,6 +161,8 @@ namespace UnityEngine.UI.Extensions
                     PreviousScreen();
                 });
             }
+
+            
             if (_scroll_rect.horizontalScrollbar != null && _scroll_rect.horizontal)
             {
                 
@@ -145,7 +174,34 @@ namespace UnityEngine.UI.Extensions
                 var vscroll = _scroll_rect.verticalScrollbar.gameObject.GetOrAddComponent<ScrollSnapScrollbarHelper>();
                 vscroll.ss = this;
             }
+
+
+            Transform obj = StoreManager.instance.contentList;
+
+            avatarData.Clear();
+
+            foreach (Transform avatars in obj)
+            {
+                avatarData.Add(avatars.gameObject);
+            }
+
+            Invoke("firstCharacter", 0.5f);
         }
+
+        void firstCharacter() 
+        {
+            if (avatarData != null)
+            {
+                nameData = avatarData[0].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+                if (ASNextButton)
+                {
+                    ASNextButton.onClick.AddListener(avatarData[0].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                }
+                // charName = avatarData[0].gameObject.name;
+            }
+        }
+
+        
 
         public void UpdateListItemsSize()
         {
@@ -350,7 +406,7 @@ namespace UnityEngine.UI.Extensions
 
                 _listContainerTransform.localPosition = Vector3.Lerp(_listContainerTransform.localPosition, _lerpTarget, 7.5f * Time.deltaTime);
 
-                if (Vector3.Distance(_listContainerTransform.localPosition, _lerpTarget) < 0.001f)
+                if (Vector3.Distance(_listContainerTransform.localPosition, _lerpTarget) < 0.01f)
                 {
                     _listContainerTransform.localPosition = _lerpTarget;
                     _lerp = false;
@@ -369,6 +425,27 @@ namespace UnityEngine.UI.Extensions
             {
                 _fastSwipeCounter++;
             }
+
+            //float startTime = Time.time;
+
+            //while (Time.time - startTime < shuffleDuration)
+            //{
+            //    for (int i = 0; i < avatarData.Count; i++)
+            //    {
+            //        if (avatarCounter >= 0 && avatarCounter <= 40)
+            //        {
+            //            NextScreen();
+            //            PreviousScreen();
+            //        }
+            //    }
+            //}
+
+            if (startShuffling) 
+            {
+                startShuffling = false;
+                StartCoroutine(ShuffleUIElements());
+                
+            }
         }
 
         private bool fastSwipe = false; //to determine if a fast swipe was performed
@@ -382,9 +459,29 @@ namespace UnityEngine.UI.Extensions
             if (CurrentPage() < _pages - 1)
             {
                 _lerp = true;
-                _lerpTarget = _pageAnchorPositions[CurrentPage() + 1];
+                _lerpTarget = _pageAnchorPositions[CurrentPage()+1];
 
+                //Debug.Log("Lerp Target "+_lerpTarget);
                 PageChanged(CurrentPage() + 1);
+
+                avatarCounter++;
+                
+                //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+
+                //ASNextButton.onClick.RemoveAllListeners();
+
+                //ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver); 
+                //skipButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                    
+                
+
+                // Debug.Log("Value is "+ nameData);
+                if (avatarCounter == avatarData.Count - 1)
+                {
+                    nextPage = false;
+                }
+
+
             }
         }
 
@@ -399,6 +496,18 @@ namespace UnityEngine.UI.Extensions
                 _lerpTarget = _pageAnchorPositions[CurrentPage() - 1];
 
                 PageChanged(CurrentPage() - 1);
+                avatarCounter--;
+                //Debug.Log("Value is " + avatarCounter);
+                //nameData = avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().JsonDataPreset;
+
+                //ASNextButton.onClick.RemoveAllListeners();
+
+                //ASNextButton.onClick.AddListener(avatarData[avatarCounter].gameObject.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver);
+                // Debug.Log("Value is " + nameData);
+                if (avatarCounter == 0)
+                {
+                    nextPage = true;
+                }
             }
         }
 
@@ -480,11 +589,13 @@ namespace UnityEngine.UI.Extensions
             if (NextButton)
             {
                 NextButton.interactable = currentPage < _pages - 1;
+                
             }
 
             if (PrevButton)
             {
                 PrevButton.interactable = currentPage > 0;
+                
             }
 
             if (onPageChange != null)
@@ -493,8 +604,53 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        #region Interfaces
-        public void OnBeginDrag(PointerEventData eventData)
+
+        //public void AvatarSelected() 
+        //{ 
+        //PresetData_Jsons.
+        //}
+        float shuffleDuration = 5f;
+        bool startShuffling = false, nextPage = false;
+        private void OnClickShuffleButton()
+        {
+            // Call the IEnumerator method indirectly
+            startShuffling = true;
+            nextPage = true;
+            //StartCoroutine(ShuffleUIElements());
+        }
+
+        private IEnumerator ShuffleUIElements()
+        {
+            float startTime = Time.time;
+            //float endTime = startTime + shuffleDuration;
+            int avatarRange = Random.Range(0, avatarData.Count - 1);
+            Debug.Log("Avatar Range is "+ avatarRange);
+            //while (Time.time - startTime < shuffleDuration)
+            //{
+            
+                for (int i = 0; i < avatarRange; i++)
+                {
+                    if (i != avatarRange)
+                    {
+                    if (nextPage) {
+                        NextScreen();
+                    }
+                    else
+                    {
+                        PreviousScreen();
+                    }
+                    
+                    
+                    yield return new WaitForSeconds(0.2f);
+                    }
+              //  shuffleDuration = 0f;
+                yield return null;
+                
+            } 
+        }
+
+                #region Interfaces
+                public void OnBeginDrag(PointerEventData eventData)
         {
             UpdateScrollbar(false);
 

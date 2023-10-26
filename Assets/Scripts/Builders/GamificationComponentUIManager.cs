@@ -23,6 +23,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter += EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter += EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter += EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter += EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit += DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
@@ -60,6 +61,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter -= EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter -= EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter -= EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter -= EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit -= DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
@@ -107,10 +109,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     float letterDelay = 0.1f;
     int storyCharCount = 0;
     bool isAgainCollided;
+    bool isStoryWritten;
     public ScrollRect narrationScroll;
     public GameObject sliderNarrationUI;
     Coroutine StoryNarrationCoroutine;
     public Button narrationUIClosebtn;
+    public Button narrationUIDownTextbtn;
     float narrationtotalHeight;
     float singleLineHeight;
 
@@ -136,6 +140,10 @@ public class GamificationComponentUIManager : MonoBehaviour
     public GameObject DisplayMessageParentUI;
     public TextMeshProUGUI DisplayMessageText;
     public TextMeshProUGUI DisplayMessageTimeText;
+
+    //Door Key Component
+    public GameObject DoorKeyParentUI;
+    public TextMeshProUGUI DoorKeyText;
 
     //Help Button Component
     public GameObject HelpButtonParentUI;
@@ -168,6 +176,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             narrationTextUI.text = narrationText;
             narrationScroll.enabled = false;
             sliderNarrationUI.SetActive(false);
+            isStoryWritten = false;
             Invoke(nameof(NarrationUILinesCount), 0.1f);
         }
         else
@@ -197,6 +206,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         int numberOfLines = narrationTextUI.textInfo.lineCount;
         // Calculate the single line height by dividing the total height by the number of lines.
         singleLineHeight = narrationtotalHeight / numberOfLines;
+
+        narrationUIDownTextbtn.interactable = !isStoryWritten;
     }
     IEnumerator StoryNarration(string msg)
     {
@@ -205,6 +216,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
+        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -213,6 +225,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(letterDelay);
             StartCoroutine(WaitForScrollingOption());
         }
+        isStoryWritten = false;
+        NarrationUILinesCount();
     }
     IEnumerator WaitForScrollingOption()
     {
@@ -743,12 +757,16 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+
                 colorString = "#36C34E";
                 break;
 
             case 1:
                 wrong++;
                 image = wrongImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+
                 break;
 
             case 2:
@@ -1249,6 +1267,45 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     #endregion
 
+    #region DoorKey Component
+    Coroutine EnableDoorKeyCoroutine;
+    public void EnableDoorKeyUI(string DisplayMessage)
+    {
+        DisableAllComponentUIObject(Constants.ItemComponentType.DoorKeyComponent);
+        if (EnableDoorKeyCoroutine == null)
+        {
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+        else
+        {
+            StopCoroutine(EnableDoorKeyCoroutine);
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+    }
+    public IEnumerator IEEnableDoorKeyUI(string DisplayMessage)
+    {
+        DisplayMessage = TextLocalization.GetLocaliseTextByKey(DisplayMessage);
+        DoorKeyText.text = DisplayMessage;
+        DoorKeyParentUI.SetActive(true);
+
+        float time = 5f;
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            time--;
+        }
+        DoorKeyParentUI.SetActive(false);
+    }
+
+    public void DisableDoorKeyUI()
+    {
+        if (EnableDoorKeyCoroutine != null)
+            StopCoroutine(EnableDoorKeyCoroutine);
+        DoorKeyParentUI.SetActive(false);
+        DoorKeyText.text = "";
+    }
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -1293,5 +1350,24 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
             DisableAvatarChangerComponentUI();
+        if (componentType != Constants.ItemComponentType.DoorKeyComponent)
+            DisableDoorKeyUI();
+    }
+
+    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    {
+
+        for (int i = 0; i < displayTitle.text.Length; i++)
+        {
+            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+            int unicode = charInfo.character;
+            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+            {
+                print("JP font");
+                return true;
+            }
+        }
+        print("JP font not");
+        return false;
     }
 }

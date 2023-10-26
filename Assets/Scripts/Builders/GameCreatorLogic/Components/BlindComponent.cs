@@ -77,7 +77,9 @@ public class BlindComponent : ItemComponent
 
         }
         PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
-        
+
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+
         if (time == 0 && !blindComponentData.isOff)
         {
             time = blindComponentData.time;
