@@ -62,7 +62,7 @@ public class CanvasButtonsHandler : MonoBehaviour
         spirit = maxSpirit;
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
-        
+
         bool RFMUI = FeedEventPrefab.m_EnvName == "RFMDummy";
         rotateOrientationLand.gameObject.SetActive(!RFMUI);
         freeCamToggle.gameObject.SetActive(!RFMUI);
@@ -111,12 +111,15 @@ public class CanvasButtonsHandler : MonoBehaviour
     public Coroutine addSpiritCoroutine;
     public IEnumerator IEUseSpirit()
     {
-        Debug.LogError("IEUseSpirit"+ ((spirit / maxSpirit * 100) > 0));
+        Debug.LogError("IEUseSpirit" + ((spirit / maxSpirit * 100) > 0));
         while ((spirit / maxSpirit * 100) > 0)
         {
-            spirit -= Time.deltaTime;
-            spiritFillImg.fillAmount = spirit / maxSpirit;
-            spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+            if (RFMInputController.movement != Vector2.zero)
+            {
+                spirit -= Time.deltaTime;
+                spiritFillImg.fillAmount = spirit / maxSpirit;
+                spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+            }
             yield return new WaitForUpdate();
         }
         overlay.gameObject.SetActive(true);
@@ -126,7 +129,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public IEnumerator IEAddSpirit()
     {
-        Debug.LogError("IEAddSpirit: "+((spirit / maxSpirit * 100) < 100));
+        Debug.LogError("IEAddSpirit: " + ((spirit / maxSpirit * 100) < 100));
         while ((spirit / maxSpirit * 100) < 100)
         {
             if ((spirit / maxSpirit * 100) > 30)
@@ -162,7 +165,7 @@ public class CanvasButtonsHandler : MonoBehaviour
             RFM.EventsManager.OnToggleHelpPanel();
             return;
         }
-        
+
         Debug.LogError("3");
         gamePlayUIParent.SetActive(!isOn);//rik.......
         GamePlayButtonEvents.inst.UpdateHelpObjects(isOn);
@@ -296,7 +299,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     {
         JJPortalPopup.SetActive(false);
         //if (currentPortalObject.GetComponent<PlayerPortal>())
-            //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
         if (currentPortalObject.GetComponent<JjWorldChanger>())
             currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
     }
