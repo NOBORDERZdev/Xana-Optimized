@@ -53,6 +53,9 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderData.spawnPoint.Clear();
+
+        Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
+        RenderSettings.skybox = null;
     }
 
     private void Start()
