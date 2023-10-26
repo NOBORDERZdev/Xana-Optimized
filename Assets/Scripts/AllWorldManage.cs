@@ -111,4 +111,10 @@ public class AllWorldManage : MonoBehaviour
         WorldPagehighlightersText[index].SetActive(true);
         HighlghterListText[index].SetActive(true);
     }
+    public void LobbyInactiveCallBack()
+    {
+        transform.GetComponent<RectTransform>().offsetMin = new Vector2(
+            transform.GetComponent<RectTransform>().offsetMin.x,
+            transform.GetComponent<RectTransform>().offsetMin.y + 342);
+    }
 }
