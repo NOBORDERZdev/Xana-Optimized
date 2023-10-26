@@ -20,7 +20,7 @@ public class SpawnPointData
 public class DownloadQueueData
 {
     public string ItemID;
-    public string RuntimeItemName;
+    public string DcitionaryKey;
     public Vector3 Position;    //local position of the item
     public Vector3 Scale;
     public Quaternion Rotation;

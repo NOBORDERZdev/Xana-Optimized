@@ -115,7 +115,7 @@ public class BuilderMapDownload : MonoBehaviour
                     string compressData = sr.ReadToEnd();
                     string deCompressData = DecompressString(compressData);
                     OnSuccess.Invoke(deCompressData);
-                    response = deCompressData;
+                   // response = deCompressData;
                 }
                 catch (Exception e)
                 {

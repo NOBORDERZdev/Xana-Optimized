@@ -94,12 +94,12 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             DownloadQueueData temp = new DownloadQueueData();
             temp.ItemID = BuilderData.mapData.data.json.otherItems[i].ItemID;
-            temp.RuntimeItemName = BuilderData.mapData.data.json.otherItems[i].RuntimeItemName;
+            temp.DcitionaryKey = i.ToString();
             temp.Position = BuilderData.mapData.data.json.otherItems[i].Position;
             temp.Rotation = BuilderData.mapData.data.json.otherItems[i].Rotation;
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
             
-            builderDataDictionary.TryAdd(BuilderData.mapData.data.json.otherItems[i].RuntimeItemName, BuilderData.mapData.data.json.otherItems[i]);
+            builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
             if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
@@ -184,7 +184,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             downloadIsGoingOn = true;
             string downloadKey = prefabPrefix + downloadDataQueue[0].ItemID + prefabSuffix;
-            string runtimeItemName = downloadDataQueue[0].RuntimeItemName;
+            string dicKey = downloadDataQueue[0].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             bool flag = false;
             AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -196,7 +196,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[runtimeItemName]);
+                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
@@ -230,7 +230,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         while (downloadFailed.Count > 0)
         {
             string downloadKey = prefabPrefix + downloadFailed[0].ItemID + prefabSuffix;
-            string runtimeItemName = downloadFailed[0].RuntimeItemName;
+            string dicKey = downloadFailed[0].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             bool flag = false;
             AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -242,7 +242,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[runtimeItemName]);
+                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
@@ -269,7 +269,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         for(int i=0;i<BuilderData.preLoadspawnPoint.Count;i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
-            string runtimeItemName = BuilderData.preLoadspawnPoint[i].RuntimeItemName;
+            string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             bool flag = false;
             AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -281,7 +281,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[runtimeItemName]);
+                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
@@ -296,11 +296,13 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void DisplayDownloadedAssetText()
     {
+        ++downloadedTillNow;
         switch (GameManager.currentLanguage)
         {
+            
             case "en":
-                assetDownloadingText.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
@@ -309,26 +311,28 @@ public class BuilderAssetDownloader : MonoBehaviour
                     assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
                     assetDownloadingTextPotrait.enabled = false;
+                    assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
             case "ja":
-                assetDownloadingText.text = "現在ワールドを構築中です.... " + (++downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
+                    assetDownloadingText.enabled = false;
                     assetDownloadingTextPotrait.enabled = false;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (++downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
@@ -400,7 +404,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             stopDownloading = true;
             BuilderEventManager.AfterWorldInstantiated?.Invoke();
-            CheckPlacementOfAllObjects();
+            //CheckPlacementOfAllObjects();
         }
     }
 
@@ -430,7 +434,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             stopDownloading = true;
             BuilderEventManager.AfterWorldInstantiated?.Invoke();
-            CheckPlacementOfAllObjects();
+            //CheckPlacementOfAllObjects();
         }
         
     }
