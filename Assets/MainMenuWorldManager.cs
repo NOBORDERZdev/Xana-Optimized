@@ -15,6 +15,7 @@ public class MainMenuWorldManager : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(0.5f);
         }
+        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         Debug.LogError("Start");
         foreach(string url in PrepareApiURL())
         {
@@ -27,6 +28,7 @@ public class MainMenuWorldManager : MonoBehaviour
                 yield return new WaitForSecondsRealtime(0.5f);
             }
         }
+        LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
     }
     List<string> PrepareApiURL()
     {

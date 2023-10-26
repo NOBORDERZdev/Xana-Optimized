@@ -7,9 +7,9 @@ public class WorldCategoryUIHandler : MonoBehaviour
     [SerializeField]
     TMP_Text CategoryName;
     [SerializeField]
-    Transform WorldElement,SpawnWorldParent;
+    Transform WorldElement,ScrollerWorlds,SpawnWorldParent;
     string _categoryType;
-    float addHeight = 450f, addWidth = 321f;
+    float addHeight = 490f, addWidth = 321f;
     public void Init(string categoryName,int totalWorlds)
     {
         CategoryName.text = categoryName;
@@ -26,16 +26,18 @@ public class WorldCategoryUIHandler : MonoBehaviour
         float Parentheight = transform.parent.GetComponent<RectTransform>().sizeDelta.y;
         if (totalWorlds > 0 && totalWorlds <= 6)
         {
-            SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * totalWorlds, addHeight + 30f);
+            SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * totalWorlds, addHeight + 100f);
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight + 30f);
             transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, Parentheight + addHeight + 30f);
+            ScrollerWorlds.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight + 60f);
         }
         else
         {
-            float sizess = totalWorlds / 2;
+            float sizess = Mathf.Ceil( (float)totalWorlds / 2f);
             SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * sizess, addHeight * 2f);
             transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight * 2f);
             transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, Parentheight + addHeight + 30f);
+            ScrollerWorlds.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight * 2f);
         }
     }
     public void ViewAllCategoryItems()

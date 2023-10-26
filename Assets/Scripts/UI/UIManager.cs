@@ -85,6 +85,7 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);
                     WorldManager.instance.WorldScrollReset();
+                    WorldManager.instance.AllWorldTabReference.AvatarWindowSizeControl(false);
                     SecondSliderScrollView.GetComponent<Mask>().enabled = false;
                     WorldScrollerHolder.gameObject.SetActive(false);
                     break;
@@ -103,6 +104,7 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);
                     WorldManager.instance.WorldScrollReset();
+                    WorldManager.instance.AllWorldTabReference.AvatarWindowSizeControl(true);
                     SecondSliderScrollView.GetComponent<Mask>().enabled = true;
                     WorldScrollerHolder.gameObject.SetActive(false);
                     break;

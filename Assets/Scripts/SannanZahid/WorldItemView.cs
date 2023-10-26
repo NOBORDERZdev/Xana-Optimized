@@ -86,6 +86,7 @@ public class WorldItemView : MonoBehaviour
             AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
             worldIcon.sprite = null;
             worldIcon.sprite = default;
+            GetComponent<VerticalLayoutGroup>().enabled = false;
         }
     }
     public void Init()
@@ -213,6 +214,20 @@ public class WorldItemView : MonoBehaviour
     }
     public IEnumerator DownloadImage()
     {
+        if (m_EnvironmentName.Length > 17)
+        {
+            eviroment_Name.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(
+                eviroment_Name.transform.parent.GetComponent<RectTransform>().sizeDelta.x,
+                100f
+                );
+        }
+        else
+        {
+            eviroment_Name.transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(
+             eviroment_Name.transform.parent.GetComponent<RectTransform>().sizeDelta.x,
+             50f
+             );
+        }
         if (m_EnvironmentName.Contains("Dubai"))
         {
             eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
@@ -223,9 +238,12 @@ public class WorldItemView : MonoBehaviour
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
+        if (WorldCreatorName!=null)
         WorldCreatorName.text = creatorName;
         gameObject.GetComponent<Button>().interactable = true;
-        yield return null;
+        yield return new WaitForSecondsRealtime(0.2f);
+        if (!m_EnvironmentName.Contains("XANA Lobby"))
+            GetComponent<VerticalLayoutGroup>().enabled = true;
     }
     public void OnClickPrefab()
     {
