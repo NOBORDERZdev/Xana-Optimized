@@ -16,10 +16,10 @@ public class MainMenuWorldManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.5f);
         }
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
-        Debug.LogError("Start");
+       // Debug.LogError("Start");
         foreach(string url in PrepareApiURL())
         {
-            Debug.LogError(GetCategoryName(State) + " ----  URL   ---- "+url);
+            //Debug.LogError(GetCategoryName(State) + " ----  URL   ---- "+url);
             GetWorldsDetailFromServer(url, GetCategoryName(State));
             dataIsFatched = true;
             State++;
@@ -94,7 +94,7 @@ public class MainMenuWorldManager : MonoBehaviour
         {
             GetComponent<WorldManager>().AllWorldTabReference.SetCategorySize(1);
         }
-        Debug.LogError("World Count " + _worldInfo.data.rows.Count);
+       // Debug.LogError("World Count " + _worldInfo.data.rows.Count);
         for (int i = 0; i < _worldInfo.data.rows.Count; i++)
         {
             WorldItemDetail _event;

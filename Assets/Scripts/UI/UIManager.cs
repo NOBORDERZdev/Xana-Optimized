@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
             case 0:
                 {
                     PreviousScreen = 0;
-                    CategoryHolderWorldView.gameObject.SetActive(true);
+                    StartCoroutine(ActivateCategoryWindow(true));
                     SearchViewAllWorldScreenHolder.gameObject.SetActive(false);
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(true);
@@ -93,7 +93,7 @@ public class UIManager : MonoBehaviour
             case 1:
                 {
                     PreviousScreen = 1;
-                    CategoryHolderWorldView.gameObject.SetActive(true);
+                    StartCoroutine(ActivateCategoryWindow(true));
                     SearchViewAllWorldScreenHolder.gameObject.SetActive(false);
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(false);
@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
-                    CategoryHolderWorldView.gameObject.SetActive(false);
+                    StartCoroutine(ActivateCategoryWindow(false));
                     AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     SearchHomeHolder.gameObject.SetActive(false);
@@ -129,7 +129,7 @@ public class UIManager : MonoBehaviour
                 }
             case 3:
                 {
-                    CategoryHolderWorldView.gameObject.SetActive(false);
+                    StartCoroutine(ActivateCategoryWindow(false));
                     SearchViewAllWorldScreenHolder.gameObject.SetActive(true);
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(false);
@@ -151,5 +151,11 @@ public class UIManager : MonoBehaviour
     {
         ViewAllWorldName = worldCheck;
         SwitchToScreen(3);
+    }
+    public IEnumerator ActivateCategoryWindow(bool _state)
+    {
+        yield return new WaitForSeconds(0.7f);
+        CategoryHolderWorldView.gameObject.SetActive(_state);
+
     }
 }

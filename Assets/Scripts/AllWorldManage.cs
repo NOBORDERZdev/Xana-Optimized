@@ -127,14 +127,33 @@ public class AllWorldManage : MonoBehaviour
             transform.GetComponent<RectTransform>().offsetMin.y -(430f*type)
             );
     }
+    int State = 0;
+    bool previousFlag = true;
     public void AvatarWindowSizeControl(bool flag)
     {
-        Debug.LogError("Called Size");
-        transform.GetComponent<RectTransform>().offsetMin = 
-            new Vector2(
-            transform.GetComponent<RectTransform>().offsetMin.x,
-            transform.GetComponent<RectTransform>().offsetMin.y + (flag ? 940f : -940f)
-            );
+        Debug.LogError("Flag set " + flag);
+      switch(State)
+        {
+            case 0:
+                SetConentSizeAfterScreenChnage(flag);
+                previousFlag=flag;
+                State = 1;
+                break;
+            case 1:
+                if(previousFlag!=flag)
+                {
+                    SetConentSizeAfterScreenChnage(flag);
+                    previousFlag = flag;
+                }
+                break;
+        }
     }
-
+    void SetConentSizeAfterScreenChnage(bool flag)
+    {
+        transform.GetComponent<RectTransform>().offsetMin =
+          new Vector2(
+          transform.GetComponent<RectTransform>().offsetMin.x,
+          transform.GetComponent<RectTransform>().offsetMin.y + (flag ? 940f : -940f)
+          );
+    }
 }

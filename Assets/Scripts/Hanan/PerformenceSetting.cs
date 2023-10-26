@@ -16,7 +16,7 @@ public class PerformenceSetting : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 #if !UNITY_EDITOR
 		//Application.targetFrameRate = 60;
-        Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        Application.targetFrameRate = 120;//Screen.currentResolution.refreshRate;
         QualitySettings.vSyncCount= 0;
         //Screen.SetResolution(1280, 720, true);
         // PlayerSettings.gcIncremental = true;

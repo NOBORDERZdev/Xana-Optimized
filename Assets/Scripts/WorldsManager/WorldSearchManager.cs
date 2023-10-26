@@ -10,6 +10,7 @@ public class WorldSearchManager : MonoBehaviour
     }
     public void UserInputUpdate(string UserInput)
     {
+       // Debug.LogError("Search  === " + UserInput);
         WorldManager.instance.SearchWorldCall(UserInput);
     }
     public void ClearInputField()
