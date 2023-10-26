@@ -5,6 +5,7 @@ using UnityEngine;
 using WebSocketSharp;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
+using LightShaft.Scripts;
 
 public class YoutubeStreamController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class YoutubeStreamController : MonoBehaviour
     private YoutubeAPIHandler APIHandler;
     private YoutubeStreamController Instance;
     public AudioSource videoPlayerAudioSource;
+    public AudioSource mediaPlayerAudioSource;
 
     private string PrevURL;
     private bool IsOldURL = true;
@@ -55,22 +57,32 @@ public class YoutubeStreamController : MonoBehaviour
         Instance = this;
         if (SoundManager.Instance)
         {
-            SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
+            if (NormalPlayer.GetComponent<YoutubeSimplified>().player.GetComponent<YoutubePlayer>().playInAVPRO)
+            {
+                SoundManager.Instance.videoPlayerSource = mediaPlayerAudioSource;
+                SoundManagerSettings.soundManagerSettings.videoSource = mediaPlayerAudioSource;
+            }
+            else
+            {
+                SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
+                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+            }
+            
             SoundManager.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
-            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
     private void Start()
     {
-        videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
+        if (videoPlayerAudioSource)
+            videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer.targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 #if UNITY_EDITOR && !UNITY_IOS
-        if (!FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena") && !FeedEventPrefab.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        if (!WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !WorldItemView.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
@@ -78,25 +90,25 @@ public class YoutubeStreamController : MonoBehaviour
         }
 #endif
 #if UNITY_IOS
-        if (FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        if (WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        if (WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
@@ -172,7 +184,7 @@ public class YoutubeStreamController : MonoBehaviour
                 player.GetLivestreamUrl(APIHandler.Data.URL);
             }
 
-            if (!FeedEventPrefab.m_EnvName.Contains("Xana Festival") || !FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+            if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.SetActive(false);
             }

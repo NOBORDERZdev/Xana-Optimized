@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 495568709}
   - component: {fileID: 495568708}
   - component: {fileID: 1324223408758653062}
+  - component: {fileID: 495568710}
   m_Layer: 0
   m_Name: SignUpManager
   m_TagString: Untagged
@@ -64,6 +65,7 @@ MonoBehaviour:
   ForgetEnterPasswordPanal: {fileID: 0}
   LogoutfromOtherDevicePanel: {fileID: 0}
   BlackScreen: {fileID: 0}
+  setAvatarGiftPanal: {fileID: 0}
   nftlist: 
   NormalColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   HighlightedColor: {r: 0.22352941, g: 0.58431375, b: 1, a: 1}
@@ -125,12 +127,14 @@ MonoBehaviour:
   XanaliaUserTokenId: 
   userRoleObj: {fileID: 11400000, guid: cb39377bf66b4954db9f972e7eb00ad6, type: 2}
   XanaliaBool: 0
-  _web3APIforWeb2: {fileID: 0}
+  _web3APIforWeb2: {fileID: 495568709}
   welcomeScreen: {fileID: 0}
   shownWelcome: 0
   PremiumUserUI: {fileID: 0}
   MoralismainObj: {fileID: 0}
   ConnectionEstablished_popUp: {fileID: 0}
+  EntertheWorld_Panal: {fileID: 0}
+  NewSignUp_Panal: {fileID: 0}
   isSetXanaliyaUserName: 0
 --- !u!114 &721177378
 MonoBehaviour:
@@ -375,6 +379,8 @@ MonoBehaviour:
     - breaking down
     - HIROKO KOSHINO
     - deemo
+    - collaboration
+  useXanaliaMainnetApiOnTestnet: 1
 --- !u!114 &495568708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,3 +413,17 @@ MonoBehaviour:
   url: 
   playbackDir: 
   saveDir: 
+--- !u!114 &495568710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686378168569390519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52913904a0404486cbc6143d85432c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rememberMe: {fileID: 0}
+  connectingWallet: {fileID: 0}

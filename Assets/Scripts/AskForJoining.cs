@@ -30,6 +30,11 @@ public class AskForJoining : MonoBehaviour
     {
         XanaConstants.xanaConstants.isFromXanaLobby =false;
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
+
+        float _rand = UnityEngine.Random.Range(6f, 10f);
+        LoadingHandler.Instance.randCurrentValue = _rand;
+        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+        XanaConstants.xanaConstants.isBackFromWorld = true;  
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
@@ -43,7 +48,7 @@ public class AskForJoining : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
         asyncLoading = SceneManager.LoadSceneAsync("Main");
-        InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
+        //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count
         UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
@@ -51,7 +56,7 @@ public class AskForJoining : MonoBehaviour
 
     void AsyncProgress()
     {
-        LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     }
 
     public void GoToMainMenu()
@@ -85,8 +90,18 @@ public class AskForJoining : MonoBehaviour
         {
             if (ReferrencesForDynamicMuseum.instance != null)
                 ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+
+            float _rand = UnityEngine.Random.Range(6f, 10f);
+            LoadingHandler.Instance.randCurrentValue = _rand;
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+
             LoadingHandler.Instance.ShowLoading();
-            LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
+            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            {
+                ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+            }
+
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);

@@ -107,6 +107,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField]
     CinemachineFreeLook cinemachineFreeLook;
 
+    internal float animationBlendValue = 0;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -376,6 +377,13 @@ public class PlayerControllerNew : MonoBehaviour
             else if (transforms[i].GetComponent<CanvasGroup>())
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
         }
+
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (GamificationComponentData.instance.isAvatarChanger ||
+                GamificationComponentData.instance.isBlindfoldedFootPrinting)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(false);
+        }
     }
 
     // first person camera off when user switch to selfie mode
@@ -423,8 +431,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
@@ -615,6 +626,10 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetBool("standJump", false);
             jumpNow = false;
         }*/
+
+        float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     /// <summary>
@@ -754,24 +769,10 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
-        if (XanaConstants.xanaConstants.isBuilderScene)
-        {
-            if (isNinjaMotion)
-            {
-                isNinjaMotion = false;
-                NinjaComponentTimerStart(0);
-            }
-            else if (isThrowModeActive)
-            {
-                if (b)
-                    StartCoroutine(nameof(ThrowEnd));
-                else
-                    isThrowPose = true;
-            }
-        }
+        StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
-        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
+        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
 
         if (!b)
         {
@@ -787,10 +788,43 @@ public class PlayerControllerNew : MonoBehaviour
             animator.GetComponent<IKMuseum>().RPCForFreeCamEnable();
         }
 
-
+        if (isFirstPerson)
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
+    public void StopBuilderComponent()
+    {
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+            }
+            else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
+            {
+                if (GamificationComponentData.instance.activeComponent != null)
+                    GamificationComponentData.instance.activeComponent.StopBehaviour();
+            }
+            else if (GamificationComponentData.instance.isAvatarChanger)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        }
+    }
 
     void Move()
     {
@@ -845,6 +879,10 @@ public class PlayerControllerNew : MonoBehaviour
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+            }
             allowJump = false;
             IsJumpButtonPress = false;
             //Debug.Log("call hua for 1==="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
@@ -1014,6 +1052,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     bool lastSelfieCanClick = false;
@@ -1047,6 +1087,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
+
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
@@ -1065,6 +1106,11 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
+
+        if (ReferrencesForDynamicMuseum.instance.m_34player)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+        }
 
         if (_IsGrounded)
         {
@@ -1565,14 +1611,13 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = Instantiate(_shurikenPrefab, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
-        spawned.GetComponent<Rigidbody>().AddForce((transform.forward * 3000f) * 0.25f);
-        //(cinemachineFreeLook.m_YAxis.Value<=0.1f?0.1f: cinemachineFreeLook.m_YAxis.Value));
-        //Toast.Show(cinemachineFreeLook.m_YAxis.Value+"");
+        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
+
         animator.SetBool("NinjaThrow", false);
         yield return new WaitForSeconds(0.4f);
         isMovementAllowed = true;
-        Destroy(spawned, 5f);
+
     }
 
     Coroutine NinjaCo;
@@ -1585,8 +1630,12 @@ public class PlayerControllerNew : MonoBehaviour
         }
         //else
         //    return;
-        isThrow = false;
-        isThrowModeActive = false;
+        if (isThrowModeActive)
+        {
+            isThrow = false;
+            isThrowModeActive = false;
+        }
+
         if (throwMainCo != null)
             throwMainCo = null;
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
@@ -1608,7 +1657,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             swordModel.SetActive(false);
         }
-        animator.SetBool("NinjaJump", false);
+        animator.SetBool("NinjaJump", true);
         animator.SetBool("isNinjaMotion", false);
         animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
         animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
@@ -1641,9 +1690,12 @@ public class PlayerControllerNew : MonoBehaviour
     {
         trajectoryController = this.GetComponent<TrajectoryController>();
         throwLineRenderer = this.GetComponent<LineRenderer>();
-        NinjaComponentTimerStart(0);
-        isNinjaMotion = false;
-        animator.SetBool("isNinjaMotion", false);
+        if (isNinjaMotion)
+        {
+            NinjaComponentTimerStart(0);
+            isNinjaMotion = false;
+            animator.SetBool("isNinjaMotion", false);
+        }
         isThrow = true;
         isThrowModeActive = true;
         if (throwMainCo == null)
@@ -1654,7 +1706,7 @@ public class PlayerControllerNew : MonoBehaviour
     private Coroutine throwStart, throwEnd, throwAction;
     bool isThrowReady = false;
     public Vector3 curveOffset;
-    bool isThrowPose = true;
+    internal bool isThrowPose = true;
 
     IEnumerator Throw()
     {
@@ -1751,9 +1803,8 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        var spawned = Instantiate(GamificationComponentData.instance.ThrowBall, handBall.transform.position, handBall.transform.rotation);
-        spawned.Init(((ActiveCamera.transform.forward + curveOffset) * _force), false);
-        Destroy(spawned.gameObject, 10);
+        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
         yield return new WaitForSeconds(1f);
@@ -1786,7 +1837,16 @@ public class PlayerControllerNew : MonoBehaviour
         throwEnd = null;
     }
 
+    internal void ThrowThingsEnded()
+    {
+        StartCoroutine(ThrowEnd());
+        isThrow = false;
+        isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+    }
+
     bool throwBallPositionSet, throwBall;
+
     void BallPositionSet()
     {
         if (throwAction == null)

@@ -9,6 +9,13 @@ public class HyperLinkPopComponent : ItemComponent
     public void Init(HyperLinkComponentData hyperLinkComponentData)
     {
         this.hyperLinkComponentData = hyperLinkComponentData;
+
+        // Remove leading and trailing spaces
+        string inputText = this.hyperLinkComponentData.titleHelpButtonText.Trim();
+        // Replace all spaces between lines with an empty string
+        string hyperLinkCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+
+        this.hyperLinkComponentData.titleHelpButtonText = hyperLinkCleanedText;
     }
 
     void SetHelpButtonNarration()
@@ -41,4 +48,48 @@ public class HyperLinkPopComponent : ItemComponent
             BuilderEventManager.OnHyperLinkPopupCollisionExit?.Invoke();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.HyperLinkPopComponent;
+    }
+
+    #endregion
 }

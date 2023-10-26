@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using TMPro;
-//using WalletConnectSharp.Core.Events;
 
 public class BuildingDetect : MonoBehaviour
 {
@@ -46,7 +42,7 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultFreeCamConsoleMat;
 
     [Header("Gangster Character")]
-    public GameObject gangsterCharacter;
+    internal GameObject gangsterCharacter;
     #endregion
 
     #region Avatar invisibility materials and gameobjects
@@ -69,7 +65,9 @@ public class BuildingDetect : MonoBehaviour
     float defaultJumpHeight, defaultSprintSpeed;
     float powerProviderHeight, powerProviderSpeed;
     float powerUpTime, avatarChangeTime;
-    IEnumerator powerUpCoroutine, avatarChangeCoroutine;
+    IEnumerator powerUpCoroutine;
+
+    Coroutine avatarChangeCoroutine;
 
     [Space(15)]
     public AnimatorOverrideController ninjaOverrideAnimator;
@@ -81,6 +79,8 @@ public class BuildingDetect : MonoBehaviour
     internal float defaultSmootnesshvalue;
     internal float defaultIntensityvalue;
 
+    float nameCanvasDefaultYpos;
+
     private void Awake()
     {
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
@@ -88,8 +88,6 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator Start()
     {
-
-
         yield return new WaitForSeconds(2f);
 
         _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
@@ -99,7 +97,6 @@ public class BuildingDetect : MonoBehaviour
         defaultMoveSpeed = _playerControllerNew.movementSpeed;
 
         powerUpCoroutine = playerPowerUp();
-        avatarChangeCoroutine = PlayerAvatarChange();
 
         SIpowerUpCoroutine = SIPowerUp();
         if (vignette != null)
@@ -132,20 +129,25 @@ public class BuildingDetect : MonoBehaviour
         defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
+
+        nameCanvasDefaultYpos = ArrowManager.Instance.nameCanvas.transform.localPosition.y;
     }
 
     private void OnEnable()
     {
         BuilderEventManager.ActivateAvatarInivisibility += AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility += StopAvatarInvisibility;
+        BuilderEventManager.StopAvatarChangeComponent += ToggleAvatarChangeComponent;
     }
     private void OnDisable()
     {
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
+        BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
+
     }
 
-    #region Mubashir Avatar Work
+    #region Avatar Work
     public void OnPowerProviderEnter(float time, float speed, float height)
     {
         powerUpTime = time;
@@ -176,60 +178,144 @@ public class BuildingDetect : MonoBehaviour
     #endregion
 
     #region Avatar Model Changing Logic
-
-    int avatarIndex;
-    public void OnAvatarChangerEnter(float time, int avatarIndex)
+    public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
+        if (tempAnimator != null)
+            this.GetComponent<Animator>().avatar = tempAnimator;
+        BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        //StopCoroutine(avatarChangeCoroutine);
         avatarChangeTime = time;
-        this.avatarIndex = avatarIndex;
-        StopCoroutine(avatarChangeCoroutine);
-        avatarChangeCoroutine = PlayerAvatarChange();
-        StartCoroutine(avatarChangeCoroutine);
+        avatarIndex = avatarIndex - 1;
+
+        if (avatarIndex == 1)
+        {
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = -1.3f;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+        }
+
+        if (avatarChangeCoroutine != null)
+            StopCoroutine(avatarChangeCoroutine);
+        gangsterCharacter = new GameObject("AvatarChange");
+        gangsterCharacter.SetActive(false);
+
+        var AppearanceChange = Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
+        CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
+        if (cc != null)
+            cc.playerControler = GamificationComponentData.instance.playerControllerNew;
+
+        if (avatarIndex == 2)
+        {
+            GameObject cloneObject = Instantiate(curObject);
+
+            Component[] components = cloneObject.GetComponents<Component>();
+            for (int i = components.Length - 1; i >= 0; i--)
+            {
+                if (!(components[i] is Transform))
+                {
+                    Destroy(components[i]);
+                }
+            }
+
+            cloneObject.transform.SetParent(AppearanceChange.transform);
+            cloneObject.transform.localPosition = Vector3.zero;
+            cloneObject.transform.localEulerAngles = Vector3.zero;
+            cloneObject.SetActive(true);
+        }
+
+        gangsterCharacter.transform.SetParent(this.transform);
+        gangsterCharacter.transform.localPosition = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+
+        //hide meshdata off character for FPS
+        if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        {
+            Transform[] transforms = gangsterCharacter.gameObject.GetComponentsInChildren<Transform>();
+
+            foreach (Transform childTransform in transforms)
+            {
+                if (childTransform.gameObject.GetComponent<Renderer>())
+                {
+                    childTransform.gameObject.GetComponent<Renderer>().enabled = false;
+                }
+            }
+        }
+        avatarChangeCoroutine = StartCoroutine(PlayerAvatarChange());
+
+        GamificationComponentData.instance.isAvatarChanger = true;
     }
     float avatarTime;
+    Avatar tempAnimator;
     IEnumerator PlayerAvatarChange()
     {
         avatarTime = 0;
 
-        ToggleSkinMesh(false);
-        Animator tempAnimator = this.GetComponent<PlayerControllerNew>().animator;
-        this.GetComponent<PlayerControllerNew>().animator = gangsterCharacter.GetComponent<Animator>();
-        gangsterCharacter.SetActive(true);
+        ToggleAvatarChangeComponent(false);
+        if (tempAnimator == null)
+            tempAnimator = this.GetComponent<Animator>().avatar;
+
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
+        yield return new WaitForSecondsRealtime(0.01f);
+        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+            gangsterCharacter.SetActive(true);
+
+        BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
 
 
         while (avatarChangeTime > avatarTime)
         {
-            int minutes = (int)avatarChangeTime / 60;
-            int seconds = (int)avatarChangeTime % 60;
-
-            //_remainingText.text = $"{minutes:D2}:{seconds:D2}";
-
             avatarChangeTime = Mathf.Clamp(avatarChangeTime, 0, Mathf.Infinity);
-
             yield return new WaitForSecondsRealtime(1f);
             avatarChangeTime--;
         }
 
-        this.GetComponent<PlayerControllerNew>().animator = tempAnimator;
-        ToggleSkinMesh(true);
-
-        gangsterCharacter.SetActive(false);
+        //this.GetComponent<Animator>().avatar = tempAnimator;
+        ToggleAvatarChangeComponent(true);
 
         yield return null;
     }
 
-    void ToggleSkinMesh(bool state)
+    void ToggleAvatarChangeComponent(bool state)
     {
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerHead.enabled = state;
-        playerPants.enabled = state;
-        playerShirt.enabled = state;
-        playerShoes.enabled = state;
+        if (state)
+        {
+            if (avatarChangeCoroutine != null)
+                StopCoroutine(avatarChangeCoroutine);
+
+            if (gangsterCharacter != null)
+            {
+                this.GetComponent<Animator>().avatar = tempAnimator;
+                Destroy(gangsterCharacter);
+            }
+            BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
+
+            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            canvasPos.y = nameCanvasDefaultYpos;
+            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+            if (avatarChangeCoroutine != null)
+                StopCoroutine(avatarChangeCoroutine);
+            avatarChangeCoroutine = null;
+
+            GamificationComponentData.instance.isAvatarChanger = false;
+        }
+        else if (gangsterCharacter != null)
+            gangsterCharacter.SetActive(true);
+
+        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        {
+            playerHair.enabled = state;
+            playerBody.enabled = state;
+            playerHead.enabled = state;
+            playerPants.enabled = state;
+            playerShirt.enabled = state;
+            playerShoes.enabled = state;
+        }
     }
     #endregion
 
-    #region Attizaz Special Item Work
+    #region Special Item Work
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
@@ -339,7 +425,7 @@ public class BuildingDetect : MonoBehaviour
     #endregion
 
     #region Avatar Invisibility 
-
+    //Hologram Material Set
     void AvatarInvisibilityApply()
     {
         playerHair.material = hologramMaterial;
@@ -390,7 +476,7 @@ public class BuildingDetect : MonoBehaviour
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
-        if (cameraAnimator == null) cameraAnimator=GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        if (cameraAnimator == null) cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
         cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }

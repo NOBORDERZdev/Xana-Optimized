@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Models;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviour
+public class GamificationComponentData : MonoBehaviourPun
 {
     public static GamificationComponentData instance;
 
@@ -51,9 +53,29 @@ public class GamificationComponentData : MonoBehaviour
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
 
+    internal IComponentBehaviour activeComponent;
+
     internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
 
     public static Action WarpComponentLocationUpdate;
+
+    public List<GameObject> AvatarChangerModels;
+
+    internal bool isNight;
+    internal bool isBlindToogle;
+    internal bool isAvatarChanger;
+    internal bool isBlindfoldedFootPrinting;
+    internal int previousSkyID;
+
+    internal List<XanaItem> xanaItems = new List<XanaItem>();
+
+    //AI Generated Skybox
+    public Material aiSkyMaterial;
+    public VolumeProfile aiPPVolumeProfile;
+    internal bool isSkyLoaded;
+
+    //Gamification components with multipler
+    public bool withMultiplayer = false;
 
     private void Awake()
     {
@@ -67,6 +89,7 @@ public class GamificationComponentData : MonoBehaviour
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
         //OnSelfiActive
         BuilderEventManager.UIToggle += UICanvasToggle;
+        BuilderEventManager.RPCcallwhenPlayerJoin += GetRPC;
 
         OrientationChange(false);
         warpComponentList.Clear();
@@ -79,6 +102,8 @@ public class GamificationComponentData : MonoBehaviour
         BuilderEventManager.ReSpawnPlayer -= PlayerSpawnBlindfoldedDisplay;
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.UIToggle -= UICanvasToggle;
+        BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
+
         WarpComponentLocationUpdate -= UpdateWarpFunctionData;
 
     }
@@ -150,43 +175,6 @@ public class GamificationComponentData : MonoBehaviour
     }
     #endregion
 
-    //    void UpdateWarpFunctionData()
-    //    {
-    //        foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
-    //        {
-    //            foreach (WarpFunctionComponent warpFunctionComponent2 in warpComponentList)
-    //            {
-    //                if (warpFunctionComponent1 == warpFunctionComponent2)
-    //                    continue;
-
-    //                if(warpFunctionComponent1.warpFunctionComponentData.isWarpPortalStart)
-    //                {
-    //                    string startKey = warpFunctionComponent1.warpFunctionComponentData.warpPortalStartKeyValue;
-
-    //if (startKey == warpFunctionComponent2.warpFunctionComponentData.warpPortalEndKeyValue)
-    //                    {
-    //                        PortalSystemEndPoint  portalSystemEndPoint= warpFunctionComponent1.warpFunctionComponentData.warpPortalDataEndPoint.Find(x => x.indexPortalEndKey == startKey);
-    //                        portalSystemEndPoint.portalEndLocation = warpFunctionComponent2.transform.localPosition;
-    //                        PortalSystemStartPoint portalSystemStartPoint = warpFunctionComponent2.warpFunctionComponentData.warpPortalDataStartPoint.Find(x => x.indexPortalStartKey == startKey);
-    //                        portalSystemStartPoint.portalStartLocation = warpFunctionComponent1.transform.localPosition;
-    //                    }
-    //                }
-    //                else
-    //                {
-    //                    string endKey = warpFunctionComponent1.warpFunctionComponentData.warpPortalEndKeyValue;
-
-    //                    if (endKey == warpFunctionComponent2.warpFunctionComponentData.warpPortalStartKeyValue)
-    //                    {
-    //                        PortalSystemEndPoint portalSystemEndPoint = warpFunctionComponent2.warpFunctionComponentData.warpPortalDataEndPoint.Find(x => x.indexPortalEndKey == endKey);
-    //                        portalSystemEndPoint.portalEndLocation = warpFunctionComponent1.transform.localPosition;
-    //                        PortalSystemStartPoint portalSystemStartPoint = warpFunctionComponent1.warpFunctionComponentData.warpPortalDataStartPoint.Find(x => x.indexPortalStartKey == endKey);
-    //                        portalSystemStartPoint.portalStartLocation = warpFunctionComponent2.transform.localPosition;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -203,26 +191,26 @@ public class GamificationComponentData : MonoBehaviour
                 {
                     string startKey = data1.warpPortalStartKeyValue;
 
-                    if (startKey == data2.warpPortalEndKeyValue)
+                    if (startKey == data2.warpPortalEndKeyValue  && startKey!="")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        startPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
                     }
                 }
                 else
                 {
                     string endKey = data1.warpPortalEndKeyValue;
-                    if (endKey == data2.warpPortalStartKeyValue)
+                    if (endKey == data2.warpPortalStartKeyValue && endKey!="")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        startPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
                     }
                 }
@@ -233,12 +221,115 @@ public class GamificationComponentData : MonoBehaviour
     void UpdateStartPortalLocations(List<PortalSystemStartPoint> endPoints, string key, Vector3 location)
     {
         PortalSystemStartPoint portalSystemEndPoint = endPoints.Find(x => x.indexPortalStartKey == key);
-        portalSystemEndPoint.portalStartLocation = location;
+        if (portalSystemEndPoint != null)
+            portalSystemEndPoint.portalStartLocation = location;
     }
 
     void UpdateEndPortalLocations(List<PortalSystemEndPoint> endPoints, string key, Vector3 location)
     {
         PortalSystemEndPoint portalSystemEndPoint = endPoints.Find(x => x.indexPortalEndKey == key);
-        portalSystemEndPoint.portalEndLocation = location;
+        if (portalSystemEndPoint != null)
+            portalSystemEndPoint.portalEndLocation = location;
     }
+
+    //All components for multiplayer
+    [PunRPC]
+    public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        if (!withMultiplayer)
+            return;
+        //store rpc data in roomoption
+        if (PhotonNetwork.IsMasterClient)
+            SetRoomData(RuntimeItemID, componentType);
+
+        GetItemFromList(RuntimeItemID, componentType);
+    }
+
+    public void GetObjectwithoutRPC(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        GetItemFromList(RuntimeItemID, componentType);
+    }
+
+    void GetItemFromList(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+        var item = xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
+        if (componentType == Constants.ItemComponentType.none)
+        {
+            item.gameObject.SetActive(false);
+            return;
+        }
+
+        RestrictionComponents(componentType);
+
+        if (item != null)
+        {
+            var component = item.GetComponent(componentType.ToString()) as ItemComponent;
+            if (component != null)
+            {
+                component.PlayBehaviour();
+            }
+        }
+    }
+
+    void RestrictionComponents(Constants.ItemComponentType componentType)
+    {
+        BuilderEventManager.onComponentActivated?.Invoke(componentType);
+    }
+
+    internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)
+    {
+
+        GamificationComponentRPC gamificationComponentRPC = new GamificationComponentRPC();
+        gamificationComponentRPC.RuntimeItemID = RuntimeItemID;
+        gamificationComponentRPC.componentType = componentType.ToString();
+
+        ExitGames.Client.Photon.Hashtable customProperties = new ExitGames.Client.Photon.Hashtable();
+
+        GamificationComponentRPCs componentRPCs = new GamificationComponentRPCs();
+
+        // Populate your GamificationComponentRPC list here
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
+        {
+            componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
+        }
+
+        componentRPCs.rpcList.Add(gamificationComponentRPC);
+        string json = JsonUtility.ToJson(componentRPCs);
+        customProperties["gamificationComponentRPCs"] = json;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+    }
+
+    void GetRPC()
+    {
+        if (!withMultiplayer)
+            return;
+
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationComponentRPCs", out object gamificationComponentRPCsObj))
+        {
+            GamificationComponentRPCs componentRPCs = JsonUtility.FromJson<GamificationComponentRPCs>(gamificationComponentRPCsObj.ToString());
+
+            if (componentRPCs.rpcList != null)
+            {
+                foreach (GamificationComponentRPC gamificationComponentRPC in componentRPCs.rpcList)
+                {
+                    Constants.ItemComponentType componentType = (Constants.ItemComponentType)Enum.Parse(typeof(Constants.ItemComponentType), gamificationComponentRPC.componentType);
+
+                    GetObjectwithoutRPC(gamificationComponentRPC.RuntimeItemID, componentType);
+                }
+            }
+        }
+    }
+}
+
+[Serializable]
+public class GamificationComponentRPC
+{
+    public string RuntimeItemID = "";
+    public string componentType = "";
+}
+[Serializable]
+public class GamificationComponentRPCs
+{
+    public List<GamificationComponentRPC> rpcList = new List<GamificationComponentRPC>();
 }

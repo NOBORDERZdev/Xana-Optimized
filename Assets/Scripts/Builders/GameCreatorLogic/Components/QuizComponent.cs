@@ -2,7 +2,7 @@ using Models;
 using Photon.Pun;
 using UnityEngine;
 
-public class QuizComponent : MonoBehaviour
+public class QuizComponent : ItemComponent
 {
     private QuizComponentData quizComponentData;
 
@@ -18,7 +18,56 @@ public class QuizComponent : MonoBehaviour
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.OnQuizComponentCollisionEnter?.Invoke(this, quizComponentData);
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
     }
+
+    private void OnDisable()
+    {
+        BuilderEventManager.OnQuizComponentColse?.Invoke();
+    }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        BuilderEventManager.OnQuizComponentCollisionEnter?.Invoke(this, quizComponentData);
+    }
+    private void StopComponent()
+    {
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.QuizComponent;
+    }
+
+    #endregion
 }

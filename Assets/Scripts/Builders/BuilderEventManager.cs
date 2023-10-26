@@ -26,7 +26,7 @@ public static class BuilderEventManager
     //Gamification Module Events
 
     //Narration Component
-    public static Action<string, bool> OnNarrationCollisionEnter;
+    public static Action<string, bool, bool> OnNarrationCollisionEnter;
     public static Action OnNarrationCollisionExit;
 
     //Random Number Component
@@ -48,6 +48,9 @@ public static class BuilderEventManager
     //Display Message Component
     public static Action<string, float, bool> OnDisplayMessageCollisionEnter;
 
+    //Door Key Component
+    public static Action<string> OnDoorKeyCollisionEnter;
+
     //Help Button Component
     public static Action<string, string, GameObject> OnHelpButtonCollisionEnter;
     public static Action OnHelpButtonCollisionExit;
@@ -57,6 +60,7 @@ public static class BuilderEventManager
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
+    public static Action OnQuizComponentColse;
 
     //Special Item Component
     public static Action<float> OnSpecialItemComponentCollisionEnter;
@@ -85,14 +89,26 @@ public static class BuilderEventManager
 
     //Blind Component
     public static Action<float> OnBlindComponentTriggerEnter;
-    public static Action<Constants.ItemComponentType> ResetComponentUI;
+
+    //Avatar change Component
+    public static Action<float> OnAvatarChangeComponentTriggerEnter;
+    public static Action<bool> StopAvatarChangeComponent;
 
     //ChangeNinja_ThrowUIPosition
-    public static Action<float,bool> ChangeNinja_ThrowUIPosition;
+    public static Action<float, bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
 
     //UI toggle
     public static Action<bool> UIToggle;
-
+    public static Action<Constants.ItemComponentType> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
+
+    //Component Restriction
+    public static Action<Constants.ItemComponentType> onComponentActivated;
+    public static Action<IComponentBehaviour> AddItemComponent;
+    public static Action RPCcallwhenPlayerJoin;
+
+    //BGM sound manager
+    public static Action<AudioPropertiesBGM> BGMDownloader;
+    public static Action BGMStart;
 }

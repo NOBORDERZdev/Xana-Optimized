@@ -150,24 +150,29 @@ public class GameManager : MonoBehaviour
     public void NotNowOfSignManager()
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-        UIManager.Instance.IsWorldClicked();
+       
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
-
         BGPlane.SetActive(true);
-        if(!WorldBool && !BottomAvatarButtonBool)
-            StoreManager.instance.SignUpAndLoginPanel(2);
+        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+            UIManager.Instance.IsWorldClicked();
         else
         {
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            if (!WorldBool && !BottomAvatarButtonBool)
+                StoreManager.instance.SignUpAndLoginPanel(2);
+            else
+            {
+                StoreManager.instance.SignUpAndLoginPanel(3);
+            }
         }
     }
     public void AvatarMenuBtnPressed()
     {
-       UIManager.Instance.AvaterButtonCustomPushed();
+        UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
- 
-        if (UserRegisterationManager.instance.LoggedIn||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
+        //mainCharacter.GetComponent<FaceIK>().ikActive= false;
+        Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -177,7 +182,7 @@ public class GameManager : MonoBehaviour
         {
             UserRegisterationManager.instance.checkbool_preser_start = true;
              PlayerPrefs.SetInt("IsChanged", 0);  
-            UserRegisterationManager.instance.OpenUIPanal(1);
+            UserRegisterationManager.instance.OpenUIPanal(17);
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);

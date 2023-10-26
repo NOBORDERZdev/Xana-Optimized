@@ -40,7 +40,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     private int PauseCount;
     private int FocusCount;
     private int StartFocusCounter;
-    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjI1MDcsImlhdCI6MTY5MDAyMTA3NywiZXhwIjoxNjkwMTkzODc3fQ.8zu0-c4ciwV9uNfifZKo4KMCOCopo6_qv4x6Sngrw_U";
+    private string Auth = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjI0LCJpYXQiOjE2OTY4NTMxMTMsImV4cCI6MTY5NjkzOTUxM30.JdzJtOAlmD9_8QtlvHbHhFtwWkGP11wevEolU-MiHQk";
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -222,8 +222,18 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             //EventUserRoles JsonDataObj2 = JsonUtility.FromJson<EventUserRoles>(eventDetails.data.eventsUserRoles);  
             //XanaEventDetails.eventDetails.eventsUserRoles.Add(eventDetails.data.eventsUserRoles);
 
-
-
+            if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
+            {
+                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+            }
+            else if (eventDetails.data.environmentId != 0)
+            {
+                XanaConstants.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
+            }
+            else if (eventDetails.data.museumId != 0)
+            {
+                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+            }
 
 
             if (!request.isHttpError && !request.isNetworkError)
@@ -504,6 +514,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         yield return new WaitForSeconds(4f);
         LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+        LoadingHandler.Instance.ShowLoading();
+        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f)));
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        yield return new WaitForSeconds(4f);
         SetSceneData();
     }
 
@@ -519,17 +533,16 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             XanaConstants.xanaConstants.userLimit = "15";
         }
         //Set These Settings after loading Json Data
-        LoadingHandler.Instance.ShowLoading();
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        
         if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
-            FeedEventPrefab.m_EnvName = "Builder";
+            WorldItemView.m_EnvName = "Builder";
             XanaConstants.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
             XanaConstants.xanaConstants.isBuilderScene = true;
             //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
             //SceneManager.LoadScene("AddressableScene");
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+            LoadingHandler.Instance.LoadSceneByIndex("Builder", true);
         }
         else
         {
@@ -540,19 +553,19 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             if (XanaEventDetails.eventDetails.museumId.Equals(0))
             {
                 XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
-                FeedEventPrefab.m_EnvName = XanaEventDetails.eventDetails.environmentName;
+                WorldItemView.m_EnvName = XanaEventDetails.eventDetails.environmentName;
                 //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             else
             {
                 XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
-                FeedEventPrefab.m_EnvName = XanaEventDetails.eventDetails.museumName;
+                WorldItemView.m_EnvName = XanaEventDetails.eventDetails.museumName;
                 //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false); 
             SceneManager.LoadScene("AddressableScene");
         }
 

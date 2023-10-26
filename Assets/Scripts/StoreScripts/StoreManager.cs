@@ -158,6 +158,7 @@ public class StoreManager : MonoBehaviour
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
     public GameObject backbutton_preset;
+    public Transform contentList;
 
     public GameObject faceTapButton;
     public GameObject eyeBrowTapButton;
@@ -257,6 +258,11 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+    public void skipAvatarSelection()
+    {
+        UserRegisterationManager.instance.usernamePanal.SetActive(true);
+    }
+
     public void WalletLoggedinCall()
     {
         GetAllMainCategories();
@@ -754,7 +760,7 @@ public class StoreManager : MonoBehaviour
             string result = StringIndexofSubcategories(GetCategoryIndex);
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 150, "asc")); // Increase item Waqas Ahmad
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));
@@ -871,6 +877,10 @@ public class StoreManager : MonoBehaviour
     }
     IEnumerator HitAllMainCategoriesAPI(string url, string Jsondata)
     {
+        while (ConstantsGod.AUTH_TOKEN.Equals("AUTH_TOKEN"))
+        {
+            yield return new WaitForSecondsRealtime(1f);
+        }
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -1263,6 +1273,8 @@ public class StoreManager : MonoBehaviour
     }
     public void OnClickBackButton()
     {
+        //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
         if (saveStoreBtnButton.interactable == true)
@@ -3840,9 +3852,9 @@ public class StoreManager : MonoBehaviour
         switch (index)
         {
             case 0:
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (XanaConstants.xanaConstants.hair != "")
                 {
-                   
                     if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornHair.name == "MDhairs")
                     {
                         // Debug.Log("Hairs list------"+ ParentOfBtnsAvatarHairs.transform.childCount);
@@ -3886,6 +3898,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 1:
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (!XanaConstants.xanaConstants.isFaceMorphed)
                 {
                     if (XanaConstants.xanaConstants.faceIndex != -1)
@@ -3936,6 +3949,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 2:
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (!XanaConstants.xanaConstants.isEyebrowMorphed)
                 {
                     if (XanaConstants.xanaConstants.eyeBrowIndex != -1)
@@ -4002,6 +4016,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 3:
+                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isEyeMorphed)
@@ -4089,6 +4104,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 4:
+                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isNoseMorphed)
@@ -4159,6 +4175,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 5:
+                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isLipMorphed)
@@ -4247,6 +4264,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 6:
+                  GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (XanaConstants.xanaConstants.bodyNumber != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarBody.transform.childCount; i++)
@@ -4265,6 +4283,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 7:
+                  GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (panelIndex == 0)
                 {
                     if (XanaConstants.xanaConstants.shoes != "")
@@ -4300,6 +4319,7 @@ public class StoreManager : MonoBehaviour
 
                 break;
             case 8:
+                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (XanaConstants.xanaConstants.eyeLashesIndex != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarEyeLashes.transform.childCount; i++)
@@ -4323,6 +4343,7 @@ public class StoreManager : MonoBehaviour
                 }
                 break;
             case 9:
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (XanaConstants.xanaConstants.makeupIndex != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarMakeup.transform.childCount; i++)
@@ -4339,8 +4360,10 @@ public class StoreManager : MonoBehaviour
                 }
                 break;
             case 10:
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (XanaConstants.xanaConstants.PresetValueString != "")
                 {
+                    
                     for (int i = 0; i < ParentOfBtnsAvatarAccessary.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsAvatarAccessary.transform.GetChild(i).gameObject;

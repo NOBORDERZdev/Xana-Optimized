@@ -162,7 +162,8 @@ public class LoadingManager : MonoBehaviour
         loading_.SetActive(true);
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
         {
-            Screen.orientation = ScreenOrientation.Portrait;
+            //Debug.LogError("~~~~~ Waqas_ LoadingManager ~~~~~~~~~~~");
+            //Screen.orientation = ScreenOrientation.Portrait;
         }
         yield return new WaitForSeconds(0.8f);
         loading_.SetActive(false);

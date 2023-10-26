@@ -8,15 +8,9 @@ public class RandomNumberComponent : ItemComponent
 
     [SerializeField]
     private RandomNumberComponentData randomNumberComponentData;
+    private bool IsAgainTouchable = true;
     private bool isActivated = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        _minNumber = randomNumberComponentData.minNumber;
-        _maxNumber = randomNumberComponentData.maxNumber;
-        GenerateNumber();
-    }
+    string RuntimeItemID = "";
 
     void GenerateNumber()
     {
@@ -28,16 +22,28 @@ public class RandomNumberComponent : ItemComponent
         this.randomNumberComponentData = randomNumberComponentData;
 
         isActivated = true;
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        _minNumber = this.randomNumberComponentData.minNumber;
+        _maxNumber = this.randomNumberComponentData.maxNumber;
+        GenerateNumber();
     }
 
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
-            BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
-            GenerateNumber();
+            if (!IsAgainTouchable) return;
+
+            IsAgainTouchable = false;
+
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
     }
 
     //onCollsion Exit to ontrigger exit
@@ -45,7 +51,55 @@ public class RandomNumberComponent : ItemComponent
     {
         if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.OnRandomCollisionExit?.Invoke();
+            IsAgainTouchable = true;
+
+            StopBehaviour();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
+
+        BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
+        GenerateNumber();
+    }
+    private void StopComponent()
+    {
+        BuilderEventManager.OnRandomCollisionExit?.Invoke();
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.RandomNumberComponent;
+    }
+
+    #endregion
 }

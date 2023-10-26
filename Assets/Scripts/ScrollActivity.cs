@@ -7,16 +7,19 @@ public class ScrollActivity : MonoBehaviour
 {
     [Header("For World Icons Scroll")]
     public ScrollRect ScrollController;
+    public Transform m_parent;
     public GameObject btnback;
     public float normalized;
     private int lastindex = 1;
+    [SerializeField] 
+    CanvasGroup canvasGroup;
+    [SerializeField] 
+    Image bg;
 
     private void Awake()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
     }
-
-    //Worked by Abdullah & Riken
     private void OnDisable()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
@@ -86,12 +89,16 @@ public class ScrollActivity : MonoBehaviour
     public IEnumerator IEBottomToTop()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
+        canvasGroup.alpha= 0;
+        canvasGroup.DOFade(1,0.2f);
         yield return new WaitForSeconds(0.2f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.2f).SetEase(Ease.Linear).OnComplete(WaitForOpenWorldPage);
         IEBottomToTopCoroutine = null;
     }
     IEnumerator ExampleCoroutine()
     {
+        canvasGroup.alpha= 1;
+        canvasGroup.DOFade(0,0.1f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
@@ -99,6 +106,14 @@ public class ScrollActivity : MonoBehaviour
     }
     public void WaitForOpenWorldPage()
     {
-        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+       DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0.97f, 0.1f).SetEase(Ease.InSine).OnComplete(BounceBack);
+
     }
+
+    void BounceBack(){ 
+        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.OutSine).OnComplete(()=> { 
+        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+        } ); 
+    }
+
 }

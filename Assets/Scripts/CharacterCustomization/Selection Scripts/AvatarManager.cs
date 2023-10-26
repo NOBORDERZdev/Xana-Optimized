@@ -118,15 +118,14 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
+                XanaConstants.xanaConstants.needToClearMemory = false;    
                 if (LoadingHandler.Instance)
                     LoadingHandler.Instance.HideLoading();
             GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
             InternetLost = go;
              }
 
-            if (LoadingHandler.Instance != null &&
-
-                !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+            if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 //CameraLook.instance.DisAllowControl();
                 OffSelfie();
@@ -151,7 +150,7 @@ namespace Metaverse
             }
 
             //WaqasAhmad
-            LoadingHandler.Instance.UpdateLoadingSlider((LoadingHandler.Instance.loadingSlider.fillAmount + 0.1f), true);
+           // LoadingHandler.Instance.UpdateLoadingSlider((LoadingHandler.Instance.loadingSlider.fillAmount + 0.1f), true);
 
 
             //AssignAvatarModel();
@@ -242,7 +241,7 @@ namespace Metaverse
 
         IEnumerator WaitForChangeButtonCommit()
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(0.95f, true);
+            //LoadingHandler.Instance.UpdateLoadingSlider(0.95f, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("Connected to Network");
 
             yield return new WaitForSeconds(1.0f);
@@ -260,7 +259,7 @@ namespace Metaverse
 
         IEnumerator WaitForAssignModel()
         {
-            LoadingHandler.Instance.UpdateLoadingSlider(0.85f, true);
+           // LoadingHandler.Instance.UpdateLoadingSlider(0.85f, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("Spawning Character");
 
             yield return new WaitForSeconds(1.0f);
@@ -388,7 +387,7 @@ namespace Metaverse
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
                     currentDummyPlayer.transform.parent = spawnPoint.transform;
                     //Debug.Log("1");
-                    if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
+                    if (WorldItemView.m_EnvName.Contains("AfterParty"))
                     {
                         //Debug.Log("2");
                         for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
