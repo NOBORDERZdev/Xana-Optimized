@@ -158,6 +158,7 @@ public class StoreManager : MonoBehaviour
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
     public GameObject backbutton_preset;
+    public Transform contentList;
 
     public GameObject faceTapButton;
     public GameObject eyeBrowTapButton;
@@ -257,6 +258,11 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+    public void skipAvatarSelection()
+    {
+        UserRegisterationManager.instance.usernamePanal.SetActive(true);
+    }
+
     public void WalletLoggedinCall()
     {
         GetAllMainCategories();
@@ -871,6 +877,10 @@ public class StoreManager : MonoBehaviour
     }
     IEnumerator HitAllMainCategoriesAPI(string url, string Jsondata)
     {
+        while (ConstantsGod.AUTH_TOKEN.Equals("AUTH_TOKEN"))
+        {
+            yield return new WaitForSecondsRealtime(1f);
+        }
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -1264,6 +1274,7 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
         if (saveStoreBtnButton.interactable == true)

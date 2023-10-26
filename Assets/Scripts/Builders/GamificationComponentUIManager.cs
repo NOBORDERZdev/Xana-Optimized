@@ -23,6 +23,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter += EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter += EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter += EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter += EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter += EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit += DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter += EnableSituationChangerUI;
@@ -45,6 +46,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
         DisableThrowThingUI();
         DisableAllComponentUIObject(Constants.ItemComponentType.none);
+
     }
     private void OnDisable()
     {
@@ -59,6 +61,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         BuilderEventManager.OnTimerCountDownTriggerEnter -= EnableTimerCountDownUI;
         BuilderEventManager.OnElapseTimeCounterTriggerEnter -= EnableElapseTimeCounDownUI;
         BuilderEventManager.OnDisplayMessageCollisionEnter -= EnableDisplayMessageUI;
+        BuilderEventManager.OnDoorKeyCollisionEnter -= EnableDoorKeyUI;
         BuilderEventManager.OnHelpButtonCollisionEnter -= EnableHelpButtonUI;
         BuilderEventManager.OnHelpButtonCollisionExit -= DisableHelpButtonUI;
         BuilderEventManager.OnSituationChangerTriggerEnter -= EnableSituationChangerUI;
@@ -79,6 +82,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
 
         BuilderEventManager.ResetComponentUI -= DisableAllComponentUIObject;
+
     }
 
     public bool isPotrait;
@@ -105,9 +109,14 @@ public class GamificationComponentUIManager : MonoBehaviour
     float letterDelay = 0.1f;
     int storyCharCount = 0;
     bool isAgainCollided;
+    bool isStoryWritten;
     public ScrollRect narrationScroll;
     public GameObject sliderNarrationUI;
     Coroutine StoryNarrationCoroutine;
+    public Button narrationUIClosebtn;
+    public Button narrationUIDownTextbtn;
+    float narrationtotalHeight;
+    float singleLineHeight;
 
     //Random Number Component
     public GameObject RandomNumberUIParent;
@@ -132,6 +141,10 @@ public class GamificationComponentUIManager : MonoBehaviour
     public TextMeshProUGUI DisplayMessageText;
     public TextMeshProUGUI DisplayMessageTimeText;
 
+    //Door Key Component
+    public GameObject DoorKeyParentUI;
+    public TextMeshProUGUI DoorKeyText;
+
     //Help Button Component
     public GameObject HelpButtonParentUI;
     public HelpButtonComponentResizer helpButtonComponentResizer;
@@ -139,6 +152,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     public TextMeshProUGUI HelpText;
     public ScrollRect helpButtonScroll;
     public GameObject sliderHelpButtonUI;
+    float helppopupTotalheight;
+    float helppopupSingleLineHeight;
 
     //Situation Changer Component
     public GameObject SituationChangerParentUI;
@@ -147,10 +162,11 @@ public class GamificationComponentUIManager : MonoBehaviour
 
 
     //Narration Component
-    void EnableNarrationUI(string narrationText, bool isStory)
+    void EnableNarrationUI(string narrationText, bool isStory, bool closeNarration)
     {
         DisableAllComponentUIObject(Constants.ItemComponentType.NarrationComponent);
         narrationUIParent.SetActive(true);
+        narrationUIClosebtn.gameObject.SetActive(closeNarration);
         if (!isStory)
         {
             if (StoryNarrationCoroutine != null)
@@ -158,8 +174,10 @@ public class GamificationComponentUIManager : MonoBehaviour
             isAgainCollided = true;
             //StartCoroutine(WaitDelayStatement());
             narrationTextUI.text = narrationText;
-            narrationScroll.enabled = true;
-            sliderNarrationUI.SetActive(true);
+            narrationScroll.enabled = false;
+            sliderNarrationUI.SetActive(false);
+            isStoryWritten = false;
+            Invoke(nameof(NarrationUILinesCount), 0.1f);
         }
         else
         {
@@ -177,16 +195,19 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void NarrationUILinesCount()
     {
-        if (narrationTextUI.textInfo.lineCount > 4)
-        {
-            narrationScroll.enabled = true;
-            sliderNarrationUI.SetActive(true);
-        }
-        else
-        {
-            narrationScroll.enabled = false;
-            sliderNarrationUI.SetActive(false);
-        }
+        narrationTextUI.rectTransform.parent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+
+        narrationScroll.enabled = false;
+        sliderNarrationUI.SetActive(false);
+
+        narrationtotalHeight = narrationTextUI.rectTransform.rect.height;
+
+        // Get the number of lines in the text.
+        int numberOfLines = narrationTextUI.textInfo.lineCount;
+        // Calculate the single line height by dividing the total height by the number of lines.
+        singleLineHeight = narrationtotalHeight / numberOfLines;
+
+        narrationUIDownTextbtn.interactable = !isStoryWritten;
     }
     IEnumerator StoryNarration(string msg)
     {
@@ -195,6 +216,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
+        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -203,6 +225,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(letterDelay);
             StartCoroutine(WaitForScrollingOption());
         }
+        isStoryWritten = false;
+        NarrationUILinesCount();
     }
     IEnumerator WaitForScrollingOption()
     {
@@ -213,6 +237,17 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
+    }
+    public void DisplayDownText()
+    {
+        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 5 < narrationtotalHeight)
+        {
+            narrationScroll.content.anchoredPosition += new Vector2(0, singleLineHeight);
+        }
+        else
+        {
+            DisableNarrationUI();
+        }
     }
     void DisableNarrationUI()
     {
@@ -428,22 +463,10 @@ public class GamificationComponentUIManager : MonoBehaviour
         {
             HelpText.text = HelpTexts + "\n";
         }
-        //HelpButtonUILinesCount();
+        helpButtonComponentResizer.titleText.text = HelpButtonTitleText.text;
+        helpButtonComponentResizer.contentText.text = HelpText.text;
         HelpButtonParentUI.SetActive(true);
-    }
-
-    public void HelpButtonUILinesCount()
-    {
-        if (HelpText.textInfo.lineCount > 4)
-        {
-            helpButtonScroll.enabled = true;
-            sliderHelpButtonUI.SetActive(true);
-        }
-        else
-        {
-            helpButtonScroll.enabled = false;
-            sliderHelpButtonUI.SetActive(false);
-        }
+        helpButtonComponentResizer.Init();
     }
     public void DisableHelpButtonUI()
     {
@@ -734,12 +757,16 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+
                 colorString = "#36C34E";
                 break;
 
             case 1:
                 wrong++;
                 image = wrongImage;
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+
                 break;
 
             case 2:
@@ -840,7 +867,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             isDissapearing = true;
             yield return new WaitForSeconds(0);
             isDissapearing = false;
-            if(GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
@@ -1075,7 +1102,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     public HyperlinkPanelResizer hyperlinkPanelResizer;
     public TextMeshProUGUI hyperLinkPopupTitleText;
     public TextMeshProUGUI hyperLinkPopupText;
+    public ScrollRect hyperLinkScrollView;
+    public GameObject hyperLinkScrollbar;
     string url;
+    float hyperlinkTotalHeight;
+    float hyperLinkSingleLineHeight;
+
     public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, Transform obj)
     {
         HyperLinkPopupUIParent.SetActive(true);
@@ -1092,7 +1124,35 @@ public class GamificationComponentUIManager : MonoBehaviour
         {
             hyperLinkPopupText.text = hyperLinkPopupTexts + "\n";
         }
-        //HelpButtonUILinesCount();
+        Invoke(nameof(HyperLinkUILinesCount),0.1f);
+    }
+
+    void HyperLinkUILinesCount()
+    {
+        hyperLinkPopupText.rectTransform.parent.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
+
+        hyperLinkScrollView.enabled = false;
+        hyperLinkScrollbar.SetActive(false);
+
+
+        hyperlinkTotalHeight = hyperLinkPopupText.rectTransform.rect.height;
+
+        // Get the number of lines in the text.
+        int numberOfLines = hyperLinkPopupText.textInfo.lineCount;
+        // Calculate the single line height by dividing the total height by the number of lines.
+        singleLineHeight = hyperlinkTotalHeight / numberOfLines;
+    }
+
+    public void HyperLinkDownText()
+    {
+        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 5 < hyperlinkTotalHeight)
+        {
+            hyperLinkScrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
+        }
+        else
+        {
+            DisableHyperLinkPopupUI();
+        }
     }
 
     public void OnClickHyperLinkButton()
@@ -1207,6 +1267,45 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     #endregion
 
+    #region DoorKey Component
+    Coroutine EnableDoorKeyCoroutine;
+    public void EnableDoorKeyUI(string DisplayMessage)
+    {
+        DisableAllComponentUIObject(Constants.ItemComponentType.DoorKeyComponent);
+        if (EnableDoorKeyCoroutine == null)
+        {
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+        else
+        {
+            StopCoroutine(EnableDoorKeyCoroutine);
+            EnableDoorKeyCoroutine = StartCoroutine(IEEnableDoorKeyUI(DisplayMessage));
+        }
+    }
+    public IEnumerator IEEnableDoorKeyUI(string DisplayMessage)
+    {
+        DisplayMessage = TextLocalization.GetLocaliseTextByKey(DisplayMessage);
+        DoorKeyText.text = DisplayMessage;
+        DoorKeyParentUI.SetActive(true);
+
+        float time = 5f;
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            time--;
+        }
+        DoorKeyParentUI.SetActive(false);
+    }
+
+    public void DisableDoorKeyUI()
+    {
+        if (EnableDoorKeyCoroutine != null)
+            StopCoroutine(EnableDoorKeyCoroutine);
+        DoorKeyParentUI.SetActive(false);
+        DoorKeyText.text = "";
+    }
+    #endregion
+
     string ConvertTimetoSecondsandMinute(float time, bool onlySS = false)
     {
         int minutes = Mathf.FloorToInt(time / 60f);
@@ -1251,5 +1350,24 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
             DisableAvatarChangerComponentUI();
+        if (componentType != Constants.ItemComponentType.DoorKeyComponent)
+            DisableDoorKeyUI();
+    }
+
+    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    {
+
+        for (int i = 0; i < displayTitle.text.Length; i++)
+        {
+            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+            int unicode = charInfo.character;
+            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+            {
+                print("JP font");
+                return true;
+            }
+        }
+        print("JP font not");
+        return false;
     }
 }

@@ -577,6 +577,8 @@ namespace LightShaft.Scripts
                     videoPlayer.renderMode == VideoRenderMode.CameraNearPlane)
                     fullscreenModeEnabled = true;
                 else fullscreenModeEnabled = false;
+
+                GetComponent<YoutubePlayer>().enabled = false;
             }
         }
 
@@ -4075,7 +4077,8 @@ namespace LightShaft.Scripts
             //audio issue fix...check all unity versions.
             if (videoQuality != YoutubeVideoQuality.STANDARD)
             {
-                videoPlayer.GetComponent<AudioSource>().volume = oldVolume;
+                if(videoPlayer.GetComponent<AudioSource>())
+                    videoPlayer.GetComponent<AudioSource>().volume = oldVolume;
             }
         }
 

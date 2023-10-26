@@ -22,7 +22,10 @@ public class HelpButtonComponent : ItemComponent
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
             infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
+            infoPopup.scrollView.enabled = false;
+            infoPopup.scrollbar.SetActive(false);
             go.SetActive(true);
+            infoPopup.Init();
             BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
         }
     }
@@ -33,6 +36,8 @@ public class HelpButtonComponent : ItemComponent
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
+
             }
         }
     }
