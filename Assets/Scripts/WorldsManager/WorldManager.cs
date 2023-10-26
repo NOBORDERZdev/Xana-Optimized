@@ -69,7 +69,6 @@ public class WorldManager : MonoBehaviour
 
 
     [SerializeField]
-    [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
 
     static int AutoSwtichIndex=0;
