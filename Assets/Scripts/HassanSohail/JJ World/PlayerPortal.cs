@@ -38,7 +38,7 @@ public class PlayerPortal : MonoBehaviour
         if (/*manager.allowTeleportation && */(other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && destinationPoint != null /*&& isAlreadyRunning */ /*&& player.allowTeleport*/)
         {
             print("player enter : " + transform.parent.parent.name);
-            
+            CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             // For NFT Click
             JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
             if (transform.parent.parent.name.Contains("Rental"))
