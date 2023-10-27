@@ -8,7 +8,7 @@ public class WorldCategoryUIHandler : MonoBehaviour
     [SerializeField]
     Transform WorldElement,ScrollerWorlds,SpawnWorldParent;
     string _categoryType;
-    float addHeight = 490f, addWidth = 321f;
+    float addHeight = 535f, addWidth = 351f;
     public void Init(string categoryName,int totalWorlds)
     {
         CategoryName.text = categoryName;
@@ -25,10 +25,12 @@ public class WorldCategoryUIHandler : MonoBehaviour
         float Parentheight = transform.parent.GetComponent<RectTransform>().sizeDelta.y;
         if (totalWorlds > 0 && totalWorlds <= 6)
         {
-            SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * totalWorlds, addHeight + 100f);
-            transform.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight + 30f);
-            transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, Parentheight + addHeight + 30f);
-            ScrollerWorlds.GetComponent<RectTransform>().sizeDelta = new Vector2(1077f, addHeight + 60f);
+            float height = addHeight + 35f;
+            float width = 1077f;
+            SpawnWorldParent.GetComponent<RectTransform>().sizeDelta = new Vector2(addWidth * totalWorlds, height);
+            transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+            transform.parent.GetComponent<RectTransform>().sizeDelta = new Vector2(width, Parentheight + height);
+            ScrollerWorlds.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
         }
         else
         {
@@ -52,5 +54,9 @@ public class WorldCategoryUIHandler : MonoBehaviour
             case "My World": UIManager.Instance.SetWorldToDisplay(APIURL.MyWorld); break;
             default: UIManager.Instance.SetWorldToDisplay(APIURL.Hot); break;
         }
+    }
+    public void CategoryScrollerReset()
+    {
+        ScrollerWorlds.GetComponent<WorldCategoryScroller>().horizontalNormalizedPosition = 0f;
     }
 }

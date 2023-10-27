@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
                     WorldManager.instance.AllWorldTabReference.AvatarWindowSizeControl(false);
                     SecondSliderScrollView.GetComponent<Mask>().enabled = false;
                     WorldScrollerHolder.gameObject.SetActive(false);
+                    WorldManager.instance.transform.GetComponent<MainMenuWorldManager>().ResetCategoryScrollers();
                     break;
                 }
             case 1:
@@ -107,6 +108,7 @@ public class UIManager : MonoBehaviour
                     WorldManager.instance.AllWorldTabReference.AvatarWindowSizeControl(true);
                     SecondSliderScrollView.GetComponent<Mask>().enabled = true;
                     WorldScrollerHolder.gameObject.SetActive(false);
+                    WorldManager.instance.transform.GetComponent<MainMenuWorldManager>().ResetCategoryScrollers();
                     break;
                 }
             case 2:

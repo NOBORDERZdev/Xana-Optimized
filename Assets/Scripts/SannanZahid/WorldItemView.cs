@@ -14,32 +14,7 @@ public class WorldItemView : MonoBehaviour
     public int Index;
     public Vector2 GridIndex { get; protected set; }
     public RectTransform RectTransform => transform as RectTransform;
-    public void Activated()
-    {
-        gameObject.SetActive(true);
-    }
-    public void Deactivated()
-    {
-        gameObject.SetActive(false);
-    }
-    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
-    {
-       Index = index;
-       GridIndex = gridPos;
-       idOfObject =  detail.IdOfWorld;
-       m_EnvironmentName = detail.EnvironmentName;
-       m_WorldDescription = detail.WorldDescription;
-       m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-       creatorName = detail.CreatorName;
-       createdAt = detail.CreatedAt;
-       userLimit = detail.UserLimit;
-       userAvatarURL = detail.UserAvatarURL;
-       updatedAt = detail.UpdatedAt;
-       entityType = detail.EntityType;
-       m_BannerLink = detail.BannerLink;
-       m_PressedIndex = detail.PressedIndex;
-       Init();
-    }
+
 
     public static string m_EnvName;
     public static string m_CreaName;
@@ -67,6 +42,7 @@ public class WorldItemView : MonoBehaviour
     public bool isReleaseFromMemoryOrNot = false;
     public bool isOnScreen;
     public bool isVisible = false;
+    public Button WorldJoinButton;
     bool isNotLoaded = true;
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
@@ -89,11 +65,29 @@ public class WorldItemView : MonoBehaviour
             GetComponent<VerticalLayoutGroup>().enabled = false;
         }
     }
+    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
+    {
+        Index = index;
+        GridIndex = gridPos;
+        idOfObject = detail.IdOfWorld;
+        m_EnvironmentName = detail.EnvironmentName;
+        m_WorldDescription = detail.WorldDescription;
+        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+        creatorName = detail.CreatorName;
+        createdAt = detail.CreatedAt;
+        userLimit = detail.UserLimit;
+        userAvatarURL = detail.UserAvatarURL;
+        updatedAt = detail.UpdatedAt;
+        entityType = detail.EntityType;
+        m_BannerLink = detail.BannerLink;
+        m_PressedIndex = detail.PressedIndex;
+        Init();
+    }
     public void Init()
     {
         GetEventType(entityType);
         StartCoroutine(DownloadPrefabSprite());
-        this.GetComponent<Button>().interactable = false;
+        WorldJoinButton.interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         LoadImagesFromRemote();
@@ -240,7 +234,7 @@ public class WorldItemView : MonoBehaviour
         eviroment_Name.text = eviroment_Name.text;
         if (WorldCreatorName!=null)
         WorldCreatorName.text = creatorName;
-        gameObject.GetComponent<Button>().interactable = true;
+        WorldJoinButton.interactable = true;
         yield return new WaitForSecondsRealtime(0.2f);
         if (!m_EnvironmentName.Contains("XANA Lobby"))
             GetComponent<VerticalLayoutGroup>().enabled = true;

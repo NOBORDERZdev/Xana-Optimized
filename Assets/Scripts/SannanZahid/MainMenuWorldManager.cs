@@ -8,6 +8,7 @@ public class MainMenuWorldManager : MonoBehaviour
 {
     public bool dataIsFatched = false;
     public Transform WorldCategoryHolder, WorldCategoryHolderSpawnParent;
+    public List<Transform> SpawnCategoryTabs = new List<Transform>();
     int State = 0;
     IEnumerator  Start()
     {
@@ -83,8 +84,11 @@ public class MainMenuWorldManager : MonoBehaviour
     }
     void InstantiateWorlds(WorldsInfo _worldInfo, string category)
     {
-       Transform categorySpawned = Instantiate(WorldCategoryHolder.gameObject, WorldCategoryHolderSpawnParent).transform;
+        if (_worldInfo.data.count.Equals(0))
+            return;
+        Transform categorySpawned = Instantiate(WorldCategoryHolder.gameObject, WorldCategoryHolderSpawnParent).transform;
         categorySpawned.gameObject.SetActive(true);
+        SpawnCategoryTabs.Add(categorySpawned);
         categorySpawned.GetComponent<WorldCategoryUIHandler>().Init(category, _worldInfo.data.rows.Count);
         if(_worldInfo.data.rows.Count>6)
         {
@@ -94,7 +98,6 @@ public class MainMenuWorldManager : MonoBehaviour
         {
             GetComponent<WorldManager>().AllWorldTabReference.SetCategorySize(1);
         }
-       // Debug.LogError("World Count " + _worldInfo.data.rows.Count);
         for (int i = 0; i < _worldInfo.data.rows.Count; i++)
         {
             WorldItemDetail _event;
@@ -139,6 +142,13 @@ public class MainMenuWorldManager : MonoBehaviour
                 _event.UserLimit = _worldInfo.data.rows[i].user_limit;
             }
             categorySpawned.GetComponent<WorldCategoryUIHandler>().AddWorldElementToUI(_event);
+        }
+    }
+    public void ResetCategoryScrollers()
+    {
+        foreach(Transform category in SpawnCategoryTabs)
+        {
+            category.GetComponent<WorldCategoryUIHandler>().CategoryScrollerReset();
         }
     }
     string GetCategoryName(int index)

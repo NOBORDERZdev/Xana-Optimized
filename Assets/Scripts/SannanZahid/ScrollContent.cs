@@ -44,7 +44,7 @@ namespace DynamicScrollRect
         string CurrentKey;
         private void Awake()
         {
-            AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 3.5f;
+            AlignSpace = (_screenSizeX - (ItemWidth * _fixedItemCount)) / 5f;
             _ReferenceItem.gameObject.SetActive(false);
         }
         public void InitScrollContent(string worldKey ,List<WorldItemDetail> contentDatum)

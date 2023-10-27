@@ -124,7 +124,7 @@ public class AllWorldManage : MonoBehaviour
         transform.GetComponent<RectTransform>().offsetMin = 
             new Vector2(
             transform.GetComponent<RectTransform>().offsetMin.x,
-            transform.GetComponent<RectTransform>().offsetMin.y -(430f*type)
+            transform.GetComponent<RectTransform>().offsetMin.y -(490f * type)
             );
     }
     int State = 0;
