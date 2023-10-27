@@ -35,7 +35,7 @@ public class AvatarController : MonoBehaviour
 
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
-    public bool isVisibleOnCam= false;
+    public bool isVisibleOnCam = false;
     private void Awake()
     {
         bodyParts = this.GetComponent<CharcterBodyParts>();
@@ -197,7 +197,7 @@ public class AvatarController : MonoBehaviour
         //}
 
         Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -1422,8 +1422,15 @@ public class AvatarController : MonoBehaviour
             if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
                 SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-                StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
+                if (isLoadStaticClothFromJson)
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+                }
+                else
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                }
+                tempBodyParts.StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
 
                 //getHairColorFormFile = false;
                 //tempStartCoroutine(tempBodyParts.ImplementColors(_CharData.HairColor, SliderType.HairColor, applyOn));
@@ -1431,7 +1438,7 @@ public class AvatarController : MonoBehaviour
             else if (type == "Hair" && XanaConstants.xanaConstants.isPresetHairColor && presetHairColor != null)
             {
                 //getHairColorFormFile = false;
-                StartCoroutine(tempBodyParts.ImplementColors(presetHairColor, SliderType.HairColor, applyOn));
+                tempBodyParts.StartCoroutine(tempBodyParts.ImplementColors(presetHairColor, SliderType.HairColor, applyOn));
                 presetHairColor = Color.clear;
             }
         }
@@ -1459,7 +1466,7 @@ public class AvatarController : MonoBehaviour
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    
+
                     SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
@@ -1502,6 +1509,8 @@ public class AvatarController : MonoBehaviour
                 break;
             case "Glove":
                 wornGloves = item;
+                Material m = new Material(wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
+                wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m;
                 wornGlovesId = itemId;
                 break;
         }
@@ -1818,11 +1827,11 @@ public class AvatarController : MonoBehaviour
     }
     void OnBecameInvisible()
     {
-        isVisibleOnCam= false;
+        isVisibleOnCam = false;
     }
 
     void OnBecameVisible()
     {
-        isVisibleOnCam= true;
+        isVisibleOnCam = true;
     }
 }
