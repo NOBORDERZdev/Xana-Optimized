@@ -158,6 +158,7 @@ public class StoreManager : MonoBehaviour
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
     public GameObject backbutton_preset;
+    public Transform contentList;
 
     public GameObject faceTapButton;
     public GameObject eyeBrowTapButton;
@@ -257,6 +258,11 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+    public void skipAvatarSelection()
+    {
+        UserRegisterationManager.instance.usernamePanal.SetActive(true);
+    }
+
     public void WalletLoggedinCall()
     {
         GetAllMainCategories();
@@ -754,7 +760,7 @@ public class StoreManager : MonoBehaviour
             string result = StringIndexofSubcategories(GetCategoryIndex);
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 150, "asc")); // Increase item Waqas Ahmad
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));

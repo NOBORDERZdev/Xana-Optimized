@@ -45,6 +45,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch += OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
+        BuilderEventManager.AfterWorldInstantiated += XanaSetItemData;
     }
 
     private void OnDisable()
@@ -52,6 +53,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch -= OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
+        BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
 
         Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
@@ -116,7 +118,7 @@ public class BuilderMapDownload : MonoBehaviour
                     string compressData = sr.ReadToEnd();
                     string deCompressData = DecompressString(compressData);
                     OnSuccess.Invoke(deCompressData);
-                    response = deCompressData;
+                   // response = deCompressData;
                 }
                 catch (Exception e)
                 {
@@ -139,19 +141,13 @@ public class BuilderMapDownload : MonoBehaviour
             yield return StartCoroutine(DownloadLevelDataJson(serverData.data.map_json_link, (sucess) =>
             {
                 levelData = GetDecompressJson(sucess);
+                BuilderData.mapData.data.json = levelData;
             },
             (onfalse) =>
             {
                 Debug.Log("Failed to load json....");
             }));
         }
-
-
-        StartCoroutine(DownloadAssetsData(() =>
-        {
-            LoadAddressableSceneAfterDownload();
-            //SetSkyProperties();
-        }));
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
@@ -164,6 +160,20 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
+
+        Debug.LogError("Map is downloaed");
+        if (BuilderAssetDownloader.isPostLoading)
+        {
+            Debug.LogError("Map is downloaed start post loading");
+            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
+        }
+        else
+        {
+            StartCoroutine(DownloadAssetsData(() =>
+            {
+                LoadAddressableSceneAfterDownload();
+            }));
+        }
     }
 
 
@@ -495,7 +505,7 @@ public class BuilderMapDownload : MonoBehaviour
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
-        Invoke(nameof(XanaSetItemData), 1.5f);
+        //Invoke(nameof(XanaSetItemData), 1.5f);
     }
 
     void XanaSetItemData()

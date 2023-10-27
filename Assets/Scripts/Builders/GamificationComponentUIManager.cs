@@ -109,10 +109,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     float letterDelay = 0.1f;
     int storyCharCount = 0;
     bool isAgainCollided;
+    bool isStoryWritten;
     public ScrollRect narrationScroll;
     public GameObject sliderNarrationUI;
     Coroutine StoryNarrationCoroutine;
     public Button narrationUIClosebtn;
+    public Button narrationUIDownTextbtn;
     float narrationtotalHeight;
     float singleLineHeight;
 
@@ -174,6 +176,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             narrationTextUI.text = narrationText;
             narrationScroll.enabled = false;
             sliderNarrationUI.SetActive(false);
+            isStoryWritten = false;
             Invoke(nameof(NarrationUILinesCount), 0.1f);
         }
         else
@@ -203,6 +206,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         int numberOfLines = narrationTextUI.textInfo.lineCount;
         // Calculate the single line height by dividing the total height by the number of lines.
         singleLineHeight = narrationtotalHeight / numberOfLines;
+
+        narrationUIDownTextbtn.interactable = !isStoryWritten;
     }
     IEnumerator StoryNarration(string msg)
     {
@@ -211,6 +216,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
+        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -219,6 +225,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(letterDelay);
             StartCoroutine(WaitForScrollingOption());
         }
+        isStoryWritten = false;
+        NarrationUILinesCount();
     }
     IEnumerator WaitForScrollingOption()
     {
@@ -1344,5 +1352,22 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableAvatarChangerComponentUI();
         if (componentType != Constants.ItemComponentType.DoorKeyComponent)
             DisableDoorKeyUI();
+    }
+
+    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    {
+
+        for (int i = 0; i < displayTitle.text.Length; i++)
+        {
+            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+            int unicode = charInfo.character;
+            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+            {
+                print("JP font");
+                return true;
+            }
+        }
+        print("JP font not");
+        return false;
     }
 }

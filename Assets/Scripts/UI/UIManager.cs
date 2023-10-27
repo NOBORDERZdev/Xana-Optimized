@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(true);
-                    LobbyTabHolder.gameObject.SetActive(true);
+                    LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     WorldManager.instance.WorldPageStateHandler(false);
