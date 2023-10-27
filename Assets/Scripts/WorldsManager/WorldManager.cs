@@ -334,7 +334,7 @@ public class WorldManager : MonoBehaviour
             {
                 _event.CreatorName = _WorldInfo.data.rows[i].user.name;
                 _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                _event.UserLimit = "10";
+                _event.UserLimit = "15";
             }
             else
             {
@@ -622,7 +622,7 @@ public class WorldManager : MonoBehaviour
             {
                 if (XanaConstants.xanaConstants.isBuilderScene)
                 {
-                    XanaConstants.xanaConstants.userLimit = "10";
+                    XanaConstants.xanaConstants.userLimit = "15";
                 }
                 else
                 {
