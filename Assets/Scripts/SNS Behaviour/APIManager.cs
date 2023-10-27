@@ -988,6 +988,7 @@ public class APIManager : MonoBehaviour
                         commentRow.createdAt = bean.data.commentPost.createdAt;
                         commentRow.updatedAt = bean.data.commentPost.updatedAt;
                         commentRow.user = bean.data.commentPost.user;
+                        
 
                         FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
                         feedCommentItemController.SetupData(commentRow);
