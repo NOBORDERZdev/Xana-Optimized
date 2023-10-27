@@ -184,16 +184,17 @@ public class LoadingHandler : MonoBehaviour
         {
             //isFedderActive = true;
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+            blackScreen.DOKill();
             blackScreen.DOFade(1, 0.1f).OnComplete(delegate
             {
                 //Debug.LogError("7 ~~~~~~~~~~~~~~~~ LandscapeLeft");
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
+                CustomLoading();
                 //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
             });
         }
 
         //StartCoroutine(CustomLoading());
-        CustomLoading();
     }
    
     void CustomLoading()
@@ -210,10 +211,9 @@ public class LoadingHandler : MonoBehaviour
         //}
 
 
-
+        loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(1f);
-        loadingPanel.SetActive(true);
       
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -478,7 +478,9 @@ public class LoadingHandler : MonoBehaviour
         else
         {
             if (isBuilder)
+            {
                 StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(25f, 30f)));
+            }
             else
                 StartCoroutine(IncrementSliderValue(Random.Range(10f, 13f)));
         }
@@ -530,11 +532,15 @@ public class LoadingHandler : MonoBehaviour
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                   // yield return new WaitForSeconds(1f);
+                    //HideLoading(ScreenOrientation.Portrait);
                 }
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                    //yield return new WaitForSeconds(1f);
+                    //HideLoading(ScreenOrientation.Portrait);
                 }
             }
             yield return null;

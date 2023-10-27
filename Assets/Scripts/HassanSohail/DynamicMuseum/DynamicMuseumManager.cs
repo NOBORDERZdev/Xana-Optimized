@@ -13,6 +13,7 @@ public class DynamicMuseumManager : MonoBehaviour
     public string VideosquarSize;
     public string potraiteSize;
     public string landscapeSize;
+    [NonReorderable]
     public List<ExhibatShowData> exhibatsSizes;
 
     public void CloseRoom(int no) {
