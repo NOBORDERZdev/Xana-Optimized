@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.2
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.16280538, g: 0.16662651, b: 0.15581298, a: 0.2}
+  m_IndirectSpecularColor: {r: 0.16394141, g: 0.16783851, b: 0.15658092, a: 0.2}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -98,8 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 8b952a0b402d4564b80e365bc2f53187,
-    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 8b952a0b402d4564b80e365bc2f53187, type: 2}
 --- !u!196 &5
 NavMeshSettings:
   serializedVersion: 2
@@ -331,6 +330,14 @@ MonoBehaviour:
   PV: {fileID: 1416200383}
   P1SelectedChar: {fileID: 11400000, guid: 1b6ce566fa04a494ead7a1cbb1efc06b, type: 2}
   P2SelectedChar: {fileID: 11400000, guid: 1b6ce566fa04a494ead7a1cbb1efc06b, type: 2}
+  player1Data:
+    name: 
+    NFT: 
+    clothJson: 
+  player2Data:
+    name: 
+    NFT: 
+    clothJson: 
   myName: 
   opponentName: 
   mainAudioSource: {fileID: 2072733966}
@@ -622,7 +629,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 264240439
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
