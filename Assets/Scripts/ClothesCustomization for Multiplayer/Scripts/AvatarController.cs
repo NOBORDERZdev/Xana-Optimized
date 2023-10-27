@@ -1321,14 +1321,31 @@ public class AvatarController : MonoBehaviour
         //Equipment equipment = applyOn.GetComponent<Equipment>();
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
-        float _size = 1f + ((float)bodyFat / 100f);
-        Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size);
-
+        //float _size1 = 1f + ((float)bodyFat*2 / 100f);     //for ratio of 1.5
+       // float _size2 = 1f + ((float)bodyFat / 100f - 0.05f);       //for ratio of 1.2
+        float _size3 = 1f + ((float)bodyFat / 100f );
+        
+        Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size3);
+        //bodyparts._scaleBodyParts[0].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[1].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[2].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[3].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[4].transform.localScale = new Vector3(_size2, _size2, _size2);
+        //bodyparts._scaleBodyParts[5].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[6].transform.localScale = new Vector3(_size2, 1, _size2);
+        //bodyparts._scaleBodyParts[7].transform.localScale = new Vector3(_size1, 1, _size1); 
+        //bodyparts._scaleBodyParts[8].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[9].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[10].transform.localScale = new Vector3(_size2, _size2, _size2);
+        //bodyparts._scaleBodyParts[11].transform.localScale = new Vector3(_size1, 1, _size1);
+        //bodyparts._scaleBodyParts[12].transform.localScale = new Vector3(_size2, _size1, _size2);
+        //bodyparts._scaleBodyParts[13].transform.localScale = new Vector3(1, 1, _size1);
+        //bodyparts._scaleBodyParts[14].transform.localScale = new Vector3(_size2, _size1, _size1);
         if (bodyparts._scaleBodyParts.Count > 0)
         {
             for (int i = 0; i < bodyparts._scaleBodyParts.Count; i++)
             {
-                bodyparts._scaleBodyParts[i].transform.localScale = new Vector3(_size, 1, _size);
+                bodyparts._scaleBodyParts[i].transform.localScale = new Vector3(_size3, 1, _size3);
             }
         }
     }
