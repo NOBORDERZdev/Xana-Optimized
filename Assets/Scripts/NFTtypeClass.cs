@@ -47,7 +47,7 @@ public class NFTtypeClass : MonoBehaviour
     }
     IEnumerator waitforIndexUpdation()
     {
-        yield return new WaitForSeconds(.03f);
+        yield return new WaitForSeconds(.01f);
         DownloadAndLoadNFT();
     }
     private void Update()
