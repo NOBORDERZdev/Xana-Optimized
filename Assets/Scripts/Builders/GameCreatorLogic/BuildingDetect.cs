@@ -146,6 +146,7 @@ public class BuildingDetect : MonoBehaviour
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
         BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
+        ApplyDefaultEffect();
 
     }
 
@@ -363,8 +364,14 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
-            _specialEffects = Instantiate(effect, ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            //GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
+            Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
+            pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
+            //Quaternion rot = ReferrencesForDynamicMuseum.instance.m_34player.transform.rotation;
+            //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
+            _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
+            _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
+
         }
         StartCoroutine(SIpowerUpCoroutine);
     }
@@ -380,7 +387,7 @@ public class BuildingDetect : MonoBehaviour
         print("Calling Routine" + _timer);
         yield return new WaitForSeconds(0.2f);
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
-        _specialEffects.gameObject.SetActive(true);
+        //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect();
         powerUpCurTime = 0;
         _playerControllerNew.specialItem = true;
@@ -392,9 +399,10 @@ public class BuildingDetect : MonoBehaviour
             _playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
-        _specialEffects.gameObject.SetActive(false);
+        //_specialEffects.gameObject.SetActive(false);
+        PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
         ApplyDefaultEffect();
-
+        _specialEffects = null;
         _playerControllerNew.specialItem = false;
         _playerControllerNew.movementSpeed = defaultMoveSpeed;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
@@ -430,9 +438,11 @@ public class BuildingDetect : MonoBehaviour
         }
         if (_specialEffects)
         {
-            _specialEffects.SetActive(false);
-            if (_specialEffects.activeInHierarchy)
-                ApplyDefaultEffect();
+            //_specialEffects.SetActive(false);
+            //if (_specialEffects.activeInHierarchy)
+            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
+            ApplyDefaultEffect();
+            _specialEffects = null;
         }
         canRunCo = false;
         _playerControllerNew.jumpHeight = defaultJumpHeight;

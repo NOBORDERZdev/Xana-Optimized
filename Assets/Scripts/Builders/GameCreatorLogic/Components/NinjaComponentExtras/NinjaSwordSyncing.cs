@@ -11,7 +11,7 @@ public class NinjaSwordSyncing : MonoBehaviourPun
     Animator anim;
     bool isDrawSword;
     [PunRPC]
-    void Init(int pvID)
+    void NinjaSwordInit(int pvID)
     {
         this.parentTransfrom = PhotonView.Find(pvID).transform;
         this.transform.SetParent(parentTransfrom);
@@ -28,7 +28,7 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         this.isDrawSword = isDrawSword;
 
         if (swordhandHook == null || swordHook == null)
-            Init(pvID);
+            NinjaSwordInit(pvID);
 
         StartCoroutine(SwordHolding());
 

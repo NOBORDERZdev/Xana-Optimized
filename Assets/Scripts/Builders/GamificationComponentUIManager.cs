@@ -167,20 +167,21 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisableAllComponentUIObject(Constants.ItemComponentType.NarrationComponent);
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
-        if (!isStory)
-        {
-            if (StoryNarrationCoroutine != null)
-                StopCoroutine(StoryNarrationCoroutine);
-            isAgainCollided = true;
-            //StartCoroutine(WaitDelayStatement());
-            narrationTextUI.text = narrationText;
-            narrationScroll.enabled = false;
-            sliderNarrationUI.SetActive(false);
-            isStoryWritten = false;
-            Invoke(nameof(NarrationUILinesCount), 0.1f);
-        }
-        else
-        {
+      
+        //if (!isStory)
+        //{
+        //    if (StoryNarrationCoroutine != null)
+        //        StopCoroutine(StoryNarrationCoroutine);
+        //    isAgainCollided = true;
+        //    //StartCoroutine(WaitDelayStatement());
+        //    narrationTextUI.text = narrationText;
+        //    narrationScroll.enabled = false;
+        //    sliderNarrationUI.SetActive(false);
+        //    isStoryWritten = false;
+        //    Invoke(nameof(NarrationUILinesCount), 0.1f);
+        //}
+        //else
+        //{
             storyCharCount = 0;
             narrationTextUI.text = "";
             if (StoryNarrationCoroutine == null)
@@ -190,7 +191,7 @@ public class GamificationComponentUIManager : MonoBehaviour
                 StopCoroutine(StoryNarrationCoroutine);
                 StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
             }
-        }
+        //}
     }
 
     public void NarrationUILinesCount()
