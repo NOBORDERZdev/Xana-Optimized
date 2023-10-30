@@ -6,6 +6,8 @@ using Photon.Pun;
 using Metaverse;
 using System.Collections;
 using System;
+using System.IO;
+using DG.Tweening;
 
 public class SceneManage : MonoBehaviourPunCallbacks
 {
@@ -127,6 +129,36 @@ public class SceneManage : MonoBehaviourPunCallbacks
         Debug.Log("Exit: Api Called");
         StartSceneLoading();
     }
+
+    public void ReturnToHome(bool changeOritentationChange)
+    {
+        if (changeOritentationChange)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            XanaConstants.xanaConstants.JjWorldSceneChange = false;
+            XanaConstants.xanaConstants.orientationchanged = false;
+            XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+        }
+        if (GameManager.currentLanguage == "ja")
+        {
+            LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
+        }
+        else if (GameManager.currentLanguage == "en")
+        {
+            LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+        }
+        Debug.Log("~~~~~~ LoadMain call");
+        LoadingHandler.Instance.ShowLoading();
+        GC.Collect();
+        AssetBundle.UnloadAllAssetBundles(true);
+        Resources.UnloadUnusedAssets();
+        // Added By WaqasAhmad [20 July 23]
+        //Caching.ClearCache();
+        //
+        //   Caching.ClearCache();
+        StartCoroutine(LoadMainEnumerator());
+    }
+
     public void StartSceneLoading()
     {
         print("Hello Scene Manager");

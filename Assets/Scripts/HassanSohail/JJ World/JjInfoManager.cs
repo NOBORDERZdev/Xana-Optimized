@@ -15,6 +15,7 @@ using UnityEngine.Video;
 using System.Text.RegularExpressions;
 using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
+using Cysharp.Threading.Tasks;
 
 public class JjInfoManager : MonoBehaviour
 {
