@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 820234885576268976}
   - component: {fileID: 6737987149151717066}
+  - component: {fileID: -3175571468122735703}
+  - component: {fileID: -6149557324123650642}
   m_Layer: 0
   m_Name: Xiaolan
   m_TagString: Untagged
@@ -47,7 +49,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: bf843a47b2a588a4c9963c723b3c2cdc, type: 3}
   m_Controller: {fileID: 9100000, guid: d33d3787caec8ca4b9094eb59ac0103f, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -56,6 +58,46 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-3175571468122735703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11786647638656522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-6149557324123650642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11786647638656522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03179e7395b9f4b01aa57d405559ab7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHair: {fileID: 0}
+  playerBody: {fileID: 0}
+  playerShirt: {fileID: 0}
+  playerPants: {fileID: 0}
+  playerShoes: {fileID: 0}
+  playerHead: {fileID: 0}
 --- !u!1 &127645970813219663
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -43,6 +44,7 @@ public class BuildingDetect : MonoBehaviour
 
     [Header("Gangster Character")]
     internal GameObject gangsterCharacter;
+    GameObject AppearanceChange;
     #endregion
 
     #region Avatar invisibility materials and gameobjects
@@ -181,7 +183,10 @@ public class BuildingDetect : MonoBehaviour
     public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
         if (tempAnimator != null)
+        {
             this.GetComponent<Animator>().avatar = tempAnimator;
+            this.GetComponent<Animator>().cullingMode = cullingMode;
+        }
         BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
         //StopCoroutine(avatarChangeCoroutine);
         avatarChangeTime = time;
@@ -197,13 +202,18 @@ public class BuildingDetect : MonoBehaviour
         if (avatarChangeCoroutine != null)
             StopCoroutine(avatarChangeCoroutine);
         gangsterCharacter = new GameObject("AvatarChange");
-        gangsterCharacter.SetActive(false);
+        //gangsterCharacter.SetActive(false);
 
-        var AppearanceChange = Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
+        Vector3 pos = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? Vector3.up * 0.1f : Vector3.zero;
+        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
+        AppearanceChange.GetPhotonView().RPC("Init", target: RpcTarget.Others, this.GetComponent<PhotonView>().ViewID, avatarIndex + 1, curObject.GetComponent<XanaItem>().itemData.RuntimeItemID);
+
+        AppearanceChange.transform.SetParent(gangsterCharacter.transform);
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
+        {
             cc.playerControler = GamificationComponentData.instance.playerControllerNew;
-
+        }
         if (avatarIndex == 2)
         {
             GameObject cloneObject = Instantiate(curObject);
@@ -246,17 +256,23 @@ public class BuildingDetect : MonoBehaviour
     }
     float avatarTime;
     Avatar tempAnimator;
+    AnimatorCullingMode cullingMode;
     IEnumerator PlayerAvatarChange()
     {
         avatarTime = 0;
 
         ToggleAvatarChangeComponent(false);
         if (tempAnimator == null)
+        {
             tempAnimator = this.GetComponent<Animator>().avatar;
+            cullingMode = this.GetComponent<Animator>().cullingMode;
+        }
+
 
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         yield return new WaitForSecondsRealtime(0.01f);
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
 
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
             gangsterCharacter.SetActive(true);
@@ -287,6 +303,7 @@ public class BuildingDetect : MonoBehaviour
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
+                PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);

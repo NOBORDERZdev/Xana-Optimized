@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1390014557647927487}
   - component: {fileID: 6751244643108330039}
   - component: {fileID: 8656912277707698038}
+  - component: {fileID: 714426165879817420}
+  - component: {fileID: -7380232086034963199}
   m_Layer: 0
   m_Name: AssetsControler
   m_TagString: Untagged
@@ -70,3 +72,43 @@ MonoBehaviour:
   jumpHeight: 5
   cameraHeight: 1
   stepOffset: 0
+--- !u!114 &714426165879817420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836379662250711913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-7380232086034963199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836379662250711913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03179e7395b9f4b01aa57d405559ab7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHair: {fileID: 0}
+  playerBody: {fileID: 0}
+  playerShirt: {fileID: 0}
+  playerPants: {fileID: 0}
+  playerShoes: {fileID: 0}
+  playerHead: {fileID: 0}

@@ -15,14 +15,22 @@ public sealed class CharacterControls : MonoBehaviour
     [SerializeField] private float stepOffset;
 
 
-     private float old_walkSpeed;
-     private float old_sprintSpeed;
-     private float old_jumpHeight;
-     private float old_cameraHeight;
-     private float old_stepOffset;
+    private float old_walkSpeed;
+    private float old_sprintSpeed;
+    private float old_jumpHeight;
+    private float old_cameraHeight;
+    private float old_stepOffset;
 
-    private void OnEnable() => AddListners();
-    private void OnDisable() => RemoveListners();
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(0.5f);
+        AddListners();
+    }
+
+    private void OnDestroy()
+    {
+        RemoveListners();
+    }
 
 
     private void AddListners()
@@ -34,7 +42,8 @@ public sealed class CharacterControls : MonoBehaviour
     private void RemoveListners()
     {
         RestoreOldValues();
-        StopCoroutine(routine);
+        if (routine != null)
+            StopCoroutine(routine);
     }
 
     private void StoreCurretValues()
@@ -51,7 +60,7 @@ public sealed class CharacterControls : MonoBehaviour
         //vThirdPersonCamera vtc = playerControler.controllerCamera.GetComponent<vThirdPersonCamera>();
 
 
-       
+
 
         while (true)
         {
@@ -63,7 +72,7 @@ public sealed class CharacterControls : MonoBehaviour
             playerControler.sprintSpeed = sprintSpeed;
             playerControler.jumpHeight = jumpHeight;
         }
-           
+
     }
     private void RestoreOldValues()
     {

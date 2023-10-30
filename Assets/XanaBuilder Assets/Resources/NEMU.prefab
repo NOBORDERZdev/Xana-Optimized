@@ -1008,6 +1008,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3385986819702956807}
   - component: {fileID: 8655177164531005821}
+  - component: {fileID: -8924643547662204717}
+  - component: {fileID: -9124432547763234725}
   m_Layer: 0
   m_Name: NEMU
   m_TagString: Untagged
@@ -1045,7 +1047,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8390852f73d788740b8ec515cc070cb9, type: 3}
   m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1054,6 +1056,46 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-8924643547662204717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717537263524051389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-9124432547763234725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717537263524051389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03179e7395b9f4b01aa57d405559ab7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHair: {fileID: 0}
+  playerBody: {fileID: 0}
+  playerShirt: {fileID: 0}
+  playerPants: {fileID: 0}
+  playerShoes: {fileID: 0}
+  playerHead: {fileID: 0}
 --- !u!1 &2855327545636472320
 GameObject:
   m_ObjectHideFlags: 0
