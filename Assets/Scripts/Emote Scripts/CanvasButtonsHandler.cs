@@ -17,6 +17,8 @@ public class CanvasButtonsHandler : MonoBehaviour
         }
     }
 
+    public PlayerControllerNew ref_PlayerControllerNew;
+
     [Header("GamePlay ui")]
     public GameObject gamePlayUIParent;
 
@@ -45,6 +47,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     {
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
     private void OnEnable()
@@ -112,10 +115,17 @@ public class CanvasButtonsHandler : MonoBehaviour
     public void MoveFromPortal()
     {
         JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
         if (currentPortalObject.GetComponent<PlayerPortal>())
             currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
         else if (currentPortalObject.GetComponent<JjWorldChanger>())
             currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+    }
+
+    public void ClosePortalPopup()
+    {
+        JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
     }
 
     public void OnSwitchCameraClick()
