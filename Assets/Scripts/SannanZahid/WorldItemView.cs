@@ -38,6 +38,7 @@ public class WorldItemView : MonoBehaviour
        entityType = detail.EntityType;
        m_BannerLink = detail.BannerLink;
        m_PressedIndex = detail.PressedIndex;
+       ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
        Init();
     }
 
@@ -47,7 +48,7 @@ public class WorldItemView : MonoBehaviour
     public string idOfObject;
     public string m_EnvironmentName;
     public string m_WorldDescription;
-    public string m_ThumbnailDownloadURL;
+    public string m_ThumbnailDownloadURL, ThumbnailDownloadURLHigh;
     public string creatorName;
     public string createdAt;
     public string userLimit;
@@ -239,8 +240,17 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
  
-        worldItemPreview.Init(m_EnvironmentName.Contains("XANA Lobby") ? XanaWorldBanner: worldIcon.sprite,
-            m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL);
+        if(m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            worldItemPreview.Init(XanaWorldBanner,
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"");
+        }
+        else
+        {
+            worldItemPreview.Init(worldIcon.sprite,
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh);
+        }
+       
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
