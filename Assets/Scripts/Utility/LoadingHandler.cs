@@ -73,6 +73,7 @@ public class LoadingHandler : MonoBehaviour
     public bool isLoadingComplete = false;
     public float randCurrentValue = 0f;
     private float sliderFinalValue = 0;
+    private float sliderCompleteValue = 0f;
 
     private void Awake()
     {
@@ -97,6 +98,7 @@ public class LoadingHandler : MonoBehaviour
     private void Start()
     {
         sliderFinalValue = Random.Range(80f, 95f);
+        sliderCompleteValue = Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
     }
 
@@ -487,11 +489,12 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator IncrementSliderValue(float speed, bool loadMainScene = false)
     {
-        while (currentValue < 100)
+        while (currentValue < sliderCompleteValue)
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if (XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld))
+            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -513,11 +516,19 @@ public class LoadingHandler : MonoBehaviour
                 {
                     isLoadingComplete = true;
                 }
-            }   
+            }
+            else if(loadMainScene)
+            {
+                if (currentValue > 35f)
+                {
+                    isLoadingComplete = true;
+                }
+            }
             if (isLoadingComplete)
             {
-                currentValue = 100;
-                if (XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld))
+                currentValue = sliderCompleteValue;
+                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                    teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";

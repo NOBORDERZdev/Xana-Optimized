@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -408,13 +408,14 @@ MonoBehaviour:
   uberShader: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
   landscapeCanvas: {fileID: 1864747888935569928}
   potraitCanvas: {fileID: 1652738247}
-  AvatarChangerModels:
-  - {fileID: 6687291654992960596, guid: b94e08f739c52e043a64551e0839f02a, type: 3}
-  - {fileID: 8365891145879477920, guid: 2a1eda20f6458435baf862072aa42779, type: 3}
-  - {fileID: 1836379662250711913, guid: a66a78495759744f09e8d2d0a8174500, type: 3}
-  - {fileID: 4201701320197669937, guid: 66d592442d7d54427acdf63ec0598010, type: 3}
-  - {fileID: 11786647638656522, guid: bbcd8dd5c4d114bd38bd1a59f2c4b1d4, type: 3}
-  - {fileID: 2717537263524051389, guid: 0d79df70e5ca543b283c31bca6a5129b, type: 3}
+  AvatarChangerModels: []
+  AvatarChangerModelNames:
+  - Gangster_Character
+  - Bear05
+  - AssetsControler
+  - Sakuya
+  - Xiaolan
+  - NEMU
   aiSkyMaterial: {fileID: 2100000, guid: afcc95ce3ebcf4a5092b5d61d6418503, type: 2}
   aiPPVolumeProfile: {fileID: 11400000, guid: 313c192bc6b244e6f871ec28dc3ba0d6, type: 2}
   withMultiplayer: 0
@@ -487,7 +488,7 @@ RectTransform:
   m_Children:
   - {fileID: 2082772787}
   m_Father: {fileID: 1864747888935569920}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -3364,8 +3365,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 938320013}
   - {fileID: 506276328}
+  - {fileID: 938320013}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
