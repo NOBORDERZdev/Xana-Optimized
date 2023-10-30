@@ -103,6 +103,23 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         updatedSpawnpoint = _updatedSpawnPoint.transform;
     }
 
+    void OnEnable()
+    {
+        BuilderEventManager.AfterWorldInstantiated += ResetPlayerAfterInstantiation;
+    }
+
+
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterWorldInstantiated -= ResetPlayerAfterInstantiation;
+        Resources.UnloadUnusedAssets();
+        GC.SuppressFinalize(this);
+        GC.Collect(0);
+        //  Caching.ClearCache();
+    }
+
+
+
     public void StartEventTimer()
     {
         eventUnivStartDateTime = DateTime.Parse(XanaEventDetails.eventDetails.startTime);
@@ -657,11 +674,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
 
-
+        isEnvLoaded = true;
         yield return new WaitForSeconds(1.75f);
         LoadingHandler.Instance.HideLoading();
         // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        LoadingHandler.Instance.UpdateLoadingStatusText("");
+        //LoadingHandler.Instance.UpdateLoadingStatusText("");
 
 
         // Yes Join APi Call Here
@@ -757,11 +774,23 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     void ResetPlayerPosition()
     {
-        Debug.Log("Reset Player Position");
-
-        mainController.GetComponent<PlayerControllerNew>().gravityVector.y = 0;
-        mainController.transform.localPosition = spawnPoint;
-
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
+            {
+                mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+            }
+            else
+            {
+                mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
+            }
+        }
+        else
+        {
+            mainController.GetComponent<PlayerControllerNew>().gravityVector.y = 0;
+            mainController.transform.localPosition = spawnPoint;
+        }
         if (IdolVillaRooms.instance != null)
         {
             IdolVillaRooms.instance.ResetVilla();
@@ -838,6 +867,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             spawnPoint = newobject.transform.position;
         }
+        BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.position;
         if (tempSpawnPoint)
         {
             if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -935,14 +965,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         yield return null;
     }
 
-    private void OnDisable()
-    {
-        Resources.UnloadUnusedAssets();
-        GC.SuppressFinalize(this);
-        GC.Collect(0);
-        //  Caching.ClearCache();
-    }
-
 
     void RespawnPlayer()
     {
@@ -951,26 +973,32 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("AddressableScene"));
         StartCoroutine(spwanPlayerWithWait());
     }
-    //IEnumerator DownloadEnvoirnmentDependanceies(string key)
-    //{
 
-    //    AsyncOperationHandle<long> getDownloadSize = Addressables.GetDownloadSizeAsync(key);
-    //    LoadingHandler.Instance.UpdateLoadingSlider(.3f);
 
-    //    yield return getDownloadSize;
-    //    if (getDownloadSize.IsValid())
-    //    {
+    void ResetPlayerAfterInstantiation()
+    {
+        if (BuilderAssetDownloader.isPostLoading)
+        {
+            if (BuilderData.spawnPoint.Count == 1)
+            {
+                spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
+            }
+            else if (BuilderData.spawnPoint.Count > 1)
+            {
+                foreach (SpawnPointData g in BuilderData.spawnPoint)
+                {
+                    if (g.IsActive)
+                    {
+                        spawnPoint = g.spawnObject.transform.localPosition;
+                        break;
+                    }
+                }
+            }
 
-    //    }
-    //    //If the download size is greater than 0, download all the dependencies.
-    //    if (getDownloadSize.Result > 0)
-    //    {
-    //        AsyncOperationHandle downloadDependencies = Addressables.DownloadDependenciesAsync(key);
-    //        yield return downloadDependencies;
-    //    }
-    //    LoadingHandler.Instance.UpdateLoadingSlider(.4f);
-    //    yield return new WaitForSeconds(.3f);
-    //}
+            mainController.transform.localPosition = spawnPoint;
+        }
+    }
+
 
 
     public void SetAddressableSceneActive()

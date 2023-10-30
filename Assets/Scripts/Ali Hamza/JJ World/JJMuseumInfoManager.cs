@@ -8,8 +8,17 @@ public class JJMuseumInfoManager : MonoBehaviour
 {
     [NonReorderable]
     public List<GameObject> NftPlaceholder;
+    [SerializeField] int JJMusuemId_test;
+    [SerializeField] int JJMusuemId_main;
     [SerializeField] int JJMusuemId;
 
+    private void Start()
+    {
+        if (APIBaseUrlChange.instance.IsXanaLive)
+            JJMusuemId = JJMusuemId_main;
+        else
+            JJMusuemId = JJMusuemId_test;
+    }
 
     public async void InitJJMuseumInfoManager()
     {

@@ -153,7 +153,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         {
             if (XanaConstants.xanaConstants.isBuilderScene)
             {
-                float _rand = UnityEngine.Random.Range(25f, 30f);
+                float _rand = UnityEngine.Random.Range(10f, 15f);
                 LoadingHandler.Instance.randCurrentValue = _rand;
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
             }

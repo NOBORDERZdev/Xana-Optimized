@@ -39,6 +39,8 @@ public class JjInfoManager : MonoBehaviour
     public RenderTexture renderTexture_1x1;
     public RenderTexture renderTexture_4x3;
     [SerializeField] int RetryChances = 3;
+    [SerializeField] int JJMusuemId_test;
+    [SerializeField] int JJMusuemId_main;
     [SerializeField] int JJMusuemId;
     public string analyticMuseumID;
     int ratioId;
@@ -104,6 +106,10 @@ public class JjInfoManager : MonoBehaviour
     {
         if (IsJjWorld)
         {
+            if (APIBaseUrlChange.instance.IsXanaLive)
+                JJMusuemId = JJMusuemId_main;
+            else
+                JJMusuemId = JJMusuemId_test;
             IntJjInfoManager();
         }
     }
