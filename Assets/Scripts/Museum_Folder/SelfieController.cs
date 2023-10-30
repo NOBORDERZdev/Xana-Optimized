@@ -625,7 +625,6 @@ public class SelfieController : MonoBehaviour
 
         // optimize the render texture data     // AR changes start
         m_RenderTexture.Release();
-        //m_RenderTexture = null;
         Resources.UnloadUnusedAssets();
         GC.Collect();                           // AR changes end
     }
