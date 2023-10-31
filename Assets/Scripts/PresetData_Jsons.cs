@@ -72,16 +72,12 @@ public class PresetData_Jsons : MonoBehaviour
    public void ChangecharacterOnCLickFromserver()
     {
         callScripts();
-        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
-        //{
-            if (WaheedDynamicScrollRect.ScrollContent.instance != null)
+        
+            if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
             {
                 JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-            Debug.Log("NAME IS "+ JsonDataPreset);
-                //gameObject.name = ScrollSnap.instance.charName;
-                Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             }
-        //}
+
         XanaConstants.xanaConstants.registerFirstTime = true;
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
