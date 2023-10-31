@@ -85,6 +85,10 @@ public class LoadButtonClick : MonoBehaviour
     public bool danceAnim;
     public void OnButtonClick() //add by kamran
     {
+        if (PlayerControllerNew.isJoystickDragging == true)
+        {
+            return;
+        }
         if (EmoteAnimationPlay.Instance.currentAnimationTab == "Sit & lying")
         {
             Debug.Log("this is sit and laying animation tab");
