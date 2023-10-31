@@ -3703,6 +3703,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
                 else
