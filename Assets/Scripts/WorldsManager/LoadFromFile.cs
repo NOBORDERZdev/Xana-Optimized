@@ -555,6 +555,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
+        ActivateNpcChat();
+    }
+
+    void ActivateNpcChat()
+    {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
         Debug.Log("<color=red> NPC Chat Object Loaded </color>");
@@ -687,6 +692,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
+        ActivateNpcChat();
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
