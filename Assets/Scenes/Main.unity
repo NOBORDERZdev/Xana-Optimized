@@ -7028,6 +7028,10 @@ PrefabInstance:
       propertyPath: canvasGroup
       value: 
       objectReference: {fileID: 1044786937}
+    - target: {fileID: 1558925940511880174, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -2.2000122
+      objectReference: {fileID: 0}
     - target: {fileID: 1558925940694880303, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 89.14258
@@ -10016,7 +10020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3276205264987118973, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4343778718239381664, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: JJLoadingSlider
@@ -14659,6 +14663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc9fe4f7d33abd40a93cbcb72c352e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  registerFirstTime: 0
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
   mic: 0
@@ -26163,18 +26168,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 950708394}
-        m_TargetAssemblyTypeName: AllWorldManage, Assembly-CSharp
-        m_MethodName: ToggleLobbyOnHomeScreen
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!222 &1140262231
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27638,6 +27631,7 @@ GameObject:
   - component: {fileID: 1226162432}
   - component: {fileID: 1226162431}
   - component: {fileID: 1226162430}
+  - component: {fileID: 1226162434}
   m_Layer: 5
   m_Name: LobbyWorldItemView
   m_TagString: Untagged
@@ -27797,6 +27791,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226162428}
   m_CullTransparentMesh: 0
+--- !u!114 &1226162434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226162428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f538a7db2b48542a7e075c7282099d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1231771637
 GameObject:
   m_ObjectHideFlags: 0

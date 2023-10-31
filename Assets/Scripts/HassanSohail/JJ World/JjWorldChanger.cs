@@ -32,6 +32,7 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);

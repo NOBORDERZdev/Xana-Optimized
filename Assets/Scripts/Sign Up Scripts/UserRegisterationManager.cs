@@ -398,7 +398,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             NewSignUp_Panal.SetActive(true);
         }
-
+        MoveButtonBacktoPreviousPos();
         LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPanal.SetActive(false);
@@ -408,6 +408,11 @@ public class UserRegisterationManager : MonoBehaviour
             ShowWelcomeScreen();
 
         }
+    }
+
+    public void MoveButtonBacktoPreviousPos() 
+    {
+        FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
     }
 
     private async void eventcalled(string _userType)
@@ -3696,6 +3701,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
                 else
