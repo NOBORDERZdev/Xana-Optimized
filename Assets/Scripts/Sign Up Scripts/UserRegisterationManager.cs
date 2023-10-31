@@ -1670,11 +1670,14 @@ public class UserRegisterationManager : MonoBehaviour
         //    PresetData_Jsons.lastSelectedPreset = null;
         //}
         PresetData_Jsons.clickname = "";
-        for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+        if (StoreManager.instance.PresetArrayContent)
         {
-            StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+            {
+                StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            }
+            StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         }
-        StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         //end reset
         if (StoreManager.instance != null)
         {
