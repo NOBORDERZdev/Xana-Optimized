@@ -311,10 +311,16 @@ public class WorldManager : MonoBehaviour
             {
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-                    _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                   string IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
                    if(!_event.EnvironmentName.Contains("XANA Lobby"))
-                    _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                   _event.ThumbnailDownloadURLHigh = _event.ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    {
+                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                        _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    }
+                   else
+                    {
+                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                    }
                 }
             }
             catch
