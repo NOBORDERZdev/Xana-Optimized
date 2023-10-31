@@ -131,28 +131,28 @@ public class WorldItemView : MonoBehaviour
             {
                 modifyEnityType = "USER";
             }
-
+            if(PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
+                joinedUserCount.transform.parent.gameObject.SetActive(true);
+            else
+                joinedUserCount.transform.parent.gameObject.SetActive(false);
             for (int i = 0; i < allWorldData.player_count.Length; i++)
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID()) // For Xana Lobby
-                        joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
+                        joinedUserCount.text = allWorldData.player_count[i].count + 5 + "";
                     else
                         joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
                     if (allWorldData.player_count[i].count > 5)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
-                    else if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) == 0)
-                        joinedUserCount.transform.parent.gameObject.SetActive(false);
-
-                    break;
+                    if (m_EnvironmentName.Contains("XANA Lobby") && allWorldData.player_count[i].count > 0)
+                        joinedUserCount.transform.parent.gameObject.SetActive(true);
+                        break;
                 }
                 if (CheckServerForID().ToString() == idOfObject)
-                {
                     joinedUserCount.text = "5";
-                }
                 else
                     joinedUserCount.text = "0";
             }

@@ -27,6 +27,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
     string ThumbnailDownloadURL="";
+    public Transform LobbyLogoContaionr;
     public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh)
     {
@@ -130,6 +131,12 @@ public class WorldItemPreviewTab : MonoBehaviour
         if (!WorldNameTxt.text.Contains("XANA Lobby"))
         {
             BannerImgSprite[0].sprite = FadeImg.sprite;
+            LobbyLogoContaionr.gameObject.SetActive(false);
+        }
+        else
+        {
+            LobbyLogoContaionr.gameObject.SetActive(true);
+
         }
 
         BannerImgSprite[1].sprite = FadeImg.sprite;
