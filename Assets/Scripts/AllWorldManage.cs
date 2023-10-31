@@ -37,6 +37,10 @@ public class AllWorldManage : MonoBehaviour
     {
         ScrollEnableDisable(0);
         WorldManager.instance.ChangeWorld(APIURL.Hot);
+        if(UIManager.Instance.PreviousScreen==0)
+        {
+            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+        }
     }
 
     public void GameWorldLoad()
