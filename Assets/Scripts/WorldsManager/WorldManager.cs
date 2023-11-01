@@ -293,12 +293,12 @@ public class WorldManager : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError(www.downloadHandler.text);
+                //Debug.LogError(www.downloadHandler.text);
                 callback(false);
             }
             else
             {
-                Debug.LogError(www.downloadHandler.text);
+                //Debug.LogError(www.downloadHandler.text);
                 _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 worldstr = www.downloadHandler.text;
                 callback(true);
