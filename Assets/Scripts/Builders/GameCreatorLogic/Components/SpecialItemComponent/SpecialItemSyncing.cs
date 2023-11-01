@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
+
+public class SpecialItemSyncing : MonoBehaviourPun
+{
+    Shader defaultSkinShader, defaultClothShader;
+    Shader newSkinShader, newClothShader;
+
+    SkinnedMeshRenderer playerHair;
+    SkinnedMeshRenderer playerBody;
+    SkinnedMeshRenderer playerShirt;
+    SkinnedMeshRenderer playerPants;
+    SkinnedMeshRenderer playerShoes;
+    GameObject playerObj;
+    void OnEnable()
+    {
+        if (photonView.IsMine)
+            return;
+
+        defaultSkinShader = GamificationComponentData.instance.skinShader;
+        defaultClothShader = GamificationComponentData.instance.cloathShader;
+        newSkinShader = GamificationComponentData.instance.superMarioShader;
+        newClothShader = GamificationComponentData.instance.superMarioShader2;
+        playerObj = FindPlayerusingPhotonView(photonView);
+        if (playerObj != null)
+        {
+            this.transform.SetParent(playerObj.transform);
+            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
+            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
+            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.Body;
+            ApplySuperMarioEffect();
+        }
+    }
+
+    void OnDisable()
+    {
+        if (photonView.IsMine)
+            return;
+        ApplyDefaultEffect();
+    }
+
+    GameObject FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        PhotonView[] photonViews = GameObject.FindObjectsOfType<PhotonView>();
+        foreach (PhotonView photonView in photonViews)
+        {
+            if (photonView.Owner == player && photonView.GetComponent<AvatarController>())
+            {
+                return photonView.gameObject;
+            }
+        }
+        return null;
+    }
+
+    private void ApplySuperMarioEffect()
+    {
+        playerHair.material.shader = newClothShader;
+        playerBody.material.shader = newSkinShader;
+        playerBody.material.SetFloat("_Outer_Glow", 2);
+        playerShirt.material.shader = newClothShader;
+        playerPants.material.shader = newClothShader;
+        playerShoes.material.shader = newClothShader;
+    }
+
+    private void ApplyDefaultEffect()
+    {
+        if (playerObj == null)
+            return;
+        playerHair.material.shader = defaultClothShader;
+        playerBody.material.shader = defaultSkinShader;
+        playerShirt.material.shader = defaultClothShader;
+        playerPants.material.shader = defaultClothShader;
+        playerShoes.material.shader = defaultClothShader;
+    }
+}

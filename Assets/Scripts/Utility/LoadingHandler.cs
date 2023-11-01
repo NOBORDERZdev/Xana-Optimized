@@ -231,10 +231,10 @@ public class LoadingHandler : MonoBehaviour
    
     public void ResetLoadingValues()
     {
-        if (LoadFromFile.instance)
-        {
-            LoadFromFile.instance.isEnvLoaded = false;
-        }
+        //if (LoadFromFile.instance)
+        //{
+        //    LoadFromFile.instance.isEnvLoaded = false;
+        //}
         currentValue = 0;
         isLoadingComplete = false;
         timer = 0;
@@ -258,7 +258,7 @@ public class LoadingHandler : MonoBehaviour
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (!XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
@@ -274,7 +274,7 @@ public class LoadingHandler : MonoBehaviour
                 {
                     //Debug.LogError(" ~~~~~~~  Simple: LandscapeLeft  ~~~~~~~ ");
                     //Debug.LogError("9 ~~~~~~~~~~~~~~~~ LandscapeLeft");
-                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    //Screen.orientation = ScreenOrientation.LandscapeLeft;
                 }
 
                 XanaConstants.xanaConstants.isBackFromWorld = false;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,13 +13,20 @@ public class HelpButtonComponentResizer : MonoBehaviour
     public TextMeshProUGUI titleText, contentText;
     public ScrollRect scrollView;
     public GameObject scrollbar;
+    public Button helpUIDownTextbtn;
+    public string msg;
+    bool isAgainCollided;
+    int textCharCount = 0;
     float val;
+    float letterDelay = 0.1f;
     float infopopuptotalHeight;
     float singleLineHeight;
+    bool isInfoTextWritten;
 
     internal void Init()
     {
-        Invoke(nameof(InfoPopupUILinesCount), 0.1f);
+        //Invoke(nameof(InfoPopupUILinesCount), 0.1f);
+        StartCoroutine(StoryNarration());
     }
 
     void InfoPopupUILinesCount()
@@ -35,6 +43,35 @@ public class HelpButtonComponentResizer : MonoBehaviour
         int numberOfLines = contentText.textInfo.lineCount;
         // Calculate the single line height by dividing the total height by the number of lines.
         singleLineHeight = infopopuptotalHeight / numberOfLines;
+
+        helpUIDownTextbtn.interactable = !isInfoTextWritten;
+
+    }
+
+    IEnumerator StoryNarration()
+    {
+        //string msg = this.msg;
+        #region
+        isAgainCollided = true;
+        yield return new WaitForSeconds(0.2f);
+        isAgainCollided = false;
+        #endregion
+        isInfoTextWritten = true;
+        while (textCharCount < msg.Length && !isAgainCollided)
+        {
+            contentText.text += msg[textCharCount];
+            textCharCount++;
+
+            yield return new WaitForSeconds(letterDelay);
+            StartCoroutine(WaitForScrollingOption());
+        }
+        isInfoTextWritten = false;
+        InfoPopupUILinesCount();
+    }
+    IEnumerator WaitForScrollingOption()
+    {
+        yield return new WaitForEndOfFrame();
+        InfoPopupUILinesCount();
     }
 
     public void DisplayDownText()
@@ -51,6 +88,8 @@ public class HelpButtonComponentResizer : MonoBehaviour
     private void OnDisable()
     {
         cam = null;
+        StopCoroutine(StoryNarration());
+        textCharCount = 0;
     }
 
     void Update()
