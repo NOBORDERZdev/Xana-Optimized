@@ -282,7 +282,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
                 //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.5f, 24.45f, -83.45f);
+                YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
                 YoutubeStreamPlayer.transform.localScale = new Vector3(0.54f, 0.53f, 0.53f);
                 YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
 
