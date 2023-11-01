@@ -93,7 +93,6 @@ public class LoadingHandler : MonoBehaviour
 #else
                 Debug.unityLogger.filterLogType = LogType.Error;
 #endif
-        Debug.unityLogger.logEnabled = true;
     }
 
     private void Start()
