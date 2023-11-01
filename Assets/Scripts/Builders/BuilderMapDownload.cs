@@ -516,7 +516,9 @@ public class BuilderMapDownload : MonoBehaviour
         SetObjectHirarchy();
 
         BuilderEventManager.CombineMeshes?.Invoke();
-        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
+        capsuleCollider_34.enabled = true;
+        capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.498f;
         mainPlayerCharacterController.height = 1f;
@@ -533,7 +535,7 @@ public class BuilderMapDownload : MonoBehaviour
         playerCharacterController.height = playerCollider.height;
         playerCharacterController.center = playerCollider.center;
 
-        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+        //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();

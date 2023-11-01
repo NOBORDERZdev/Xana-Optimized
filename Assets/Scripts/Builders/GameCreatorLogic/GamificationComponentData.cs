@@ -59,7 +59,8 @@ public class GamificationComponentData : MonoBehaviourPun
 
     public static Action WarpComponentLocationUpdate;
 
-    public List<GameObject> AvatarChangerModels;
+    //public List<GameObject> AvatarChangerModels;
+    public List<string> AvatarChangerModelNames;
 
     internal bool isNight;
     internal bool isBlindToogle;

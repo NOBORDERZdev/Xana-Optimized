@@ -615,8 +615,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             player.AddComponent<KeyValues>();
             GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
-            player.GetComponent<CapsuleCollider>().isTrigger = false;
-            player.GetComponent<CapsuleCollider>().enabled = false;
+            //player.GetComponent<CapsuleCollider>().isTrigger = false;
+            //player.GetComponent<CapsuleCollider>().enabled = false;
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
 
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
