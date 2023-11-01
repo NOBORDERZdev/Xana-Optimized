@@ -79,15 +79,18 @@ public class GameManager : MonoBehaviour
             //if (XanaConstants.xanaConstants.isHoldCharacterNFT && XanaConstants.xanaConstants.isNFTEquiped)
             if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
             {
+                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
                 return (Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
             }
             else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
+                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = true;
+                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
                 return (Application.persistentDataPath + "/logIn.json");
             }
         }
@@ -95,11 +98,13 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
+                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = false;
+                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
                 return (Application.persistentDataPath + "/loginAsGuestClass.json");
             }
         }
