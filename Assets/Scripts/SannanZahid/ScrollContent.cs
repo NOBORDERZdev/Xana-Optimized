@@ -71,6 +71,14 @@ namespace DynamicScrollRect
                 InitItemsVertical(Worlds.Count);
                 DynamicScrollRect.content.anchoredPosition = Vector2.zero;
             }
+            else if(worldKey.Equals(APIURL.SearchWorldByTag.ToString()))
+            {
+                ClearContent();
+                Worlds = contentDatum;
+                CurrentKey = worldKey;
+                InitItemsVertical(Worlds.Count);
+                DynamicScrollRect.content.anchoredPosition = Vector2.zero;
+            }
             switch(RestrictState)
             {
                 case 0:
