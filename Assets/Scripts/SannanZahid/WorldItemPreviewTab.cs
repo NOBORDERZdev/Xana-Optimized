@@ -27,14 +27,13 @@ public class WorldItemPreviewTab : MonoBehaviour
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
     string ThumbnailDownloadURL="";
-    public Transform LobbyLogoContaionr;
+    public Transform LobbyLogoContaionr,XanaAvatarIcon,NoAvatarIcon,AvatarIcon;
     public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh)
     {
         WorldIconImg.sprite = null;
         if (!ThumbnailDownloadURL.Equals(""))
         {
-            Debug.LogError("Keyyy  " + ThumbnailDownloadURL);
             AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
         }
         JoinEventBtn.onClick.RemoveAllListeners();
@@ -75,7 +74,25 @@ public class WorldItemPreviewTab : MonoBehaviour
                 UserProfileImg.transform.parent.gameObject.SetActive(false);
             }
         }
-        StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
+        if(userAvatarURL=="")
+        {
+            NoAvatarIcon.gameObject.SetActive(true);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(false);
+        }
+        else if(WorldNameTxt.text.Contains("XANA Lobby"))
+        {
+            NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(true);
+            AvatarIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(true);
+            StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
+        }
     }
     public void CallAnalytics(string idOfObject,string entityType)
     {
@@ -145,7 +162,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     }
     IEnumerator DownloadAndSetImage(string downloadURL,Image imageHolder)
     {
-        yield return new WaitForSecondsRealtime(Random.Range(0.1f,0.3f));
+        yield return null;
         if (!string.IsNullOrEmpty(downloadURL))
         {
             if (AssetCache.Instance.HasFile(downloadURL))

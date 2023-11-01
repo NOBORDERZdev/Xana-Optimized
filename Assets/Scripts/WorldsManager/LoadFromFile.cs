@@ -555,6 +555,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
+        ActivateNpcChat();
+    }
+
+    void ActivateNpcChat()
+    {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
         Debug.Log("<color=red> NPC Chat Object Loaded </color>");
@@ -575,7 +580,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public IEnumerator SpawnPlayerForBuilderScene()
     {
         LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
-
+        yield return new WaitForSeconds(0.2f);
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
@@ -639,6 +644,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             firstPersonCamera.farClipPlane = 1000;
             environmentCameraRender.farClipPlane = 1000;
             freeCam.farClipPlane = 1000;
+            BuilderEventManager.ApplySkyoxSettings?.Invoke();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
@@ -687,6 +693,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
+        ActivateNpcChat();
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
@@ -880,7 +887,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
         }
 
-        BuilderEventManager.ApplySkyoxSettings?.Invoke();
 
     }
 
