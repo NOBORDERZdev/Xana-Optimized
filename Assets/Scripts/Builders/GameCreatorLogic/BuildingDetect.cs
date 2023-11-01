@@ -400,7 +400,8 @@ public class BuildingDetect : MonoBehaviour
             yield return null;
         }
         //_specialEffects.gameObject.SetActive(false);
-        PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
+        if (_specialEffects)
+            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
         ApplyDefaultEffect();
         _specialEffects = null;
         _playerControllerNew.specialItem = false;
