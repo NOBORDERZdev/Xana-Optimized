@@ -74,10 +74,10 @@ public class PresetData_Jsons : MonoBehaviour
         callScripts();
         //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
         //{
-            if (WaheedDynamicScrollRect.ScrollContent.instance != null)
+            if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
             {
                 JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-            Debug.Log("NAME IS "+ JsonDataPreset);
+                Debug.Log("NAME IS "+ JsonDataPreset);
                 //gameObject.name = ScrollSnap.instance.charName;
                 Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
             }
