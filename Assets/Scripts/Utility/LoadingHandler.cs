@@ -231,10 +231,10 @@ public class LoadingHandler : MonoBehaviour
    
     public void ResetLoadingValues()
     {
-        if (LoadFromFile.instance)
-        {
-            LoadFromFile.instance.isEnvLoaded = false;
-        }
+        //if (LoadFromFile.instance)
+        //{
+        //    LoadFromFile.instance.isEnvLoaded = false;
+        //}
         currentValue = 0;
         isLoadingComplete = false;
         timer = 0;
