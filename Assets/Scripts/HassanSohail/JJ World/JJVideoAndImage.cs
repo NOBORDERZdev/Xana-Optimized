@@ -456,7 +456,8 @@ public class JJVideoAndImage : MonoBehaviour
     public void OpenWorldInfo()
     {
         if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
-
+        if (PlayerControllerNew.isJoystickDragging == true)
+            return;
         //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
         if (JjInfoManager.Instance != null && _videoType!=VideoTypeRes.islive)
         {

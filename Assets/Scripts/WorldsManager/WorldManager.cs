@@ -460,7 +460,7 @@ public class WorldManager : MonoBehaviour
             Resources.UnloadUnusedAssets();
             GC.Collect();
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -524,7 +524,7 @@ public class WorldManager : MonoBehaviour
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -579,10 +579,10 @@ public class WorldManager : MonoBehaviour
         }
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-            {
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            }
+            //if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+            //{
+            //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //}
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -593,10 +593,10 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-            {
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            }
+            //if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+            //{
+            //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //}
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
