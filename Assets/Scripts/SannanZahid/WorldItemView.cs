@@ -39,6 +39,7 @@ public class WorldItemView : MonoBehaviour
        m_BannerLink = detail.BannerLink;
        m_PressedIndex = detail.PressedIndex;
        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        worldTags = detail.WorldTags;
        Init();
     }
 
@@ -69,6 +70,10 @@ public class WorldItemView : MonoBehaviour
     public bool isOnScreen;
     public bool isVisible = false;
     bool isNotLoaded = true;
+
+    [Header("Tags and Category")]
+    public string[] worldTags;
+
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
@@ -243,12 +248,12 @@ public class WorldItemView : MonoBehaviour
         if(m_EnvironmentName.Contains("XANA Lobby"))
         {
             worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"");
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
         }
         else
         {
             worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh);
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
         }
        
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;

@@ -236,6 +236,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //PlayerPrefs.SetInt("shownWelcome", 1);
                 
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
         }
 
@@ -285,6 +286,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("iSignup", 1);
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
     public void CoutinueAsAGuest()
     {
@@ -380,6 +382,7 @@ public class UserRegisterationManager : MonoBehaviour
     public void BacktoAvatarSelectionPanel() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
     public void LoginScreenClicked(int btn) 

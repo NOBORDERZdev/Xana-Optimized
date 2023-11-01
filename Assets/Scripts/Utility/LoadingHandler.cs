@@ -183,18 +183,38 @@ public class LoadingHandler : MonoBehaviour
         //if (!XanaConstants.xanaConstants.isFromXanaLobby)
         {
             //isFedderActive = true;
-            Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-            blackScreen.DOKill();
-            blackScreen.DOFade(1, 0.1f).OnComplete(delegate
+            if (XanaConstants.xanaConstants.isBackFromWorld)
             {
-                //Debug.LogError("7 ~~~~~~~~~~~~~~~~ LandscapeLeft");
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-                CustomLoading();
-                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
-            });
+                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+                {
+                    ActivateFadder_AtLoadingStart();
+                }
+                else
+                {
+                    CustomLoading();
+                }
+            }
+            else
+            {
+                ActivateFadder_AtLoadingStart();
+            }
+           
         }
 
         //StartCoroutine(CustomLoading());
+    }
+
+    void ActivateFadder_AtLoadingStart()
+    {
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOKill();
+        blackScreen.DOFade(1, 0.1f).OnComplete(delegate
+        {
+            //Debug.LogError("7 ~~~~~~~~~~~~~~~~ LandscapeLeft");
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            CustomLoading();
+            //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
+        });
     }
    
     void CustomLoading()

@@ -77,9 +77,7 @@ public class PresetData_Jsons : MonoBehaviour
             if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
             {
                 JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-                Debug.Log("NAME IS "+ JsonDataPreset);
-                //gameObject.name = ScrollSnap.instance.charName;
-                Debug.Log("PRINTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             }
         //}
         XanaConstants.xanaConstants.registerFirstTime = true;

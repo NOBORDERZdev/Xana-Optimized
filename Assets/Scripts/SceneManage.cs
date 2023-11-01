@@ -57,7 +57,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public void LoadMain(bool changeOritentationChange)
     {
         disableSoundXanalobby();
-
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
             exitOnce = false;
