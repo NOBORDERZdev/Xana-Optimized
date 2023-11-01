@@ -43,7 +43,6 @@ public class WorldCategoryUIHandler : MonoBehaviour
     }
     public void ViewAllCategoryItems()
     {
-        Debug.LogError("View All Items  --- " + CategoryName.text);
         switch (CategoryName.text)
         {
             case "Hot": UIManager.Instance.SetWorldToDisplay(APIURL.Hot); break; 

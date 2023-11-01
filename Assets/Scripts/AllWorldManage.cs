@@ -131,7 +131,6 @@ public class AllWorldManage : MonoBehaviour
     bool previousFlag = true;
     public void AvatarWindowSizeControl(bool flag)
     {
-        Debug.LogError("Flag set " + flag);
       switch(State)
         {
             case 0:

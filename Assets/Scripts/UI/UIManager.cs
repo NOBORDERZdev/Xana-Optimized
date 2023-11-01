@@ -1,5 +1,6 @@
 ﻿using AdvancedInputFieldPlugin;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ public class UIManager : MonoBehaviour
         AdvanceSearchInputField,
         CategoryHolderWorldView;
 
-
+    int stateofDevice = 0;
     private void Awake()
     {
         Instance = this;
@@ -57,6 +58,8 @@ public class UIManager : MonoBehaviour
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
+        stateofDevice = PlayerPrefs.GetInt("DeviceSizeStateXana");
+        ContentScreenSpaceSet(S1Dimension[stateofDevice]);
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
@@ -65,8 +68,9 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(_state);
         ShowFooter(!_state);
     }
+    public List<float> S1Dimension, S2Dimension = new List<float>();
     APIURL ViewAllWorldName = default;
-    public int PreviousScreen;
+    public int PreviousScreen,ScreenSpaceIndex = 0;
     public void SwitchToScreen(int Screen)
     {
         switch(Screen)
@@ -148,6 +152,60 @@ public class UIManager : MonoBehaviour
                     break;
                 }
         }
+        switch (ScreenSpaceIndex)
+        {
+            case 0: //// H S0
+                {
+                    if (Screen == 1)
+                    {
+                        ContentScreenSpaceSet(-S1Dimension[stateofDevice]);
+                        ContentScreenSpaceSet(S2Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 1;
+                    }
+                    else if (Screen == 2 || Screen == 3)
+                    {
+                        ContentScreenSpaceSet(-S1Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 2;
+                    }
+                    break;
+                }
+            case 1: //// W S1
+                {
+                    if (Screen == 0)
+                    {
+                        ContentScreenSpaceSet(-S2Dimension[stateofDevice]);
+                        ContentScreenSpaceSet(S1Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 0;
+                    }
+                    else if (Screen == 2 || Screen == 3)
+                    {
+                        ContentScreenSpaceSet(-S2Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 2;
+                    }
+                    break;
+                }
+            case 2: //// V S S3  S4
+                {
+                    if (Screen == 0)
+                    {
+                        ContentScreenSpaceSet(S1Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 0;
+                    }
+                    else if (Screen == 1)
+                    {
+                        ContentScreenSpaceSet(S2Dimension[stateofDevice]);
+                        ScreenSpaceIndex = 1;
+                    }
+                    break;
+                }
+        }
+    }
+    void ContentScreenSpaceSet(float height)
+    {
+        Vector2 contentsize = WorldManager.instance.AllWorldTabReference.transform.GetComponent<RectTransform>().offsetMin;
+        WorldManager.instance.AllWorldTabReference.transform.GetComponent<RectTransform>().offsetMin =
+            new Vector2(contentsize.x, contentsize.y + height);
+
     }
     public void SetWorldToDisplay(APIURL worldCheck)
     {
