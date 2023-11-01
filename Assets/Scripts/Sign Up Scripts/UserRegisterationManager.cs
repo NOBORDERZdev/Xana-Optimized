@@ -795,6 +795,7 @@ public class UserRegisterationManager : MonoBehaviour
         emailTabSelected.SetActive(true);
         phoneTabSelected.SetActive(false);
         WalletTabSelected.SetActive(false);
+
         // emailTabText.fontStyle = FontStyle.Bold;
         // phoneTabText.fontStyle = FontStyle.Normal;
 
@@ -2900,6 +2901,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     OpenUIPanal(3);
                     Email = localEmail;
+                    SignUpWithPhoneBool = false;
                 }
             }
         }
