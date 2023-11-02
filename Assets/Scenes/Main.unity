@@ -7040,6 +7040,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -58.300293
       objectReference: {fileID: 0}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagsParent
+      value: 
+      objectReference: {fileID: 73875577}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagsPrefab
+      value: 
+      objectReference: {fileID: 8176391467165557215, guid: eb5df21b3da49744d8be91e521cce1d8, type: 3}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagScroller
+      value: 
+      objectReference: {fileID: 73875578}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: worldDetailPage
+      value: 
+      objectReference: {fileID: 225363369}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
       value: Description World Preview
@@ -7146,6 +7162,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6f0cb94b3b7c84a9fdf6db7256b8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &73875577 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1558925939953790356, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &73875578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1558925941502505680, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &83870516
 GameObject:
   m_ObjectHideFlags: 0
@@ -10265,6 +10291,11 @@ MonoBehaviour:
   key: 
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 218387421}
+--- !u!1 &225363369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1558925939985417448, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &228476576
 GameObject:
   m_ObjectHideFlags: 0
@@ -14359,6 +14390,7 @@ MonoBehaviour:
   isReleaseFromMemoryOrNot: 0
   isOnScreen: 0
   isVisible: 0
+  worldTags: []
   worldItemPreview: {fileID: 73875576}
 --- !u!114 &427651066
 MonoBehaviour:
@@ -27232,6 +27264,7 @@ MonoBehaviour:
   isReleaseFromMemoryOrNot: 0
   isOnScreen: 0
   isVisible: 0
+  worldTags: []
   worldItemPreview: {fileID: 73875576}
 --- !u!114 &1226162431
 MonoBehaviour:

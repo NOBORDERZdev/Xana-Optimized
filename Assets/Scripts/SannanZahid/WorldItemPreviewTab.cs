@@ -28,8 +28,17 @@ public class WorldItemPreviewTab : MonoBehaviour
     public ScrollActivity scrollActivity;
     string ThumbnailDownloadURL="";
     public Transform LobbyLogoContaionr,XanaAvatarIcon,NoAvatarIcon,AvatarIcon;
+
+    [Header("Tags and Category")]
+    public GameObject tagScroller;
+    public Transform tagsParent;
+    public GameObject tagsPrefab;
+    public GameObject worldDetailPage;
+    public string[] m_WorldTags;
+    public bool tagsInstantiated;
+
     public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
-        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh)
+        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh,string[] worldTags)
     {
         WorldIconImg.sprite = null;
         if (!ThumbnailDownloadURL.Equals(""))
@@ -57,6 +66,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
             StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
         }
+        m_WorldTags = worldTags;
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
@@ -93,6 +103,8 @@ public class WorldItemPreviewTab : MonoBehaviour
             AvatarIcon.gameObject.SetActive(true);
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
+
+        InstantiateWorldtags();
     }
     public void CallAnalytics(string idOfObject,string entityType)
     {
@@ -176,5 +188,29 @@ public class WorldItemPreviewTab : MonoBehaviour
                 });
             }
         }
+    }
+
+
+    void InstantiateWorldtags()
+    {
+        if (m_WorldTags.Length > 0)
+            tagScroller.SetActive(true);
+        else
+            return;
+
+        if (tagsParent.transform.childCount > 0)
+        {
+            foreach (Transform t in tagsParent)
+                Destroy(t.gameObject);
+        }
+
+        for (int i = 0; i < m_WorldTags.Length; i++)
+        {
+            GameObject temp = Instantiate(tagsPrefab, tagsParent);
+            temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
+            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
+            temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+        }
+        tagsInstantiated = true;
     }
 }
