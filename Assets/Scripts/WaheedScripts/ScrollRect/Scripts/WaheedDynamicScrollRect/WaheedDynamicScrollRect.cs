@@ -940,7 +940,12 @@ namespace WaheedDynamicScrollRect
             ToggleNextPreviousBtnsInteractability();
             MoveContentBackward();
             GetAvatarName();
-
+            if (Counter > 0)
+            {
+                previous.interactable = false;
+                CancelInvoke("ActivePrviousButton");
+                Invoke("ActivePrviousButton", 0.3f);
+            }
             if (Counter == DemoUIContent.instance._itemCount - 1)
                 {
                     shuffled = false;
@@ -954,8 +959,13 @@ namespace WaheedDynamicScrollRect
             ToggleNextPreviousBtnsInteractability();
             MoveContentForward();
             GetAvatarName();
-
-            if (Counter == 0)
+            if (Counter < 43)
+            {
+                next.interactable = false;
+                CancelInvoke("ActiveNextButton");
+                Invoke("ActiveNextButton", 0.3f);  
+            }
+                if (Counter == 0)
                 {
                     shuffled = true;
                 }
@@ -1029,7 +1039,15 @@ namespace WaheedDynamicScrollRect
             ASNextButton.onClick.AddListener(presetScript.ChangecharacterOnCLickFromserver);
         }
 
+        public void ActivePrviousButton()
+        {
+            previous.interactable = true;
+        }
 
+        public void ActiveNextButton()
+        {
+            next.interactable = true;
+        }
 
         //private void UpdateChildImage(int index)
         //{
