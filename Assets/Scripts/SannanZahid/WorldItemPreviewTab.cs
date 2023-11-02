@@ -66,7 +66,15 @@ public class WorldItemPreviewTab : MonoBehaviour
             ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
             StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
         }
-        m_WorldTags = worldTags;
+        if(worldTags!=null && worldTags.Length>0)
+        {
+            m_WorldTags = worldTags;
+            InstantiateWorldtags();
+        }
+        else
+        {
+            tagScroller.SetActive(false);
+        }
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
@@ -103,8 +111,6 @@ public class WorldItemPreviewTab : MonoBehaviour
             AvatarIcon.gameObject.SetActive(true);
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
-
-        InstantiateWorldtags();
     }
     public void CallAnalytics(string idOfObject,string entityType)
     {
