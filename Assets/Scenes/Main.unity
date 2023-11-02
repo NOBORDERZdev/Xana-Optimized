@@ -7040,6 +7040,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -58.300293
       objectReference: {fileID: 0}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagsParent
+      value: 
+      objectReference: {fileID: 73875577}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagsPrefab
+      value: 
+      objectReference: {fileID: 8176391467165557215, guid: eb5df21b3da49744d8be91e521cce1d8, type: 3}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: tagScroller
+      value: 
+      objectReference: {fileID: 73875578}
+    - target: {fileID: 1558925941770329753, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: worldDetailPage
+      value: 
+      objectReference: {fileID: 225363369}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
       value: Description World Preview
@@ -7146,6 +7162,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6f0cb94b3b7c84a9fdf6db7256b8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &73875577 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1558925939953790356, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &73875578 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1558925941502505680, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &83870516
 GameObject:
   m_ObjectHideFlags: 0
@@ -10109,6 +10135,11 @@ MonoBehaviour:
   key: 
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 218387421}
+--- !u!1 &225363369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1558925939985417448, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &228476576
 GameObject:
   m_ObjectHideFlags: 0
@@ -11470,7 +11501,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318419331}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -11483,7 +11514,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318419331}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -11931,7 +11962,7 @@ RectTransform:
   m_GameObject: {fileID: 345170585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0884, y: 1.0884, z: 1.0884}
+  m_LocalScale: {x: 1.0884, y: 1.0884, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 601642701}
@@ -14189,6 +14220,7 @@ MonoBehaviour:
   m_EnvironmentName: 
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
+  ThumbnailDownloadURLHigh: 
   creatorName: 
   createdAt: 
   userLimit: 
@@ -14207,6 +14239,7 @@ MonoBehaviour:
   isReleaseFromMemoryOrNot: 0
   isOnScreen: 0
   isVisible: 0
+  worldTags: []
   worldItemPreview: {fileID: 73875576}
 --- !u!114 &427651066
 MonoBehaviour:
@@ -21785,7 +21818,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1594758007}
+    m_TransformParent: {fileID: 1549620715}
     m_Modifications:
     - target: {fileID: 3995237291109791890, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_Name
@@ -21801,7 +21834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -21828,6 +21861,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -21845,15 +21890,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -27678,6 +27723,7 @@ MonoBehaviour:
   m_EnvironmentName: 
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
+  ThumbnailDownloadURLHigh: 
   creatorName: 
   createdAt: 
   userLimit: 
@@ -27696,6 +27742,7 @@ MonoBehaviour:
   isReleaseFromMemoryOrNot: 0
   isOnScreen: 0
   isVisible: 0
+  worldTags: []
   worldItemPreview: {fileID: 73875576}
 --- !u!114 &1226162431
 MonoBehaviour:
@@ -34622,6 +34669,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 73875575}
+  - {fileID: 915149436}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -35546,7 +35594,6 @@ RectTransform:
   - {fileID: 805763575}
   - {fileID: 1419735168}
   - {fileID: 3782409780276931276}
-  - {fileID: 915149436}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -506,8 +506,9 @@ public class ShowNFTDetails : MonoBehaviour
                 else
                 {
                     VideoObjectWithDes.transform.localScale = new Vector3(2, 2, 2);
-                    VideoObjectWithDes.transform.localPosition = new Vector3(0f, 322.768f, 0f);
-                    VideoObjectWithDes.GetComponent<RectTransform>().sizeDelta = new Vector2(586.335f, 480.696f);
+                    VideoObjectWithDes.transform.localPosition = new Vector3(1.045f, 320.178f, 0f);
+                    VideoObjectWithDes.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                    VideoObjectWithDes.GetComponent<RectTransform>().sizeDelta = new Vector2(483.513f, 589.744f);
                 }
                 nftWithDes[type].videoLandscapeObj.SetActive(false);
                 nftWithDes[type].videoPotraiteObj.SetActive(true);
@@ -519,8 +520,9 @@ public class ShowNFTDetails : MonoBehaviour
                 if (data.detail.ratio=="1:1")
                 {
                     VideoObjectWithDes.transform.localScale = new Vector3(1, 1.225f, 1);
-                    VideoObjectWithDes.transform.localPosition = new Vector3(-307, 0f, 0f);
-                    VideoObjectWithDes.GetComponent<RectTransform>().sizeDelta = new Vector2(473f, 470f);
+                    VideoObjectWithDes.transform.localPosition = new Vector3(-304.6486f, -0.5784f, 0f);
+                    VideoObjectWithDes.transform.localEulerAngles = new Vector3(0f, 0f, 90f);
+                    VideoObjectWithDes.GetComponent<RectTransform>().sizeDelta = new Vector2(471.8433f, 385.856f);
                 }
                 else if (data.detail.ratio == "9:16")
                 {

@@ -74,6 +74,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
     private void OnEnable()

@@ -352,9 +352,10 @@ public class AddressableDownloader : MonoBehaviour
                         }
                         if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
                             StoreManager.instance.loaderForItems.SetActive(false);
+                        GameManager.Instance.isStoreAssetDownloading = false;
                         yield break;
                     }
-                    GameManager.Instance.isStoreAssetDownloading = false;
+                    
                 }
             }
         }

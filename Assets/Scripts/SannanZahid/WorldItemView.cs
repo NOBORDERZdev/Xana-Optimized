@@ -38,6 +38,8 @@ public class WorldItemView : MonoBehaviour
        entityType = detail.EntityType;
        m_BannerLink = detail.BannerLink;
        m_PressedIndex = detail.PressedIndex;
+       ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        worldTags = detail.WorldTags;
        Init();
     }
 
@@ -47,7 +49,7 @@ public class WorldItemView : MonoBehaviour
     public string idOfObject;
     public string m_EnvironmentName;
     public string m_WorldDescription;
-    public string m_ThumbnailDownloadURL;
+    public string m_ThumbnailDownloadURL, ThumbnailDownloadURLHigh;
     public string creatorName;
     public string createdAt;
     public string userLimit;
@@ -68,6 +70,10 @@ public class WorldItemView : MonoBehaviour
     public bool isOnScreen;
     public bool isVisible = false;
     bool isNotLoaded = true;
+
+    [Header("Tags and Category")]
+    public string[] worldTags;
+
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
@@ -130,28 +136,28 @@ public class WorldItemView : MonoBehaviour
             {
                 modifyEnityType = "USER";
             }
-
+            if(PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
+                joinedUserCount.transform.parent.gameObject.SetActive(true);
+            else
+                joinedUserCount.transform.parent.gameObject.SetActive(false);
             for (int i = 0; i < allWorldData.player_count.Length; i++)
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
                     Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID()) // For Xana Lobby
-                        joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
+                        joinedUserCount.text = allWorldData.player_count[i].count + 5 + "";
                     else
                         joinedUserCount.text = allWorldData.player_count[i].count.ToString();
 
                     if (allWorldData.player_count[i].count > 5)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
-                    else if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) == 0)
-                        joinedUserCount.transform.parent.gameObject.SetActive(false);
-
-                    break;
+                    if (m_EnvironmentName.Contains("XANA Lobby") && allWorldData.player_count[i].count > 0)
+                        joinedUserCount.transform.parent.gameObject.SetActive(true);
+                        break;
                 }
                 if (CheckServerForID().ToString() == idOfObject)
-                {
                     joinedUserCount.text = "5";
-                }
                 else
                     joinedUserCount.text = "0";
             }
@@ -239,8 +245,17 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
  
-        worldItemPreview.Init(m_EnvironmentName.Contains("XANA Lobby") ? XanaWorldBanner: worldIcon.sprite,
-            m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL);
+        if(m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            worldItemPreview.Init(XanaWorldBanner,
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
+        }
+        else
+        {
+            worldItemPreview.Init(worldIcon.sprite,
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
+        }
+       
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
