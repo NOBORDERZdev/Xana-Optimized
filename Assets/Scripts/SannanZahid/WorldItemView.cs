@@ -14,6 +14,8 @@ public class WorldItemView : MonoBehaviour
     public int Index;
     public Vector2 GridIndex { get; protected set; }
     public RectTransform RectTransform => transform as RectTransform;
+
+    public WorldItemDetail worldDetail;
     public void Activated()
     {
         gameObject.SetActive(true);
@@ -24,6 +26,7 @@ public class WorldItemView : MonoBehaviour
     }
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
     {
+        worldDetail = detail;
        Index = index;
        GridIndex = gridPos;
        idOfObject =  detail.IdOfWorld;
@@ -245,17 +248,6 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
  
-        if(m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
-        }
-        else
-        {
-            worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
-        }
-       
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
@@ -268,6 +260,17 @@ public class WorldItemView : MonoBehaviour
         {
             XanaConstants.xanaConstants.userLimit = userLimit;
         }
+        if(m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            worldItemPreview.Init(XanaWorldBanner,
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
+        }
+        else
+        {
+            worldItemPreview.Init(worldIcon.sprite,
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
+        }
+       
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }

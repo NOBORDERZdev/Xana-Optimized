@@ -65,7 +65,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     private void Start()
     {
         spirit = maxSpirit;
-        bool RFMUI = FeedEventPrefab.m_EnvName == "RFMDummy";
+        bool RFMUI = WorldItemView.m_EnvName == "RFMDummy";
         rotateOrientationLand.gameObject.SetActive(!RFMUI);
         freeCamToggle.gameObject.SetActive(!RFMUI);
         slideBtn.gameObject.SetActive(RFMUI);

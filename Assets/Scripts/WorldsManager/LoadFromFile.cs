@@ -447,7 +447,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+        if (WorldItemView.m_EnvName.Contains("RFMDummy"))
         {
             spawnPoint += new Vector3(Random.Range(-2, 2), spawnPoint.y, Random.Range(-2, 2));
             

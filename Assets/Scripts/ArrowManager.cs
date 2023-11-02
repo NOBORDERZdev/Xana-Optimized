@@ -89,7 +89,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
-                if (!FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+                if (!WorldItemView.m_EnvName.Contains("RFMDummy"))
                 {
                     this.transform.parent = mainPlayerParent;
                 }
