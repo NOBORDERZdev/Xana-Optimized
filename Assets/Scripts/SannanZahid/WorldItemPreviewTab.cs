@@ -85,21 +85,14 @@ public class WorldItemPreviewTab : MonoBehaviour
         else
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
-        if (!string.IsNullOrEmpty(creatorName))
-        {
-            if (creatorName.Equals("XANA"))
-            {
-                XanaProfile.SetActive(true);
-                UserProfileImg.transform.parent.gameObject.SetActive(false);
-            }
-        }
-        if(userAvatarURL=="")
+        AvatarIcon.GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        if (userAvatarURL == "")
         {
             NoAvatarIcon.gameObject.SetActive(true);
             XanaAvatarIcon.gameObject.SetActive(false);
             AvatarIcon.gameObject.SetActive(false);
         }
-        else if(WorldNameTxt.text.Contains("XANA Lobby"))
+        else if(creatorName.ToLower().Contains("xana"))
         {
             NoAvatarIcon.gameObject.SetActive(false);
             XanaAvatarIcon.gameObject.SetActive(true);
