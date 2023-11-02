@@ -98,7 +98,8 @@ public class WorldItemView : MonoBehaviour
     {
         GetEventType(entityType);
         StartCoroutine(DownloadPrefabSprite());
-        this.GetComponent<Button>().interactable = false;
+        if (!m_EnvironmentName.Contains("XANA Lobby"))
+            this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         LoadImagesFromRemote();

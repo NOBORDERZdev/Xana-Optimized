@@ -85,7 +85,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         else
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
-        AvatarIcon.GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
         if (userAvatarURL == "")
         {
             NoAvatarIcon.gameObject.SetActive(true);
