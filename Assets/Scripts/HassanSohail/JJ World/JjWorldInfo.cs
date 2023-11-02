@@ -29,30 +29,30 @@ public class JjWorldInfo : MonoBehaviour
         if ((Time.time - tempTimer) < clickTime)
         {
             //OpenWorldInfo();
-          //  PublishLog();
+            //  PublishLog();
+            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+                OpenWorldInfo();
             tempTimer = 0;
         }
 
     }
 
-    //public void OpenWorldInfo() {
-    //    if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+    public void OpenWorldInfo()
+    {
+        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
 
-    //    if (JjInfoManager.Instance != null)
-    //    {
-    //        if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese )
-    //        {
-    //            JjInfoManager.Instance.SetInfo(NftRatio,JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].WorldImage, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType);
-    //        }
-    //        else if(CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
-    //        {
-    //            if (!JjInfoManager.Instance.worldInfos[id].Title[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Aurthor[1].IsNullOrEmpty() && !JjInfoManager.Instance.worldInfos[id].Des[1].IsNullOrEmpty())
-    //            {
-    //                JjInfoManager.Instance.SetInfo(NftRatio,JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].WorldImage, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink,JjInfoManager.Instance.worldInfos[id].videoType);
-    //            }
-    //        }
-    //    }
-    //}
+        if (JjInfoManager.Instance != null)
+        {
+            if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+            {
+                JjInfoManager.Instance.SetInfoForXanaLobby(NftRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].Texture, JjInfoManager.Instance.worldInfos[id].Type);
+            }
+            else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            {
+                JjInfoManager.Instance.SetInfoForXanaLobby(NftRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].Texture, JjInfoManager.Instance.worldInfos[id].Type);
+            }
+        }
+    }
 
     void PublishLog()
     {
