@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
                     WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
                     SecondSliderScrollView.GetComponent<Mask>().enabled = true;
-
+                    ShowFooter(true);
                     break;
                 }
         }
