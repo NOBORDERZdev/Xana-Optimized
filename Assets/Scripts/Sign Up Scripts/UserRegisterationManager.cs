@@ -279,6 +279,9 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
             PlayerPrefs.SetInt("CloseLoginScreen", 1);
+            PlayerPrefs.SetInt("iSignup", 1);
+            PlayerPrefs.SetInt("IsProcessComplete", 1);
+            PlayerPrefs.SetInt("shownWelcome",1);
         }
 
     }
