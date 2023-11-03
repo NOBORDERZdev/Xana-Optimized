@@ -189,7 +189,7 @@ public class StoreManager : MonoBehaviour
     public bool MultipleSave; // to enable/ disable multiple save 
     private GameObject childObject;
     public Button newAvatarPresetBtn;
-
+    public CanvasScaler _CanvasScaler;
     public Action storeOpen;
 
     private void Awake()
@@ -261,6 +261,7 @@ public class StoreManager : MonoBehaviour
     public void skipAvatarSelection()
     {
         UserRegisterationManager.instance.usernamePanal.SetActive(true);
+        _CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
     }
 
     public void WalletLoggedinCall()

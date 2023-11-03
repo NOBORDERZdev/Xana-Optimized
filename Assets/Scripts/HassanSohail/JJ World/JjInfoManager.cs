@@ -536,7 +536,68 @@ public class JjInfoManager : MonoBehaviour
         roomName = museumType.ToString();
         #endregion
     }
+    public void SetInfoForXanaLobby(JjRatio ratio, string title, string aurthur, string des,Texture2D image,DataType type)
+    {
+        nftTitle = title;
+        _Ratio = ratio;
+        _Title = title;
+        _Aurthor = aurthur;
+        _Des = des;
+        _image = image;
+        _Type = type;
+        ratioId = ((int)ratio);
 
+        ratioReferences[ratioId].l_image.gameObject.SetActive(true);
+        ratioReferences[ratioId].p_image.gameObject.SetActive(true);
+        ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
+        ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
+        ratioReferences[ratioId].l_Title.text = title;
+        ratioReferences[ratioId].l_Aurthur.text = aurthur;
+        ratioReferences[ratioId].l_Description.text = des;
+        if (type == DataType.Image)
+        {
+            ratioReferences[ratioId].l_image.texture = image;
+            ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
+        }
+        else
+        {
+            ratioReferences[ratioId].l_image.gameObject.SetActive(false);
+            //ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+        }
+
+        ratioReferences[ratioId].p_Title.text = title;
+        ratioReferences[ratioId].p_Aurthur.text = aurthur;
+        ratioReferences[ratioId].p_Description.text = des;
+        ratioReferences[ratioId].p_image.texture = image;
+        if (type == DataType.Image)
+        {
+            ratioReferences[ratioId].p_image.texture = image;
+            ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
+        }
+        else
+        {
+            ratioReferences[ratioId].p_image.gameObject.SetActive(false);
+            //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+        }
+        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        {
+            LandscapeObj.SetActive(true);
+            PotraiteObj.SetActive(false);
+            ratioReferences[ratioId].l_obj.SetActive(true);
+            ratioReferences[ratioId].p_obj.SetActive(false);
+        }
+        else
+        {
+            LandscapeObj.SetActive(false);
+            PotraiteObj.SetActive(true);
+            ratioReferences[ratioId].l_obj.SetActive(false);
+            ratioReferences[ratioId].p_obj.SetActive(true);
+        }
+        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        {
+            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+        }
+    }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
         string worldName = XanaConstants.xanaConstants.EnviornmentName;
@@ -650,6 +711,7 @@ public class JJWorldInfo
     public string url;
     public DataType Type;
     public Sprite WorldImage;
+    public Texture2D Texture;
     public string VideoLink;
     public bool isAWSVideo;
     public bool isLiveVideo;

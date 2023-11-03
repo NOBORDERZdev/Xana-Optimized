@@ -26,14 +26,27 @@ public class WorldItemPreviewTab : MonoBehaviour
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
+    string ThumbnailDownloadURL="";
+    public Transform LobbyLogoContaionr,XanaAvatarIcon,NoAvatarIcon,AvatarIcon;
+
+    [Header("Tags and Category")]
+    public GameObject tagScroller;
+    public Transform tagsParent;
+    public GameObject tagsPrefab;
+    public GameObject worldDetailPage;
+    public string[] m_WorldTags;
+    public bool tagsInstantiated;
+
     public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
-        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL)
+        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh,string[] worldTags)
     {
+        WorldIconImg.sprite = null;
+        if (!ThumbnailDownloadURL.Equals(""))
+        {
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
+        }
         JoinEventBtn.onClick.RemoveAllListeners();
-        if (_isBuilderScene)
-            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinBuilderWorld());
-        else
-            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
+       
         scrollActivity.enabled = false;
         ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
@@ -41,7 +54,24 @@ public class WorldItemPreviewTab : MonoBehaviour
         CreatorNameTxt.text = creatorName;
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
-        WorldIconImg.sprite = worldImg;
+        if (ThumbnailDownloadURLHigh == "")
+        {
+            WorldIconImg.sprite = worldImg;
+        }
+        else
+        {
+            ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
+            StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
+        }
+        if(worldTags!=null && worldTags.Length>0)
+        {
+            m_WorldTags = worldTags;
+            InstantiateWorldtags();
+        }
+        else
+        {
+            tagScroller.SetActive(false);
+        }
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
@@ -50,45 +80,36 @@ public class WorldItemPreviewTab : MonoBehaviour
         m_WorldIsClicked = true;
         m_isSignUpPassed = true;
         _isBuilderScene = isBuilderSceneF;
+        if (_isBuilderScene)
+            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinBuilderWorld());
+        else
+            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
-        if (!string.IsNullOrEmpty(creatorName))
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        if (userAvatarURL == "")
         {
-            if (creatorName.Equals("XANA"))
-            {
-                XanaProfile.SetActive(true);
-                UserProfileImg.transform.parent.gameObject.SetActive(false);
-            }
+            NoAvatarIcon.gameObject.SetActive(true);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(false);
         }
-        StartCoroutine(UpdateUserProfile(userAvatarURL));
+        else if(creatorName.ToLower().Contains("xana"))
+        {
+            NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(true);
+            AvatarIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(true);
+            StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
+        }
     }
-    // For Analitics & User Count
     public void CallAnalytics(string idOfObject,string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt);
-    }
-    IEnumerator UpdateUserProfile(string userAvatarURL)
-    {
-        yield return new WaitForSeconds(Random.Range(0.1f, 0.6f));
-
-        if (!string.IsNullOrEmpty(userAvatarURL))
-        {
-            if (AssetCache.Instance.HasFile(userAvatarURL))
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(UserProfileImg, userAvatarURL, changeAspectRatio: true);
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(userAvatarURL, userAvatarURL, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(UserProfileImg, userAvatarURL, changeAspectRatio: true);
-                    }
-                });
-            }
-        }
-
     }
     public void SetPanelToBottom()
     {
@@ -133,17 +154,63 @@ public class WorldItemPreviewTab : MonoBehaviour
         UIManager.Instance.ShowFooter(false);
         m_MuseumIsClicked = false;
         GameManager.Instance.WorldBool = true;
-
     }
     public void UpdateWorldPanel()
     {
         if (!WorldNameTxt.text.Contains("XANA Lobby"))
         {
             BannerImgSprite[0].sprite = FadeImg.sprite;
+            LobbyLogoContaionr.gameObject.SetActive(false);
+        }
+        else
+        {
+            LobbyLogoContaionr.gameObject.SetActive(true);
+
         }
 
         BannerImgSprite[1].sprite = FadeImg.sprite;
         if (BannerImgSprite.Length > 2)
             BannerImgSprite[2].sprite = FadeImg.sprite;
+    }
+    IEnumerator DownloadAndSetImage(string downloadURL,Image imageHolder)
+    {
+        yield return null;
+        if (!string.IsNullOrEmpty(downloadURL))
+        {
+            if (AssetCache.Instance.HasFile(downloadURL))
+                AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(downloadURL, downloadURL, (success) =>
+                {
+                    if (success)
+                        AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+                });
+            }
+        }
+    }
+
+
+    void InstantiateWorldtags()
+    {
+        if (m_WorldTags.Length > 0)
+            tagScroller.SetActive(true);
+        else
+            return;
+
+        if (tagsParent.transform.childCount > 0)
+        {
+            foreach (Transform t in tagsParent)
+                Destroy(t.gameObject);
+        }
+
+        for (int i = 0; i < m_WorldTags.Length; i++)
+        {
+            GameObject temp = Instantiate(tagsPrefab, tagsParent);
+            temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
+            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
+            temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+        }
+        tagsInstantiated = true;
     }
 }

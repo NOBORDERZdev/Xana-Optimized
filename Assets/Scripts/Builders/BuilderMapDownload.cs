@@ -519,7 +519,9 @@ public class BuilderMapDownload : MonoBehaviour
         SetObjectHirarchy();
 
         BuilderEventManager.CombineMeshes?.Invoke();
-        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
+        capsuleCollider_34.enabled = true;
+        capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.498f;
         mainPlayerCharacterController.height = 1f;
@@ -529,14 +531,14 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
 
-        CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
-        playerCollider.height = 1.5f;
-        playerCollider.center = Vector3.up * (playerCollider.height / 2);
+        //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
+        capsuleCollider_34.height = 1.5f;
+        capsuleCollider_34.center = Vector3.up * (capsuleCollider_34.height / 2);
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
-        playerCharacterController.height = playerCollider.height;
-        playerCharacterController.center = playerCollider.center;
+        playerCharacterController.height = capsuleCollider_34.height;
+        playerCharacterController.center = capsuleCollider_34.center;
 
-        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+        //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();

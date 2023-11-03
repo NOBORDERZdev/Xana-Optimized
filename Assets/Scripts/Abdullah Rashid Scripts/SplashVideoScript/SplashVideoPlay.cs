@@ -67,7 +67,7 @@ public class SplashVideoPlay : MonoBehaviour
     void OnAvatarSelectionPanal() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
 }
