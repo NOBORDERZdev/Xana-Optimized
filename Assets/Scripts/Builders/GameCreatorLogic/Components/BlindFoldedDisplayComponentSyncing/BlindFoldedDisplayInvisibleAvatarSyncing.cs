@@ -25,6 +25,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
     Material[] defaultHeadMaterials;
 
     GameObject playerObj;
+    bool isInitialise;
 
     void OnEnable()
     {
@@ -32,7 +33,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             return;
 
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
-       StartCoroutine(SyncingCoroutin());
+        StartCoroutine(SyncingCoroutin());
     }
 
     private IEnumerator SyncingCoroutin()
@@ -73,7 +74,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
     void OnDisable()
     {
-        StopAvatarInvisibility();
+        if (isInitialise)
+            StopAvatarInvisibility();
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
@@ -110,6 +112,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
         playerFreeCamConsole.material = hologramMaterial;
         playerFreeCamConsoleOther.material = hologramMaterial;
+
+        isInitialise = true;
     }
 
     void StopAvatarInvisibility()

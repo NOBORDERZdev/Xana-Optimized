@@ -207,7 +207,10 @@ public class BuildingDetect : MonoBehaviour
 
         Vector3 pos = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? Vector3.up * 0.1f : Vector3.zero;
         AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
-        AppearanceChange.GetPhotonView().RPC("Init", target: RpcTarget.Others, this.GetComponent<PhotonView>().ViewID, avatarIndex + 1, curObject.GetComponent<XanaItem>().itemData.RuntimeItemID);
+        //AppearanceChange.GetPhotonView().RPC("Init", target: RpcTarget.Others, this.GetComponent<PhotonView>().ViewID, avatarIndex + 1, curObject.GetComponent<XanaItem>().itemData.RuntimeItemID);
+        var hash = new ExitGames.Client.Photon.Hashtable();
+        hash.Add("avatarChanger", (avatarIndex + 1)+","+curObject.GetComponent<XanaItem>().itemData.RuntimeItemID+","+ this.GetComponent<PhotonView>().ViewID);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();

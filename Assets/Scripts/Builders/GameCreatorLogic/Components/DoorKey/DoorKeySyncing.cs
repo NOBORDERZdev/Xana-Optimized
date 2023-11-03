@@ -15,6 +15,12 @@ public class DoorKeySyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
+
+        if (!GamificationComponentData.instance.withMultiplayer)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         StartCoroutine(SyncingCoroutin());
     }
 

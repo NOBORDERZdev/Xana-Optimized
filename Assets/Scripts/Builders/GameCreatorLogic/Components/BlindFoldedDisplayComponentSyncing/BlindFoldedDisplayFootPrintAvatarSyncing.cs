@@ -16,6 +16,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     MeshRenderer playerFreeCamConsoleOther;
 
     GameObject playerObj;
+    bool isInitialise = false;
 
     void OnEnable()
     {
@@ -52,6 +53,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
             ringbufferFootStep.enabled = true;
             ringbufferFootStep.transform.GetChild(0).gameObject.SetActive(true);
             AvatarFootPrintVisible(false);
+            isInitialise = true;
         }
     }
 
@@ -59,7 +61,8 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        AvatarFootPrintVisible(true);
+        if (isInitialise)
+            AvatarFootPrintVisible(true);
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)

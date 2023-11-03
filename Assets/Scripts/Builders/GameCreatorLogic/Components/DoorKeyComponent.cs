@@ -8,6 +8,7 @@ public class DoorKeyComponent : ItemComponent
 
     private bool activateComponent = false;
     string RuntimeItemID = "";
+    bool isCollisionHandled = false;
 
     public void Init(DoorKeyComponentData _doorKeyComponentData)
     {
@@ -20,6 +21,8 @@ public class DoorKeyComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            if (isCollisionHandled)
+                return;
             if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
             {
                 PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
@@ -33,7 +36,6 @@ public class DoorKeyComponent : ItemComponent
                 if (!KeyValidation()) return;
 
                 _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Add(this.doorKeyComponentData.selectedKey);
-                Debug.LogError("DoorKey Component RuntimeItemID "+ RuntimeItemID);
                 PlayerCanvas.Instance.ToggleKey(true);
                 //this.gameObject.SetActive(false);
                 GamificationComponentData.instance.doorKeyCount++;
@@ -96,6 +98,7 @@ public class DoorKeyComponent : ItemComponent
                     PlayerCanvas.Instance.ToggleWrongKey();
 
             }
+            isCollisionHandled = true;
         }
     }
     private bool KeyValidation()
