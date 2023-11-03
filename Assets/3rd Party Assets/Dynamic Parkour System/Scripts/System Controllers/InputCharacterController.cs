@@ -28,6 +28,7 @@ namespace Climbing
     {
         private PlayerControls controls = null;
         public bool isOtherPlayer;
+        public bool isPlayerController;
         public Vector2 movement;
         public bool run;
         public bool jump;
@@ -48,7 +49,7 @@ namespace Climbing
         void Awake()
         {
             //Hold and Release
-            if (!isOtherPlayer)
+            if (isPlayerController)
             {
                 controls = new PlayerControls();
                 controls.Player.Movement.performed += ctx => movement = ctx.ReadValue<Vector2>();

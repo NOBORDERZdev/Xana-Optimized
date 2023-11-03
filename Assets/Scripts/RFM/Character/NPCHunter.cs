@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Climbing;
 using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace RFM.Character
         
         
         private NavMeshAgent _navMeshAgent;
+        public InputCharacterController NPCRFMInputCharacterController;
         private float _maxSpeed;
         private List<GameObject> _players;
         private Transform _target;
@@ -88,9 +90,10 @@ namespace RFM.Character
 
             var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
 
-            npcAnim.SetFloat(velocityNameX, animVector.x);
-            npcAnim.SetFloat(velocityNameY, animVector.y);
-            
+            NPCRFMInputCharacterController.movement = animVector;
+            /*npcAnim.SetFloat(velocityNameX, animVector.x);
+            npcAnim.SetFloat(velocityNameY, animVector.y);*/
+
 
             // Catch player if in range of a sphere of radius = catchRadius
             _inRangePlayer = CheckPlayerInRange();
@@ -167,7 +170,7 @@ namespace RFM.Character
 
         private void GameOver()
         {
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject.transform.parent.parent.gameObject);
         }
     }
 }

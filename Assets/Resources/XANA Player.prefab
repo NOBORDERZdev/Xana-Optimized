@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 1504103122322176804}
   - component: {fileID: 7942164388486371721}
   - component: {fileID: 6600868634286491041}
-  - component: {fileID: 6399635851196118119}
   - component: {fileID: 6710238650612245467}
   - component: {fileID: 6793251032484300684}
   m_Layer: 10
@@ -231,6 +230,7 @@ MonoBehaviour:
   freeCamera: {fileID: 0}
   runCamera: {fileID: 0}
   sliderCamera: {fileID: 0}
+  isNPC: 0
   stepHeight: 0.6
   stepVelocity: 0.08
   normalCapsuleCollider: {fileID: 5556358534646836576}
@@ -325,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d0f95fdb5d2b4dbce657c49796b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animVelocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 5556358534646836591}
   switchCameras: {fileID: 0}
 --- !u!114 &5556358534646836585
@@ -482,23 +483,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6399635851196118119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5556358534646836578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7c3ccb252414bc46a44e428b27b1c70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOtherPlayer: 1
-  movement: {x: 0, y: 0}
-  run: 0
-  jump: 0
-  drop: 0
 --- !u!114 &6710238650612245467
 MonoBehaviour:
   m_ObjectHideFlags: 0

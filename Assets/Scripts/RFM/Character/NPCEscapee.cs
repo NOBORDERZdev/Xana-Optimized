@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Climbing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,9 +17,11 @@ namespace RFM.Character
         [SerializeField] private string velocityNameX, velocityNameY;
 
         private NavMeshAgent _navMeshAgent;
+        public float NPCvelocity;
         private float _maxSpeed;
         private Transform _closestHunterTransform = null;
         private float _minDistance = 10f;
+        public InputCharacterController EscapeNPCRFMInputController;
 
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
@@ -95,6 +98,7 @@ namespace RFM.Character
 
         private void Update()
         {
+            NPCvelocity = _navMeshAgent.velocity.magnitude;
             Vector3 velocity = _navMeshAgent.velocity;
             Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
             Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
@@ -105,8 +109,10 @@ namespace RFM.Character
 
             var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
 
-            animator.SetFloat(velocityNameX, animVector.x);
-            animator.SetFloat(velocityNameY, animVector.y);
+            EscapeNPCRFMInputController.movement = animVector;
+
+            /*animator.SetFloat(velocityNameX, animVector.x);
+            animator.SetFloat(velocityNameY, animVector.y);*/
         }
 
         private void EscapeFromHunters()

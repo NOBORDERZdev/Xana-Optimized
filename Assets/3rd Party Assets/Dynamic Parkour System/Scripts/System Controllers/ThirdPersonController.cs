@@ -56,7 +56,7 @@ namespace Climbing
         public CinemachineFreeLook runCamera;
         public CinemachineVirtualCamera sliderCamera;
 
-
+        public bool isNPC;
         [Header("Step Settings")]
         [Range(0, 10.0f)] public float stepHeight = 0.8f;
         public float stepVelocity = 0.2f;
@@ -75,7 +75,7 @@ namespace Climbing
         {
             photonView = transform.parent.GetComponent<PhotonView>();
 
-            if (photonView.IsMine)
+            if (photonView.IsMine && !isNPC)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
                 CanvasButtonsHandler.inst.jumpAction += JumpAction;
@@ -135,10 +135,19 @@ namespace Climbing
             //Detect if Player is on Ground
             isGrounded = OnGround();
 
-            if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
+            if (!isNPC)
+            {
+                if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
+            }
+            else
+            {
+                characterInput.movement.y = 0;
+                characterMovement.SetVelocity(characterInput.movement);
+                return;
+            }
 
             //Get Input if controller and movement are not disabled
-            if (!dummy && allowMovement && photonView.IsMine)
+            if (!dummy && allowMovement && photonView.IsMine && !isNPC)
             {
                 AddMovementInput(characterInput.movement);
 
