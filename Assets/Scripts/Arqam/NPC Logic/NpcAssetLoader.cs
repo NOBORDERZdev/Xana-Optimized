@@ -97,12 +97,16 @@ public class NpcAssetLoader : MonoBehaviour
                 StichItem((GameObject)(object)loadedObject, ObjectType, this.gameObject, false);
                 CheckMoreAIDresses();
             }
-            else
+            else if (loadedObject.Equals(null) || loadedObject == null)
+            {
+                WearDefault(ObjectType);
+                CheckMoreAIDresses();
                 Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
+            }
 
             AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
         }
-        else if (handle.Status == AsyncOperationStatus.Failed)
+        else if (handle.Status == AsyncOperationStatus.Failed )
         {
             WearDefault(ObjectType); // wear default cloth
             CheckMoreAIDresses();

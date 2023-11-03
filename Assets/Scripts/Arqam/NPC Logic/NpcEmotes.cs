@@ -103,6 +103,8 @@ namespace NPC {
                                     throw;
                                 }
                             }
+                            
+                            www.Dispose();
                         }
                     }
                 }
