@@ -75,8 +75,15 @@ public class AvatarChangerSyncing : MonoBehaviourPun
                 arrowManager.nameCanvas.transform.localPosition = canvasPos;
             }
             gangsterCharacter = new GameObject("AvatarChange");
+            gangsterCharacter.transform.SetParent(playerObj.transform);
+            gangsterCharacter.transform.localPosition = Vector3.zero;
+            gangsterCharacter.transform.localEulerAngles = Vector3.zero;
             //gangsterCharacter.SetActive(false);
+            Vector3 pos = gangsterCharacter.transform.position;
+            pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
+            transform.position = pos;
             transform.SetParent(gangsterCharacter.transform);
+            transform.localEulerAngles = Vector3.zero;
             if (avatarIndex == 2)
             {
                 var item = GamificationComponentData.instance.xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
@@ -96,9 +103,6 @@ public class AvatarChangerSyncing : MonoBehaviourPun
                 cloneObject.transform.localEulerAngles = Vector3.zero;
                 cloneObject.SetActive(true);
             }
-            gangsterCharacter.transform.SetParent(playerObj.transform);
-            gangsterCharacter.transform.localPosition = Vector3.zero;
-            gangsterCharacter.transform.localEulerAngles = Vector3.zero;
             anim.avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
             //gangsterCharacter.SetActive(true);
 
