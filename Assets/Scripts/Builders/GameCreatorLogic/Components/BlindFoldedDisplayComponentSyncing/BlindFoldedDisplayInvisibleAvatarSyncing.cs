@@ -32,9 +32,16 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             return;
 
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
+       StartCoroutine(SyncingCoroutin());
+    }
+
+    private IEnumerator SyncingCoroutin()
+    {
+        yield return new WaitForSeconds(0.5f);
         playerObj = FindPlayerusingPhotonView(photonView);
         if (playerObj != null)
         {
+            yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();

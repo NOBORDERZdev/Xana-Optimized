@@ -26,16 +26,23 @@ public class DoorKeyComponent : ItemComponent
                 PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
             }
+
             PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             if (this.doorKeyComponentData.isKey && !this.doorKeyComponentData.isDoor)
             {
                 if (!KeyValidation()) return;
 
                 _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Add(this.doorKeyComponentData.selectedKey);
-
+                Debug.LogError("DoorKey Component RuntimeItemID "+ RuntimeItemID);
                 PlayerCanvas.Instance.ToggleKey(true);
                 //this.gameObject.SetActive(false);
-                PlayerCanvas.Instance.keyCounter.text = "x" + _other.gameObject.GetComponent<KeyValues>()._dooKeyValues.Count.ToString();
+                GamificationComponentData.instance.doorKeyCount++;
+                PlayerCanvas.Instance.keyCounter.text = "x" + GamificationComponentData.instance.doorKeyCount;
+                if (GamificationComponentData.instance.DoorKeyObject == null)
+                    GamificationComponentData.instance.DoorKeyObject = PhotonNetwork.Instantiate("DoorKey", Vector3.zero, Quaternion.identity);
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("doorKeyCount", GamificationComponentData.instance.doorKeyCount);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
                 if (GamificationComponentData.instance.withMultiplayer)
                     GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
                 else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
@@ -55,9 +62,16 @@ public class DoorKeyComponent : ItemComponent
                     if (item.Equals(this.doorKeyComponentData.selectedDoorKey.ToString()))
                     {
                         values._dooKeyValues.Remove(item);
+                        GamificationComponentData.instance.doorKeyCount--;
+                        var hash = new ExitGames.Client.Photon.Hashtable();
+                        hash.Add("doorKeyCount", GamificationComponentData.instance.doorKeyCount);
+                        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
                         if (values._dooKeyValues.Count <= 0)
+                        {
                             PlayerCanvas.Instance.ToggleKey(false);
-
+                            if (GamificationComponentData.instance.DoorKeyObject != null)
+                                PhotonNetwork.Destroy(GamificationComponentData.instance.DoorKeyObject.GetPhotonView());
+                        }
                         isDoorFind = true;
                         PlayerCanvas.Instance.keyCounter.text = "x" + values._dooKeyValues.Count.ToString();
                         break;

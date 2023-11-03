@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using static Photon.Voice.AudioUtil;
-using static StoreManager;
 
 public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
 {
@@ -23,10 +21,16 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
+        StartCoroutine(SyncingCoroutin());
+    }
 
+    private IEnumerator SyncingCoroutin()
+    {
+        yield return new WaitForSeconds(0.5f);
         playerObj = FindPlayerusingPhotonView(photonView);
         if (playerObj != null)
         {
+            yield return new WaitForSeconds(0.5f);
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();

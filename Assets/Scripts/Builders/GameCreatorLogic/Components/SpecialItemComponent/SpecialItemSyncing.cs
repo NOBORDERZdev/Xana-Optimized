@@ -15,6 +15,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
     GameObject playerObj;
+
     void OnEnable()
     {
         if (photonView.IsMine)
@@ -24,9 +25,16 @@ public class SpecialItemSyncing : MonoBehaviourPun
         defaultClothShader = GamificationComponentData.instance.cloathShader;
         newSkinShader = GamificationComponentData.instance.superMarioShader;
         newClothShader = GamificationComponentData.instance.superMarioShader2;
+        StartCoroutine(SyncingCoroutin());
+    }
+
+    private IEnumerator SyncingCoroutin()
+    {
+        yield return new WaitForSeconds(0.5f);
         playerObj = FindPlayerusingPhotonView(photonView);
         if (playerObj != null)
         {
+            yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();

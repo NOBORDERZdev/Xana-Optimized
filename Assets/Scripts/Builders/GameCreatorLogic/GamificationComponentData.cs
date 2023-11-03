@@ -77,6 +77,8 @@ public class GamificationComponentData : MonoBehaviourPun
 
     //Gamification components with multipler
     public bool withMultiplayer = false;
+    internal GameObject DoorKeyObject;
+    internal int doorKeyCount=0;
 
     private void Awake()
     {
