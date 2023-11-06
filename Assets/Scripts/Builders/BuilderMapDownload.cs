@@ -55,6 +55,9 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
+
+        Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
+        RenderSettings.skybox = null;
     }
 
     private void Start()

@@ -548,6 +548,10 @@ public class SelfieController : MonoBehaviour
         }
 
         BuilderEventManager.UIToggle?.Invoke(false);
+
+        m_RenderTexture.Release();
+        Resources.UnloadUnusedAssets();
+        GC.Collect();
     }
 
 
@@ -607,7 +611,7 @@ public class SelfieController : MonoBehaviour
 
     public void TakeScreenShootAndSaveToGallary()
     {
-        Texture2D l_Texture2d = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGB24, false);
+        Texture2D l_Texture2d = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGB24, false);  // RGB24
         RenderTexture.active = m_RenderTexture;
         l_Texture2d.ReadPixels(new Rect(0, 0, m_RenderTexture.width, m_RenderTexture.height), 0, 0);
         l_Texture2d.Apply();
@@ -618,6 +622,11 @@ public class SelfieController : MonoBehaviour
 
         m_Texture2D = l_Texture2d;
         m_CapturedImage.texture = m_Texture2D;
+
+        // optimize the render texture data     // AR changes start
+        m_RenderTexture.Release();
+        Resources.UnloadUnusedAssets();
+        GC.Collect();                           // AR changes end
     }
 
     public int picCount;
