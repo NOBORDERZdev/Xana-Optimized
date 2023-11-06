@@ -36,9 +36,6 @@ public class ButtonScript : MonoBehaviour
 
         if (XanaConstants.xanaConstants.currentButtonIndex == Index)
         {
-            //    if (Index == 0)                                                  // AR Changes
-            //        StoreManager.instance.ForcellySetLastClickedBtnOfHair();     // AR Changes
-
             if (StoreManager.instance.CloseColorPanel(Index) == true)
             {
                 if (StoreManager.instance.ParentOfBtnsAvatarEyeBrows.transform.childCount != 0)
@@ -55,8 +52,6 @@ public class ButtonScript : MonoBehaviour
                         StoreManager.instance.ParentOfBtnsAvatarHairs.transform.GetChild(i).gameObject.SetActive(false);
                     }
                 }
-                //StoreManager.instance.SubmitAllItemswithSpecificSubCategory(StoreManager.instance.SubCategoriesList[Index + 8].id, true);      // AR changes
-                
             }
             StoreManager.instance.UpdateStoreSelection(Index);
             // If click on the same panel Do Nothing & return
@@ -66,8 +61,6 @@ public class ButtonScript : MonoBehaviour
         // because new category is opened
         StoreManager.instance.StopAllCoroutines();
         StoreManager.instance.eyeBrowTapButton.SetActive(false);
-
-        // StoreManager.instance.DeletePreviousItems();            // AR changes
         
         if (gameObject.transform.parent.name != "Accesary")
         {

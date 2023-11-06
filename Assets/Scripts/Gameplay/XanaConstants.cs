@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.ResourceManagement.AsyncOperations;
-
 public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
@@ -96,10 +95,6 @@ public class XanaConstants : MonoBehaviour
 
     public enum ScreenType { MobileScreen, TabScreen }
     public ScreenType screenType;
-    /// <summary>
-    /// variables for builder scene integration 
-    /// </summary>
-    /// 
     public bool isBuilderScene;
     public int builderMapID;
     public bool JjWorldSceneChange = false;
@@ -123,7 +118,6 @@ public class XanaConstants : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
-
     public string r_EmoteReactionPersistentPath
     {
         get
@@ -131,8 +125,6 @@ public class XanaConstants : MonoBehaviour
             return Application.persistentDataPath + "/EmoteReaction";
         }
     }
-
-
     public void Awake()
     {
         if (xanaConstants)
@@ -160,19 +152,6 @@ public class XanaConstants : MonoBehaviour
                 PlayerPrefs.SetInt("minimap", 0); // Bydefault Off
                 minimap = PlayerPrefs.GetInt("minimap");
             }
-
-            //if (PlayerPrefs.HasKey("userName"))
-            //{
-            //    userName = PlayerPrefs.GetInt("userName");
-            //}
-            //else
-            //{
-            //    PlayerPrefs.SetInt("userName", 1);
-            //    userName = PlayerPrefs.GetInt("userName");
-            //}
-
-
-
             DontDestroyOnLoad(this.gameObject);
         }
 
@@ -200,33 +179,18 @@ public class XanaConstants : MonoBehaviour
 
         return diagonalInches;
     }
-    private void Start()
-    {
-        //  StartCoroutine(LoadAddressableDependenceies());
-    }
-
     public void StopMic()
     {
         PlayerPrefs.SetInt("micSound", 0);
         mic = PlayerPrefs.GetInt("micSound");
     }
-
     public void PlayMic()
     {
         PlayerPrefs.SetInt("micSound", 1);
         mic = PlayerPrefs.GetInt("micSound");
     }
-
-
-    /// <summary>
-    /// To preload addressable dependenceies
-    /// </summary>
-    /// <returns></returns>
     public IEnumerator LoadAddressableDependenceies()
     {
-        //yield return Addressables.DownloadDependenciesAsync("boyc11hair", true);
-
-        // Check the download size
         for (int i = 0; i < labels.Length; i++)
         {
             downloadHandle = Addressables.DownloadDependenciesAsync(labels[i], false);
@@ -247,12 +211,5 @@ public class XanaConstants : MonoBehaviour
             Addressables.Release(downloadHandle); //Release the operation handle
         }
     }
-
-
-
-
-
-
-    //////constant string variables 
     public const string collectibleMsg = "Item Collected...";
 }
