@@ -24,6 +24,8 @@ public class WorldItemView : MonoBehaviour
     }
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
     {
+        if(PreviewLogo)
+            PreviewLogo.gameObject.SetActive(true);
        Index = index;
        GridIndex = gridPos;
        idOfObject =  detail.IdOfWorld;
@@ -70,6 +72,7 @@ public class WorldItemView : MonoBehaviour
     public bool isOnScreen;
     public bool isVisible = false;
     bool isNotLoaded = true;
+    public Transform PreviewLogo;
 
     [Header("Tags and Category")]
     public string[] worldTags;
@@ -177,8 +180,10 @@ public class WorldItemView : MonoBehaviour
        if(AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
+            if (PreviewLogo)
+                PreviewLogo.gameObject.SetActive(false);
         }
-       else
+        else
         {
             AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
             {
@@ -186,10 +191,12 @@ public class WorldItemView : MonoBehaviour
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                     isImageSuccessDownloadAndSave = true;
+                    if (PreviewLogo)
+                        PreviewLogo.gameObject.SetActive(false);
+
                 }
             });
         }
-      
     }
     void GetEventType(string entityType)
     {
