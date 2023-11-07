@@ -48,9 +48,12 @@ namespace AdvancedInputFieldPlugin
 		private int characterLimit;
 		private bool emojisAllowed;
 		private TextValidator textValidator;
-
+		
 		private float currentTransitionTime;
 		private bool processHardwareKeyboardEvents;
+
+
+		private ButtonAnimationScript btnScriptInstance;
 
 		public bool ShouldSubmit
 		{
@@ -66,7 +69,7 @@ namespace AdvancedInputFieldPlugin
 			ConfigureCharacterRows(mainPageValues);
 			textValidator = new TextValidator(CharacterValidation.NONE, LineType.SINGLE_LINE);
 		}
-
+		
 		public override void EnableUpdates()
 		{
 			processHardwareKeyboardEvents = true;
@@ -89,7 +92,10 @@ namespace AdvancedInputFieldPlugin
 					OnKeyboardShow();
 					int keyboardHeight = Mathf.RoundToInt(rectTransform.rect.height * canvas.scaleFactor); //Convert to screen pixels
 					OnKeyboardHeightChanged(keyboardHeight); //Fully shown
-				}
+                    GetButtonAnimationScript();
+					moveButtonUpwithKeyboard();
+					
+                }
 
 				float progress = currentTransitionTime / TRANSITION_TIME;
 				Vector2 anchoredPositon = rectTransform.anchoredPosition;
@@ -104,7 +110,10 @@ namespace AdvancedInputFieldPlugin
 					currentTransitionTime = TRANSITION_TIME;
 					OnKeyboardHide();
 					OnKeyboardHeightChanged(0); //Fully hidden
-				}
+                    GetButtonAnimationScript();
+					moveButtonDownwithKeyboard();
+					
+                }
 
 				float progress = currentTransitionTime / TRANSITION_TIME;
 				Vector2 anchoredPositon = rectTransform.anchoredPosition;
@@ -117,6 +126,30 @@ namespace AdvancedInputFieldPlugin
 				UpdateHardwareKeyboardInput();
 			}
 		}
+
+
+
+		public void GetButtonAnimationScript() 
+		{
+            btnScriptInstance = FindObjectOfType<ButtonAnimationScript>();
+        }
+
+		public void moveButtonUpwithKeyboard() 
+		{
+			if (btnScriptInstance != null) 
+			{
+                btnScriptInstance.moveButtonUp();
+            }
+            
+		}
+
+		public void moveButtonDownwithKeyboard()
+		{
+			if (btnScriptInstance != null)
+			{
+				btnScriptInstance.moveButtonDown();
+			}
+        }
 
 		internal void UpdateHardwareKeyboardInput()
 		{
