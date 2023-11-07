@@ -8,13 +8,13 @@ public class NpcSpawner : MonoBehaviour
     public static NpcSpawner npcSpawner;
     [HideInInspector]
     public int npcCounter = 0;
+    [HideInInspector]
     public List<GameObject> npcModel;
 
     [SerializeField] private int aiStrength = 5;
-    [SerializeField] List<string> aiNames;
     
     private GameObject aiPrefabs;
-    private int rand = 0;
+
 
     private void Awake()
     {
@@ -22,6 +22,14 @@ public class NpcSpawner : MonoBehaviour
             npcSpawner = this;
         else
             Destroy(this.gameObject);
+    }
+    private void OnEnable()
+    {
+        NpcChatSystem.npcNameAction += UpdateNpcName;
+    }
+    private void OnDisable()
+    {
+        NpcChatSystem.npcNameAction -= UpdateNpcName;
     }
 
     void Start()
@@ -35,16 +43,19 @@ public class NpcSpawner : MonoBehaviour
             Vector3 temp = RandomNavMeshPoint();
             npc.transform.position = temp;
             npc.transform.rotation = Quaternion.identity;
-
-            rand = Random.Range(0, aiNames.Count);
-            npc.GetComponent<NpcBehaviourSelector>().SetAiName(aiNames[rand]);       // Set npc names
-            aiNames.RemoveAt(rand);
             
             npcCounter++;
             npcModel.Add(npc);
         }
-
         StartCoroutine(ReactScreen.Instance.getAllReactions());
+    }
+
+    private void UpdateNpcName(NpcChatSystem npcChatSystem)
+    {
+        for (int i = 0; i < npcModel.Count; i++)
+        {
+            npcModel[i].GetComponent<NpcBehaviourSelector>().SetAiName(npcChatSystem.npcDB[i].aiNames);
+        }
     }
 
     Vector3 RandomNavMeshPoint()

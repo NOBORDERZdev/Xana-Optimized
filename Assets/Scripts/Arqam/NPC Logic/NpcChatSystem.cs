@@ -20,7 +20,9 @@ public class NpcChatSystem : MonoBehaviour
         public int actualAiIds;
     }
     public List<NPCAttributes> npcAttributes;
-    private List<NPCAttributes> npcDB;
+    [HideInInspector]
+    public List<NPCAttributes> npcDB;
+    public static Action<NpcChatSystem> npcNameAction;
 
     private int id = 0;
     private string msg = "Hello";
@@ -47,6 +49,8 @@ public class NpcChatSystem : MonoBehaviour
             npcAttributes.RemoveAt(rand);
         }
         tempResponseNum = numOfResponseWantToShow;
+
+        npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
     }
 
     private void OnEnable()
@@ -54,11 +58,13 @@ public class NpcChatSystem : MonoBehaviour
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert += PlayerSendMsg;
     }
+
     private void OnDisable()
     {
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
+
 
     private void PlayerSendMsg(string msgData)
     {
@@ -115,7 +121,8 @@ public class NpcChatSystem : MonoBehaviour
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.UserNpc, id.ToString());
             Debug.Log("Communication Response(UserAI): " + feed.response);
 
-            NpcSpawner.npcSpawner.npcModel[counter-1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(feed.response);
+            if (NpcSpawner.npcSpawner)
+                NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(feed.response);
         }
         else
             Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
