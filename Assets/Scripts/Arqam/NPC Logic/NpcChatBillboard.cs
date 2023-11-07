@@ -10,12 +10,6 @@ namespace NPC
         public GameObject chatBoard;
         public TMP_Text chatText;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
 
         public void ShowNpcMessage(string msg)
         {
