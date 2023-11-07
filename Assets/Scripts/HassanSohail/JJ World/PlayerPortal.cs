@@ -35,41 +35,44 @@ public class PlayerPortal : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (/*manager.allowTeleportation && */(other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && destinationPoint != null /*&& isAlreadyRunning */ /*&& player.allowTeleport*/)
+        if (other.GetComponent<PhotonView>() != null)
         {
-            print("player enter : " + transform.parent.parent.name);
-            
-            // For NFT Click
-            JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
-            if (transform.parent.parent.name.Contains("Rental"))
+            if (destinationPoint != null && other.GetComponent<PhotonView>().IsMine)
             {
-                string tempString = JjInfoManager.Instance.analyticMuseumID;
-                int ind = int.Parse(tempString.Split('_').Last());
-                JjInfoManager.Instance.analyticMuseumID= "Space_" + ind;
-            }
+                print("player enter : " + transform.parent.parent.name);
+                CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+                // For NFT Click
+                JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
+                if (transform.parent.parent.name.Contains("Rental"))
+                {
+                    string tempString = JjInfoManager.Instance.analyticMuseumID;
+                    int ind = int.Parse(tempString.Split('_').Last());
+                    JjInfoManager.Instance.analyticMuseumID = "Space_" + ind;
+                }
 
-            // For EnterPortal
-            if(currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
-            {
-                if(transform.parent.name.Contains("Astroboy"))
-                customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Atom + "_" + name;
-                else
-                    customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Rental + "_" + name;
-            }
-            else if (currentPortal == PortalType.Enter)
-            {
-                if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
-                    customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Atom + "_" + ref_JJMuseumInfoManager.name;
-                else
-                    customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
-            }
+                // For EnterPortal
+                if (currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
+                {
+                    if (transform.parent.name.Contains("Astroboy"))
+                        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Atom + "_" + name;
+                    else
+                        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Rental + "_" + name;
+                }
+                else if (currentPortal == PortalType.Enter)
+                {
+                    if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
+                        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Atom + "_" + ref_JJMuseumInfoManager.name;
+                    else
+                        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
+                }
 
-            triggerObject = other.gameObject;
+                triggerObject = other.gameObject;
 
-            if(currentPortal == PortalType.Enter || currentPortal == PortalType.Teleport)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject,2);
-            else if(currentPortal == PortalType.Exit)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+                if (currentPortal == PortalType.Enter || currentPortal == PortalType.Teleport)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
+                else if (currentPortal == PortalType.Exit)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+            }
         }
     }
 
@@ -116,7 +119,7 @@ public class PlayerPortal : MonoBehaviour
         CheckAgain:
             if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" /*&& hit.collider.gameObject.tag == "Player"*/)
+                if ((hit.collider.GetComponent<PhotonView>()!=null) && hit.collider.GetComponent<PhotonView>().IsMine)//hit.collider.gameObject.tag == "PhotonLocalPlayer" /*&& hit.collider.gameObject.tag == "Player"*/)
                 {
                     destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
                     goto CheckAgain;

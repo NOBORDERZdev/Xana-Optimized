@@ -17,6 +17,16 @@ public class AllWorldManage : MonoBehaviour
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
 
+    private void OnEnable()
+    {
+        WorldSearchManager.OpenSearchPanel += SearchScreenLoad;
+    }
+
+    private void OnDisable()
+    {
+        WorldSearchManager.OpenSearchPanel -= SearchScreenLoad;
+    }
+
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
         UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);
@@ -26,6 +36,13 @@ public class AllWorldManage : MonoBehaviour
         UIManager.Instance.SwitchToScreen(2);
         WorldManager.instance.ClearWorldScrollWorlds();
     }
+
+    public void SearchScreenLoad(string searchKey)
+    {
+        UIManager.Instance.SwitchToScreen(2);
+        WorldManager.instance.ClearWorldScrollWorlds();
+    }
+
     public void BackToPreviousScreen()
     {
         WorldManager.instance.ClearWorldScrollWorlds();
@@ -37,6 +54,10 @@ public class AllWorldManage : MonoBehaviour
     {
         ScrollEnableDisable(0);
         WorldManager.instance.ChangeWorld(APIURL.Hot);
+        if(UIManager.Instance.PreviousScreen==0)
+        {
+            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+        }
     }
 
     public void GameWorldLoad()

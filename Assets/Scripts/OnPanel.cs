@@ -43,7 +43,7 @@ public class OnPanel : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (UIManager.Instance.HomePage.activeInHierarchy)
+        if ( UIManager.Instance.HomePage && UIManager.Instance.HomePage.activeInHierarchy)
             UIManager.Instance.HomePage.SetActive(true);
 
 

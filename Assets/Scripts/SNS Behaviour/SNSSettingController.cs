@@ -170,7 +170,11 @@ public class SNSSettingController : MonoBehaviour
         {
             UserRegisterationManager.instance.LogoutAccount();
             //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
-            SimultaneousConnectionButton();
+            if(PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
+            {
+                SimultaneousConnectionButton();
+            }
+            //SimultaneousConnectionButton();
         }
     }
 
@@ -230,14 +234,12 @@ public class SNSSettingController : MonoBehaviour
         PlayerPrefs.DeleteKey("FaceBlendShapeApplied");
         PlayerPrefs.DeleteKey("AppliedShapeIndexppp");
         PlayerPrefs.DeleteKey("SelectedAvatarID");
-        //PlayerPrefs.DeleteKey("IsChanged");
     }
 
     public void DeleteAccountConfirmation()
     {
         deleteAccountPopup.SetActive(true);
     }
-
     public void DeleteAccount()
     {
         if (UserRegisterationManager.instance != null)
@@ -248,8 +250,6 @@ public class SNSSettingController : MonoBehaviour
             });
         }
     }
-
-
     public void SimultaneousConnectionButton()
     {
         int status = PlayerPrefs.GetInt("ShowLiveUserCounter");
@@ -258,60 +258,14 @@ public class SNSSettingController : MonoBehaviour
             // Currently Btn is OFF, enable Btn Here
             btnImage.sprite = onBtn;
             status = 1;
-            UserCounterStatus(true);
         }
         else
         {
             // Currently Btn is ON, disable Btn Here
             status = 0;
             btnImage.sprite = offBtn;
-            UserCounterStatus(false);
         }
         PlayerPrefs.SetInt("ShowLiveUserCounter", status);
-    }
-
-
-    void UserCounterStatus(bool _status)
-    {
-        // Lobby Prefab
-        WorldManager.instance.EventPrefabLobby.GetComponent<WorldItemView>()
-            .joinedUserCount.transform.parent.gameObject.SetActive(_status);
-
-        //// Home Page => Hot
-        //foreach (var item in WorldManager.instance.listParentHotSection.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
-
-        //// Home Page => New
-        //foreach (var item in WorldManager.instance.listParentAllWorlds.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
-
-        //// Home Page => My World
-        //foreach (var item in WorldManager.instance.listParentMyWorlds.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
-
-        //// World Page => Hot
-        //foreach (var item in WorldManager.instance.world_HotScroll.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
-
-        //// World Page => New
-        //foreach (var item in WorldManager.instance.world_NewScroll.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
-
-        //// World Page => My World
-        //foreach (var item in WorldManager.instance.world_myworldScroll.GetAllChildren())
-        //{
-        //    item.GetComponent<FeedEventPrefab>().joinedUserCount.transform.parent.gameObject.SetActive(_status);
-        //}
     }
     void CheckBtnStatus(int status)
     {

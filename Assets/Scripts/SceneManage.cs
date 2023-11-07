@@ -43,15 +43,21 @@ public class SceneManage : MonoBehaviourPunCallbacks
     {
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
-            SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
-            SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+            if (SoundManagerSettings.soundManagerSettings != null)
+            {
+                if (SoundManagerSettings.soundManagerSettings.bgmSource)
+                SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+                if (SoundManagerSettings.soundManagerSettings.videoSource)
+                SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+                if (SoundManagerSettings.soundManagerSettings.effectsSource)
+                SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+            }
         }
     }
     public void LoadMain(bool changeOritentationChange)
     {
         disableSoundXanalobby();
-
+        XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
             exitOnce = false;
@@ -153,7 +159,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         {
             if (XanaConstants.xanaConstants.isBuilderScene)
             {
-                float _rand = UnityEngine.Random.Range(25f, 30f);
+                float _rand = UnityEngine.Random.Range(10f, 15f);
                 LoadingHandler.Instance.randCurrentValue = _rand;
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
             }

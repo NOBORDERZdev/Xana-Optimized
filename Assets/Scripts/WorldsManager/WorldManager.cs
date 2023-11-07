@@ -76,7 +76,7 @@ public class WorldManager : MonoBehaviour
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {
-        if(WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
+        if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
             WorldItemManager.DisplayWorlds(tab.ToString());
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -95,7 +95,7 @@ public class WorldManager : MonoBehaviour
     IEnumerator WorldCall(APIURL tab)
     {
         yield return new WaitForSeconds(1f);
-        while(!dataIsFatched)
+        while (!dataIsFatched)
         {
             Debug.LogError("Clear Fetch");
             NotProcessRequest = true;
@@ -112,31 +112,36 @@ public class WorldManager : MonoBehaviour
         aPIURLGlobal = chnager;
     }
     public string previousSearchKey;
-    public void SearchWorldCall(string searchKey)
+    public void SearchWorldCall(string searchKey, bool isFromTag = false)
     {
-        if(searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
+        if (searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
         {
-            aPIURLGlobal = APIURL.SearchWorld;
-            this.WorldItemManager.ClearListInDictionary(APIURL.SearchWorld.ToString());
+            if (isFromTag)
+                aPIURLGlobal = APIURL.SearchWorldByTag;
+            else
+                aPIURLGlobal = APIURL.SearchWorld;
+            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
             ClearWorldScrollWorlds();
             SearchPageNumb = 1;
+            SearchTagPageNumb = 1;
             SearchPageSize = 40;
+            SearchTagPageSize = 40;
             SearchKey = searchKey;
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
         else
         {
-            this.WorldItemManager.ClearListInDictionary(APIURL.SearchWorld.ToString());
+            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
             ClearWorldScrollWorlds();
             previousSearchKey = SearchKey = searchKey;
         }
     }
     void SetAutoSwtichStreaming()
-    { 
-         if (XanaConstants.xanaConstants.isCameraMan)
-         {
+    {
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            
+
             XanaConstants.xanaConstants.JjWorldSceneChange = true;
             XanaConstants.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
             XanaConstants.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
@@ -148,16 +153,16 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
-            if (AutoSwtichIndex< AutoSwtichWorldList.Count - 1)
+            if (AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
             {
                 AutoSwtichIndex++;
             }
             else
             {
-                AutoSwtichIndex=0;
+                AutoSwtichIndex = 0;
             }
             LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
-         }    
+        }
     }
 
     private void OnDestroy()
@@ -175,6 +180,8 @@ public class WorldManager : MonoBehaviour
     }
     public int SearchPageNumb = 1;
     public int SearchPageSize = 15;
+    public int SearchTagPageNumb = 1;
+    public int SearchTagPageSize = 15;
     public string SearchKey = default;
     string PrepareApiURL(APIURL aPIURL)
     {
@@ -193,7 +200,9 @@ public class WorldManager : MonoBehaviour
             case APIURL.TestWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             case APIURL.SearchWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + "/" + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
+                return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
+            case APIURL.SearchWorldByTag:
+                return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + SearchKey + "/" + SearchTagPageNumb + "/" + SearchTagPageSize;
             default:
                 return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
         }
@@ -219,6 +228,9 @@ public class WorldManager : MonoBehaviour
                 return;
             case APIURL.SearchWorld:
                 SearchPageNumb += 1;
+                return;
+            case APIURL.SearchWorldByTag:
+                SearchTagPageNumb += 1;
                 return;
             case APIURL.TestWorld:
                 pageNumberTestWorld += 1;
@@ -259,7 +271,7 @@ public class WorldManager : MonoBehaviour
             else
             {
                 loadOnce = true;
-                if(++CallBackCheck > 17)
+                if (++CallBackCheck > 17)
                 {
                     LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                     CallBackCheck = 0;
@@ -281,10 +293,12 @@ public class WorldManager : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
+                //Debug.LogError(www.downloadHandler.text);
                 callback(false);
             }
             else
             {
+                //Debug.LogError(www.downloadHandler.text);
                 _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 worldstr = www.downloadHandler.text;
                 callback(true);
@@ -295,7 +309,7 @@ public class WorldManager : MonoBehaviour
     public string worldstr;
     bool isLobbyActive = false;
     public WorldItemManager WorldItemManager;
-    void InstantiateWorlds(string key)
+    void InstantiateWorlds(string _apiURL)
     {
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
@@ -311,10 +325,16 @@ public class WorldManager : MonoBehaviour
             {
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-                    _event.ThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                   if(!_event.EnvironmentName.Contains("XANA Lobby"))
-                    _event.ThumbnailDownloadURL = _event.ThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                   _event.ThumbnailDownloadURLHigh = _event.ThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    string IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                    if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                    {
+                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                        _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                    }
+                    else
+                    {
+                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                    }
                 }
             }
             catch
@@ -334,7 +354,7 @@ public class WorldManager : MonoBehaviour
             {
                 _event.CreatorName = _WorldInfo.data.rows[i].user.name;
                 _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                _event.UserLimit = "10";
+                _event.UserLimit = "15";
             }
             else
             {
@@ -347,11 +367,12 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1,Vector2.zero,_event);
+                if(EventPrefabLobby.activeInHierarchy)
+                    EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
             {
-                WorldItemManager.AddWorld(key,_event);
+                WorldItemManager.AddWorld(_apiURL, _event);
             }
         }
         if (!isLobbyActive)
@@ -363,7 +384,7 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        WorldItemManager.DisplayWorlds(key);
+        WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         TutorialsManager.instance.ShowTutorials();
@@ -454,7 +475,7 @@ public class WorldManager : MonoBehaviour
             Resources.UnloadUnusedAssets();
             GC.Collect();
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -518,7 +539,7 @@ public class WorldManager : MonoBehaviour
             }
             print("_NFTID :: " + PlayerPrefs.GetInt("nftID").ToString());
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -530,7 +551,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-    CheckAgain:
+        CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
@@ -573,10 +594,10 @@ public class WorldManager : MonoBehaviour
         }
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-            {
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            }
+            //if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+            //{
+            //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //}
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -587,10 +608,10 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange)
-            {
-                LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
-            }
+            //if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+            //{
+            //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
+            //}
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -622,7 +643,7 @@ public class WorldManager : MonoBehaviour
             {
                 if (XanaConstants.xanaConstants.isBuilderScene)
                 {
-                    XanaConstants.xanaConstants.userLimit = "10";
+                    XanaConstants.xanaConstants.userLimit = "15";
                 }
                 else
                 {
@@ -635,9 +656,10 @@ public class WorldManager : MonoBehaviour
     }
 }
 [Serializable]
-class AutoSwtichEnv{ 
+class AutoSwtichEnv
+{
     public string name;
-    public bool isMussuem= false;
+    public bool isMussuem = false;
     public int mainnetId;
     public int testnetId;
 }
@@ -682,7 +704,7 @@ public class UserInfo
 }
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld
+    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld, SearchWorldByTag
 }
 public enum WorldType
 {
