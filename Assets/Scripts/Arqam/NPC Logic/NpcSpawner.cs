@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class NpcSpawner : MonoBehaviour
 {
+    public static int npcCounter = 0;
 
     [SerializeField] private int aiStrength = 5;
     [SerializeField] List<string> aiNames;
@@ -12,8 +13,13 @@ public class NpcSpawner : MonoBehaviour
     private GameObject aiPrefabs;
     private int rand = 0;
 
+    private void OnDisable()
+    {
+        npcCounter = 0;
+    }
     void Start()
     {
+        npcCounter = 0;
         aiPrefabs = Resources.Load("NPC") as GameObject;
         for (int i = 0; i < aiStrength; i++)
         {
@@ -25,6 +31,8 @@ public class NpcSpawner : MonoBehaviour
             rand = Random.Range(0, aiNames.Count);
             npc.GetComponent<NpcBehaviourSelector>().SetAiName(aiNames[rand]);       // Set npc names
             aiNames.RemoveAt(rand);
+            
+            npcCounter++;
         }
 
         StartCoroutine(ReactScreen.Instance.getAllReactions());
