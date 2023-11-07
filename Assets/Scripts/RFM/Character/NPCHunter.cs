@@ -90,25 +90,28 @@ namespace RFM.Character
 
             npcAnim.SetFloat(velocityNameX, animVector.x);
             npcAnim.SetFloat(velocityNameY, animVector.y);
-            
+
 
             // Catch player if in range of a sphere of radius = catchRadius
-            _inRangePlayer = CheckPlayerInRange();
+            if (!RFMDevmodeManager.instance.devMode) 
+            {
+                _inRangePlayer = CheckPlayerInRange();
 
-            if (_inRangePlayer == null)
-            {
-                _catchTimer = 0;
-            }
-            else
-            {
-                _catchTimer += Time.deltaTime;
-                if (_catchTimer >= timeToCatchEscapee)
+                if (_inRangePlayer == null)
                 {
                     _catchTimer = 0;
-                    _players.Remove(_inRangePlayer);
-                    _target = null;
-                    killVFX.SetActive(true);
-                    _inRangePlayer.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                }
+                else
+                {
+                    _catchTimer += Time.deltaTime;
+                    if (_catchTimer >= timeToCatchEscapee)
+                    {
+                        _catchTimer = 0;
+                        _players.Remove(_inRangePlayer);
+                        _target = null;
+                        killVFX.SetActive(true);
+                        _inRangePlayer.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                    }
                 }
             }
         }
@@ -147,21 +150,24 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
+            if (!RFMDevmodeManager.instance.devMode) 
             {
-                _players.Remove(other.gameObject);
-                _target = null;
-                killVFX.SetActive(true);
-                other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
-            }
-            
-            else if (other.CompareTag(Globals.PLAYER_TAG)/*Globals.LOCAL_PLAYER_TAG*/)
-            {
-                _players.Remove(other.gameObject);
-                _target = null;
-                killVFX.SetActive(true);
-                
-                other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
+                {
+                    _players.Remove(other.gameObject);
+                    _target = null;
+                    killVFX.SetActive(true);
+                    other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
+                }
+
+                else if (other.CompareTag(Globals.PLAYER_TAG)/*Globals.LOCAL_PLAYER_TAG*/)
+                {
+                    _players.Remove(other.gameObject);
+                    _target = null;
+                    killVFX.SetActive(true);
+
+                    other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                }
             }
         }
 

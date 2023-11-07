@@ -13,7 +13,19 @@ public class RFMButtonsLayoutManager : MonoBehaviour
 
     public Slider sizeSlider;
 
-    public Camera RFMCamera;
+    public static RFMButtonsLayoutManager instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     private void OnEnable()
     {
@@ -44,6 +56,20 @@ public class RFMButtonsLayoutManager : MonoBehaviour
         PlayerPrefs.SetFloat("slideY", slideButton.transform.localPosition.y);
         PlayerPrefs.SetFloat("slideScaleX", slideButton.transform.localScale.x);
         PlayerPrefs.SetFloat("slideScaleY", slideButton.transform.localScale.y);
+
+        CanvasButtonsHandler.inst.joyStickRFM.transform.localPosition = new Vector3(joyStick.transform.localPosition.x, joyStick.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.joyStickRFM.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
+
+        CanvasButtonsHandler.inst.slideBtn.transform.localPosition = new Vector3(slideButton.transform.localPosition.x, slideButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.slideBtn.transform.localScale = new Vector3(slideButton.transform.localScale.x, slideButton.transform.localScale.y, 0);
+
+        CanvasButtonsHandler.inst.runBtn.transform.localPosition = new Vector3(runButton.transform.localPosition.x, runButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.runBtn.transform.localScale = new Vector3(runButton.transform.localScale.x, runButton.transform.localScale.y, 0);
+
+        CanvasButtonsHandler.inst.jumpBtnRFM.transform.localPosition = new Vector3(jumpButton.transform.localPosition.x, jumpButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.jumpBtnRFM.transform.localScale = new Vector3(jumpButton.transform.localScale.x, jumpButton.transform.localScale.y, 0);
+
+        PlayerPrefs.Save();
     }
 
     public void LoadLayout() 
@@ -61,39 +87,47 @@ public class RFMButtonsLayoutManager : MonoBehaviour
         jumpButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("slideScaleX", 1), PlayerPrefs.GetFloat("slideScaleY", 1), 0);
     }
 
+    public void ResetLayout() 
+    {
+        PlayerPrefs.DeleteKey("joyX");
+        PlayerPrefs.DeleteKey("joyScaleX");
+        PlayerPrefs.DeleteKey("joyY");
+        PlayerPrefs.DeleteKey("joyScaleY");
+        PlayerPrefs.DeleteKey("runX");
+        PlayerPrefs.DeleteKey("runScaleX");
+        PlayerPrefs.DeleteKey("runY");
+        PlayerPrefs.DeleteKey("runScaleY");
+        PlayerPrefs.DeleteKey("jumpX");
+        PlayerPrefs.DeleteKey("jumpScaleX");
+        PlayerPrefs.DeleteKey("jumpY");
+        PlayerPrefs.DeleteKey("jumpScaleY");
+        PlayerPrefs.DeleteKey("slideX");
+        PlayerPrefs.DeleteKey("slideScaleX");
+        PlayerPrefs.DeleteKey("slideY");
+        PlayerPrefs.DeleteKey("slideScaleY");
+
+
+        joyStick.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 75), PlayerPrefs.GetFloat("joyY", 36), 0);
+        joyStick.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
+
+        runButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("runX", -52.5f), PlayerPrefs.GetFloat("runY", 143.29f), 0);
+        runButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("runScaleX", 1), PlayerPrefs.GetFloat("runScaleY", 1), 0);
+
+        jumpButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("jumpX", -91), PlayerPrefs.GetFloat("jumpY", 73), 0);
+        jumpButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("jumpScaleX", 1), PlayerPrefs.GetFloat("jumpScaleY", 1), 0);
+
+        jumpButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("slideX", -133.73f), PlayerPrefs.GetFloat("slideY", 143.29f), 0);
+        jumpButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("slideScaleX", 1), PlayerPrefs.GetFloat("slideScaleY", 1), 0);
+
+
+    }
+
+
     public void ResizeUI(float size) 
     {
         if (currentSelectedObject != null) 
         {
             currentSelectedObject.transform.localScale = new Vector3(1f + size, 1f + size, 0);
-        }
-    }
-
-
-
-
-    private void Update()
-    {
-        if (Input.touchCount > 0)
-        {
-            Touch touch = Input.GetTouch(0);
-            {
-                RaycastHit hit;
-                Ray ray = RFMCamera.ScreenPointToRay(touch.position);
-                print(touch.position);
-                if (Physics.Raycast(ray, out hit))
-                {
-                    GameObject touchedObject = hit.transform.gameObject;
-                    print("hit a gameObject prolly");
-                    print(hit.transform.name);
-                    if (hit.transform.gameObject.CompareTag("resizable")) 
-                    {
-                        print("TOUCH2");
-                        currentSelectedObject = touchedObject;
-                    }
-                }
-            }           
-
         }
     }
 }
