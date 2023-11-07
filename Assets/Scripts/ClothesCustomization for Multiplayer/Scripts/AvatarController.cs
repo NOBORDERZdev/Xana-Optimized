@@ -130,31 +130,34 @@ public class AvatarController : MonoBehaviour
     {
 
         XanaConstants.xanaConstants.isNFTEquiped = false;
-        ResetBonesDefault(bodyParts);
-        bodyParts.DefaultBlendShapes(this.gameObject);
-
-        bodyParts.DefaultTexture(false);
-        ResizeClothToBodyFat(this.gameObject, 0);
-
-        if (wornEyewearable)
-            UnStichItem("EyeWearable");
-
-        if (wornChain)
-            UnStichItem("Chain");
-
-        if (wornGloves)
+        if (bodyParts != null)
         {
-            bodyParts.TextureForGlove(null);
-            UnStichItem("Glove");
+
+            ResetBonesDefault(bodyParts);
+            bodyParts.DefaultBlendShapes(this.gameObject);
+
+            bodyParts.DefaultTexture(false);
+            ResizeClothToBodyFat(this.gameObject, 0);
+
+            if (wornEyewearable)
+                UnStichItem("EyeWearable");
+
+            if (wornChain)
+                UnStichItem("Chain");
+
+            if (wornGloves)
+            {
+                bodyParts.TextureForGlove(null);
+                UnStichItem("Glove");
+            }
+
+            bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 1);
+            bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 1);
+
+            BoxerNFTEventManager.OnNFTUnequipShaderUpdate?.Invoke();
+            BoxerNFTEventManager.NFTLightUpdate?.Invoke(LightPresetNFT.DefaultSkin);
+            IntializeAvatar();
         }
-
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 1);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 1);
-
-        BoxerNFTEventManager.OnNFTUnequipShaderUpdate?.Invoke();
-        BoxerNFTEventManager.NFTLightUpdate?.Invoke(LightPresetNFT.DefaultSkin);
-        IntializeAvatar();
-
     }
 
     public void SetAvatarClothDefault(GameObject applyOn)
@@ -198,6 +201,7 @@ public class AvatarController : MonoBehaviour
 
     public async void IntializeAvatar(bool canWriteFile = false)
     {
+        Debug.LogError("IntializeAvatar canWriteFile: " + canWriteFile);
         // Other Requirements 
         // Set "isNFTAquiped" Variable according to Equipt & Unequipt of the NFT
 
