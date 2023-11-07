@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class MeshRendererHandler : MonoBehaviour
 {
-    [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] MeshRenderer parentMeshRenderer;
+    [SerializeField] MeshRenderer netMeshRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        if (!meshRenderer)
+        if (!parentMeshRenderer)
         {
-            meshRenderer = GetComponent<MeshRenderer>();
+            parentMeshRenderer = GetComponent<MeshRenderer>();
         }
     }
 
@@ -18,26 +19,28 @@ public class MeshRendererHandler : MonoBehaviour
     {
         if (other.CompareTag("camHandler"))
         {
-            meshRenderer.enabled = false;
-            if (this.transform.childCount > 0) {
-                for (int i = 0; i < transform.childCount; i++) {
-                    transform.GetChild(i).gameObject.SetActive(false);
-                }
-            }
+            parentMeshRenderer.enabled = false;
+            netMeshRenderer.enabled = false;
+            //if (this.transform.childCount > 0) {
+            //    for (int i = 0; i < transform.childCount; i++) {
+            //        transform.GetChild(i).gameObject.SetActive(false);
+            //    }
+            //}
         }
     } 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("camHandler"))
         {
-            meshRenderer.enabled = true;
-            if (this.transform.childCount > 0)
-            {
-                for (int i = 0; i < transform.childCount; i++)
-                {
-                    transform.GetChild(i).gameObject.SetActive(true);
-                }
-            }
+            parentMeshRenderer.enabled = true;
+            netMeshRenderer.enabled = true;
+            //if (this.transform.childCount > 0)
+            //{
+            //    for (int i = 0; i < transform.childCount; i++)
+            //    {
+            //        transform.GetChild(i).gameObject.SetActive(true);
+            //    }
+            //}
         }
     }
 }

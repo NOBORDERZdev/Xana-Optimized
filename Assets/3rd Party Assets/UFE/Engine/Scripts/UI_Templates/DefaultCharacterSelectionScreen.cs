@@ -74,6 +74,15 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 	{
 		yield return new WaitForSeconds(0.8f);
 		print("Starting"); //kush
+
+        //Attizaz
+        int randomprofile1 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+        int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+
+        P1SelectedChar = FightingGameManager.instance.profiles[randomprofile1];
+        P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
+       // print("<color=red>DO UNCOMMENT ABOVE CODE</color>");
+	///////////////////////////////////////////////////////////////////////////////////////////////
 		UFE.SetPlayer1(P1SelectedChar);
 		UFE.SetPlayer2(P2SelectedChar);
 		//UFE.config.gameGUI.screenFadeDuration = 0f;

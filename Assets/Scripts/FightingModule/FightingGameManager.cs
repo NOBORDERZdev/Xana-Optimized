@@ -21,6 +21,8 @@ public class FightingGameManager : MonoBehaviour
     public AudioSource mainAudioSource;
     public AudioClip crowdSound,menuMusic;
 
+
+    public UFE3D.CharacterInfo[] profiles;
     private void Awake()
     {
         if (instance == null)
@@ -115,7 +117,6 @@ public class FightingGameManager : MonoBehaviour
             mainAudioSource.Play();
         }
     }
-
 
     #endregion
 

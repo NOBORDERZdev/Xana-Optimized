@@ -7,6 +7,12 @@ using UnityEngine;
 
 public class SoundChanger : MonoBehaviour
 {
+    private void Awake()
+    {
+      //  UFE.config.selectedStage.position = new FPLibrary.FPVector(0, -1.7f, 0);
+        //UFE.config.selectedStage._rightBoundary = 20;
+        //UFE.config.selectedStage._leftBoundary = 20;
+    }
     // Start is called before the first frame update
     void Start()
     {
