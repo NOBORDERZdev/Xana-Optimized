@@ -114,6 +114,8 @@ public class NpcChatSystem : MonoBehaviour
             if (XanaChatSystem.instance)
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.UserNpc, id.ToString());
             Debug.Log("Communication Response(UserAI): " + feed.response);
+
+            NpcSpawner.npcSpawner.npcModel[counter-1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(feed.response);
         }
         else
             Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);

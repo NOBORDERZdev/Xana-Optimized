@@ -347,7 +347,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                 }
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
-                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcCounter;
+                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
                     totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
                 }
                 //else

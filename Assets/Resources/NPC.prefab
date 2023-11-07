@@ -2411,6 +2411,7 @@ GameObject:
   - component: {fileID: 643616328065951517}
   - component: {fileID: 3006339212063398433}
   - component: {fileID: 4589838338599843764}
+  - component: {fileID: 2832265568828161933}
   m_Layer: 22
   m_Name: NPC
   m_TagString: PhotonLocalPlayer
@@ -3119,6 +3120,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reactionDisplay: {fileID: 1902365783454280086}
+--- !u!114 &2832265568828161933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cdbb7d331ba6245a02f495bfecfdea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatBoard: {fileID: 4925133271004135547}
+  chatText: {fileID: 8210428530870036614}
 --- !u!1 &4913886486643861697
 GameObject:
   m_ObjectHideFlags: 0
