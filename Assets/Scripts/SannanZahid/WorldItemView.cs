@@ -14,8 +14,6 @@ public class WorldItemView : MonoBehaviour
     public int Index;
     public Vector2 GridIndex { get; protected set; }
     public RectTransform RectTransform => transform as RectTransform;
-
-    public WorldItemDetail worldDetail;
     public void Activated()
     {
         gameObject.SetActive(true);
@@ -26,7 +24,8 @@ public class WorldItemView : MonoBehaviour
     }
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
     {
-        worldDetail = detail;
+        if(PreviewLogo)
+            PreviewLogo.gameObject.SetActive(true);
        Index = index;
        GridIndex = gridPos;
        idOfObject =  detail.IdOfWorld;
@@ -73,6 +72,7 @@ public class WorldItemView : MonoBehaviour
     public bool isOnScreen;
     public bool isVisible = false;
     bool isNotLoaded = true;
+    public Transform PreviewLogo;
 
     [Header("Tags and Category")]
     public string[] worldTags;
@@ -101,7 +101,8 @@ public class WorldItemView : MonoBehaviour
     {
         GetEventType(entityType);
         StartCoroutine(DownloadPrefabSprite());
-        this.GetComponent<Button>().interactable = false;
+        if (!m_EnvironmentName.Contains("XANA Lobby"))
+            this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         LoadImagesFromRemote();
@@ -179,8 +180,10 @@ public class WorldItemView : MonoBehaviour
        if(AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
+            if (PreviewLogo)
+                PreviewLogo.gameObject.SetActive(false);
         }
-       else
+        else
         {
             AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
             {
@@ -188,10 +191,12 @@ public class WorldItemView : MonoBehaviour
                 {
                     AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
                     isImageSuccessDownloadAndSave = true;
+                    if (PreviewLogo)
+                        PreviewLogo.gameObject.SetActive(false);
+
                 }
             });
         }
-      
     }
     void GetEventType(string entityType)
     {
@@ -248,6 +253,17 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
  
+        if(m_EnvironmentName.Contains("XANA Lobby"))
+        {
+            worldItemPreview.Init(XanaWorldBanner,
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
+        }
+        else
+        {
+            worldItemPreview.Init(worldIcon.sprite,
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
+        }
+       
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
@@ -260,17 +276,6 @@ public class WorldItemView : MonoBehaviour
         {
             XanaConstants.xanaConstants.userLimit = userLimit;
         }
-        if(m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
-        }
-        else
-        {
-            worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
-        }
-       
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
