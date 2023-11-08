@@ -76,6 +76,7 @@ namespace RFM.Managers
             EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
+
         }
 
 
@@ -514,24 +515,14 @@ namespace RFM.Managers
         /// </summary>
         private static IEnumerator FetchConfigDataFromServer()
         {
-            //the api is set we just have to get the map
-            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
-            using UnityWebRequest www = UnityWebRequest.Get(url);
-            // www.SetRequestHeader("Authorization", userToken);
-            www.SendWebRequest();
-            while (!www.isDone)
+            //if Devmode then make time unlimited for testing
+            if (RFMDevmodeManager.instance.devMode)
             {
-                yield return null;
-            }
-            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
-
                 CurrentGameConfiguration = new GameConfiguration
                 {
                     MatchMakingTime = 10,
                     TakePositionTime = 10,
-                    GameplayTime = 60,
+                    GameplayTime = 999999,
                     //GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     EscapeesToHuntersRatio = Vector2.one,
@@ -539,9 +530,37 @@ namespace RFM.Managers
                     MoneyPerInterval = 15,
                 };
             }
-            else
+            else 
             {
-                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+                //the api is set we just have to get the map
+                var url = "https://api.npoint.io/2b73c02e13403750bcb0";
+                using UnityWebRequest www = UnityWebRequest.Get(url);
+                // www.SetRequestHeader("Authorization", userToken);
+                www.SendWebRequest();
+                while (!www.isDone)
+                {
+                    yield return null;
+                }
+                if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError("RFM Failed to load configuration from API. Using default values...");
+
+                    CurrentGameConfiguration = new GameConfiguration
+                    {
+                        MatchMakingTime = 10,
+                        TakePositionTime = 10,
+                        GameplayTime = 60,
+                        //GameRestartWaitTime = 3000,
+                        MaxPlayersInRoom = 10,
+                        EscapeesToHuntersRatio = Vector2.one,
+                        GainingMoneyTimeInterval = 1,
+                        MoneyPerInterval = 15,
+                    };
+                }
+                else
+                {
+                    CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+                }
             }
         }
 

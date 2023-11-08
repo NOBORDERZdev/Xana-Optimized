@@ -39,9 +39,15 @@ public class CanvasButtonsHandler : MonoBehaviour
     public TextMeshProUGUI spiritText;
     public Image overlay;
     public Button runIcon;
+
+    //RFM
     public InputCharacterController RFMInputController;
     public GameObject slideBtn;
     public GameObject runBtn;
+    public GameObject jumpBtnRFM;
+    public GameObject joyStickRFM;
+    public Button setControlsLayoutBtnRFM;
+
     public GameObject favouriteBtn;
     public Action<bool> jumpAction;
     public Action<bool> slideAction;
