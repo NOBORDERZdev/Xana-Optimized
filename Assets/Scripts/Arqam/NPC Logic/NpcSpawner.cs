@@ -20,7 +20,7 @@ public class NpcSpawner : MonoBehaviour
     {
         if (npcSpawner is null)
             npcSpawner = this;
-        else
+        else if(npcSpawner != null && npcSpawner != this)
             Destroy(this.gameObject);
     }
     private void OnEnable()
