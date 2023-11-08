@@ -513,6 +513,9 @@ public class GalleryImageManager : MonoBehaviour
 
         certificate.SetActive(false);
         StartCoroutine(museumRaycaster.WaitForCooldown());
+
+        if (m_RenderTexture != null)
+            m_RenderTexture.Release();
     }
 
 
