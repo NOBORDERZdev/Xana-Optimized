@@ -238,8 +238,21 @@ public class ItemDetail : MonoBehaviour
             isHairItem = true;
            // Debug.Log("IsStartItem=true");
         }
+        CheckDeemoNft();
     }
-    void Delay()
+    public void CheckDeemoNft()
+    {
+        if (!XanaConstants.xanaConstants.IsDeemoNFT)
+        {
+            if (name.Contains("deemotshirt"))
+            {
+                Debug.Log("yES dEEMO dEEMO");
+               this.gameObject.SetActive(false);
+            }
+
+        } 
+    }
+        void Delay()
     {
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
@@ -1187,4 +1200,6 @@ public class ItemDetail : MonoBehaviour
         StoreManager.instance.GreyRibbonImage.SetActive(false);
         StoreManager.instance.WhiteRibbonImage.SetActive(true);
     }
+  
+    
 }
