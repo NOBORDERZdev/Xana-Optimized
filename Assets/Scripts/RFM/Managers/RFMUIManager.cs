@@ -102,10 +102,13 @@ namespace RFM.Managers
             showMoney.gameObject.SetActive(false);
         }
 
-        public void EscapeeCaught(string nickName, int money, float timeSurvived, bool isNPC = false)
+        public void RunnerCaught(string nickName, int money, float timeSurvived, bool isNPC = false)
         {
-            string[] array = { nickName, timeSurvived.ToString() };
-            scores.Add(array, money);
+            if (isNPC)
+            {
+                string[] array = { nickName, timeSurvived.ToString() };
+                scores.Add(array, money);
+            }
 
             //if (isNPC) // only master should send the RPC if it's an NPC.
             //           // Otherwise, there will be multiple enteries for one NPC
@@ -136,6 +139,24 @@ namespace RFM.Managers
 
         private void OnShowScores()
         {
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                int money = 0;
+                float timeSurvived = 0;
+                if (player.CustomProperties.TryGetValue("money", out object _money))
+                {
+                    money = (int)_money;
+                }
+                if (player.CustomProperties.TryGetValue("timeSurvived", out object _timeSurvived))
+                {
+                    timeSurvived = (float)_timeSurvived;
+                }
+
+                string[] array = { player.NickName, timeSurvived.ToString() };
+                scores.Add(array, money);
+            }
+
+
             scores = scores.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
             foreach (var score in scores)
@@ -144,27 +165,27 @@ namespace RFM.Managers
                 entry.Init(score.Key[0], score.Value, score.Key[1], 1 + scores.Keys.ToList().IndexOf(score.Key));
             }
 
-            //var npcEscapees = FindObjectsOfType<NPCEscapee>();
-            //var playerEscapees = FindObjectsOfType<PlayerEscapee>();
+            //var npcRunners = FindObjectsOfType<NPCRunner>();
+            //var playerRunners = FindObjectsOfType<PlayerRunner>();
 
-            //npcEscapees = npcEscapees.OrderByDescending(x => x.money).ToArray();
-            //playerEscapees = playerEscapees.OrderByDescending(x => x.Money).ToArray();
+            //npcRunners = npcRunners.OrderByDescending(x => x.money).ToArray();
+            //playerRunners = playerRunners.OrderByDescending(x => x.Money).ToArray();
 
-            //Debug.LogError("RFM npcEscapees: " + npcEscapees.Length);
-            //Debug.LogError("RFM playerEscapees: " + playerEscapees.Length);
+            //Debug.LogError("RFM npcRunners: " + npcRunners.Length);
+            //Debug.LogError("RFM playerRunners: " + playerRunners.Length);
 
-            //for (int i = 0; i < playerEscapees.Length; i++)
+            //for (int i = 0; i < playerRunners.Length; i++)
             //{
-            //    PlayerEscapee playerEscapee = playerEscapees[i];
+            //    PlayerRunner playerRunner = playerRunners[i];
             //    var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            //    entry.Init(playerEscapee.nickName, playerEscapee.Money, playerEscapee.timeSurvived, i);
+            //    entry.Init(playerRunner.nickName, playerRunner.Money, playerRunner.timeSurvived, i);
             //}
 
-            //for (int i = 0; i < npcEscapees.Length; i++)
+            //for (int i = 0; i < npcRunners.Length; i++)
             //{
-            //    NPCEscapee npcEscapee = npcEscapees[i];
+            //    NPCRunner npcRunner = npcRunners[i];
             //    var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-            //    entry.Init(npcEscapee.nickName, npcEscapee.money, npcEscapee.timeSurvived, i);
+            //    entry.Init(npcRunner.nickName, npcRunner.money, npcRunner.timeSurvived, i);
             //}
         }
     }

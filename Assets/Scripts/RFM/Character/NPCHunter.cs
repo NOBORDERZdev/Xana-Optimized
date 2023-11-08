@@ -24,7 +24,7 @@ namespace RFM.Character
         public Transform CameraTarget => cameraPosition;
 
         // Catch player in range
-        [SerializeField] private float timeToCatchEscapee = 5;
+        [SerializeField] private float timeToCatchRunner = 5;
         [SerializeField] private float catchRadius = 2;
         private float _catchTimer;
         private GameObject _inRangePlayer;
@@ -58,7 +58,7 @@ namespace RFM.Character
             _players = new List<GameObject>(
                 GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
             _players.AddRange(new List<GameObject>(
-                GameObject.FindGameObjectsWithTag(Globals.ESCAPEE_NPC_TAG)));
+                GameObject.FindGameObjectsWithTag(Globals.RUNNER_NPC_TAG)));
 
             if (_players.Count > 0)
             {
@@ -102,13 +102,13 @@ namespace RFM.Character
             else
             {
                 _catchTimer += Time.deltaTime;
-                if (_catchTimer >= timeToCatchEscapee)
+                if (_catchTimer >= timeToCatchRunner)
                 {
                     _catchTimer = 0;
                     _players.Remove(_inRangePlayer);
                     _target = null;
                     killVFX.SetActive(true);
-                    _inRangePlayer.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                    _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
                 }
             }
         }
@@ -147,12 +147,12 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
+            if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             {
                 _players.Remove(other.gameObject);
                 _target = null;
                 killVFX.SetActive(true);
-                other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
+                other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
             }
             
             else if (other.CompareTag(Globals.PLAYER_TAG)/*Globals.LOCAL_PLAYER_TAG*/)
@@ -161,7 +161,7 @@ namespace RFM.Character
                 _target = null;
                 killVFX.SetActive(true);
                 
-                other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                other.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
             }
         }
 

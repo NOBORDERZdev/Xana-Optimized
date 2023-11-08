@@ -18,12 +18,12 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
+            if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             {
                 _players.Remove(other.gameObject);
                 _target = null;
                 killVFX.SetActive(true);
-                other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
+                other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
             }
             
             else if (other.CompareTag(Globals.PLAYER_TAG))
@@ -32,7 +32,7 @@ namespace RFM.Character
                 _target = null;
                 killVFX.SetActive(true);
                 
-                other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaughtByPlayer(this);
+                other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
 
                 // PhotonView is on the parent of the gameobject that has a collider.
                 // int colliderViewId = other.transform.root.GetComponent<PhotonView>().ViewID;
