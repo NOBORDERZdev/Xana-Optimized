@@ -384,7 +384,8 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        WorldItemManager.DisplayWorlds(_apiURL);
+        if(WorldItemManager.gameObject.activeInHierarchy)
+            WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
       //  TutorialsManager.instance.ShowTutorials();
