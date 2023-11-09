@@ -6,8 +6,6 @@ using UnityEngine.Rendering.Universal;
 
 public class BuildingDetect : MonoBehaviour
 {
-    [Header("Avatar Change")]
-    public GameObject[] tmpModel;
 
     #region Special Item Fields
 
@@ -377,7 +375,7 @@ public class BuildingDetect : MonoBehaviour
             //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
             _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
-
+            _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);
     }
