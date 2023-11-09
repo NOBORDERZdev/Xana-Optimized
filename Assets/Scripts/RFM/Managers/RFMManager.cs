@@ -91,6 +91,7 @@ namespace RFM.Managers
 
         private IEnumerator Start()
         {
+            Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
 
             if (PhotonNetwork.IsMasterClient)
@@ -171,7 +172,45 @@ namespace RFM.Managers
             }
         }
 
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                if ( PhotonNetwork.IsMasterClient)
+                {
+                    if (PhotonNetwork.PlayerListOthers.Length > 0)
+                    {
+                        Debug.LogError("RPC Called");
+                        GetComponent<PhotonView>().RPC("ChangeMasterClientifAvailble", PhotonNetwork.PlayerListOthers[0]);
+                    }
+                    ChangeMasterClientifAvailble();
+                    PhotonNetwork.SendAllOutgoingCommands();
 
+                }
+            }
+        } 
+
+        [PunRPC]
+        public void ChangeMasterClientifAvailble()
+        {
+            Debug.LogError("ChangeMasterClientifAvailble: "+PhotonNetwork.LocalPlayer.NickName);
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            {
+                return;
+            }
+
+            PhotonNetwork.SetMasterClient(PhotonNetwork.MasterClient.GetNext());
+        }
+
+
+        public virtual void OnMasterClientSwitched(Player newMasterClient)
+        {
+            Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
+        }
         private IEnumerator StartRFM()
         {
             EventsManager.StartCountdown();
@@ -203,7 +242,7 @@ namespace RFM.Managers
 
                 StartCoroutine(SpawnNPCs(roles.Item4, roles.Item3));
                 //SpawnAIEscapees(roles.Item3);
-                
+
                 var numberOfPlayerHunters = roles.Item2;
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
                 {
@@ -302,7 +341,7 @@ namespace RFM.Managers
             //RFMCharacter.gameStartAction?.Invoke();
         }
 
-        
+
         private void AfterTakePositionTimerHunter()
         {
             Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
@@ -328,7 +367,7 @@ namespace RFM.Managers
         {
             Debug.Log("RFM numOfAIHunters: " + numOfHunters);
             var delay = (numOfHunters + numOfEscapees) / 11; // 10 seconds countdown.
-                                                            // Need to spawn all NPCs beofre last second
+                                                             // Need to spawn all NPCs beofre last second
 
             for (int i = 0; i < numOfHunters; i++)
             {
@@ -339,7 +378,7 @@ namespace RFM.Managers
 
                 yield return new WaitForSeconds(delay);
             }
-            
+
             Debug.Log("RFM numOfAIEscapees: " + numOfEscapees);
             for (int i = 0; i < numOfEscapees; i++)
             {
@@ -530,7 +569,7 @@ namespace RFM.Managers
                     MoneyPerInterval = 15,
                 };
             }
-            else 
+            else
             {
                 //the api is set we just have to get the map
                 var url = "https://api.npoint.io/2b73c02e13403750bcb0";
