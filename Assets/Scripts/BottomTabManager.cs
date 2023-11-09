@@ -41,7 +41,7 @@ public class BottomTabManager : MonoBehaviour
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
         }
-        OnSelectedClick(defaultSelection);
+      //---->>>Sannan  OnSelectedClick(defaultSelection);
 
         if (UIManager.Instance != null && defaultSelection == 0)
         {
@@ -51,6 +51,7 @@ public class BottomTabManager : MonoBehaviour
 
     public void OnSelectedClick(int index)
     {
+        return;
         for (int i = 0; i < allButtonIcon.Count; i++)
         {
             if (i == index)
@@ -74,9 +75,27 @@ public class BottomTabManager : MonoBehaviour
     }
     public void CheckLoginOrNotForFooterButton()
     {
-        if (UIManager.Instance != null)
+        ////---->>>Sannan   if (UIManager.Instance != null)
+        //{
+        //    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+        //}
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        else
+        {
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        }
+        if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
+        {
+            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
         }
     }
 
@@ -121,24 +140,36 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
+        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        {
+            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+        }
+        UIManager.Instance.HomeWorldScreen.SetActive(false);
+        UIManager.Instance.HomePage.SetActive(true);
+    }
+    public void OnClickHomeWorldButton()
+    {
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
-        if (defaultSelection != 0)
+       // if (defaultSelection != 0)
         {
-            OnSelectedClick(0);
+            //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
                 FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
             }
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
-            }
+            ////---->>>Sannan   if (UIManager.Instance != null)
+            //   {
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            // }
 
-            UIManager.Instance.Canvas.SetActive(true);
-            UIManager.Instance.SwitchToScreen(0);
+            //  UIManager.Instance.Canvas.SetActive(true);
+            UIManager.Instance.HomeWorldScreen.SetActive(true);
+            UIManager.Instance.HomePage.SetActive(false);
+              UIManager.Instance.SwitchToScreen(0);
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
@@ -162,7 +193,7 @@ public class BottomTabManager : MonoBehaviour
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 1;
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
                 }
-                UIManager.Instance.Canvas.SetActive(true);
+               // UIManager.Instance.Canvas.SetActive(true);
                 UIManager.Instance.SwitchToScreen(1);
                 WorldManager.instance.ChangeWorld(APIURL.Hot);
                 WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
@@ -187,7 +218,7 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
             }
 
-            UIManager.Instance.Canvas.SetActive(true);
+           // UIManager.Instance.Canvas.SetActive(true);
         }
         GameManager.Instance.BottomAvatarBtnPressed();
     }
@@ -228,7 +259,7 @@ public class BottomTabManager : MonoBehaviour
 
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -321,10 +352,10 @@ public class BottomTabManager : MonoBehaviour
                     FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
                 }
             }
-
+            UIManager.Instance.HomeWorldScreen.SetActive(false);
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -335,7 +366,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (defaultSelection != 4)
         {
-            OnSelectedClick(4);
+            //---->>>Sannan OnSelectedClick(4);
             defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
 
@@ -363,13 +394,24 @@ public class BottomTabManager : MonoBehaviour
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
     }
 
-
+    public void ShopButtonClicked()
+    {
+        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        {
+            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
+            //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+        }
+        UIManager.Instance.ShowFooter(false);
+        UIManager.Instance.HomeWorldScreen.SetActive(false);
+    }
     public void SetDefaultButtonSelection(int index)
     {
         switch (index)

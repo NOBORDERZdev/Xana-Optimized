@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
+    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
     public GameObject _SplashScreen;
     public Transform SecondSliderScrollView;
 
@@ -74,7 +74,7 @@ public class UIManager : MonoBehaviour
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
-                    AvatarWindowHolder.gameObject.SetActive(true);
+                    AvatarWindowHolder.gameObject.SetActive(false);
                     LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);

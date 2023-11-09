@@ -367,7 +367,7 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                if(EventPrefabLobby.activeInHierarchy)
+               // if(EventPrefabLobby.activeInHierarchy)
                     EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
@@ -384,10 +384,11 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        WorldItemManager.DisplayWorlds(_apiURL);
+        if(WorldItemManager.gameObject.activeInHierarchy)
+            WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        TutorialsManager.instance.ShowTutorials();
+      //  TutorialsManager.instance.ShowTutorials();
     }
     public void WorldPageStateHandler(bool _checkCheck)
     {
