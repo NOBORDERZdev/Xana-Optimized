@@ -1,13 +1,8 @@
 ﻿using Cinemachine;
-using Metaverse;
 using Photon.Pun;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.OnScreen;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PlayerControllerNew : MonoBehaviour
@@ -136,7 +131,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     void Start()
     {
-
         originalSprintSpeed = sprintSpeed;
         originalJumpSpeed = JumpVelocity;
 
@@ -1321,7 +1315,6 @@ public class PlayerControllerNew : MonoBehaviour
     }
     /// </summary>
 
-
     public bool isNinjaMotion = false;
     public bool isMovementAllowed = true;
     public bool isThrow = false;
@@ -1428,7 +1421,7 @@ public class PlayerControllerNew : MonoBehaviour
             else// player is walking
             {
 
-                PlayerIsWalking?.Invoke();
+                //PlayerIsWalking?.Invoke();
 
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
@@ -1487,7 +1480,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            PlayerIsIdle?.Invoke();
+            //PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
@@ -1643,17 +1636,21 @@ public class PlayerControllerNew : MonoBehaviour
         if (throwMainCo != null)
             throwMainCo = null;
 
-        if (swordModel == null)
+        if (swordModel == null && time > 0)
         {
             swordModel = PhotonNetwork.Instantiate(GamificationComponentData.instance.katanaPrefab.name, Vector3.zero, new Quaternion(0, 0, 0, 0));
             swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
 
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
-        NinjaCo = StartCoroutine(NinjaComponentTimer(time));
+        if (time > 0)
+        {
+            NinjaCo = StartCoroutine(NinjaComponentTimer(time));
+        }
     }
     public IEnumerator NinjaComponentTimer(float time)
     {
+        BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
         isDrawSword = false;
         if (swordModel && time != 0)
         {
@@ -1678,6 +1675,8 @@ public class PlayerControllerNew : MonoBehaviour
         isDrawSword = false;
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
         sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
+        BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
+
     }
     bool attackwithSword, attackwithShuriken, hideoropenSword;
     void AttackwithSword() => attackwithSword = true;
@@ -1741,12 +1740,14 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = true;
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
+                    BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
                 }
                 else
                 {
                     throwLineRenderer.enabled = false;
                     trajectoryController.colliderAim.SetActive(false);
                     handBall.SetActive(false);
+                    BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
                 }
 
                 //Debug.Log("Throw Mode Active");
@@ -1769,6 +1770,7 @@ public class PlayerControllerNew : MonoBehaviour
                             throwStart = StartCoroutine(ThrowStart());
                         }
                     }
+
                     if (!isThrowPose && animator.GetCurrentAnimatorStateInfo(0).IsName("throw") && throwStart == null && throwAction == null)
                     {
                         isThrowPose = !isThrowPose;

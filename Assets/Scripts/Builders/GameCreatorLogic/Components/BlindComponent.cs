@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using Models;
+using System;
 using Photon.Pun;
 using UnityEngine;
+using ExitGames.Client.Photon.StructWrapping;
 
 public class BlindComponent : ItemComponent
 {
@@ -17,6 +19,9 @@ public class BlindComponent : ItemComponent
 
     float time;
     string RuntimeItemID = "";
+
+    GameObject playerObject;
+
     void Start()
     {
         _light = FindObjectsOfType<Light>();
@@ -39,11 +44,12 @@ public class BlindComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            playerObject = _other.gameObject;
             if (!IsAgainTouchable) return;
 
             IsAgainTouchable = false;
 
-            if(GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
@@ -78,7 +84,31 @@ public class BlindComponent : ItemComponent
         }
         PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
 
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+
+        float timeDiff = 0;
+        if (playerObject != null)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            var hash = new ExitGames.Client.Photon.Hashtable();
+            hash.Add("blindComponent", DateTime.UtcNow.ToString());
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
+        else
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent",out object blindComponent))
+            {
+                string blindComponentstr = blindComponent.ToString();
+                DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr).ToUniversalTime(); ;
+                DateTime currentDateTime = DateTime.UtcNow;
+                TimeSpan diff = dateTimeRPC - currentDateTime;
+
+                timeDiff = (diff.Minutes * 60) + diff.Seconds;
+                time = timeDiff;
+
+                if (time == 0 || time > blindComponentData.time)
+                    return;
+            }
+        }
 
         if (time == 0 && !blindComponentData.isOff)
         {
@@ -99,8 +129,11 @@ public class BlindComponent : ItemComponent
 
     public override void StopBehaviour()
     {
+        if(isPlaying)
+        {
         isPlaying = false;
         StopComponent();
+        }
     }
 
     public override void PlayBehaviour()
