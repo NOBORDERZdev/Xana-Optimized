@@ -376,9 +376,10 @@ public class BottomTabManager : MonoBehaviour
         {
             FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
             FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
-           // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
-          //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+            // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
+            //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
+        UIManager.Instance.ShowFooter(false);
     }
     public void SetDefaultButtonSelection(int index)
     {

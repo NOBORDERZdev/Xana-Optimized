@@ -1278,6 +1278,7 @@ public class StoreManager : MonoBehaviour
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
+        UIManager.Instance.ShowFooter(true);
         if (saveStoreBtnButton.interactable == true)
             ReturnHomePopUp.SetActive(true);
         else
