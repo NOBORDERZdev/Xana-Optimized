@@ -335,7 +335,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (defaultSelection != 4)
         {
-            OnSelectedClick(4);
+            //---->>>Sannan OnSelectedClick(4);
             defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
 
@@ -369,7 +369,16 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
-
+    public void ShopButtonClicked()
+    {
+        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        {
+            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+           // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
+          //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+        }
+    }
     public void SetDefaultButtonSelection(int index)
     {
         switch (index)

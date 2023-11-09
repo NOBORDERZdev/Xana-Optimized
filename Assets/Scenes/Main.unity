@@ -51251,6 +51251,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8957875775553727377, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957875775563425835, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -51265,6 +51269,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775563425835, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775585424744, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
@@ -51425,7 +51433,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6527359761169222394}
+    - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ShopButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BottomTabManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8957875776355661021, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_Spacing
@@ -52717,7 +52741,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!114 &5771878551162209363
 MonoBehaviour:
