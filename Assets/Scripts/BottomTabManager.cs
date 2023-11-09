@@ -352,7 +352,7 @@ public class BottomTabManager : MonoBehaviour
                     FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
                 }
             }
-
+            UIManager.Instance.HomeWorldScreen.SetActive(false);
             if (UIManager.Instance.Canvas.activeSelf)
             {
                // UIManager.Instance.Canvas.SetActive(false);
