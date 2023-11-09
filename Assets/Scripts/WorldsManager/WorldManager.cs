@@ -387,7 +387,7 @@ public class WorldManager : MonoBehaviour
         WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        TutorialsManager.instance.ShowTutorials();
+      //  TutorialsManager.instance.ShowTutorials();
     }
     public void WorldPageStateHandler(bool _checkCheck)
     {

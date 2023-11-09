@@ -41,7 +41,7 @@ public class BottomTabManager : MonoBehaviour
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
         }
-        OnSelectedClick(defaultSelection);
+      //---->>>Sannan  OnSelectedClick(defaultSelection);
 
         if (UIManager.Instance != null && defaultSelection == 0)
         {
@@ -74,10 +74,10 @@ public class BottomTabManager : MonoBehaviour
     }
     public void CheckLoginOrNotForFooterButton()
     {
-        if (UIManager.Instance != null)
-        {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-        }
+        ////---->>>Sannanif (UIManager.Instance != null)
+        //{
+        //    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+        //}
     }
 
     public void HomeSceneFooterSNSButtonIntrectableTrueFalse()
