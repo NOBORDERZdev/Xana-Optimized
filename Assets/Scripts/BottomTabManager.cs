@@ -51,6 +51,7 @@ public class BottomTabManager : MonoBehaviour
 
     public void OnSelectedClick(int index)
     {
+        return;
         for (int i = 0; i < allButtonIcon.Count; i++)
         {
             if (i == index)
@@ -162,7 +163,7 @@ public class BottomTabManager : MonoBehaviour
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 1;
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
                 }
-                UIManager.Instance.Canvas.SetActive(true);
+               // UIManager.Instance.Canvas.SetActive(true);
                 UIManager.Instance.SwitchToScreen(1);
                 WorldManager.instance.ChangeWorld(APIURL.Hot);
                 WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
@@ -187,7 +188,7 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
             }
 
-            UIManager.Instance.Canvas.SetActive(true);
+           // UIManager.Instance.Canvas.SetActive(true);
         }
         GameManager.Instance.BottomAvatarBtnPressed();
     }
@@ -228,7 +229,7 @@ public class BottomTabManager : MonoBehaviour
 
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -324,7 +325,7 @@ public class BottomTabManager : MonoBehaviour
 
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -363,7 +364,7 @@ public class BottomTabManager : MonoBehaviour
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance.Canvas.SetActive(false);
+               // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }

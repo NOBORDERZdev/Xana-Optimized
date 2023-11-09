@@ -22877,7 +22877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 29713220771265418, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 29713220771265419, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_Pivot.x
@@ -51273,7 +51273,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6527359761169222394}
+    - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickFeedButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BottomTabManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875775563425836, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775585424744, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_Type
