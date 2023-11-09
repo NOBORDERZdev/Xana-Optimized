@@ -75,7 +75,7 @@ public class BottomTabManager : MonoBehaviour
     }
     public void CheckLoginOrNotForFooterButton()
     {
-        ////---->>>Sannanif (UIManager.Instance != null)
+        ////---->>>Sannan   if (UIManager.Instance != null)
         //{
         //    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
         //}
@@ -122,24 +122,36 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
+        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        {
+            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+        }
+        UIManager.Instance.HomeWorldScreen.SetActive(false);
+        UIManager.Instance.HomePage.SetActive(true);
+    }
+    public void OnClickHomeWorldButton()
+    {
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
-        if (defaultSelection != 0)
+       // if (defaultSelection != 0)
         {
-            OnSelectedClick(0);
+            //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
                 FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
             }
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
-            }
+            ////---->>>Sannan   if (UIManager.Instance != null)
+            //   {
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            // }
 
-            UIManager.Instance.Canvas.SetActive(true);
-            UIManager.Instance.SwitchToScreen(0);
+            //  UIManager.Instance.Canvas.SetActive(true);
+            UIManager.Instance.HomeWorldScreen.SetActive(true);
+            UIManager.Instance.HomePage.SetActive(false);
+              UIManager.Instance.SwitchToScreen(0);
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
