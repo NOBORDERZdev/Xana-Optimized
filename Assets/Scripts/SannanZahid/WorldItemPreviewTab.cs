@@ -124,7 +124,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+      //  UIManager.Instance.HomePage.SetActive(true);
         FadeImg.sprite = WorldIconImg.sprite;
         UpdateWorldPanel();
         string EnvironmentName = WorldNameTxt.text; 
