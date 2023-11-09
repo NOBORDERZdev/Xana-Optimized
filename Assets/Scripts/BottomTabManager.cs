@@ -392,6 +392,7 @@ public class BottomTabManager : MonoBehaviour
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
         UIManager.Instance.ShowFooter(false);
+        UIManager.Instance.HomeWorldScreen.SetActive(false);
     }
     public void SetDefaultButtonSelection(int index)
     {
