@@ -79,6 +79,24 @@ public class BottomTabManager : MonoBehaviour
         //{
         //    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
         //}
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        {
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        else
+        {
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        }
+        if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
+        {
+            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+        }
     }
 
     public void HomeSceneFooterSNSButtonIntrectableTrueFalse()
