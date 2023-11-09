@@ -109,6 +109,8 @@ public class AvatarControllerHome : MonoBehaviour
     /// </summary>
     void Wander() {
         animator.SetBool("Action", false);
+        animator.SetBool("isMoving", true);
+
         agent.enabled = true;
         Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius, maxRadius), -1);
         agent.SetDestination(newPos);
@@ -154,6 +156,7 @@ public class AvatarControllerHome : MonoBehaviour
     }
 
     void perfomAnim() {
+        animator.SetBool("isMoving", false);
         animator.SetBool("Action",true);
         animator.SetFloat("Blend", 0f);
         Invoke(nameof(Wander), 8f);
