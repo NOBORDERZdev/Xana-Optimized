@@ -7,6 +7,9 @@ using UnityEngine.AI;
 public class AvatarControllerHome : MonoBehaviour
 {
     #region Editor_Wandering
+    [SerializeField] GameObject worldObj;
+    [SerializeField] GameObject storeCam;
+    [SerializeField] GameObject worldCam;
     [Header("Wandering")]
     [SerializeField] float minRadius;
     [SerializeField] float maxRadius;
@@ -23,12 +26,24 @@ public class AvatarControllerHome : MonoBehaviour
     #endregion
 
     bool isPerformingAction = false;
+
+    bool isInHome = true;
+    Vector3 startpos;
+    Vector3 startRot;
+    Vector3 lastpos;
     private void OnEnable()
     {
         timer = wanderTimer;
         agent.enabled = false;
         //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
         animator.SetBool("IsGrounded", true);
+        GetComponent<FaceIK>().ikActive = false;
+        GetComponent<FootStaticIK>().ikActive = false;
+        startpos = transform.position;
+        startRot = transform.eulerAngles;
+        storeCam.SetActive(false);
+        worldCam.SetActive(true);
+        worldObj.SetActive(true);
     }
 
     private void Start()
@@ -40,7 +55,7 @@ public class AvatarControllerHome : MonoBehaviour
 
     void Update()
     {
-        if (isMoving)
+        if (isMoving && isInHome)
         {
             if (!agent.pathPending)
             {
@@ -108,6 +123,10 @@ public class AvatarControllerHome : MonoBehaviour
     /// To wander in world
     /// </summary>
     void Wander() {
+        if (!isInHome)
+        {
+            return;
+        }
         animator.SetBool("Action", false);
         animator.SetBool("isMoving", true);
 
@@ -124,14 +143,14 @@ public class AvatarControllerHome : MonoBehaviour
                 animator.SetFloat("Blend", 0.25f);
                 agent.speed = 0.9f;
                 break;
-           /* case 1: // run
-                animator.SetFloat("Blend", 1.0f);
-                agent.speed = 2.2f;
-                break;
-            default: // sprint
-                animator.SetFloat("Blend", 1.3f);
-                agent.speed = 3;
-                break;*/
+                /* case 1: // run
+                     animator.SetFloat("Blend", 1.0f);
+                     agent.speed = 2.2f;
+                     break;
+                 default: // sprint
+                     animator.SetFloat("Blend", 1.3f);
+                     agent.speed = 3;
+                     break;*/
         }
         isMoving = true;
 
@@ -156,10 +175,48 @@ public class AvatarControllerHome : MonoBehaviour
     }
 
     void perfomAnim() {
+        isMoving = false;
         animator.SetBool("isMoving", false);
-        animator.SetBool("Action",true);
+        animator.SetBool("Action", true);
         animator.SetFloat("Blend", 0f);
         Invoke(nameof(Wander), 8f);
+    }
+
+    /// <summary>
+    /// To change player from Home to store and viceversa
+    /// </summary>
+    public void UpdateState(bool setToStore) {
+        animator.SetBool("Action", false);
+        animator.SetBool("isMoving", false);
+        isMoving = false;
+       
+        animator.SetFloat("Blend", 0.0f);
+        if (setToStore) // set player avatar for store
+        {
+            isInHome = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            print("STORE HOME CALL");
+            animator.SetBool("idel", true);
+            GetComponent<FaceIK>().ikActive = true;
+            GetComponent<FootStaticIK>().ikActive = true;
+            gameObject.transform.position = startpos;
+            gameObject.transform.eulerAngles = startRot;
+            storeCam.SetActive(true);
+            worldCam.SetActive(false);
+            worldObj.SetActive(false);
+        }
+        else
+        {
+            storeCam.SetActive(false);
+            worldCam.SetActive(true);
+            worldObj.SetActive(true);
+            isInHome = true;
+            animator.SetBool("idel", false);
+            GetComponent<FaceIK>().ikActive = false;
+            GetComponent<FootStaticIK>().ikActive = false;
+            GetComponent<NavMeshAgent>().enabled = true;
+            Wander();
+        }
     }
 
 }

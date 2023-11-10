@@ -409,6 +409,7 @@ public class BottomTabManager : MonoBehaviour
             // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         UIManager.Instance.ShowFooter(false);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
     }

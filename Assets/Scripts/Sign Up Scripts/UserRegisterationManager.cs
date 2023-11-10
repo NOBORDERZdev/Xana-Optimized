@@ -239,6 +239,8 @@ public class UserRegisterationManager : MonoBehaviour
                 StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
         }
+        print("CALlll");
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
 
         //  usernamePanal.SetActive(true);
     }
@@ -3388,6 +3390,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
             print("--- Return using namepanel" + Localusername);
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
 
             DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key

@@ -1288,6 +1288,8 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);
