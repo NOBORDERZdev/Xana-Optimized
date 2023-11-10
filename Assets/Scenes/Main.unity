@@ -8386,23 +8386,6 @@ PrefabInstance:
       objectReference: {fileID: 64211639564321974}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1b11b153176cf4ca44b4e270c47be3, type: 3}
---- !u!1 &129985680 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8957875776030714272, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
-  m_PrefabInstance: {fileID: 4874600109039586143}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &129985685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129985680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92e27a86c2bbbef4eb91b42efd231a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &130474497 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7141477523298660083, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
@@ -28241,6 +28224,7 @@ GameObject:
   - component: {fileID: 1190772601}
   - component: {fileID: 1190772600}
   - component: {fileID: 1190772602}
+  - component: {fileID: 1190772603}
   m_Layer: 0
   m_Name: AvatarButton
   m_TagString: Untagged
@@ -28351,9 +28335,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1594758011}
-        m_TargetAssemblyTypeName: CommingSoonMessageDisplayer, Assembly-CSharp
-        m_MethodName: CommingSoonMessage
+      - m_Target: {fileID: 6527359761169222394}
+        m_TargetAssemblyTypeName: BottomTabManager, Assembly-CSharp
+        m_MethodName: ShopButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28363,6 +28347,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1190772603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190772598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e27a86c2bbbef4eb91b42efd231a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1199138083
 GameObject:
   m_ObjectHideFlags: 0
@@ -42824,7 +42820,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861471897}
-  m_LocalRotation: {x: 0.23496974, y: 0.000000020763416, z: -0.000000005019301, w: 0.9720027}
+  m_LocalRotation: {x: 0.23496972, y: 0, z: 0, w: 0.9720027}
   m_LocalPosition: {x: -0.04, y: 3.307, z: -8.5199995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51426,15 +51422,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6207376626901806542, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.23496974
+      value: 0.23496972
       objectReference: {fileID: 0}
     - target: {fileID: 6207376626901806542, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000020763416
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6207376626901806542, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000005019301
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_RootOrder
@@ -51887,14 +51883,14 @@ PrefabInstance:
     - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6527359761169222394}
+      objectReference: {fileID: 1594758011}
     - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShopButtonClicked
+      value: CommingSoonMessage
       objectReference: {fileID: 0}
     - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: BottomTabManager, Assembly-CSharp
+      value: CommingSoonMessageDisplayer, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8957875776030714274, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
