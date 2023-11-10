@@ -47,6 +47,32 @@ public class UITransformController : MonoBehaviour
     {
         SetSliderValueEvent -= SetSliderValue;
     }
+
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(4f);
+        if (!openButton)
+        {
+            // openButton= FightingGameManager.instance.OpenButton;
+            GameObject button = GameObject.Find("ButtonSettings");
+            openButton = button.GetComponent<Button>();
+        }
+        openButton.onClick.AddListener(() =>
+        {
+            //BottomRightContainer.SetActive(true);
+            //TopRightContainer.SetActive(true);
+            //ModifierButtonConainer.SetActive(true);
+            //JoyStickContainer.SetActive(true);
+            DummyUIPanel.SetActive(true);
+            openModificationEvent?.Invoke(highlightColor, rangeRectTransform);
+            OnEditModeChanged?.Invoke(false);
+            editButton.gameObject.SetActive(true);
+            sizeSlider.interactable = false;
+            tipText.SetActive(false);
+
+        });
+    }
+
     void EnableEditMode()
     {
         OnEditModeChanged?.Invoke(true);
@@ -56,20 +82,7 @@ public class UITransformController : MonoBehaviour
     }
     private void Awake()
     {
-        openButton.onClick.AddListener(() =>
-        {
-            //BottomRightContainer.SetActive(true);
-            //TopRightContainer.SetActive(true);
-            //ModifierButtonConainer.SetActive(true);
-            //JoyStickContainer.SetActive(true);
-            DummyUIPanel.SetActive(true);
-            openModificationEvent(highlightColor, rangeRectTransform);
-            OnEditModeChanged?.Invoke(false);
-            editButton.gameObject.SetActive(true);
-            sizeSlider.interactable = false;
-            tipText.SetActive(false);
-
-        });
+       
         saveButton.onClick.AddListener(() =>
         {
             saveAndCloseEvent();

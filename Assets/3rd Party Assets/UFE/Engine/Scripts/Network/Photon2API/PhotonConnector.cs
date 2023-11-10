@@ -300,7 +300,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     /// </remarks>
     public override void OnConnected()
     {
-        if (debugInfo) Debug.Log("PhotonConnector.OnConnected: "+PhotonNetwork.LocalPlayer.NickName);
+        if (debugInfo) Debug.Log("PhotonConnector.OnConnected: " + PhotonNetwork.LocalPlayer.NickName);
         this.RaiseOnInitializationSuccessful();
     }
 
@@ -481,6 +481,16 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
                 this.RaiseOnJoined(new MultiplayerAPI.JoinedMatchInformation(PhotonNetwork.CurrentRoom.Name));
             }
         }
+        Hashtable customProperties = new Hashtable();
+        if (ProfileSelector._instance.currentProfile == -1)
+        {
+            ProfileSelector._instance.currentProfile = Random.Range(0, FightingGameManager.instance.profiles.Length);
+        }
+        customProperties["profileId"] = ProfileSelector._instance.currentProfile; // Replace 123 with your desired integer value.
+
+        // Set the custom properties for the local player.
+        PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
+
     }
 
     /// <summary>
@@ -492,7 +502,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     /// </remarks>
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        if (debugInfo) Debug.Log("PhotonConnector.OnPlayerConnected"+ newPlayer.NickName);
+        if (debugInfo) Debug.Log("PhotonConnector.OnPlayerConnected" + newPlayer.NickName);
 
         if (this._isMasterClient)
         {
@@ -548,8 +558,8 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
         if (debugInfo) Debug.Log("PhotonConnector.OnConnectedToMaster");
 
         Hashtable playerProperties = new Hashtable();
-        playerProperties.Add("PlayerName",PlayerPrefs.GetString("PlayerName"));
-        playerProperties.Add("NFTURL",XanaConstants.xanaConstants.NFTUrl);
+        playerProperties.Add("PlayerName", PlayerPrefs.GetString("PlayerName"));
+        playerProperties.Add("NFTURL", XanaConstants.xanaConstants.NFTUrl);
         playerProperties.Add("ClothJson", XanaConstants.xanaConstants.clothJson);
         PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;
         PhotonNetwork.JoinLobby();
@@ -602,7 +612,65 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player player, ExitGames.Client.Photon.Hashtable hashtable)
     {
         if (debugInfo) Debug.Log("PhotonConnector.OnPlayerPropertiesChanged");
+        SetPlayersProfiles();
+
     }
+    private void SetPlayersProfiles()
+    {
+        print("!!!!!!!!!!!!!!!!!!!!!!!!");
+        if (debugInfo) Debug.Log("PhotonConnector.OnPlayerPropertiesChanged");
+
+        if (!PhotonNetwork.LocalPlayer.IsLocal || PhotonNetwork.CurrentRoom.PlayerCount < 2)
+            return;
+
+        foreach (Player players in PhotonNetwork.PlayerList)
+        {
+            object profileIdObj;
+            if (players.CustomProperties.TryGetValue("profileId", out profileIdObj))
+            {
+
+                Debug.Log(players.NickName + " Has Profile ID : " + (int)profileIdObj);
+
+                if (PhotonNetwork.LocalPlayer.ActorNumber != players.ActorNumber)
+                {
+                    Debug.Log("Remote Player Name is :" + players.NickName);
+                    if (players.IsMasterClient)
+                    {
+                        int profileID = (int)profileIdObj;
+                        FightingGameManager.instance.id1 = profileID;
+                        //set this profileID to Player 1;
+                        //      DefaultCharacterSelectionScreen.instance.SetPlayer1(profileID);
+                    }
+                    else
+                    {
+                        int profileID = (int)profileIdObj;
+                        FightingGameManager.instance.id2 = profileID;
+                        //set this profileID to Player 2;
+                        //    DefaultCharacterSelectionScreen.instance.SetPlayer2(profileID);
+                    }
+                }
+                else
+                {
+                    Debug.Log("My Player Name is :" + players.NickName);
+                    if (players.IsMasterClient)
+                    {
+                        int profileID = (int)profileIdObj;
+                        FightingGameManager.instance.id1 = profileID;
+                        //set this profileID to Player 1;
+                        //    DefaultCharacterSelectionScreen.instance.SetPlayer1(profileID);
+                    }
+                    else
+                    {
+                        int profileID = (int)profileIdObj;
+                        FightingGameManager.instance.id2 = profileID;
+                        //set this profileID to Player 2;
+                        //   DefaultCharacterSelectionScreen.instance.SetPlayer2(profileID);
+                    }
+                }
+            }
+        }
+    }
+
 
     /// <summary>
     /// Called when the server sent the response to a FindFriends request and updated PhotonNetwork.Friends.
@@ -834,7 +902,6 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
 
     protected virtual void RaiseOnPlayerConnectedToMatch(MultiplayerAPI.PlayerInformation player)
     {
-        Debug.LogError("player networkIdentity: " + player.networkIdentity);
         if (debugInfo) Debug.Log("PhotonConnector.RaiseOnPlayerConnectedToMatch");
         if (this.OnPlayerConnectedToMatch != null)
         {

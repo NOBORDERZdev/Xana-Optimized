@@ -65,25 +65,44 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 				FightingGameManager.instance.CallRPC();
 			}
 		}
-
-
-
     }
 
-	System.Collections.IEnumerator GoToLoading() 
+
+	System.Collections.IEnumerator GoToLoading()
 	{
 		yield return new WaitForSeconds(0.8f);
 		print("Starting"); //kush
 
-        //Attizaz
-        int randomprofile1 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
-        int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+		//Attizaz
+		//int randomprofile1 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+		//int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
 
-        P1SelectedChar = FightingGameManager.instance.profiles[randomprofile1];
-        P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
-       // print("<color=red>DO UNCOMMENT ABOVE CODE</color>");
-	///////////////////////////////////////////////////////////////////////////////////////////////
-		UFE.SetPlayer1(P1SelectedChar);
+		//if (ProfileSelector._instance.currentProfile == -1)
+		//{
+
+		//	P1SelectedChar = FightingGameManager.instance.profiles[randomprofile1];
+		//	P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
+		//}
+		//else
+		//{
+			P1SelectedChar = FightingGameManager.instance.profiles[FightingGameManager.instance.id1];
+			P2SelectedChar = FightingGameManager.instance.profiles[FightingGameManager.instance.id2];
+		//		}
+		if (UFE.gameMode == GameMode.TrainingRoom|| UFE.gameMode == GameMode.VersusMode) {
+
+			if (ProfileSelector._instance.currentProfile == -1) {
+				ProfileSelector._instance.currentProfile = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+			}
+
+			P1SelectedChar = FightingGameManager.instance.profiles[ProfileSelector._instance.currentProfile];
+
+			int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+			P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
+		}
+
+			// print("<color=red>DO UNCOMMENT ABOVE CODE</color>");
+			///////////////////////////////////////////////////////////////////////////////////////////////
+			UFE.SetPlayer1(P1SelectedChar);
 		UFE.SetPlayer2(P2SelectedChar);
 		//UFE.config.gameGUI.screenFadeDuration = 0f;
 		//instance.globalConfigFile.gameGUI.screenFadeDuration = 0f;
@@ -91,6 +110,40 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 		//instance.hasFadeOut = false;
 		UFE.StartLoadingBattleScreen();
 	}
+	//System.Collections.IEnumerator GoToLoading() 
+	//{
+	//	yield return new WaitForSeconds(0.8f);
+	//	print("Starting"); //kush
+
+	//	//Attizaz
+
+	//	int randomprofile1 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+ //       int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+
+	//	if (ProfileSelector._instance.currentProfile == -1)
+	//	{
+
+	//		P1SelectedChar = FightingGameManager.instance.profiles[randomprofile1];
+	//		P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
+	//	}
+	//	else
+	//	{
+	//		P1SelectedChar = FightingGameManager.instance.profiles[ProfileSelector._instance.currentProfile];
+	//		P2SelectedChar = FightingGameManager.instance.profiles[ProfileSelector._instance.currentProfile];
+	//	}
+
+
+
+ //      // print("<color=red>DO UNCOMMENT ABOVE CODE</color>");
+	/////////////////////////////////////////////////////////////////////////////////////////////////
+	//	UFE.SetPlayer1(P1SelectedChar);
+	//	UFE.SetPlayer2(P2SelectedChar);
+	//	//UFE.config.gameGUI.screenFadeDuration = 0f;
+	//	//instance.globalConfigFile.gameGUI.screenFadeDuration = 0f;
+	//	//instance.hasFadeIn = false;
+	//	//instance.hasFadeOut = false;
+	//	UFE.StartLoadingBattleScreen();
+	//}
 
 	//Attizaz
 	//void GetPlayersInstances()

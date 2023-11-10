@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FightingGameManager : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class FightingGameManager : MonoBehaviour
 
     public UFE3D.CharacterInfo P1SelectedChar;
     public UFE3D.CharacterInfo P2SelectedChar;
-
     public PlayerDataClass player1Data = new PlayerDataClass();
     public PlayerDataClass player2Data = new PlayerDataClass();
+
     public string myName = ""; //Attizaz
     public string opponentName = "";
 
@@ -23,6 +24,11 @@ public class FightingGameManager : MonoBehaviour
 
 
     public UFE3D.CharacterInfo[] profiles;
+
+
+    public Button OpenButton;
+    [HideInInspector]public int id1;
+    [HideInInspector] public int id2;
     private void Awake()
     {
         if (instance == null)
@@ -44,14 +50,9 @@ public class FightingGameManager : MonoBehaviour
         }
     }
 
-   
+
 
     #region Attizaz's code
-    public void CallRPC()
-    {
-        PV.RPC("PlayerSelection", RpcTarget.All);
-    }
-
     public void GetPlayerData()
     {
         Debug.LogError("GetPlayerData");
@@ -70,6 +71,11 @@ public class FightingGameManager : MonoBehaviour
                 );
         }
     }
+    public void CallRPC()
+    {
+        PV.RPC("PlayerSelection", RpcTarget.All);
+    }
+
     [PunRPC]
     public void PlayerSelection()
     {
@@ -129,7 +135,6 @@ public class PlayerDataClass
     public string clothJson;
     public PlayerDataClass()
     {
-
     }
     public PlayerDataClass(string n, string nft, string c)
     {
