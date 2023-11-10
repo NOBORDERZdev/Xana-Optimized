@@ -21,11 +21,11 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     #endregion
 
+    #region Positioning Mechanics
     private void Start()
     {
         StartCoroutine(SetName());
     }
-    #region Positioning Mechanics
     void Update()
     {
         placeNameHolderToScreen();
@@ -44,13 +44,13 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(1f);
-            if(PlayerPrefs.GetInt("shownWelcome") == 1)
+            if (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetString("UserNameAndPassword")!="")
             {
                 break;
             }
         }
         yield return new WaitForSeconds(1f);
-        if (PlayerPrefs.GetInt("IsLoggedIn")==0)
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             _onScreenSprite.transform.GetChild(0).GetComponent<TMPro.TMP_Text>().text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         }
