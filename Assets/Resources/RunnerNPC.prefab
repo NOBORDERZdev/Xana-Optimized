@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 7776860532593438711}
   m_Layer: 22
   m_Name: Character
-  m_TagString: EscapeeNPC
+  m_TagString: RunnerNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1917,8 +1917,8 @@ GameObject:
   - component: {fileID: 8235149719610812909}
   - component: {fileID: 6871966640619135633}
   m_Layer: 8
-  m_Name: EscapeeNPC
-  m_TagString: Untagged
+  m_Name: RunnerNPC
+  m_TagString: RunnerNPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1961,6 +1961,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3829161618264365950}
+  - {fileID: 6871966640619135633}
   - {fileID: 316958233412008741}
   sceneViewId: 0
   InstantiationId: 0
@@ -2031,6 +2032,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf853f666895814da52a71357e8cd45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nickName: Player
+  money: 0
+  timeSurvived: 0
   animator: {fileID: 250644416097083143}
   velocityNameX: velocityX
   velocityNameY: velocityY
