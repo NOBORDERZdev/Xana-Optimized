@@ -29,10 +29,14 @@ public class OnEnableDisable : MonoBehaviour
     public void ClosePopUp()
     {
         OnDisabled.Invoke();
-
+        UIManager.Instance.ShowFooter(true);
+       // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         StartCoroutine(WaitForPopup());
     }
-
+    public void StartAvatar()
+    {
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+    }
     IEnumerator WaitForPopup()
     {
         yield return new WaitForSeconds(0.34f);

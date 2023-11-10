@@ -100,7 +100,8 @@ public class WorldItemView : MonoBehaviour
     public void Init()
     {
         GetEventType(entityType);
-        StartCoroutine(DownloadPrefabSprite());
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(DownloadPrefabSprite());
         if (!m_EnvironmentName.Contains("XANA Lobby"))
             this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
@@ -113,12 +114,14 @@ public class WorldItemView : MonoBehaviour
         {
             if (!isBannerLoaded)
             {
-                StartCoroutine(DownloadAndLoadBanner());
+                if (gameObject.activeInHierarchy)
+                    StartCoroutine(DownloadAndLoadBanner());
             }
         }
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
-            StartCoroutine(DownloadAndLoadFeed());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(DownloadAndLoadFeed());
         }
     }
     void UpdateUserCount()
