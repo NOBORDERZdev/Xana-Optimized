@@ -14,6 +14,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Photon.Pun;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -118,7 +119,7 @@ public class BuilderMapDownload : MonoBehaviour
                     string compressData = sr.ReadToEnd();
                     string deCompressData = DecompressString(compressData);
                     OnSuccess.Invoke(deCompressData);
-                   // response = deCompressData;
+                    // response = deCompressData;
                 }
                 catch (Exception e)
                 {
@@ -604,6 +605,21 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
+        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        {
+            newObj.SetActive(false);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                MultiplayerComponentData multiplayerComponentData = new();
+                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+                return;
+            }
+        }
+
+
         meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
@@ -612,11 +628,21 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Add game object into XanaItems List for Hirarchy
-        GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+            GamificationComponentData.instance.xanaItems.Add(xanaItem);
 
 
         if (!_itemData.isVisible)
             newObj.SetActive(false);
+    }
+
+    bool IsMultiplayerComponent(ItemData itemData)
+    {
+        if (itemData.rotatorComponentData.IsActive || itemData.addForceComponentData.isActive || itemData.toFroComponentData.IsActive || itemData.translateComponentData.IsActive || itemData.scalerComponentData.IsActive || itemData.rotateComponentData.IsActive)
+        {
+            return true;
+        }
+        else return false;
     }
     #endregion
 
@@ -950,4 +976,16 @@ public class TerrainProperties
 public class SpawnComponentData
 {
     public bool IsActive;
+}
+
+[Serializable]
+public class MultiplayerComponentData
+{
+    public string RuntimeItemID = "";
+    public int viewID = 0;
+}
+[Serializable]
+public class MultiplayerComponentDatas
+{
+    public List<MultiplayerComponentData> multiplayerComponents = new List<MultiplayerComponentData>();
 }

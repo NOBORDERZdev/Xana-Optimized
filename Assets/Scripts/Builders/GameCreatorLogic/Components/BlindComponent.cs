@@ -3,7 +3,6 @@ using Models;
 using System;
 using Photon.Pun;
 using UnityEngine;
-using ExitGames.Client.Photon.StructWrapping;
 
 public class BlindComponent : ItemComponent
 {
