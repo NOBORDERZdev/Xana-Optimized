@@ -107,7 +107,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fecb5561-800e-47da-9330-793580240cc2"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Joystick>/stick"",
                     ""interactions"": """",
                     ""processors"": ""StickDeadzone"",
                     ""groups"": ""Gamepad"",
@@ -206,7 +206,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9e081fed-bab1-498e-9d8b-77de7ec049e7"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<HID::Ͽ 8422131441e4>/button9"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
@@ -228,7 +228,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""26f0d6af-cab9-49e9-a183-cb0efa4b462c"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<HID::Ͽ 8422131441e4>/button10"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
