@@ -14,8 +14,8 @@ namespace RFM.Character
         [SerializeField] private GameObject killVFX;
         [SerializeField] private Animator npcAnim;
         [SerializeField] private string velocityNameX, velocityNameY;
-        
-        
+
+
         private NavMeshAgent _navMeshAgent;
         private float _maxSpeed;
         private List<GameObject> _players;
@@ -38,23 +38,23 @@ namespace RFM.Character
         {
             EventsManager.onGameTimeup += GameOver;
         }
-        
+
         private void OnDisable()
         {
             EventsManager.onGameTimeup -= GameOver;
         }
-        
+
         private void Start()
         {
             _maxSpeed = _navMeshAgent.speed;
-            
+
             InvokeRepeating(nameof(SearchForTarget), 1, 1);
         }
 
         private void SearchForTarget()
         {
             if (_target) return;
-            
+
             _players = new List<GameObject>(
                 GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
             _players.AddRange(new List<GameObject>(
@@ -77,9 +77,9 @@ namespace RFM.Character
             {
                 FollowTarget(_target.position);
             }
-            
+
             Vector3 velocity = _navMeshAgent.velocity;
-            Vector2 velocityDir = new Vector2(velocity.x, velocity.z); 
+            Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
             Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
             float angle = Vector2.SignedAngle(forward, velocityDir);
             float xVal = Mathf.Cos((angle - 90 / 180) * Mathf.Deg2Rad);
@@ -93,24 +93,25 @@ namespace RFM.Character
 
 
             // Catch player if in range of a sphere of radius = catchRadius
-            if (!RFMDevmodeManager.instance.devMode) 
+            if (!RFMDevmodeManager.instance.devMode)
             {
                 _inRangePlayer = CheckPlayerInRange();
 
-            if (_inRangePlayer == null)
-            {
-                _catchTimer = 0;
-            }
-            else
-            {
-                _catchTimer += Time.deltaTime;
-                if (_catchTimer >= timeToCatchRunner)
+                if (_inRangePlayer == null)
                 {
                     _catchTimer = 0;
-                    _players.Remove(_inRangePlayer);
-                    _target = null;
-                    killVFX.SetActive(true);
-                    _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
+                }
+                else
+                {
+                    _catchTimer += Time.deltaTime;
+                    if (_catchTimer >= timeToCatchRunner)
+                    {
+                        _catchTimer = 0;
+                        _players.Remove(_inRangePlayer);
+                        _target = null;
+                        killVFX.SetActive(true);
+                        _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
+                    }
                 }
             }
         }
@@ -123,7 +124,7 @@ namespace RFM.Character
                 {
                     if (_inRangePlayer == col.gameObject)
                         return _inRangePlayer;
-                    
+
                     if (col.GetComponent<PhotonView>().IsMine)
                     {
                         return col.gameObject;
@@ -134,10 +135,10 @@ namespace RFM.Character
             return null;
         }
 
-        
+
         private void FollowTarget(Vector3 targetPosition)
         {
-            if(Globals.gameState != Globals.GameState.Gameplay)
+            if (Globals.gameState != Globals.GameState.Gameplay)
             {
                 _navMeshAgent.isStopped = true;
                 return;
@@ -149,14 +150,14 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!RFMDevmodeManager.instance.devMode) 
+            if (!RFMDevmodeManager.instance.devMode)
             {
-                if (other.CompareTag(Globals.ESCAPEE_NPC_TAG))
+                if (other.CompareTag(Globals.RUNNER_NPC_TAG))
                 {
                     _players.Remove(other.gameObject);
                     _target = null;
                     killVFX.SetActive(true);
-                    other.transform.parent.GetComponent<NPCEscapee>().AIEscapeeCaught();
+                    other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
                 }
 
                 else if (other.CompareTag(Globals.PLAYER_TAG)/*Globals.LOCAL_PLAYER_TAG*/)
@@ -165,7 +166,7 @@ namespace RFM.Character
                     _target = null;
                     killVFX.SetActive(true);
 
-                    other.GetComponent<PlayerEscapee>()?.PlayerEscapeeCaught(this);
+                    other.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
                 }
             }
         }
@@ -174,5 +175,6 @@ namespace RFM.Character
         {
             PhotonNetwork.Destroy(gameObject);
         }
+
     }
 }

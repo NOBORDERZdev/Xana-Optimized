@@ -269,7 +269,7 @@ namespace RFM.Managers
                     if (PhotonNetwork.PlayerListOthers.Length > 0)
                     {
                         Debug.LogError("RPC Called");
-                        GetComponent<PhotonView>().RPC("ChangeMasterClientifAvailble", PhotonNetwork.PlayerListOthers[0]);
+                        GetComponent<PhotonView>().RPC(nameof(ChangeMasterClientifAvailble), PhotonNetwork.PlayerListOthers[0]);
                     }
                     ChangeMasterClientifAvailble();
                     PhotonNetwork.SendAllOutgoingCommands();
@@ -299,6 +299,8 @@ namespace RFM.Managers
         {
             Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
         }
+
+
         private IEnumerator StartRFM()
         {
             EventsManager.StartCountdown();
@@ -685,7 +687,7 @@ namespace RFM.Managers
                         GameplayTime = 60,
                         //GameRestartWaitTime = 3000,
                         MaxPlayersInRoom = 10,
-                        EscapeesToHuntersRatio = Vector2.one,
+                        RunnersToHuntersRatio = Vector2.one,
                         GainingMoneyTimeInterval = 1,
                         MoneyPerInterval = 15,
                     };
