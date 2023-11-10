@@ -1643,10 +1643,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
-        if (time > 0)
-        {
-            NinjaCo = StartCoroutine(NinjaComponentTimer(time));
-        }
+        NinjaCo = StartCoroutine(NinjaComponentTimer(time));
     }
     public IEnumerator NinjaComponentTimer(float time)
     {
