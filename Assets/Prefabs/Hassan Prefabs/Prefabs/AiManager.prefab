@@ -365,23 +365,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad6c3bd807892745b48ad7e16fb440d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  decoratedAi: 0
   SpwanedAiCount: 0
-  AiCountToSpwaned: 0
-  aiPrefab: {fileID: 4894719807666117210, guid: 971eb2f9b1c8d42448d04c9aa4e045b0,
-    type: 3}
-  SpwanedAi: []
+  Source: {fileID: 0}
   apperance: {fileID: 863353209589563777}
-  SpwanPoints:
-  - {fileID: 528096141}
-  - {fileID: 64586074}
-  - {fileID: 360227144}
-  - {fileID: 1897604872}
-  - {fileID: 2056047848}
-  - {fileID: 1201288613}
-  - {fileID: 595128301}
-  - {fileID: 2048794714}
-  - {fileID: 1576798955}
-  - {fileID: 1770107120}
   aiNames:
   - Maverick
   - Blaze
@@ -398,6 +385,12 @@ MonoBehaviour:
   - Freya
   - Phoenix
   - Willow
+  aiPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &863353209589563777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1059,3 +1052,4 @@ MonoBehaviour:
   - eyelash_36
   - RioEyeLashes
   aiManager: {fileID: 863353209589563776}
+  tempCounter: 0

@@ -14,7 +14,8 @@ namespace RFM.Managers
         
         [SerializeField] private GameObject helpPanel;
         [SerializeField] private GameObject instructionsPanelPanel;
-        
+        [SerializeField] private GameObject setLayoutPanel;
+
         // Leaderboard
         [SerializeField] private RectTransform leaderboardEntryContainer;
         [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
@@ -47,6 +48,7 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart += OnCountdownStart;
             RFM.EventsManager.onGameTimeup += OnGameOver;
             RFM.EventsManager.onShowScores += OnShowScores;
+            CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.AddListener(ToggleLayoutPanel);
         }
 
         private void OnDisable()
@@ -55,11 +57,27 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart -= OnCountdownStart;
             RFM.EventsManager.onGameTimeup -= OnGameOver;
             RFM.EventsManager.onShowScores -= OnShowScores;
+            CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.RemoveAllListeners();
         }
         
         private void OnCountdownStart()
         {
             instructionsPanelPanel.SetActive(false);
+        }
+
+
+        public void ToggleLayoutPanel() 
+        {
+            if (setLayoutPanel.activeInHierarchy)
+            {
+                setLayoutPanel.SetActive(false);
+
+            }
+            else
+            {
+                setLayoutPanel.SetActive(true);
+
+            }
         }
 
         public void ToggleHelpPanel()

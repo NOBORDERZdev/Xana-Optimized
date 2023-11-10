@@ -13,6 +13,9 @@ public class WorldItemManager : MonoBehaviour
     {
         if(Worlds.ContainsKey(key))
         {
+            foreach(WorldItemDetail searchWorld in Worlds[key])
+                if (searchWorld.IdOfWorld.Equals(_world.IdOfWorld))
+                    return;
             Worlds[key].Add(_world);
         }
         else

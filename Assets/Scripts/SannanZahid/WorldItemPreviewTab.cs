@@ -36,10 +36,12 @@ public class WorldItemPreviewTab : MonoBehaviour
     public GameObject worldDetailPage;
     public string[] m_WorldTags;
     public bool tagsInstantiated;
+    public Transform PreviewLogo;
 
     public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh,string[] worldTags)
     {
+        PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
         if (!ThumbnailDownloadURL.Equals(""))
         {
@@ -56,6 +58,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
         if (ThumbnailDownloadURLHigh == "")
         {
+            PreviewLogo.gameObject.SetActive(false);
             WorldIconImg.sprite = worldImg;
         }
         else
@@ -85,21 +88,14 @@ public class WorldItemPreviewTab : MonoBehaviour
         else
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
-        if (!string.IsNullOrEmpty(creatorName))
-        {
-            if (creatorName.Equals("XANA"))
-            {
-                XanaProfile.SetActive(true);
-                UserProfileImg.transform.parent.gameObject.SetActive(false);
-            }
-        }
-        if(userAvatarURL=="")
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        if (userAvatarURL == "")
         {
             NoAvatarIcon.gameObject.SetActive(true);
             XanaAvatarIcon.gameObject.SetActive(false);
             AvatarIcon.gameObject.SetActive(false);
         }
-        else if(WorldNameTxt.text.Contains("XANA Lobby"))
+        else if(creatorName.ToLower().Contains("xana"))
         {
             NoAvatarIcon.gameObject.SetActive(false);
             XanaAvatarIcon.gameObject.SetActive(true);
@@ -185,15 +181,25 @@ public class WorldItemPreviewTab : MonoBehaviour
         if (!string.IsNullOrEmpty(downloadURL))
         {
             if (AssetCache.Instance.HasFile(downloadURL))
+            {
                 AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+                PreviewLogo.gameObject.SetActive(false);
+            }
             else
             {
                 AssetCache.Instance.EnqueueOneResAndWait(downloadURL, downloadURL, (success) =>
                 {
                     if (success)
+                    {
                         AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+                        if (imageHolder.Equals(WorldIconImg))
+                        {
+                            PreviewLogo.gameObject.SetActive(false);
+                        }
+                    }
                 });
             }
+          
         }
     }
 

@@ -81,6 +81,7 @@ namespace RFM.Managers
             EventsManager.onPlayerCaught += PlayerCaught;
             EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
+
         }
 
 
@@ -107,6 +108,7 @@ namespace RFM.Managers
             //}
 
 
+            Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
 
             if (PhotonNetwork.IsMasterClient)
@@ -258,7 +260,45 @@ namespace RFM.Managers
             }
         }
 
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                if ( PhotonNetwork.IsMasterClient)
+                {
+                    if (PhotonNetwork.PlayerListOthers.Length > 0)
+                    {
+                        Debug.LogError("RPC Called");
+                        GetComponent<PhotonView>().RPC("ChangeMasterClientifAvailble", PhotonNetwork.PlayerListOthers[0]);
+                    }
+                    ChangeMasterClientifAvailble();
+                    PhotonNetwork.SendAllOutgoingCommands();
 
+                }
+            }
+        } 
+
+        [PunRPC]
+        public void ChangeMasterClientifAvailble()
+        {
+            Debug.LogError("ChangeMasterClientifAvailble: "+PhotonNetwork.LocalPlayer.NickName);
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            {
+                return;
+            }
+
+            PhotonNetwork.SetMasterClient(PhotonNetwork.MasterClient.GetNext());
+        }
+
+
+        public virtual void OnMasterClientSwitched(Player newMasterClient)
+        {
+            Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
+        }
         private IEnumerator StartRFM()
         {
             EventsManager.StartCountdown();
@@ -391,7 +431,7 @@ namespace RFM.Managers
             //RFMCharacter.gameStartAction?.Invoke();
         }
 
-        
+
         private void AfterTakePositionTimerHunter()
         {
             Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
@@ -608,24 +648,14 @@ namespace RFM.Managers
         /// </summary>
         private static IEnumerator FetchConfigDataFromServer()
         {
-            //the api is set we just have to get the map
-            var url = "https://api.npoint.io/2b73c02e13403750bcb0";
-            using UnityWebRequest www = UnityWebRequest.Get(url);
-            // www.SetRequestHeader("Authorization", userToken);
-            www.SendWebRequest();
-            while (!www.isDone)
+            //if Devmode then make time unlimited for testing
+            if (RFMDevmodeManager.instance.devMode)
             {
-                yield return null;
-            }
-            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
-
                 CurrentGameConfiguration = new GameConfiguration
                 {
                     MatchMakingTime = 10,
                     TakePositionTime = 10,
-                    GameplayTime = 60,
+                    GameplayTime = 999999,
                     //GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     RunnersToHuntersRatio = Vector2.one,
@@ -635,7 +665,35 @@ namespace RFM.Managers
             }
             else
             {
-                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+                //the api is set we just have to get the map
+                var url = "https://api.npoint.io/2b73c02e13403750bcb0";
+                using UnityWebRequest www = UnityWebRequest.Get(url);
+                // www.SetRequestHeader("Authorization", userToken);
+                www.SendWebRequest();
+                while (!www.isDone)
+                {
+                    yield return null;
+                }
+                if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.LogError("RFM Failed to load configuration from API. Using default values...");
+
+                    CurrentGameConfiguration = new GameConfiguration
+                    {
+                        MatchMakingTime = 10,
+                        TakePositionTime = 10,
+                        GameplayTime = 60,
+                        //GameRestartWaitTime = 3000,
+                        MaxPlayersInRoom = 10,
+                        EscapeesToHuntersRatio = Vector2.one,
+                        GainingMoneyTimeInterval = 1,
+                        MoneyPerInterval = 15,
+                    };
+                }
+                else
+                {
+                    CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
+                }
             }
         }
 

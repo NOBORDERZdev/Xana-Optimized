@@ -367,7 +367,8 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
+                if(EventPrefabLobby.activeInHierarchy)
+                    EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
             {

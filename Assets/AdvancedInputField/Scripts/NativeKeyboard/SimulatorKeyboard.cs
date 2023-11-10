@@ -92,8 +92,8 @@ namespace AdvancedInputFieldPlugin
 					OnKeyboardShow();
 					int keyboardHeight = Mathf.RoundToInt(rectTransform.rect.height * canvas.scaleFactor); //Convert to screen pixels
 					OnKeyboardHeightChanged(keyboardHeight); //Fully shown
-                    GetButtonAnimationScript();
-					moveButtonUpwithKeyboard();
+                   // GetButtonAnimationScript();
+					//moveButtonUpwithKeyboard();
 					
                 }
 
@@ -110,8 +110,8 @@ namespace AdvancedInputFieldPlugin
 					currentTransitionTime = TRANSITION_TIME;
 					OnKeyboardHide();
 					OnKeyboardHeightChanged(0); //Fully hidden
-                    GetButtonAnimationScript();
-					moveButtonDownwithKeyboard();
+                  //  GetButtonAnimationScript();
+				//	moveButtonDownwithKeyboard();
 					
                 }
 
