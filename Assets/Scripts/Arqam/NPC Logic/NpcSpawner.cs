@@ -12,15 +12,16 @@ public class NpcSpawner : MonoBehaviour
     public List<GameObject> npcModel;
 
     [SerializeField] private int aiStrength = 5;
-    
-    private GameObject aiPrefabs;
 
+    private GameObject aiPrefabs;
+    private Vector3 spawnPos;
+    private bool isSpawn = false;
 
     private void Awake()
     {
         if (npcSpawner is null)
             npcSpawner = this;
-        else if(npcSpawner != null && npcSpawner != this)
+        else if (npcSpawner != null && npcSpawner != this)
             Destroy(this.gameObject);
     }
     private void OnEnable()
@@ -39,11 +40,17 @@ public class NpcSpawner : MonoBehaviour
         aiPrefabs = Resources.Load("NPC") as GameObject;
         for (int i = 0; i < aiStrength; i++)
         {
+  
+            while (!isSpawn)
+            {
+                (spawnPos, isSpawn) = RandomNavMeshPoint();  
+            }
+            Debug.Log("isSpawn: " + isSpawn);
+            isSpawn = false;
             GameObject npc = Instantiate(aiPrefabs);
-            Vector3 temp = RandomNavMeshPoint();
-            npc.transform.position = temp;
+            npc.transform.position = spawnPos;
             npc.transform.rotation = Quaternion.identity;
-            
+
             npcCounter++;
             npcModel.Add(npc);
         }
@@ -58,7 +65,7 @@ public class NpcSpawner : MonoBehaviour
         }
     }
 
-    Vector3 RandomNavMeshPoint()
+    (Vector3, bool) RandomNavMeshPoint()
     {
         NavMeshTriangulation navMeshData = NavMesh.CalculateTriangulation();
         // Get a random triangle from the NavMesh
@@ -78,7 +85,28 @@ public class NpcSpawner : MonoBehaviour
             r2 = 1 - r2;
         }
         Vector3 randomPoint = vertex1 + r1 * (vertex2 - vertex1) + r2 * (vertex3 - vertex1);
-        return randomPoint;
+        //return randomPoint;
+
+        Vector3 offset = new Vector3(randomPoint.x, randomPoint.y + 2f, randomPoint.z);
+
+        Ray ray = new Ray(offset, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.tag == "Item")
+            {
+                //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //sphere.transform.position = hit.point;
+                Debug.Log("Picked SpawnPoint not on ground");
+                return (hit.point, false);
+            }
+            else
+                return (hit.point, true);
+        }
+        else
+            return (randomPoint, true);
     }
+
 
 }
