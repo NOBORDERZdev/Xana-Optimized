@@ -14,6 +14,7 @@ public class BottomTabManager : MonoBehaviour
     public Color sellectedColor = new Color();
     public Color unSellectedColor = new Color();
     public Color intractableFalseColor = new Color();
+    public Color DisableButtonColor = new Color();
     public int defaultSelection = 0;
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
@@ -51,7 +52,15 @@ public class BottomTabManager : MonoBehaviour
 
     public void OnSelectedClick(int index)
     {
-        return;
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        {
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
+        else
+            return;
         for (int i = 0; i < allButtonIcon.Count; i++)
         {
             if (i == index)
@@ -82,16 +91,22 @@ public class BottomTabManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
-          //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
+            allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
+            allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+            //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         else
         {
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
-            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.black;
-           // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            allButtonIcon[2].transform.GetComponent<Image>().color = Color.white;
+            allButtonIcon[3].transform.GetComponent<Image>().color = Color.white;
+            allButtonIcon[4].transform.GetComponent<Image>().color = Color.white;
+            // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
         if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
         {
@@ -410,7 +425,6 @@ public class BottomTabManager : MonoBehaviour
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
         GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-        UIManager.Instance.ShowFooter(false);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
     }
     public void SetDefaultButtonSelection(int index)
