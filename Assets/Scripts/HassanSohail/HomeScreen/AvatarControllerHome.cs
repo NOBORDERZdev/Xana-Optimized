@@ -129,7 +129,7 @@ public class AvatarControllerHome : MonoBehaviour
         }
         animator.SetBool("Action", false);
         animator.SetBool("isMoving", true);
-
+        Invoke(nameof(ForceActionFalse), 0.05f);
         agent.enabled = true;
         Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius, maxRadius), -1);
         agent.SetDestination(newPos);
@@ -153,6 +153,11 @@ public class AvatarControllerHome : MonoBehaviour
                      break;*/
         }
         isMoving = true;
+
+    }
+
+    void ForceActionFalse() {
+        animator.SetBool("Action", false);
 
     }
 
