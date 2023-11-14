@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
+
     public void AvaterButtonCustomPushed()
     {
         WorldItemPreviewTab.m_WorldIsClicked = false;
@@ -63,10 +64,12 @@ public class UIManager : MonoBehaviour
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
+         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
         yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
     }
 

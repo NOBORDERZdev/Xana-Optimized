@@ -389,7 +389,7 @@ public class WorldManager : MonoBehaviour
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
 
-        Invoke(nameof(ShowTutorial),0.2f);
+       // Invoke(nameof(ShowTutorial),0.5f);
     }
 
     void ShowTutorial(){ 
