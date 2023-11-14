@@ -49,50 +49,60 @@ MonoBehaviour:
   responseChecker: 0
   npcAttributes:
   - aiNames: Maverick
-    aiIds: 7893
+    aiIds: 1
     actualAiIds: 37183
   - aiNames: blaze
-    aiIds: 7896
+    aiIds: 2
     actualAiIds: 37184
   - aiNames: Hunter
-    aiIds: 7898
+    aiIds: 3
     actualAiIds: 37187
   - aiNames: Jaxon
-    aiIds: 7899
+    aiIds: 4
     actualAiIds: 37188
   - aiNames: Phoenix
-    aiIds: 7901
+    aiIds: 5
     actualAiIds: 37189
   - aiNames: Axel
-    aiIds: 7902
+    aiIds: 6
     actualAiIds: 37190
   - aiNames: Wolf
-    aiIds: 7903
+    aiIds: 7
     actualAiIds: 37191
   - aiNames: Luna
-    aiIds: 7904
+    aiIds: 8
     actualAiIds: 37192
   - aiNames: Nova
-    aiIds: 7905
+    aiIds: 9
     actualAiIds: 37193
   - aiNames: Ember
-    aiIds: 7906
+    aiIds: 10
     actualAiIds: 37194
   - aiNames: Raven
-    aiIds: 7907
+    aiIds: 11
     actualAiIds: 37195
   - aiNames: Scarlett
-    aiIds: 7908
+    aiIds: 12
     actualAiIds: 37196
   - aiNames: Freya
-    aiIds: 7909
+    aiIds: 13
     actualAiIds: 37197
   - aiNames: Liam
-    aiIds: 7910
+    aiIds: 14
     actualAiIds: 37198
   - aiNames: Willow
-    aiIds: 7911
+    aiIds: 15
     actualAiIds: 37199
+  npcDB: []
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 
 --- !u!114 &795303163645620554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0bd48adc70866438d856d23205278e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feed:
+    response_jp: 
+    response_en: 
+    emotion: 
 --- !u!114 &-4114564411297842832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,17 +133,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcAttributes:
   - aiNames: Mason
-    aiIds: 8011
+    aiIds: 16
     actualAiIds: 37525
   - aiNames: Ethan
-    aiIds: 8012
+    aiIds: 100
     actualAiIds: 37526
   - aiNames: Olivia
-    aiIds: 8013
+    aiIds: 101
     actualAiIds: 37527
   - aiNames: Mia
-    aiIds: 8014
+    aiIds: 102
     actualAiIds: 37528
   - aiNames: Jolly
-    aiIds: 8015
+    aiIds: 103
     actualAiIds: 37529
+  responseData:
+    response_jp: 
+    response_en: 
+    emotion: 
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 
