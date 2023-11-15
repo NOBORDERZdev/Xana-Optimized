@@ -10,6 +10,7 @@ public class AvatarControllerHome : MonoBehaviour
     [SerializeField] GameObject worldObj;
     [SerializeField] GameObject storeCam;
     [SerializeField] GameObject worldCam;
+    [SerializeField] GameObject cineCam;
     [Header("Wandering")]
     [SerializeField] float minRadius;
     [SerializeField] float maxRadius;
@@ -154,12 +155,14 @@ public class AvatarControllerHome : MonoBehaviour
             GetComponent<FootStaticIK>().ikActive = true;
             transform.position = startpos;
             transform.eulerAngles = startRot;
+            cineCam.SetActive(true);
             storeCam.SetActive(true);
             worldCam.SetActive(false);
             worldObj.SetActive(false);
         }
         else
         {
+            cineCam.SetActive(false);
             storeCam.SetActive(false);
             worldCam.SetActive(true);
             worldObj.SetActive(true);
