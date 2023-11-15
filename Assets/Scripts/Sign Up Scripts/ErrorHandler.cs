@@ -99,6 +99,7 @@ namespace Sign_Up_Scripts
                 errorMessage.JapaneseMessage = errorCode;
             }
             SetActiveText(errorMessage);
+            UserRegisterationManager.instance.NewLoadingScreen.SetActive(false);
         }
 
         //public void ShowErrorMessage(string errorCode, Text textToBeSet)

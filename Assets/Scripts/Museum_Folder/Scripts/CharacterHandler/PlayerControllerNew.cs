@@ -377,6 +377,13 @@ public class PlayerControllerNew : MonoBehaviour
             else if (transforms[i].GetComponent<CanvasGroup>())
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
         }
+
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (GamificationComponentData.instance.isAvatarChanger ||
+                GamificationComponentData.instance.isBlindfoldedFootPrinting)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(false);
+        }
     }
 
     // first person camera off when user switch to selfie mode
@@ -424,8 +431,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
@@ -759,23 +769,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
-        if (XanaConstants.xanaConstants.isBuilderScene)
-        {
-            if (isNinjaMotion)
-            {
-                isNinjaMotion = false;
-                NinjaComponentTimerStart(0);
-            }
-            else if (isThrowModeActive)
-            {
-                StartCoroutine(nameof(ThrowEnd));
-                isThrow = false;
-                isThrowModeActive = false;
-                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
-            }
-
-            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-        }
+        StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
         animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
@@ -795,10 +789,42 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         if (isFirstPerson)
-            animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
+    public void StopBuilderComponent()
+    {
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+            }
+            else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
+            {
+                if (GamificationComponentData.instance.activeComponent != null)
+                    GamificationComponentData.instance.activeComponent.StopBehaviour();
+            }
+            else if (GamificationComponentData.instance.isAvatarChanger)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        }
+    }
 
     void Move()
     {
@@ -1061,7 +1087,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
-        
+
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
@@ -1530,6 +1556,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 1);
         animator.CrossFade("NinjaAttack", 0.1f);
         yield return new WaitForSecondsRealtime(0.8f);
         isMovementAllowed = true;
@@ -1538,6 +1565,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 2);
         animator.CrossFade("NinjaAmimationSlash3", 0.1f);
         yield return new WaitForSecondsRealtime(1f);
         isMovementAllowed = true;
@@ -1547,6 +1575,7 @@ public class PlayerControllerNew : MonoBehaviour
     IEnumerator NinjaAttack3()
     {
         //StopCoroutine(NinjaAttack());
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 3);
         isMovementAllowed = false;
         animator.CrossFade("Sword And Shield Attack", 0.1f);
         yield return new WaitForSecondsRealtime(1.5f);
@@ -1560,6 +1589,7 @@ public class PlayerControllerNew : MonoBehaviour
         if (isDrawSword)
         {
             isMovementAllowed = false;
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, true, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
             animator.CrossFade("SheathingSword", 0.2f);
             yield return new WaitForSecondsRealtime(0.8f);
             swordModel.transform.SetParent(swordhandHook, false);
@@ -1567,17 +1597,17 @@ public class PlayerControllerNew : MonoBehaviour
             swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
             swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
             isMovementAllowed = true;
-
-
         }
         if (!isDrawSword)
         {
             isMovementAllowed = false;
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, false, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+
             isMovementAllowed = true;
         }
     }
@@ -1585,14 +1615,13 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = Instantiate(_shurikenPrefab, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
-        spawned.GetComponent<Rigidbody>().AddForce((transform.forward * 3000f) * 0.25f);
-        //(cinemachineFreeLook.m_YAxis.Value<=0.1f?0.1f: cinemachineFreeLook.m_YAxis.Value));
-        //Toast.Show(cinemachineFreeLook.m_YAxis.Value+"");
+        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
+
         animator.SetBool("NinjaThrow", false);
         yield return new WaitForSeconds(0.4f);
         isMovementAllowed = true;
-        Destroy(spawned, 5f);
+
     }
 
     Coroutine NinjaCo;
@@ -1613,6 +1642,13 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (throwMainCo != null)
             throwMainCo = null;
+
+        if (swordModel == null)
+        {
+            swordModel = PhotonNetwork.Instantiate(GamificationComponentData.instance.katanaPrefab.name, Vector3.zero, new Quaternion(0, 0, 0, 0));
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+        }
+
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
         NinjaCo = StartCoroutine(NinjaComponentTimer(time));
     }
@@ -1624,13 +1660,15 @@ public class PlayerControllerNew : MonoBehaviour
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-            swordModel.SetActive(true);
+            //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
         isNinjaMotion = false;
+        StopCoroutine(nameof(DrawNinjaSword));
         if (swordModel)
         {
-            swordModel.SetActive(false);
+            //swordModel.SetActive(false);
+            PhotonNetwork.Destroy(swordModel.GetComponent<PhotonView>());
         }
         animator.SetBool("NinjaJump", true);
         animator.SetBool("isNinjaMotion", false);
@@ -1778,9 +1816,8 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        var spawned = Instantiate(GamificationComponentData.instance.ThrowBall, handBall.transform.position, handBall.transform.rotation);
-        spawned.Init(((ActiveCamera.transform.forward + curveOffset) * _force), false);
-        Destroy(spawned.gameObject, 10);
+        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
         yield return new WaitForSeconds(1f);
@@ -1836,14 +1873,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        if (swordModel == null)
-        {
-            swordModel = Instantiate(GamificationComponentData.instance.katanaPrefab, transform.parent);
-            swordModel.transform.localPosition = Vector3.zero;
-            swordModel.transform.localScale = Vector3.one;
-            swordModel.SetActive(false);
-        }
-
         _shurikenPrefab = GamificationComponentData.instance.shurikenPrefab;
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
         swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;

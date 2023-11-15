@@ -17,6 +17,8 @@ public class CanvasButtonsHandler : MonoBehaviour
         }
     }
 
+    public PlayerControllerNew ref_PlayerControllerNew;
+
     [Header("GamePlay ui")]
     public GameObject gamePlayUIParent;
 
@@ -36,12 +38,16 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject portraitJoystick;
 
     public GameObject jumpBtn;
+
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
+    public Text JJPortalPopupText;
+    public string[] JJPortalPopupTextData;
     private void Start()
     {
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
     private void OnEnable()
@@ -93,6 +99,33 @@ public class CanvasButtonsHandler : MonoBehaviour
     public void OnInviteClick()
     {
         GamePlayButtonEvents.inst.OnInviteClick();
+    }
+
+    public void EnableJJPortalPopup(GameObject obj, int indexForText)
+    {
+        if(LoadingHandler.Instance != null)
+        {
+            LoadingHandler.Instance.ResetLoadingValues();
+        }
+        JJPortalPopupText.text = JJPortalPopupTextData[indexForText].ToString();
+        currentPortalObject = obj;
+        JJPortalPopup.SetActive(true);
+    }
+
+    public void MoveFromPortal()
+    {
+        JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
+        if (currentPortalObject.GetComponent<PlayerPortal>())
+            currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        else if (currentPortalObject.GetComponent<JjWorldChanger>())
+            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+    }
+
+    public void ClosePortalPopup()
+    {
+        JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
     }
 
     public void OnSwitchCameraClick()
@@ -193,13 +226,5 @@ public class CanvasButtonsHandler : MonoBehaviour
     {
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
-    }
-    public void MoveFromPortal()
-    {
-        JJPortalPopup.SetActive(false);
-        //if (currentPortalObject.GetComponent<PlayerPortal>())
-            //currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
-        if (currentPortalObject.GetComponent<JjWorldChanger>())
-            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
     }
 }

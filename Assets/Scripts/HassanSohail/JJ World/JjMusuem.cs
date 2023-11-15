@@ -64,6 +64,7 @@ public class JjMusuem : MonoBehaviour
 
     IEnumerator changePos(Transform destinationPoint) {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.7f, 0.85f), 4f, false);
         yield return new WaitForSeconds(.02f);
         manager.allowTeleportation = false;
         player.allowTeleport = false;

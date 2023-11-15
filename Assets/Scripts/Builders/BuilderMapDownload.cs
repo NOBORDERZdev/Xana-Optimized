@@ -14,8 +14,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using System.Buffers;
-using UnityEngine.InputSystem;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -47,6 +45,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch += OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
+        BuilderEventManager.AfterWorldInstantiated += XanaSetItemData;
     }
 
     private void OnDisable()
@@ -54,7 +53,11 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.OnBuilderDataFetch -= OnBuilderDataFetch;
         BuilderEventManager.ApplySkyoxSettings -= SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
+        BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
+
+        Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
+        RenderSettings.skybox = null;
     }
 
     private void Start()
@@ -115,7 +118,7 @@ public class BuilderMapDownload : MonoBehaviour
                     string compressData = sr.ReadToEnd();
                     string deCompressData = DecompressString(compressData);
                     OnSuccess.Invoke(deCompressData);
-                    response = deCompressData;
+                   // response = deCompressData;
                 }
                 catch (Exception e)
                 {
@@ -138,19 +141,13 @@ public class BuilderMapDownload : MonoBehaviour
             yield return StartCoroutine(DownloadLevelDataJson(serverData.data.map_json_link, (sucess) =>
             {
                 levelData = GetDecompressJson(sucess);
+                BuilderData.mapData.data.json = levelData;
             },
             (onfalse) =>
             {
                 Debug.Log("Failed to load json....");
             }));
         }
-
-
-        StartCoroutine(DownloadAssetsData(() =>
-        {
-            LoadAddressableSceneAfterDownload();
-            //SetSkyProperties();
-        }));
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
@@ -160,6 +157,23 @@ public class BuilderMapDownload : MonoBehaviour
             SetWaterTexture(levelData.terrainProperties.waterTexturePath);
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
+
+        if (levelData.audioPropertiesBGM != null)
+            BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
+
+        Debug.LogError("Map is downloaed");
+        if (BuilderAssetDownloader.isPostLoading)
+        {
+            Debug.LogError("Map is downloaed start post loading");
+            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
+        }
+        else
+        {
+            StartCoroutine(DownloadAssetsData(() =>
+            {
+                LoadAddressableSceneAfterDownload();
+            }));
+        }
     }
 
 
@@ -486,13 +500,12 @@ public class BuilderMapDownload : MonoBehaviour
 
         lensFlareComponent.lensFlareData = lensFlareData;
         lensFlareComponent.scale = lensFlareScale;
-
     }
 
     void SetPlayerProperties()
     {
         BuilderEventManager.ApplyPlayerProperties?.Invoke(levelData.playerProperties.jumpMultiplier, levelData.playerProperties.speedMultiplier);
-        Invoke(nameof(XanaSetItemData), 1.5f);
+        //Invoke(nameof(XanaSetItemData), 1.5f);
     }
 
     void XanaSetItemData()
@@ -506,7 +519,9 @@ public class BuilderMapDownload : MonoBehaviour
         SetObjectHirarchy();
 
         BuilderEventManager.CombineMeshes?.Invoke();
-        GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>().enabled = true;
+        CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
+        capsuleCollider_34.enabled = true;
+        capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.498f;
         mainPlayerCharacterController.height = 1f;
@@ -516,17 +531,18 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
 
-        CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
-        playerCollider.height = 1.5f;
-        playerCollider.center = Vector3.up * (playerCollider.height / 2);
+        //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
+        capsuleCollider_34.height = 1.5f;
+        capsuleCollider_34.center = Vector3.up * (capsuleCollider_34.height / 2);
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
-        playerCharacterController.height = playerCollider.height;
-        playerCharacterController.center = playerCollider.center;
+        playerCharacterController.height = capsuleCollider_34.height;
+        playerCharacterController.center = capsuleCollider_34.center;
 
-        GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
+        //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
 
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
+        BuilderEventManager.BGMStart?.Invoke();
     }
 
 
@@ -706,6 +722,7 @@ public class LevelData
     public SkyProperties skyProperties;
     public PlayerProperties playerProperties;
     public TerrainProperties terrainProperties;
+    public AudioPropertiesBGM audioPropertiesBGM = new AudioPropertiesBGM();
 }
 
 //User Map Data Model - 
@@ -730,6 +747,23 @@ public class UserMaps
     public List<UserMapData> userMapList;
 }
 
+[Serializable]
+public class AudioPropertiesBGM
+{
+    #region Data Variables
+    public DataAudioBGM dataAudioBGM = new DataAudioBGM();
+    #endregion
+}
+
+[Serializable]
+public class DataAudioBGM
+{
+    #region Data Variables
+    public string pathAudioBGM;
+    public bool audioLoopBGM;
+    public float audioVolume = .1f;
+    #endregion
+}
 
 [Serializable]
 public class SkyProperties

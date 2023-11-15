@@ -20,8 +20,6 @@ public class ScrollActivity : MonoBehaviour
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
     }
-
-    //Worked by Abdullah & Riken
     private void OnDisable()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
@@ -93,7 +91,6 @@ public class ScrollActivity : MonoBehaviour
         ScrollController.verticalNormalizedPosition = 3.5f;
         canvasGroup.alpha= 0;
         canvasGroup.DOFade(1,0.2f);
-        bg.DOFade(1,0.2f);
         yield return new WaitForSeconds(0.2f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.2f).SetEase(Ease.Linear).OnComplete(WaitForOpenWorldPage);
         IEBottomToTopCoroutine = null;
@@ -102,7 +99,6 @@ public class ScrollActivity : MonoBehaviour
     {
         canvasGroup.alpha= 1;
         canvasGroup.DOFade(0,0.1f);
-        bg.DOFade(0,0.1f);
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
@@ -110,7 +106,6 @@ public class ScrollActivity : MonoBehaviour
     }
     public void WaitForOpenWorldPage()
     {
-        //ScrollController.transform.DOPunchPosition();
        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0.97f, 0.1f).SetEase(Ease.InSine).OnComplete(BounceBack);
 
     }

@@ -95,6 +95,8 @@ public class AvatarSelfie : MonoBehaviour
         }));
         selfieCam.SetActive(false);
         m_CharacterAnimator.SetBool("Idle", lastAnimatorState);
+
+        m_RenderTexture.Release();      // AR changes
     }
 
     IEnumerator UploadImageOnServer(Byte[] imageData, Action<bool> CallBack)
