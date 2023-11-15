@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class HomeCameraController : MonoBehaviour
 {
-    float PanSpeed = 5f;
+    float PanSpeed = 2.5f;
     float ZoomSpeedTouch = 0.1f;
     float ZoomSpeedMouse = 0.5f;
     
