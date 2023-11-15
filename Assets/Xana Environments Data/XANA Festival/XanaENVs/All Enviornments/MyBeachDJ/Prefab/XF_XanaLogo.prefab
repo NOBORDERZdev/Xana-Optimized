@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8432009339314839531
+--- !u!1 &8528552546259736588
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9101585169853400401}
-  - component: {fileID: 5323405289970223860}
-  - component: {fileID: 7927601577606299198}
-  - component: {fileID: 8774676735310333536}
+  - component: {fileID: 9011792972758434486}
+  - component: {fileID: 5386175837511863571}
+  - component: {fileID: 7880029596630858201}
+  - component: {fileID: 8834629303539663239}
+  - component: {fileID: 5386175837511863568}
   m_Layer: 0
   m_Name: XF_XanaLogo
   m_TagString: Untagged
@@ -19,13 +20,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9101585169853400401
+--- !u!4 &9011792972758434486
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432009339314839531}
+  m_GameObject: {fileID: 8528552546259736588}
   m_LocalRotation: {x: -0.000019744037, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -79.8, y: 98.2, z: -170.3}
   m_LocalScale: {x: 80, y: 80, z: 80}
@@ -34,21 +35,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.002, y: 0, z: 0}
---- !u!33 &5323405289970223860
+--- !u!33 &5386175837511863571
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432009339314839531}
+  m_GameObject: {fileID: 8528552546259736588}
   m_Mesh: {fileID: -6712298650935394949, guid: 76cb4786c7e6d354abaf6df81d7f1bdb, type: 3}
---- !u!23 &7927601577606299198
+--- !u!23 &7880029596630858201
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432009339314839531}
+  m_GameObject: {fileID: 8528552546259736588}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
@@ -84,14 +85,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &8774676735310333536
+--- !u!95 &8834629303539663239
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8432009339314839531}
+  m_GameObject: {fileID: 8528552546259736588}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f5f865db71690d646880e87545bb9077, type: 2}
@@ -104,3 +105,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5386175837511863568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528552546259736588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: XF_XanaLogo
