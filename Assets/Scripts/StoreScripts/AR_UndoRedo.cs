@@ -50,6 +50,9 @@ public class AR_UndoRedo : MonoBehaviour
     [Space(5)]
     public List<Data> data;
 
+    public enum ButtonState { Undo, Redo ,none};
+    public ButtonState currentButtonState = ButtonState.none;
+    public bool calledOneTime = false;
     void Awake()
     {
         if (obj == null)
@@ -116,12 +119,15 @@ public class AR_UndoRedo : MonoBehaviour
     private bool performRedoAction = true;
     private void BackPressed()
     {
-        if (!performRedoAction) return;
+        if (!performRedoAction ) return;
+        ReduActionPerform();
+    }
+    void ReduActionPerform()
+    {
         performRedoAction = false;
 
         if (data.Count > defaultListSize)  // && headIndex >= defaultListSize
         {
-            Debug.Log("<color=red>Back Pressed</color>");
             previousInd = headIndex - 1;
 
             StartCoroutine(SendMessage(data[previousInd].actionObject, data[previousInd].parameter, data[previousInd].methodName,
@@ -134,6 +140,17 @@ public class AR_UndoRedo : MonoBehaviour
             isDequeueData = true;
         }
         StartCoroutine(EnableBtnAction());
+
+        if(currentButtonState == ButtonState.Redo && !calledOneTime)
+        {
+            headIndex++;
+            calledOneTime = true;
+        }
+        if (currentButtonState != ButtonState.Redo)
+        {
+            currentButtonState = ButtonState.Redo;
+            ReduActionPerform();
+        }
     }
 
     IEnumerator EnableBtnAction()
@@ -147,6 +164,11 @@ public class AR_UndoRedo : MonoBehaviour
     private void NextPressed()
     {
         if (!performUndoAction) return;
+        UndoActionPerform();
+    }
+
+    void UndoActionPerform()
+    {
         performUndoAction = false;
 
         if (headIndex < data.Count && data.Count > defaultListSize)
@@ -166,8 +188,12 @@ public class AR_UndoRedo : MonoBehaviour
             isDequeueData = false;
         }
         StartCoroutine(EnableBtnAction2());
+        if (currentButtonState != ButtonState.Undo)
+        {
+            currentButtonState = ButtonState.Undo;
+            UndoActionPerform();
+        }
     }
-
     IEnumerator EnableBtnAction2()
     {
         yield return new WaitForSeconds(0.5f);
