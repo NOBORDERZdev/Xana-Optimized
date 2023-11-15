@@ -1961,6 +1961,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3829161618264365950}
+  - {fileID: 6871966640619135633}
   - {fileID: 316958233412008741}
   sceneViewId: 0
   InstantiationId: 0
@@ -1991,7 +1992,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.23
-  m_Speed: 2
+  m_Speed: 2.33
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 200
@@ -2031,6 +2032,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf853f666895814da52a71357e8cd45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nickName: Player
+  money: 0
+  timeSurvived: 0
   animator: {fileID: 250644416097083143}
   velocityNameX: velocityX
   velocityNameY: velocityY
