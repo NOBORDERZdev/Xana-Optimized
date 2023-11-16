@@ -16,12 +16,12 @@ MonoBehaviour:
   debugMode: 1
   debug_ReactionWeight: 1
   advancedOptions:
-    timeBetweenDecisions: 0.07
+    timeBetweenDecisions: 0
     timeBetweenActions: 0.02
-    aggressiveness: 0.65
+    aggressiveness: 0.64
     ruleCompliance: 0.9
     comboEfficiency: 1
-    movementDuration: 0.3
+    movementDuration: 0.2
     buttonSequenceInterval: 1
     attackDesirabilityCalculation: 2
     defaultDesirability: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
       inputWhenDown: 0
       inputWhenBlocking: 1
       inputWhenStunned: 1
-      enableAttackTypeFilter: 0
+      enableAttackTypeFilter: 1
       enableGaugeFilter: 1
       enableDistanceFilter: 1
       enableDamageFilter: 1
@@ -45,7 +45,7 @@ MonoBehaviour:
     attacksAtPreferableDistance: 5
     autoMove: 1
     restOnLocation: 1
-    moveFrequency: 4
+    moveFrequency: 3
     autoJump: 1
     jumpBackFrequency: 0
     jumpStraightFrequency: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     jumpBlockAccuracy: 0
     autoAttack: 1
     obeyPreferableDistances: 1
-    attackFrequency: 5
+    attackFrequency: 4
     debugToggle: 0
   aiRules:
   - ruleName: Crouch Block
@@ -172,11 +172,11 @@ MonoBehaviour:
       strong: 0.2
       veryStrong: 0.25
     distance:
-      veryClose: 0.05
-      close: 0.06
-      mid: 0.1
-      far: 0.11
-      veryFar: 0.18
+      veryClose: 0.03
+      close: 0.045
+      mid: 0.05
+      far: 0.06
+      veryFar: 0.07
     desirability:
       theWorstOption: 0
       veryUndesirable: 0.15

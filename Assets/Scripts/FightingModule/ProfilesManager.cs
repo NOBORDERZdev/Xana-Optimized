@@ -1,36 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
+using UnityEngine.UI;
 
 
-public class ProfilesManager : MonoBehaviourPunCallbacks
+public class ProfilesManager : MonoBehaviour
 {
-  //  int ii = 0;
+    public Image TargetSprite;
+    public Button[] ProfileButtons;
+
+
+    private void Start()
+    {
+        if (ProfileSelector._instance.currentProfile != -1)
+        {
+      //      TargetSprite.rectTransform.anchoredPosition = ProfileButtons[ProfileSelector._instance.currentProfile].GetComponent<RectTransform>().anchoredPosition;
+            TargetSprite.rectTransform.position = ProfileButtons[ProfileSelector._instance.currentProfile].transform.position;
+            TargetSprite.gameObject.SetActive(true);
+        }
+    }
+
     public void ProfileSelected(int i) {
         ProfileSelector._instance.currentProfile = i;
-    //    ii = i;
-        //Hashtable customProperties = new Hashtable();
-        //customProperties["profileId"] = i; // Replace 123 with your desired integer value.
-
-        //if (PhotonNetwork.IsConnectedAndReady)
-        //{
-        //    PhotonNetwork.SetPlayerCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "profileId", i } });
-        //}
-        //else
-        //{
-        //    Debug.Log("Not Connected to photon");
-        //}
-
-        //// Set the custom properties for the local player.
-        ////PhotonNetwork.LocalPlayer.SetCustomProperties(customProperties);
-        //print("Selected");
+        //  TargetSprite.rectTransform.anchoredPosition = ProfileButtons[ProfileSelector._instance.currentProfile].GetComponent<RectTransform>().anchoredPosition;
+        TargetSprite.rectTransform.position = ProfileButtons[ProfileSelector._instance.currentProfile].transform.position; 
+        TargetSprite.gameObject.SetActive(true);
     }
 
-    public override void OnJoinedRoom()
-    {
-      //  base.OnJoinedRoom();
-        Debug.Log("Joined Room");
-     //   PhotonNetwork.SetPlayerCustomProperties(new ExitGames.Client.Photon.Hashtable() { { "profileId", ii } });
-    }
 }
