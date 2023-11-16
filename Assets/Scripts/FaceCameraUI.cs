@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FaceCameraUI : MonoBehaviour
@@ -15,8 +13,7 @@ public class FaceCameraUI : MonoBehaviour
 
     private Transform localTrans;
     public bool oneTimeCall = false;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         localTrans = GetComponent<Transform>();
         mainCam = LoadFromFile.instance.PlayerCamera.transform;
@@ -24,8 +21,7 @@ public class FaceCameraUI : MonoBehaviour
         firstPersonCam = LoadFromFile.instance.firstPersonCamera.transform;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (firstPersonCam.gameObject.activeInHierarchy && mainCam!=firstPersonCam) 
             mainCam = firstPersonCam;
@@ -53,8 +49,10 @@ public class FaceCameraUI : MonoBehaviour
                     {
                         if (!objects[i].GetComponent<PhotonView>().IsMine)
                         {
-                            objects[i].gameObject.GetComponent<ArrowManager>().PhotonUserName.gameObject.GetComponent<FaceCameraUI>().selfieCam = selfieCam;
-                            objects[i].gameObject.GetComponent<ArrowManager>().PhotonUserName.gameObject.GetComponent<FaceCameraUI>().selfieCamOther = selfieCamOther;
+                            objects[i].gameObject.GetComponent<ArrowManager>().PhotonUserName.gameObject
+                                .GetComponent<FaceCameraUI>().selfieCam = selfieCam;
+                            objects[i].gameObject.GetComponent<ArrowManager>().PhotonUserName.gameObject
+                                .GetComponent<FaceCameraUI>().selfieCamOther = selfieCamOther;
                         }
                     }
                 }

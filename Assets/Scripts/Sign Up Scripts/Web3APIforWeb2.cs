@@ -1,4 +1,5 @@
 using AdvancedInputFieldSamples;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -8,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using WalletConnectSharp.Core.Models;
 
 public class Web3APIforWeb2 : MonoBehaviour
 {
@@ -29,7 +31,7 @@ public class Web3APIforWeb2 : MonoBehaviour
 
     //private string OwnedSpecifiednftAPIMainNet = "https://prod-backend.xanalia.com/nfts/nft-by-address-user-tcg?address=";
     private string OwnedSpecifiednftAPIMainNet = "https://prod-backend.xanalia.com/nfts/nft-by-address-user-tcg-v2?address=";
-    private string OwnedSpecifiednftAPITestNet = "https://backend.xanalia.com/nfts/nft-by-address-user-tcg-v2?address=";
+    private string OwnedSpecifiednftAPITestNet = "https://backend.xanalia.com/nfts/nft-by-address-user-tcg?address=";
 
     //private string SpecifiedNFTPostFix = "&pageIndex=1&pageSize=1000&name=breaking down";
     private string SpecifiedNFTPostFix = "&pageIndex=1&pageSize=1000&name=";
@@ -45,8 +47,6 @@ public class Web3APIforWeb2 : MonoBehaviour
 
     [SerializeField]
     private RequestData requestData;
-
-    [SerializeField] bool useXanaliaMainnetApiOnTestnet;
     // Start is called before the first frame update
     void Start()
     {
@@ -82,28 +82,12 @@ public class Web3APIforWeb2 : MonoBehaviour
             //  localAPI = string.Format(TestNetOwnednftAPI, OwnedNFTPageNumb, OwnedNFTPageSize) + publicID + Postfix;
             if (TestSpecificCase)
             {
-                // XANALLIA APIS ARE NOT IMPLEMENT ON TESTNET THATS WHY USING MAINNET APIS.
-                if (useXanaliaMainnetApiOnTestnet)
-                {
-                     localAPI = OwnedSpecifiednftAPIMainNet + TestSpecificAdrress + SpecifiedNFTPostFix;
-                }
-                else
-                {
-                    localAPI = OwnedSpecifiednftAPITestNet + TestSpecificAdrress + SpecifiedNFTPostFix;
-                }
 
+                localAPI = OwnedSpecifiednftAPITestNet + TestSpecificAdrress + SpecifiedNFTPostFix;
             }
             else
             {
-                // XANALLIA APIS ARE NOT IMPLEMENT ON TESTNET THATS WHY USING MAINNET APIS.
-                if (useXanaliaMainnetApiOnTestnet)
-                {
-                     localAPI = OwnedSpecifiednftAPIMainNet + publicID + SpecifiedNFTPostFix;
-                }
-                else
-                {
-                  localAPI = OwnedSpecifiednftAPITestNet + publicID + SpecifiedNFTPostFix;
-                }
+                localAPI = OwnedSpecifiednftAPITestNet + publicID + SpecifiedNFTPostFix;
             }
         }
         else
@@ -239,26 +223,13 @@ public class Web3APIforWeb2 : MonoBehaviour
             if (TestSpecificCase)
             {
                 print("NFT55 " + _nftid);
-                if (useXanaliaMainnetApiOnTestnet)
-                {
-                   localAPI = PrefixMainNetOneNFTOwnerShip + TestSpecificAdrress + PostfixOneNFTOwnerShip + _nftid;
-                }
-                else
-                {
-                    localAPI = PrefixTesnetOneNFTOwnerShip + TestSpecificAdrress + PostfixOneNFTOwnerShip + _nftid;
-                }
+
+                localAPI = PrefixTesnetOneNFTOwnerShip + TestSpecificAdrress + PostfixOneNFTOwnerShip + _nftid;
             }
             else
             {
-                if (useXanaliaMainnetApiOnTestnet)
-                {
-                   localAPI = PrefixMainNetOneNFTOwnerShip + PlayerPrefs.GetString("publicID") + PostfixOneNFTOwnerShip + _nftid;
-                }
-                else
-                {
-                    localAPI = PrefixTesnetOneNFTOwnerShip + PlayerPrefs.GetString("publicID") + PostfixOneNFTOwnerShip + _nftid;
-                }
                 print("NFT66 " + _nftid);
+                localAPI = PrefixTesnetOneNFTOwnerShip + PlayerPrefs.GetString("publicID") + PostfixOneNFTOwnerShip + _nftid;
             }
         }
         Debug.Log("localAPI: " + localAPI);

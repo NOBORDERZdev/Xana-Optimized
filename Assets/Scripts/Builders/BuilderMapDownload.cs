@@ -641,6 +641,11 @@ public class BuilderMapDownload : MonoBehaviour
         //{
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
         //}
+
+        /*if (RFM.Globals.IsRFMWorld)
+        {
+            SceneManager.LoadSceneAsync("RFMDummy", LoadSceneMode.Additive);
+        }*/
         if (!XanaConstants.xanaConstants.isFromXanaLobby)
         {
             // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
