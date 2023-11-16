@@ -42,7 +42,7 @@ public class ItemGFXHandler : ItemComponent
                 {
                     _renderers[i].sharedMaterials.ForEachItem((d) =>
                     {
-                        if (d.shader==GamificationComponentData.instance.proceduralRingShader || d.shader==GamificationComponentData.instance.uberShader)
+                        if (d.shader==GamificationComponentData.instance.proceduralRingShader || d.shader==GamificationComponentData.instance.uberShader || d.shader.name.Contains("Particles Additive Alpha8"))
                         {
                             if (s == null || !s.name.Equals(d.shader.name))
                             {
