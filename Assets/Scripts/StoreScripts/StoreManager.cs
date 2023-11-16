@@ -1528,6 +1528,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomEyesPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomEyesPalette.gameObject.SetActive(false);
+            ParentOfBtnsCustomEyes.gameObject.SetActive(false);  
             ParentOfBtnsAvatarEyes.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[3], (RectTransform)ParentOfBtnsAvatarEyes);
             return tempBool;
@@ -1537,6 +1538,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomLipsPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomLipsPalette.gameObject.SetActive(false);
+            ParentOfBtnsCustomLips.gameObject.SetActive(false);  
             ParentOfBtnsAvatarLips.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[5], (RectTransform)ParentOfBtnsAvatarLips);
             return tempBool;
