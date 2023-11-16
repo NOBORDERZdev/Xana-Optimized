@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4b3f2a017bf1dd54d80bb9256ff3f603, type: 2}
 --- !u!64 &8
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &153016228
 Transform:
@@ -2296,7 +2296,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1014793351
 GameObject:
@@ -2813,108 +2813,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &1159641483
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5618566492306241921, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Name
-      value: NavmeshBaker
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241921, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 45.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 52
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492306241923, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Size.x
-      value: 30.14466
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Size.y
-      value: 1.0256748
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Size.z
-      value: 15.488289
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Center.x
-      value: -4.3768196
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Center.y
-      value: -0.5483961
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_Center.z
-      value: 0.4295082
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_NavMeshData
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_CollectObjects
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5618566492940775946, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-      propertyPath: m_LayerMask.m_Bits
-      value: 1048576
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
---- !u!4 &1159641484 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5618566492940776181, guid: d6fd541299c3a6c4ab08463a0ca98738, type: 3}
-  m_PrefabInstance: {fileID: 1159641483}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1163100471
 GameObject:
   m_ObjectHideFlags: 0
@@ -4310,89 +4208,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &1658404799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1658404800}
-  - component: {fileID: 1658404802}
-  - component: {fileID: 1658404801}
-  m_Layer: 20
-  m_Name: Pointer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1658404800
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658404799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1159641484}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1658404801
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658404799}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1658404802
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658404799}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &1700376267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7674,7 +7489,7 @@ GameObject:
   m_Name: Window_Lights_4G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000010183235832
@@ -8172,7 +7987,7 @@ GameObject:
   m_Name: Building_3B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000010321360866
@@ -9581,7 +9396,7 @@ GameObject:
   m_Name: Window_Lights_5B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000010784654480
@@ -9638,7 +9453,7 @@ GameObject:
   m_Name: Building_3A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000010795793295
@@ -9828,7 +9643,7 @@ GameObject:
   m_Name: Building_9B (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000010912000129
@@ -10037,7 +9852,7 @@ GameObject:
   m_Name: Building_5B (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011000785726
@@ -10112,7 +9927,7 @@ GameObject:
   m_Name: Window_Lights_4I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011025559593
@@ -10225,7 +10040,7 @@ GameObject:
   m_Name: Building_1A (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011078086439
@@ -10675,7 +10490,7 @@ GameObject:
   m_Name: Smoke_Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011239587053
@@ -10831,7 +10646,7 @@ GameObject:
   m_Name: Building_3B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011268753650
@@ -11402,7 +11217,7 @@ GameObject:
   m_Name: Window_Lights_4A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011555730782
@@ -11422,7 +11237,7 @@ GameObject:
   m_Name: Air_Conditioner_1A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011556155612
@@ -11480,7 +11295,7 @@ GameObject:
   m_Name: Building_4I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011581914523
@@ -11839,7 +11654,7 @@ GameObject:
   m_Name: Building_5B (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011747447506
@@ -12089,7 +11904,7 @@ GameObject:
   m_Name: Canopy_9C.M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011836960123
@@ -12356,7 +12171,7 @@ GameObject:
   m_Name: Donut_9C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011935659485
@@ -12526,7 +12341,7 @@ GameObject:
   m_Name: Building_3B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000011990207789
@@ -12545,7 +12360,7 @@ GameObject:
   m_Name: Canopy_9C.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012001818310
@@ -12848,7 +12663,7 @@ GameObject:
   m_Name: Window_Lights_3A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012093315108
@@ -12866,7 +12681,7 @@ GameObject:
   m_Name: Window_Lights_5B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012097564557
@@ -13243,7 +13058,7 @@ GameObject:
   m_Name: Fan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012222923057
@@ -13690,7 +13505,7 @@ GameObject:
   m_Name: Canopy_9C.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012391554849
@@ -13727,7 +13542,7 @@ GameObject:
   m_Name: Smoke_Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012396077250
@@ -13745,7 +13560,7 @@ GameObject:
   m_Name: Window_Lights_5C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012396449699
@@ -14122,7 +13937,7 @@ GameObject:
   m_Name: Logo_9C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012480387817
@@ -14428,7 +14243,7 @@ GameObject:
   m_Name: Window_Lights_5C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012638748320
@@ -14597,7 +14412,7 @@ GameObject:
   m_Name: Smoke_Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012698350330
@@ -14616,7 +14431,7 @@ GameObject:
   m_Name: Shed_5E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012698924830
@@ -15040,7 +14855,7 @@ GameObject:
   m_Name: Window_Lights_5E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012863843829
@@ -15223,7 +15038,7 @@ GameObject:
   m_Name: Building_7A (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012931506218
@@ -15368,7 +15183,7 @@ GameObject:
   m_Name: Smoke_Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000012966523362
@@ -15854,7 +15669,7 @@ GameObject:
   m_Name: Building_4A (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013155610091
@@ -15945,7 +15760,7 @@ GameObject:
   m_Name: Building_10B (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013181408379
@@ -16079,7 +15894,7 @@ GameObject:
   m_Name: Air_Conditioner_1A (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013228506542
@@ -16209,7 +16024,7 @@ GameObject:
   m_Name: Shed_9B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013276943412
@@ -16510,7 +16325,7 @@ GameObject:
   m_Name: Building_4H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013395858903
@@ -16546,7 +16361,7 @@ GameObject:
   m_Name: Fan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013416151221
@@ -16616,7 +16431,7 @@ GameObject:
   m_Name: Sign_7A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013438543575
@@ -16817,7 +16632,7 @@ GameObject:
   m_Name: Building_9C (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013534759208
@@ -16870,7 +16685,7 @@ GameObject:
   m_Name: Window_Lights_4C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013558474596
@@ -16889,7 +16704,7 @@ GameObject:
   m_Name: Logo_10B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013573116768
@@ -16964,7 +16779,7 @@ GameObject:
   m_Name: Building_4C (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013590534158
@@ -17727,7 +17542,7 @@ GameObject:
   m_Name: Window_Lights_1A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013872058985
@@ -18065,7 +17880,7 @@ GameObject:
   m_Name: Building_5C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013973745660
@@ -18321,7 +18136,7 @@ GameObject:
   m_Name: Window_Lights_10B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014038107924
@@ -18526,7 +18341,7 @@ GameObject:
   m_Name: Window_Lights_4H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014133447390
@@ -18582,7 +18397,7 @@ GameObject:
   m_Name: Window_Lights_7A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014143649174
@@ -18619,7 +18434,7 @@ GameObject:
   m_Name: Smoke_Grey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014146863728
@@ -18729,7 +18544,7 @@ GameObject:
   m_Name: Window_Lights_9B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014189229367
@@ -18767,7 +18582,7 @@ GameObject:
   m_Name: Building_5E (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014192441756
@@ -19087,7 +18902,7 @@ GameObject:
   m_Name: Building_5C (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014279952374
@@ -19122,7 +18937,7 @@ GameObject:
   m_Name: Building_4G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000014284536865
