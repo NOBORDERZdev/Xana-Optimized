@@ -89,6 +89,8 @@ namespace Climbing
 
         private void SetCameraTargets()
         {
+            if (!RFM.Globals.player) return;
+
             var cameraController = RFM.Globals.player.GetComponentInChildren<Climbing.CameraController>();
             FreeLook.Follow = cameraController.playerModel;
             FreeLook.LookAt = cameraController.focus;

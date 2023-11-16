@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace RFM.Character
 {
-    public class NPCEscapee : MonoBehaviour, IPunObservable
+    public class NPCRunner : MonoBehaviour, IPunObservable
     {
         public string nickName = "Player";
         public int money;
@@ -138,21 +138,21 @@ namespace RFM.Character
             }
         }
         
-        public void AIEscapeeCaught()
+        public void AIRunnerCaught()
         {
             StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            if (PhotonNetwork.IsMasterClient)
+            if (/*PhotonNetwork.IsMasterClient*/true)
             {
-                RFM.Managers.RFMUIManager.Instance.EscapeeCaught(nickName, money, timeSurvived, true);
+                RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived, true);
             }
             PhotonNetwork.Destroy(this.gameObject);
         }
         
         private void GameOver()
         {
-            AIEscapeeCaught();
+            AIRunnerCaught();
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
