@@ -1,18 +1,20 @@
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
-public class SpecialItemSyncing : MonoBehaviourPun
+public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
 {
-    Shader defaultSkinShader, defaultClothShader;
-    Shader newSkinShader, newClothShader;
-
     SkinnedMeshRenderer playerHair;
     SkinnedMeshRenderer playerBody;
     SkinnedMeshRenderer playerShirt;
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
+    SkinnedMeshRenderer playerHead;
+    MeshRenderer playerFreeCamConsole;
+    MeshRenderer playerFreeCamConsoleOther;
+
     GameObject playerObj;
     bool isInitialise = false;
 
@@ -20,16 +22,6 @@ public class SpecialItemSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-
-        if (!GamificationComponentData.instance.withMultiplayer)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-        defaultSkinShader = GamificationComponentData.instance.skinShader;
-        defaultClothShader = GamificationComponentData.instance.cloathShader;
-        newSkinShader = GamificationComponentData.instance.superMarioShader;
-        newClothShader = GamificationComponentData.instance.superMarioShader2;
         StartCoroutine(SyncingCoroutin());
     }
 
@@ -40,16 +32,28 @@ public class SpecialItemSyncing : MonoBehaviourPun
         if (playerObj != null)
         {
             yield return new WaitForSeconds(0.5f);
-            this.transform.SetParent(playerObj.transform);
-            transform.localEulerAngles = Vector3.up * 180;
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
             playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
             playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
             playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
             playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
             playerBody = charcterBodyParts.Body;
-            ApplySuperMarioEffect();
+            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+            playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
+
+            this.transform.SetParent(playerShoes.transform);
+            this.transform.localPosition = Vector3.up * 0.0207f;
+            transform.localEulerAngles = Vector3.zero;
+            RingbufferFootSteps ringbufferFootStep = gameObject.GetComponentInChildren<RingbufferFootSteps>();
+            //for (int i = 0; i < ringbufferFootSteps.Length; i++)
+            //{
+            ringbufferFootStep.enabled = true;
+            ringbufferFootStep.transform.GetChild(0).gameObject.SetActive(true);
+            AvatarFootPrintVisible(false);
+            isInitialise = true;
         }
     }
 
@@ -58,7 +62,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
         if (photonView.IsMine)
             return;
         if (isInitialise)
-            ApplyDefaultEffect();
+            AvatarFootPrintVisible(true);
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
@@ -75,26 +79,15 @@ public class SpecialItemSyncing : MonoBehaviourPun
         return null;
     }
 
-    private void ApplySuperMarioEffect()
+    void AvatarFootPrintVisible(bool state)
     {
-        playerHair.material.shader = newClothShader;
-        playerBody.material.shader = newSkinShader;
-        playerBody.material.SetFloat("_Outer_Glow", 2);
-        playerShirt.material.shader = newClothShader;
-        playerPants.material.shader = newClothShader;
-        playerShoes.material.shader = newClothShader;
-        isInitialise = true;
-    }
-
-    private void ApplyDefaultEffect()
-    {
-        if (playerObj == null)
-            return;
-
-        playerHair.material.shader = defaultClothShader;
-        playerBody.material.shader = defaultSkinShader;
-        playerShirt.material.shader = defaultClothShader;
-        playerPants.material.shader = defaultClothShader;
-        playerShoes.material.shader = defaultClothShader;
+        playerHair.enabled = state;
+        playerBody.enabled = state;
+        playerShirt.enabled = state;
+        playerPants.enabled = state;
+        playerShoes.enabled = state;
+        playerHead.enabled = state;
+        playerFreeCamConsole.enabled = state;
+        playerFreeCamConsoleOther.enabled = state;
     }
 }
