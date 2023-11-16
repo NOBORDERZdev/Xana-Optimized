@@ -396,7 +396,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-        CheckAgain:
+            CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -558,6 +558,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
         }
 
+        XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
+        BuilderEventManager.AfterPlayerInstantiated?.Invoke();
+
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
@@ -590,7 +593,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-    CheckAgain:
+        CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -660,7 +663,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-    End:
+        End:
         //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -880,7 +883,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             spawnPoint = newobject.transform.position;
         }
-        BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.position;
+        BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
         if (tempSpawnPoint)
         {
             if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -961,9 +964,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-    CheckAgain:
+        CheckAgain:
         Transform temp = null;
-        temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+            temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        else
+            temp = new GameObject("SpawnPoint").transform;
         if (temp)
         {
             spawnPoint = temp.position;
@@ -1021,13 +1027,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        //print("~~~~~~ " + temp);
-        if (!string.IsNullOrEmpty(temp))
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
-        else if (XanaConstants.xanaConstants.isBuilderScene)
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
-        else
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
+        //Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
+        //if (!string.IsNullOrEmpty(temp))
+        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
+        //else if (XanaConstants.xanaConstants.isBuilderScene)
+        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
+        //else
+        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
 
     }
 
