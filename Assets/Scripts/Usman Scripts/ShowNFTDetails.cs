@@ -145,7 +145,7 @@ public class ShowNFTDetails : MonoBehaviour
         
         
 
-        if (data.detail.description.Length > 0)
+        if (data.detail.description.Length > 0 && XanaConstants.xanaConstants.EnviornmentName!= "Koto-ku Virtual Exhibition")
         {
             int type;
             if (data.detail.ratio == "1:1")
@@ -428,7 +428,7 @@ public class ShowNFTDetails : MonoBehaviour
         displayPanelWithStats.SetActive(false);
         //VideoObjectWithDes.SetActive(true);
         displayVideoPanelParent.SetActive(true);
-        if (data.detail.description.Length > 0)
+        if (data.detail.description.Length > 0 && XanaConstants.xanaConstants.EnviornmentName != "Koto-ku Virtual Exhibition")
         {
             int type;
             if (data.detail.ratio == "1:1")

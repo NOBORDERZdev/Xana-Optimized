@@ -688,7 +688,7 @@ public class DynamicGalleryData : MonoBehaviour
                     print("showing video");
                     CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
                     ShowNFTDetails.instance.ShowVideo(this);
-                    if (hit.collider.GetComponent<DynamicGalleryData>().detail.description.Length > 0)
+                    if (hit.collider.GetComponent<DynamicGalleryData>().detail.description.Length > 0 && XanaConstants.xanaConstants.EnviornmentName != "Koto-ku Virtual Exhibition")
                     {
                         videoPlayerWithStats.Play();
                         print("showing video");
