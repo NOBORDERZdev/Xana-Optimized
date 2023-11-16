@@ -1037,7 +1037,7 @@ public class MyProfileDataManager : MonoBehaviour
         //{
         //    NFTShowingOnneBool = true;
         // }  
-
+        UserRegisterationManager.instance.GetOwnedNFTsFromAPI();
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
