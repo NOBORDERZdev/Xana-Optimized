@@ -3788,12 +3788,12 @@ public class UserRegisterationManager : MonoBehaviour
 
                     }
                 }
-                if (myObjectofOTPForResetPassword.data.tempToken == null)
-                {
-                    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
-                    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
-                }
+                //if (myObjectofOTPForResetPassword.data.tempToken == null)
+                //{
+                //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
+                //    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                //}
 
             }
 

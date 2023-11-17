@@ -87,6 +87,7 @@ public class WorldItemView : MonoBehaviour
         {
             LoadImagesFromRemote();
         }
+        UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
     }
     private void OnDisable()
     {
@@ -96,6 +97,7 @@ public class WorldItemView : MonoBehaviour
             worldIcon.sprite = null;
             worldIcon.sprite = default;
         }
+        UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     }
     public void Init()
     {
@@ -165,6 +167,50 @@ public class WorldItemView : MonoBehaviour
                 }
                 if (CheckServerForID().ToString() == idOfObject)
                     joinedUserCount.text = "5";
+                else
+                    joinedUserCount.text = "0";
+            }
+        }
+    }
+    void UpdateUserCount(string UserDetails)
+    {
+        joinedUserCount.text = "0";
+        if (string.IsNullOrEmpty(UserDetails))
+        {
+            return;
+        }
+        AllWorldData allWorldData = JsonConvert.DeserializeObject<AllWorldData>(UserDetails);
+        if (allWorldData != null && allWorldData.player_count.Length > 0)
+        {
+            string modifyEnityType = entityType;
+            if (modifyEnityType.Contains("_"))
+            {
+                //modifyEnityType = modifyEnityType.Split("_").First();
+                modifyEnityType = "USER";
+            }
+            for (int i = 0; i < allWorldData.player_count.Length; i++)
+            {
+                if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
+                {
+                    Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
+                    if (allWorldData.player_count[i].world_id == CheckServerForID())
+                    { // For Xana Lobby
+                        joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
+                    }
+                    else
+                        joinedUserCount.text = allWorldData.player_count[i].count.ToString();
+
+                    if (allWorldData.player_count[i].count > 5)
+                        joinedUserCount.transform.parent.gameObject.SetActive(true);
+                    else if (PlayerPrefs.GetInt("ShowLiveUserCounter", 0) == 0)
+                        joinedUserCount.transform.parent.gameObject.SetActive(false);
+
+                    break;
+                }
+                if (CheckServerForID().ToString() == idOfObject)
+                {
+                    joinedUserCount.text = "5";
+                }
                 else
                     joinedUserCount.text = "0";
             }

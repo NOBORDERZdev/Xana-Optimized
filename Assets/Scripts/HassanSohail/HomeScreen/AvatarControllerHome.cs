@@ -10,6 +10,7 @@ public class AvatarControllerHome : MonoBehaviour
     [SerializeField] GameObject worldObj;
     [SerializeField] GameObject storeCam;
     [SerializeField] GameObject worldCam;
+    [SerializeField] GameObject cineCam;
     [Header("Wandering")]
     [SerializeField] float minRadius;
     [SerializeField] float maxRadius;
@@ -20,9 +21,9 @@ public class AvatarControllerHome : MonoBehaviour
 
     #region PrivateVar_Wandering
     bool isMoving = false;
-    float wanderTimer;
+    //float wanderTimer;
     Transform target;
-    float timer;
+   // float timer;
     #endregion
 
     bool isPerformingAction = false;
@@ -33,7 +34,7 @@ public class AvatarControllerHome : MonoBehaviour
     Vector3 lastpos;
     private void OnEnable()
     {
-        timer = wanderTimer;
+       // timer = wanderTimer;
         agent.enabled = false;
         //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
         animator.SetBool("IsGrounded", true);
@@ -45,14 +46,10 @@ public class AvatarControllerHome : MonoBehaviour
         worldCam.SetActive(true);
         worldObj.SetActive(true);
     }
-
     private void Start()
     {
-        // PerformAction();
         Wander();
     }
-
-
     void Update()
     {
         if (isMoving && isInHome)
@@ -61,17 +58,14 @@ public class AvatarControllerHome : MonoBehaviour
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if (!agent.hasPath || agent.velocity.sqrMagnitude <= 0.25f)
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude <= 0.3f)
                     {
                         agent.updateRotation = true;
                         isMoving = false;
                         agent.enabled = false;
                         animator.SetFloat("Blend", 0.0f);
                         animator.SetFloat("BlendY", 0.0f);
-
                         isPerformingAction = false;
-
-                        //PerformAction();
                         perfomAnim();
                     }
                     else
@@ -102,77 +96,46 @@ public class AvatarControllerHome : MonoBehaviour
             animator.SetFloat("BlendY", 0.0f);
         }
     }
-
-    /// <summary>
-    /// To perform different action like wandering, animations etc.
-    /// </summary>
-    void PerformAction() {
-        int rand = 0;//Random.Range(0,TotalActions);
-        switch (rand)
-        {
-            case 0:
-                Wander();
-                break;
-            default:
-                break;
-        }
-
-    }
-
-    /// <summary>
-    /// To wander in world
-    /// </summary>
     void Wander() {
+
         if (!isInHome)
         {
             return;
         }
         animator.SetBool("Action", false);
         animator.SetBool("isMoving", true);
-        Invoke(nameof(ForceActionFalse), 0.05f);
+       // Invoke(nameof(ForceActionFalse), 0.05f);
         agent.enabled = true;
         Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius, maxRadius), -1);
         agent.SetDestination(newPos);
         animator.SetBool("IsGrounded", true);
-        animator.SetFloat("Blend", 0.01f);
-        animator.SetFloat("Blend", 0f);
-        int rand = 0;//Random.Range(0, 2);
-        switch (rand)
-        {
-            case 0: // walk
-                animator.SetFloat("Blend", 0.25f);
-                agent.speed = 0.9f;
-                break;
-                /* case 1: // run
-                     animator.SetFloat("Blend", 1.0f);
-                     agent.speed = 2.2f;
-                     break;
-                 default: // sprint
-                     animator.SetFloat("Blend", 1.3f);
-                     agent.speed = 3;
-                     break;*/
-        }
+        animator.SetFloat("Blend", 0.25f);
+        agent.speed = 0.9f;
         isMoving = true;
-
     }
-
-    void ForceActionFalse() {
-        animator.SetBool("Action", false);
-
-    }
-
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
-        randDirection += origin;
+        if (isInHome)
+        {
+            Vector3 randDirection = Random.insideUnitSphere * dist;
+            randDirection += origin;
 
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-        return navHit.position;
+            NavMeshHit navHit;
+            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+            return navHit.position;
+        }
+        else
+        {
+            return gameObject.transform.position;
+        }
     }
 
     private void FaceTarget(Vector3 destination)
     {
+        if (!isInHome)
+        {
+            return;
+        }
         Vector3 lookPos = destination - transform.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
@@ -180,43 +143,43 @@ public class AvatarControllerHome : MonoBehaviour
     }
 
     void perfomAnim() {
-        isMoving = false;
         animator.SetBool("isMoving", false);
         animator.SetBool("Action", true);
-        animator.SetFloat("Blend", 0f);
         Invoke(nameof(Wander), 8f);
     }
-
     /// <summary>
     /// To change player from Home to store and viceversa
     /// </summary>
     public void UpdateState(bool setToStore) {
-        animator.SetBool("Action", false);
-        animator.SetBool("isMoving", false);
-        isMoving = false;
-       
+
         animator.SetFloat("Blend", 0.0f);
         if (setToStore) // set player avatar for store
         {
+            animator.SetBool("Action", false);
+            animator.SetBool("isMoving", false);
+            isMoving = false;
             isInHome = false;
             GetComponent<NavMeshAgent>().enabled = false;
             print("STORE HOME CALL");
             animator.SetBool("idel", true);
             GetComponent<FaceIK>().ikActive = true;
             GetComponent<FootStaticIK>().ikActive = true;
-            gameObject.transform.position = startpos;
-            gameObject.transform.eulerAngles = startRot;
+            transform.position = startpos;
+            transform.eulerAngles = startRot;
+            cineCam.SetActive(true);
             storeCam.SetActive(true);
             worldCam.SetActive(false);
             worldObj.SetActive(false);
         }
         else
         {
+            cineCam.SetActive(false);
             storeCam.SetActive(false);
             worldCam.SetActive(true);
             worldObj.SetActive(true);
             isInHome = true;
             animator.SetBool("idel", false);
+            transform.position = startpos;
             GetComponent<FaceIK>().ikActive = false;
             GetComponent<FootStaticIK>().ikActive = false;
             GetComponent<NavMeshAgent>().enabled = true;
@@ -224,4 +187,14 @@ public class AvatarControllerHome : MonoBehaviour
         }
     }
 
+
+
+    public void SetAvatarforAR()
+    {
+        animator.SetFloat("Blend", 0.0f);
+        animator.SetBool("Action", false);
+        animator.SetBool("isMoving", false);
+        animator.SetBool("idel", true);
+        gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled=false;
+    }
 }

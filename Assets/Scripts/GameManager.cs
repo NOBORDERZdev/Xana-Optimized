@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Input.multiTouchEnabled = false;
+        //Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
        // m_AnimControlller = mainCharacter.GetComponent<Animator>().runtimeAnimatorController;
         OnceGuestBool = false;

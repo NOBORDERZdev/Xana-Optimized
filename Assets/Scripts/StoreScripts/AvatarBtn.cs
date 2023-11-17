@@ -496,18 +496,21 @@ public class AvatarBtn : MonoBehaviour
                     }
             }
 
-            XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
-            XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
-
-            if (XanaConstants.xanaConstants._lastAvatarClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastAvatarClickedBtn)
-                return;
-
-            XanaConstants.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-
-            if (XanaConstants.xanaConstants._lastAvatarClickedBtn)
+            if (CurrentString != "Morphs")
             {
-                if (XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
-                    XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
+                XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
+
+                if (XanaConstants.xanaConstants._lastAvatarClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastAvatarClickedBtn)
+                    return;
+
+                XanaConstants.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+
+                if (XanaConstants.xanaConstants._lastAvatarClickedBtn)
+                {
+                    if (XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
+                        XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                }
             }
             //Debug.Log("<color=red>AvatarBtn AssignLastClickedBtnHere</color>");
             XanaConstants.xanaConstants._lastAvatarClickedBtn = this.gameObject;

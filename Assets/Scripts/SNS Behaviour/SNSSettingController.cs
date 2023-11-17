@@ -214,6 +214,10 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
+            if (UIManager.Instance!=null)
+            {
+                UIManager.Instance._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+            }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer !=null)
             {
