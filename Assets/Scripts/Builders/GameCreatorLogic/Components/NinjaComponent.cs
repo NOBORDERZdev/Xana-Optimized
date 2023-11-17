@@ -64,8 +64,11 @@ public class NinjaComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()

@@ -8,18 +8,25 @@ public class AudioManagerBGM : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip currentClip;
     AudioPropertiesBGM audioPropertiesBGM;
-    bool isDownloaded = false, downloadingError=false;
+    bool isDownloaded = false, downloadingError = false;
 
     private void OnEnable()
     {
         BuilderEventManager.BGMDownloader += AudioBGM;
         BuilderEventManager.BGMStart += BGMStart;
+        BuilderEventManager.BGMVolume += BGMVolume;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.BGMDownloader -= AudioBGM;
         BuilderEventManager.BGMStart -= BGMStart;
+        BuilderEventManager.BGMVolume -= BGMVolume;
+    }
+
+    void BGMVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 
     private void AudioBGM(AudioPropertiesBGM audioPropertiesBGM)
