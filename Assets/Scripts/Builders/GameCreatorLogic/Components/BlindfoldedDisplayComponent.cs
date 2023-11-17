@@ -17,6 +17,9 @@ public class BlindfoldedDisplayComponent : ItemComponent
     bool notTriggerOther = false;
     RingbufferFootSteps rr;
 
+    GameObject invisibleAvatar;
+    GameObject footPrintAvatar;
+
     public void Init(BlindfoldedDisplayComponentData blindfoldedDisplayComponentData)
     {
         this.blindfoldedDisplayComponentData = blindfoldedDisplayComponentData;
@@ -57,11 +60,13 @@ public class BlindfoldedDisplayComponent : ItemComponent
             rb = shoes.gameObject.AddComponent<Rigidbody>();
         rb.isKinematic = true;
 
-        if (shoes.transform.childCount == 0)
-        {
-            var tempobj = Instantiate(GamificationComponentData.instance.FootSteps[0], shoes);
-            tempobj.transform.localPosition = Vector3.up * 0.0207f;
-        }
+        //if (shoes.transform.childCount == 0)
+        //{
+        footPrintAvatar = PhotonNetwork.Instantiate(GamificationComponentData.instance.FootSteps[0].name,Vector3.zero, Quaternion.identity);
+        footPrintAvatar.transform.SetParent(shoes);
+        footPrintAvatar.transform.localPosition = Vector3.up * 0.0207f;
+        footPrintAvatar.transform.localEulerAngles = Vector3.zero;
+        //}
 
         skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
 
@@ -121,6 +126,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         yield return new WaitForEndOfFrame();
         BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
+        invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar",Vector3.zero,Quaternion.identity);
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
         DeactivateAvatarInivisibility();
     }
@@ -129,6 +135,12 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
         BuilderEventManager.DeactivateAvatarInivisibility?.Invoke();
+
+        if (invisibleAvatar)
+            PhotonNetwork.Destroy(invisibleAvatar.GetPhotonView());
+        if (footPrintAvatar)
+            PhotonNetwork.Destroy(footPrintAvatar.GetPhotonView());
+
         notTriggerOther = false;
         RaycastHit hit;
         if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
@@ -162,7 +174,6 @@ public class BlindfoldedDisplayComponent : ItemComponent
             }
             GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
             GamificationComponentData.instance.activeComponent = null;
-
         }
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);

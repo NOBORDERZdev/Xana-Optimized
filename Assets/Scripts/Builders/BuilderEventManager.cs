@@ -107,6 +107,7 @@ public static class BuilderEventManager
     public static Action<bool> UIToggle;
     public static Action<Constants.ItemComponentType> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
+    public static Action<bool> DisableAnimationsButtons;
 
     //Component Restriction
     public static Action<Constants.ItemComponentType> onComponentActivated;
@@ -116,4 +117,5 @@ public static class BuilderEventManager
     //BGM sound manager
     public static Action<AudioPropertiesBGM> BGMDownloader;
     public static Action BGMStart;
+    public static Action<float> BGMVolume;
 }
