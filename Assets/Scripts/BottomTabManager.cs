@@ -160,8 +160,13 @@ public class BottomTabManager : MonoBehaviour
             FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
             FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
         }
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
         UIManager.Instance.HomePage.SetActive(true);
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
+        UIManager.Instance.Canvas.SetActive(true);
     }
     public void OnClickHomeWorldButton()
     {
@@ -169,6 +174,7 @@ public class BottomTabManager : MonoBehaviour
         Debug.Log("Home button onclick");
        // if (defaultSelection != 0)
         {
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -181,10 +187,13 @@ public class BottomTabManager : MonoBehaviour
             //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
             // }
 
-            //  UIManager.Instance.Canvas.SetActive(true);
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
+            UIManager.Instance.Canvas.SetActive(true);
             UIManager.Instance.HomeWorldScreen.SetActive(true);
             UIManager.Instance.HomePage.SetActive(false);
-              UIManager.Instance.SwitchToScreen(0);
+            UIManager.Instance.SwitchToScreen(0);
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
@@ -197,6 +206,7 @@ public class BottomTabManager : MonoBehaviour
             Debug.Log("World button onclick");
             if (defaultSelection != 1)
             {
+                GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
                 OnSelectedClick(1);
                 if (FindObjectOfType<AdditiveScenesManager>() != null)
                 {
@@ -221,6 +231,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (defaultSelection != 0)
         {
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -240,7 +251,7 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to Explore button click.......
     public void OnClickWorldButton()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_message"))
+        if (!PremiumUsersDetails.Instance.CheckSpecificItem("WorldButton"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -255,6 +266,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (defaultSelection != 1)
         {
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -274,6 +286,10 @@ public class BottomTabManager : MonoBehaviour
 
             if (UIManager.Instance.Canvas.activeSelf)
             {
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
+                UIManager.Instance.Canvas.SetActive(true);
                // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
@@ -292,6 +308,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (defaultSelection != 5)
         {
+           
             //OnSelectedClick(5);
             defaultSelection = 5;
             if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
@@ -307,11 +324,12 @@ public class BottomTabManager : MonoBehaviour
                 hadeObj.localRotation = Quaternion.Euler(Vector3.zero);
                 hadeObj.transform.GetChild(0).transform.localRotation = Quaternion.Euler(Vector3.zero);
             }
-
             DontDestroyOnLoad(MainSceneAvatar);
             MainSceneAvatar.SetActive(false);
+            //MainSceneAvatar.transform.parent.transform.eulerAngles= new Vector3(0,180,0);
             Initiate.Fade("ARModuleRoomScene", Color.black, 1.0f, true);
             XanaConstants.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
+
         }
     }
 
@@ -330,6 +348,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (defaultSelection != 3)
         {
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             // LoaderShow(true);
             OnSelectedClick(3);
             defaultSelection = 3;
@@ -379,8 +398,9 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to Profile button click.......
     public void OnClickProfileButton()
     {
-        if (defaultSelection != 4)
+        if (/*defaultSelection != 4*/ true)
         {
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //---->>>Sannan OnSelectedClick(4);
             defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
@@ -409,7 +429,10 @@ public class BottomTabManager : MonoBehaviour
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {
-               // UIManager.Instance.Canvas.SetActive(false);
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=0; // hiding home footer
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=false;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
+                UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -465,5 +488,10 @@ public class BottomTabManager : MonoBehaviour
 
     public void createBackFromSns(){ 
         XanaConstants.xanaConstants.isBackfromSns= true;    
+    }
+
+
+    public void newStore(){ 
+       SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
     }
 }

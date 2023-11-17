@@ -64,10 +64,14 @@ public class UIManager : MonoBehaviour
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
-         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        _footerCan.GetComponent<CanvasGroup>().interactable=false;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
         yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+        _footerCan.GetComponent<CanvasGroup>().interactable=true;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);

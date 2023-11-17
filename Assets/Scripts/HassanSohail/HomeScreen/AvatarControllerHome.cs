@@ -113,18 +113,29 @@ public class AvatarControllerHome : MonoBehaviour
         agent.speed = 0.9f;
         isMoving = true;
     }
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    public Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
-        randDirection += origin;
+        if (isInHome)
+        {
+            Vector3 randDirection = Random.insideUnitSphere * dist;
+            randDirection += origin;
 
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-        return navHit.position;
+            NavMeshHit navHit;
+            NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+            return navHit.position;
+        }
+        else
+        {
+            return gameObject.transform.position;
+        }
     }
 
     private void FaceTarget(Vector3 destination)
     {
+        if (!isInHome)
+        {
+            return;
+        }
         Vector3 lookPos = destination - transform.position;
         lookPos.y = 0;
         Quaternion rotation = Quaternion.LookRotation(lookPos);
@@ -176,4 +187,14 @@ public class AvatarControllerHome : MonoBehaviour
         }
     }
 
+
+
+    public void SetAvatarforAR()
+    {
+        animator.SetFloat("Blend", 0.0f);
+        animator.SetBool("Action", false);
+        animator.SetBool("isMoving", false);
+        animator.SetBool("idel", true);
+        gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled=false;
+    }
 }
