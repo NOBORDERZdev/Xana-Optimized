@@ -31,12 +31,13 @@ public class AvatarController : MonoBehaviour
     public bool isEscapeeNPC;
     public string hunterClothJson;
     public string[] escapeeNPCClothesJSON;
+    public int escappeeClothIndex;
 
     public AddressableDownloader addressableDownloader;
 
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
-    public bool isVisibleOnCam= false;
+    public bool isVisibleOnCam = false;
     private void Awake()
     {
         bodyParts = this.GetComponent<CharcterBodyParts>();
@@ -213,7 +214,7 @@ public class AvatarController : MonoBehaviour
         //}
 
         Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -440,7 +441,8 @@ public class AvatarController : MonoBehaviour
         if (isEscapeeNPC)
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(escapeeNPCClothesJSON[Random.Range(0, escapeeNPCClothesJSON.Length)]);
+            escappeeClothIndex = Random.Range(0, escapeeNPCClothesJSON.Length);
+            _CharacterData = _CharacterData.CreateFromJSON(escapeeNPCClothesJSON[escappeeClothIndex]);
             if (_CharacterData.myItemObj.Count > 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -1464,9 +1466,9 @@ public class AvatarController : MonoBehaviour
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
         //float _size1 = 1f + ((float)bodyFat*2 / 100f);     //for ratio of 1.5
-       // float _size2 = 1f + ((float)bodyFat / 100f - 0.05f);       //for ratio of 1.2
-        float _size3 = 1f + ((float)bodyFat / 100f );
-        
+        // float _size2 = 1f + ((float)bodyFat / 100f - 0.05f);       //for ratio of 1.2
+        float _size3 = 1f + ((float)bodyFat / 100f);
+
         Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size3);
         //bodyparts._scaleBodyParts[0].transform.localScale = new Vector3(_size1, 1, _size1);
         //bodyparts._scaleBodyParts[1].transform.localScale = new Vector3(_size1, 1, _size1);
@@ -1581,7 +1583,18 @@ public class AvatarController : MonoBehaviour
             if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
                 SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                if (isHunter)
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(hunterClothJson);
+                }
+                else if (isEscapeeNPC)
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(escapeeNPCClothesJSON[escappeeClothIndex]);
+                }
+                else
+                {
+                    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                }
                 StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
 
                 //getHairColorFormFile = false;
@@ -1618,7 +1631,7 @@ public class AvatarController : MonoBehaviour
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    
+
                     SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
@@ -1977,11 +1990,11 @@ public class AvatarController : MonoBehaviour
     }
     void OnBecameInvisible()
     {
-        isVisibleOnCam= false;
+        isVisibleOnCam = false;
     }
 
     void OnBecameVisible()
     {
-        isVisibleOnCam= true;
+        isVisibleOnCam = true;
     }
 }
