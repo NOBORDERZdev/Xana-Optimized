@@ -161,12 +161,16 @@ public class BottomTabManager : MonoBehaviour
             FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
         }
         GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
-        UIManager.Instance.HomeWorldScreen.SetActive(false);
-        UIManager.Instance.HomePage.SetActive(true);
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
-        UIManager.Instance.Canvas.SetActive(true);
+        if (UIManager.Instance != null)
+        {
+            CheckLoginOrNotForFooterButton();
+            UIManager.Instance.HomeWorldScreen.SetActive(false);
+            UIManager.Instance.HomePage.SetActive(true);
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
+            UIManager.Instance.Canvas.SetActive(true);
+        }
     }
     public void OnClickHomeWorldButton()
     {
@@ -186,14 +190,17 @@ public class BottomTabManager : MonoBehaviour
             //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
             //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
             // }
-
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
-            UIManager.Instance.Canvas.SetActive(true);
-            UIManager.Instance.HomeWorldScreen.SetActive(true);
-            UIManager.Instance.HomePage.SetActive(false);
-            UIManager.Instance.SwitchToScreen(0);
+             if (UIManager.Instance != null)
+             {
+                CheckLoginOrNotForFooterButton();
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
+                UIManager.Instance.Canvas.SetActive(true);
+                UIManager.Instance.HomeWorldScreen.SetActive(true);
+                UIManager.Instance.HomePage.SetActive(false);
+                UIManager.Instance.SwitchToScreen(0);
+             }
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
