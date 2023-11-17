@@ -23,17 +23,16 @@ public class RFMCharacter : MonoBehaviour
         RFM.EventsManager.onGameStart -= GameStart;
     }
 
-    //void Start()
-    //{
-    //    gameStartAction += GameStart;
-    //}
+    void Start()
+    {
+        voiceView.SpeakerInUse.GetComponent<AudioSource>().spatialBlend = 0;
+    }
 
     public void GameStart()
     {
         Debug.Log($"RFM {photonView.Owner.NickName} + player is hunter: { photonView.Owner.CustomProperties["isHunter"]}");
         isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
 
-        voiceView.SpeakerInUse.GetComponent<AudioSource>().spatialBlend = 0;
         if (RFMManager.Instance.isPlayerHunter)
         {
             voiceView.SpeakerInUse.gameObject.SetActive(isHunter);
