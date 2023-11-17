@@ -328,7 +328,7 @@ namespace RFM.Managers
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
 
-                statusTMP.text = "RUN FAR FROM THE <#FF36D3>HUNTERS!</color>";
+                statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
@@ -385,7 +385,7 @@ namespace RFM.Managers
             Debug.Log("RFM numOfAIRunners: " + numOfRunners);
             for (int i = 0; i < numOfRunners; i++)
             {
-                PhotonNetwork.InstantiateRoomObject("RunnerNPC",
+                PhotonNetwork.InstantiateRoomObject("RFM/RunnerNPC",
                     playersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
                         Random.Range(-2.0f, 2.0f)),
                     playersSpawnArea.rotation);
