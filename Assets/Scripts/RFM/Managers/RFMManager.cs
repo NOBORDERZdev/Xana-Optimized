@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Linq;
@@ -435,10 +436,10 @@ namespace RFM.Managers
             //camera logic
             if (Globals.gameState == Globals.GameState.Countdown)
             {
-                //if (time < 7)
-                // rfmCameraManager.SwtichCamera(0);
-                //if (time < 4)
-                //rfmCameraManager.SwtichCamera(1);
+                if (time < 7)
+                 rfmCameraManager.SwtichCamera(0);
+                if (time < 4)
+                rfmCameraManager.SwtichCamera(1);
                 if (time < 1)
                     rfmCameraManager.SwitchOffAllCameras();
             }
@@ -461,6 +462,7 @@ namespace RFM.Managers
 
             await Task.Delay(1000);
             EventsManager.ShowScores();
+
         }
 
         private void PlayerCaught(RFM.Character.NPCHunter catcher)
