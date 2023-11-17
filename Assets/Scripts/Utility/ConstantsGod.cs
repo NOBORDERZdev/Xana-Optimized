@@ -222,6 +222,12 @@ public class ConstantsGod
     public static string SearchWorldAPI = "/item/search-worlds/";
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     #endregion
+    #region UserPost
+    public static string SendPostToServer = "/item/new-text-post";
+    public static string GetPostSentToServer = "/item/get-user-text-post/1/100";
+
+    #endregion
+
 
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
