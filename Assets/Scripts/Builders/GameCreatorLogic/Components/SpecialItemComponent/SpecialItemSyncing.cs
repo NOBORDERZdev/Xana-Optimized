@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,19 +14,34 @@ public class SpecialItemSyncing : MonoBehaviourPun
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
     GameObject playerObj;
+    bool isInitialise = false;
+
     void OnEnable()
     {
         if (photonView.IsMine)
             return;
 
+        if (!GamificationComponentData.instance.withMultiplayer)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         defaultSkinShader = GamificationComponentData.instance.skinShader;
         defaultClothShader = GamificationComponentData.instance.cloathShader;
         newSkinShader = GamificationComponentData.instance.superMarioShader;
         newClothShader = GamificationComponentData.instance.superMarioShader2;
+        StartCoroutine(SyncingCoroutin());
+    }
+
+    private IEnumerator SyncingCoroutin()
+    {
+        yield return new WaitForSeconds(0.5f);
         playerObj = FindPlayerusingPhotonView(photonView);
         if (playerObj != null)
         {
+            yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
+            transform.localEulerAngles = Vector3.up * 180;
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
             playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
@@ -43,7 +57,8 @@ public class SpecialItemSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        ApplyDefaultEffect();
+        if (isInitialise)
+            ApplyDefaultEffect();
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
@@ -68,12 +83,14 @@ public class SpecialItemSyncing : MonoBehaviourPun
         playerShirt.material.shader = newClothShader;
         playerPants.material.shader = newClothShader;
         playerShoes.material.shader = newClothShader;
+        isInitialise = true;
     }
 
     private void ApplyDefaultEffect()
     {
         if (playerObj == null)
             return;
+
         playerHair.material.shader = defaultClothShader;
         playerBody.material.shader = defaultSkinShader;
         playerShirt.material.shader = defaultClothShader;
