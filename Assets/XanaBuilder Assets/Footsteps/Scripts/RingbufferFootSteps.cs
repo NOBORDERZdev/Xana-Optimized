@@ -2,7 +2,8 @@
 
 public class RingbufferFootSteps : MonoBehaviour
 {
-    PlayerControllerNew playerControllerNew;
+    //PlayerControllerNew playerControllerNew;
+    Animator anim;
     public ParticleSystem system;
     Vector3 lastEmit;
 
@@ -12,15 +13,15 @@ public class RingbufferFootSteps : MonoBehaviour
 
     void Start()
     {
-        playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        anim = GetComponentInParent<IKMuseum>().GetComponent<Animator>();
         lastEmit = transform.position;
     }
 
     public void Update()
     {
-        if (BlindfoldedDisplayComponent.footstepsBool == true)
+        //if (BlindfoldedDisplayComponent.footstepsBool == true)
         {
-            if (Vector3.Distance(lastEmit, transform.position) > delta && playerControllerNew._IsGrounded)
+            if (Vector3.Distance(lastEmit, transform.position) > delta && anim.GetBool("IsGrounded"))
             {
                 Gizmos.color = Color.green;
                 var pos = transform.position + (transform.right * gap * dir);
