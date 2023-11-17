@@ -69,18 +69,13 @@ namespace RFM.Character
 
         private void SearchForTarget()
         {
+            if (Globals.gameState != Globals.GameState.Gameplay) return;
             if (_hasTarget) return;
-
-            //_players = new List<GameObject>(
-            //    GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
-            //_players.AddRange(new List<GameObject>(
-            //    GameObject.FindGameObjectsWithTag(Globals.RUNNER_NPC_TAG)));
 
             if (_players.Count > 0)
             {
                 _target = _players[Random.Range(0, _players.Count)].transform;
                 _hasTarget = true;
-                //FollowTarget(_target.position);
             }
             else
             {
@@ -91,36 +86,31 @@ namespace RFM.Character
 
         private void ControlBotMovement()
         {
-            // Bot movement logic goes here. For example:
-            if (!_hasTarget) return;
-
-            if (Globals.gameState != Globals.GameState.Gameplay)
+            if (Globals.gameState != Globals.GameState.Gameplay ||
+                !_hasTarget ||
+                _target == null)
             {
                 _navMeshAgent.isStopped = true;
                 return;
             }
 
+            // Bot movement logic goes here. For example:
             _targetPosition = _target.position;
             _navMeshAgent.SetDestination(_targetPosition);
             _navMeshAgent.isStopped = false;
-
-            // Handle collision, interactions, etc.
         }
 
         private void SyncMovement()
         {
-            if (!_hasTarget) return;
-
-            //if (!isMoving)
-            //{
-            //    // If the bot is supposed to be stationary, snap to the target position
-            //    agent.Warp(_target.position);
-            //}
-            //else
+            if (Globals.gameState != Globals.GameState.Gameplay ||
+                !_hasTarget ||
+                _target == null)
             {
-                // If the bot is moving, smoothly interpolate to the target position
-                _navMeshAgent.SetDestination(_targetPosition);
+                _navMeshAgent.isStopped = true;
+                return;
             }
+
+            _navMeshAgent.SetDestination(_targetPosition);
         }
 
         private void Update()
@@ -135,11 +125,6 @@ namespace RFM.Character
                 // Synchronize movement for non-master clients
                 SyncMovement();
             }
-
-            //if (_target)
-            //{
-            //    FollowTarget(_target.position);
-            //}
 
             Vector3 velocity = _navMeshAgent.velocity;
             Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
@@ -197,19 +182,6 @@ namespace RFM.Character
 
             return null;
         }
-
-
-        //private void FollowTarget(Vector3 targetPosition)
-        //{
-        //    if (Globals.gameState != Globals.GameState.Gameplay)
-        //    {
-        //        _navMeshAgent.isStopped = true;
-        //        return;
-        //    }
-
-        //    _navMeshAgent.SetDestination(targetPosition);
-        //    _navMeshAgent.isStopped = false;
-        //}
 
         private void OnTriggerEnter(Collider other)
         {
