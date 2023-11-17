@@ -199,6 +199,8 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen{
 				yield return new WaitForSeconds(.1f);
             }
 
+			yield return new WaitForSeconds(.5f);
+
 			TakeTransparentScreenshot(player1Cam, 512, 512, Path.Combine(Application.persistentDataPath + "player1.png"));
 			TakeTransparentScreenshot(player2Cam, 512, 512, Path.Combine(Application.persistentDataPath + "player2.png"));
 			yield return new WaitForSeconds(.5f);
