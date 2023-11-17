@@ -65,7 +65,7 @@ public class SaveParentObjectsToJson : EditorWindow
             data.layerIndex = rootObject.gameObject.layer;
             data.priority = GetObjectPriority(rootObject.tag);
             data.isActive = rootObject.gameObject.activeSelf;
-
+            data.lightmapData = GetLightmapData(rootObject.gameObject);
             sceneObjectsData.SceneObjects.Add(data);
         }
 
@@ -96,6 +96,20 @@ public class SaveParentObjectsToJson : EditorWindow
 
         return bounds;
     }
+
+    private LightmapData[] GetLightmapData(GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+        LightmapData[] lightmapData = new LightmapData[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            lightmapData[i] = new LightmapData();
+            lightmapData[i].lightmapIndex = renderers[i].lightmapIndex;
+            lightmapData[i].lightmapScaleOffset = renderers[i].lightmapScaleOffset;
+        }
+        return lightmapData;
+    }
+
 
     public int GetObjectPriority(string priorityStatus)
     {

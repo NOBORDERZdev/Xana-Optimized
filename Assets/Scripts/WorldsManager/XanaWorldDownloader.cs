@@ -416,8 +416,17 @@ public class XanaWorldDownloader : MonoBehaviour
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.position, _itemData.rotation, assetParentStatic);
         newObj.transform.localScale = _itemData.scale;
         newObj.SetActive(_itemData.isActive);
+        ApplyLightmapData(_itemData.lightmapData, newObj);
     }
-
+    private static void ApplyLightmapData(LightmapData[] lightmapData,GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].lightmapIndex = lightmapData[i].lightmapIndex;
+            renderers[i].lightmapScaleOffset = lightmapData[i].lightmapScaleOffset;
+        }
+    }
 
     IEnumerator CheckShortIntervalSorting()
     {
@@ -544,4 +553,12 @@ public class ObjectsInfo
     public string tagName;
     public int layerIndex;
     public bool isActive;
+    public LightmapData[] lightmapData;
+}
+[System.Serializable]
+public class LightmapData
+{
+    public int lightmapIndex;
+    public Vector4 lightmapScaleOffset;
+    // Add more fields as needed to store relevant data
 }

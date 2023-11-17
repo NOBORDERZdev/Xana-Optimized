@@ -684,6 +684,24 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
+
+        if (!XanaConstants.xanaConstants.isCameraMan)
+        {
+            LoadingHandler.Instance.HideLoading();
+            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        {
+            if (!XanaConstants.xanaConstants.isCameraMan)
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        }
+        else
+        {
+            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        }
+        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
@@ -1028,12 +1046,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             temp = "Astroboy x Tottori Metaverse Museum";
         }
         //Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
-        //if (!string.IsNullOrEmpty(temp))
-        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
-        //else if (XanaConstants.xanaConstants.isBuilderScene)
-        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
-        //else
-        //    SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
+        if (!string.IsNullOrEmpty(temp))
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
+        else if (XanaConstants.xanaConstants.isBuilderScene)
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
+        else
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
 
     }
 
