@@ -434,12 +434,12 @@ namespace RFM.Managers
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
 
             //camera logic
-            if (Globals.gameState == Globals.GameState.Countdown)
+            if (Globals.gameState == Globals.GameState.TakePosition)
             {
                 if (time < 7)
-                 rfmCameraManager.SwtichCamera(0);
+                    rfmCameraManager.SwtichCamera(0);
                 if (time < 4)
-                rfmCameraManager.SwtichCamera(1);
+                    rfmCameraManager.SwtichCamera(1);
                 if (time < 1)
                     rfmCameraManager.SwitchOffAllCameras();
             }
