@@ -97,18 +97,6 @@ namespace RFM.Managers
 
         private IEnumerator Start()
         {
-            //if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue( "startTime", out double _startTime))
-            //{
-            //    startTime = _startTime;
-            //}
-            //else
-            //{
-            //    startTime = PhotonNetwork.Time;
-            //    Hashtable roomProps = new() { { "startTime", startTime } };
-            //    PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
-            //}
-
-
             Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
 
@@ -146,78 +134,11 @@ namespace RFM.Managers
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
+
+            statusTMP.text = "Waiting for other players to join:";
+            statusBG.SetActive(true);
+            statusMMFPlayer.PlayFeedbacks();
         }
-
-        //private void Update()
-        //{
-        //    currentTime = (float)(PhotonNetwork.Time - startTime);
-        //    Debug.LogError("RFM Current Time:" + currentTime);
-
-        //    if (Globals.gameState == Globals.GameState.InLobby)
-        //    {
-        //        gameplayTimeText.text = ((int)(CurrentGameConfiguration.MatchMakingTime - currentTime)).ToString();
-        //    }
-        //    else if (Globals.gameState == Globals.GameState.Countdown)
-        //    {
-        //        gameplayTimeText.text = "00";
-        //    }
-        //    else if (Globals.gameState == Globals.GameState.Countdown)
-        //    {
-        //        gameplayTimeText.text = ((int)(CurrentGameConfiguration.GameplayTime - currentTime)).ToString();
-        //    }
-
-        //    if (currentTime > CurrentGameConfiguration.MatchMakingTime)
-        //    {
-        //        if (Globals.gameState == Globals.GameState.InLobby)
-        //        {
-        //            Debug.LogError("RFM StartRFM()");
-        //            /*StartCoroutine(*/StartRFM();
-        //        }
-        //    }
-        //    if (currentTime > CurrentGameConfiguration.MatchMakingTime + 10) // countdown time
-        //    {
-        //        if (Globals.gameState == Globals.GameState.Countdown)
-        //        {
-        //            Debug.LogError("RFM ResetPosition()");
-        //            ResetPosition();
-        //        }
-        //    }
-        //    if (currentTime > CurrentGameConfiguration.MatchMakingTime + 10 + CurrentGameConfiguration.TakePositionTime)
-        //    {
-        //        if (Globals.gameState == Globals.GameState.TakePosition)
-        //        {
-        //            if (isPlayerHunter)
-        //            {
-        //                AfterTakePositionTimerHunter();
-        //            }
-        //            else
-        //            {
-        //                AfterTakePositionTimerRunner();
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private async void OnApplicationFocus(bool focus)
-        //{
-        //    //Debug.LogError("RFM focus: " + focus + " at time: " + Time.realtimeSinceStartup);
-        //    //if (PhotonNetwork.IsMasterClient && !focus)
-        //    //{
-        //    //    Player newMaster = PhotonNetwork.LocalPlayer;
-        //    //    foreach (var player in PhotonNetwork.PlayerList)
-        //    //    {
-        //    //        if (player != PhotonNetwork.MasterClient)
-        //    //        {
-        //    //            newMaster = player;
-        //    //        }
-        //    //    }
-        //    //    //yield return new WaitUntil( () => PhotonNetwork.SetMasterClient(newMaster));
-        //    //    PhotonNetwork.SetMasterClient(newMaster);
-        //    //    await Task.Delay(3000);
-
-        //    //    Debug.LogError("RFM Making " + newMaster.NickName + " the master." + " at time: " + Time.realtimeSinceStartup);
-        //    //}
-        //}
 
         // private void OnGUI()
         // {
@@ -250,7 +171,10 @@ namespace RFM.Managers
             {
                 Globals.gameState = Globals.GameState.InLobby;
                 countDownText.transform.parent.gameObject.SetActive(false);
-                statusBG.SetActive(false);
+
+                statusTMP.text = "Waiting for other players to join:";
+                statusBG.SetActive(true);
+                //statusMMFPlayer.PlayFeedbacks();
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -269,37 +193,39 @@ namespace RFM.Managers
                 {
                     if (PhotonNetwork.PlayerListOthers.Length > 0)
                     {
-                        Debug.LogError("RPC Called");
-                        GetComponent<PhotonView>().RPC(nameof(ChangeMasterClientifAvailble), PhotonNetwork.PlayerListOthers[0]);
+                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer.GetNext());
+
+                        //Debug.LogError("RPC Called");
+                        //GetComponent<PhotonView>().RPC(nameof(ChangeMasterClientifAvailble), PhotonNetwork.PlayerListOthers[0]);
+                        PhotonNetwork.SendAllOutgoingCommands();
                     }
-                    ChangeMasterClientifAvailble();
-                    PhotonNetwork.SendAllOutgoingCommands();
+                    //ChangeMasterClientifAvailble();
 
                 }
             }
         } 
 
-        [PunRPC]
-        public void ChangeMasterClientifAvailble()
-        {
-            Debug.LogError("ChangeMasterClientifAvailble: "+PhotonNetwork.LocalPlayer.NickName);
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                return;
-            }
-            if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-            {
-                return;
-            }
+        //[PunRPC]
+        //public void ChangeMasterClientifAvailble()
+        //{
+        //    Debug.LogError("ChangeMasterClientifAvailble: "+PhotonNetwork.LocalPlayer.NickName);
+        //    if (!PhotonNetwork.IsMasterClient)
+        //    {
+        //        return;
+        //    }
+        //    if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+        //    {
+        //        return;
+        //    }
 
-            PhotonNetwork.SetMasterClient(PhotonNetwork.MasterClient.GetNext());
-        }
+        //    PhotonNetwork.SetMasterClient(PhotonNetwork.MasterClient.GetNext());
+        //}
 
 
-        public virtual void OnMasterClientSwitched(Player newMasterClient)
-        {
-            Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
-        }
+        //public virtual void OnMasterClientSwitched(Player newMasterClient)
+        //{
+        //    Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
+        //}
 
 
         private IEnumerator StartRFM()
@@ -309,7 +235,7 @@ namespace RFM.Managers
             CancelInvoke(nameof(CheckForGameStartCondition));
 
             countDownText.transform.parent.gameObject.SetActive(true);
-            statusTMP.text = "Countdown";
+            statusTMP.text = "Resetting position in:";
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
@@ -329,7 +255,6 @@ namespace RFM.Managers
 
 
                 StartCoroutine(SpawnNPCs(roles.Item4, roles.Item3));
-                //SpawnAIRunners(roles.Item3);
                 
                 var numberOfPlayerHunters = roles.Item2;
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
@@ -352,7 +277,6 @@ namespace RFM.Managers
 
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null,
                 countDownText, AfterEachSecondCountdownTimer));
-            // Timer.SetDurationAndRun(10, null, countDownText, AfterEachSecondCountdownTimer);
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -361,8 +285,6 @@ namespace RFM.Managers
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
-
-            //ResetPosition();
         }
 
 
@@ -386,8 +308,6 @@ namespace RFM.Managers
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
-                //Globals.gameState = Globals.GameState.TakePosition;
-
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, AfterTakePositionTimerHunter,
                     countDownText);
 
@@ -408,7 +328,7 @@ namespace RFM.Managers
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
 
-                statusTMP.text = "RUN FAR FROM THE <#FF36D3>HUNTERS!</color>";
+                statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
@@ -465,7 +385,7 @@ namespace RFM.Managers
             Debug.Log("RFM numOfAIRunners: " + numOfRunners);
             for (int i = 0; i < numOfRunners; i++)
             {
-                PhotonNetwork.InstantiateRoomObject("RunnerNPC",
+                PhotonNetwork.InstantiateRoomObject("RFM/RunnerNPC",
                     playersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
                         Random.Range(-2.0f, 2.0f)),
                     playersSpawnArea.rotation);
@@ -477,7 +397,7 @@ namespace RFM.Managers
             Debug.Log("RFM numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
-                PhotonNetwork.InstantiateRoomObject("HunterNPC",
+                PhotonNetwork.InstantiateRoomObject("RFM/HunterNPC",
                     huntersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
                         Random.Range(-2.0f, 2.0f)),
                     huntersSpawnArea.rotation);
@@ -514,12 +434,12 @@ namespace RFM.Managers
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
 
             //camera logic
-            if (Globals.gameState == Globals.GameState.Countdown)
+            if (Globals.gameState == Globals.GameState.TakePosition)
             {
                 if (time < 7)
-                 rfmCameraManager.SwtichCamera(0);
+                    rfmCameraManager.SwtichCamera(0);
                 if (time < 4)
-                rfmCameraManager.SwtichCamera(1);
+                    rfmCameraManager.SwtichCamera(1);
                 if (time < 1)
                     rfmCameraManager.SwitchOffAllCameras();
             }
@@ -544,31 +464,6 @@ namespace RFM.Managers
             EventsManager.ShowScores();
 
         }
-
-        // [PunRPC]
-        // public void LocalPlayerCaughtByHunter(int viewID)
-        // {
-        //     if (Globals.player.GetComponentInChildren<PhotonView>().ViewID == viewID)
-        //     {
-        //         Debug.LogError("RFM LocalPlayerCaughtByHunter viewID = " + viewID);
-        //         
-        //         if (Globals.gameState != Globals.GameState.Gameplay) return;
-        //
-        //         mainCam.SetActive(false);
-        //         gameCanvas.SetActive(false);
-        //         statusTMP.text = "You've been caught!";
-        //         statusBG.SetActive(true);
-        //         statusMMFPlayer.PlayFeedbacks();
-        //         //statusTMP.gameObject.SetActive(true);
-        //         // Globals.player.transform.root.gameObject.SetActive(false);
-        //         
-        //         // photonView.RPC(nameof(DeactivateNPCPlayer), RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber);
-        //         PhotonNetwork.Destroy(Globals.player.transform.root.gameObject);
-        //         
-        //         npcCamera = Instantiate(npcCameraPrefab);
-        //         npcCamera.Init(transform/*.CameraTarget*/);
-        //     }
-        // }
 
         private void PlayerCaught(RFM.Character.NPCHunter catcher)
         {
@@ -653,7 +548,7 @@ namespace RFM.Managers
         private static IEnumerator FetchConfigDataFromServer()
         {
             //if Devmode then make time unlimited for testing
-            if (RFMDevmodeManager.instance.devMode)
+            if (RFM.Globals.DevMode)
             {
                 CurrentGameConfiguration = new GameConfiguration
                 {

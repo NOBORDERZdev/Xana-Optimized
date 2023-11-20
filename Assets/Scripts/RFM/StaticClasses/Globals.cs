@@ -33,5 +33,6 @@ namespace RFM
 
         public static bool IsRFMWorld = false;
         public static bool IsLocalPlayerHunter;
+        public static bool DevMode = false;
     }
 }
