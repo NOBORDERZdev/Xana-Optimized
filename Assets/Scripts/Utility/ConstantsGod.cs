@@ -118,6 +118,8 @@ public class ConstantsGod
     // Xana Lobby WOrlds
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
 
+    public static string GETXANAOFFICIALWORLDBYID = "";
+
     #endregion
 
     #region SNS Managers    
