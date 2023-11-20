@@ -89,13 +89,13 @@ public class WorldItemPreviewTab : MonoBehaviour
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
-        if (userAvatarURL == "")
+        if (string.IsNullOrEmpty(userAvatarURL))
         {
             NoAvatarIcon.gameObject.SetActive(true);
             XanaAvatarIcon.gameObject.SetActive(false);
             AvatarIcon.gameObject.SetActive(false);
         }
-        else if(creatorName.ToLower().Contains("xana"))
+        else if(!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
         {
             NoAvatarIcon.gameObject.SetActive(false);
             XanaAvatarIcon.gameObject.SetActive(true);
