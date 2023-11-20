@@ -101,12 +101,10 @@ public class XanaWorldDownloader : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!XanaConstants.xanaConstants.isBuilderScene)
-        {
-            BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
-            ResetAll();
-        }
+
+        BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
+        ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+        ResetAll();
 
     }
 
@@ -238,9 +236,9 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    Debug.LogError("Error while downloading Addressable :- "+downloadKey);
+                    Debug.LogError("Error while downloading Addressable :- " + downloadKey);
                 }
             }
             while (!_async.IsDone)
@@ -418,7 +416,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
     }
-    private static void ApplyLightmapData(LightmapData[] lightmapData,GameObject prefab)
+    private static void ApplyLightmapData(LightmapData[] lightmapData, GameObject prefab)
     {
         Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
         for (int i = 0; i < renderers.Length; i++)
@@ -430,7 +428,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckShortIntervalSorting()
     {
-        CheckingAgain:
+    CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
         currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
@@ -456,7 +454,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckLongIntervalSorting()
     {
-        CheckingAgain:
+    CheckingAgain:
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
