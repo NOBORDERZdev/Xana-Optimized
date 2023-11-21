@@ -319,9 +319,44 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (levelData.terrainProperties.realisticMatIndex != -1)
         {
-            meshRenderer.enabled = false;
-            realisticPlanRenderer.material = realisticTerrainMaterials.GetMaterial(levelData.terrainProperties.realisticMatIndex);
-            realisticPlanRenderer.gameObject.SetActive(true);
+            StartCoroutine(SetRealisticTerrain(meshRenderer));
+        }
+    }
+
+    IEnumerator SetRealisticTerrain(MeshRenderer meshRenderer)
+    {
+        bool realisticTerrainExist = realisticTerrainMaterials.terrainMaterials.Exists(x => x.id == levelData.terrainProperties.realisticMatIndex);
+        if (realisticTerrainExist)
+        {
+            AsyncOperationHandle loadRealisticMaterial;
+            RealisticMaterialData realisticMaterialData = realisticTerrainMaterials.terrainMaterials.Find(x => x.id == levelData.terrainProperties.realisticMatIndex);
+            string loadRealisticMatKey = realisticMaterialData.name.Replace(" ", "");
+            bool flag = false;
+            loadRealisticMaterial = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(loadRealisticMatKey, ref flag);
+            if (!flag)
+                loadRealisticMaterial = Addressables.LoadAssetAsync<Material>(loadRealisticMatKey);
+            while (!loadRealisticMaterial.IsDone)
+            {
+                yield return null;
+            }
+            if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
+            {
+                //Debug.LogError(" ---------- NONE ------------ SKY BOXX");
+            }
+            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
+            {
+                //Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
+            }
+            else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
+            {
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
+                Material _mat = loadRealisticMaterial.Result as Material;
+                Debug.LogError(realisticMaterialData.shaderName);
+                _mat.shader = Shader.Find(realisticMaterialData.shaderName);
+                meshRenderer.enabled = false;
+                realisticPlanRenderer.material = _mat;
+                realisticPlanRenderer.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -1010,6 +1045,7 @@ public class RealisticMaterialData
 {
     public int id;
     public string name;
-    public Material material;
-    public Sprite thumbnail;
+    //public Material material;
+    public string shaderName;
+    //public Sprite thumbnail;
 }
