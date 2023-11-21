@@ -23,9 +23,11 @@ public class BuilderMapDownload : MonoBehaviour
     private float progressPlusValue = 100;
     public Transform builderAssetsParent;
     public GameObject terrainPlane;
+    public MeshRenderer realisticPlanRenderer;
     public GameObject waterPlane;
 
     public SkyBoxesData skyBoxData;
+    public RealisticTerrainMaterials realisticTerrainMaterials;
     public Color skyBoxColor;
     public Light directionalLight;
     public Light characterLight;
@@ -313,6 +315,13 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
             }));
+        }
+
+        if (levelData.terrainProperties.realisticMatIndex != -1)
+        {
+            meshRenderer.enabled = false;
+            realisticPlanRenderer.material = realisticTerrainMaterials.GetMaterial(levelData.terrainProperties.realisticMatIndex);
+            realisticPlanRenderer.gameObject.SetActive(true);
         }
     }
 
@@ -957,6 +966,9 @@ public class TerrainProperties
     public int leftMovesAllowed;
     public int rightMovesAllowed;
     public int planeHeightLimit;
+    public int terrainTextureSelected;
+    public Texture terrainTexture;
+    public int realisticMatIndex;
     #endregion
 
     public TerrainProperties()
@@ -969,6 +981,9 @@ public class TerrainProperties
         planePos = new Vector3(0.0f, 0f, 0.0f);
         upMovesAllowed = downMovesAllowed = leftMovesAllowed = rightMovesAllowed = 2;
         planeHeightLimit = 5;
+        terrainTextureSelected = 0;
+        realisticMatIndex = -1;
+        terrainTexture = null;
     }
 }
 
@@ -988,4 +1003,13 @@ public class MultiplayerComponentData
 public class MultiplayerComponentDatas
 {
     public List<MultiplayerComponentData> multiplayerComponents = new List<MultiplayerComponentData>();
+}
+
+[Serializable]
+public class RealisticMaterialData
+{
+    public int id;
+    public string name;
+    public Material material;
+    public Sprite thumbnail;
 }
