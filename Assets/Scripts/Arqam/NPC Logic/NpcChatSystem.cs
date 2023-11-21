@@ -28,7 +28,7 @@ public class NpcChatSystem : MonoBehaviour
     private int numOfResponseWantToShow = 5;
     private int counter = 0;
     private int tempResponseNum = 0;
-    private const int userId = 100;
+    private const int userId = 0;
     private Queue<string> playerMessages = new Queue<string>();
 
     [System.Serializable]
