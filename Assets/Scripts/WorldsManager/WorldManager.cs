@@ -88,7 +88,7 @@ public class WorldManager : MonoBehaviour
     }
     public void ChangeWorld(APIURL tab)
     {
-        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+      //  LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         WorldItemManager.DisplayWorlds("Temp");
         StartCoroutine(WorldCall(tab));
     }
@@ -246,7 +246,7 @@ public class WorldManager : MonoBehaviour
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
-        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+      //  LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
             if (isSucess)
@@ -387,10 +387,12 @@ public class WorldManager : MonoBehaviour
         WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        Invoke(nameof(ShowTutorial),0.2f);
+       
+           // Invoke(nameof(ShowTutorial), 0.2f);
+       
     }
 
-    void ShowTutorial(){ 
+    public void ShowTutorial(){ 
         TutorialsManager.instance.ShowTutorials();
     }
 
