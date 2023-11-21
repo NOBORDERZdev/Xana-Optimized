@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using RFM.Character;
 using UnityEngine.SocialPlatforms.Impl;
+using Photon.Realtime;
 
 namespace RFM.Managers
 {
@@ -17,8 +18,15 @@ namespace RFM.Managers
         [SerializeField] private GameObject setLayoutPanel;
 
         // Leaderboard
+        [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private RectTransform leaderboardEntryContainer;
         [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
+
+        [Header("XanaStones")]
+        [SerializeField] private TextMeshProUGUI playerXanaStones;
+        [SerializeField] private TextMeshProUGUI playerEarnedXanaStones;
+        [SerializeField] private GameObject xanaStonePopup;
+        [SerializeField] private GameObject notEnoughXanaStonesPopup;
 
         // HUD
         public TextMeshProUGUI showMoney;
@@ -40,6 +48,8 @@ namespace RFM.Managers
             showMoney.text = "00";
 
             scores = new Dictionary<string[], int>();
+
+            gameOverPanel.SetActive(false);
         }
 
         private void OnEnable()
@@ -118,6 +128,14 @@ namespace RFM.Managers
         private void OnGameOver()
         {
             showMoney.gameObject.SetActive(false);
+            gameOverPanel.SetActive(true);
+            int earnedMoney = 0;
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("money", out object _money))
+            {
+                earnedMoney = (int)_money * RFM.Globals.xanaStoneFee;
+            }
+
+            playerEarnedXanaStones.text = $"You have earned <color=purple>${earnedMoney}</color> XanaStones";
         }
 
         public void RunnerCaught(string nickName, int money, float timeSurvived, bool isNPC = false)
@@ -146,13 +164,13 @@ namespace RFM.Managers
 
         //int rank = 0;
 
-        [PunRPC]
-        private void CreateLeaderboardEntry(string nickName, int money, float timeSurvived)
-        {
-            //string[] array = { nickName , timeSurvived.ToString()};
+        //[PunRPC]
+        //private void CreateLeaderboardEntry(string nickName, int money, float timeSurvived)
+        //{
+        //    //string[] array = { nickName , timeSurvived.ToString()};
 
-            //scores.Add(array, money);
-        }
+        //    //scores.Add(array, money);
+        //}
 
 
         private void OnShowScores()
@@ -205,6 +223,32 @@ namespace RFM.Managers
             //    var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
             //    entry.Init(npcRunner.nickName, npcRunner.money, npcRunner.timeSurvived, i);
             //}
+        }
+
+        public void ShowXanaStonePopup()
+        {
+            xanaStonePopup.SetActive(true);
+            playerXanaStones.text = $"XanaStones: ${RFMEconomyManager.money}";
+        }
+
+        public void Button_PlayWithXanaStones(int amount)
+        {
+            if (RFMEconomyManager.PayToPlayRFM(amount))
+            {
+                RFMManager.Instance.StartMatchMaking();
+                xanaStonePopup.SetActive(false);
+                RFM.Globals.xanaStoneFee = amount;
+            }
+            else
+            {
+                notEnoughXanaStonesPopup.SetActive(true);
+            }
+        }
+
+        public void Button_AddXanaStones() // For testing
+        {
+            RFMEconomyManager.money += 100;
+            playerXanaStones.text = $"XanaStones: ${RFMEconomyManager.money}";
         }
     }
 }
