@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 6d6f74af19d0e8945a22a7e831509498, type: 2}
 --- !u!1001 &107290908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -236,6 +236,53 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c4a9b7e3574606468f4b1866620f044, type: 3}
+--- !u!1 &1525585004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1525585006}
+  - component: {fileID: 1525585005}
+  m_Layer: 0
+  m_Name: NPC Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1525585005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525585004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceee87669c5d38a49972a31ad7ea30e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcCounter: 0
+  npcModel: []
+  aiStrength: 5
+--- !u!4 &1525585006
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525585004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -41.29254, y: -47.453674, z: -118.149254}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1605342114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -246,6 +293,18 @@ PrefabInstance:
     - target: {fileID: 1045525670369851578, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
       propertyPath: m_Name
       value: Idol Girl Villa
+      objectReference: {fileID: 0}
+    - target: {fileID: 1045525670369851578, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825732165483616911, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 119
+      objectReference: {fileID: 0}
+    - target: {fileID: 2253477184973777216, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 119
       objectReference: {fileID: 0}
     - target: {fileID: 2529900550598168577, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
       propertyPath: m_RootOrder
@@ -290,6 +349,34 @@ PrefabInstance:
     - target: {fileID: 2529900550598168577, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3113185194030723674, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443428125990387617, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740889712780340173, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740889712780340173, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600981507784739349, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621203293541421683, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930912875721565346, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a050b01b39ef0a4ba6c2f078f8901ba, type: 3}
