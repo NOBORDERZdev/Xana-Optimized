@@ -12,6 +12,11 @@ public class XLDynamicText : MonoBehaviour
     [Header("Xana Lobby Dynamic Text")]
     public TextMeshProUGUI XLDynamicTextBanner;
     public TextMeshProUGUI XLDynamicTextThumbnail;
+    // Start is called before the first frame update
+    void Start()
+    {
+        GetXanaLobbyDynamicText();
+    }
     public async void GetXanaLobbyDynamicText()
     {
         StringBuilder apiUrl = new StringBuilder();
