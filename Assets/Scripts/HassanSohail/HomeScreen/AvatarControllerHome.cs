@@ -11,6 +11,7 @@ public class AvatarControllerHome : MonoBehaviour
     [SerializeField] GameObject storeCam;
     [SerializeField] GameObject worldCam;
     [SerializeField] GameObject cineCam;
+    [SerializeField] RuntimeAnimatorController ArAnimator;
     [Header("Wandering")]
     [SerializeField] float minRadius;
     [SerializeField] float maxRadius;
@@ -42,8 +43,11 @@ public class AvatarControllerHome : MonoBehaviour
         GetComponent<FootStaticIK>().ikActive = false;
         startpos = transform.position;
         startRot = transform.eulerAngles;
+        if(storeCam!=null)
         storeCam.SetActive(false);
+        if(worldCam!= null)
         worldCam.SetActive(true);
+        if(worldObj!=null)
         worldObj.SetActive(true);
     }
     private void Start()
@@ -166,16 +170,25 @@ public class AvatarControllerHome : MonoBehaviour
             GetComponent<FootStaticIK>().ikActive = true;
             transform.position = startpos;
             transform.eulerAngles = startRot;
+            if(cineCam!=null)
             cineCam.SetActive(true);
+            if(storeCam!=null)
             storeCam.SetActive(true);
+            if(worldCam!=null)
             worldCam.SetActive(false);
+            if(worldObj!=null)
             worldObj.SetActive(false);
+            gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled = false;
         }
         else
         {
+            if(cineCam!=null)
             cineCam.SetActive(false);
+            if(storeCam!=null)
             storeCam.SetActive(false);
+            if(worldCam!=null)
             worldCam.SetActive(true);
+            if(worldObj!=null)
             worldObj.SetActive(true);
             isInHome = true;
             animator.SetBool("idel", false);
@@ -184,6 +197,7 @@ public class AvatarControllerHome : MonoBehaviour
             GetComponent<FootStaticIK>().ikActive = false;
             GetComponent<NavMeshAgent>().enabled = true;
             Wander();
+            gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled = true;
         }
     }
 
@@ -196,5 +210,6 @@ public class AvatarControllerHome : MonoBehaviour
         animator.SetBool("isMoving", false);
         animator.SetBool("idel", true);
         gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled=false;
+        gameObject.GetComponent<Animator>().runtimeAnimatorController = ArAnimator;
     }
 }
