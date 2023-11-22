@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
     public GameObject _SplashScreen;
-    
+    public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
@@ -53,7 +53,7 @@ public class UIManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
-               
+                IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 4f));
                
             }
