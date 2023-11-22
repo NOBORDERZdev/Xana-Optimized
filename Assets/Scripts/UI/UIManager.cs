@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
                 IsSplashActive = false;
-                StartCoroutine(IsSplashEnable(false, 4f));
+                StartCoroutine(IsSplashEnable(false, 3f));
                
             }
            

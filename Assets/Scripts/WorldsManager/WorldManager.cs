@@ -401,8 +401,10 @@ public class WorldManager : MonoBehaviour
         WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-       
-           // Invoke(nameof(ShowTutorial), 0.2f);
+        if (!UIManager.Instance.IsSplashActive)
+        {
+            Invoke(nameof(ShowTutorial), 1f);
+        }
        
     }
 
