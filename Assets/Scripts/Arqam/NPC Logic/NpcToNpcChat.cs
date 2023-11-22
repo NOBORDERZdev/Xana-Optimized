@@ -20,21 +20,42 @@ public class NpcToNpcChat : MonoBehaviour
     /// <summary>
     /// Output data class
     /// </summary>
-    private class ResponseData
+    [Serializable]
+    public class ResponseData
     {
-        public string user_id;
-        public string prompt;
-        public string response;
+        public string response_jp;
+        public string response_en;
+        public string emotion;
     }
-    private ResponseData responseData;
-    private class FeedData
+    public ResponseData responseData;
+
+    [Serializable]
+    public class FeedData
     {
-        public int id;
-        public string response;
+        [Newtonsoft.Json.JsonProperty("in")]
+        public InputData input_data;
+        [Newtonsoft.Json.JsonProperty("out")]
+        public OutputData output_data;
     }
-    private FeedData feed;
+    [System.Serializable]
+    public class InputData
+    {
+        public int target_npc_id;
+        public string target_npc_msg;
+    }
+    [System.Serializable]
+    public class OutputData
+    {
+        public int user_id;
+        public string user_msg_jp;
+        public string user_msg_en;
+        public string emotion;
+    }
+    public FeedData feed;
+
     private string msg = "";
     private int npcCounter = 0;
+    private int npcThatStartConversation = 0;
 
     private void OnEnable()
     {
@@ -52,11 +73,10 @@ public class NpcToNpcChat : MonoBehaviour
 
     IEnumerator FetchResponseFromWeb()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 5f));  // 3f, 7f
 
-        string prefix = "";
-        int id = 0;
         int temp = UnityEngine.Random.Range(0, npcAttributes.Count);
+        npcThatStartConversation = temp;
         // add remaining npcs into list except selected one
         npcDB = new List<NPCAttributes>();
         for (int i = 0; i < npcAttributes.Count; i++)
@@ -77,18 +97,21 @@ public class NpcToNpcChat : MonoBehaviour
             npcDB[count] = value;
         }
 
-
+        string ip = "";
+        int id = 0;
+        // same api as NPC free speech api
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://182.70.242.10:8032/api/v1/text_from_userid_en_35?id=";
+            ip = "http://182.70.242.10:8034/";
             id = npcAttributes[temp].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            prefix = "http://15.152.13.112:8032/api/v1/text_from_userid_en_35?id=";
+            ip = "http://15.152.13.112:8032/";
             id = npcAttributes[temp].actualAiIds;
         }
 
+        string prefix = ip + "api/v2/text_from_userid_en_35?id=";
         string url = prefix + id;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + url + "</color>");
 
@@ -101,8 +124,8 @@ public class NpcToNpcChat : MonoBehaviour
             responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseData.response, CallBy.NpcToNpc, id.ToString());
-            Debug.Log("Communication Response(Npc Message)(NpcToNpc): " + responseData.response);
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, CustomLocalization.forceJapanese ? responseData.response_jp : responseData.response_en, CallBy.NpcToNpc, id.ToString());
+            Debug.Log("Communication Response(Npc Message)(NpcToNpc): " + (CustomLocalization.forceJapanese ? responseData.response_jp : responseData.response_en));
         }
         else
             Debug.LogError("Communication API Error(NpcToNpc): " + gameObject.name + request.error);
@@ -115,30 +138,28 @@ public class NpcToNpcChat : MonoBehaviour
     }
     IEnumerator GetMsgResponse()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 5f)); // 3f, 7f
         int id = 0;
         string ip = "";
-        string prefix = "";
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+
+        // same API as NPC to User api
+        if (!APIBaseUrlChange.instance.IsXanaLive)          
         {
-            //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
-            ip = "http://182.70.242.10:8032/";
-            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
+            ip = "http://182.70.242.10:8034/";
             id = npcDB[npcCounter].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            //prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
             ip = "http://15.152.13.112:8032/";
-            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
             id = npcDB[npcCounter].actualAiIds;
         }
 
-        //string url = "&id=";
-        string url = "&msg=";
-        //string postUrl = prefix + msg + url + id;
-        string postUrl = prefix + id + url + msg;
+        string prefix = ip + "api/v2/text_from_usertext_en_35?user_id=";
+        string targetData = "&target_id=";
+        string messageData = "&msg=";
+        string postUrl = prefix + npcAttributes[npcThatStartConversation].aiIds + targetData + id + messageData + msg;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + postUrl + "</color>");
+
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
@@ -147,20 +168,20 @@ public class NpcToNpcChat : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.FreeSpeechNpc, id.ToString());
-            Debug.Log("Communication Response(Npc Reply)(NpcToNpc): " + feed.response);
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, CustomLocalization.forceJapanese ? feed.output_data.user_msg_jp : feed.output_data.user_msg_en, CallBy.FreeSpeechNpc, id.ToString());
+            Debug.Log("Communication Response(Npc Reply)(NpcToNpc): " + (CustomLocalization.forceJapanese ? feed.output_data.user_msg_jp : feed.output_data.user_msg_en));
         }
         else
             Debug.LogError("Communication API Error(NpcToNpc): " + gameObject.name + request.error);
 
         npcCounter++;
-        Debug.Log("(NpcToNpc) Count: " + npcDB.Count);
+        //Debug.Log("(NpcToNpc) Count: " + npcDB.Count);
         if (npcCounter < npcDB.Count)
             StartCoroutine(GetMsgResponse());
         else
         {
             npcCounter = 0;
-            yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 5f));  // 3f, 7f
             StartCoroutine(FetchResponseFromWeb());
         }
     }
