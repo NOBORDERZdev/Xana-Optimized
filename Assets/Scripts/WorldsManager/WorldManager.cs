@@ -367,7 +367,8 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
+                if(EventPrefabLobby.activeInHierarchy)
+                    EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
             {
@@ -386,8 +387,13 @@ public class WorldManager : MonoBehaviour
         WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        Invoke(nameof(ShowTutorial),0.2f);
+    }
+
+    void ShowTutorial(){ 
         TutorialsManager.instance.ShowTutorials();
     }
+
     public void WorldPageStateHandler(bool _checkCheck)
     {
         WorldItemManager.WorldPageStateHandler(_checkCheck);

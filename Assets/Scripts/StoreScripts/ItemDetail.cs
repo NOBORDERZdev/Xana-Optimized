@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using static StoreManager;
 using System;
+using static AR_UndoRedo;
+
 public class ItemDetail : MonoBehaviour
 {
     public Color NormalColor;
@@ -79,7 +81,10 @@ public class ItemDetail : MonoBehaviour
                 // Eyebrow button method is itemBtnClicked
                 //
                 if (CategoriesEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar || CategoriesEnumVar == EnumClass.CategoryEnum.EyeLashesAvatar)
+                {
                     this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
+                    this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
+                }
                 //
                 else
                     this.gameObject.GetComponent<Button>().onClick.AddListener(ColorBtnClicked);
@@ -93,6 +98,7 @@ public class ItemDetail : MonoBehaviour
             else
             {
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
+                this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
             }
             decimal PriceInDecimal = decimal.Parse(price);
             int priceint = (int)PriceInDecimal;
@@ -238,8 +244,21 @@ public class ItemDetail : MonoBehaviour
             isHairItem = true;
            // Debug.Log("IsStartItem=true");
         }
+        CheckDeemoNft();
     }
-    void Delay()
+    public void CheckDeemoNft()
+    {
+        if (!XanaConstants.xanaConstants.IsDeemoNFT)
+        {
+            if (name.Contains("deemotshirt"))
+            {
+                Debug.Log("yES dEEMO dEEMO");
+               this.gameObject.SetActive(false);
+            }
+
+        } 
+    }
+        void Delay()
     {
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
@@ -506,6 +525,7 @@ public class ItemDetail : MonoBehaviour
     {
         if (GameManager.Instance.isStoreAssetDownloading || GetComponent<Image>().enabled is true)
             return;
+        
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
          
@@ -869,6 +889,11 @@ public class ItemDetail : MonoBehaviour
         }
     }
 
+    void ResetButtonState()
+    {
+        obj.currentButtonState = ButtonState.none;
+        obj.calledOneTime = false;
+    }
     // open color pallete panel by press color btn
     public void ColorBtnClicked()
     {
@@ -1187,4 +1212,6 @@ public class ItemDetail : MonoBehaviour
         StoreManager.instance.GreyRibbonImage.SetActive(false);
         StoreManager.instance.WhiteRibbonImage.SetActive(true);
     }
+  
+    
 }

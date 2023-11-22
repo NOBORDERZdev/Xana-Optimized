@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,7 +14,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     public const string prefabSuffix = "_XANA";
 
     public static bool proximityLoading = true;
-    public static bool isPostLoading=true;
+    public static bool isPostLoading = true;
 
     //booleans 
     public static bool stopDownloading;
@@ -98,9 +99,9 @@ public class BuilderAssetDownloader : MonoBehaviour
             temp.Position = BuilderData.mapData.data.json.otherItems[i].Position;
             temp.Rotation = BuilderData.mapData.data.json.otherItems[i].Rotation;
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
-            
+
             builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
-            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive)
+            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnComponent)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
                 temp.IsActive = BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive;
@@ -218,7 +219,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             downloadIsGoingOn = false;
         }
 
-        if(downloadDataQueue.Count<=0)
+        if (downloadDataQueue.Count <= 0)
         {
             StartCoroutine(DownloadFailedItem());
         }
@@ -266,7 +267,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public IEnumerator DownloadSpawnPointsPreload()
     {
-        for(int i=0;i<BuilderData.preLoadspawnPoint.Count;i++)
+        for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
@@ -299,7 +300,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         ++downloadedTillNow;
         switch (GameManager.currentLanguage)
         {
-            
+
             case "en":
                 assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
@@ -369,6 +370,20 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
+        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        {
+            newObj.SetActive(false);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                MultiplayerComponentData multiplayerComponentData = new();
+                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+                return;
+            }
+        }
+
         meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
@@ -377,11 +392,20 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
 
         //Add game object into XanaItems List for Hirarchy
-        GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+            GamificationComponentData.instance.xanaItems.Add(xanaItem);
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }
 
+    static bool IsMultiplayerComponent(ItemData itemData)
+    {
+        if (itemData.rotatorComponentData.IsActive || itemData.addForceComponentData.isActive || itemData.toFroComponentData.IsActive || itemData.translateComponentData.IsActive || itemData.scalerComponentData.IsActive || itemData.rotateComponentData.IsActive)
+        {
+            return true;
+        }
+        else return false;
+    }
 
     IEnumerator CheckShortIntervalSorting()
     {
@@ -436,18 +460,18 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterWorldInstantiated?.Invoke();
             //CheckPlacementOfAllObjects();
         }
-        
+
     }
 
     bool posChecking = true;
-    public void CheckPlacementOfAllObjects                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ()
+    public void CheckPlacementOfAllObjects()
     {
-        if(posChecking)
+        if (posChecking)
         {
             foreach (Transform t in assetParent)
             {
                 ItemData _itemData;
-                builderDataDictionary.TryGetValue(t.name,out _itemData);
+                builderDataDictionary.TryGetValue(t.name, out _itemData);
                 t.transform.localPosition = _itemData.Position;
                 t.transform.rotation = _itemData.Rotation;
             }
@@ -458,7 +482,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void OnOrientationChange()
     {
-        if(totalAssetCount!=downloadedTillNow)
+        if (totalAssetCount != downloadedTillNow)
         {
             if (ChangeOrientation_waqas._instance.isPotrait)
             {
@@ -490,7 +514,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         dataArranged = false;
         dataSorted = false;
 
-       // BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, SetConstant.isLogin);
+        // BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
     }
 
