@@ -8,6 +8,8 @@ namespace RFM.Character
 {
     public class NPCHunter : MonoBehaviour, IPunObservable
     {
+        // TODO : Assign a new target if the current target is caught by another hunter
+
         [SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
         [SerializeField] private Animator npcAnim;
@@ -81,6 +83,11 @@ namespace RFM.Character
             {
                 _hasTarget = false;
                 _navMeshAgent.isStopped = true;
+            }
+
+            if (_players.Count == 0)
+            {
+                GetAllRunners();
             }
         }
 

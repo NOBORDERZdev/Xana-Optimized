@@ -29,7 +29,7 @@ namespace RFM.Managers
         #region Serialized Fields
         public bool isPlayerHunter;
         //public Transform lobbySpawnPoint;
-        public GameObject playerObject;
+        //public GameObject playerObject;
         [SerializeField] public Transform playersSpawnArea;
         [SerializeField] private GameObject huntersCage;
         [SerializeField] private FollowNPC npcCameraPrefab;
@@ -114,14 +114,14 @@ namespace RFM.Managers
             //gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
-            //StartMatchMaking();
+            StartMatchMaking();
 
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
         }
 
-        public void StartMatchMaking()
+        public void StartMatchMaking() // Need to be called from UI if XanaStone is required to play
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
             Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>

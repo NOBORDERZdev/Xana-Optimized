@@ -161,10 +161,15 @@ namespace RFM.Character
             StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            if (/*PhotonNetwork.IsMasterClient*/true)
-            {
-                RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived, true);
-            }
+            
+            RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
+            
+            gameObject.SetActive(false);
+            Invoke(nameof(DestroyRunner), 2f);
+        }
+
+        private void DestroyRunner()
+        {
             PhotonNetwork.Destroy(this.gameObject);
         }
         

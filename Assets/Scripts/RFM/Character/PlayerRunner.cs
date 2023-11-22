@@ -63,7 +63,7 @@ namespace RFM.Character
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
-            RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
+            // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
         }
 
@@ -86,7 +86,7 @@ namespace RFM.Character
             StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
-            RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
+            // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
             EventsManager.PlayerCaught(npcHunter);
         }
@@ -95,7 +95,7 @@ namespace RFM.Character
         {
             StopCoroutine(TimeSurvived());
             StopCoroutine(AddMoney());
-            RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
+            // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
             PhotonNetwork.Destroy(transform.root.gameObject);
             EventsManager.PlayerCaughtByPlayer(npcHunter);
         }
