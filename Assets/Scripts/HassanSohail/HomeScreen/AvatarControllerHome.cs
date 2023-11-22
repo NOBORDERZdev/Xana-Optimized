@@ -32,6 +32,7 @@ public class AvatarControllerHome : MonoBehaviour
     Vector3 startpos;
     Vector3 startRot;
     Vector3 lastpos;
+    public Transform PostBubble;
     private void OnEnable()
     {
        // timer = wanderTimer;
@@ -170,6 +171,7 @@ public class AvatarControllerHome : MonoBehaviour
             storeCam.SetActive(true);
             worldCam.SetActive(false);
             worldObj.SetActive(false);
+            PostBubble.gameObject.SetActive(false);
         }
         else
         {
@@ -184,6 +186,7 @@ public class AvatarControllerHome : MonoBehaviour
             GetComponent<FootStaticIK>().ikActive = false;
             GetComponent<NavMeshAgent>().enabled = true;
             Wander();
+            PostBubble.gameObject.SetActive(true);
         }
     }
 

@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
     public GameObject _SplashScreen;
-    
+
+    public Transform _postScreen,_postCamera;
     public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
@@ -32,7 +33,13 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
-
+    public void SwitchToPostScreen(bool flag)
+    {
+        _postScreen.gameObject.SetActive(flag);
+        HomePage.gameObject.SetActive(!flag);
+        _postCamera.gameObject.SetActive(flag);
+        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(flag);
+    }
     public void AvaterButtonCustomPushed()
     {
         WorldItemPreviewTab.m_WorldIsClicked = false;

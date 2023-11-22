@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     public static string currentLanguage = "";
 
     public bool isStoreAssetDownloading = false;
-
+    public AvatarPathSystemManager avatarPathSystemManager;
     private void Awake()
     {
         if (Instance == null)
