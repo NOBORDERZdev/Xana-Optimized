@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
     public GameObject _SplashScreen;
-    
+    public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         WorldScrollerHolder,
         LobbyTabHolder,
         AdvanceSearchInputField;
+   
 
     private void Awake()
     {
@@ -50,26 +51,35 @@ public class UIManager : MonoBehaviour
     {
         if (SavaCharacterProperties.NeedToShowSplash == 1)
         {
-            StartCoroutine(IsSplashEnable(false, 4f));
+            if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+            {
+                IsSplashActive = false;
+                StartCoroutine(IsSplashEnable(false, 3f));
+               
+            }
+           
         }
         else
         {
+
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
     }
+   
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
-        yield return new WaitForSeconds(_time);
+         yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
     }
-
+   
+  
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
@@ -107,6 +117,7 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
+
                     AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     SearchHomeHolder.gameObject.SetActive(false);
