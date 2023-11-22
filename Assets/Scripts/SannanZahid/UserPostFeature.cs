@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 
 public class UserPostFeature : MonoBehaviour
 {
+    public Transform Bubble;
     [SerializeField]
     public TMPro.TMP_InputField _postInputField;
     [SerializeField]
@@ -54,6 +55,7 @@ public class UserPostFeature : MonoBehaviour
             else
             {
                 Debug.LogError("Posted ---->  "+www.downloadHandler.text);
+                Bubble.gameObject.SetActive(true);
                 OnUpdatePostText.Invoke(postMessage);
             }
             www.Dispose();
@@ -80,6 +82,14 @@ public class UserPostFeature : MonoBehaviour
             {
                 Debug.LogError("Posted ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
+                if(RetrievedPost.data.rows.Count>0)
+                {
+                    Bubble.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Bubble.gameObject.SetActive(false);
+                }
                 for (int i = RetrievedPost.data.rows.Count-1; i >0; i--)
                 {
                     Debug.LogError("Message --->> " + RetrievedPost.data.rows[i].text_post);

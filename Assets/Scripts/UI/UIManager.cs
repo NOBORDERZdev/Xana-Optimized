@@ -1,5 +1,6 @@
 ﻿using AdvancedInputFieldPlugin;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,11 +36,20 @@ public class UIManager : MonoBehaviour
     }
     public void SwitchToPostScreen(bool flag)
     {
-        _postScreen.gameObject.SetActive(flag);
-        HomePage.gameObject.SetActive(!flag);
-        _postCamera.gameObject.SetActive(flag);
-        ShowFooter(!flag);
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(flag);
+       
+        if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
+        {
+            SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
+
+        }
+        else
+        {
+            _postScreen.gameObject.SetActive(flag);
+            HomePage.gameObject.SetActive(!flag);
+            _postCamera.gameObject.SetActive(flag);
+            ShowFooter(!flag);
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(flag);
+        }
     }
     public void AvaterButtonCustomPushed()
     {

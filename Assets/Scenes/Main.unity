@@ -6498,6 +6498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f1013204ef4014393507b5ada21276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Bubble: {fileID: 276063576}
   _postInputField: {fileID: 774483741}
   _postScreen: {fileID: 1537461318}
   RetrievedPost:
@@ -9898,7 +9899,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -11445,7 +11446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &276063576
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11910,7 +11911,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hassan We are in trouble.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f499a72b1aaf8e54481810c548607373, type: 2}
   m_sharedMaterial: {fileID: 21000011916881608, guid: f499a72b1aaf8e54481810c548607373, type: 2}
@@ -38692,7 +38693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 540, y: -52.865}
+  m_AnchoredPosition: {x: 540, y: -52.865234}
   m_SizeDelta: {x: 1080, y: 155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1597821154
@@ -39894,6 +39895,7 @@ MonoBehaviour:
   defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 1654741760}
+  PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1341452831}
   chatMessageUnReadCountText: {fileID: 360765117}
 --- !u!225 &1654741760
@@ -47628,6 +47630,7 @@ MonoBehaviour:
   defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2051747839}
+  PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1033625937}
   chatMessageUnReadCountText: {fileID: 346837808}
 --- !u!225 &2051747839
@@ -49254,6 +49257,7 @@ MonoBehaviour:
   defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2123470891}
+  PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 414214556}
   chatMessageUnReadCountText: {fileID: 1955619320}
 --- !u!225 &2123470891
@@ -49512,6 +49516,7 @@ MonoBehaviour:
   defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2132913894}
+  PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1565411577}
   chatMessageUnReadCountText: {fileID: 1891834831}
 --- !u!225 &2132913894
@@ -53068,6 +53073,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: PostButton
+      value: 
+      objectReference: {fileID: 180488059}
+    - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: AllTitleText.Array.data[5]
       value: 
       objectReference: {fileID: 60543371}
@@ -53440,6 +53449,10 @@ PrefabInstance:
       propertyPath: EquipUiObj
       value: 
       objectReference: {fileID: 1595459687}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: PostManager
+      value: 
+      objectReference: {fileID: 54166482}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: ShadowPlane
       value: 

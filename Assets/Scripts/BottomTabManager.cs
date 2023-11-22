@@ -19,6 +19,7 @@ public class BottomTabManager : MonoBehaviour
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
 
+    public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
 
@@ -56,7 +57,7 @@ public class BottomTabManager : MonoBehaviour
         {
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[2].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            //PostButton.transform.GetComponent<Button>().interactable = false;
             //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         else
@@ -81,6 +82,8 @@ public class BottomTabManager : MonoBehaviour
                 }
             }
         }
+        PostButton.transform.GetComponent<Button>().interactable = true;
+
     }
     public void CheckLoginOrNotForFooterButton()
     {
@@ -96,6 +99,9 @@ public class BottomTabManager : MonoBehaviour
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+            //PostButton.transform.GetComponent<Button>().interactable = false;
+
+
             //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         else
@@ -103,6 +109,8 @@ public class BottomTabManager : MonoBehaviour
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+           // PostButton.transform.GetComponent<Button>().interactable = true;
+
             allButtonIcon[2].transform.GetComponent<Image>().color = Color.white;
             allButtonIcon[3].transform.GetComponent<Image>().color = Color.white;
             allButtonIcon[4].transform.GetComponent<Image>().color = Color.white;
