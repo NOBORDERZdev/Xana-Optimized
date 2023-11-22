@@ -16,7 +16,7 @@ public class PopupClick : MonoBehaviour
     {
         skipClick = true;
         PlayerPrefs.SetInt("SkipCounter", PlayerPrefs.GetInt("SkipCounter") + 1);
-        FooterTabs.SetActive(true);
+       // FooterTabs.SetActive(true);
         VersionPopup.SetActive(false);
     }
 
