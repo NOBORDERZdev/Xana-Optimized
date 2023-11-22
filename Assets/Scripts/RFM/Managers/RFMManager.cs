@@ -108,7 +108,7 @@ namespace RFM.Managers
             Globals.gameState = Globals.GameState.InLobby;
             _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
-
+            RFMButtonsLayoutManager.instance.LoadLayout();
             gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
