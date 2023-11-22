@@ -47,8 +47,6 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     internal Vector3 Ninja_Throw_InitPosX;
     internal bool worldCameraEnable;
 
-    public Shader proceduralRingShader;
-    public Shader uberShader;
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
