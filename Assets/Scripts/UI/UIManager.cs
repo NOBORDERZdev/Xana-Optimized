@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
         _postScreen.gameObject.SetActive(flag);
         HomePage.gameObject.SetActive(!flag);
         _postCamera.gameObject.SetActive(flag);
+        ShowFooter(!flag);
         GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(flag);
     }
     public void AvaterButtonCustomPushed()

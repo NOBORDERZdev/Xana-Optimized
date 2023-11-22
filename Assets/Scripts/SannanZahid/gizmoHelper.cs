@@ -12,7 +12,7 @@ public class gizmoHelper : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position, radius);
         style.normal.textColor = Color.red;
-        Handles.Label(transform.position, transform.name, style);
+      //  Handles.Label(transform.position, transform.name, style);
     }
     private void OnDrawGizmosSelected()
     {
