@@ -42,8 +42,11 @@ public class CollectibleComponent : ItemComponent
 
     public override void StopBehaviour()
     {
+        if(isPlaying)
+        {
         isPlaying = false;
         StopComponent();
+        }
     }
 
     public override void PlayBehaviour()

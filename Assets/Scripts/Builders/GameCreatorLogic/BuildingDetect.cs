@@ -6,8 +6,6 @@ using UnityEngine.Rendering.Universal;
 
 public class BuildingDetect : MonoBehaviour
 {
-    [Header("Avatar Change")]
-    public GameObject[] tmpModel;
 
     #region Special Item Fields
 
@@ -203,13 +201,21 @@ public class BuildingDetect : MonoBehaviour
         if (avatarChangeCoroutine != null)
             StopCoroutine(avatarChangeCoroutine);
         gangsterCharacter = new GameObject("AvatarChange");
+        gangsterCharacter.transform.SetParent(this.transform);
+        gangsterCharacter.transform.localPosition = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
         //gangsterCharacter.SetActive(false);
 
-        Vector3 pos = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? Vector3.up * 0.1f : Vector3.zero;
+        Vector3 pos = gangsterCharacter.transform.position;
+        pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
         AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
-        AppearanceChange.GetPhotonView().RPC("Init", target: RpcTarget.Others, this.GetComponent<PhotonView>().ViewID, avatarIndex + 1, curObject.GetComponent<XanaItem>().itemData.RuntimeItemID);
+
+        var hash = new ExitGames.Client.Photon.Hashtable();
+        hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<XanaItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
+        AppearanceChange.transform.localEulerAngles = Vector3.zero;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
         {
@@ -234,9 +240,7 @@ public class BuildingDetect : MonoBehaviour
             cloneObject.SetActive(true);
         }
 
-        gangsterCharacter.transform.SetParent(this.transform);
-        gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+
 
         //hide meshdata off character for FPS
         if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
@@ -371,7 +375,7 @@ public class BuildingDetect : MonoBehaviour
             //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
             _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
-
+            _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);
     }
@@ -400,7 +404,8 @@ public class BuildingDetect : MonoBehaviour
             yield return null;
         }
         //_specialEffects.gameObject.SetActive(false);
-        PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
+        if (_specialEffects)
+            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
         ApplyDefaultEffect();
         _specialEffects = null;
         _playerControllerNew.specialItem = false;

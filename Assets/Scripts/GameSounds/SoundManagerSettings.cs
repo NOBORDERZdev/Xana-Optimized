@@ -286,6 +286,8 @@ public class SoundManagerSettings : MonoBehaviour
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
         }
+
+        BuilderEventManager.BGMVolume?.Invoke(Vol);
     }
     public void SetVideoVolume(float Vol)
     {

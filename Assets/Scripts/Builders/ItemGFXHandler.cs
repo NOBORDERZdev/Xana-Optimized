@@ -42,16 +42,27 @@ public class ItemGFXHandler : ItemComponent
                 {
                     _renderers[i].sharedMaterials.ForEachItem((d) =>
                     {
-                        if (d.shader==GamificationComponentData.instance.proceduralRingShader || d.shader==GamificationComponentData.instance.uberShader)
+                        string shaderName = d.shader.name;
+
+                        if (shaderName.Contains("Procedural") || shaderName.Contains("Particles Additive Alpha8") || shaderName.Contains("Ubershader"))
                         {
-                            if (s == null || !s.name.Equals(d.shader.name))
-                            {
-                                s = Shader.Find(d.shader.name);
-                            }
-                            if (s != null)
-                            {
-                                d.shader = s;
-                            }
+                            d.shader = Shader.Find(shaderName);
+                        }
+                        else if (d.name == "mtEFT0210004_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended");
+                        }
+                        else if (d.name == "mtEFT0210005_PlaceMode" || d.name == "mtEFT0210026_PlaceMode_04")
+                        {
+                            d.shader = Shader.Find("Mobile/Particles/Alpha Blended");
+                        }
+                        else if (d.name == "mtEFT0210018_PlaceMode" || d.name == "mtEFT0210021_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Additive");
+                        }
+                        else if (d.name == "mtEFT0210019_PlaceMode_02" || d.name == "mtEFT0210026_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply");
                         }
                     });
                 }
