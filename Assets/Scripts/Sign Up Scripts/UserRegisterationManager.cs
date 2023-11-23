@@ -343,7 +343,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
 
-        CloseLoginScreen();
+      //  CloseLoginScreen();
     }
 
 
@@ -3310,6 +3310,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
+        TutorialsManager.instance.ShowTutorials();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
