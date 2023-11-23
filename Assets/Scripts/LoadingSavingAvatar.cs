@@ -42,7 +42,7 @@ public class LoadingSavingAvatar : MonoBehaviour
             if (time >= TotalTimer)
             {
                 Once = true;
-                CallWelcome();
+              //  CallWelcome();
                 // StartCoroutine(versionCheck());
 
             }
