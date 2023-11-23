@@ -30,6 +30,12 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Canvas.GetComponent<CanvasGroup>().alpha = 0;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Canvas.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        _footerCan.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
@@ -74,11 +80,15 @@ public class UIManager : MonoBehaviour
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+         Canvas.GetComponent<CanvasGroup>().interactable =false;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =false;
         _footerCan.GetComponent<CanvasGroup>().interactable=false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
         yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Canvas.GetComponent<CanvasGroup>().interactable =true;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =true;
         _footerCan.GetComponent<CanvasGroup>().interactable=true;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;

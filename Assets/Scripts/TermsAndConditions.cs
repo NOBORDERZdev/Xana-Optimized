@@ -29,10 +29,22 @@ public class TermsAndConditions : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("TermsConditionAgreement"))
         {
+            //if (UIManager.Instance)
+            //{
+            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 1;
+            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = true;
+            //}
             mainPanel.SetActive(false);
         }
         else
         {
+            if (UIManager.Instance)
+            {
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 0;
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = false;
+            }
             mainPanel.SetActive(true);
         }
     }
@@ -75,6 +87,11 @@ public class TermsAndConditions : MonoBehaviour
     {
         mainPanel.SetActive(false);
         UserRegisterationManager.instance.welcomeScreen.SetActive(true);
+         if(UIManager.Instance){ 
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
+                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable= true;
+            }
         UIManager.Instance.StartCoroutine(UIManager.Instance.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
     }
