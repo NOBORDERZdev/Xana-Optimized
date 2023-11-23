@@ -60,8 +60,9 @@ namespace WaheedDynamicScrollRect
         public List<Transform> avatarData = new List<Transform>();
         public static int Counter = 0;
         public GameObject myContent;
-        bool _isShuffling = false, shuffled = false;
+        bool _isShuffling = false, shuffled = false, myShuffle=false;
         string gameObjectName = null;
+
         //public Transform[] _Avatars;
 
         private ScrollContent _content;
@@ -940,7 +941,7 @@ namespace WaheedDynamicScrollRect
             ToggleNextPreviousBtnsInteractability();
             MoveContentBackward();
             GetAvatarName();
-            if (Counter > 0)
+            if (Counter > 0 && !myShuffle)
             {
                 previous.interactable = false;
                 CancelInvoke("ActivePrviousButton");
@@ -959,7 +960,7 @@ namespace WaheedDynamicScrollRect
             ToggleNextPreviousBtnsInteractability();
             MoveContentForward();
             GetAvatarName();
-            if (Counter < 43)
+            if (Counter < 43 && !myShuffle)
             {
                 next.interactable = false;
                 CancelInvoke("ActiveNextButton");
@@ -973,6 +974,7 @@ namespace WaheedDynamicScrollRect
 
         public void beginShuffling() 
         {
+            myShuffle = true;
             _isShuffling = true;
             shufflingUI = true;
             //shuffleButton.gameObject.GetComponent<Image>().raycastTarget = false;
@@ -1011,7 +1013,9 @@ namespace WaheedDynamicScrollRect
                 yield return null;
             }
             shufflingUI = false;
+            myShuffle = false;
             ToggleNextPreviousBtnsInteractability();
+           // Invoke("ToggleNextPreviousBtnsInteractability", 0.5f);
             yield return null;
         }
         public PresetData_Jsons presetScript;

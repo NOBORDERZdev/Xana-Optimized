@@ -324,7 +324,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1465257260}
         m_TargetAssemblyTypeName: RFMButtonsLayoutManager, Assembly-CSharp
         m_MethodName: ResetLayout
         m_Mode: 1
@@ -15472,6 +15472,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4873187496261019277}
     m_Modifications:
+    - target: {fileID: 434558341727265523, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1207936373471435936, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_TagString
       value: Deep Jump
@@ -16144,6 +16148,18 @@ PrefabInstance:
       propertyPath: m_ScaleInLightmap
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 5599229865399039113, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599229865399039113, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 44f536d675c18be49939ea57fb54ef7f, type: 2}
+    - target: {fileID: 5599229865399039113, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 44f536d675c18be49939ea57fb54ef7f, type: 2}
     - target: {fileID: 6247769859073086812, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -16183,6 +16199,14 @@ PrefabInstance:
     - target: {fileID: 6609173714218939543, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_TagString
       value: Deep Jump
+      objectReference: {fileID: 0}
+    - target: {fileID: 6773230466653868007, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5523277661179574252, guid: 8453091e83d98c94cab775ce39ddc73b, type: 3}
+    - target: {fileID: 6773230466653868007, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7274980692429024081, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_Center.x
@@ -16427,6 +16451,10 @@ PrefabInstance:
     - target: {fileID: 7390389052547750782, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7652942371407409474, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7817174936722765408, guid: 5ba9afd434da20b49b0a504ceeb4750f, type: 3}
       propertyPath: m_TagString
@@ -23868,7 +23896,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1465257260}
         m_TargetAssemblyTypeName: RFMButtonsLayoutManager, Assembly-CSharp
         m_MethodName: SaveLayout
         m_Mode: 1
@@ -29356,7 +29384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df40b8399cb08fb488b452bd84ee17bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  devMode: 0
+  devMode: 1
 --- !u!1 &1595515515
 GameObject:
   m_ObjectHideFlags: 0
