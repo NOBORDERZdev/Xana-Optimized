@@ -99,7 +99,7 @@ public class NpcChatSystem : MonoBehaviour
     }
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.3f));
         if (counter is 0 && playerMessages.Count > 0)
             msg = playerMessages.Dequeue();
 
@@ -131,12 +131,18 @@ public class NpcChatSystem : MonoBehaviour
             InputData inputD = feed.input_data;
             OutputData outputD = feed.output_data;
 
-            if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, CustomLocalization.forceJapanese ? feed.output_data.user_msg_jp : feed.output_data.user_msg_en, CallBy.UserNpc, id.ToString());
-            Debug.Log("Communication Response(UserAI): " + (CustomLocalization.forceJapanese ? feed.output_data.user_msg_jp : feed.output_data.user_msg_en));
+            string responseFeed = "";
+            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+                responseFeed = feed.output_data.user_msg_jp;
+            else
+                responseFeed = feed.output_data.user_msg_en;
 
+            if (XanaChatSystem.instance) {
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
+                Debug.Log("Communication Response(UserAI): " + responseFeed);
+            }
             if (NpcSpawner.npcSpawner)
-                NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(CustomLocalization.forceJapanese ? feed.output_data.user_msg_jp : feed.output_data.user_msg_en);
+                NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
         }
         else
             Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
