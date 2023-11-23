@@ -20,6 +20,7 @@ public static class BuilderEventManager
     public static Action AfterPlayerInstantiated;
 
     public static Action AfterWorldInstantiated;
+    public static Action AfterWorldOffcialWorldsInatantiated;
 
     public static Action ReSpawnPlayer;
 

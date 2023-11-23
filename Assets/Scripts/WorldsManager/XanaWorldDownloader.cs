@@ -336,7 +336,7 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = true;
         if (totalAssetCount == downloadedTillNow)
         {
-            BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            BuilderEventManager.AfterWorldOffcialWorldsInatantiated?.Invoke();
         }
     }
 

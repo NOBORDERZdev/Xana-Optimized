@@ -5,12 +5,12 @@ public class DisableDummyObjects : MonoBehaviour
     public GameObject[] dummyObjects;
     private void OnEnable()
     {
-        BuilderEventManager.AfterWorldInstantiated += DisableDummyObjectsAfterWorldInstantiated;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += DisableDummyObjectsAfterWorldInstantiated;
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.AfterWorldInstantiated -= DisableDummyObjectsAfterWorldInstantiated;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= DisableDummyObjectsAfterWorldInstantiated;
     }
 
     private void DisableDummyObjectsAfterWorldInstantiated()

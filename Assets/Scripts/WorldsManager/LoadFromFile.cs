@@ -1021,6 +1021,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (BuilderAssetDownloader.isPostLoading)
         {
+            Debug.LogError("here resetting player .... ");
             if (BuilderData.spawnPoint.Count == 1)
             {
                 spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
