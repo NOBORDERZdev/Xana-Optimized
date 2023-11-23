@@ -63,7 +63,7 @@ public class SaveParentObjectsToJson : EditorWindow
             data.objectBound = CalculateBoundsWithChildren(rootObject.transform);
             data.tagName = rootObject.tag;
             data.layerIndex = rootObject.gameObject.layer;
-            data.priority = GetObjectPriority(rootObject.tag);
+            data.priority = GetObjectPriority(rootObject.gameObject);
             data.isActive = rootObject.gameObject.activeSelf;
             data.lightmapData = GetLightmapData(rootObject.gameObject);
             sceneObjectsData.SceneObjects.Add(data);
@@ -111,19 +111,13 @@ public class SaveParentObjectsToJson : EditorWindow
     }
 
 
-    public int GetObjectPriority(string priorityStatus)
+    public Priority GetObjectPriority(GameObject rootObject)
     {
-        switch (priorityStatus)
+        if(rootObject.GetComponent<SetPrefabInfo>()!=null)
         {
-            case high:
-                return 1;
-            case medium:
-                return 2;
-            case low:
-                return 3;
-            default:
-                return 3;
+            return rootObject.GetComponent<SetPrefabInfo>().objectPriority;
         }
+        return Priority.defaultPriority;
     }
 }
 

@@ -488,7 +488,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         else
         {
-            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            if (JjMusuem.Instance)
+                JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            else
+            {
+                if (!XanaConstants.xanaConstants.isCameraMan)
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            }
         }
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
 

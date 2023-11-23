@@ -17,6 +17,8 @@ public class XanaWorldDownloader : MonoBehaviour
     public static bool dataArranged;
     public static bool dataSorted;
     public static bool isSpawnDownloaded;
+    public static bool isDefaultPriorityObjectDownloaded;
+    public static bool isfailedObjectsDownloaded;
 
     public Transform assetParent;
     public TMPro.TextMeshProUGUI assetDownloadingText;
@@ -35,7 +37,8 @@ public class XanaWorldDownloader : MonoBehaviour
     public static int timeFullSorting = 100;
 
     public static List<DownloadQueueData> downloadDataQueue = new List<DownloadQueueData>();
-    public static List<DownloadQueueData> preLoadspawnPoint = new List<DownloadQueueData>();
+    public static List<DownloadQueueData> preLoadObjects = new List<DownloadQueueData>();
+    public static List<DownloadQueueData> postLoadObjects = new List<DownloadQueueData>();
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ObjectsInfo> xanaWorldDataDictionary = new Dictionary<string, ObjectsInfo>();
 
@@ -116,13 +119,12 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
-        StartCoroutine(DownloadSpawnPointsPreload());
+        StartCoroutine(DownloadObjects(preLoadObjects,true));
         while (!isSpawnDownloaded)
         {
             await Task.Yield();
         }
         StartDownloadingAssets();
-
         EnableDownloadingText();
     }
 
@@ -143,9 +145,13 @@ public class XanaWorldDownloader : MonoBehaviour
             temp.Scale = xanaSceneData.SceneObjects[i].scale;
 
             xanaWorldDataDictionary.Add(i.ToString(), xanaSceneData.SceneObjects[i]);
-            if (xanaSceneData.SceneObjects[i].priority == 1)
+            if (xanaSceneData.SceneObjects[i].priority == Priority.High)
             {
-                preLoadspawnPoint.Add(temp);
+                preLoadObjects.Add(temp);
+            }
+            if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
+            {
+                postLoadObjects.Add(temp);
             }
             else
             {
@@ -215,6 +221,16 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartCoroutine(DownloadAssetsFromSortedList());
+        while (!isDefaultPriorityObjectDownloaded)
+        {
+            await Task.Yield();
+        }
+        StartCoroutine(DownloadFailedItem());
+        while (!isfailedObjectsDownloaded)
+        {
+            await Task.Yield();
+        }
+        StartCoroutine(DownloadObjects(postLoadObjects, false));
         //StartCoroutine(CheckLongIntervalSorting());
         //StartCoroutine(CheckShortIntervalSorting());
 
@@ -268,11 +284,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
             downloadIsGoingOn = false;
         }
-
-        if (downloadDataQueue.Count <= 0)
-        {
-            StartCoroutine(DownloadFailedItem());
-        }
+        isDefaultPriorityObjectDownloaded = true;
     }
 
 
@@ -321,15 +333,20 @@ public class XanaWorldDownloader : MonoBehaviour
                 DisplayDownloadedAssetText();
             }
         }
+        isfailedObjectsDownloaded = true;
+        if (totalAssetCount == downloadedTillNow)
+        {
+            BuilderEventManager.AfterWorldInstantiated?.Invoke();
+        }
     }
 
 
-    public IEnumerator DownloadSpawnPointsPreload()
+    public IEnumerator DownloadObjects(List<DownloadQueueData> downloadQueues, bool preLodaingObjects)
     {
-        for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
+        for (int i = 0; i < downloadQueues.Count; i++)
         {
-            string downloadKey = BuilderData.preLoadspawnPoint[i].ItemID;
-            string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
+            string downloadKey = downloadQueues[i].ItemID;
+            string dicKey = downloadQueues[i].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             bool flag = false;
             AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -350,8 +367,9 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             yield return new WaitForSeconds(0.01f);
         }
+        if (preLodaingObjects)
+            isSpawnDownloaded = true;
 
-        isSpawnDownloaded = true;
     }
 
     void EnableDownloadingText()
@@ -413,22 +431,31 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.position, _itemData.rotation, assetParentStatic);
         newObj.transform.localScale = _itemData.scale;
+        newObj.name = _itemData.name;
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
     }
     private static void ApplyLightmapData(LightmapData[] lightmapData, GameObject prefab)
     {
-        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < renderers.Length; i++)
+        try
         {
-            renderers[i].lightmapIndex = lightmapData[i].lightmapIndex;
-            renderers[i].lightmapScaleOffset = lightmapData[i].lightmapScaleOffset;
+            Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                renderers[i].lightmapIndex = lightmapData[i].lightmapIndex;
+                renderers[i].lightmapScaleOffset = lightmapData[i].lightmapScaleOffset;
+            }
         }
+        catch (Exception e)
+        {
+            Debug.LogError("Error while applying lightmap data :- " + e.Message);
+        }
+
     }
 
     IEnumerator CheckShortIntervalSorting()
     {
-    CheckingAgain:
+        CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
         currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
@@ -454,7 +481,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckLongIntervalSorting()
     {
-    CheckingAgain:
+        CheckingAgain:
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
@@ -522,6 +549,10 @@ public class XanaWorldDownloader : MonoBehaviour
 
         downloadDataQueue.Clear();
         xanaWorldDataDictionary.Clear();
+        preLoadObjects.Clear();
+        postLoadObjects.Clear();
+        downloadFailed.Clear();
+        xanaSceneData.SceneObjects.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         downloadedTillNow = 0;
@@ -529,6 +560,9 @@ public class XanaWorldDownloader : MonoBehaviour
         dataArranged = false;
         dataSorted = false;
         stopDownloading = false;
+        isDefaultPriorityObjectDownloaded=false;
+        isfailedObjectsDownloaded = false;
+        isSpawnDownloaded = false;
     }
 
 }
@@ -547,7 +581,7 @@ public class ObjectsInfo
     public Quaternion rotation;
     public Vector3 scale;
     public Bounds objectBound;
-    public int priority;
+    public Priority priority;
     public string tagName;
     public int layerIndex;
     public bool isActive;
@@ -559,4 +593,11 @@ public class LightmapData
     public int lightmapIndex;
     public Vector4 lightmapScaleOffset;
     // Add more fields as needed to store relevant data
+}
+
+public enum Priority
+{
+    defaultPriority = 0,
+    High = 1,
+    Low = 2
 }
