@@ -53,8 +53,8 @@ public class Timer : MonoBehaviour
                 timeRemaining -= Time.deltaTime;
                 float minutes = Mathf.FloorToInt(timeRemaining / 60);
                 float seconds = Mathf.FloorToInt(timeRemaining % 60);
-                this.GetComponent<Text>().text = minutes.ToString() + ":" + seconds.ToString() + "     <color=#1D9CFE>" + sendAgainText + "</color>";
-                this.GetComponent<Text>().text = string.Format("{00:00}:{01:00}", minutes, seconds) + "     <color=#1D9CFE>" + sendAgainText + "</color>";
+                this.GetComponent<Text>().text = minutes.ToString() + ":" + seconds.ToString();// + "     <color=#1D9CFE>" + sendAgainText + "</color>";
+                this.GetComponent<Text>().text = string.Format("{00:00}:{01:00}", minutes, seconds);//  + "     <color=#1D9CFE>" + sendAgainText + "</color>";
 
 
             }
@@ -62,7 +62,7 @@ public class Timer : MonoBehaviour
             {
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
-                this.GetComponent<Text>().text = timeRemaining.ToString() + "     <color=#1D9CFE>" + sendAgainText + "</color>";
+                this.GetComponent<Text>().text = timeRemaining.ToString();// + "     <color=#1D9CFE>" + sendAgainText + "</color>";
                 timerIsRunning = false;
                 if (sendAgain)
                 {
