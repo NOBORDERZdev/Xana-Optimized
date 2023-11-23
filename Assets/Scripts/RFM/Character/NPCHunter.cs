@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Climbing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,7 +15,8 @@ namespace RFM.Character
         [SerializeField] private string velocityNameX, velocityNameY;
 
 
-        private NavMeshAgent _navMeshAgent;
+        public NavMeshAgent _navMeshAgent;
+        public InputCharacterController NPCRFMInputCharacterController;
         private float _maxSpeed;
         private List<GameObject> _players;
         private Transform _target;
@@ -29,11 +31,6 @@ namespace RFM.Character
         [SerializeField] private float catchRadius = 2;
         private float _catchTimer;
         private GameObject _inRangePlayer;
-
-        private void Awake()
-        {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-        }
 
         private void OnEnable()
         {
@@ -136,8 +133,10 @@ namespace RFM.Character
 
             var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
 
-            npcAnim.SetFloat(velocityNameX, animVector.x);
-            npcAnim.SetFloat(velocityNameY, animVector.y);
+            NPCRFMInputCharacterController.movement = animVector;
+
+            /*npcAnim.SetFloat(velocityNameX, animVector.x);
+            npcAnim.SetFloat(velocityNameY, animVector.y);*/
 
 
             if (RFM.Globals.DevMode) return;
@@ -158,7 +157,7 @@ namespace RFM.Character
                     _catchTimer = 0;
                     _players.Remove(_inRangePlayer);
                     _hasTarget = false;
-                    killVFX.SetActive(true);
+                    //killVFX.SetActive(true);
                     _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
                 }
             }
@@ -208,7 +207,7 @@ namespace RFM.Character
 
         private void GameOver()
         {
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject.transform.parent.parent.gameObject);
         }
 
 
@@ -228,6 +227,7 @@ namespace RFM.Character
                 if (Vector3.Distance(_navMeshAgent.destination, _targetPosition) > 1.0f)
                 {
                     _navMeshAgent.SetDestination(_targetPosition);
+                    NPCRFMInputCharacterController.movement = _targetPosition;
                 }
 
                 // Additional security and validation checks can be implemented here

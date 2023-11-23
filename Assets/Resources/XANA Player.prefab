@@ -230,6 +230,7 @@ MonoBehaviour:
   freeCamera: {fileID: 0}
   runCamera: {fileID: 0}
   sliderCamera: {fileID: 0}
+  isNPC: 0
   stepHeight: 0.6
   stepVelocity: 0.08
   normalCapsuleCollider: {fileID: 5556358534646836576}
@@ -324,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941d0f95fdb5d2b4dbce657c49796b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animVelocity: {x: 0, y: 0, z: 0}
   animator: {fileID: 5556358534646836591}
   switchCameras: {fileID: 0}
 --- !u!114 &5556358534646836585
@@ -494,6 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOtherPlayer: 1
+  isPlayerController: 0
   movement: {x: 0, y: 0}
   run: 0
   jump: 0

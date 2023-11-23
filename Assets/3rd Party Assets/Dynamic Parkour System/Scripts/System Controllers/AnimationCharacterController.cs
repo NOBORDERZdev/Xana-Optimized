@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Climbing
     public class AnimationCharacterController : MonoBehaviour
     {
         private ThirdPersonController controller;
-        private Vector3 animVelocity;
+        public Vector3 animVelocity;
 
         [HideInInspector] public Animator animator;
         public SwitchCameras switchCameras;
@@ -41,7 +42,11 @@ namespace Climbing
         {
             controller = GetComponent<ThirdPersonController>();
             animator = GetComponent<Animator>();
-            switchCameras = Camera.main?.GetComponent<SwitchCameras>();
+            if (GetComponent<PhotonView>().IsMine && controller.characterInput.isPlayerController && !controller.isNPC)
+            {
+                Debug.Log("switchCameras");
+                switchCameras = Camera.main?.GetComponent<SwitchCameras>();
+            }
         }
 
         void Update()
@@ -60,10 +65,10 @@ namespace Climbing
             }
         }
 
-        private void LateUpdate()
+        /*private void LateUpdate()
         {
             if (!switchCameras) switchCameras = Camera.main?.GetComponent<SwitchCameras>();
-        }
+        }*/
 
         public void SetAnimVelocity(Vector3 value) { animVelocity = value; animVelocity.y = 0; }
         public Vector3 GetAnimVelocity() { return animVelocity; }

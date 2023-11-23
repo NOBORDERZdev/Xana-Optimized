@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Climbing;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,20 +16,17 @@ namespace RFM.Character
         [SerializeField] private Animator animator;
         [SerializeField] private string velocityNameX, velocityNameY;
 
-        private NavMeshAgent _navMeshAgent;
+        public NavMeshAgent _navMeshAgent;
         private float _maxSpeed;
         private Transform _closestHunterTransform = null;
         private float _minDistance = 10f;
+        public InputCharacterController RunnerNPCRFMInputController;
 
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
 
         private Vector3 _targetPosition;
 
-        private void Awake()
-        {
-            _navMeshAgent = GetComponent<NavMeshAgent>();
-        }
         
         private void OnEnable()
         {
@@ -110,8 +108,10 @@ namespace RFM.Character
 
             var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
 
-            animator.SetFloat(velocityNameX, animVector.x);
-            animator.SetFloat(velocityNameY, animVector.y);
+            RunnerNPCRFMInputController.movement = animVector;
+
+            /*animator.SetFloat(velocityNameX, animVector.x);
+            animator.SetFloat(velocityNameY, animVector.y);*/
         }
 
         private void EscapeFromHunters()
@@ -165,7 +165,7 @@ namespace RFM.Character
             {
                 RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived, true);
             }
-            PhotonNetwork.Destroy(this.gameObject);
+            PhotonNetwork.Destroy(this.gameObject.transform.parent.parent.gameObject);
         }
         
         private void GameOver()

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace Climbing
         {
         }
 
-        
+
         /// <summary>
         /// Checks if Player can Slide the Obstacle
         /// </summary>
@@ -63,7 +64,10 @@ namespace Climbing
                             controller.characterAnimation.animator.CrossFade("Running Slide", 0.05f);
                             dis = 4 / Vector3.Distance(startPos, targetPos);
                             controller.characterAnimation.animator.SetFloat("AnimSpeed", dis);
-                            controller.characterAnimation.switchCameras.SlideCam();
+                            if (controller.characterInput.isPlayerController && !controller.isNPC && controller.GetComponent<PhotonView>().IsMine)
+                            {
+                                controller.characterAnimation.switchCameras.SlideCam();
+                            }
                             controller.slideParticleEffect.SetActive(true);
                             startPos = controller.transform.position;
                             startRot = controller.transform.rotation;
@@ -95,8 +99,11 @@ namespace Climbing
 
                 if (vaultTime > 1)
                 {
-                    controller.characterAnimation.animator.SetFloat("AnimSpeed",1);
-                    controller.characterAnimation.switchCameras.FreeLookCam();
+                    controller.characterAnimation.animator.SetFloat("AnimSpeed", 1);
+                    if (controller.characterInput.isPlayerController && !controller.isNPC && controller.GetComponent<PhotonView>().IsMine)
+                    {
+                        controller.characterAnimation.switchCameras.FreeLookCam();
+                    }
                     controller.slideParticleEffect.SetActive(false);
                     controller.EnableController();
                 }

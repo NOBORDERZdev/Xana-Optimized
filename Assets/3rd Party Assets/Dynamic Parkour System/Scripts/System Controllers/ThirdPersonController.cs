@@ -31,7 +31,6 @@ namespace Climbing
     [RequireComponent(typeof(MovementCharacterController))]
     [RequireComponent(typeof(AnimationCharacterController))]
     [RequireComponent(typeof(DetectionCharacterController))]
-    [RequireComponent(typeof(CameraController))]
     [RequireComponent(typeof(VaultingController))]
 
     public class ThirdPersonController : MonoBehaviour/*Pun*/
@@ -56,6 +55,7 @@ namespace Climbing
         public CinemachineFreeLook runCamera;
         public CinemachineVirtualCamera sliderCamera;
 
+        public bool isNPC;
 
         [Header("Step Settings")]
         [Range(0, 10.0f)] public float stepHeight = 0.8f;
@@ -75,7 +75,7 @@ namespace Climbing
         {
             photonView = transform.parent.GetComponent<PhotonView>();
 
-            if (photonView.IsMine)
+            if (photonView.IsMine && !isNPC)
             {
                 characterInput = CanvasButtonsHandler.inst.RFMInputController;
                 CanvasButtonsHandler.inst.jumpAction += JumpAction;
@@ -135,10 +135,19 @@ namespace Climbing
             //Detect if Player is on Ground
             isGrounded = OnGround();
 
-            if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
+            if (!isNPC)
+            {
+                if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
+            }
+            else
+            {
+                characterInput.movement.y = 0;
+                characterMovement.SetVelocity(characterInput.movement);
+                return;
+            }
 
             //Get Input if controller and movement are not disabled
-            if (!dummy && allowMovement && photonView.IsMine)
+            if (!dummy && allowMovement)
             {
                 AddMovementInput(characterInput.movement);
 
@@ -160,7 +169,7 @@ namespace Climbing
             {
                 if (!RFM.Globals.player)
                 {
-                    if (photonView.IsMine)
+                    if (photonView.IsMine && !isNPC)
                     {
                         Debug.LogError("RFM RFM.Globals.player missing. Reassigning player");
                         RFM.Globals.player = gameObject;
