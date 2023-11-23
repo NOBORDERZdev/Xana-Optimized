@@ -175,7 +175,19 @@ namespace RFM.Character
         
         private void GameOver()
         {
-            AIRunnerCaught();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // Called on all non-master clients when the runner is caught.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
