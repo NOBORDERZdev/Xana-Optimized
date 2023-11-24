@@ -157,29 +157,35 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        if (defaultSelection!=0)
         {
-            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            defaultSelection=0;
+        
+            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            {
+                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            }
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+            if (UIManager.Instance != null)
+            {
+                CheckLoginOrNotForFooterButton();
+                UIManager.Instance.HomeWorldScreen.SetActive(false);
+                UIManager.Instance.HomePage.SetActive(true);
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                UIManager.Instance.Canvas.SetActive(true);
+            }
         }
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
-        if (UIManager.Instance != null)
-        {
-            CheckLoginOrNotForFooterButton();
-            UIManager.Instance.HomeWorldScreen.SetActive(false);
-            UIManager.Instance.HomePage.SetActive(true);
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
-            UIManager.Instance.Canvas.SetActive(true);
         }
-    }
     public void OnClickHomeWorldButton()
     {
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
-       // if (defaultSelection != 0)
+        if (defaultSelection != 1)
         {
+            defaultSelection=1;
             GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
