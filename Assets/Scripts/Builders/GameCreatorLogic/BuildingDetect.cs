@@ -28,7 +28,7 @@ public class BuildingDetect : MonoBehaviour
 
     [Header("Default Mats")]
     [SerializeField]
-    private Material defaultHairMat;
+    private Material[] defaultHairMat;
     [SerializeField]
     private Material defaultBodyMat;
     [SerializeField]
@@ -125,7 +125,7 @@ public class BuildingDetect : MonoBehaviour
         defaultBodyMat = playerBody.material;
         defaultPantsMat = playerPants.material;
         defaultShirtMat = playerShirt.material;
-        defaultHairMat = playerHair.material;
+        defaultHairMat = playerHair.sharedMaterials;
         defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
@@ -460,7 +460,13 @@ public class BuildingDetect : MonoBehaviour
     //Hologram Material Set
     void AvatarInvisibilityApply()
     {
-        playerHair.material = hologramMaterial;
+        //playerHair.material = hologramMaterial;
+        Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
+        for (int i = 0; i < hairMats.Length; i++)
+        {
+            hairMats[i] = hologramMaterial;
+        }
+        playerHair.sharedMaterials = hairMats;
         playerBody.material = hologramMaterial;
         playerShirt.material = hologramMaterial;
         playerPants.material = hologramMaterial;
@@ -482,7 +488,7 @@ public class BuildingDetect : MonoBehaviour
 
     void StopAvatarInvisibility()
     {
-        playerHair.material = defaultHairMat;
+        playerHair.sharedMaterials = defaultHairMat;
         playerBody.material = defaultBodyMat;
         playerShirt.material = defaultShirtMat;
         playerPants.material = defaultPantsMat;
