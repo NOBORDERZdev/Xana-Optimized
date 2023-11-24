@@ -119,6 +119,8 @@ public class ConstantsGod
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
     public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";  
 
+    public static string GETXANAOFFICIALWORLDBYID = "";
+
     #endregion
 
     #region SNS Managers    
