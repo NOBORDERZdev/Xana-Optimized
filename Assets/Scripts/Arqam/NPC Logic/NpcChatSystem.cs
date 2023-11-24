@@ -119,7 +119,7 @@ public class NpcChatSystem : MonoBehaviour
         string prefix = ip + "api/v2/text_from_usertext_en_35?user_id=";
         string targetData = "&target_id=";
         string messageData = "&msg=";
-        string postUrl = prefix + userId + targetData + id + messageData + msg;
+        string postUrl = prefix + id + targetData + userId + messageData + msg;
         Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
@@ -137,32 +137,35 @@ public class NpcChatSystem : MonoBehaviour
             else
                 responseFeed = feed.output_data.user_msg_en;
 
-            if (XanaChatSystem.instance) {
+            if (XanaChatSystem.instance)
+            {
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
-                Debug.Log("Communication Response(UserAI): " + responseFeed);
+                Debug.Log("Communication Response(UserAI): " + NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NpcBehaviourSelector>().npcName + responseFeed);
+                Debug.Log("Communication Response(UserAI): " + feed.output_data.user_msg_en);
+
+                if (NpcSpawner.npcSpawner)
+                    NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
             }
-            if (NpcSpawner.npcSpawner)
-                NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
-        }
-        else
-            Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
+            else
+                Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
 
-        tempResponseNum--;
-        if (tempResponseNum > 0)
-        {
-            if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
-                StartCoroutine(SetApiData());
-            else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
-                responseChecker = ResponseChecker.CallAfterIterationEnd;
+            tempResponseNum--;
+            if (tempResponseNum > 0)
+            {
+                if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
+                    StartCoroutine(SetApiData());
+                else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
+                    responseChecker = ResponseChecker.CallAfterIterationEnd;
+            }
+            else
+            {
+                counter = 0;
+                tempResponseNum = numOfResponseWantToShow;
+            }
+            yield return null;
         }
-        else
-        {
-            counter = 0;
-            tempResponseNum = numOfResponseWantToShow;
-        }
-        yield return null;
+
     }
-
 }
 
 

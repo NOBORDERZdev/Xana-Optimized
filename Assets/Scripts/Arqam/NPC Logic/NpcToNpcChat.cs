@@ -161,7 +161,7 @@ public class NpcToNpcChat : MonoBehaviour
         string prefix = ip + "api/v2/text_from_usertext_en_35?user_id=";
         string targetData = "&target_id=";
         string messageData = "&msg=";
-        string postUrl = prefix + npcAttributes[npcThatStartConversation].aiIds + targetData + id + messageData + msg;
+        string postUrl = prefix + id + targetData + npcAttributes[npcThatStartConversation].aiIds + messageData + msg;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + postUrl + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
