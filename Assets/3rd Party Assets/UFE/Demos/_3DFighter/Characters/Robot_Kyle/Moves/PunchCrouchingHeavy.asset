@@ -2931,12 +2931,14 @@ MonoBehaviour:
   fps: 60
   ignoreGravity: 0
   ignoreFriction: 0
-  cancelMoveWheLanding: 0
+  cancelMoveWhenLanding: 0
+  landingMoveLink: {fileID: 0}
   forceMirrorLeft: 0
   forceMirrorRight: 0
   invertRotationLeft: 0
   invertRotationRight: 0
   autoCorrectRotation: 0
+  allowSideSwitch: 0
   frameWindowRotation: 0
   cooldown: 0
   cooldownFrames: 0
@@ -2946,8 +2948,8 @@ MonoBehaviour:
   animSpeedKeyFrame: []
   totalFrames: 21
   startUpFrames: 9
-  activeFrames: 3
-  recoveryFrames: 9
+  activeFrames: 4
+  recoveryFrames: 8
   applyRootMotion: 0
   lockXMotion: 0
   lockYMotion: 0
@@ -3012,7 +3014,9 @@ MonoBehaviour:
       movingBack: 1
       standBy: 1
       blocking: 0
+      blockStunned: 0
       stunned: 0
+      resetStunValue: 0
     basicMovesToggle: 0
     statesToggle: 1
   moveClassification:
@@ -3071,19 +3075,20 @@ MonoBehaviour:
     _gaugeGainOnHit:
       _serializedValue: 21474836480
     _gaugeGainOnBlock:
-      _serializedValue: 25769803776
+      _serializedValue: 10737418240
     _opGaugeGainOnBlock:
-      _serializedValue: 8589934592
+      _serializedValue: 0
     _opGaugeGainOnParry:
-      _serializedValue: 42949672960
+      _serializedValue: 0
     _opGaugeGainOnHit:
-      _serializedValue: 4294967296
+      _serializedValue: 0
     DCMove: {fileID: 0}
     DCStance: 0
     editorToggle: 0
   sortOrder: []
   particleEffects: []
   appliedForces: []
+  opAppliedForces: []
   slowMoEffects: []
   bodyPartVisibilityChanges: []
   opponentOverride: []
@@ -3135,6 +3140,7 @@ MonoBehaviour:
       _animationSpeed:
         _serializedValue: 429496736
       autoHitStop: 1
+      sticky: 0
       _hitStop:
         _serializedValue: 429496736
       mirrorOn2PSide: 0
@@ -3156,6 +3162,7 @@ MonoBehaviour:
       _animationSpeed:
         _serializedValue: 429496729
       autoHitStop: 1
+      sticky: 0
       _hitStop:
         _serializedValue: 429496729
       mirrorOn2PSide: 0
@@ -3191,8 +3198,10 @@ MonoBehaviour:
     damageType: 1
     _damageOnHit:
       _serializedValue: 257698037760
-    _damageOnBlock:
+    _minDamageOnHit:
       _serializedValue: 0
+    _damageOnBlock:
+      _serializedValue: 128849018880
     doesntKill: 0
     hitType: 0
     resetPreviousHorizontalPush: 1
@@ -3302,8 +3311,8 @@ MonoBehaviour:
           _serializedValue: 0
         z:
           _serializedValue: 0
-    hitToggle: 1
-    damageOptionsToggle: 0
+    hitToggle: 0
+    damageOptionsToggle: 1
     hitStunOptionsToggle: 0
     forceOptionsToggle: 1
     opponentForceToggle: 1
@@ -3571,12 +3580,14 @@ MonoBehaviour:
       z:
         _serializedValue: -771430656
   lockOnTargets: []
+  switchCharacterOptions: []
   invincibleBodyParts: []
   stateOverride: []
   armorOptions:
     activeFramesBegin: 0
     activeFramesEnds: 0
     overrideHitEffects: 0
+    blockHits: 0
     hitEffects:
       hitParticle: {fileID: 0}
       killTime: 0
@@ -3587,6 +3598,7 @@ MonoBehaviour:
       _animationSpeed:
         _serializedValue: 429496736
       autoHitStop: 1
+      sticky: 0
       _hitStop:
         _serializedValue: 429496736
       mirrorOn2PSide: 0
@@ -3601,3 +3613,4 @@ MonoBehaviour:
     damageAbsorption: 0
     nonAffectedBodyParts: 
   projectiles: []
+  rotationPreview: {x: 0, y: 90, z: 0}
