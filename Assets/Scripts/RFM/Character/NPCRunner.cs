@@ -161,16 +161,33 @@ namespace RFM.Character
             StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            if (/*PhotonNetwork.IsMasterClient*/true)
-            {
-                RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived, true);
-            }
+            
+            RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
+            
+            gameObject.SetActive(false);
+            Invoke(nameof(DestroyRunner), 2f);
+        }
+
+        private void DestroyRunner()
+        {
             PhotonNetwork.Destroy(this.gameObject);
         }
         
         private void GameOver()
         {
-            AIRunnerCaught();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            // Called on all non-master clients when the runner is caught.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

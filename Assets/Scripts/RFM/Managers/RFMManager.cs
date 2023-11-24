@@ -28,8 +28,8 @@ namespace RFM.Managers
 
         #region Serialized Fields
         public bool isPlayerHunter;
-        public Transform lobbySpawnPoint;
-        public GameObject playerObject;
+        //public Transform lobbySpawnPoint;
+        //public GameObject playerObject;
         [SerializeField] public Transform playersSpawnArea;
         [SerializeField] private GameObject huntersCage;
         [SerializeField] private FollowNPC npcCameraPrefab;
@@ -38,7 +38,7 @@ namespace RFM.Managers
         [SerializeField] private TextMeshProUGUI countDownText;
         [SerializeField] private TextMeshProUGUI gameplayTimeText, statusTMP;
         [SerializeField] private GameObject statusBG;
-        [SerializeField] private GameObject gameOverPanel;
+        //[SerializeField] private GameObject gameOverPanel;
 
         //MM effects
         [SerializeField] private MMScaleShaker timerTextScaleShaker;
@@ -97,6 +97,8 @@ namespace RFM.Managers
 
         private IEnumerator Start()
         {
+            RFMUIManager.Instance.ShowXanaStonePopup();
+
             Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
 
@@ -109,9 +111,19 @@ namespace RFM.Managers
             _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             RFMButtonsLayoutManager.instance.LoadLayout();
-            gameOverPanel.SetActive(false);
+            //gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
+            StartMatchMaking();
+
+            //this is to turn post processing on
+            var cameraData = Camera.main.GetUniversalAdditionalCameraData();
+            cameraData.renderPostProcessing = true;
+        }
+
+        public void StartMatchMaking() // Need to be called from UI if XanaStone is required to play
+        {
+            gameplayTimeText.transform.parent.gameObject.SetActive(true);
             Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
@@ -130,10 +142,6 @@ namespace RFM.Managers
             Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
 
             InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
-
-            //this is to turn post processing on
-            var cameraData = Camera.main.GetUniversalAdditionalCameraData();
-            cameraData.renderPostProcessing = true;
 
             statusTMP.text = "Waiting for other players to join:";
             statusBG.SetActive(true);
@@ -453,7 +461,7 @@ namespace RFM.Managers
             statusTMP.text = "Time's Up!";
             statusBG.SetActive(false);
 
-            gameOverPanel.SetActive(true);
+            //gameOverPanel.SetActive(true);
 
             if (_npcCamera != null)
             {
@@ -674,9 +682,9 @@ namespace RFM.Managers
     }
 }
 
-public class RFMPlayerClass
-{
-    public string playerName;
-    public bool isHunter;
-    public bool isRunner;
-}
+//public class RFMPlayerClass
+//{
+//    public string playerName;
+//    public bool isHunter;
+//    public bool isRunner;
+//}
