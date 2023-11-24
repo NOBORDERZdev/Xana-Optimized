@@ -623,7 +623,7 @@ public class DefaultBattleGUI : BattleGUI
 					}
 				}*/
 
-                Texture2D pt1 = NativeGallery.LoadImageAtPath(Path.Combine(Application.persistentDataPath + "player1.png"));
+                Texture2D pt1 = NativeGallery.LoadImageAtPath(Path.Combine((Application.persistentDataPath + "/FightingModule"), "player1.png"));
                 this.player1GUI.portrait.sprite = Sprite.Create(pt1, new Rect(0, 0, pt1.width, pt1.height), Vector2.zero, 100, 0, SpriteMeshType.FullRect, Vector4.zero, false);
 
                 /*this.player1GUI.portrait.sprite = Sprite.Create(
@@ -662,7 +662,7 @@ public class DefaultBattleGUI : BattleGUI
 						setPlayerIcon(FightingGameManager.instance.player2Data.NFT, this.player2GUI.portrait);
 					}
 				}*/
-                Texture2D pt2 = NativeGallery.LoadImageAtPath(Path.Combine(Application.persistentDataPath + "player2.png"));
+                Texture2D pt2 = NativeGallery.LoadImageAtPath(Path.Combine((Application.persistentDataPath + "/FightingModule"), "player2.png"));
                 this.player2GUI.portrait.sprite = Sprite.Create(pt2, new Rect(0, 0, pt2.width, pt2.height), Vector2.zero, 100, 0, SpriteMeshType.FullRect, Vector4.zero, false);
 
                 /*this.player2GUI.portrait.sprite = Sprite.Create(
