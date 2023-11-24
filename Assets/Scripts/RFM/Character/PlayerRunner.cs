@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -17,12 +18,16 @@ namespace RFM.Character
         {
             EventsManager.onGameStart += OnGameStarted;
             EventsManager.onGameTimeup += OnGameOver;
+
+            PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
         
         private void OnDisable()
         {
             EventsManager.onGameStart -= OnGameStarted;
             EventsManager.onGameTimeup -= OnGameOver;
+
+            PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
         private void OnGameStarted()
@@ -80,15 +85,24 @@ namespace RFM.Character
             }
         }
 
-        public void PlayerRunnerCaught(NPCHunter npcHunter)
+        
+        public void PlayerRunnerCaught(/*NPCHunter*//*Transform npcHunter*/)
         {
             StopCoroutine(TimeSurvived());
             StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
+            var randomHunter = FindObjectOfType<RFM.Character.NPCHunter>();
+            Transform cameraTarget = transform;
+            
+            if (randomHunter != null)
+            {
+                cameraTarget = randomHunter.CameraTarget;
+            }
+
             PhotonNetwork.Destroy(transform.root.gameObject);
-            EventsManager.PlayerCaught(npcHunter);
+            EventsManager.PlayerCaught(cameraTarget);
         }
         
         public void PlayerRunnerCaughtByPlayer(PlayerHunter npcHunter)
@@ -111,6 +125,27 @@ namespace RFM.Character
             {
                 this.Money = (int)stream.ReceiveNext();
                 this.timeSurvived = (float)stream.ReceiveNext();
+            }
+        }
+
+        private void ReceivePhotonEvents(EventData photonEvent)
+        {
+            switch (photonEvent.Code)
+            {
+                case PhotonEventCodes.PlayerCaught:
+                    {
+                        // get view ID and NPCHunter from parameters of the event
+                        // call PlayerRunnerCaught() method on the NPCHunter
+                        object[] data = (object[])photonEvent.CustomData;
+                        int viewID = (int)data[0];
+                        //Transform cameraTarget = (Transform)data[1];
+
+                        if (viewID == GetComponent<PhotonView>().ViewID)
+                        {
+                            PlayerRunnerCaught(/*cameraTarget*/);
+                        }
+                        break;
+                    }
             }
         }
     }

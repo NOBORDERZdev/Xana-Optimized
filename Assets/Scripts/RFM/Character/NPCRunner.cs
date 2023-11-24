@@ -163,22 +163,20 @@ namespace RFM.Character
             StopCoroutine(TimeSurvived());
             
             RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
-            
-            gameObject.SetActive(false);
-            Invoke(nameof(DestroyRunner), 2f);
+
+            PhotonNetwork.Destroy(this.gameObject);
+            //gameObject.SetActive(false);
+            //Invoke(nameof(DestroyRunner), 2f);
         }
 
-        private void DestroyRunner()
-        {
-            PhotonNetwork.Destroy(this.gameObject);
-        }
+        //private void DestroyRunner()
+        //{
+        //    PhotonNetwork.Destroy(this.gameObject);
+        //}
         
         private void GameOver()
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                AIRunnerCaught();
-            }
+            AIRunnerCaught();
         }
 
         private void OnDestroy()

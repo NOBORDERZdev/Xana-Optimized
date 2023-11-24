@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
+using static StoreManager;
 using Random = UnityEngine.Random;
 
 namespace RFM.Character
@@ -45,7 +48,10 @@ namespace RFM.Character
 
         private void OnTakePositionTimeStart()
         {
-            GetAllRunners();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GetAllRunners();
+            }
         }
 
         private void OnDisable()
@@ -58,7 +64,10 @@ namespace RFM.Character
         {
             _maxSpeed = _navMeshAgent.speed;
 
-            InvokeRepeating(nameof(SearchForTarget), 1, 1);
+            if (PhotonNetwork.IsMasterClient) // Only the master client controls the hunter. Other clients just sync the movement
+            {
+                InvokeRepeating(nameof(SearchForTarget), 1, 1);
+            }
         }
 
         private void GetAllRunners()
@@ -109,12 +118,17 @@ namespace RFM.Character
 
         private void SyncMovement()
         {
-            if (Globals.gameState != Globals.GameState.Gameplay ||
-                !_hasTarget ||
-                _target == null)
+            if (Globals.gameState != Globals.GameState.Gameplay)
+                //||
+                //!_hasTarget ||
+                //_target == null)
             {
                 _navMeshAgent.isStopped = true;
                 return;
+            }
+            else
+            {
+                _navMeshAgent.isStopped = false;
             }
 
             _navMeshAgent.SetDestination(_targetPosition);
@@ -148,6 +162,7 @@ namespace RFM.Character
 
 
             if (RFM.Globals.DevMode) return;
+            if (!PhotonNetwork.IsMasterClient) return;
 
 
             // Catch player if in range of a sphere of radius = catchRadius
@@ -166,7 +181,16 @@ namespace RFM.Character
                     _players.Remove(_inRangePlayer);
                     _hasTarget = false;
                     killVFX.SetActive(true);
-                    _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
+
+
+                    // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
+
+                    var id = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught,
+                        new object[] { id },
+                        new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                        SendOptions.SendReliable);
                 }
             }
         }
@@ -209,7 +233,15 @@ namespace RFM.Character
                 _hasTarget = false;
                 killVFX.SetActive(true);
 
-                other.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(this);
+                // Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
+                // The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
+                // Send photonview ID of other in parameters.
+                var id = other.GetComponent<PhotonView>().ViewID;
+
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught, 
+                    new object[] { id }, 
+                    new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
+                    SendOptions.SendReliable);
             }
         }
 

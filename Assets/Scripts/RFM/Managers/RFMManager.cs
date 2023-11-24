@@ -97,7 +97,7 @@ namespace RFM.Managers
 
         private IEnumerator Start()
         {
-            RFMUIManager.Instance.ShowXanaStonePopup();
+            // RFMUIManager.Instance.ShowXanaStonePopup();
 
             Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
@@ -110,7 +110,7 @@ namespace RFM.Managers
             Globals.gameState = Globals.GameState.InLobby;
             _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
-            RFMButtonsLayoutManager.instance.LoadLayout();
+            // RFMButtonsLayoutManager.instance.LoadLayout();
             //gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
@@ -473,7 +473,7 @@ namespace RFM.Managers
 
         }
 
-        private void PlayerCaught(RFM.Character.NPCHunter catcher)
+        private void PlayerCaught(/*RFM.Character.NPCHunter*/Transform catcher)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -487,7 +487,7 @@ namespace RFM.Managers
             {
                 _npcCamera = Instantiate(npcCameraPrefab);
             }
-            _npcCamera.Init(catcher.CameraTarget);
+            _npcCamera.Init(catcher/*.CameraTarget*/);
         }
 
 
