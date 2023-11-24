@@ -7138,6 +7138,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1549620715}
     m_Modifications:
+    - target: {fileID: 277648596435297029, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1466594453660654582, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -7323,6 +7327,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1558925941502505680, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
   m_PrefabInstance: {fileID: 73875574}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &73875579 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 442439587926390477, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+  m_PrefabInstance: {fileID: 73875574}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &83870516
 GameObject:
   m_ObjectHideFlags: 0
@@ -27810,6 +27825,7 @@ GameObject:
   - component: {fileID: 1226162431}
   - component: {fileID: 1226162430}
   - component: {fileID: 1226162434}
+  - component: {fileID: 1226162435}
   m_Layer: 5
   m_Name: LobbyWorldItemView
   m_TagString: Untagged
@@ -27984,6 +28000,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0f538a7db2b48542a7e075c7282099d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1226162435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226162428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e48efd7b1807b498651d10fbe74efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XLDynamicTextBanner: {fileID: 1753683459}
+  XLDynamicTextThumbnail: {fileID: 73875579}
 --- !u!1 &1231771637
 GameObject:
   m_ObjectHideFlags: 0
@@ -38763,7 +38793,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1753683455}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
   m_Name: 
