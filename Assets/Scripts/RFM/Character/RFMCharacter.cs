@@ -8,7 +8,7 @@ public class RFMCharacter : MonoBehaviour
 {
     public PhotonView photonView;
     public PhotonVoiceView voiceView;
-    public RFMPlayerClass RFMPlayer;
+    //public RFMPlayerClass RFMPlayer;
     public bool isHunter;
     //public static Action gameStartAction;
 

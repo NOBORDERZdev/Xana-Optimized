@@ -845,10 +845,13 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
         {
-            controllerCamera.SetActive(true);
-            if (controllerCharacterRenderCamera != null)
+            if (!WorldItemView.m_EnvName.Contains("RFM"))
             {
-                controllerCharacterRenderCamera.SetActive(true);
+                controllerCamera.SetActive(true);
+                if (controllerCharacterRenderCamera != null)
+                {
+                    controllerCharacterRenderCamera.SetActive(true);
+                }
             }
         }
 
