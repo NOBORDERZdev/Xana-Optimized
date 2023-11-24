@@ -19,13 +19,6 @@ namespace RFM.Managers
 {
     public class RFMManager : MonoBehaviourPunCallbacks
     {
-        #region Photon Events Codes
-
-        public const byte ResetPositionEventCode = 6;
-        public const byte StartRFMEventCode = 7;
-
-        #endregion
-
         #region Serialized Fields
         public bool isPlayerHunter;
         //public Transform lobbySpawnPoint;
@@ -130,7 +123,7 @@ namespace RFM.Managers
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        PhotonNetwork.RaiseEvent(StartRFMEventCode, null,
+                        PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
                             new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                     }
                     CancelInvoke(nameof(CheckForGameStartCondition));
@@ -171,7 +164,7 @@ namespace RFM.Managers
                 if (Globals.gameState != Globals.GameState.InLobby) return;
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PhotonNetwork.RaiseEvent(StartRFMEventCode, null,
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
             }
@@ -289,7 +282,7 @@ namespace RFM.Managers
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.RaiseEvent(ResetPositionEventCode, null,
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.ResetPositionEventCode, null,
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
@@ -514,12 +507,12 @@ namespace RFM.Managers
         {
             switch (photonEvent.Code)
             {
-                case ResetPositionEventCode:
+                case PhotonEventCodes.ResetPositionEventCode:
                     {
                         ResetPosition();
                         break;
                     }
-                case StartRFMEventCode:
+                case PhotonEventCodes.StartRFMEventCode:
                     {
                         StartCoroutine(StartRFM());
                         break;
