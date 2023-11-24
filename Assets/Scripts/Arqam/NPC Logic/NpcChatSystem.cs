@@ -140,8 +140,7 @@ public class NpcChatSystem : MonoBehaviour
             if (XanaChatSystem.instance)
             {
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
-                Debug.Log("Communication Response(UserAI): " + NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NpcBehaviourSelector>().npcName + responseFeed);
-                Debug.Log("Communication Response(UserAI): " + feed.output_data.user_msg_en);
+                Debug.Log("Communication Response(UserAI): " + responseFeed);
 
                 if (NpcSpawner.npcSpawner)
                     NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
