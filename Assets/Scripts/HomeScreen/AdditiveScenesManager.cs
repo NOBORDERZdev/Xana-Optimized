@@ -12,16 +12,17 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     public GameObject SNSMessage;
     public BottomTabManager homeBottomTab;
-    private void Awake()
-    {
-        sceneDelay = .5f;
-        StartCoroutine(AddDelayStore(sceneDelay/3));
-    }
+    
     private void Start()
     {
-        StartCoroutine(AddDelay(sceneDelay));
-        StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
-        StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
+        if(!XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            sceneDelay = .5f;
+            StartCoroutine(AddDelayStore(sceneDelay / 3));
+            StartCoroutine(AddDelay(sceneDelay));
+            StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
+            StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
+        }
     }
     IEnumerator AddDelayStore(float delay)
     {

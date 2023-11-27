@@ -63,22 +63,22 @@ MonoBehaviour:
   - aiNames: Phoenix
     aiIds: 7901
     actualAiIds: 37189
-  - aiNames: Axel
+  - aiNames: "\u30CE\u30D6"
     aiIds: 7902
     actualAiIds: 37190
-  - aiNames: Wolf
+  - aiNames: "\u30B5\u30E4"
     aiIds: 7903
     actualAiIds: 37191
-  - aiNames: Luna
+  - aiNames: "\u30DF\u30AA"
     aiIds: 7904
     actualAiIds: 37192
-  - aiNames: Nova
+  - aiNames: "\u30B7\u30F3"
     aiIds: 7905
     actualAiIds: 37193
-  - aiNames: Ember
+  - aiNames: "\u30A2\u30AD"
     aiIds: 7906
     actualAiIds: 37194
-  - aiNames: Raven
+  - aiNames: "\u30EA\u30E7\u30A6"
     aiIds: 7907
     actualAiIds: 37195
   - aiNames: Scarlett
@@ -93,6 +93,16 @@ MonoBehaviour:
   - aiNames: Willow
     aiIds: 7911
     actualAiIds: 37199
+  npcDB: []
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 
 --- !u!114 &795303163645620554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +115,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d0bd48adc70866438d856d23205278e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feed:
+    response_jp: 
+    response_en: 
+    emotion: 
 --- !u!114 &-4114564411297842832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,10 +135,10 @@ MonoBehaviour:
   - aiNames: Mason
     aiIds: 8011
     actualAiIds: 37525
-  - aiNames: Ethan
+  - aiNames: "\u30E6\u30A6\u30B4"
     aiIds: 8012
     actualAiIds: 37526
-  - aiNames: Olivia
+  - aiNames: "\u30A2\u30E6"
     aiIds: 8013
     actualAiIds: 37527
   - aiNames: Mia
@@ -133,3 +147,16 @@ MonoBehaviour:
   - aiNames: Jolly
     aiIds: 8015
     actualAiIds: 37529
+  responseData:
+    response_jp: 
+    response_en: 
+    emotion: 
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 

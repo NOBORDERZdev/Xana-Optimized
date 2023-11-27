@@ -26,10 +26,6 @@ public class XanaLobbyManager : MonoBehaviour
     Texture2D _image;
     MediaType _Type;
 
-    [SerializeField]
-    List<GameObject> StaticObjects;
-    [SerializeField]
-    List<GameObject> DynamicObjects;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,30 +36,11 @@ public class XanaLobbyManager : MonoBehaviour
         {
             Instance = this;
         }
-        EnableDisableObjects();
     }
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-    void EnableDisableObjects()
-    {
-        if (APIBaseUrlChange.instance.IsXanaLive)
-        {
-            foreach (GameObject item in StaticObjects)
-            {
-                item.SetActive(true);
-            }
-        }
-        else
-        {
-            foreach (GameObject item in DynamicObjects)
-            {
-                item.SetActive(true);
-            }
-            InitXanaLobbyWorlds();
-        }
+        InitXanaLobbyWorlds();
     }
     // Update is called once per frame
     void Update()

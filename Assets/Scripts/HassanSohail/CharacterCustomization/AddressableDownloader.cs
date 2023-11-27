@@ -37,6 +37,7 @@ public class AddressableDownloader : MonoBehaviour
         if (!isDownloading)
         {
             isDownloading = true;
+            XanaConstants.isAddressableCatalogDownload = true;
 #if UNITY_EDITOR
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
@@ -44,9 +45,9 @@ public class AddressableDownloader : MonoBehaviour
             AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath, true);
             DownloadingCatalog.Completed += OnCatalogDownload;
 #else
-  BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
-          AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath,true);
-          DownloadingCatalog.Completed += OnCatalogDownload;
+              BuildScriptableObject buildScriptableObject = Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+                      AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(buildScriptableObject.addressableCatalogFilePath,true);
+                      DownloadingCatalog.Completed += OnCatalogDownload;
 #endif
         }
     }
@@ -355,7 +356,7 @@ public class AddressableDownloader : MonoBehaviour
                         GameManager.Instance.isStoreAssetDownloading = false;
                         yield break;
                     }
-                    
+
                 }
             }
         }
