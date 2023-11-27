@@ -77,7 +77,7 @@ public class WorldManager : MonoBehaviour
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 5);
+        Invoke(nameof(LoadJjworld), 0);
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {

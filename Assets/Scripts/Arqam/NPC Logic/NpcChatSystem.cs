@@ -4,7 +4,6 @@ using System;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-
 public class NpcChatSystem : MonoBehaviour
 {
     public enum ResponseChecker { CallAfterIterationEnd, InstantlyCall };
@@ -29,15 +28,32 @@ public class NpcChatSystem : MonoBehaviour
     private int numOfResponseWantToShow = 5;
     private int counter = 0;
     private int tempResponseNum = 0;
-
+    private const int userId = 0;
     private Queue<string> playerMessages = new Queue<string>();
 
-    private class FeedData
+    [System.Serializable]
+    public class FeedData
     {
-        public int id;
-        public string response;
+        [Newtonsoft.Json.JsonProperty("in")]
+        public InputData input_data;
+        [Newtonsoft.Json.JsonProperty("out")]
+        public OutputData output_data;
     }
-    private FeedData feed;
+    [System.Serializable]
+    public class InputData
+    {
+        public int target_npc_id;
+        public string target_npc_msg;
+    }
+    [System.Serializable]
+    public class OutputData
+    {
+        public int user_id;
+        public string user_msg_jp;
+        public string user_msg_en;
+        public string emotion;
+    }
+    public FeedData feed;
 
     private void Awake()
     {
@@ -83,66 +99,72 @@ public class NpcChatSystem : MonoBehaviour
     }
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.3f));
         if (counter is 0 && playerMessages.Count > 0)
             msg = playerMessages.Dequeue();
 
         string ip = "";
-        string prefix = "";
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].aiIds;
-            ip = "http://182.70.242.10:8032/";
-            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
-            //prefix = "http://182.70.242.10:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://182.70.242.10:8034/";
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].actualAiIds;
-            ip = "http://15.152.13.112:8032/";
-            prefix = ip + "api/v1/text_from_usertext_en_35?id=";
-            //prefix = "http://15.152.13.112:8032/api/v1/text_from_prompt_en?msg=";
+            ip = "http://15.152.55.82:8054/";
         }
         counter++;
 
-        //string url = "&id=";
-        string url = "&msg=";
-        //string postUrl = prefix + msg + url + id;
-        string postUrl = prefix + id + url + msg;
+        string prefix = ip + "api/v2/text_from_usertext_en_35?user_id=";
+        string targetData = "&target_id=";
+        string messageData = "&msg=";
+        string postUrl = prefix + id + targetData + userId + messageData + msg;
         Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
+
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
+            InputData inputD = feed.input_data;
+            OutputData outputD = feed.output_data;
+
+            string responseFeed = "";
+            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+                responseFeed = feed.output_data.user_msg_jp;
+            else
+                responseFeed = feed.output_data.user_msg_en;
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.UserNpc, id.ToString());
-            Debug.Log("Communication Response(UserAI): " + feed.response);
+            {
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
+                Debug.Log("Communication Response(UserAI): " + responseFeed);
 
-            if (NpcSpawner.npcSpawner)
-                NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(feed.response);
-        }
-        else
-            Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
+                if (NpcSpawner.npcSpawner)
+                    NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
+            }
+            else
+                Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
 
-        tempResponseNum--;
-        if (tempResponseNum > 0)
-        {
-            if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
-                StartCoroutine(SetApiData());
-            else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
-                responseChecker = ResponseChecker.CallAfterIterationEnd;
+            tempResponseNum--;
+            if (tempResponseNum > 0)
+            {
+                if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
+                    StartCoroutine(SetApiData());
+                else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
+                    responseChecker = ResponseChecker.CallAfterIterationEnd;
+            }
+            else
+            {
+                counter = 0;
+                tempResponseNum = numOfResponseWantToShow;
+            }
+            yield return null;
         }
-        else
-        {
-            counter = 0;
-            tempResponseNum = numOfResponseWantToShow;
-        }
-        yield return null;
+
     }
-
 }
 
 

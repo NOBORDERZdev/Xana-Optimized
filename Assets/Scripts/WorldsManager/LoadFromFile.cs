@@ -282,9 +282,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
                 //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
                 //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
-                YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
+                //YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
+                //YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
 
 
 
@@ -396,7 +396,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-        CheckAgain:
+            CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -488,7 +488,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         else
         {
-            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            if (JjMusuem.Instance)
+                JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            else
+            {
+                if (!XanaConstants.xanaConstants.isCameraMan)
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            }
         }
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
 
@@ -558,6 +564,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
         }
 
+        XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
+        BuilderEventManager.AfterPlayerInstantiated?.Invoke();
+
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
@@ -590,7 +599,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-    CheckAgain:
+        CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -660,7 +669,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-    End:
+        End:
         //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -680,6 +689,24 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         updatedSpawnpoint.localPosition = spawnPoint;
         StartCoroutine(VoidCalculation());
         LightCullingScene();
+
+
+        if (!XanaConstants.xanaConstants.isCameraMan)
+        {
+            LoadingHandler.Instance.HideLoading();
+            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        {
+            if (!XanaConstants.xanaConstants.isCameraMan)
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        }
+        else
+        {
+            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        }
+        XanaConstants.xanaConstants.JjWorldSceneChange = false;
 
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);
@@ -880,7 +907,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             spawnPoint = newobject.transform.position;
         }
-        BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.position;
+        BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
         if (tempSpawnPoint)
         {
             if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -961,9 +988,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-    CheckAgain:
+        CheckAgain:
         Transform temp = null;
-        temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+            temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        else
+            temp = new GameObject("SpawnPoint").transform;
         if (temp)
         {
             spawnPoint = temp.position;
@@ -991,6 +1021,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (BuilderAssetDownloader.isPostLoading)
         {
+            Debug.LogError("here resetting player .... ");
             if (BuilderData.spawnPoint.Count == 1)
             {
                 spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
@@ -1021,7 +1052,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        //print("~~~~~~ " + temp);
+        //Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (XanaConstants.xanaConstants.isBuilderScene)
