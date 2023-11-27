@@ -7,13 +7,14 @@ using System;
 public class NpcFreeSpeech : MonoBehaviour
 {
     private NpcChatSystem npcChatSystem;
-    private class FeedData
+    [Serializable]
+    public class FeedData
     {
-        public string user_id;
-        public string prompt;
-        public string response;
+        public string response_jp;
+        public string response_en;
+        public string emotion;
     }
-    private FeedData feed;
+    public FeedData feed;
 
 
     private void Awake()
@@ -23,31 +24,29 @@ public class NpcFreeSpeech : MonoBehaviour
 
     private void Start()
     {
-         StartCoroutine(SetApiData());
+        StartCoroutine(SetApiData());
     }
 
     IEnumerator SetApiData()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.3f));  // 3f, 7f
 
-        string prefix = "";
         string ip = "";
         int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
-
+  
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
-            ip = "http://182.70.242.10:8032/";
-            prefix = ip + "api/v1/text_from_userid_en_35?id=";
+            ip = "http://182.70.242.10:8034/";
             id = npcChatSystem.npcAttributes[temp].aiIds;
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
             ip = "http://15.152.13.112:8032/";
-            prefix = ip + "api/v1/text_from_userid_en_35?id=";
             id = npcChatSystem.npcAttributes[temp].actualAiIds;
         }
 
+        string prefix = ip + "api/v2/text_from_userid_en_35?id=";
         string url = prefix + id;
         Debug.Log("<color=red> Communication URL(FreeAI): " + url + "</color>");
 
@@ -58,14 +57,20 @@ public class NpcFreeSpeech : MonoBehaviour
         {
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
+            string responseFeed = "";
+            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+                responseFeed = feed.response_jp;
+            else
+                responseFeed = feed.response_en;
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, feed.response, CallBy.FreeSpeechNpc, id.ToString());
-            Debug.Log("Communication Response(FreeAI): " + feed.response);
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
+
+            Debug.Log("Communication Response(FreeAI): " + responseFeed);
         }
         else
             Debug.LogError("Communication API Error(FreeAI): " + gameObject.name + request.error);
 
-        yield return new WaitForSeconds(UnityEngine.Random.Range(3f, 7f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.3f));   // 3f, 7f
         StartCoroutine(SetApiData());
     }
 

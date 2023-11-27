@@ -15,6 +15,8 @@ public class BottomTabManager : MonoBehaviour
     public Color unSellectedColor = new Color();
     public Color intractableFalseColor = new Color();
     public Color DisableButtonColor = new Color();
+    public Color ActiveButtonColor = new Color();
+
     public int defaultSelection = 0;
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
@@ -69,7 +71,7 @@ public class BottomTabManager : MonoBehaviour
                 defaultSelection = index;
                 if (i == 2)
                 {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = ActiveButtonColor;
                 }
             }
             else
@@ -103,9 +105,9 @@ public class BottomTabManager : MonoBehaviour
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
-            allButtonIcon[2].transform.GetComponent<Image>().color = Color.white;
-            allButtonIcon[3].transform.GetComponent<Image>().color = Color.white;
-            allButtonIcon[4].transform.GetComponent<Image>().color = Color.white;
+            allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
+            allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
+            allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
             // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
         if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
@@ -131,7 +133,7 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                allButtonIcon[i].color = Color.white;
+                allButtonIcon[i].color = ActiveButtonColor;
                 if (i == 2)
                 {
                     allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
@@ -155,29 +157,35 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        if (defaultSelection!=0)
         {
-            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            defaultSelection=0;
+        
+            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            {
+                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            }
+            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+            if (UIManager.Instance != null)
+            {
+                CheckLoginOrNotForFooterButton();
+                UIManager.Instance.HomeWorldScreen.SetActive(false);
+                UIManager.Instance.HomePage.SetActive(true);
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                UIManager.Instance.Canvas.SetActive(true);
+            }
         }
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
-        if (UIManager.Instance != null)
-        {
-            CheckLoginOrNotForFooterButton();
-            UIManager.Instance.HomeWorldScreen.SetActive(false);
-            UIManager.Instance.HomePage.SetActive(true);
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1; // hiding home footer
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
-            UIManager.Instance.Canvas.SetActive(true);
         }
-    }
     public void OnClickHomeWorldButton()
     {
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
-       // if (defaultSelection != 0)
+        if (defaultSelection != 1)
         {
+            defaultSelection=1;
             GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)

@@ -15,6 +15,7 @@ public class PlayerPortal : MonoBehaviour
     public enum PortalType { None, Enter, Exit, Teleport }
     public PortalType currentPortal = PortalType.None;
     public JJMuseumInfoManager ref_JJMuseumInfoManager;
+    public string scriptObjectName;
     public float cam_XValue = -50f;
     #endregion
     #region PrivateVar
@@ -31,7 +32,24 @@ public class PlayerPortal : MonoBehaviour
     private void Start()
     {
         referrencesForDynamicMuseum = ReferrencesForDynamicMuseum.instance;
+        FindScriptAttchedObject();
        // player = referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>();
+    }
+
+    void FindScriptAttchedObject()
+    {
+        GameObject assetsParent = GameObject.Find("Assets");
+        if(assetsParent!=null)
+        {
+            for(int i = 0;i<assetsParent.transform.childCount;i++)
+            {
+                if(assetsParent.transform.GetChild(i).name == scriptObjectName)
+                {
+                    ref_JJMuseumInfoManager = assetsParent.transform.GetChild(i).GetComponent<JJMuseumInfoManager>();
+                    break;
+                }
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
