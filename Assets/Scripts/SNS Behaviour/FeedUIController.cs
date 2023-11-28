@@ -178,7 +178,7 @@ public class FeedUIController : MonoBehaviour
 
     [Space]
     [Header("Add Friends")]
-    [SerializeField] GameObject AddFriendPanel;
+    [SerializeField] public GameObject AddFriendPanel;
     [SerializeField] GameObject AddFriendSerachBar;
 
     private void Awake()
