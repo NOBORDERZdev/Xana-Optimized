@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.5921569, g: 0.75686276, b: 0.9843137, a: 1}
-  m_AmbientEquatorColor: {r: 0.972549, g: 0.6666667, b: 0.39215687, a: 1}
+  m_AmbientSkyColor: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
+  m_AmbientEquatorColor: {r: 1, g: 0.94509804, b: 0.8901961, a: 1}
   m_AmbientGroundColor: {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 0}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 3e4820149fe9c564b9e08221aa437be8, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.61671007, g: 0.71138245, b: 0.8997746, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -37855,7 +37855,6 @@ MonoBehaviour:
   intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
   DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 1654741760}
   chatMessageUnReadCountObj: {fileID: 1341452831}
@@ -45509,7 +45508,6 @@ MonoBehaviour:
   intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
   DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2051747839}
   chatMessageUnReadCountObj: {fileID: 1033625937}
@@ -47136,7 +47134,6 @@ MonoBehaviour:
   intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
   DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2123470891}
   chatMessageUnReadCountObj: {fileID: 414214556}
@@ -47395,7 +47392,6 @@ MonoBehaviour:
   intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
   DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  defaultSelection: 1
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2132913894}
   chatMessageUnReadCountObj: {fileID: 1565411577}
@@ -50833,9 +50829,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2259584938695699434, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_Name
       value: HomeScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207376626176932544, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 274.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207376626176932544, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 274.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207376626176932544, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 274.72
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_RootOrder
