@@ -559,7 +559,7 @@ public class BottomTabManager : MonoBehaviour
     }
 
 
-    public void newStore(){ 
+    public void ComingSoon(){ 
        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
     }
 }
