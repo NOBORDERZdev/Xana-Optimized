@@ -177,6 +177,13 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
+        if (BuilderData.mapData.data.json.otherItems.Count==0)
+        {
+            assetDownloadingText.enabled = false;
+            assetDownloadingTextPotrait.enabled = false;
+            assetDownloadingText.transform.parent.gameObject.SetActive(false);
+            assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator DownloadAssetsFromSortedList()
