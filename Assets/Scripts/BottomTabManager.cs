@@ -425,6 +425,7 @@ public class BottomTabManager : MonoBehaviour
             }
         }
         FeedUIController.Instance.SetAddFriendScreen(true);
+        Invoke(nameof(InvokeDisableFeed),1f);
         //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
         //{
         //    //FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
@@ -451,6 +452,9 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
+    void InvokeDisableFeed(){ 
+        FeedUIController.Instance.feedUiScreen.SetActive(false);
+    }
 
     //this method is used to Profile button click.......
     public void OnClickProfileButton()

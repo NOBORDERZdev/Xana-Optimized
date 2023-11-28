@@ -13,6 +13,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public SearchUserRow searchUserRow;
 
     public TextMeshProUGUI userNameText;
+    public TextMeshProUGUI userBioText;
     public Image profileImage;
     public TextMeshProUGUI followFollowingText;
     public Image followFollowingImage;
@@ -62,6 +63,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         searchUserRow = searchUserRow1;
 
         userNameText.text = searchUserRow.name;
+        userBioText.text = searchUserRow.userProfile.bio;
         if (!string.IsNullOrEmpty(searchUserRow.avatar))
         {
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
