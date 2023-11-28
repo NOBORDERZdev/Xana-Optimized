@@ -410,6 +410,48 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
+    public void OnClickAddFriends(){ 
+        GlobalVeriableClass.callingScreen = "Feed";
+        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        {
+            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
+            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+        }
+        else
+        {
+            if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
+            {
+                Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
+            }
+        }
+        FeedUIController.Instance.SetAddFriendScreen(true);
+        //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+        //{
+        //    //FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
+        //    FeedUIController.Instance.ResetAllFeedScreen(true);
+        //    MyProfileDataManager.Instance.MyProfileSceenShow(false);//false my profile screen
+        //}
+        //else
+        //{
+        //    APIManager.Instance.RequestGetUserDetails("myProfile");
+        //}
+
+        //if (FeedUIController.Instance != null)
+        //{
+        //    if (FeedUIController.Instance.feedUiScreen.activeSelf)
+        //    {
+        //        FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+        //    }
+        //}
+        UIManager.Instance.HomeWorldScreen.SetActive(false);
+        if (UIManager.Instance.Canvas.activeSelf)
+        {
+            // UIManager.Instance.Canvas.SetActive(false);
+            Invoke("ClearUnloadAssetData", 0.2f);
+        }
+    }
+
+
     //this method is used to Profile button click.......
     public void OnClickProfileButton()
     {

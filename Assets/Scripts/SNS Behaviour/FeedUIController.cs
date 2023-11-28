@@ -176,6 +176,11 @@ public class FeedUIController : MonoBehaviour
     public List<FollowerItemController> profileFollowerItemControllersList = new List<FollowerItemController>();
     public List<FollowingItemController> profileFollowingItemControllersList = new List<FollowingItemController>();
 
+    [Space]
+    [Header("Add Friends")]
+    [SerializeField] GameObject AddFriendPanel;
+    [SerializeField] GameObject AddFriendSerachBar;
+
     private void Awake()
     {
         if (Instance == null)
@@ -332,6 +337,16 @@ public class FeedUIController : MonoBehaviour
         SNSSettingController.Instance.myAccountScreen.SetActive(false);
         SNSSettingController.Instance.myAccountPersonalInfoScreen.SetActive(false);
         //StartCoroutine(WaitToResetAllFeedScreen(isFeedScreen));        
+    }
+
+    public void SetAddFriendScreen(bool flag){
+        AddFriendPanel.SetActive(flag);    
+        AddFriendSerachBar.SetActive(false);
+    }
+
+    public void OnClickAddFriendSearchBtn(){ 
+        AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
+        
     }
 
     /*public IEnumerator WaitToResetAllFeedScreen(bool isFeedScreen)
