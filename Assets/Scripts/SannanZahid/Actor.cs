@@ -48,9 +48,12 @@ public class Actor : MonoBehaviour
                     MoveSpeed = move.Speed;
                     transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
                     _playerMoves.Enqueue(move);
+                    _PlayerAnimator.SetFloat("Blend", 0.25f);
+                    _PlayerAnimator.SetBool("isMoving", true);
                 }
                 break;
             case 1:
+
                 transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
                 transform.LookAt(MoveTarget);
                 if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
