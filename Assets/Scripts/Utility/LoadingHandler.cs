@@ -245,10 +245,10 @@ public class LoadingHandler : MonoBehaviour
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
 
-        if (XanaConstants.xanaConstants.needToClearMemory)
-            AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
-        else
-            XanaConstants.xanaConstants.needToClearMemory = true;
+        //if (XanaConstants.xanaConstants.needToClearMemory)
+        //    AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
+        //else
+        //    XanaConstants.xanaConstants.needToClearMemory = true;
     }
    
     public void ResetLoadingValues()
