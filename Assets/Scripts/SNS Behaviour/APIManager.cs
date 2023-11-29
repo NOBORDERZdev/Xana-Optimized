@@ -1450,10 +1450,20 @@ public class APIManager : MonoBehaviour
     public IEnumerator IERequestGetSearchUser(string name)
     {
         WWWForm form = new WWWForm();
-
-        form.AddField("name", name);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser), form))
+        if (!name.All(char.IsDigit)) // is seraching with name
+        {
+          form.AddField("name", name);
+          form.AddField("userId",0);
+        }
+        else // is searching with number
+        {
+            form.AddField("name", "");
+            form.AddField("userId",name);
+        }
+       
+       
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/50";
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -3004,11 +3014,11 @@ public class SearchUserRow
     public int id;
     public string name;
     public string avatar;
-    public AllUserWithFeedUserProfile userProfile;
-    public int followerCount;
     public int followingCount;
     public int feedCount;
+    public int followerCount;
     public bool isFollowing;
+    public AllUserWithFeedUserProfile userProfile;
 }
 
 [System.Serializable]

@@ -154,7 +154,7 @@ public class ConstantsGod
 
     public static string r_url_FeedLikeDisLike = "/feeds/like-dislike-post";
 
-    public static string r_url_SearchUser = "/users/search-user";
+    public static string r_url_SearchUser = /*"/users/search-user"*/ "/users/v2/search-user/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";

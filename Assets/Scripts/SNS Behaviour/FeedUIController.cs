@@ -328,7 +328,7 @@ public class FeedUIController : MonoBehaviour
         otherPlayerProfileScreen.SetActive(false);
         giftItemScreens.SetActive(false);
         feedVideoScreen.SetActive(false);
-        findFriendScreen.SetActive(false);
+        //findFriendScreen.SetActive(false);
         createFeedScreen.SetActive(false);
 
         profileFollowerFollowingListScreen.SetActive(false);
@@ -903,7 +903,7 @@ public class FeedUIController : MonoBehaviour
     {
         //findFriendInputField.text = "";
         findFriendInputFieldAdvanced.Text = "";
-        findFriendScreen.SetActive(true);
+        //findFriendScreen.SetActive(true);
     }
 
     #region find User references
@@ -933,7 +933,7 @@ public class FeedUIController : MonoBehaviour
 
         //findFriendInputField.text = "";
         findFriendInputFieldAdvanced.Text = "";
-        findFriendScreen.SetActive(false);
+        //findFriendScreen.SetActive(false);
         foreach (Transform item in findFriendContainer)
         {
             Destroy(item.gameObject);

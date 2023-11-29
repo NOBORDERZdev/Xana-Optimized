@@ -431,6 +431,8 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
             FeedUIController.Instance.SetAddFriendScreen(true);
             FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
+            FeedUIController.Instance.ResetAllFeedScreen(true);
+            MyProfileDataManager.Instance.MyProfileSceenShow(false);
             //Invoke(nameof(InvokeDisableFeed),1f);
             //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             //{
