@@ -961,37 +961,51 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 yield return new WaitForSeconds(1f);
             }
-            //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
-            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
-            //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
-            //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby)
-            {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-                //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
-            }
-            yield return handle;
-            addressableSceneName = environmentLabel;
-            //...
 
-            //One way to handle manual scene activation.
-            if (handle.Status == AsyncOperationStatus.Succeeded)
+            if (environmentLabel == "RFMDummy")
             {
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, environmentLabel);
+                AsyncOperation asc = SceneManager.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive);
 
-                yield return handle.Result.ActivateAsync();
+                while (!asc.isDone)
+                {
+                    yield return new WaitForSeconds(1);
+                }
                 DownloadCompleted();
             }
-            else // error occur 
+            else
             {
-                AssetBundle.UnloadAllAssetBundles(false);
-                Resources.UnloadUnusedAssets();
+                //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
+                AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
+                //if (XanaConstants.xanaConstants.isFromXanaLobby)
+                //{
+                //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
+                //}
+                if (!XanaConstants.xanaConstants.isFromXanaLobby)
+                {
+                    LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
+                    //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+                }
+                yield return handle;
+                addressableSceneName = environmentLabel;
+                //...
 
-                HomeBtn.onClick.Invoke();
+                //One way to handle manual scene activation.
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, environmentLabel);
+
+                    yield return handle.Result.ActivateAsync();
+                    DownloadCompleted();
+                }
+                else // error occur 
+                {
+                    AssetBundle.UnloadAllAssetBundles(false);
+                    Resources.UnloadUnusedAssets();
+
+                    HomeBtn.onClick.Invoke();
+                }
+                // Addressables.Release(handle);
             }
-            // Addressables.Release(handle);
         }
         else
         {
