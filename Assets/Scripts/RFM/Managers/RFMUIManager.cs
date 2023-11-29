@@ -58,7 +58,7 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart += OnCountdownStart;
             RFM.EventsManager.onGameTimeup += OnGameOver;
             RFM.EventsManager.onShowScores += OnShowScores;
-            CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.AddListener(ToggleLayoutPanel);
+            // CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.AddListener(ToggleLayoutPanel);
         }
 
         private void OnDisable()
@@ -67,7 +67,7 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart -= OnCountdownStart;
             RFM.EventsManager.onGameTimeup -= OnGameOver;
             RFM.EventsManager.onShowScores -= OnShowScores;
-            CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.RemoveAllListeners();
+            // CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.RemoveAllListeners();
         }
         
         private void OnCountdownStart()

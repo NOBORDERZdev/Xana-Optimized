@@ -4,7 +4,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
-using static StoreManager;
 using Random = UnityEngine.Random;
 
 namespace RFM.Character
@@ -147,18 +146,7 @@ namespace RFM.Character
                 SyncMovement();
             }
 
-            Vector3 velocity = _navMeshAgent.velocity;
-            Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
-            Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
-            float angle = Vector2.SignedAngle(forward, velocityDir);
-            float xVal = Mathf.Cos((angle - 90 / 180) * Mathf.Deg2Rad);
-            float yVal = Mathf.Cos(angle * Mathf.Deg2Rad);
-            float speed = velocity.magnitude;
-
-            var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
-
-            npcAnim.SetFloat(velocityNameX, animVector.x);
-            npcAnim.SetFloat(velocityNameY, animVector.y);
+            npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
 
 
             if (RFM.Globals.DevMode) return;
@@ -185,10 +173,10 @@ namespace RFM.Character
 
                     // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
 
-                    var id = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    var actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
 
-                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught,
-                        new object[] { id },
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                        actorNumber,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
                 }
@@ -236,10 +224,10 @@ namespace RFM.Character
                 // Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
                 // The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
                 // Send photonview ID of other in parameters.
-                var id = other.GetComponent<PhotonView>().ViewID;
+                var viewId = other.GetComponent<PhotonView>().ViewID;
 
-                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught, 
-                    new object[] { id }, 
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught, 
+                    viewId, 
                     new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
                     SendOptions.SendReliable);
             }
