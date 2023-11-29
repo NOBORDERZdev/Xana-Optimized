@@ -6,7 +6,7 @@ public class CharacterLights : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!GetComponent<PhotonAnimatorView>().photonView.IsMine)
+        if(!GetComponentInParent<PhotonView>().IsMine)
         {
             characterLights.SetActive(false);
         }

@@ -22,7 +22,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     Transform mainPlayerParent;
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
-   
+
 
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
@@ -89,7 +89,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
-                this.transform.parent = mainPlayerParent;
+                if (!WorldItemView.m_EnvName.Contains("RFMDummy"))
+                {
+                    this.transform.parent = mainPlayerParent;
+                }
                 this.transform.localPosition = new Vector3(0, -0.081f, 0);
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarManager.Instance.currentDummyPlayer = this.gameObject;
@@ -141,7 +144,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
             else
             {
-               // Debug.Log("Speaker in use false");
+                // Debug.Log("Speaker in use false");
                 VoiceImage.gameObject.SetActive(false);
                 IsSpeak = false;
             }
@@ -197,9 +200,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
 
         //sendDataReactionUrl(url);
-       
-            gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
-       
+
+        gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+
 
     }
     private void OnChangeText(string text)
@@ -346,29 +349,31 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataUserNAmeToggle(int UserNameContantToggle, int viewId)
     {
-        Debug.Log("ThisidToggle:" +UserNameContantToggle);
-        Debug.Log("ThisitOGGLEid:" +viewId);
-        NameToggle(UserNameContantToggle,viewId);
+        Debug.Log("ThisidToggle:" + UserNameContantToggle);
+        Debug.Log("ThisitOGGLEid:" + viewId);
+        NameToggle(UserNameContantToggle, viewId);
 
 
     }
-    public void NameToggle(int ToggleConstant,int id) {
-        if (gameObject.GetComponent<PhotonView>().ViewID == id) {
-            Debug.Log("USERNAME VALUE:"+ XanaConstants.xanaConstants.userName);
+    public void NameToggle(int ToggleConstant, int id)
+    {
+        if (/*gameObject*/transform.root.GetComponent<PhotonView>().ViewID == id)
+        {
+            Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
             if (ToggleConstant == 0)
             {
-                Debug.Log("Onbtn:"+ReferrencesForDynamicMuseum.instance.onBtnUsername);
+                Debug.Log("Onbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
 
             }
-                else 
-             {
-                Debug.Log("Offbtn:"+ReferrencesForDynamicMuseum.instance.onBtnUsername);
+            else
+            {
+                Debug.Log("Offbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);
                 PhotonUserName.enabled = false;
             }
         }
-        
-  }
+
+    }
 
 
     [PunRPC]

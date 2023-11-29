@@ -121,9 +121,9 @@ namespace Metaverse
                 XanaConstants.xanaConstants.needToClearMemory = false;    
                 if (LoadingHandler.Instance)
                     LoadingHandler.Instance.HideLoading();
-            GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
-            InternetLost = go;
-             }
+                GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
+                InternetLost = go;
+            }
 
             if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
@@ -132,7 +132,7 @@ namespace Metaverse
                 TurnCameras(false);
                 //Instantiate(JoinCurrentRoomPanel);
             }
-            
+
         }
         public void InstantiatePlayerAgain()
         {
@@ -385,7 +385,10 @@ namespace Metaverse
 
 
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
-                    currentDummyPlayer.transform.parent = spawnPoint.transform;
+                    if (!FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+                    {
+                        currentDummyPlayer.transform.parent = spawnPoint.transform;
+                    }
                     //Debug.Log("1");
                     if (WorldItemView.m_EnvName.Contains("AfterParty"))
                     {
@@ -418,8 +421,8 @@ namespace Metaverse
                     }
                     StartCoroutine(WaitAndDeactiveSelfie());
                     StartCoroutine(OverLapTime());
-                //}
-            }
+                    //}
+                }
 
             }
             else
@@ -538,7 +541,10 @@ namespace Metaverse
                 currentDummyPlayer.tag = "PhotonLocalPlayer";
                 Debug.Log("nick name 2 ==" + PhotonNetwork.NickName);
                 currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
-                currentDummyPlayer.transform.parent = spawnPoint.transform;
+                if (!FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+                {
+                    currentDummyPlayer.transform.parent = spawnPoint.transform;
+                }
                 currentDummyPlayer.transform.localPosition = new Vector3(0, -0.081f, 0);
                 // Defaultanimator = GameObject.FindGameObjectWithTag("PhotonLocalPlayer").transform.GetComponent<Animator>().runtimeAnimatorController;
                 print("SpawningHere");

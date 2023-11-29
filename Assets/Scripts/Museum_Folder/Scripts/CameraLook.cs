@@ -6,6 +6,7 @@ using TouchPhase = UnityEngine.TouchPhase;
 using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Climbing;
 
 public class CameraLook : MonoBehaviour
 {
@@ -43,7 +44,9 @@ public class CameraLook : MonoBehaviour
     //** Temp Variables
     float m_TempDistance;
     private Vector2 delta;
+    public bool isRFM;
     public PlayerControllerNew playerController;
+    public InputCharacterController RFMinputController;
 
     public Transform cameraPos;
 
@@ -72,7 +75,7 @@ public class CameraLook : MonoBehaviour
     }
     private void Awake()
     {
-        if (instance == null)
+        //if (instance == null)
         {
             instance = this;
         }
@@ -87,6 +90,10 @@ public class CameraLook : MonoBehaviour
         lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         playerController = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
+        if (isRFM)
+        {
+            RFMinputController = playerController.gameObject.GetComponent<InputCharacterController>();
+        }
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;
@@ -98,7 +105,10 @@ public class CameraLook : MonoBehaviour
             lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
-        camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        if (ReferrencesForDynamicMuseum.instance != null)
+        {
+            camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        }
     }
 
     void SwitchOrientation()
@@ -167,33 +177,38 @@ public class CameraLook : MonoBehaviour
                 ZoomDetection();
             }
         }
-       CameraPlayerMeshCollosionFind();
+        CameraPlayerMeshCollosionFind();
     }
 
     /// <summary>
     /// To check is camera in player mesh
     /// </summary>
-    void CameraPlayerMeshCollosionFind(){
-        if (charcterBody == null || pointObj  == null )
+    void CameraPlayerMeshCollosionFind()
+    {
+        if (charcterBody == null || pointObj == null)
         {
-            if(ReferrencesForDynamicMuseum.instance.m_34player){ 
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
                 charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
-               // pointObj = charcterBody.Body.gameObject;
+                // pointObj = charcterBody.Body.gameObject;
             }
             else
             {
                 return;
             }
         }
-        
-        float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
-        if (dist< 0.01f)
+
+        if (camRender != null && pointObj != null)
         {
-            charcterBody.HidePlayer();
-        }
-        else
-        {
-            charcterBody.ShowPlayer();
+            float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
+            if (dist < 0.01f)
+            {
+                charcterBody.HidePlayer();
+            }
+            else
+            {
+                charcterBody.ShowPlayer();
+            }
         }
     }
 
@@ -227,7 +242,7 @@ public class CameraLook : MonoBehaviour
             {
                 Touch t = Input.GetTouch(0);
                 Touch t1 = new Touch();
-                if(Input.touchCount > 1)
+                if (Input.touchCount > 1)
                     t1 = Input.GetTouch(1);
 
                 if (isRotatingScreen)     // screen is already rotation before joystick down
@@ -366,10 +381,20 @@ public class CameraLook : MonoBehaviour
 
     bool CheckCanZoom()
     {
-        if (playerController.horizontal != 0 && playerController.vertical != 0)
-            return false;
-        if (playerController.jumpNow)
-            return false;
+        if (isRFM)
+        {
+            if (RFMinputController.movement.x != 0 && RFMinputController.movement.y != 0)
+                return false;
+            if (RFMinputController.jump)
+                return false;
+        }
+        else
+        {
+            if (playerController.horizontal != 0 && playerController.vertical != 0)
+                return false;
+            if (playerController.jumpNow)
+                return false;
+        }
         return true;
     }
 

@@ -164,7 +164,9 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-
+        // RFM: we need a reference to the local player to set its position.
+        //RFM.Globals.player = this;
+        // RFM
 
 
     }
@@ -847,8 +849,14 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
         {
-            controllerCamera.SetActive(true);
-            controllerCharacterRenderCamera.SetActive(true);
+            if (!WorldItemView.m_EnvName.Contains("RFM"))
+            {
+                controllerCamera.SetActive(true);
+                if (controllerCharacterRenderCamera != null)
+                {
+                    controllerCharacterRenderCamera.SetActive(true);
+                }
+            }
         }
 
         _IsGrounded = characterController.isGrounded;

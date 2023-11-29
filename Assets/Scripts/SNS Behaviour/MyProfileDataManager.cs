@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -1116,11 +1116,11 @@ public class MyProfileDataManager : MonoBehaviour
             print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
             for (int i = 0; i < UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count; i++)
             {
-                if (/*UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo")*/ true)
+                if (!UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo"))
                 {
                     GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
                     Debug.Log("L_ItemBtnObj");
-                    if ( UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype.Count> i && UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
+                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
                     {
                         L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
                     }

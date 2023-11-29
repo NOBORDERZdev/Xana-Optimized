@@ -125,16 +125,16 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         if (ReferenceObject.activeInHierarchy && m_34player != null)
         {
             Debug.Log("call hua texture Landscap");
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
+            m_34player.GetComponent<MyBeachSelfieCam>()?.SelfieCapture_CamRender.SetActive(true);
+            m_34player.GetComponent<MyBeachSelfieCam>()?.SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
 
 
         if (ReferenceObjectPotrait.activeInHierarchy)
         {
             Debug.Log("call hua texture potriat");
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
+            m_34player.GetComponent<MyBeachSelfieCam>()?.SelfieCapture_CamRender.SetActive(false);
+            m_34player.GetComponent<MyBeachSelfieCam>()?.SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
 
 
@@ -154,7 +154,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
             {
                 if (XanaConstants.xanaConstants.minimap == 1)
+                {
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+                }
                 else
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
             }
@@ -163,7 +165,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         else
         {
             if (XanaConstants.xanaConstants.minimap == 1)
+            {
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+            }
             else
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
         }

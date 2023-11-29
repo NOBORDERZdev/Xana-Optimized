@@ -1,19 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Collections;
 using Cinemachine;
-using UnityEditor;
-using WebSocketSharp;
 using UnityEngine.SceneManagement;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
-using Photon.Realtime;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using System;
 using UnityEngine.UI;
-using System.IO;
 using UnityEngine.Rendering.Universal;
+using Random = UnityEngine.Random;
 
 public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -400,13 +396,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+                if (hit.collider.gameObject.CompareTag("PhotonLocalPlayer") ||
+                    hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     goto CheckAgain;
                 } //else if()
 
-                else if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
+                if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-2, 2), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-2, 2));
                     goto CheckAgain;
@@ -456,7 +453,21 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        if (WorldItemView.m_EnvName.Contains("RFMDummy"))
+        {
+            spawnPoint += new Vector3(Random.Range(-2, 2), spawnPoint.y, Random.Range(-2, 2));
+            
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
+            
+            PlayerCamera.gameObject.SetActive(false);
+            environmentCameraRender.gameObject.SetActive(false);
+            mainController.GetComponent<CapsuleCollider>().enabled = mainController.GetComponent<CharacterController>().enabled = false;
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        }
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -620,7 +631,20 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+        {
+            player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj.
+            
+            PlayerCamera.gameObject.SetActive(false);
+            environmentCameraRender.gameObject.SetActive(false);
+            Debug.LogError("entered in RFMDummy Scene");
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+            Debug.LogError("Enter in other scene");
+        }
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;
@@ -874,18 +898,44 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         Transform tempSpawnPoint = null;
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
-        if (BuilderData.spawnPoint.Count == 1)
+        // if (RFM.Globals.IsRFMWorld) // TODO Muneeb
+        // {
+        //     spawnPoint = RFM.Managers.RFMManager.Instance.lobbySpawnPoint.position;
+        //
+        //     if (BuilderData.spawnPoint.Count == 1)
+        //     {
+        //         RFM.Managers.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //
+        //         var position = RFM.Managers.RFMManager.Instance.huntersSpawnArea.position;
+        //         position = new Vector3(
+        //             position.x,
+        //             position.y,
+        //             position.z + 10
+        //         );
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea.position = position;
+        //     }
+        //     else if (BuilderData.spawnPoint.Count > 1)
+        //     {
+        //         RFM.Managers.RFMManager.Instance.playersSpawnArea = BuilderData.spawnPoint[0].spawnObject.transform;
+        //         RFM.Managers.RFMManager.Instance.huntersSpawnArea = BuilderData.spawnPoint[1].spawnObject.transform;
+        //     }
+        // }
+        // else
         {
-            tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
-        }
-        else if (BuilderData.spawnPoint.Count > 1)
-        {
-            foreach (SpawnPointData g in BuilderData.spawnPoint)
+            if (BuilderData.spawnPoint.Count == 1)
             {
-                if (g.IsActive)
+                spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.position;
+            }
+            else if (BuilderData.spawnPoint.Count > 1)
+            {
+                foreach (SpawnPointData g in BuilderData.spawnPoint)
                 {
-                    tempSpawnPoint = g.spawnObject.transform;
-                    break;
+                    if (g.IsActive)
+                    {
+                        spawnPoint = g.spawnObject.transform.position;
+                        break;
+                    }
                 }
             }
         }
