@@ -667,8 +667,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "Builder";
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+            StartCoroutine(JoinWorldDelay());
         }
         else
         {
@@ -685,6 +684,14 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
     }
+
+    IEnumerator JoinWorldDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        Photon.Pun.PhotonHandler.levelName = "Builder";
+        LoadingHandler.Instance.LoadSceneByIndex("Builder");
+    }
+
     public void LoadJjworld()
     {
         SetAutoSwtichStreaming();
