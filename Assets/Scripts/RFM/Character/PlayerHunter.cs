@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace RFM.Character
@@ -23,7 +25,14 @@ namespace RFM.Character
                 _players.Remove(other.gameObject);
                 _target = null;
                 killVFX.SetActive(true);
-                other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
+                // other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
+
+                var viewId = other.GetComponent<PhotonView>().ViewID;
+
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.BotRunnerCaught,
+                    viewId,
+                    new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
+                    SendOptions.SendReliable);
             }
             
             else if (other.CompareTag(Globals.PLAYER_TAG))
@@ -32,13 +41,14 @@ namespace RFM.Character
                 _target = null;
                 killVFX.SetActive(true);
                 
-                other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
+                // other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
 
-                // PhotonView is on the parent of the gameobject that has a collider.
-                // int colliderViewId = other.transform.root.GetComponent<PhotonView>().ViewID;
-                //
-                // RFM.Managers.RFMManager.Instance.photonView.RPC("LocalPlayerCaughtByHunter", 
-                //     RpcTarget.All, colliderViewId);
+                var viewId = other.GetComponent<PhotonView>().ViewID;
+
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                    viewId,
+                    new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                    SendOptions.SendReliable);
             }
         }
     }

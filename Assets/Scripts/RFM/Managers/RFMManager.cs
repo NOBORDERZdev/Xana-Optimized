@@ -72,8 +72,8 @@ namespace RFM.Managers
         public override void OnEnable()
         {
             base.OnEnable();
-            EventsManager.onPlayerCaught += PlayerCaught;
-            EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
+            //EventsManager.onPlayerCaught += PlayerCaught;
+            //EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
 
         }
@@ -82,8 +82,8 @@ namespace RFM.Managers
         public override void OnDisable()
         {
             base.OnDisable();
-            EventsManager.onPlayerCaught -= PlayerCaught;
-            EventsManager.onPlayerCaughtByPlayer -= PlayerCaughtByPlayer;
+            //EventsManager.onPlayerCaught -= PlayerCaught;
+            //EventsManager.onPlayerCaughtByPlayer -= PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
@@ -126,15 +126,15 @@ namespace RFM.Managers
                         PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
                             new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                     }
-                    CancelInvoke(nameof(CheckForGameStartCondition));
+                    //CancelInvoke(nameof(CheckForGameStartCondition));
                 }
 
             }, gameplayTimeText);
 
-            photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
-            Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
+            //photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
+            //Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
 
-            InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
+            //InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
 
             statusTMP.text = "Waiting for other players to join:";
             statusBG.SetActive(true);
@@ -151,46 +151,62 @@ namespace RFM.Managers
 
         #region Private Methods
 
-        [PunRPC]
-        private void PlayerJoined()
+        //[PunRPC]
+        //private void PlayerJoined()
+        //{
+        //    CheckForGameStartCondition();
+        //}
+
+        //private void CheckForGameStartCondition()
+        //{
+        //    if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        //    {
+        //        if (Globals.gameState != Globals.GameState.InLobby) return;
+        //        if (PhotonNetwork.IsMasterClient)
+        //        {
+        //            PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
+        //                new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Globals.gameState = Globals.GameState.InLobby;
+        //        countDownText.transform.parent.gameObject.SetActive(false);
+
+        //        statusTMP.text = "Waiting for other players to join:";
+        //        statusBG.SetActive(true);
+        //        //statusMMFPlayer.PlayFeedbacks();
+
+        //        if (PhotonNetwork.IsMasterClient)
+        //        {
+        //            PhotonNetwork.CurrentRoom.IsOpen = true;
+        //        }
+
+        //        StopAllCoroutines();
+        //    }
+        //}
+
+        public void RFMStartInterrupted()
         {
-            CheckForGameStartCondition();
-        }
+            Globals.gameState = Globals.GameState.InLobby;
+            countDownText.transform.parent.gameObject.SetActive(false);
 
-        private void CheckForGameStartCondition()
-        {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+            statusTMP.text = "Waiting for other players to join:";
+            statusBG.SetActive(true);
+
+            if (PhotonNetwork.IsMasterClient)
             {
-                if (Globals.gameState != Globals.GameState.InLobby) return;
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
-                        new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
-                }
+                PhotonNetwork.CurrentRoom.IsOpen = true;
             }
-            else
-            {
-                Globals.gameState = Globals.GameState.InLobby;
-                countDownText.transform.parent.gameObject.SetActive(false);
 
-                statusTMP.text = "Waiting for other players to join:";
-                statusBG.SetActive(true);
-                //statusMMFPlayer.PlayFeedbacks();
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.CurrentRoom.IsOpen = true;
-                }
-
-                StopAllCoroutines();
-            }
+            StopAllCoroutines();
         }
 
         void OnApplicationPause(bool pauseStatus)
         {
             if (pauseStatus)
             {
-                if ( PhotonNetwork.IsMasterClient)
+                if (PhotonNetwork.IsMasterClient)
                 {
                     if (PhotonNetwork.PlayerListOthers.Length > 0)
                     {
@@ -204,36 +220,14 @@ namespace RFM.Managers
 
                 }
             }
-        } 
-
-        //[PunRPC]
-        //public void ChangeMasterClientifAvailble()
-        //{
-        //    Debug.LogError("ChangeMasterClientifAvailble: "+PhotonNetwork.LocalPlayer.NickName);
-        //    if (!PhotonNetwork.IsMasterClient)
-        //    {
-        //        return;
-        //    }
-        //    if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
-        //    {
-        //        return;
-        //    }
-
-        //    PhotonNetwork.SetMasterClient(PhotonNetwork.MasterClient.GetNext());
-        //}
-
-
-        //public virtual void OnMasterClientSwitched(Player newMasterClient)
-        //{
-        //    Debug.LogError("OnMasterClientSwitched: " + newMasterClient.NickName);
-        //}
+        }
 
 
         private IEnumerator StartRFM()
         {
             EventsManager.StartCountdown();
             Globals.gameState = Globals.GameState.Countdown;
-            CancelInvoke(nameof(CheckForGameStartCondition));
+            //CancelInvoke(nameof(CheckForGameStartCondition));
 
             countDownText.transform.parent.gameObject.SetActive(true);
             statusTMP.text = "Resetting position in:";
@@ -256,7 +250,7 @@ namespace RFM.Managers
 
 
                 StartCoroutine(SpawnNPCs(roles.Item4, roles.Item3));
-                
+
                 var numberOfPlayerHunters = roles.Item2;
                 foreach (var roomPlayer in PhotonNetwork.CurrentRoom.Players)
                 {
@@ -405,8 +399,8 @@ namespace RFM.Managers
 
                 yield return new WaitForSeconds(delay);
             }
-            
-            
+
+
         }
 
 
@@ -466,7 +460,7 @@ namespace RFM.Managers
 
         }
 
-        private void PlayerCaught(/*RFM.Character.NPCHunter*/Transform catcher)
+        private void PlayerCaught()
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -476,30 +470,35 @@ namespace RFM.Managers
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
-            if (_npcCamera == null)
+            var randomHunter = FindObjectOfType<RFM.Character.NPCHunter>();
+
+            if (randomHunter != null)
             {
-                _npcCamera = Instantiate(npcCameraPrefab);
+                if (_npcCamera == null)
+                {
+                    _npcCamera = Instantiate(npcCameraPrefab);
+                }
+                _npcCamera.Init(randomHunter.CameraTarget);
             }
-            _npcCamera.Init(catcher/*.CameraTarget*/);
         }
 
 
-        private void PlayerCaughtByPlayer(RFM.Character.PlayerHunter catcher)
-        {
-            if (Globals.gameState != Globals.GameState.Gameplay) return;
+        //private void PlayerCaughtByPlayer(RFM.Character.PlayerHunter catcher)
+        //{
+        //    if (Globals.gameState != Globals.GameState.Gameplay) return;
 
-            _mainCam.SetActive(false);
-            _gameCanvas.SetActive(false);
-            statusTMP.text = "Player caught! Spectating...";
-            statusBG.SetActive(true);
-            statusMMFPlayer.PlayFeedbacks();
+        //    _mainCam.SetActive(false);
+        //    _gameCanvas.SetActive(false);
+        //    statusTMP.text = "Player caught! Spectating...";
+        //    statusBG.SetActive(true);
+        //    statusMMFPlayer.PlayFeedbacks();
 
-            if (_npcCamera == null)
-            {
-                _npcCamera = Instantiate(npcCameraPrefab);
-            }
-            _npcCamera.Init(catcher.transform/*cameraTarget*/);
-        }
+        //    if (_npcCamera == null)
+        //    {
+        //        _npcCamera = Instantiate(npcCameraPrefab);
+        //    }
+        //    _npcCamera.Init(catcher.transform/*cameraTarget*/);
+        //}
 
 
 
@@ -517,8 +516,20 @@ namespace RFM.Managers
                         StartCoroutine(StartRFM());
                         break;
                     }
+                case PhotonEventCodes.PlayerRunnerCaught:
+                    {
+                        // PhotonView.Find(id)
+                        var viewId = (int)photonEvent.CustomData;
+
+                        if (viewId == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
+                        {
+                            PlayerCaught();
+                        }
+                        break;
+                    }
             }
         }
+
 
         #endregion
 
