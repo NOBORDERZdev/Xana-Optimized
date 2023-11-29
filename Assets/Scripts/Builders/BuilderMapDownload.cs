@@ -36,6 +36,9 @@ public class BuilderMapDownload : MonoBehaviour
     public VolumeProfile defaultPostProcessVolProfile;
     public MeshCombiner meshCombiner;
 
+    //Reflection Probe
+    public ReflectionProbe reflectionProbe;
+
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
@@ -495,11 +498,13 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
+        reflectionProbe.enabled = true;
         if (lensFlareData != null)
             SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
         else
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
+        reflectionProbe.RenderProbe();
         DynamicGI.UpdateEnvironment();
     }
 
@@ -594,6 +599,9 @@ public class BuilderMapDownload : MonoBehaviour
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
         BuilderEventManager.BGMStart?.Invoke();
+
+
+        reflectionProbe.enabled = true;
     }
 
 
