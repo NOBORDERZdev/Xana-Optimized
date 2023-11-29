@@ -112,7 +112,7 @@ public class NpcChatSystem : MonoBehaviour
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
             id = npcDB[counter].actualAiIds;
-            ip = "http://15.152.13.112:8032/";
+            ip = "http://15.152.55.82:8054/";
         }
         counter++;
 

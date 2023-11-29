@@ -180,7 +180,8 @@ public class IKMuseum : MonoBehaviour
     {
         if (gameObject.GetComponent<PhotonView>().ViewID == _viewID)
         {
-            m_ConsoleObjOther.SetActive(true);
+            if(!ReferrencesForDynamicMuseum.instance.playerControllerNew.isFirstPerson)
+                m_ConsoleObjOther.SetActive(true);
             m_Animator.SetBool("freecam", true);
            
             Debug.Log("EnableFreeCamOnRemoteSideeeeee");

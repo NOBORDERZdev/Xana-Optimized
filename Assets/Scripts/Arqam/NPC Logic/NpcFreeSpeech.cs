@@ -42,7 +42,7 @@ public class NpcFreeSpeech : MonoBehaviour
         }
         else if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            ip = "http://15.152.13.112:8032/";
+            ip = "http://15.152.55.82:8054/";
             id = npcChatSystem.npcAttributes[temp].actualAiIds;
         }
 
