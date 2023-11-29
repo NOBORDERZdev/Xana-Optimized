@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
@@ -74,7 +73,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     string skyboxMatKey = "";
     public void ChangeSkyBox(int skyID)
     {
-
         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
@@ -88,6 +86,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
                 loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
                 if (!flag)
                     loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
+                Debug.LogError("indexx == " + indexx);
+
                 loadSkyBox.Completed += LoadSkyBox_Completed;
             }
             else
@@ -100,19 +100,19 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             if (ColorUtility.TryParseHtmlString("#" + builderMapDownload.levelData.skyProperties.skyColorTop, out topColor) && ColorUtility.TryParseHtmlString("#" + builderMapDownload.levelData.skyProperties.skyColorMiddle, out middleColor) && ColorUtility.TryParseHtmlString("#" + builderMapDownload.levelData.skyProperties.skyColorBottom, out bottomColor))
                 SetSkyColor(topColor, middleColor, bottomColor);
             ppVolume.profile = defaultSkyBoxData.ppVolumeProfile;
+            directionLight.color = defaultSkyBoxData.directionalLightData.directionLightColor;
+            DirectionLightColorChange(-1);
 
-            directionLight.intensity = 1f;
-            directionLight.shadowStrength = .2f;
-            characterDirectionLight.intensity = .15f;
-            DynamicGI.UpdateEnvironment();
+            //DynamicGI.UpdateEnvironment();
         }
 
     }
     private void LoadSkyBox_Completed(AsyncOperationHandle obj)
     {
-        if(obj.Status==AsyncOperationStatus.Succeeded)
+        if (obj.Status == AsyncOperationStatus.Succeeded)
             AddressableDownloader.Instance.MemoryManager.AddToReferenceList(obj, skyboxMatKey);
         Material _mat = obj.Result as Material;
+        Debug.LogError("indexx == " + indexx);
         _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
         RenderSettings.skybox = _mat;
         directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
@@ -139,10 +139,12 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
     void DirectionLightColorChange(int skyID)
     {
+        builderMapDownload.reflectionProbe.enabled = true;
+
         LensFlareData lensFlareData = new LensFlareData();
         if (skyID == -1)
         {
-            directionLight.intensity = 1;
+            directionLight.intensity = defaultSkyBoxData.directionalLightData.lightIntensity;
             directionLight.shadowStrength = defaultSkyBoxData.directionalLightData.directionLightShadowStrength;
             lensFlareData = defaultSkyBoxData.directionalLightData.lensFlareData;
         }
@@ -158,12 +160,16 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         {
             sceneLensFlare.lensFlareData = lensFlareData.falreData;
             sceneLensFlare.scale = lensFlareData.flareScale;
+            sceneLensFlare.intensity = lensFlareData.flareIntensity;
         }
         else
         {
             sceneLensFlare.lensFlareData = null;
             sceneLensFlare.scale = 1;
+            sceneLensFlare.intensity = 1;
         }
         DynamicGI.UpdateEnvironment();
+        builderMapDownload.reflectionProbe.RenderProbe();
+
     }
 }

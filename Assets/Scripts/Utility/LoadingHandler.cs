@@ -208,7 +208,9 @@ public class LoadingHandler : MonoBehaviour
     {
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOKill();
-        blackScreen.DOFade(1, 0.1f).OnComplete(delegate
+        blackScreen.color = new Color(1, 1, 1, 1);
+        // Adding Delay Time
+        blackScreen.DOFade(1, 0.5f).OnComplete(delegate
         {
             //Debug.LogError("7 ~~~~~~~~~~~~~~~~ LandscapeLeft");
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -233,7 +235,7 @@ public class LoadingHandler : MonoBehaviour
 
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.2f).SetDelay(1f);
+        blackScreen.DOFade(0, 0.2f).SetDelay(0f);
       
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
@@ -243,10 +245,10 @@ public class LoadingHandler : MonoBehaviour
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
 
-        if (XanaConstants.xanaConstants.needToClearMemory)
-            AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
-        else
-            XanaConstants.xanaConstants.needToClearMemory = true;
+        //if (XanaConstants.xanaConstants.needToClearMemory)
+        //    AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
+        //else
+        //    XanaConstants.xanaConstants.needToClearMemory = true;
     }
    
     public void ResetLoadingValues()

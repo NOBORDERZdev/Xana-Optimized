@@ -313,6 +313,8 @@ public class PlayerControllerNew : MonoBehaviour
             OnInvokeCameraChange(firstPersonCameraObj.GetComponent<Camera>());
             //gameObject.transform.localScale = new Vector3(0, 1, 0);
             DisablePlayerOnFPS();
+            controllerCamera.SetActive(false);
+            firstPersonCameraObj.tag = "MainCamera";
             ActiveCamera = firstPersonCameraObj;
             // MuseumRaycaster.instance.playerCamera = firstPersonCameraObj.GetComponent<Camera>();
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Continuous;
@@ -324,10 +326,12 @@ public class PlayerControllerNew : MonoBehaviour
             gyroButton.SetActive(false);
             gyroButton_Portait.SetActive(false);
 
+            firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
             StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(ReferrencesForDynamicMuseum.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
+            controllerCamera.SetActive(true);
             EnablePlayerOnThirdPerson();
             ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Disabled;
@@ -845,10 +849,13 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
         {
-            controllerCamera.SetActive(true);
-            if (controllerCharacterRenderCamera != null)
+            if (!WorldItemView.m_EnvName.Contains("RFM"))
             {
-                controllerCharacterRenderCamera.SetActive(true);
+                controllerCamera.SetActive(true);
+                if (controllerCharacterRenderCamera != null)
+                {
+                    controllerCharacterRenderCamera.SetActive(true);
+                }
             }
         }
 

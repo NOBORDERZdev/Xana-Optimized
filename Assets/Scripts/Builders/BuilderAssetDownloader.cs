@@ -101,7 +101,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
 
             builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
-            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive)
+            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnComponent)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
                 temp.IsActive = BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive;
@@ -177,6 +177,13 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
+        if (BuilderData.mapData.data.json.otherItems.Count==0)
+        {
+            assetDownloadingText.enabled = false;
+            assetDownloadingTextPotrait.enabled = false;
+            assetDownloadingText.transform.parent.gameObject.SetActive(false);
+            assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     IEnumerator DownloadAssetsFromSortedList()
@@ -298,16 +305,17 @@ public class BuilderAssetDownloader : MonoBehaviour
     void DisplayDownloadedAssetText()
     {
         ++downloadedTillNow;
+        int spawnPointCount = BuilderData.spawnPoint.Count;
         switch (GameManager.currentLanguage)
         {
 
             case "en":
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
-                    assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                    assetDownloadingTextPotrait.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
@@ -317,12 +325,12 @@ public class BuilderAssetDownloader : MonoBehaviour
                 }
                 break;
             case "ja":
-                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
-                    assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingTextPotrait.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingText.text = "読み込み完了.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                    assetDownloadingTextPotrait.text = "読み込み完了.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
@@ -332,12 +340,12 @@ public class BuilderAssetDownloader : MonoBehaviour
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
-                    assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
+                    assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                    assetDownloadingTextPotrait.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.enabled = false;
@@ -509,6 +517,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         builderDataDictionary.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
+        BuilderData.preLoadspawnPoint.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;

@@ -26,7 +26,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Contains a context menu function to find scene references of selected gameObject and its components.
 /// </summary>
-public class ReferencesFinder : MonoBehaviour
+public class ReferencesFinder : /*MonoBehaviour,*/ EditorWindow
 {
     /// <summary>
     /// Finds scene references of selected gameObject and its components.
@@ -42,6 +42,9 @@ public class ReferencesFinder : MonoBehaviour
 
         // get all components of selected gameObject
         object[] componentsOnSelectedObj = Selection.activeGameObject.GetComponentsInChildren<MonoBehaviour>();
+
+        // Keep a list of all the components that have references to the selected object
+        targetMonoBehaviours = new List<MonoBehaviour>();
 
         // iterate through all root objects
         for (int i = 0; i < rootObjects.Count; ++i)
@@ -62,6 +65,7 @@ public class ReferencesFinder : MonoBehaviour
                     if (componentsOnSelectedObj.Contains(field) || field == Selection.activeGameObject)
                     {
                         Debug.LogError("Reference found on: " + field, component);
+                        targetMonoBehaviours.Add(component);
                     }
                     // else
                     // {
@@ -69,6 +73,35 @@ public class ReferencesFinder : MonoBehaviour
                     // }
                 }
             }
+
+            if (targetMonoBehaviours.Count > 0)
+            {
+                GetWindow<ReferencesFinder>("Hierarchy Highlighter");
+            }
+            else
+            {
+                Debug.LogError("No references found");
+            }
         }
+    }
+
+    private Vector2 scrollPosition;
+    public static List<MonoBehaviour> targetMonoBehaviours;
+
+    private void OnGUI()
+    {
+        GUILayout.Label("Found References in Scene", EditorStyles.boldLabel);
+
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
+        foreach (var behaviour in targetMonoBehaviours)
+        {
+            if (GUILayout.Button(behaviour.ToString()))
+            {
+                EditorGUIUtility.PingObject(behaviour);
+            }
+        }
+
+        GUILayout.EndScrollView();
     }
 }

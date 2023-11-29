@@ -72,7 +72,7 @@ public class WorldManager : MonoBehaviour
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 5);
+        Invoke(nameof(LoadJjworld), 0);
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {
@@ -88,7 +88,14 @@ public class WorldManager : MonoBehaviour
     }
     public void ChangeWorld(APIURL tab)
     {
-        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        if (UIManager.Instance.IsSplashActive)
+        {
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        }
+        else {
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        }
+      
         WorldItemManager.DisplayWorlds("Temp");
         StartCoroutine(WorldCall(tab));
     }
@@ -246,7 +253,14 @@ public class WorldManager : MonoBehaviour
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
-        LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        if (UIManager.Instance.IsSplashActive)
+        {
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        }
+        else
+        {
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        }
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
             if (isSucess)
@@ -387,10 +401,14 @@ public class WorldManager : MonoBehaviour
         WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        Invoke(nameof(ShowTutorial),0.2f);
+        if (!UIManager.Instance.IsSplashActive)
+        {
+            Invoke(nameof(ShowTutorial), 1f);
+        }
+       
     }
 
-    void ShowTutorial(){ 
+    public void ShowTutorial(){ 
         TutorialsManager.instance.ShowTutorials();
     }
 
@@ -608,8 +626,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "Builder";
-            LoadingHandler.Instance.LoadSceneByIndex("Builder");
+            StartCoroutine(JoinWorldDelay());
         }
         else
         {
@@ -626,6 +643,14 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
     }
+
+    IEnumerator JoinWorldDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        Photon.Pun.PhotonHandler.levelName = "Builder";
+        LoadingHandler.Instance.LoadSceneByIndex("Builder");
+    }
+
     public void LoadJjworld()
     {
         SetAutoSwtichStreaming();

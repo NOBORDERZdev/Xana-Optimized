@@ -23,6 +23,8 @@ namespace RFM.Character
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
 
+        private Vector3 _targetPosition;
+
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -51,7 +53,10 @@ namespace RFM.Character
 
         private void TakePositionTimeStarted()
         {
-            InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
+            if (PhotonNetwork.IsMasterClient) // Only master controls the movement 
+            {
+                InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
+            }
         }
 
 
@@ -131,10 +136,23 @@ namespace RFM.Character
                 _navMeshAgent.SetDestination(newPost);
             }
 
-            else // When no hunters are close
+            else // When no hunters are close, move randomly
             {
-                Vector3 newPost = transform.position + new Vector3(Random.Range(-1.0f, 1.0f), 0, 1);
-                _navMeshAgent.SetDestination(newPost);
+                Vector3 newPost = transform.position + transform.forward +
+                                  new Vector3(Random.Range(-1.0f, 1.0f), 0, 0);
+
+
+                NavMeshPath path = new NavMeshPath();
+
+                if (_navMeshAgent.CalculatePath(newPost, path))
+                {
+                    _navMeshAgent.SetDestination(newPost);
+                }
+                else
+                {
+                    newPost = transform.position + Random.insideUnitSphere * 1;
+                    _navMeshAgent.SetDestination(newPost);
+                }
             }
         }
         
@@ -143,29 +161,51 @@ namespace RFM.Character
             StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            if (/*PhotonNetwork.IsMasterClient*/true)
-            {
-                RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived, true);
-            }
+            
+            RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
+
             PhotonNetwork.Destroy(this.gameObject);
+            //gameObject.SetActive(false);
+            //Invoke(nameof(DestroyRunner), 2f);
         }
+
+        //private void DestroyRunner()
+        //{
+        //    PhotonNetwork.Destroy(this.gameObject);
+        //}
         
         private void GameOver()
         {
             AIRunnerCaught();
         }
 
+        private void OnDestroy()
+        {
+            // Called on all non-master clients when the runner is caught.
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
+        }
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
+                stream.SendNext(_navMeshAgent.destination);
                 stream.SendNext(money);
                 stream.SendNext(timeSurvived);
             }
             else
             {
+                _targetPosition = (Vector3)stream.ReceiveNext();
                 money = (int)stream.ReceiveNext();
                 timeSurvived = (float)stream.ReceiveNext();
+
+                if (Vector3.Distance(_navMeshAgent.destination, _targetPosition) > 1.0f)
+                {
+                    _navMeshAgent.SetDestination(_targetPosition);
+                }
             }
         }
     }
