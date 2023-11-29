@@ -43,7 +43,8 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
     public GameObject BlackScreen;
-
+    bool passwordBool=false;
+    bool emailBool = false;
     //Waheed Changes
     public GameObject setAvatarGiftPanal;
 
@@ -1190,9 +1191,15 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 4:
                 {
-                    PasswordPanal.SetActive(true);
-                    Password1New.Text = "";
-                    Password2New.Text = "";
+                    Invoke("blackscrreefalse", 0.2f);
+                    this.gameObject.GetComponent<SplashVideoPlay>().RefrenceDownloafVideo();
+                    this.gameObject.GetComponent<SplashVideoPlay>().SplashvideoObj.SetActive(true);
+                   
+                       
+                   
+                    //PasswordPanal.SetActive(true);
+                    //Password1New.Text = "";
+                    //Password2New.Text = "";
                     //  Password1InputTextShiftCode.EmptyPassword();
                     //  Password2ConfirmInputTextShiftCode.EmptyPassword();
                     break;
@@ -1200,7 +1207,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 5:
                 {
                     //usernamePanal.SetActive(true);
-                    setAvatarGiftPanal.SetActive(true);
+                   // setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
                     //StartCoroutine(WaitandActive());
                     //UsernameTextNew.Text = "";
@@ -1417,7 +1424,10 @@ public class UserRegisterationManager : MonoBehaviour
     // DifferentAPI,s Call
 
     // Started Device Token 
-
+    public void blackscrreefalse() { 
+    
+    BlackScreen.SetActive(false); 
+    }
     string uniqueID2()
     {
         DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -2779,31 +2789,16 @@ public class UserRegisterationManager : MonoBehaviour
         if (EmailFieldNew.Text == "")
         {
             errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //    
-            //     errorTextEmail.GetComponent<Text>().text = "メールアドレスを入力してください";
-            //  }
-            // else
-            // {
-            //     errorTextEmail.GetComponent<Text>().text = "Email field should not be empty";
-            //  }
-
-            errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<Text>());
+             errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<Text>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             return;
         }
         else
-        {
-
-            //  print("Email validity is " + IsValidEmail(EmailInputTextNew.Text));
-            //  EmailInputTextNew.Text = EmailInputTextNew.Text.Trim();
+        { 
             EmailFieldNew.Text = EmailFieldNew.Text.Trim();
-            // if (IsValidEmail(EmailInputTextNew.Text))
+            
             if (IsValidEmail(EmailFieldNew.Text))
             {
-                //  string email = EmailInputTextNew.Text;
                 string email = EmailFieldNew.Text;
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.SendEmailOTP;
                 email = email.ToLower();
@@ -2836,15 +2831,6 @@ public class UserRegisterationManager : MonoBehaviour
             else
             {
                 errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-
-                // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                // {
-                //     errorTextEmail.GetComponent<Text>().text = "有効なメールアドレスを入力してください";
-                // }
-                // else
-                // {
-                //     errorTextEmail.GetComponent<Text>().text = "Please enter valid email";
-                // }
                 errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<Text>());
                 StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             }
@@ -2887,7 +2873,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return request.SendWebRequest();
 
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (!request.isHttpError && !request.isNetworkError )
         {
             if (_loader != null)
             {
@@ -2895,7 +2881,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
 
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-            if (request.error == null)
+            if (request.error == null && passwordBool)
             {
                 Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
@@ -2905,7 +2891,9 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         currentSelectedNxtButton.interactable = true;
                     }
+                    emailBool = true;
                     OpenUIPanal(3);
+                    //emailBool = true;
                     Email = localEmail;
                     SignUpWithPhoneBool = false;
                 }
@@ -2946,16 +2934,6 @@ public class UserRegisterationManager : MonoBehaviour
                     print(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
-                        //if (request.downloadHandler.text.Contains(" must be a valid email"))
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email, errorTextEmail.GetComponent<Text>());
-                        //}
-                        //else
-                        //{
-
-                        //    errorHandler.ShowErrorMessage(ErrorType.Same_Email_is_already_registered, errorTextEmail.GetComponent<Text>());
-
-                        //}
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextEmail.GetComponent<Text>());
                         errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                         if (_loader != null)
@@ -2967,18 +2945,6 @@ public class UserRegisterationManager : MonoBehaviour
                             _loader.SetActive(false);
                         }
                         StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-
-
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     //3: Email address is already exists
-                        //      errorTextEmail.GetComponent<Text>().text = "同じメールアドレスが登録されています";
-                        // }
-                        // else
-                        // {
-                        //     errorTextEmail.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-
 
                     }
                 }
@@ -3113,14 +3079,6 @@ public class UserRegisterationManager : MonoBehaviour
         {
             print("Password Field should not be empty");
             errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "パスワードを入力してください";
-            // }
-            // else
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "Password field should not be empty";
-            // }
             errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextPassword.GetComponent<Text>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
@@ -3155,27 +3113,18 @@ public class UserRegisterationManager : MonoBehaviour
             return;
         }
 
-        if (pass1 == pass2)
+        if (pass1 == pass2 )
         {
+           
             password = pass1;
-
-            OpenUIPanal(5);
+            passwordBool = true;
+            //  OpenUIPanal(5);
         }
         else
-        {
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "パスワードが一致していません";
-            // }
-            // else
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "Password not matched";
-            // }
-            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
-
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+        {   
+             errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
+             StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             //   print("Password not matched");
         }
     }
@@ -3263,16 +3212,6 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-
-                // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                // {
-                //     // 6: Cannot Connect to Destination Host
-                //     errorTextPassword.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                // }
-                // else
-                // {
-                //     errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
                 StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             }
@@ -3285,16 +3224,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         //    print("Hey success false " + myObject.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     errorTextPassword.GetComponent<Text>().text = "ユーザーは既に存在します";
-                        // }
-                        // else
-                        // {
-                        //     errorTextPassword.GetComponent<Text>().text = myObject.msg.ToUpper();
-                        // }
-                        //errorHandler.ShowErrorMessage(ErrorType.User_Already_Exist , errorTextPassword.GetComponent<Text>());
-                        errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<Text>());
+                         errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<Text>());
                         StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
@@ -3713,16 +3643,20 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
-                        NewLoadingScreen.SetActive(false);
+
+                     NewLoadingScreen.SetActive(false);
+                  
                     }
                 }
                 else
                 {
                     //if (myObjectForOPT.success == "true")
                     if (myObjectForOPT.success)
-                    {
+                    {   
+                        BlackScreen.SetActive(true);
                         OpenUIPanal(4);
                         NewLoadingScreen.SetActive(false);
+                        SignUpPanal.SetActive(false);
                     }
                 }
 
