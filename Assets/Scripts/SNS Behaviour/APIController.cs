@@ -442,6 +442,23 @@ public class APIController : MonoBehaviour
         }
     }
 
+    public void ShowHotFirend(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.hotFriendContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+            }
+        }
+    }
+
     //this method is used to create feed top story panel in follower item.......
     public void GetSetAllfollowerInTopStoryPanelUser()
     {

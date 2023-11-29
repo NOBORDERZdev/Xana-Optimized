@@ -1484,6 +1484,34 @@ public class APIManager : MonoBehaviour
     }
     #endregion
 
+    #region Friends
+
+    public void SetHotFriend()
+    {
+        StartCoroutine(IERequestHotFirends());
+    }
+
+     IEnumerator IERequestHotFirends(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Hot Friends Data" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.ShowHotFirend(searchUserRoot);
+                //APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+    #endregion
+
     #region UserAPI.......... 
 
     public void RequestSetName(string setName_name)

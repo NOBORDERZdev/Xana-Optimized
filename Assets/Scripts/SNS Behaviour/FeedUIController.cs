@@ -95,6 +95,10 @@ public class FeedUIController : MonoBehaviour
     public string feedFullViewScreenCallingFrom = "";
 
     [Space]
+    [Header("Hot Friend")]
+    public GameObject hotFriendContainer;
+
+    [Space]
     [Header("Find Friend screen References")]
     public GameObject findFriendScreen;
     public Transform findFriendContainer;
@@ -330,7 +334,7 @@ public class FeedUIController : MonoBehaviour
         feedVideoScreen.SetActive(false);
         //findFriendScreen.SetActive(false);
         createFeedScreen.SetActive(false);
-
+        FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
         OtherPlayerProfileData.Instance.backKeyManageList.Clear();
 
@@ -346,6 +350,7 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickAddFriendSearchBtn(){ 
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
+        FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         
     }
 
@@ -915,10 +920,18 @@ public class FeedUIController : MonoBehaviour
         {
             //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
             APIManager.Instance.RequestGetSearchUser(findFriendInputFieldAdvanced.Text);
+            if (!findFriendScreen.gameObject.activeInHierarchy)
+            {
+                findFriendScreen.gameObject.SetActive(true);
+            }
         }
         else
         {
             //if user typed character clear then clear all search user list.
+            if (findFriendScreen.gameObject.activeInHierarchy)
+            {
+                findFriendScreen.gameObject.SetActive(false);
+            }
             foreach (Transform item in findFriendContainer)
             {
                 Destroy(item.gameObject);
