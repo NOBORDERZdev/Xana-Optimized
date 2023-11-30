@@ -15,11 +15,13 @@ public class RFMCharacter : MonoBehaviour
 
     private void OnEnable()
     {
+        RFM.EventsManager.onTakePositionTimeStart += OnTakePositionStart;
         RFM.EventsManager.onGameStart += GameStart;
     }
 
     private void OnDisable()
     {
+        RFM.EventsManager.onTakePositionTimeStart -= OnTakePositionStart;
         RFM.EventsManager.onGameStart -= GameStart;
     }
 
@@ -28,10 +30,27 @@ public class RFMCharacter : MonoBehaviour
         voiceView.SpeakerInUse.GetComponent<AudioSource>().spatialBlend = 0;
     }
 
+    private void OnTakePositionStart()
+    {
+        isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
+
+        if (isHunter)
+        {
+            GetComponent<RFM.Character.PlayerRunner>().enabled = false;
+            GetComponent<RFM.Character.PlayerHunter>().enabled = true;
+        }
+        else
+        {
+            GetComponent<RFM.Character.PlayerHunter>().enabled = false;
+            GetComponent<RFM.Character.PlayerRunner>().enabled = true;
+        }
+    }
+
+
     public void GameStart()
     {
         Debug.Log($"RFM {photonView.Owner.NickName} + player is hunter: { photonView.Owner.CustomProperties["isHunter"]}");
-        isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
+        //isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
 
         if (RFMManager.Instance.isPlayerHunter)
         {

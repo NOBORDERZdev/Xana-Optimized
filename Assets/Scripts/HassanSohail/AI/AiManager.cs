@@ -149,14 +149,18 @@ namespace XanaAi
                 }
                 else
                 {
+                    #if UNITY_ANDROID || UNITY_IOS
                     Handheld.Vibrate();
+                    #endif
                     Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
                 }
                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
             }
             else if (handle.Status == AsyncOperationStatus.Failed)
             {
+                #if UNITY_ANDROID || UNITY_IOS
                 Handheld.Vibrate();
+                #endif
                 WearDefault(ObjectType, ai); // wear default cloth
                 apperance.CheckMoreAIDresses(ai);
                 Debug.LogError("Failed to load addressable: " + handle.OperationException);
@@ -189,7 +193,7 @@ namespace XanaAi
             }
         }
 
-        #endregion
+#endregion
 
         #region UnusedMethod
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
@@ -212,7 +216,9 @@ namespace XanaAi
                 }
                 catch (System.Exception)
                 {
+                    #if UNITY_ANDROID || UNITY_IOS
                     Handheld.Vibrate();
+                    #endif
                     if (ObjectType.Contains("EyeTexture"))
                         charcterBody.ApplyEyeLenTexture(charcterBody.Eye_Texture, ai.gameObject);
                     else if (ObjectType.Contains("EyeBrrow"))
@@ -251,7 +257,9 @@ namespace XanaAi
                 }
                 else
                 {
+                    #if UNITY_ANDROID || UNITY_IOS
                     Handheld.Vibrate();
+                    #endif
                     Debug.LogError("Loaded Textures are null. Handle the error appropriately.");
                 }
             }
@@ -274,7 +282,7 @@ namespace XanaAi
             //Addressables.Release(handle);
         }
 
-        #endregion
+#endregion
 
     }
 }

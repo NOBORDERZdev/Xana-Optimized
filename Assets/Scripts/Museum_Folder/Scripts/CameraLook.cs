@@ -146,7 +146,7 @@ public class CameraLook : MonoBehaviour
             return;
         }
 
-        if (Application.isEditor)
+        if (Application.isEditor || !Application.isMobilePlatform)
         {
             if (_allowRotation)
             {

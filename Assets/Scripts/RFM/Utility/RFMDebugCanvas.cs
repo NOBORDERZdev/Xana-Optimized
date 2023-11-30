@@ -12,7 +12,19 @@ namespace RFM.Utility
         public TextMeshProUGUI maxPlayers;
         public TextMeshProUGUI currentPlayers;
         public TextMeshProUGUI rfmStatus;
-    
+
+        private void Awake()
+        {
+            if (RFM.Globals.DevMode)
+            {
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
         private void Update()
         {
             isMaster.text = $"isMaster: {PhotonNetwork.IsMasterClient}";

@@ -18,6 +18,12 @@ namespace RFM
 
             //var rank = transform.childCount - (transform.GetSiblingIndex() + 1);
             rankText.text = playerRank.ToString();
+
+            if (playerRank is 1 or 2 or 3)
+            {
+                nameTMP.color = new Color(255, 54, 211);
+                GetComponent<UnityEngine.UI.Image>().color = new Color(255, 54, 211);
+            }
         }
     }
 }

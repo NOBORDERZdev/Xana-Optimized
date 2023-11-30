@@ -1590,11 +1590,13 @@ public class MessageController : MonoBehaviour
             if (path != null)
             {
                 // Play the recorded video
+                #if UNITY_ANDROID || UNITY_IOS
                 Handheld.PlayFullScreenMovie("file://" + path);
+                #endif
             }
         });
     }
-    #endregion
+#endregion
 
     #region Chat Details Screen Methods.......
     public void OnClickChatScreenMenuButton()//old
