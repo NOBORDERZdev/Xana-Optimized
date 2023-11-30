@@ -47,6 +47,8 @@ public class SplashVideoPlay : MonoBehaviour
     }
     IEnumerator FadeOut()
     {
+        player.targetTexture.Release();
+
         while (alpha > 0.0f)
         {
             yield return new WaitForSeconds(0.05f);
@@ -65,7 +67,7 @@ public class SplashVideoPlay : MonoBehaviour
     void OnAvatarSelectionPanal() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
 }

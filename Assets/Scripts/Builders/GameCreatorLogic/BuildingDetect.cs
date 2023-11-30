@@ -1,12 +1,11 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class BuildingDetect : MonoBehaviour
 {
-    [Header("Avatar Change")]
-    public GameObject[] tmpModel;
 
     #region Special Item Fields
 
@@ -29,7 +28,7 @@ public class BuildingDetect : MonoBehaviour
 
     [Header("Default Mats")]
     [SerializeField]
-    private Material defaultHairMat;
+    private Material[] defaultHairMat;
     [SerializeField]
     private Material defaultBodyMat;
     [SerializeField]
@@ -43,6 +42,7 @@ public class BuildingDetect : MonoBehaviour
 
     [Header("Gangster Character")]
     internal GameObject gangsterCharacter;
+    GameObject AppearanceChange;
     #endregion
 
     #region Avatar invisibility materials and gameobjects
@@ -125,7 +125,7 @@ public class BuildingDetect : MonoBehaviour
         defaultBodyMat = playerBody.material;
         defaultPantsMat = playerPants.material;
         defaultShirtMat = playerShirt.material;
-        defaultHairMat = playerHair.material;
+        defaultHairMat = playerHair.sharedMaterials;
         defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
@@ -144,6 +144,7 @@ public class BuildingDetect : MonoBehaviour
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
         BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
+        ApplyDefaultEffect();
 
     }
 
@@ -181,7 +182,10 @@ public class BuildingDetect : MonoBehaviour
     public void OnAvatarChangerEnter(float time, int avatarIndex, GameObject curObject)
     {
         if (tempAnimator != null)
+        {
             this.GetComponent<Animator>().avatar = tempAnimator;
+            this.GetComponent<Animator>().cullingMode = cullingMode;
+        }
         BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
         //StopCoroutine(avatarChangeCoroutine);
         avatarChangeTime = time;
@@ -197,13 +201,26 @@ public class BuildingDetect : MonoBehaviour
         if (avatarChangeCoroutine != null)
             StopCoroutine(avatarChangeCoroutine);
         gangsterCharacter = new GameObject("AvatarChange");
-        gangsterCharacter.SetActive(false);
+        gangsterCharacter.transform.SetParent(this.transform);
+        gangsterCharacter.transform.localPosition = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+        //gangsterCharacter.SetActive(false);
 
-        var AppearanceChange = Instantiate(GamificationComponentData.instance.AvatarChangerModels[avatarIndex], gangsterCharacter.transform);
+        Vector3 pos = gangsterCharacter.transform.position;
+        pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
+        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
+
+        var hash = new ExitGames.Client.Photon.Hashtable();
+        hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<XanaItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+        AppearanceChange.transform.SetParent(gangsterCharacter.transform);
+        AppearanceChange.transform.localEulerAngles = Vector3.zero;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
+        {
             cc.playerControler = GamificationComponentData.instance.playerControllerNew;
-
+        }
         if (avatarIndex == 2)
         {
             GameObject cloneObject = Instantiate(curObject);
@@ -223,9 +240,7 @@ public class BuildingDetect : MonoBehaviour
             cloneObject.SetActive(true);
         }
 
-        gangsterCharacter.transform.SetParent(this.transform);
-        gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+
 
         //hide meshdata off character for FPS
         if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
@@ -246,17 +261,23 @@ public class BuildingDetect : MonoBehaviour
     }
     float avatarTime;
     Avatar tempAnimator;
+    AnimatorCullingMode cullingMode;
     IEnumerator PlayerAvatarChange()
     {
         avatarTime = 0;
 
         ToggleAvatarChangeComponent(false);
         if (tempAnimator == null)
+        {
             tempAnimator = this.GetComponent<Animator>().avatar;
+            cullingMode = this.GetComponent<Animator>().cullingMode;
+        }
+
 
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         yield return new WaitForSecondsRealtime(0.01f);
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
 
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
             gangsterCharacter.SetActive(true);
@@ -287,6 +308,7 @@ public class BuildingDetect : MonoBehaviour
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
+                PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
@@ -346,8 +368,14 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
-            _specialEffects = Instantiate(effect, ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            //GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
+            Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
+            pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
+            //Quaternion rot = ReferrencesForDynamicMuseum.instance.m_34player.transform.rotation;
+            //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
+            _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
+            _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);
     }
@@ -363,7 +391,7 @@ public class BuildingDetect : MonoBehaviour
         print("Calling Routine" + _timer);
         yield return new WaitForSeconds(0.2f);
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
-        _specialEffects.gameObject.SetActive(true);
+        //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect();
         powerUpCurTime = 0;
         _playerControllerNew.specialItem = true;
@@ -375,9 +403,11 @@ public class BuildingDetect : MonoBehaviour
             _playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
-        _specialEffects.gameObject.SetActive(false);
+        //_specialEffects.gameObject.SetActive(false);
+        if (_specialEffects)
+            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
         ApplyDefaultEffect();
-
+        _specialEffects = null;
         _playerControllerNew.specialItem = false;
         _playerControllerNew.movementSpeed = defaultMoveSpeed;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
@@ -413,9 +443,11 @@ public class BuildingDetect : MonoBehaviour
         }
         if (_specialEffects)
         {
-            _specialEffects.SetActive(false);
-            if (_specialEffects.activeInHierarchy)
-                ApplyDefaultEffect();
+            //_specialEffects.SetActive(false);
+            //if (_specialEffects.activeInHierarchy)
+            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
+            ApplyDefaultEffect();
+            _specialEffects = null;
         }
         canRunCo = false;
         _playerControllerNew.jumpHeight = defaultJumpHeight;
@@ -428,7 +460,13 @@ public class BuildingDetect : MonoBehaviour
     //Hologram Material Set
     void AvatarInvisibilityApply()
     {
-        playerHair.material = hologramMaterial;
+        //playerHair.material = hologramMaterial;
+        Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
+        for (int i = 0; i < hairMats.Length; i++)
+        {
+            hairMats[i] = hologramMaterial;
+        }
+        playerHair.sharedMaterials = hairMats;
         playerBody.material = hologramMaterial;
         playerShirt.material = hologramMaterial;
         playerPants.material = hologramMaterial;
@@ -450,7 +488,7 @@ public class BuildingDetect : MonoBehaviour
 
     void StopAvatarInvisibility()
     {
-        playerHair.material = defaultHairMat;
+        playerHair.sharedMaterials = defaultHairMat;
         playerBody.material = defaultBodyMat;
         playerShirt.material = defaultShirtMat;
         playerPants.material = defaultPantsMat;

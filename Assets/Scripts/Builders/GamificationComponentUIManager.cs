@@ -109,10 +109,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     float letterDelay = 0.1f;
     int storyCharCount = 0;
     bool isAgainCollided;
+    bool isStoryWritten;
     public ScrollRect narrationScroll;
     public GameObject sliderNarrationUI;
     Coroutine StoryNarrationCoroutine;
     public Button narrationUIClosebtn;
+    public Button narrationUIDownTextbtn;
     float narrationtotalHeight;
     float singleLineHeight;
 
@@ -165,29 +167,31 @@ public class GamificationComponentUIManager : MonoBehaviour
         DisableAllComponentUIObject(Constants.ItemComponentType.NarrationComponent);
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
-        if (!isStory)
-        {
-            if (StoryNarrationCoroutine != null)
-                StopCoroutine(StoryNarrationCoroutine);
-            isAgainCollided = true;
-            //StartCoroutine(WaitDelayStatement());
-            narrationTextUI.text = narrationText;
-            narrationScroll.enabled = false;
-            sliderNarrationUI.SetActive(false);
-            Invoke(nameof(NarrationUILinesCount), 0.1f);
-        }
+
+        //if (!isStory)
+        //{
+        //    if (StoryNarrationCoroutine != null)
+        //        StopCoroutine(StoryNarrationCoroutine);
+        //    isAgainCollided = true;
+        //    //StartCoroutine(WaitDelayStatement());
+        //    narrationTextUI.text = narrationText;
+        //    narrationScroll.enabled = false;
+        //    sliderNarrationUI.SetActive(false);
+        //    isStoryWritten = false;
+        //    Invoke(nameof(NarrationUILinesCount), 0.1f);
+        //}
+        //else
+        //{
+        storyCharCount = 0;
+        narrationTextUI.text = "";
+        if (StoryNarrationCoroutine == null)
+            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
         else
         {
-            storyCharCount = 0;
-            narrationTextUI.text = "";
-            if (StoryNarrationCoroutine == null)
-                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
-            else
-            {
-                StopCoroutine(StoryNarrationCoroutine);
-                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
-            }
+            StopCoroutine(StoryNarrationCoroutine);
+            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
         }
+        //}
     }
 
     public void NarrationUILinesCount()
@@ -203,6 +207,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         int numberOfLines = narrationTextUI.textInfo.lineCount;
         // Calculate the single line height by dividing the total height by the number of lines.
         singleLineHeight = narrationtotalHeight / numberOfLines;
+
+        narrationUIDownTextbtn.interactable = !isStoryWritten;
     }
     IEnumerator StoryNarration(string msg)
     {
@@ -211,6 +217,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
+        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -219,6 +226,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(letterDelay);
             StartCoroutine(WaitForScrollingOption());
         }
+        isStoryWritten = false;
+        NarrationUILinesCount();
     }
     IEnumerator WaitForScrollingOption()
     {
@@ -447,16 +456,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         helpButtonComponentResizer.isAlwaysOn = false;
         HelpButtonTitleText.text = helpButtonTitle;
         HelpText.text = "";
-        if (HelpTexts.Length == 0)
-        {
-            HelpText.text = "Define Rules here !";
-        }
-        else
-        {
-            HelpText.text = HelpTexts + "\n";
-        }
+        //if (HelpTexts.Length == 0)
+        //{
+        //    HelpText.text = "Define Rules here !";
+        //}
+        //else
+        //{
+        //    HelpText.text = HelpTexts + "\n";
+        //}
         helpButtonComponentResizer.titleText.text = HelpButtonTitleText.text;
-        helpButtonComponentResizer.contentText.text = HelpText.text;
+        //helpButtonComponentResizer.contentText.text = HelpText.text;
+        helpButtonComponentResizer.msg = HelpTexts.Length == 0 ? "Define Rules here !" : HelpTexts + "\n";
         HelpButtonParentUI.SetActive(true);
         helpButtonComponentResizer.Init();
     }
@@ -1096,9 +1106,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     public TextMeshProUGUI hyperLinkPopupText;
     public ScrollRect hyperLinkScrollView;
     public GameObject hyperLinkScrollbar;
+    public Button hyperlinkDownArrowbtn;
     string url;
     float hyperlinkTotalHeight;
+    int hyperLinkCharCount = 0;
     float hyperLinkSingleLineHeight;
+    Coroutine HyperLinkCoroutine;
+    bool isAgainHyperLinkCollided;
+    bool isHyperlinkWritten;
+
 
     public void EnableHyperLinkPopupUI(string hyperLinkPopupTitle, string hyperLinkPopupTexts, string hyperLinkPopupURL, Transform obj)
     {
@@ -1108,15 +1124,43 @@ public class GamificationComponentUIManager : MonoBehaviour
         hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
-        if (hyperLinkPopupTexts.Length == 0)
-        {
-            hyperLinkPopupText.text = "Define Rules here !";
-        }
+        string msg= hyperLinkPopupTexts.Length == 0 ? "Define Rules here !": hyperLinkPopupTexts + "\n";
+        Invoke(nameof(HyperLinkUILinesCount), 0.1f);
+
+        hyperLinkCharCount = 0;
+        hyperLinkPopupText.text = "";
+        if (HyperLinkCoroutine == null)
+            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
         else
         {
-            hyperLinkPopupText.text = hyperLinkPopupTexts + "\n";
+            StopCoroutine(HyperLinkCoroutine);
+            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
         }
-        Invoke(nameof(HyperLinkUILinesCount),0.1f);
+    }
+
+    IEnumerator HyperLinkPopupCO(string msg)
+    {
+        #region
+        isAgainHyperLinkCollided = true;
+        yield return new WaitForSeconds(0.2f);
+        isAgainHyperLinkCollided = false;
+        #endregion
+        isHyperlinkWritten = true;
+        while (hyperLinkCharCount < msg.Length && !isAgainHyperLinkCollided)
+        {
+            hyperLinkPopupText.text += msg[hyperLinkCharCount];
+            hyperLinkCharCount++;
+
+            yield return new WaitForSeconds(letterDelay);
+            StartCoroutine(WaitForHyperLinkScrollingOption());
+        }
+        isHyperlinkWritten = false;
+        HyperLinkUILinesCount();
+    }
+    IEnumerator WaitForHyperLinkScrollingOption()
+    {
+        yield return new WaitForEndOfFrame();
+        HyperLinkUILinesCount();
     }
 
     void HyperLinkUILinesCount()
@@ -1133,6 +1177,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         int numberOfLines = hyperLinkPopupText.textInfo.lineCount;
         // Calculate the single line height by dividing the total height by the number of lines.
         singleLineHeight = hyperlinkTotalHeight / numberOfLines;
+
+        hyperlinkDownArrowbtn.interactable = !isHyperlinkWritten;
     }
 
     public void HyperLinkDownText()
@@ -1344,5 +1390,22 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableAvatarChangerComponentUI();
         if (componentType != Constants.ItemComponentType.DoorKeyComponent)
             DisableDoorKeyUI();
+    }
+
+    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    {
+
+        for (int i = 0; i < displayTitle.text.Length; i++)
+        {
+            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+            int unicode = charInfo.character;
+            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+            {
+                print("JP font");
+                return true;
+            }
+        }
+        print("JP font not");
+        return false;
     }
 }

@@ -189,7 +189,7 @@ public class StoreManager : MonoBehaviour
     public bool MultipleSave; // to enable/ disable multiple save 
     private GameObject childObject;
     public Button newAvatarPresetBtn;
-
+    public CanvasScaler _CanvasScaler;
     public Action storeOpen;
 
     private void Awake()
@@ -261,6 +261,7 @@ public class StoreManager : MonoBehaviour
     public void skipAvatarSelection()
     {
         UserRegisterationManager.instance.usernamePanal.SetActive(true);
+        _CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
     }
 
     public void WalletLoggedinCall()
@@ -760,7 +761,7 @@ public class StoreManager : MonoBehaviour
             string result = StringIndexofSubcategories(GetCategoryIndex);
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 150, "asc")); // Increase item Waqas Ahmad
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));
@@ -1524,6 +1525,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomEyesPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomEyesPalette.gameObject.SetActive(false);
+            ParentOfBtnsCustomEyes.gameObject.SetActive(false);  
             ParentOfBtnsAvatarEyes.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[3], (RectTransform)ParentOfBtnsAvatarEyes);
             return tempBool;
@@ -1533,6 +1535,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomLipsPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomLipsPalette.gameObject.SetActive(false);
+            ParentOfBtnsCustomLips.gameObject.SetActive(false);  
             ParentOfBtnsAvatarLips.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[5], (RectTransform)ParentOfBtnsAvatarLips);
             return tempBool;

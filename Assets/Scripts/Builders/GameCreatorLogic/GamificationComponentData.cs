@@ -5,10 +5,11 @@ using System.Linq;
 using DG.Tweening;
 using Models;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviourPun
+public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 {
     public static GamificationComponentData instance;
 
@@ -46,8 +47,6 @@ public class GamificationComponentData : MonoBehaviourPun
     internal Vector3 Ninja_Throw_InitPosX;
     internal bool worldCameraEnable;
 
-    public Shader proceduralRingShader;
-    public Shader uberShader;
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
@@ -59,7 +58,8 @@ public class GamificationComponentData : MonoBehaviourPun
 
     public static Action WarpComponentLocationUpdate;
 
-    public List<GameObject> AvatarChangerModels;
+    //public List<GameObject> AvatarChangerModels;
+    public List<string> AvatarChangerModelNames;
 
     internal bool isNight;
     internal bool isBlindToogle;
@@ -68,6 +68,7 @@ public class GamificationComponentData : MonoBehaviourPun
     internal int previousSkyID;
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
+    internal List<XanaItem> multiplayerComponentsxanaItems = new List<XanaItem>();
 
     //AI Generated Skybox
     public Material aiSkyMaterial;
@@ -76,6 +77,8 @@ public class GamificationComponentData : MonoBehaviourPun
 
     //Gamification components with multipler
     public bool withMultiplayer = false;
+    internal GameObject DoorKeyObject;
+    internal int doorKeyCount = 0;
 
     private void Awake()
     {
@@ -191,7 +194,7 @@ public class GamificationComponentData : MonoBehaviourPun
                 {
                     string startKey = data1.warpPortalStartKeyValue;
 
-                    if (startKey == data2.warpPortalEndKeyValue  && startKey!="")
+                    if (startKey == data2.warpPortalEndKeyValue && startKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
                         endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
@@ -204,7 +207,7 @@ public class GamificationComponentData : MonoBehaviourPun
                 else
                 {
                     string endKey = data1.warpPortalEndKeyValue;
-                    if (endKey == data2.warpPortalStartKeyValue && endKey!="")
+                    if (endKey == data2.warpPortalStartKeyValue && endKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
                         endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
@@ -320,6 +323,56 @@ public class GamificationComponentData : MonoBehaviourPun
             }
         }
     }
+
+    internal void SetMultiplayerComponentData(MultiplayerComponentData multiplayerComponentData)
+    {
+        //Debug.LogError(JsonUtility.ToJson(multiplayerComponentData));
+        var hash = new ExitGames.Client.Photon.Hashtable();
+
+        MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
+
+        // Multiplayer component data list
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
+        {
+            multiplayerComponentdatas = JsonUtility.FromJson<MultiplayerComponentDatas>(multiplayerComponentdatasObj.ToString());
+        }
+
+        multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
+        string json = JsonUtility.ToJson(multiplayerComponentdatas);
+        hash.Add("gamificationMultiplayerComponentDatas", json);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+    }
+
+    #region Photon Events
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+        foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        {
+            if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+                xanaItem.SetData(xanaItem.itemData);
+        }
+    }
+    #endregion
 }
 
 [Serializable]

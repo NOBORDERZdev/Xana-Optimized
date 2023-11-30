@@ -236,6 +236,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //PlayerPrefs.SetInt("shownWelcome", 1);
                 
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
         }
 
@@ -277,6 +278,9 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
             PlayerPrefs.SetInt("CloseLoginScreen", 1);
+            PlayerPrefs.SetInt("iSignup", 1);
+            PlayerPrefs.SetInt("IsProcessComplete", 1);
+            PlayerPrefs.SetInt("shownWelcome",1);
         }
         
     }
@@ -285,6 +289,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("iSignup", 1);
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
     public void CoutinueAsAGuest()
     {
@@ -338,7 +343,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
 
-        CloseLoginScreen();
+      //  CloseLoginScreen();
     }
 
 
@@ -380,6 +385,7 @@ public class UserRegisterationManager : MonoBehaviour
     public void BacktoAvatarSelectionPanel() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
     public void LoginScreenClicked(int btn) 
@@ -398,7 +404,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             NewSignUp_Panal.SetActive(true);
         }
-
+        MoveButtonBacktoPreviousPos();
         LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPanal.SetActive(false);
@@ -408,6 +414,11 @@ public class UserRegisterationManager : MonoBehaviour
             ShowWelcomeScreen();
 
         }
+    }
+
+    public void MoveButtonBacktoPreviousPos() 
+    {
+        FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
     }
 
     private async void eventcalled(string _userType)
@@ -790,6 +801,7 @@ public class UserRegisterationManager : MonoBehaviour
         emailTabSelected.SetActive(true);
         phoneTabSelected.SetActive(false);
         WalletTabSelected.SetActive(false);
+
         // emailTabText.fontStyle = FontStyle.Bold;
         // phoneTabText.fontStyle = FontStyle.Normal;
 
@@ -1665,11 +1677,14 @@ public class UserRegisterationManager : MonoBehaviour
         //    PresetData_Jsons.lastSelectedPreset = null;
         //}
         PresetData_Jsons.clickname = "";
-        for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+        if (StoreManager.instance.PresetArrayContent)
         {
-            StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+            {
+                StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            }
+            StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         }
-        StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         //end reset
         if (StoreManager.instance != null)
         {
@@ -2892,6 +2907,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     OpenUIPanal(3);
                     Email = localEmail;
+                    SignUpWithPhoneBool = false;
                 }
             }
         }
@@ -3294,6 +3310,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
+        TutorialsManager.instance.ShowTutorials();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
@@ -3696,6 +3713,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
                 else
@@ -3768,12 +3786,12 @@ public class UserRegisterationManager : MonoBehaviour
 
                     }
                 }
-                if (myObjectofOTPForResetPassword.data.tempToken == null)
-                {
-                    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
-                    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
-                }
+                //if (myObjectofOTPForResetPassword.data.tempToken == null)
+                //{
+                //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
+                //    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                //}
 
             }
 
