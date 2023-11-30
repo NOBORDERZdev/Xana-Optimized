@@ -84,6 +84,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 }
                 LoadingHandler.Instance.ShowLoading();
                 //LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
+
+                if (XanaConstants.xanaConstants.needToClearMemory)
+                    AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
+                else
+                    XanaConstants.xanaConstants.needToClearMemory = true;
+
                 GC.Collect();
                 AssetBundle.UnloadAllAssetBundles(true);
                 Resources.UnloadUnusedAssets();
@@ -97,7 +103,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.2f);
         XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
