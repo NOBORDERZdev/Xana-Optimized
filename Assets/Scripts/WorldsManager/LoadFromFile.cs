@@ -418,9 +418,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage") )
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else if ( WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
+            {
+                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
+                //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
+                StartCoroutine(setPlayerCamAngle(0.38f, 0.2275f));
             }
             else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
             {
