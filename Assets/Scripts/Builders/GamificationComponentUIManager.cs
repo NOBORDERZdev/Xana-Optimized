@@ -242,7 +242,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public void DisplayDownText()
     {
-        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 5 < narrationtotalHeight)
+        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 4 <= narrationtotalHeight)
         {
             narrationScroll.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
@@ -355,7 +355,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine ElapsedTimerCoroutine;
     public void EnableElapseTimeCounDownUI(float time, bool isRunning)
     {
-        //Debug.Log("EnableElapseTimeCounDownUI" + time);
+        Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
         if (isRunning)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent);
@@ -381,13 +381,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
-        while (time >= 0 && isRunning)
-        {
-            ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
-            yield return new WaitForSeconds(1);
-            time++;
-        }
-        yield return new WaitForSeconds(time);
+        if (isRunning)
+            while (time >= 0)
+            {
+                ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
+                yield return new WaitForSeconds(1);
+                time++;
+            }
+        else
+            yield return new WaitForSeconds(time);
         DisableElapseTimeCounDownUI();
     }
     public void DisableElapseTimeCounDownUI()
@@ -1192,7 +1194,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void HyperLinkDownText()
     {
-        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 5 < hyperlinkTotalHeight)
+        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 4 <= hyperlinkTotalHeight)
         {
             hyperLinkScrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
