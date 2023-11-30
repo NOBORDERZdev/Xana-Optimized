@@ -10,11 +10,11 @@ namespace RFM
     {
         public static event Action onCountdownStart, onTakePositionTimeStart, onGameStart, onGameTimeup,
             onShowScores, onHideCanvasElements, onToggleHelpPanel;
-        public static event Action</*NPCHunter*/Transform> onPlayerCaught;
-        public static event Action<PlayerHunter> onPlayerCaughtByPlayer;
+        //public static event Action</*NPCHunter*/Transform> onPlayerCaught;
+        //public static event Action<PlayerHunter> onPlayerCaughtByPlayer;
 
-        public static void PlayerCaught(/*NPCHunter*/Transform catcher) => onPlayerCaught?.Invoke(catcher);
-        public static void PlayerCaughtByPlayer(PlayerHunter catcher) => onPlayerCaughtByPlayer?.Invoke(catcher);
+        //public static void PlayerCaught(/*NPCHunter*/Transform catcher) => onPlayerCaught?.Invoke(catcher);
+        //public static void PlayerCaughtByPlayer(PlayerHunter catcher) => onPlayerCaughtByPlayer?.Invoke(catcher);
         public static void TakePositionTime() => onTakePositionTimeStart?.Invoke();
         public static void StartGame() => onGameStart?.Invoke();
         public static void StartCountdown() => onCountdownStart?.Invoke();

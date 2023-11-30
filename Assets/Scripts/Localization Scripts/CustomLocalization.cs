@@ -146,7 +146,7 @@ public class CustomLocalization : MonoBehaviour
 
     public static string GetLanguage()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         string newLanguage = Application.systemLanguage.ToString();
 
         if (newLanguage == "English")
@@ -198,7 +198,7 @@ public class CustomLocalization : MonoBehaviour
 
     public static string GetISO3Language()
     {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
         string newLanguage = Application.systemLanguage.ToString();
 
         if (newLanguage == "English")

@@ -20,8 +20,8 @@ namespace RFM.Character
 
 
         private NavMeshAgent _navMeshAgent;
-        private float _maxSpeed;
-        private List<GameObject> _players;
+        // private float _maxSpeed;
+        private List<GameObject> _allRunners;
         private Transform _target;
         private Vector3 _targetPosition;
 
@@ -42,62 +42,152 @@ namespace RFM.Character
 
         private void OnEnable()
         {
+            EventsManager.onGameStart/*onTakePositionTimeStart*/ += OnGameStart;
             EventsManager.onGameTimeup += GameOver;
-            EventsManager.onTakePositionTimeStart += OnTakePositionTimeStart;
         }
 
-        private void OnTakePositionTimeStart()
+        private void OnGameStart()
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)// Only the master client controls the hunter.
+                                             // Other clients just sync the movement
             {
                 GetAllRunners();
+                InvokeRepeating(nameof(SearchForTarget), 1, 1);
             }
         }
 
         private void OnDisable()
         {
+            EventsManager.onGameStart -= OnGameStart;
             EventsManager.onGameTimeup -= GameOver;
-            EventsManager.onTakePositionTimeStart -= OnTakePositionTimeStart;
         }
 
-        private void Start()
-        {
-            _maxSpeed = _navMeshAgent.speed;
-
-            if (PhotonNetwork.IsMasterClient) // Only the master client controls the hunter. Other clients just sync the movement
-            {
-                InvokeRepeating(nameof(SearchForTarget), 1, 1);
-            }
-        }
+        //private void Start()
+        //{
+        //    _maxSpeed = _navMeshAgent.speed;
+        //}
 
         private void GetAllRunners()
         {
-            _players = new List<GameObject>(
-                               GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
-            _players.AddRange(new List<GameObject>(
-                               GameObject.FindGameObjectsWithTag(Globals.RUNNER_NPC_TAG)));
+            //_allRunners = new List<GameObject>(
+            //                   GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
+            //_allRunners.AddRange(new List<GameObject>(
+            //                   GameObject.FindGameObjectsWithTag(Globals.RUNNER_NPC_TAG)));
+            _allRunners = new List<GameObject>();
+
+            //var playerRunners = FindObjectsOfType<PlayerRunner>();
+            //var botRunners = FindObjectsOfType<NPCRunner>();
+            //foreach (var runner in playerRunners)
+            //{
+            //    if (runner.enabled)
+            //    {
+            //        _allRunners.Add(runner.gameObject);
+            //    }
+            //}
+            //foreach (var botRunner in botRunners)
+            //{
+            //    _allRunners.Add(botRunner.gameObject);
+            //}
+
+            var runners = FindObjectsOfType<Runner>();
+            foreach (var runner in runners)
+            {
+                if (runner.enabled)
+                {
+                    _allRunners.Add(runner.gameObject);
+                }
+            }
         }
 
         private void SearchForTarget()
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
-            if (_hasTarget) return;
 
-            if (_players.Count > 0)
+            // if any of the object in _players list is missing, remove it from the list.
+            for (int i = 0; i < _allRunners.Count; i++)
             {
-                _target = _players[Random.Range(0, _players.Count)].transform;
-                _hasTarget = true;
+                if (_allRunners[i] == null)
+                {
+                    _allRunners.RemoveAt(i);
+                }
             }
-            else
+
+            if (_allRunners == null || _allRunners.Count == 0)
+            {
+                GetAllRunners();
+            }
+
+            if (_allRunners.Count > 0) // if any runner is found
+            {
+                var closestRunner = _allRunners[0];
+                foreach (var runner in _allRunners) // get the closest runner
+                {
+                    if (runner == null) continue;
+
+                    if (Vector3.Distance(transform.position, runner.transform.position) <
+                                           Vector3.Distance(transform.position, closestRunner.transform.position))
+                    {
+                        closestRunner = runner;
+                    }
+                }
+
+                // if the closestRunner is not the current target, set it as target and set _hasTarget to true.
+                // otherwise, set a random target and set _hasTarget to true.
+                if (_target != closestRunner.transform)
+                {
+                    _target = closestRunner.transform;
+                    _hasTarget = true;
+                    Debug.LogError("Closest target locked");
+                }
+                else
+                {
+                    //_target = _allRunners[Random.Range(0, _allRunners.Count)].transform;
+                    //_hasTarget = true;
+                    //Debug.LogError("Random target locked");
+                }
+            }
+            else // if no runner is found
             {
                 _hasTarget = false;
                 _navMeshAgent.isStopped = true;
             }
 
-            if (_players.Count == 0)
-            {
-                GetAllRunners();
-            }
+            //if (_target == null) // sometimes, the target is null even though _hasTarget is true
+            //                     // such as when the target is caught by another hunter
+            //{
+            //    _hasTarget = false;
+            //}
+
+            //if (_hasTarget) return;
+
+            //if (_allRunners.Count > 0)
+            //{
+            //    // if any of the runners in _allRunners list is closer than 5 units, set it as target and set _hasTarget
+            //    // to true. otherwise, set a random target and set _hasTarget to true.
+            //    foreach (var runner in _allRunners)
+            //    {
+            //        if (runner == null) continue;
+
+            //        if (Vector3.Distance(transform.position, runner.transform.position) < 50)
+            //        {
+            //            _target = runner.transform;
+            //            _hasTarget = true;
+            //            Debug.LogError("Closest target locked");
+            //            break;
+            //        }
+            //    }
+            //    if (!_hasTarget)
+            //    {
+            //        _target = _allRunners[Random.Range(0, _allRunners.Count)].transform;
+            //        _hasTarget = true;
+            //        Debug.LogError("Random target locked");
+            //    } 
+            //}
+            //else
+            //{
+            //    _hasTarget = false;
+            //    _navMeshAgent.isStopped = true;
+            //}
         }
 
         private void ControlBotMovement()
@@ -136,6 +226,12 @@ namespace RFM.Character
 
         private void Update()
         {
+            // Draw a line from the hunter to the target
+            if (_hasTarget && _target != null)
+            {
+                Debug.DrawLine(transform.position, _target.position, Color.red);
+            }
+
             // Only the master client controls the bot
             if (PhotonNetwork.IsMasterClient)
             {
@@ -147,21 +243,10 @@ namespace RFM.Character
                 SyncMovement();
             }
 
-            Vector3 velocity = _navMeshAgent.velocity;
-            Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
-            Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
-            float angle = Vector2.SignedAngle(forward, velocityDir);
-            float xVal = Mathf.Cos((angle - 90 / 180) * Mathf.Deg2Rad);
-            float yVal = Mathf.Cos(angle * Mathf.Deg2Rad);
-            float speed = velocity.magnitude;
-
-            var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
-
-            npcAnim.SetFloat(velocityNameX, animVector.x);
-            npcAnim.SetFloat(velocityNameY, animVector.y);
+            npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
 
 
-            if (RFM.Globals.DevMode) return;
+            //if (RFM.Globals.DevMode) return;
             if (!PhotonNetwork.IsMasterClient) return;
 
 
@@ -178,17 +263,17 @@ namespace RFM.Character
                 if (_catchTimer >= timeToCatchRunner)
                 {
                     _catchTimer = 0;
-                    _players.Remove(_inRangePlayer);
+                    _allRunners.Remove(_inRangePlayer);
                     _hasTarget = false;
                     killVFX.SetActive(true);
 
 
                     // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
 
-                    var id = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    var viewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
 
-                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught,
-                        new object[] { id },
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                        viewId,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
                 }
@@ -201,10 +286,10 @@ namespace RFM.Character
             {
                 if (col.CompareTag(Globals.PLAYER_TAG))
                 {
-                    if (_inRangePlayer == col.gameObject)
+                    if (_inRangePlayer == col.gameObject) // if this runner is already in range, return it
                         return _inRangePlayer;
 
-                    if (col.GetComponent<PhotonView>().IsMine)
+                    //if (col.GetComponent<PhotonView>().IsMine) // ?
                     {
                         return col.gameObject;
                     }
@@ -216,30 +301,35 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (RFM.Globals.DevMode) return;
+            //if (RFM.Globals.DevMode) return;
             if (!PhotonNetwork.IsMasterClient) return;
 
-            if (other.CompareTag(Globals.RUNNER_NPC_TAG))
+            //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
+            if (other.GetComponent<NPCRunner>())
             {
-                _players.Remove(other.gameObject);
+                _allRunners.Remove(other.gameObject);
                 _hasTarget = false;
                 killVFX.SetActive(true);
                 other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
+
+                return;
             }
 
-            else if (other.CompareTag(Globals.PLAYER_TAG))
+            //else if (other.CompareTag(Globals.PLAYER_TAG))
+            var playerRunner = other.GetComponent<PlayerRunner>();
+            if (playerRunner != null && playerRunner.enabled)
             {
-                _players.Remove(other.gameObject);
+                _allRunners.Remove(other.gameObject);
                 _hasTarget = false;
                 killVFX.SetActive(true);
 
                 // Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
                 // The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
                 // Send photonview ID of other in parameters.
-                var id = other.GetComponent<PhotonView>().ViewID;
+                var viewId = other.GetComponent<PhotonView>().ViewID;
 
-                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerCaught, 
-                    new object[] { id }, 
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught, 
+                    viewId, 
                     new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
                     SendOptions.SendReliable);
             }

@@ -104,7 +104,7 @@ namespace SuperStar.Helpers
 
         public static string GetStoreLink()
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE
             string link = "https://play.google.com/store/apps/details?id=" + Application.identifier;
 #elif UNITY_ANDROID
             string link = "market://details?id=" + Application.identifier;

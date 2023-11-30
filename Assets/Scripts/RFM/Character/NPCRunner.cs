@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RFM.Character
 {
-    public class NPCRunner : MonoBehaviour, IPunObservable
+    public class NPCRunner : Runner
     {
         public string nickName = "Player";
         public int money;
@@ -35,6 +36,8 @@ namespace RFM.Character
             EventsManager.onTakePositionTimeStart += TakePositionTimeStarted;
             EventsManager.onGameStart += OnGameStarted;
             EventsManager.onGameTimeup += GameOver;
+
+            PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
         
         private void OnDisable()
@@ -42,6 +45,8 @@ namespace RFM.Character
             EventsManager.onTakePositionTimeStart -= TakePositionTimeStarted;
             EventsManager.onGameStart -= OnGameStarted;
             EventsManager.onGameTimeup -= GameOver;
+
+            PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
         private void Start()
@@ -165,14 +170,7 @@ namespace RFM.Character
             RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
 
             PhotonNetwork.Destroy(this.gameObject);
-            //gameObject.SetActive(false);
-            //Invoke(nameof(DestroyRunner), 2f);
         }
-
-        //private void DestroyRunner()
-        //{
-        //    PhotonNetwork.Destroy(this.gameObject);
-        //}
         
         private void GameOver()
         {
@@ -188,7 +186,7 @@ namespace RFM.Character
             }
         }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
@@ -206,6 +204,23 @@ namespace RFM.Character
                 {
                     _navMeshAgent.SetDestination(_targetPosition);
                 }
+            }
+        }
+
+        private void ReceivePhotonEvents(EventData photonEvent)
+        {
+            switch (photonEvent.Code)
+            {
+                case PhotonEventCodes.PlayerRunnerCaught: // Event is only sent to the master client
+                    {
+                        int viewId = (int)photonEvent.CustomData;
+
+                        if (viewId == GetComponent<PhotonView>().ViewID)
+                        {
+                            AIRunnerCaught();
+                        }
+                        break;
+                    }
             }
         }
     }
