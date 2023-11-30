@@ -41,7 +41,7 @@ namespace NPC {
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
 #elif UNITY_IOS
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].ios_file;
-#elif UNITY_EDITOR
+#elif UNITY_EDITOR || UNITY_STANDALONE
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
 #endif
                     string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");

@@ -47,7 +47,9 @@ namespace NatCorder.Examples {
                 recordingPath => {
                     Debug.Log($"Saved recording to: {recordingPath}");
                     var prefix = Application.platform == RuntimePlatform.IPhonePlayer ? "file://" : "";
+                    #if UNITY_ANDROID || UNITY_IOS
                     Handheld.PlayFullScreenMovie($"{prefix}{recordingPath}");
+                    #endif
                 }
             );
         }
