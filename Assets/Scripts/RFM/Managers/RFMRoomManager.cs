@@ -42,6 +42,7 @@ namespace RFM.Managers
             else
             {
                 RFM.Managers.RFMManager.Instance.RFMStartInterrupted();
+                InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
             }
         }
     }

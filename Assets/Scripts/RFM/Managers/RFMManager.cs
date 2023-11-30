@@ -1,10 +1,7 @@
-
 using System;
 using System.Collections;
-using System.Linq;
 using System.Threading.Tasks;
 using ExitGames.Client.Photon;
-using ExitGames.Client.Photon.StructWrapping;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
 using Photon.Realtime;
@@ -268,11 +265,13 @@ namespace RFM.Managers
                 }
             }
 
+
             gameplayTimeText.gameObject.SetActive(false);
 
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null,
                 countDownText, AfterEachSecondCountdownTimer));
 
+            SetRunnerOrHunterStatusOfPlayer();
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -282,12 +281,8 @@ namespace RFM.Managers
             }
         }
 
-
-        private void ResetPosition()
+        private void SetRunnerOrHunterStatusOfPlayer()
         {
-            EventsManager.TakePositionTime();
-            Globals.gameState = Globals.GameState.TakePosition;
-
             bool isHunter = false;
             if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isHunter", out object _isHunter))
             {
@@ -299,18 +294,85 @@ namespace RFM.Managers
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
 
+                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
+                //RFM.Globals.player.GetComponent<RFM.Character.PlayerRunner>().enabled = false;
+                //RFM.Globals.player.GetComponent<RFM.Character.PlayerHunter>().enabled = true;
+                Globals.IsLocalPlayerHunter = true;
+
+                //statusTMP.text = "CATCH THE <#FF36D3>RUNNERS!</color>";
+
+                //var hunterPosition = huntersSpawnArea.position;
+                //var randomHunterPos = new Vector3(
+                //    hunterPosition.x + Random.Range(-2, 2),
+                //    hunterPosition.y,
+                //    hunterPosition.z + Random.Range(-2, 2));
+
+                ////play VFX
+                //hunterSpawnVFX.SetActive(true);
+                //Destroy(hunterSpawnVFX, 10f);
+                //Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
+
+            }
+
+            else // Player spawning as Runner
+            {
+                Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
+
+                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
+                //RFM.Globals.player.GetComponent<RFM.Character.PlayerHunter>().enabled = false;
+                //RFM.Globals.player.GetComponent<RFM.Character.PlayerRunner>().enabled = true;
+                Globals.IsLocalPlayerHunter = false;
+
+                //statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
+
+                //var position = playersSpawnArea.position;
+                //var randomPos = new Vector3(
+                //    position.x + Random.Range(-2, 2),
+                //    position.y,
+                //    position.z + Random.Range(-2, 2));
+
+                ////play VFX
+                //playerSpawnVFX.SetActive(true);
+                //Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
+                //                              // Should be instantiated or disabled.
+
+                //Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
+            }
+        }
+
+
+        private void ResetPosition()
+        {
+            EventsManager.TakePositionTime();
+            Globals.gameState = Globals.GameState.TakePosition;
+
+            //bool isHunter = false;
+            //if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isHunter", out object _isHunter))
+            //{
+            //    isPlayerHunter = isHunter = (bool)_isHunter;
+            //}
+
+
+            if (/*isHunter*/RFM.Globals.IsLocalPlayerHunter) // Player spawning as Hunter
+            {
+                //Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
+
+                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
+                //Globals.IsLocalPlayerHunter = true;
+
                 statusTMP.text = "CATCH THE <#FF36D3>RUNNERS!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
-                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, AfterTakePositionTimerHunter,
+                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, 
+                    /*AfterTakePositionTimerHunter*/StartGameplay,
                     countDownText);
 
                 var hunterPosition = huntersSpawnArea.position;
                 var randomHunterPos = new Vector3(
-                    hunterPosition.x + Random.Range(-2, 2),
+                    hunterPosition.x + Random.Range(-1.0f, 1.0f),
                     hunterPosition.y,
-                    hunterPosition.z + Random.Range(-2, 2));
+                    hunterPosition.z + Random.Range(-1.0f, 1.0f));
 
                 //play VFX
                 hunterSpawnVFX.SetActive(true);
@@ -321,7 +383,10 @@ namespace RFM.Managers
 
             else // Player spawning as Runner
             {
-                Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
+                //Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
+
+                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
+                //Globals.IsLocalPlayerHunter = false;
 
                 statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
                 statusBG.SetActive(true);
@@ -330,14 +395,15 @@ namespace RFM.Managers
                 //Globals.gameState = Globals.GameState.TakePosition;
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
-                    AfterTakePositionTimerRunner, countDownText,
+                    /*AfterTakePositionTimerRunner*/StartGameplay, 
+                    countDownText,
                     AfterEachSecondCountdownTimer);
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
-                    position.x + Random.Range(-2, 2),
+                    position.x + Random.Range(-1.0f, 1.0f),
                     position.y,
-                    position.z + Random.Range(-2, 2));
+                    position.z + Random.Range(-1.0f, 1.0f));
 
                 //play VFX
                 playerSpawnVFX.SetActive(true);
@@ -350,26 +416,26 @@ namespace RFM.Managers
         }
 
 
-        private void AfterTakePositionTimerHunter()
-        {
-            Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
-            Globals.IsLocalPlayerHunter = true;
-            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-            countDownText.transform.parent.gameObject.SetActive(false);
+        //private void AfterTakePositionTimerHunter()
+        //{
+        //    //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
+        //    //Globals.IsLocalPlayerHunter = true;
+        //    //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+        //    //countDownText.transform.parent.gameObject.SetActive(false);
 
-            StartGameplay();
-        }
+        //    //StartGameplay();
+        //}
 
 
-        private void AfterTakePositionTimerRunner()
-        {
-            Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
-            Globals.IsLocalPlayerHunter = false;
-            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-            countDownText.transform.parent.gameObject.SetActive(false);
+        //private void AfterTakePositionTimerRunner()
+        //{
+        //    //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
+        //    //Globals.IsLocalPlayerHunter = false;
+        //    //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+        //    //countDownText.transform.parent.gameObject.SetActive(false);
 
-            StartGameplay();
-        }
+        //    //StartGameplay();
+        //}
 
         private IEnumerator SpawnNPCs(int numOfHunters, int numOfRunners)
         {
@@ -381,8 +447,9 @@ namespace RFM.Managers
             for (int i = 0; i < numOfRunners; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("RFM/RunnerNPC",
-                    playersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
-                        Random.Range(-2.0f, 2.0f)),
+                    playersSpawnArea.position + new Vector3(
+                        Random.Range(-1.0f, 1.0f), 0,
+                        Random.Range(-1.0f, 1.0f)),
                     playersSpawnArea.rotation);
 
                 yield return new WaitForSeconds(delay);
@@ -393,8 +460,8 @@ namespace RFM.Managers
             for (int i = 0; i < numOfHunters; i++)
             {
                 PhotonNetwork.InstantiateRoomObject("RFM/HunterNPC",
-                    huntersSpawnArea.position + new Vector3(Random.Range(-2.0f, 2.0f), 0,
-                        Random.Range(-2.0f, 2.0f)),
+                    huntersSpawnArea.position + new Vector3(Random.Range(-1.0f, 1.0f), 0,
+                        Random.Range(-1.0f, 1.0f)),
                     huntersSpawnArea.rotation);
 
                 yield return new WaitForSeconds(delay);
@@ -404,11 +471,12 @@ namespace RFM.Managers
         }
 
 
-        [PunRPC]
+        //[PunRPC]
         private void StartGameplay()
         {
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
+            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
             gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
@@ -525,6 +593,9 @@ namespace RFM.Managers
                         {
                             PlayerCaught();
                         }
+
+                        // Game should be over if all runners are caught
+
                         break;
                     }
             }
@@ -559,14 +630,33 @@ namespace RFM.Managers
         /// </summary>
         private static IEnumerator FetchConfigDataFromServer()
         {
-            //if Devmode then make time unlimited for testing
+            //the api is set we just have to get the map
+            var url = "https://api.npoint.io/2b73c02e13403750bcb0"; // This JSON file can be edited
+                                                                    // at https://www.npoint.io/docs/2b73c02e13403750bcb0
+
             if (RFM.Globals.DevMode)
             {
+                url = "https://api.npoint.io/d348af22a8d5fe5167f4"; // Use a different JSON file for dev mode.
+                                                                    // https://www.npoint.io/docs/d348af22a8d5fe5167f4
+            }
+
+
+            using UnityWebRequest www = UnityWebRequest.Get(url);
+            // www.SetRequestHeader("Authorization", userToken);
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("RFM Failed to load configuration from API. Using default values...");
+
                 CurrentGameConfiguration = new GameConfiguration
                 {
                     MatchMakingTime = 10,
                     TakePositionTime = 10,
-                    GameplayTime = 999999,
+                    GameplayTime = 60,
                     //GameRestartWaitTime = 3000,
                     MaxPlayersInRoom = 10,
                     RunnersToHuntersRatio = Vector2.one,
@@ -576,35 +666,7 @@ namespace RFM.Managers
             }
             else
             {
-                //the api is set we just have to get the map
-                var url = "https://api.npoint.io/2b73c02e13403750bcb0";
-                using UnityWebRequest www = UnityWebRequest.Get(url);
-                // www.SetRequestHeader("Authorization", userToken);
-                www.SendWebRequest();
-                while (!www.isDone)
-                {
-                    yield return null;
-                }
-                if (www.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
-                {
-                    Debug.LogError("RFM Failed to load configuration from API. Using default values...");
-
-                    CurrentGameConfiguration = new GameConfiguration
-                    {
-                        MatchMakingTime = 10,
-                        TakePositionTime = 10,
-                        GameplayTime = 60,
-                        //GameRestartWaitTime = 3000,
-                        MaxPlayersInRoom = 10,
-                        RunnersToHuntersRatio = Vector2.one,
-                        GainingMoneyTimeInterval = 1,
-                        MoneyPerInterval = 15,
-                    };
-                }
-                else
-                {
-                    CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
-                }
+                CurrentGameConfiguration = JsonUtility.FromJson<GameConfiguration>(www.downloadHandler.text);
             }
         }
 

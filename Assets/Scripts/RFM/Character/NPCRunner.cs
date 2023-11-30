@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 namespace RFM.Character
 {
-    public class NPCRunner : MonoBehaviour, IPunObservable
+    public class NPCRunner : Runner
     {
         public string nickName = "Player";
         public int money;
@@ -186,7 +186,7 @@ namespace RFM.Character
             }
         }
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
@@ -211,7 +211,7 @@ namespace RFM.Character
         {
             switch (photonEvent.Code)
             {
-                case PhotonEventCodes.BotRunnerCaught: // Event is only sent to the master client
+                case PhotonEventCodes.PlayerRunnerCaught: // Event is only sent to the master client
                     {
                         int viewId = (int)photonEvent.CustomData;
 

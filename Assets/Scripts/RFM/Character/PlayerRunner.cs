@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace RFM.Character
 {
-    public class PlayerRunner : MonoBehaviour, IPunObservable
+    public class PlayerRunner : Runner/*, IPunObservable*/
     {
         private TMPro.TextMeshProUGUI _showMoney;
         private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
 
-        public string nickName;
-        public float timeSurvived;
-        public int Money = 0;
+        [HideInInspector] public string nickName;
+        [HideInInspector] public float timeSurvived;
+        [HideInInspector] public int Money = 0;
         
         private void OnEnable()
         {
@@ -107,7 +107,7 @@ namespace RFM.Character
         //    EventsManager.PlayerCaughtByPlayer(npcHunter);
         //}
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
