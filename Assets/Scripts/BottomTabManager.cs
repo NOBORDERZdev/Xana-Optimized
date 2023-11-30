@@ -396,7 +396,7 @@ public class BottomTabManager : MonoBehaviour
 
             if (FeedUIController.Instance != null)
             {
-                FeedUIController.Instance.AddFriendPanel.SetActive(false);
+                FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
                 if (FeedUIController.Instance.feedUiScreen.activeSelf)
                 {

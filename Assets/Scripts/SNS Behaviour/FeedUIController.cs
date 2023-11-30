@@ -95,10 +95,6 @@ public class FeedUIController : MonoBehaviour
     public string feedFullViewScreenCallingFrom = "";
 
     [Space]
-    [Header("Hot Friend")]
-    public GameObject hotFriendContainer;
-
-    [Space]
     [Header("Find Friend screen References")]
     public GameObject findFriendScreen;
     public Transform findFriendContainer;
@@ -183,7 +179,11 @@ public class FeedUIController : MonoBehaviour
     [Space]
     [Header("Add Friends")]
     [SerializeField] public GameObject AddFriendPanel;
+    [SerializeField] public GameObject HotFriendPanel;
+    public GameObject hotFriendContainer;
     [SerializeField] GameObject AddFriendSerachBar;
+    [SerializeField] GameObject AddFriendFollowing;
+    [SerializeField] public GameObject AddFriendPanelFollowingCont;
 
     private void Awake()
     {
@@ -345,7 +345,9 @@ public class FeedUIController : MonoBehaviour
 
     public void SetAddFriendScreen(bool flag){
         AddFriendPanel.SetActive(flag);    
+        HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
+        AddFriendFollowing.SetActive(false);
     }
 
     public void OnClickAddFriendSearchBtn(){ 
@@ -1530,6 +1532,7 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileFollowingPaginationAPICall()
     {
+        print("~~~~~~~~");
         //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
         if (profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition <= 0.01f && isProfileFollowingDataLoaded)
         {
@@ -2771,6 +2774,16 @@ public class FeedUIController : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    #endregion
+
+    #region Add Friend Following
+    public void OnClickAddFriendFollowing(){
+        if (!AddFriendFollowing.activeInHierarchy) // not click on AddFriendFollowing
+        {
+            //HotFriendPanel.SetActive(false);
+            //APIController.Instance.GetAllFollowingUser
         }
     }
     #endregion
