@@ -23,7 +23,7 @@ namespace RFM
 
         public static bool IsRFMWorld = false;
         public static bool IsLocalPlayerHunter;
-        public static bool DevMode = false;
+        public static bool DevMode = true;
         public static int xanaStoneFee;
     }
 }
