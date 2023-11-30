@@ -215,6 +215,7 @@ public class BuildingDetect : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
+        AppearanceChange.transform.localPosition = Vector3.up*(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
