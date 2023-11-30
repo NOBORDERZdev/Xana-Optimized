@@ -100,7 +100,7 @@ namespace RFM.Managers
             Globals.gameState = Globals.GameState.InLobby;
             _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
-            // RFMButtonsLayoutManager.instance.LoadLayout();
+            //RFMButtonsLayoutManager.instance.LoadLayout();
             //gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
@@ -375,8 +375,8 @@ namespace RFM.Managers
                     hunterPosition.z + Random.Range(-1.0f, 1.0f));
 
                 //play VFX
-                hunterSpawnVFX.SetActive(true);
-                Destroy(hunterSpawnVFX, 10f);
+                //hunterSpawnVFX.SetActive(true);
+                //Destroy(hunterSpawnVFX, 10f);
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
             }
@@ -401,13 +401,13 @@ namespace RFM.Managers
 
                 var position = playersSpawnArea.position;
                 var randomPos = new Vector3(
-                    position.x + Random.Range(-1.0f, 1.0f),
+                    position.x + Random.Range(-2.0f, 2.0f),
                     position.y,
-                    position.z + Random.Range(-1.0f, 1.0f));
+                    position.z + Random.Range(-3.0f, 3.0f));
 
                 //play VFX
-                playerSpawnVFX.SetActive(true);
-                Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
+                //playerSpawnVFX.SetActive(true);
+                //Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
                                               // Should be instantiated or disabled.
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
@@ -476,7 +476,7 @@ namespace RFM.Managers
         {
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
-            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+            //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
             gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
@@ -502,7 +502,10 @@ namespace RFM.Managers
                 if (time < 7)
                     rfmCameraManager.SwtichCamera(0);
                 if (time < 4)
+                {
+                    huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
                     rfmCameraManager.SwtichCamera(1);
+                }
                 if (time < 1)
                     rfmCameraManager.SwitchOffAllCameras();
             }

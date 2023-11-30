@@ -9,7 +9,7 @@ namespace RFM
     public static class EventsManager
     {
         public static event Action onCountdownStart, onTakePositionTimeStart, onGameStart, onGameTimeup,
-            onShowScores, onHideCanvasElements, onToggleHelpPanel;
+            onShowScores, onHideCanvasElements, onToggleHelpPanel, onToggleSetLayoutPanel;
         //public static event Action</*NPCHunter*/Transform> onPlayerCaught;
         //public static event Action<PlayerHunter> onPlayerCaughtByPlayer;
 
@@ -22,5 +22,6 @@ namespace RFM
         public static void ShowScores() => onShowScores?.Invoke();
         public static void OnHideCanvasElements() => onHideCanvasElements?.Invoke();
         public static void OnToggleHelpPanel() => onToggleHelpPanel?.Invoke();
+        public static void onSetLayoutPanelActivate() => onToggleSetLayoutPanel?.Invoke();
     }
 }

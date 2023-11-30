@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.InputSystem.OnScreen;
 using Climbing;
 using System;
+using RFM;
 
 public class CanvasButtonsHandler : MonoBehaviour
 {
@@ -80,6 +81,8 @@ public class CanvasButtonsHandler : MonoBehaviour
 
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        if (setControlsLayoutBtnRFM)
+            setControlsLayoutBtnRFM.onClick.AddListener(ToggleRFMSetLayoutPanel);
         ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
@@ -88,7 +91,10 @@ public class CanvasButtonsHandler : MonoBehaviour
         if (_inst != this)
             _inst = this;
     }
-
+    public void ToggleRFMSetLayoutPanel() 
+    {
+        EventsManager.onSetLayoutPanelActivate();
+    }
     public void HandleJumpBtnAction(bool jump)
     {
         jumpAction?.Invoke(jump);
