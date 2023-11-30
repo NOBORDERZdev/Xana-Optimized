@@ -25,6 +25,7 @@ public class OwnedNFTContainer : ScriptableObject
     public void CreateJsonFromRoot(string json)
     {
         NFTlistdata =  Root.CreateFromJSON(json);
+        FillAllListAsyncWaiting();
     }
     public async Task FillAllListAsyncWaiting()
     {
