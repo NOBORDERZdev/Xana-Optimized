@@ -22,6 +22,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static bool dataArranged;
     public static bool dataSorted;
     public static bool isSpawnDownloaded;
+    bool isWorldInstantiated = true;
 
     public Transform assetParent;
     public TMPro.TextMeshProUGUI assetDownloadingText;
@@ -177,7 +178,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
-        if (BuilderData.mapData.data.json.otherItems.Count==0)
+        if (BuilderData.mapData.data.json.otherItems.Count == 0)
         {
             assetDownloadingText.enabled = false;
             assetDownloadingTextPotrait.enabled = false;
@@ -435,7 +436,11 @@ public class BuilderAssetDownloader : MonoBehaviour
         else
         {
             stopDownloading = true;
-            BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            if (isWorldInstantiated)
+            {
+                isWorldInstantiated = false;
+                BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            }
             //CheckPlacementOfAllObjects();
         }
     }
@@ -465,7 +470,11 @@ public class BuilderAssetDownloader : MonoBehaviour
         else
         {
             stopDownloading = true;
-            BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            if (isWorldInstantiated)
+            {
+                isWorldInstantiated = false;
+                BuilderEventManager.AfterWorldInstantiated?.Invoke();
+            }
             //CheckPlacementOfAllObjects();
         }
 

@@ -7,6 +7,7 @@ using Models;
 using System.Globalization;
 using System;
 using Photon.Pun;
+using System.Text.RegularExpressions;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -415,7 +416,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         //if (!DisplayMessageParentUI.activeInHierarchy)
         //{
+
         DisplayMessageText.text = DisplayMessage;
+        bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
+        Debug.LogError(isJPText);
+        if (isJPText)
+            DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
+        else
+            DisplayMessageText.font = GamificationComponentData.instance.orbitronFont;
+
         DisplayMessageParentUI.SetActive(true);
         //yield return new WaitForSeconds(.1f);
         //}
@@ -1124,7 +1133,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
-        string msg= hyperLinkPopupTexts.Length == 0 ? "Define Rules here !": hyperLinkPopupTexts + "\n";
+        string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
         hyperLinkCharCount = 0;
@@ -1392,20 +1401,23 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableDoorKeyUI();
     }
 
-    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    bool CheckJapaneseDisplayMessage(string displayTitle)
     {
 
-        for (int i = 0; i < displayTitle.text.Length; i++)
-        {
-            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
-            int unicode = charInfo.character;
-            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
-            {
-                print("JP font");
-                return true;
-            }
-        }
-        print("JP font not");
-        return false;
+        //for (int i = 0; i < displayTitle.text.Length; i++)
+        //{
+        //    TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+        //    int unicode = charInfo.character;
+        //    if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+        //    {
+        //        print("JP font");
+        //        return true;
+        //    }
+        //}
+        //print("JP font not");
+        //return false;
+        Regex regex = new Regex(@"\p{IsHiragana}|\p{IsKatakana}|\p{IsCJKUnifiedIdeographs}");
+
+        return regex.IsMatch(displayTitle);
     }
 }
