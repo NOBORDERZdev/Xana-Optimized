@@ -114,6 +114,18 @@ namespace RFM.Managers
         public void StartMatchMaking() // Need to be called from UI if XanaStone is required to play
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
+
+            Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime - 10, () => 
+            { // Close the room before the last 10 seconds
+                if (RFM.Globals.gameState == Globals.GameState.InLobby)
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        PhotonNetwork.CurrentRoom.IsOpen = false;
+                    }
+                }
+            });
+
             Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
@@ -531,7 +543,7 @@ namespace RFM.Managers
 
         }
 
-        private void PlayerCaught()
+        private void PlayerCaught(int hunterViewID = -1)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -541,15 +553,31 @@ namespace RFM.Managers
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
-            var randomHunter = FindObjectOfType<RFM.Character.NPCHunter>();
-
-            if (randomHunter != null)
+            if (_npcCamera == null)
             {
-                if (_npcCamera == null)
+                _npcCamera = Instantiate(npcCameraPrefab);
+            }
+
+            if (hunterViewID != -1)
+            {
+                var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
+                if (hunter != null)
                 {
-                    _npcCamera = Instantiate(npcCameraPrefab);
+                    _npcCamera.Init(hunter.cameraTarget);
                 }
-                _npcCamera.Init(randomHunter.CameraTarget);
+            }
+            else
+            {
+                var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+
+                if (randomHunter != null)
+                {
+                    if (_npcCamera == null)
+                    {
+                        _npcCamera = Instantiate(npcCameraPrefab);
+                    }
+                    _npcCamera.Init(randomHunter.cameraTarget);
+                }
             }
         }
 
@@ -590,11 +618,13 @@ namespace RFM.Managers
                 case PhotonEventCodes.PlayerRunnerCaught:
                     {
                         // PhotonView.Find(id)
-                        var viewId = (int)photonEvent.CustomData;
+                        //var viewId = (int)photonEvent.CustomData;
+                        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
+                        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
 
-                        if (viewId == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
+                        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
                         {
-                            PlayerCaught();
+                            PlayerCaught(hunterViewID);
                         }
 
                         // Game should be over if all runners are caught

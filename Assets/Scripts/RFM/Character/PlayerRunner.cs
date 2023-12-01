@@ -127,8 +127,10 @@ namespace RFM.Character
             {
                 case PhotonEventCodes.PlayerRunnerCaught:
                     {
-                        int viewId = (int)photonEvent.CustomData;
-                        if (viewId == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
+                        //int viewId = (int)photonEvent.CustomData;
+                        // get an array from custom data
+                        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
+                        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
                         {
                             PlayerRunnerCaught();
                         }

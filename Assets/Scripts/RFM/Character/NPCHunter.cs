@@ -5,15 +5,14 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
 using static StoreManager;
-using Random = UnityEngine.Random;
 
 namespace RFM.Character
 {
-    public class NPCHunter : MonoBehaviour, IPunObservable
+    public class NPCHunter : Hunter
     {
         // TODO : Assign a new target if the current target is caught by another hunter
 
-        [SerializeField] private Transform cameraPosition;
+        //[SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
         [SerializeField] private Animator npcAnim;
         [SerializeField] private string velocityNameX, velocityNameY;
@@ -27,7 +26,7 @@ namespace RFM.Character
 
         private bool _hasTarget = false;
 
-        public Transform CameraTarget => cameraPosition;
+        // public Transform cameraTarget/* => cameraPosition*/;
 
         // Catch player in range
         [SerializeField] private float timeToCatchRunner = 5;
@@ -137,7 +136,6 @@ namespace RFM.Character
                 {
                     _target = closestRunner.transform;
                     _hasTarget = true;
-                    Debug.LogError("Closest target locked");
                 }
                 else
                 {
@@ -270,12 +268,16 @@ namespace RFM.Character
 
                     // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
 
-                    var viewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    var myViewId = GetComponent<PhotonView>().ViewID;
+
+                    object[] prameters = new object[] { runnerViewId, myViewId };
 
                     PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                        viewId,
+                        prameters,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
+
                 }
             }
         }
@@ -332,10 +334,13 @@ namespace RFM.Character
                 // Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
                 // The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
                 // Send photonview ID of other in parameters.
-                var viewId = other.GetComponent<PhotonView>().ViewID;
+                var runnerViewId = other.GetComponent<PhotonView>().ViewID;
+                var myViewId = GetComponent<PhotonView>().ViewID;
 
-                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught, 
-                    viewId, 
+                object[] prameters = new object[] { runnerViewId, myViewId};
+
+                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                    prameters, 
                     new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
                     SendOptions.SendReliable);
             }
@@ -347,7 +352,7 @@ namespace RFM.Character
         }
 
 
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {

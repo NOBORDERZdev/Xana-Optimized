@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RFM.Character
 {
-    public class PlayerHunter : MonoBehaviour
+    public class PlayerHunter : Hunter
     {
         // [SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
@@ -15,7 +15,7 @@ namespace RFM.Character
         //private List<GameObject> _players;
         //private Transform _target;
 
-        public Transform cameraTarget/* => cameraPosition*/;
+        // public Transform cameraTarget/* => cameraPosition*/;
 
         private void Start()
         {
@@ -50,7 +50,6 @@ namespace RFM.Character
             var playerRunner = other.GetComponent<PlayerRunner>();
             if (playerRunner != null && playerRunner.enabled)
             {
-                Debug.LogError("PlayerHunter: OnTriggerEnter: PlayerRunner");
                 //_players.Remove(other.gameObject);
                 //_target = null;
                 killVFX.SetActive(true);
@@ -58,12 +57,18 @@ namespace RFM.Character
                 // other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
 
                 var viewId = other.GetComponent<PhotonView>().ViewID;
+                var myViewId = GetComponent<PhotonView>().ViewID;
 
                 PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                    viewId,
+                    /*viewId*/new object[viewId, myViewId],
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
+        }
+
+        public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            
         }
     }
 }
