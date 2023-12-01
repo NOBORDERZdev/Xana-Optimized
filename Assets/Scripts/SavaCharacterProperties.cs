@@ -373,6 +373,10 @@ public class SavingCharacterDataClass
     {
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);
     }
+    public SavingCharacterDataClass()
+    {
+
+    }
 }
 
 public class BoxerNFTDataClass
