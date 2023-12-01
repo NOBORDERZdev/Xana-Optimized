@@ -2003,7 +2003,7 @@ MonoBehaviour:
       stunned: 0
       resetStunValue: 0
     basicMovesToggle: 0
-    statesToggle: 1
+    statesToggle: 0
   moveClassification:
     attackType: 1
     hitType: 0
@@ -2038,8 +2038,8 @@ MonoBehaviour:
     nextMoveStartupFrame: 4
     linkableMoves:
     - {fileID: 11400000, guid: ed8fe64afd430fb40a6208419e3df4f8, type: 2}
-    linkableMovesToggle: 1
-    hitConfirmToggle: 1
+    linkableMovesToggle: 0
+    hitConfirmToggle: 0
     counterMoveToggle: 1
   - linkType: 0
     allowBuffer: 1
@@ -2063,8 +2063,8 @@ MonoBehaviour:
     nextMoveStartupFrame: 7
     linkableMoves:
     - {fileID: 11400000, guid: 4b9d5ea5671119d4880ef55ab362d82f, type: 2}
-    linkableMovesToggle: 1
-    hitConfirmToggle: 1
+    linkableMovesToggle: 0
+    hitConfirmToggle: 0
     counterMoveToggle: 0
   gauges:
   - castingFrame: 0
@@ -2216,7 +2216,7 @@ MonoBehaviour:
     hitType: 0
     resetPreviousHorizontalPush: 1
     resetPreviousVerticalPush: 1
-    resetPreviousSidewaysPush: 0
+    resetPreviousSidewaysPush: 1
     resetJumpForce: 0
     applyDifferentAirForce: 1
     applyDifferentBlockForce: 0
@@ -2224,7 +2224,7 @@ MonoBehaviour:
     applyDifferentSelfBlockForce: 0
     _pushForce:
       x:
-        _serializedValue: 42949672960
+        _serializedValue: 0
       y:
         _serializedValue: 0
       z:
@@ -2323,7 +2323,7 @@ MonoBehaviour:
           _serializedValue: 0
     hitToggle: 1
     damageOptionsToggle: 0
-    hitStunOptionsToggle: 1
+    hitStunOptionsToggle: 0
     forceOptionsToggle: 1
     opponentForceToggle: 1
     selfForceToggle: 0
