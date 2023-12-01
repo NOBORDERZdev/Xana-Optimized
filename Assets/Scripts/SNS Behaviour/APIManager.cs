@@ -646,6 +646,45 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    public void SetAdFrndFollowing(){ 
+        StartCoroutine(IEAdFrndAllFollowing(1,500));
+    }
+
+    public AllFollowingRoot adFrndFollowing;
+    public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + pageNum + "/" + pageSize)))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("GetAllFollowing Data" + data);
+                adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                APIController.Instance.SpwanAdFrndFollowing();
+                
+
+                //switch (getFollowingFor)
+                //{
+                //    case "Message":
+                //        APIController.Instance.GetAllFollowingUser(pageNum);
+                //        break;
+                //    default:
+                //        break;
+                //}
+                // Debug.Log(root.data.count);
+            }
+        }
+    }
+
     //this api is used to get all followers.......
     public void RequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
     {
@@ -885,6 +924,39 @@ public class APIManager : MonoBehaviour
                 profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
 
                 FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
+            }
+        }
+    }
+
+
+    public void AdFrndFollowingFetch(){ 
+       foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
+       {
+            Destroy(item.gameObject);
+       }
+       
+    }
+
+     public IEnumerator IEAdFrndFollowingUser(string user_Id, int pageNum, int pageSize)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            //FeedUIController.Instance.ShowLoader(false);
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
+                AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
             }
         }
     }
@@ -2416,12 +2488,14 @@ public class APIManager : MonoBehaviour
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
+    public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
 
     [Space]
     [Header("Profile Follower Following")]
     public AllFollowersRoot profileAllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot profileAllFollowingRoot = new AllFollowingRoot();
-
+    public AllFollowingRoot AdFrndFollowingRoot = new AllFollowingRoot();
+    
     [Space]
     [Header("Current Feed Comment List Response")]
     [SerializeField]

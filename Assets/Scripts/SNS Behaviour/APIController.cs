@@ -485,6 +485,27 @@ public class APIController : MonoBehaviour
             FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
         }
     }
+
+    public void AdFrndFollowingFetch(){
+        foreach (Transform item in FeedUIController.Instance.adFrndFollowingListContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        APIManager.Instance.SetAdFrndFollowing();
+    }
+
+    public void SpwanAdFrndFollowing(){ 
+        for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
+        {
+            if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+            {
+                GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i]);
+                followingObject.GetComponent<Button>().enabled= false;
+            }
+        }
+    }
+
     #endregion
 
     #region Chat Module Reference................................................................................

@@ -158,8 +158,10 @@ public class FeedUIController : MonoBehaviour
     public GameObject profileFollowerFollowingListScreen;
     public Transform profileFollowerListContainer;
     public Transform profileFollowingListContainer;
+    public Transform adFrndFollowingListContainer;
     public GameObject followerPrefab;
     public GameObject followingPrefab;
+    public GameObject adFriendFollowingPrefab;
     public TextMeshProUGUI profileFFScreenTitleText;
     public Transform profileFFLineSelection;
     public Transform[] profileFFSelectionTab;
@@ -168,19 +170,25 @@ public class FeedUIController : MonoBehaviour
     public ScrollRectFasterEx[] profileFFScreenScrollrectFasterEXList;
     public int profileFollowerPaginationPageNo = 1;
     public int profileFollowingPaginationPageNo = 1;
+    public int adFrndFollowingPaginationPageNo = 1;
     public bool isProfileFollowerDataLoaded = false;
     public bool isProfileFollowingDataLoaded = false;
+    public bool isAdFrndFollowingDataLoaded = false;
 
     private List<int> profileFollowerLoadedItemIDList = new List<int>();
     private List<int> profileFollowingLoadedItemIDList = new List<int>();
+    private List<int> adFrndFollowingLoadedItemIDList = new List<int>();
     public List<FollowerItemController> profileFollowerItemControllersList = new List<FollowerItemController>();
     public List<FollowingItemController> profileFollowingItemControllersList = new List<FollowingItemController>();
+    public List<FollowingItemController> AdFrndFollowingItemControllersList = new List<FollowingItemController>();
 
     [Space]
     [Header("Add Friends")]
     [SerializeField] public GameObject AddFriendPanel;
     [SerializeField] public GameObject HotFriendPanel;
     public GameObject hotFriendContainer;
+    [SerializeField] GameObject AddFrndFollowingPanel;
+    [SerializeField] GameObject AddFrndFollowingContainer;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
@@ -913,6 +921,18 @@ public class FeedUIController : MonoBehaviour
         //findFriendScreen.SetActive(true);
     }
 
+    /// <summary>
+    /// On click following btn of ad friends screen
+    /// </summary>
+    public void OnClickAdFriendsFollowingBtn()
+    {
+        if (!AddFrndFollowingPanel.activeInHierarchy)
+        {
+            AddFrndFollowingPanel.SetActive(true);
+            APIController.Instance.AdFrndFollowingFetch();
+        }
+    }
+
     #region find User references
     //this method is used to On find value inputfield value change.......
     public void OnValueChangeFindFriend()
@@ -1483,6 +1503,28 @@ public class FeedUIController : MonoBehaviour
         waitToProfileFollowingDataLoadCo = StartCoroutine(WaitToProfileFollowingDataLoad(pageNum));
     }
 
+     Coroutine waitToAdFrndFollowingDataLoadCo;
+    public void AdFrndGetAllFollowing(int pageNum)
+    {
+        //Debug.Log("ProfileGetAllFollowing:" + APIManager.Instance.profileAllFollowingRoot.data.rows.Count + "    :pageNum:" + pageNum);
+        for (int i = 0; i < APIManager.Instance.AdFrndFollowingRoot.data.rows.Count; i++)
+        {
+            if (!adFrndFollowingLoadedItemIDList.Contains(APIManager.Instance.AdFrndFollowingRoot.data.rows[i].following.id))
+            {
+                GameObject followingObject = Instantiate(followingPrefab, adFrndFollowingListContainer);
+                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.AdFrndFollowingRoot.data.rows[i]);
+                AdFrndFollowingItemControllersList.Add(followingObject.GetComponent<FollowingItemController>());
+                adFrndFollowingLoadedItemIDList.Add(APIManager.Instance.AdFrndFollowingRoot.data.rows[i].following.id);
+            }
+        }
+
+        if (waitToAdFrndFollowingDataLoadCo != null)
+        {
+            StopCoroutine(waitToAdFrndFollowingDataLoadCo);
+        }
+        waitToAdFrndFollowingDataLoadCo = StartCoroutine(WaitToAdFrndFollowingDataLoad(pageNum));
+    }
+
     Coroutine waitToProfileFollowingDataLoadCo;
     IEnumerator WaitToProfileFollowingDataLoad(int pageNum)
     {
@@ -1491,6 +1533,16 @@ public class FeedUIController : MonoBehaviour
         if (pageNum > 1 && APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
         {
             profileFollowingPaginationPageNo += 1;
+        }
+    }
+
+    IEnumerator WaitToAdFrndFollowingDataLoad(int pageNum)
+    {
+        yield return new WaitForSeconds(0.5f);
+        isAdFrndFollowingDataLoaded = true;
+        if (pageNum > 1 && APIManager.Instance.AdFrndFollowingRoot.data.rows.Count > 0)
+        {
+            adFrndFollowingPaginationPageNo += 1;
         }
     }
 
