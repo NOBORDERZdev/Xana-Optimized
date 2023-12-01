@@ -245,7 +245,7 @@ namespace RFM.Character
 
 
             //if (RFM.Globals.DevMode) return;
-            if (!PhotonNetwork.IsMasterClient) return;
+            //if (!PhotonNetwork.IsMasterClient) return;
 
 
             // Catch player if in range of a sphere of radius = catchRadius
@@ -265,18 +265,20 @@ namespace RFM.Character
                     _hasTarget = false;
                     killVFX.SetActive(true);
 
+                    _inRangePlayer.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
+
 
                     // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
 
-                    var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
-                    var myViewId = GetComponent<PhotonView>().ViewID;
+                    //var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    //var myViewId = GetComponent<PhotonView>().ViewID;
 
-                    object[] prameters = new object[] { runnerViewId, myViewId };
+                    //object[] prameters = new object[] { runnerViewId, myViewId };
 
-                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                        prameters,
-                        new RaiseEventOptions { Receivers = ReceiverGroup.All },
-                        SendOptions.SendReliable);
+                    //PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                    //    prameters,
+                    //    new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                    //    SendOptions.SendReliable);
 
                 }
             }
@@ -290,12 +292,15 @@ namespace RFM.Character
                 var playerRunner = col.GetComponent<PlayerRunner>();
                 if (playerRunner != null && playerRunner.enabled)
                 {
-                    if (_inRangePlayer == col.gameObject) // if this runner is already in range, return it
-                        return _inRangePlayer;
-
-                    //if (col.GetComponent<PhotonView>().IsMine) // ?
+                    if (col.GetComponent<PhotonView>().IsMine)
                     {
-                        return col.gameObject;
+                        if (_inRangePlayer == col.gameObject) // if this runner is already in range, return it
+                            return _inRangePlayer;
+
+                        //if (col.GetComponent<PhotonView>().IsMine) // ?
+                        {
+                            return col.gameObject;
+                        }
                     }
                 }
             }
@@ -306,7 +311,7 @@ namespace RFM.Character
         private void OnTriggerEnter(Collider other)
         {
             //if (RFM.Globals.DevMode) return;
-            if (!PhotonNetwork.IsMasterClient) return;
+            //if (!PhotonNetwork.IsMasterClient) return;
             if (RFM.Globals.gameState != RFM.Globals.GameState.Gameplay) // Only catch players in gameplay state
             {
                 return;
@@ -315,34 +320,48 @@ namespace RFM.Character
             //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             if (other.GetComponentInParent<NPCRunner>())
             {
-                _allRunners.Remove(other.gameObject);
-                _hasTarget = false;
-                killVFX.SetActive(true);
-                other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    _allRunners.Remove(other.gameObject);
+                    _hasTarget = false;
+                    killVFX.SetActive(true);
+                    other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
 
-                return;
+                    return;
+                }
+                
             }
 
             //else if (other.CompareTag(Globals.PLAYER_TAG))
             var playerRunner = other.GetComponent<PlayerRunner>();
             if (playerRunner != null && playerRunner.enabled)
             {
-                _allRunners.Remove(other.gameObject);
-                _hasTarget = false;
-                killVFX.SetActive(true);
+                // if the playerRunner is the local player, call the PlayerRunnerCaught() method on the PlayerRunner script
+                if (other.GetComponent<PhotonView>().IsMine)
+                {
+                    _allRunners.Remove(other.gameObject);
+                    _hasTarget = false;
+                    killVFX.SetActive(true);
+                    other.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
+                }
 
-                // Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
-                // The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
-                // Send photonview ID of other in parameters.
-                var runnerViewId = other.GetComponent<PhotonView>().ViewID;
-                var myViewId = GetComponent<PhotonView>().ViewID;
 
-                object[] prameters = new object[] { runnerViewId, myViewId};
+                //_allRunners.Remove(other.gameObject);
+                //_hasTarget = false;
+                //killVFX.SetActive(true);
 
-                PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                    prameters, 
-                    new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
-                    SendOptions.SendReliable);
+                //// Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
+                //// The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
+                //// Send photonview ID of other in parameters.
+                //var runnerViewId = other.GetComponent<PhotonView>().ViewID;
+                //var myViewId = GetComponent<PhotonView>().ViewID;
+
+                //object[] prameters = new object[] { runnerViewId, myViewId};
+
+                //PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                //    prameters, 
+                //    new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
+                //    SendOptions.SendReliable);
             }
         }
 

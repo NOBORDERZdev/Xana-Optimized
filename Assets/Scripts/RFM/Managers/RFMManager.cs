@@ -543,7 +543,7 @@ namespace RFM.Managers
 
         }
 
-        private void PlayerCaught(int hunterViewID = -1)
+        public void PlayerCaught(/*int hunterViewID = -1*//*Transform hunter*/)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -558,27 +558,35 @@ namespace RFM.Managers
                 _npcCamera = Instantiate(npcCameraPrefab);
             }
 
-            if (hunterViewID != -1)
-            {
-               var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
-               if (hunter != null)
-               {
-                   _npcCamera.Init(hunter.cameraTarget);
-               }
-            }
-            else
-            {
-                var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+            var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
 
-                if (randomHunter != null)
-                {
-                    if (_npcCamera == null)
-                    {
-                        _npcCamera = Instantiate(npcCameraPrefab);
-                    }
-                    _npcCamera.Init(randomHunter.cameraTarget);
-                }
+            if (randomHunter != null)
+            {
+                _npcCamera.Init(randomHunter.cameraTarget);
             }
+
+
+            ////if (hunterViewID != -1)
+            //{
+            //   //var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
+            //   //if (hunter != null)
+            //   //{
+            //   //    _npcCamera.Init(hunter.cameraTarget);
+            //   //}
+            //}
+            ////else
+            //{
+            //    //var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+
+            //    //if (randomHunter != null)
+            //    {
+            //        //if (_npcCamera == null)
+            //        //{
+            //        //    _npcCamera = Instantiate(npcCameraPrefab);
+            //        //}
+            //        //_npcCamera.Init(randomHunter.cameraTarget);
+            //    }
+            //}
         }
 
 
@@ -615,22 +623,22 @@ namespace RFM.Managers
                         StartCoroutine(StartRFM());
                         break;
                     }
-                case PhotonEventCodes.PlayerRunnerCaught:
-                    {
-                        // PhotonView.Find(id)
-                        //var viewId = (int)photonEvent.CustomData;
-                        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
-                        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
+                //case PhotonEventCodes.PlayerRunnerCaught:
+                //    {
+                //        // PhotonView.Find(id)
+                //        //var viewId = (int)photonEvent.CustomData;
+                //        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
+                //        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
 
-                        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
-                        {
-                            PlayerCaught(hunterViewID);
-                        }
+                //        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
+                //        {
+                //            PlayerCaught(hunterViewID);
+                //        }
 
-                        // Game should be over if all runners are caught
+                //        // Game should be over if all runners are caught
 
-                        break;
-                    }
+                //        break;
+                //    }
             }
         }
 
