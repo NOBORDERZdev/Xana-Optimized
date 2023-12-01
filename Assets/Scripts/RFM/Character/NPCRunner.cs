@@ -213,7 +213,7 @@ namespace RFM.Character
             {
                 case PhotonEventCodes.PlayerRunnerCaught: // Event is only sent to the master client
                     {
-                        int viewId = (int)photonEvent.CustomData;
+                        int viewId = (int)((object[])photonEvent.CustomData)[0];
 
                         if (viewId == GetComponent<PhotonView>().ViewID)
                         {

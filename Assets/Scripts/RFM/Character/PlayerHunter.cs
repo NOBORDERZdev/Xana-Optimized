@@ -36,13 +36,16 @@ namespace RFM.Character
                 killVFX.SetActive(true);
                 // other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
 
-                var viewId = other.GetComponent<PhotonView>().ViewID;
+                //var viewId = other.GetComponent<PhotonView>().ViewID;
+                var runnerViewId = other.GetComponent<PhotonView>().ViewID;
+                var myViewId = GetComponent<PhotonView>().ViewID;
+
+                object[] prameters = new object[] { runnerViewId, myViewId };
 
                 PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                    viewId,
+                    prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
                     SendOptions.SendReliable);
-
                 return;
             }
             
@@ -56,11 +59,13 @@ namespace RFM.Character
 
                 // other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
 
-                var viewId = other.GetComponent<PhotonView>().ViewID;
+                var runnerViewId = other.GetComponent<PhotonView>().ViewID;
                 var myViewId = GetComponent<PhotonView>().ViewID;
 
+                object[] prameters = new object[] { runnerViewId, myViewId };
+
                 PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                    /*viewId*/new object[viewId, myViewId],
+                    prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
