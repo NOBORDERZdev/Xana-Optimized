@@ -284,7 +284,9 @@ namespace RFM.Character
         {
             foreach (var col in Physics.OverlapSphere(transform.position, catchRadius))
             {
-                if (col.CompareTag(Globals.PLAYER_TAG))
+                //if (col.CompareTag(Globals.PLAYER_TAG))
+                var playerRunner = col.GetComponent<PlayerRunner>();
+                if (playerRunner != null && playerRunner.enabled)
                 {
                     if (_inRangePlayer == col.gameObject) // if this runner is already in range, return it
                         return _inRangePlayer;
@@ -303,9 +305,13 @@ namespace RFM.Character
         {
             //if (RFM.Globals.DevMode) return;
             if (!PhotonNetwork.IsMasterClient) return;
+            if (RFM.Globals.gameState != RFM.Globals.GameState.Gameplay) // Only catch players in gameplay state
+            {
+                return;
+            }
 
             //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
-            if (other.GetComponent<NPCRunner>())
+            if (other.GetComponentInParent<NPCRunner>())
             {
                 _allRunners.Remove(other.gameObject);
                 _hasTarget = false;

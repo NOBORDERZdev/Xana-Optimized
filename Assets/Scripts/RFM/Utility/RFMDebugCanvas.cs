@@ -15,14 +15,14 @@ namespace RFM.Utility
 
         private void Awake()
         {
-            if (RFM.Globals.DevMode)
+            //if (RFM.Globals.DevMode)
             {
                 gameObject.SetActive(true);
             }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            //else
+            //{
+            //    gameObject.SetActive(false);
+            //}
         }
 
         private void Update()

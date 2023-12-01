@@ -23,8 +23,13 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
+            if (RFM.Globals.gameState != RFM.Globals.GameState.Gameplay) // Only catch players in gameplay state
+            {
+                return;
+            }
+
             //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
-            if (other.GetComponent<NPCRunner>())
+            if (other.GetComponentInParent<NPCRunner>())
             {
                 //_players.Remove(other.gameObject);
                 //_target = null;

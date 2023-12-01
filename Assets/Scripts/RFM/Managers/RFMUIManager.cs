@@ -24,7 +24,7 @@ namespace RFM.Managers
 
         [Header("XanaStones")]
         [SerializeField] private TextMeshProUGUI playerXanaStones;
-        [SerializeField] private TextMeshProUGUI playerEarnedXanaStones;
+        //[SerializeField] private TextMeshProUGUI playerEarnedXanaStones;
         [SerializeField] private GameObject xanaStonePopup;
         [SerializeField] private GameObject notEnoughXanaStonesPopup;
 
@@ -135,7 +135,7 @@ namespace RFM.Managers
                 earnedMoney = (int)_money * RFM.Globals.xanaStoneFee;
             }
 
-            playerEarnedXanaStones.text = $"You have earned <color=purple>${earnedMoney}</color> XanaStones";
+            //playerEarnedXanaStones.text = $"You have earned <color=purple>${earnedMoney}</color> XanaStones";
         }
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
