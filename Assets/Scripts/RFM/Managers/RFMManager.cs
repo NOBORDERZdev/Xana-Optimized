@@ -558,15 +558,15 @@ namespace RFM.Managers
                 _npcCamera = Instantiate(npcCameraPrefab);
             }
 
-            //if (hunterViewID != -1)
-            //{
-            //    var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
-            //    if (hunter != null)
-            //    {
-            //        _npcCamera.Init(hunter.cameraTarget);
-            //    }
-            //}
-            //else
+            if (hunterViewID != -1)
+            {
+               var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
+               if (hunter != null)
+               {
+                   _npcCamera.Init(hunter.cameraTarget);
+               }
+            }
+            else
             {
                 var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
 
