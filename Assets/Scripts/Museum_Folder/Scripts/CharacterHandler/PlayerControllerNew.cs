@@ -1120,6 +1120,8 @@ public class PlayerControllerNew : MonoBehaviour
         else if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             gravityVector.y = JumpVelocity * 2;
         }
 
