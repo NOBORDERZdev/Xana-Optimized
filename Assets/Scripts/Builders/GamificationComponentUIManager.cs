@@ -355,7 +355,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine ElapsedTimerCoroutine;
     public void EnableElapseTimeCounDownUI(float time, bool isRunning)
     {
-        Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
+        //Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
         if (isRunning)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent);
