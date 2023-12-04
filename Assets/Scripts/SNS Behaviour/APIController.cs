@@ -500,7 +500,7 @@ public class APIController : MonoBehaviour
             if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
             {
                 GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
-                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i]);
+                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i],false);
                 followingObject.GetComponent<Button>().enabled= false;
             }
         }

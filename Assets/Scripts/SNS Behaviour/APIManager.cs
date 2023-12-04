@@ -3120,7 +3120,8 @@ public class SearchUserRow
     public int followingCount;
     public int feedCount;
     public int followerCount;
-    public bool isFollowing;
+    public bool is_following_me;
+    public bool am_i_following;
     public AllUserWithFeedUserProfile userProfile;
 }
 

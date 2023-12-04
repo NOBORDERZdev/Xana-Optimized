@@ -82,7 +82,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 GetImageFromAWS(searchUserRow.avatar, profileImage);
             }
         }
-        FollowFollowingSetUp(searchUserRow.isFollowing);
+        FollowFollowingSetUp(searchUserRow.is_following_me);
     }
 
     public void OnClickUserProfileButton()
@@ -120,7 +120,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         singleUserProfileData.followerCount = searchUserRow.followerCount;
         singleUserProfileData.followingCount = searchUserRow.followingCount;
         singleUserProfileData.feedCount = searchUserRow.feedCount;
-        singleUserProfileData.isFollowing = searchUserRow.isFollowing;
+        singleUserProfileData.isFollowing = searchUserRow.is_following_me;
 
         SingleUserProfile singleUserProfile = new SingleUserProfile();
         singleUserProfileData.userProfile = singleUserProfile;
@@ -161,7 +161,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (searchUserRow != null)
         {
-            if (searchUserRow.isFollowing)
+            if (searchUserRow.is_following_me)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
                 FeedUIController.Instance.ShowLoader(true);//active api loader
@@ -204,7 +204,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 string data = www.downloadHandler.text;
                 Debug.Log("follow user success data:" + data);
 
-                searchUserRow.isFollowing = true;
+                searchUserRow.is_following_me = true;
                 FollowFollowingSetUp(true);
 
                 //refresh Feed API.......
@@ -240,7 +240,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                Debug.Log("user unfollow success data:" + data);
-                searchUserRow.isFollowing = false;
+                searchUserRow.is_following_me = false;
                 //FollowFollowingSetUp(false);
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
                 this.gameObject.SetActive(false);
