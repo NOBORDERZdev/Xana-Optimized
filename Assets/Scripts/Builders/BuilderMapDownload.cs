@@ -677,8 +677,8 @@ public class BuilderMapDownload : MonoBehaviour
             }
         }
 
-
-        meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        if (!newObj.name.Contains("pfBLD1210015_XANA"))
+            meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         {

@@ -75,9 +75,9 @@ public class BlindComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
+        if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
         {
-            PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+            PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
             PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
         }
