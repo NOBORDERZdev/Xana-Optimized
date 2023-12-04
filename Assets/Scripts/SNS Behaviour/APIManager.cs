@@ -653,7 +653,8 @@ public class APIManager : MonoBehaviour
     public AllFollowingRoot adFrndFollowing;
     public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + pageNum + "/" + pageSize)))
+        using (/*UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + pageNum + "/" + pageSize))*/
+            UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + PlayerPrefs.GetString("UserName") + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 

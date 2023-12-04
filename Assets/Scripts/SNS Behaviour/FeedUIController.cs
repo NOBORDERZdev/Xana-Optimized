@@ -2827,16 +2827,8 @@ public class FeedUIController : MonoBehaviour
                 }
             }
         }
-    }
     #endregion
-
-    #region Add Friend Following
-    public void OnClickAddFriendFollowing(){
-        if (!AddFriendFollowing.activeInHierarchy) // not click on AddFriendFollowing
-        {
-            //HotFriendPanel.SetActive(false);
-            //APIController.Instance.GetAllFollowingUser
-        }
     }
-    #endregion
+    
 }
+

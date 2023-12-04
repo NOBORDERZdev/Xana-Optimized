@@ -242,7 +242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5333363854145499617
 RectTransform:
   m_ObjectHideFlags: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -347,8 +347,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5333363855922748485}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnclickFollowFollowingButton
+        m_TargetAssemblyTypeName: FindFriendWithNameItem, Assembly-CSharp
+        m_MethodName: OnClickUnFollowAndRefershAdFrndFollowing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Follow
+  m_text: Following
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
@@ -706,8 +706,8 @@ MonoBehaviour:
   userNameText: {fileID: 5333363856199227687}
   userBioText: {fileID: 1734628346159710465}
   profileImage: {fileID: 1289804007355833246}
-  followFollowingText: {fileID: 5333363855164092917}
-  followFollowingImage: {fileID: 5333363854145499623}
+  followFollowingText: {fileID: 0}
+  followFollowingImage: {fileID: 0}
   followColor: {r: 0, g: 0, b: 0, a: 1}
   followingColor: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   defaultSP: {fileID: 0}
@@ -757,8 +757,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5333363855922748485}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClickUserProfileButton
+        m_TargetAssemblyTypeName: FindFriendWithNameItem, Assembly-CSharp
+        m_MethodName: OnClickUnFollowAndRefershAdFrndFollowing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

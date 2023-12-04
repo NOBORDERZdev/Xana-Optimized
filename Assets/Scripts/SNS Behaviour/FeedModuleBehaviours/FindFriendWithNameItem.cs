@@ -224,13 +224,12 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("userId", user_Id);
-
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UnFollowAUser), form))
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
 
             yield return www.SendWebRequest();
-
+            print("www" + www.downloadHandler);
             FeedUIController.Instance.ShowLoader(false);//false api loader
 
             if (www.isNetworkError || www.isHttpError)
@@ -242,8 +241,9 @@ public class FindFriendWithNameItem : MonoBehaviour
                 string data = www.downloadHandler.text;
                Debug.Log("user unfollow success data:" + data);
                 searchUserRow.isFollowing = false;
-                FollowFollowingSetUp(false);
+                //FollowFollowingSetUp(false);
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                this.gameObject.SetActive(false);
             }
         }
     }
@@ -270,6 +270,16 @@ public class FindFriendWithNameItem : MonoBehaviour
                 }
             });
             return;
+        }
+    }
+
+    public void OnClickUnFollowAndRefershAdFrndFollowing()
+    {
+        if (GetComponent<FollowingItemController>())
+        {
+            FeedUIController.Instance.ShowLoader(true);
+            RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
+            //FeedUIController.Instance.OnClickAddFriendFollowing();
         }
     }
 
