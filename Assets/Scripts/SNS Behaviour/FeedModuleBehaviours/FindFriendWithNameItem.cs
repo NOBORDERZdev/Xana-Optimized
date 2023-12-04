@@ -82,7 +82,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 GetImageFromAWS(searchUserRow.avatar, profileImage);
             }
         }
-        FollowFollowingSetUp(searchUserRow.is_following_me);
+        FollowFollowingSetUp(searchUserRow.am_i_following);
     }
 
     public void OnClickUserProfileButton()
