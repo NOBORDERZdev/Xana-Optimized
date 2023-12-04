@@ -853,7 +853,10 @@ public class PlayerControllerNew : MonoBehaviour
 
         _IsGrounded = characterController.isGrounded;
         if (_IsGrounded)
+        {
             canDoubleJump = false;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+        }
 
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -1117,6 +1120,8 @@ public class PlayerControllerNew : MonoBehaviour
         else if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             gravityVector.y = JumpVelocity * 2;
         }
 
@@ -1313,9 +1318,16 @@ public class PlayerControllerNew : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             Debug.Log("Double jump testing ");
             gravityVector.y = JumpVelocity * 2;
         }
+    }
+
+    void StopDoubleJump()
+    {
+        animator.SetBool("canDoubleJump", false);
     }
     /// </summary>
 
@@ -1494,6 +1506,7 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
         }
+        animator.SetBool("standJump", false);
     }
 
     void AnimationBehaviourNinjaMode()

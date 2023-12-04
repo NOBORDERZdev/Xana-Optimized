@@ -7,6 +7,7 @@ using Models;
 using System.Globalization;
 using System;
 using Photon.Pun;
+using System.Text.RegularExpressions;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -241,7 +242,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public void DisplayDownText()
     {
-        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 5 < narrationtotalHeight)
+        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 4 <= narrationtotalHeight)
         {
             narrationScroll.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
@@ -354,7 +355,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine ElapsedTimerCoroutine;
     public void EnableElapseTimeCounDownUI(float time, bool isRunning)
     {
-        //Debug.Log("EnableElapseTimeCounDownUI" + time);
+        //Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
         if (isRunning)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent);
@@ -380,13 +381,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
-        while (time >= 0 && isRunning)
-        {
-            ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
-            yield return new WaitForSeconds(1);
-            time++;
-        }
-        yield return new WaitForSeconds(time);
+        if (isRunning)
+            while (time >= 0)
+            {
+                ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
+                yield return new WaitForSeconds(1);
+                time++;
+            }
+        else
+            yield return new WaitForSeconds(time);
         DisableElapseTimeCounDownUI();
     }
     public void DisableElapseTimeCounDownUI()
@@ -415,7 +418,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         //if (!DisplayMessageParentUI.activeInHierarchy)
         //{
+
         DisplayMessageText.text = DisplayMessage;
+        bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
+        Debug.LogError(isJPText);
+        if (isJPText)
+            DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
+        else
+            DisplayMessageText.font = GamificationComponentData.instance.orbitronFont;
+
         DisplayMessageParentUI.SetActive(true);
         //yield return new WaitForSeconds(.1f);
         //}
@@ -1124,7 +1135,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
-        string msg= hyperLinkPopupTexts.Length == 0 ? "Define Rules here !": hyperLinkPopupTexts + "\n";
+        string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
         hyperLinkCharCount = 0;
@@ -1183,7 +1194,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void HyperLinkDownText()
     {
-        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 5 < hyperlinkTotalHeight)
+        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 4 <= hyperlinkTotalHeight)
         {
             hyperLinkScrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
@@ -1392,20 +1403,23 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableDoorKeyUI();
     }
 
-    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    bool CheckJapaneseDisplayMessage(string displayTitle)
     {
 
-        for (int i = 0; i < displayTitle.text.Length; i++)
-        {
-            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
-            int unicode = charInfo.character;
-            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
-            {
-                print("JP font");
-                return true;
-            }
-        }
-        print("JP font not");
-        return false;
+        //for (int i = 0; i < displayTitle.text.Length; i++)
+        //{
+        //    TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
+        //    int unicode = charInfo.character;
+        //    if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
+        //    {
+        //        print("JP font");
+        //        return true;
+        //    }
+        //}
+        //print("JP font not");
+        //return false;
+        Regex regex = new Regex(@"\p{IsHiragana}|\p{IsKatakana}|\p{IsCJKUnifiedIdeographs}");
+
+        return regex.IsMatch(displayTitle);
     }
 }
