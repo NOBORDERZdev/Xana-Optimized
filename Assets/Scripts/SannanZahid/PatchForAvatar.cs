@@ -7,10 +7,10 @@ public class PatchForAvatar : MonoBehaviour
 
     void Update()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
     }
     private void OnDisable()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+       // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
     }
 }

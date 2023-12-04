@@ -1275,6 +1275,7 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
@@ -1288,7 +1289,7 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
 
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);

@@ -30,6 +30,7 @@ public class LookAtCamera : MonoBehaviour
     }
     public void UpdateText(string txt)
     {
+        Debug.LogError("UpdateText ----> " + txt);
         _postText.text = txt;
     }
 }

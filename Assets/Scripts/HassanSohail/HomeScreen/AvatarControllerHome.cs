@@ -151,7 +151,7 @@ public class AvatarControllerHome : MonoBehaviour
     /// <summary>
     /// To change player from Home to store and viceversa
     /// </summary>
-    public void UpdateState(bool setToStore) {
+   /* public void UpdateState(bool setToStore) {
 
         animator.SetFloat("Blend", 0.0f);
         if (setToStore) // set player avatar for store
@@ -188,7 +188,7 @@ public class AvatarControllerHome : MonoBehaviour
             Wander();
             PostBubble.gameObject.SetActive(true);
         }
-    }
+    }*/
 
 
 

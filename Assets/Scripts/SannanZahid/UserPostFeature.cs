@@ -17,7 +17,23 @@ public class UserPostFeature : MonoBehaviour
     public UpdatePostText OnUpdatePostText;
     public void SendPost()
     {
-        StartCoroutine(SendPostDataToServer(_postInputField.text));
+        if (_postInputField.text == "")
+        {
+            StartCoroutine(SendPostDataToServer("null", GameManager.Instance.userAnimationPostFeature.MoodSelected));
+            Bubble.gameObject.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(SendPostDataToServer(_postInputField.text, GameManager.Instance.userAnimationPostFeature.MoodSelected));
+            Bubble.gameObject.SetActive(true);
+        }
+        
+        if(GameManager.Instance.moodManager.PostMood)
+        {
+            GameManager.Instance.moodManager.PostMood = false;
+            GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected);
+            GameManager.Instance.moodManager.LastMoodSelected = "";
+        }
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -35,12 +51,13 @@ public class UserPostFeature : MonoBehaviour
                 return "";
         }
     }
-    IEnumerator SendPostDataToServer(string postMessage)
+    IEnumerator SendPostDataToServer(string postMessage, string mood)
     {
         string FinalUrl = PrepareApiURL("Send");
         Debug.LogError("Prepared URL ----> " + FinalUrl);
         WWWForm form = new WWWForm();
         form.AddField("text_post", postMessage);
+        form.AddField("text_mood", mood);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {
             Debug.LogError("Token ----> " + ConstantsGod.AUTH_TOKEN);
@@ -50,13 +67,14 @@ public class UserPostFeature : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
+                Debug.LogError("SendPostDataToServer ----> " + postMessage);
+
                 Debug.LogError("Error Post --->  "+www.downloadHandler.text);
             }
             else
             {
                 Debug.LogError("Posted ---->  "+www.downloadHandler.text);
-                Bubble.gameObject.SetActive(true);
-                OnUpdatePostText.Invoke(postMessage);
+    
             }
             www.Dispose();
         }
@@ -82,7 +100,7 @@ public class UserPostFeature : MonoBehaviour
             {
                 Debug.LogError("Posted ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
-                if(RetrievedPost.data.rows.Count>0)
+                if (RetrievedPost.data !=null)
                 {
                     Bubble.gameObject.SetActive(true);
                 }
@@ -90,11 +108,26 @@ public class UserPostFeature : MonoBehaviour
                 {
                     Bubble.gameObject.SetActive(false);
                 }
-                for (int i = RetrievedPost.data.rows.Count-1; i >0; i--)
+               // for (int i = RetrievedPost.data.rows.Count-1; i >0;)
                 {
-                    Debug.LogError("Message --->> " + RetrievedPost.data.rows[i].text_post);
-                    textElement.text = RetrievedPost.data.rows[i].text_post;
-                    break;
+                    Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+                    if (RetrievedPost.data.text_post == "null")
+                    {
+                        Bubble.gameObject.SetActive(false);
+                    }
+                    else
+                        textElement.text = RetrievedPost.data.text_post;
+                    if(RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood!=null && RetrievedPost.data.text_mood != "")
+                    {
+                        Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood);
+                        GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+                    }
+                    else
+                    {
+                        Bubble.gameObject.SetActive(false);
+                    }
+                   // break;
                 }
             }
             www.Dispose();
@@ -104,21 +137,12 @@ public class UserPostFeature : MonoBehaviour
     public class PostInfo
     {
         public bool success;
-        public PostClass data;
-        public string msg;
-    }
-    [System.Serializable]
-    public class PostClass
-    {
-        public int count;
-        public List<PostRowList> rows;
+        public PostRowList data;
     }
     [System.Serializable]
     public class PostRowList
     {
-        public string id;
-        public string user_id;
         public string text_post;
-
+        public string text_mood;
     }
 }

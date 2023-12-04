@@ -34,13 +34,13 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
+    bool a =false;
     public void SwitchToPostScreen(bool flag)
     {
        
         if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
         {
             SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
-
         }
         else
         {
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(flag);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(flag);
         }
     }
     public void AvaterButtonCustomPushed()

@@ -168,7 +168,7 @@ public class BottomTabManager : MonoBehaviour
             FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
             FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
         }
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+       // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         if (UIManager.Instance != null)
         {
             CheckLoginOrNotForFooterButton();
@@ -186,7 +186,7 @@ public class BottomTabManager : MonoBehaviour
         Debug.Log("Home button onclick");
        // if (defaultSelection != 0)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+          //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -221,7 +221,7 @@ public class BottomTabManager : MonoBehaviour
             Debug.Log("World button onclick");
             if (defaultSelection != 1)
             {
-                GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+               // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
                 OnSelectedClick(1);
                 if (FindObjectOfType<AdditiveScenesManager>() != null)
                 {
@@ -246,7 +246,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (defaultSelection != 0)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+           // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -281,7 +281,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (defaultSelection != 1)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+           // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -363,7 +363,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (defaultSelection != 3)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+           // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             // LoaderShow(true);
             OnSelectedClick(3);
             defaultSelection = 3;
@@ -415,7 +415,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (/*defaultSelection != 4*/ true)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+           // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //---->>>Sannan OnSelectedClick(4);
             defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
@@ -462,7 +462,8 @@ public class BottomTabManager : MonoBehaviour
             // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().defaultSelection = 4;
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+        // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
     }
     public void SetDefaultButtonSelection(int index)

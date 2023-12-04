@@ -30,7 +30,6 @@ public class OnEnableDisable : MonoBehaviour
     {
         OnDisabled.Invoke();
         UIManager.Instance.ShowFooter(true);
-        GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         StartCoroutine(WaitForPopup());
     }
     IEnumerator WaitForPopup()

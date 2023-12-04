@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class AvatarPathSystemManager : MonoBehaviour
 {
     [SerializeField]
     Transform _startPoint;
+    [SerializeField]
     int _row = 11, _col = 11;
     Transform[,] points;
     void Awake()
@@ -115,7 +113,6 @@ public class AvatarPathSystemManager : MonoBehaviour
     }
     public MoveBehaviour.Behaviour GetRandomBehaviour()
     {
-        
         while (true)
         {
             int i = UnityEngine.Random.Range(0, 4);
@@ -131,7 +128,6 @@ public class AvatarPathSystemManager : MonoBehaviour
                     return MoveBehaviour.Behaviour.Down;
             }
         }
-        return MoveBehaviour.Behaviour.Left;
     }
     public Transform GetAvatarSpawnPoint()
     {
@@ -150,7 +146,14 @@ public class AvatarPathSystemManager : MonoBehaviour
 [Serializable]
 public class MoveBehaviour
 {
-    public enum Behaviour { Left, Right, Up, Down, Action };
+    public enum Behaviour 
+    {
+        Left,
+        Right,
+        Up,
+        Down,
+        Action
+    };
     public Behaviour behaviour;
     public float Speed = 0f;
 }
