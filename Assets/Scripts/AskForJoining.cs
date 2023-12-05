@@ -30,6 +30,7 @@ public class AskForJoining : MonoBehaviour
     {
         XanaConstants.xanaConstants.isFromXanaLobby =false;
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstants.xanaConstants.isFromPMYLobby = false;
 
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingHandler.Instance.randCurrentValue = _rand;

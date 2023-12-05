@@ -104,6 +104,7 @@ public class XanaConstants : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
+    public bool isFromPMYLobby = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;

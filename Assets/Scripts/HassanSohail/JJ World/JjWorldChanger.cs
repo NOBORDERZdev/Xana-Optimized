@@ -80,9 +80,10 @@ public class JjWorldChanger : MonoBehaviour
         }
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
             XanaConstants.xanaConstants.isFromXanaLobby = true;
-        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+            XanaConstants.xanaConstants.isFromPMYLobby = true;
+
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
