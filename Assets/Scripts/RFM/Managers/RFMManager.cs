@@ -48,7 +48,7 @@ namespace RFM.Managers
         public static RFMManager Instance;
         private GameObject _mainCam, _gameCanvas;
         private FollowNPC _npcCamera;
-        private PlayerControllerNew _player;
+        //private PlayerControllerNew _player;
         [HideInInspector] public static GameConfiguration CurrentGameConfiguration;
 
         //double startTime = -1;
@@ -543,7 +543,7 @@ namespace RFM.Managers
 
         }
 
-        public void PlayerCaught(/*int hunterViewID = -1*//*Transform hunter*/)
+        public void PlayerCaught(int hunterViewID = -1/*Transform hunter*/)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -558,54 +558,35 @@ namespace RFM.Managers
                 _npcCamera = Instantiate(npcCameraPrefab);
             }
 
+            //var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+
+            //if (randomHunter != null)
+            //{
+            //    _npcCamera.Init(randomHunter.cameraTarget);
+            //}
+
+
+            if (hunterViewID != -1)
+            {
+                var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
+                if (hunter != null)
+                {
+                    _npcCamera.Init(hunter.cameraTarget);
+                    return;
+                }
+            }
+
             var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
 
             if (randomHunter != null)
             {
+                if (_npcCamera == null)
+                {
+                    _npcCamera = Instantiate(npcCameraPrefab);
+                }
                 _npcCamera.Init(randomHunter.cameraTarget);
             }
-
-
-            ////if (hunterViewID != -1)
-            //{
-            //   //var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
-            //   //if (hunter != null)
-            //   //{
-            //   //    _npcCamera.Init(hunter.cameraTarget);
-            //   //}
-            //}
-            ////else
-            //{
-            //    //var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
-
-            //    //if (randomHunter != null)
-            //    {
-            //        //if (_npcCamera == null)
-            //        //{
-            //        //    _npcCamera = Instantiate(npcCameraPrefab);
-            //        //}
-            //        //_npcCamera.Init(randomHunter.cameraTarget);
-            //    }
-            //}
         }
-
-
-        //private void PlayerCaughtByPlayer(RFM.Character.PlayerHunter catcher)
-        //{
-        //    if (Globals.gameState != Globals.GameState.Gameplay) return;
-
-        //    _mainCam.SetActive(false);
-        //    _gameCanvas.SetActive(false);
-        //    statusTMP.text = "Player caught! Spectating...";
-        //    statusBG.SetActive(true);
-        //    statusMMFPlayer.PlayFeedbacks();
-
-        //    if (_npcCamera == null)
-        //    {
-        //        _npcCamera = Instantiate(npcCameraPrefab);
-        //    }
-        //    _npcCamera.Init(catcher.transform/*cameraTarget*/);
-        //}
 
 
 

@@ -86,7 +86,7 @@ namespace RFM.Character
         }
 
         
-        public void PlayerRunnerCaught(/*Transform hunter*/)
+        public void PlayerRunnerCaught(/*Transform hunter*/int hunterViewID)
         {
             StopCoroutine(TimeSurvived());
             StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
@@ -95,8 +95,7 @@ namespace RFM.Character
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
 
             PhotonNetwork.Destroy(transform.root.gameObject);
-            RFM.Managers.RFMManager.Instance.PlayerCaught(/*hunter*/);
-            //EventsManager.PlayerCaught(cameraTarget);
+            RFM.Managers.RFMManager.Instance.PlayerCaught(/*hunter*/hunterViewID);
         }
         
         //public void PlayerRunnerCaughtByPlayer(PlayerHunter npcHunter)
@@ -128,15 +127,13 @@ namespace RFM.Character
             {
                 case PhotonEventCodes.PlayerRunnerCaught:
                     {
-                        //int viewId = (int)photonEvent.CustomData;
-                        // get an array from custom data
                         int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
-                        //int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
+                        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
                         if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
                         {
                             //var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
 
-                            PlayerRunnerCaught(/*hunter.cameraTarget*/);
+                            PlayerRunnerCaught(/*hunter.cameraTarget*/hunterViewID);
                         }
                         break;
                     }

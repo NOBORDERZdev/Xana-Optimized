@@ -23,24 +23,27 @@ namespace RFM.Character
 
         private void OnTriggerEnter(Collider other)
         {
+            if (!this.enabled) return; // This function is called even if the script is disabled
+            
             if (RFM.Globals.gameState != RFM.Globals.GameState.Gameplay) // Only catch players in gameplay state
             {
                 return;
             }
-            if (!this.enabled)
-            {
-                return;
-            }
+
+            // Should only catch runners if this is local player
+            //if (!GetComponent<PhotonView>().IsMine)
+            //{
+            //    return;
+            //}
+            
 
             //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             if (other.GetComponentInParent<NPCRunner>())
             {
-                //_players.Remove(other.gameObject);
-                //_target = null;
-                killVFX.SetActive(true);
+                // Cannot directly call AIRunnerCaught() because NPCRunners are owned by the master client
                 // other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
-
-                //var viewId = other.GetComponent<PhotonView>().ViewID;
+                
+                killVFX.SetActive(true);
                 var runnerViewId = other.GetComponent<PhotonView>().ViewID;
                 var myViewId = GetComponent<PhotonView>().ViewID;
 
@@ -57,8 +60,6 @@ namespace RFM.Character
             var playerRunner = other.GetComponent<PlayerRunner>();
             if (playerRunner != null && playerRunner.enabled)
             {
-                //_players.Remove(other.gameObject);
-                //_target = null;
                 killVFX.SetActive(true);
 
                 // other.GetComponent<PlayerRunner>()?.PlayerRunnerCaughtByPlayer(this);
