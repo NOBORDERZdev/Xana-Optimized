@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public GameObject _SplashScreen;
 
     public Transform _postScreen,_postCamera;
+    public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
 
     [Header("Footer Reference")]
@@ -27,10 +28,17 @@ public class UIManager : MonoBehaviour
         WorldScrollerHolder,
         LobbyTabHolder,
         AdvanceSearchInputField;
+   
 
     private void Awake()
     {
         Instance = this;
+        Canvas.GetComponent<CanvasGroup>().alpha = 0;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Canvas.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        _footerCan.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
@@ -69,32 +77,45 @@ public class UIManager : MonoBehaviour
     {
         if (SavaCharacterProperties.NeedToShowSplash == 1)
         {
-            StartCoroutine(IsSplashEnable(false, 4f));
+            if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+            {
+                IsSplashActive = false;
+                StartCoroutine(IsSplashEnable(false, 3f));
+               
+            }
+           
         }
         else
         {
+
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
     }
+   
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+         Canvas.GetComponent<CanvasGroup>().interactable =false;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =false;
         _footerCan.GetComponent<CanvasGroup>().interactable=false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
         yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Canvas.GetComponent<CanvasGroup>().interactable =true;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =true;
         _footerCan.GetComponent<CanvasGroup>().interactable=true;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
     }
-
+   
+  
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
@@ -132,6 +153,7 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
+
                     AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     SearchHomeHolder.gameObject.SetActive(false);
