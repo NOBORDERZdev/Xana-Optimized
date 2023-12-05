@@ -217,7 +217,7 @@ namespace RFM.Character
 
                         if (viewId == GetComponent<PhotonView>().ViewID)
                         {
-                            AIRunnerCaught();
+                            AIRunnerCaught(); // When caught by PlayerHunter
                         }
                         break;
                     }
