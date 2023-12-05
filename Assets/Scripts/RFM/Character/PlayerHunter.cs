@@ -27,6 +27,10 @@ namespace RFM.Character
             {
                 return;
             }
+            if (!this.enabled)
+            {
+                return;
+            }
 
             //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             if (other.GetComponentInParent<NPCRunner>())

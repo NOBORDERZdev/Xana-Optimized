@@ -26,7 +26,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
-    public Image VoiceImage;
+    public GameObject VoiceImage;
     public bool IsSpeak;
     public GameObject ChatShow;
     //public GameObject ChatShowSecond;

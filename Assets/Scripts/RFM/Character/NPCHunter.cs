@@ -263,7 +263,7 @@ namespace RFM.Character
                     _catchTimer = 0;
                     _allRunners.Remove(_inRangePlayer);
                     _hasTarget = false;
-                    killVFX.SetActive(true);
+                    //killVFX.SetActive(true);
 
                     _inRangePlayer.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
 
