@@ -24,6 +24,7 @@ namespace RFM.UI
             if (!_cameraTransform)
             {
                 Debug.LogError("RFM RFM Camera not found!");
+                _cameraTransform = RFM.Managers.RFMManager.Instance._mainCam?.transform;
                 //if (Camera.main)
                 //{
                 //    _cameraTransform = Camera.main.transform;
