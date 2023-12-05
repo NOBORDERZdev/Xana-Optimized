@@ -5,24 +5,35 @@ using Photon.Pun;
 public class ElapsedTimeComponent : ItemComponent
 {
     private bool isActivated = false;
+    private bool IsAgainTouchable = true;
     [SerializeField]
     private ElapsedTimeComponentData elapsedTimeComponentData;
-    string RuntimeItemID = "";
 
     public void Init(ElapsedTimeComponentData elapsedTimeComponentData)
     {
         this.elapsedTimeComponentData = elapsedTimeComponentData;
         isActivated = true;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            if (!IsAgainTouchable) return;
+
+            IsAgainTouchable = false;
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
     }
 
     #region BehaviourControler
@@ -49,10 +60,10 @@ public class ElapsedTimeComponent : ItemComponent
     }
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
