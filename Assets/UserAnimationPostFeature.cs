@@ -17,15 +17,16 @@ public class UserAnimationPostFeature : MonoBehaviour
     {
         _selectedCategory = ActorBehaviour.Category.Fun;
         InstantiateMoodTab();
-        BuildMoodDialog();
+       StartCoroutine( BuildMoodDialog());
     }
     string PrepareApiURL()
     {
        return "https://api-test.xana.net/item/app-emojis";
     }
-    int CallBackCheck = 0;
-    public void BuildMoodDialog()
+   // int CallBackCheck = 0;
+    IEnumerator BuildMoodDialog()
     {
+        yield return new WaitForSeconds(1f);
         string finalAPIURL = PrepareApiURL();
         LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
@@ -36,13 +37,13 @@ public class UserAnimationPostFeature : MonoBehaviour
             }
             else
             {
-                if (++CallBackCheck > 17)
-                {
-                    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-                    CallBackCheck = 0;
-                    return;
-                }
-                BuildMoodDialog();
+                /* if (++CallBackCheck > 17)
+                 {
+                     LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                     CallBackCheck = 0;
+                     return;
+                 }*/
+                StartCoroutine(BuildMoodDialog());
             }
         }));
     }
@@ -55,8 +56,10 @@ public class UserAnimationPostFeature : MonoBehaviour
 
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
+           // yield return www;
+
             while (!www.isDone)
-                yield return null;
+                yield return new WaitForSeconds(Time.deltaTime);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                // Debug.LogError(www.downloadHandler.text);

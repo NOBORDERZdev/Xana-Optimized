@@ -18,10 +18,13 @@ public class Actor : MonoBehaviour
     public Transform NameTagHolderObj;
     void SetMoveActions(MoveBehaviour move)
     {
+        Debug.LogError("Add Moves --->  "+ move.behaviour.ToString());
+
         _playerMoves.Enqueue(move);
     }
     void ClearMoves()
     {
+        Debug.LogError("ClearMoves");
         _playerMoves.Clear();
     }
     public void Init(ActorBehaviour playerBehaviour)
@@ -67,7 +70,7 @@ public class Actor : MonoBehaviour
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
                     {
                         MoveBehaviour move = _playerMoves.Dequeue();
-                   // Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
+                    Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
@@ -84,7 +87,7 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
-              //  Debug.LogError("Action ---> "+ ActionClipTime);
+                Debug.LogError("Action ---> "+ ActionClipTime);
                 yield return new WaitForSeconds(ActionClipTime*2f);
                 if(!_moveFlag)
                 {
@@ -92,7 +95,10 @@ public class Actor : MonoBehaviour
                 }
                 else
                 {
-                    _PlayerAnimator.SetBool("Action", false);
+                    if (_playerMoves.Peek().behaviour != MoveBehaviour.Behaviour.Action)
+                    {
+                        _PlayerAnimator.SetBool("Action", false);
+                    }
                     StateMoveBehaviour = 1;
                 }
                 break;
