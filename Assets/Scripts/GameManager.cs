@@ -7,6 +7,8 @@ using System.Linq;
 using TMPro;
 
 using UnityEngine.UI;
+using UnityEngine.Networking;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
+        StartCoroutine(GetClassCodeFromServer());
 /*#if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -151,7 +154,7 @@ public class GameManager : MonoBehaviour
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
 
-        if (XanaConstants.xanaConstants.EnviornmentName == "HOKUSAI KATSUSHIKA")
+        if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
         {
             if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
             {
@@ -290,4 +293,65 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync("Main");
         }
     }
+
+
+    IEnumerator GetClassCodeFromServer()
+    {
+        //string api = "https://api-test.xana.net/classCode/get-all-class-codes/1/20";
+       
+            yield return new WaitForSeconds(10f);
+            string token = ConstantsGod.AUTH_TOKEN;
+
+            string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" + 1 + "/" + 5;
+            Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+
+            UnityWebRequest www;
+            www = UnityWebRequest.Get(api);
+
+
+            www.SetRequestHeader("Authorization", token);
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+
+
+            if (!www.isHttpError && !www.isNetworkError)
+            {
+                Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
+                ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
+                
+                if (response.success)
+                    CheckResponse(response.data);
+            }
+            else
+                Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+
+            www.Dispose();
+    }
+
+
+    private void CheckResponse(ClassCode[] response)
+    {
+        for (int i = 0; i < response.Length; i++)
+        {
+            XanaConstants.xanaConstants.pmy_ClassCode.Add(int.Parse(response[i].codeText));
+        }
+    }
+}
+
+
+public class ClassAPIResponse
+{
+    public bool success;
+    public ClassCode[] data;
+    public string message;
+}
+public class ClassCode
+{
+    public string id;
+    public string subject;
+    public string codeText;
 }
