@@ -83,6 +83,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
             transform.position = pos;
             transform.SetParent(gangsterCharacter.transform);
+            transform.localPosition= Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
             transform.localEulerAngles = Vector3.zero;
             if (avatarIndex == 2)
             {

@@ -7,15 +7,12 @@ public class TimerComponent : ItemComponent
 
     private bool isActivated = false;
     private TimerComponentData timerComponentData;
-    string RuntimeItemID = "";
 
     public void Init(TimerComponentData timerComponentData)
     {
         this.timerComponentData = timerComponentData;
 
         isActivated = true;
-
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
 
