@@ -48,7 +48,7 @@ namespace RFM.Managers
         public static RFMManager Instance;
         private GameObject _mainCam, _gameCanvas;
         private FollowNPC _npcCamera;
-        private PlayerControllerNew _player;
+        //private PlayerControllerNew _player;
         [HideInInspector] public static GameConfiguration CurrentGameConfiguration;
 
         //double startTime = -1;
