@@ -7,9 +7,14 @@ namespace RFM.UI
         private Transform _cameraTransform;
         private void Start()
         {
-            if (Camera.main != null)
+            _cameraTransform = RFM.Managers.RFMManager.Instance._mainCam?.transform;
+
+            if (_cameraTransform == null)
             {
-                _cameraTransform = Camera.main.transform;
+                if (Camera.main != null)
+                {
+                    _cameraTransform = Camera.main.transform;
+                }
             }
         }
 

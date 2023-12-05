@@ -37,6 +37,7 @@ namespace RFM.Managers
 
         //Camera Manager
         [SerializeField] private RFMCameraManager rfmCameraManager;
+        [SerializeField] public GameObject _mainCam;
 
         //VFX
         [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
@@ -46,7 +47,8 @@ namespace RFM.Managers
         #region Fields
 
         public static RFMManager Instance;
-        private GameObject _mainCam, _gameCanvas;
+        
+        private GameObject _gameCanvas;
         private FollowNPC _npcCamera;
         //private PlayerControllerNew _player;
         [HideInInspector] public static GameConfiguration CurrentGameConfiguration;
@@ -98,7 +100,7 @@ namespace RFM.Managers
             }
 
             Globals.gameState = Globals.GameState.InLobby;
-            _mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
+            //_mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             //RFMButtonsLayoutManager.instance.LoadLayout();
             //gameOverPanel.SetActive(false);
