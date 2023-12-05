@@ -56,7 +56,7 @@ public class MoodManager : MonoBehaviour
             var stateMachine = layer.stateMachine;
             foreach (var state in stateMachine.states)
             {
-                Debug.LogError("NameOfAnimation Node === " + state.state.tag);
+               // Debug.LogError("NameOfAnimation Node === " + state.state.tag);
                 if(state.state.tag.Equals("Move"))
                     state.state.motion = Move;
                 else if (state.state.tag.Equals("Action"))
@@ -85,14 +85,15 @@ public class MoodManager : MonoBehaviour
         LastMoodSelected = originalKey;
         StartCoroutine(DownloadAddressableAnimation(animkey));
     }
-    public void SetMoodPosted(string animkey)
+    public void SetMoodPosted(string animkey, bool walkFlag)
     {
         int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
         if(NoOfAnimations == 1)
             StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Action"));
         else
             StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Action"));
-        StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Move"));
+       if(!walkFlag)
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Move"));
     }
     public IEnumerator DownloadAddressableAnimation(string key)
     {
@@ -164,25 +165,25 @@ public class MoodManager : MonoBehaviour
             {
                 if (loadOp.Result == null || loadOp.Result.Equals(null))   // Added by Ali Hamza to resolve avatar naked issue
                 {
-                    Debug.LogError("NULLLLLL");
+                  //  Debug.LogError("NULLLLLL");
                 }
                 else
                 {
-                    Debug.LogError("FOUND ----->");
+                   // Debug.LogError("FOUND ----->");
                     var controller = PlayerAnimator.runtimeAnimatorController as AnimatorController;
                     foreach (var layer in controller.layers)
                     {
                         var stateMachine = layer.stateMachine;
                         foreach (var state in stateMachine.states)
                         {
-                            Debug.LogError("NameOfAnimation Node === " + state.state.tag);
+                          //  Debug.LogError("NameOfAnimation Node === " + state.state.tag);
                             if (state.state.tag.Equals(NodeAnimToReplace))
                             {
                                 state.state.motion = loadOp.Result;
                                 if(NodeAnimToReplace == "Action")
                                 {
                                     Debug.LogError("Length Of Clip "+loadOp.Result.length);
-                                  GameManager.Instance.mainCharacter.GetComponent<Actor>().ActionClipTime = loadOp.Result.length;
+                                    GameManager.Instance.mainCharacter.GetComponent<Actor>().ActionClipTime = loadOp.Result.length;
                                 }
                                 yield return new WaitForSeconds(Time.deltaTime);
                                 PlayerAnimator.SetBool("Menu Action", false);

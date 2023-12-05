@@ -15,6 +15,7 @@ public class Actor : MonoBehaviour
     float MoveSpeed = default;
     Transform MoveTarget;
     public float ActionClipTime = 0f;
+    public Transform NameTagHolderObj;
     void SetMoveActions(MoveBehaviour move)
     {
         _playerMoves.Enqueue(move);
@@ -66,7 +67,7 @@ public class Actor : MonoBehaviour
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
                     {
                         MoveBehaviour move = _playerMoves.Dequeue();
-                    Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
+                   // Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
@@ -83,10 +84,17 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
-                Debug.LogError("Action ---> "+ ActionClipTime);
+              //  Debug.LogError("Action ---> "+ ActionClipTime);
                 yield return new WaitForSeconds(ActionClipTime*2f);
-                _PlayerAnimator.SetBool("Action", false);
-                StateMoveBehaviour = 1;
+                if(!_moveFlag)
+                {
+                    StateMoveBehaviour = 0;
+                }
+                else
+                {
+                    _PlayerAnimator.SetBool("Action", false);
+                    StateMoveBehaviour = 1;
+                }
                 break;
         }
         StartCoroutine(StartActorBehaviour());
@@ -103,15 +111,11 @@ public class Actor : MonoBehaviour
         else
         {
             _PlayerAnimator.SetBool("IdleMenu", flag);
+            _PlayerAnimator.SetBool("Menu Action", false);
             _moveFlag = true;
         }
+        NameTagHolderObj.gameObject.SetActive(!flag);
         this.GetComponent<FaceIK>().enabled = !flag;
         this.GetComponent<FootStaticIK>().enabled = !flag;
-     //   GetComponent<FaceIK>().ikActive = flag;
-     //   GetComponent<FootStaticIK>().ikActive = flag;
-    }
-    public void ViewMoodMenu()
-    {
-
     }
 }

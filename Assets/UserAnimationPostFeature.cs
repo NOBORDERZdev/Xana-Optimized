@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -60,12 +59,12 @@ public class UserAnimationPostFeature : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError(www.downloadHandler.text);
+               // Debug.LogError(www.downloadHandler.text);
                 callback(false);
             }
             else
             {
-                Debug.LogError(www.downloadHandler.text);
+              //  Debug.LogError(www.downloadHandler.text);
                 _moodInfo = JsonUtility.FromJson<MoodInfo>(www.downloadHandler.text);
                 _moodstr = www.downloadHandler.text;
                 callback(true);
@@ -103,7 +102,7 @@ public class UserAnimationPostFeature : MonoBehaviour
     public void ChangeMoodView(int index)
     {
        _selectedCategory = (ActorBehaviour.Category)index;
-        Debug.LogError("_selectedCategory ---> " + _selectedCategory.ToString());
+      //  Debug.LogError("_selectedCategory ---> " + _selectedCategory.ToString());
         InstantiateMoodsToUIHolder();
     }
     public string MoodSelected = default;
@@ -111,7 +110,7 @@ public class UserAnimationPostFeature : MonoBehaviour
     public void SetMood(string moodName)
     {
         MoodSelected = _selectedCategory.ToString() + " " + moodName ;
-        Debug.LogError("moodName ---> " + MoodSelected);
+      //  Debug.LogError("moodName ---> " + MoodSelected);
         NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(MoodSelected);
         if(NoOfAnimations == 1)
         {

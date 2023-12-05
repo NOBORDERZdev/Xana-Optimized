@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class PatchForAvatar : MonoBehaviour
 {
-
-    void Update()
+    private void OnEnable()
     {
-      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+
     }
     private void OnDisable()
     {
-       // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
     }
 }

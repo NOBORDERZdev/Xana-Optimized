@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
 using UnityEngine;
 
 public class ActorManager : MonoBehaviour
@@ -28,13 +26,13 @@ public class ActorManager : MonoBehaviour
     public void SetMood(string mood)
     {
         ActorBehaviour actor = actorBehaviour.Find(x => x.Name == mood);
-        Debug.LogError("Actor Behaviour === " + actor.Name);
+        //Debug.LogError("Actor Behaviour === " + actor.Name);
         GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actor);
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
-        Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
+       // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
         if(flag)
         {
             _cinemaCam.SetActive(true);
@@ -45,7 +43,7 @@ public class ActorManager : MonoBehaviour
             _previousRot = GameManager.Instance.mainCharacter.transform.eulerAngles;
             GameManager.Instance.mainCharacter.transform.position = _menuViewPoint.position;
             GameManager.Instance.mainCharacter.transform.eulerAngles = _menuViewPoint.eulerAngles;
-            Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
+           // Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
         }
         else
         {
@@ -115,5 +113,4 @@ public class ActorBehaviour
     public bool IdleAnimationFlag = false;
     [NonReorderable]
     public List<MoveBehaviour> ActorMoveBehaviours;
-   // public List<string> Idle, Move = new List<string>();
 }
