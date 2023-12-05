@@ -174,7 +174,11 @@ namespace RFM.Character
         
         private void GameOver()
         {
-            AIRunnerCaught();
+            // Clear up all remaining NPCRunners are GameOver.
+            if (PhotonNetwork.IsMasterClient)
+            {
+                AIRunnerCaught();
+            }
         }
 
         private void OnDestroy()
@@ -182,7 +186,11 @@ namespace RFM.Character
             // Called on all non-master clients when the runner is caught.
             if (!PhotonNetwork.IsMasterClient)
             {
-                AIRunnerCaught();
+                StopCoroutine(AddMoney());
+                CancelInvoke(nameof(EscapeFromHunters));
+                StopCoroutine(TimeSurvived());
+
+                RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
             }
         }
 
