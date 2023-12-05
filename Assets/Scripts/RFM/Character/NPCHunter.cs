@@ -150,11 +150,11 @@ namespace RFM.Character
                 _navMeshAgent.isStopped = true;
             }
 
-            //if (_target == null) // sometimes, the target is null even though _hasTarget is true
-            //                     // such as when the target is caught by another hunter
-            //{
-            //    _hasTarget = false;
-            //}
+            if (_target == null) // sometimes, the target is null even though _hasTarget is true
+                                 // such as when the target is caught by another hunter
+            {
+                _hasTarget = false;
+            }
 
             //if (_hasTarget) return;
 
@@ -261,8 +261,8 @@ namespace RFM.Character
                 if (_catchTimer >= timeToCatchRunner)
                 {
                     _catchTimer = 0;
-                    _allRunners.Remove(_inRangePlayer);
-                    _hasTarget = false;
+                    //_allRunners.Remove(_inRangePlayer);
+                    //_hasTarget = false;
                     killVFX.SetActive(true);
 
 
@@ -337,8 +337,8 @@ namespace RFM.Character
                 // if the playerRunner is the local player, call the PlayerRunnerCaught() method on the PlayerRunner script
                 if (other.GetComponent<PhotonView>().IsMine)
                 {
-                    _allRunners.Remove(other.gameObject);
-                    _hasTarget = false;
+                    //_allRunners.Remove(other.gameObject);
+                    //_hasTarget = false;
                     killVFX.SetActive(true);
                     //other.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
 
@@ -381,6 +381,12 @@ namespace RFM.Character
                 {
                     _navMeshAgent.SetDestination(_targetPosition);
                 }
+
+                //// teleport to the new position if the distance is too far
+                //if (Vector3.Distance(transform.position, _targetPosition) > 5.0f)
+                //{
+                //    transform.position = _targetPosition;
+                //}
 
                 // Additional security and validation checks can be implemented here
             }
