@@ -9,41 +9,45 @@ namespace RFM.Managers
     /// Creates and manages the PUN2 rooms for RFM
     /// </summary>
     /// <remarks>https://muneebullah.com</remarks>
-    public class RFMRoomManager : MonoBehaviourPun
+    public class RFMRoomManager : MonoBehaviourPunCallbacks
     {
         private void Start()
         {
-            photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
+            //photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
             Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
 
-            InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
+            //InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
         }
 
-        [PunRPC]
-        private void PlayerJoined()
-        {
-            CheckForGameStartCondition();
-        }
+        //[PunRPC]
+        //private void PlayerJoined()
+        //{
+        //    CheckForGameStartCondition();
+        //}
 
-        private void CheckForGameStartCondition()
+        //private void CheckForGameStartCondition()
+        //{
+        //    if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        //    {
+        //        if (Globals.gameState != Globals.GameState.InLobby) return;
+        //        if (PhotonNetwork.IsMasterClient)
+        //        {
+        //            PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, 
+        //                null,
+        //                new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
+        //                SendOptions.SendReliable);
+        //        }
+        //        CancelInvoke(nameof(CheckForGameStartCondition));
+        //    }
+        //    //else
+        //    //{
+        //    //    //RFM.Managers.RFMManager.Instance.RFMStartInterrupted();
+        //    //}
+        //}
+
+        public override void OnJoinedRoom()
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
-            {
-                if (Globals.gameState != Globals.GameState.InLobby) return;
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, 
-                        null,
-                        new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
-                        SendOptions.SendReliable);
-                }
-                CancelInvoke(nameof(CheckForGameStartCondition));
-            }
-            else
-            {
-                RFM.Managers.RFMManager.Instance.RFMStartInterrupted();
-                InvokeRepeating(nameof(CheckForGameStartCondition), 1, 1);
-            }
+            Debug.LogError("RFM OnJoinedRoom() after reconnecting");
         }
     }
 }
