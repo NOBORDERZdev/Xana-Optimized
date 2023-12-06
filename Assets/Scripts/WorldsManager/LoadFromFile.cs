@@ -360,7 +360,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         //if (XanaConstants.xanaConstants.isFromXanaLobby)
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
         {
             // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
@@ -396,7 +396,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-            CheckAgain:
+        CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -418,12 +418,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage") )
+            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
-            else if ( WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
+            else if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
             {
+                if (XanaConstants.xanaConstants.isFromPMYLobby)  // Set spawn pos when ReEnter into PMY lobby
+                    spawnPoint = new Vector3(spawnPoint.x - 5f, spawnPoint.y, spawnPoint.z - 30.62f);
+
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
                 //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
@@ -506,10 +509,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
+
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
             XanaConstants.xanaConstants.isFromXanaLobby = false;
-        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+            XanaConstants.xanaConstants.isFromPMYLobby = false;
+
         StartCoroutine(VoidCalculation());
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
@@ -606,7 +611,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -676,7 +681,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-        End:
+    End:
         //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -951,7 +956,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //{
             //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
             //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            if (!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
                 //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
@@ -995,7 +1000,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;

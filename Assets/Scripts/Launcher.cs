@@ -234,6 +234,10 @@ namespace Photon.Pun.Demo.PunBasics
             if (PhotonNetwork.IsConnected)
             {
                 isConnecting = false;
+
+                //if (lobbyName == "PMYRoomA")
+                //    lobbyName = Guid.NewGuid().ToString();    // Generate unique room name everytime for PMYRoomA only
+
                 print("Join Random Room in: " + lobbyName);
                 PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
             }
