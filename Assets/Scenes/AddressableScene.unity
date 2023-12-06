@@ -8522,6 +8522,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951787288}
   m_CullTransparentMesh: 0
+--- !u!114 &973992882 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1440768809, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b72c3b5739e04afc8b0df04ca69fd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &980862381
 GameObject:
   m_ObjectHideFlags: 0
@@ -39609,7 +39620,11 @@ PrefabInstance:
     - target: {fileID: 6860018102757080848, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1808683680640967397}
+      objectReference: {fileID: 973992882}
+    - target: {fileID: 6860018102757080848, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: HandleJumpBtnAction
+      objectReference: {fileID: 0}
     - target: {fileID: 6907531792610345431, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 30.000214
