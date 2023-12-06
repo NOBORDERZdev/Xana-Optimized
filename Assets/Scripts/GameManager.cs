@@ -7,6 +7,10 @@ using System.Linq;
 using TMPro;
 
 using UnityEngine.UI;
+using UnityEngine.Networking;
+using System;
+using Newtonsoft.Json;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -63,6 +67,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
+        StartCoroutine(GetClassCodeFromServer());
 /*#if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -150,7 +155,16 @@ public class GameManager : MonoBehaviour
     public void NotNowOfSignManager()
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-       
+
+        if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
+        {
+            if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
+            {
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
+                return;
+            }
+        }//
+
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
@@ -281,4 +295,73 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync("Main");
         }
     }
+
+
+    IEnumerator GetClassCodeFromServer()
+    {
+        //string api = "https://api-test.xana.net/classCode/get-all-class-codes/1/20";
+       
+            yield return new WaitForSeconds(10f);
+            string token = ConstantsGod.AUTH_TOKEN;
+
+            string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" + 1 + "/" + 5;
+            Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
+
+            UnityWebRequest www;
+            www = UnityWebRequest.Get(api);
+
+
+            www.SetRequestHeader("Authorization", token);
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+
+
+            if (!www.isHttpError && !www.isNetworkError)
+            {
+                Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
+                string jsonString = www.downloadHandler.text;
+                //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
+                ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
+           
+
+                if (rootObject.success)
+                    CheckResponse(rootObject.data);
+            }
+            else
+                Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
+
+            www.Dispose();
+    }
+
+
+    private void CheckResponse(List<ClassCode> response)
+    {
+        for (int i = 0; i < response.Count; i++)
+        {
+            XanaConstants.xanaConstants.pmy_ClassCode.Add(response[i].codeText);
+        }
+    }
+}
+
+
+public class ClassAPIResponse
+{
+    public bool success;
+    public List<ClassCode> data;
+    public string msg;
+}
+
+public class ClassCode
+{
+    public int id;
+    public string loginId;
+    public string subject;
+    public string codeText;
+    public bool isActive;
+    public DateTime createdAt;
+    public DateTime updatedAt;
 }

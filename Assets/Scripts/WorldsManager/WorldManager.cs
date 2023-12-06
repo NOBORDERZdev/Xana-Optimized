@@ -494,6 +494,16 @@ public class WorldManager : MonoBehaviour
                     return;
                 }
             }
+            // Added By WaqasAhmad [PMY ClassRoom Dummy Work]
+            else if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
+            {
+                if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
+                {
+                    XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
+                    return;
+                }
+            }
+
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
