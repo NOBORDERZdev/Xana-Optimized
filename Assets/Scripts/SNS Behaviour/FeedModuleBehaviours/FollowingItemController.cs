@@ -58,7 +58,7 @@ public class FollowingItemController : MonoBehaviour
         }
     }
 
-    public void SetupData(AllFollowingRow allFollowingRow)
+    public void SetupData(AllFollowingRow allFollowingRow, bool isFromProfile= true)
     {
         followingRawData = allFollowingRow;
 
@@ -81,7 +81,10 @@ public class FollowingItemController : MonoBehaviour
                 GetImageFromAWS(followingRawData.following.avatar, profileImage);
             }
         }
-        FollowFollowingSetUp(false);
+        if (isFromProfile)
+        {
+            FollowFollowingSetUp(false);
+        }
     }
 
     public void OnClickUserProfileButton()

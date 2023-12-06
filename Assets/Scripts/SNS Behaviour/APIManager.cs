@@ -646,6 +646,46 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    public void SetAdFrndFollowing(){ 
+        StartCoroutine(IEAdFrndAllFollowing(1,500));
+    }
+
+    public AllFollowingRoot adFrndFollowing;
+    public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
+    {
+        using (/*UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + pageNum + "/" + pageSize))*/
+            UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + PlayerPrefs.GetString("UserName") + "/" + pageNum + "/" + pageSize)))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("GetAllFollowing Data" + data);
+                adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                APIController.Instance.SpwanAdFrndFollowing();
+                
+
+                //switch (getFollowingFor)
+                //{
+                //    case "Message":
+                //        APIController.Instance.GetAllFollowingUser(pageNum);
+                //        break;
+                //    default:
+                //        break;
+                //}
+                // Debug.Log(root.data.count);
+            }
+        }
+    }
+
     //this api is used to get all followers.......
     public void RequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
     {
@@ -885,6 +925,39 @@ public class APIManager : MonoBehaviour
                 profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
 
                 FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
+            }
+        }
+    }
+
+
+    public void AdFrndFollowingFetch(){ 
+       foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
+       {
+            Destroy(item.gameObject);
+       }
+       
+    }
+
+     public IEnumerator IEAdFrndFollowingUser(string user_Id, int pageNum, int pageSize)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            //FeedUIController.Instance.ShowLoader(false);
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
+                AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
             }
         }
     }
@@ -1450,10 +1523,20 @@ public class APIManager : MonoBehaviour
     public IEnumerator IERequestGetSearchUser(string name)
     {
         WWWForm form = new WWWForm();
-
-        form.AddField("name", name);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser), form))
+        if (!name.All(char.IsDigit)) // is seraching with name
+        {
+          form.AddField("name", name);
+          form.AddField("userId",0);
+        }
+        else // is searching with number
+        {
+            form.AddField("name", "");
+            form.AddField("userId",name);
+        }
+       
+       
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/50";
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -1469,6 +1552,34 @@ public class APIManager : MonoBehaviour
                Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+    #endregion
+
+    #region Friends
+
+    public void SetHotFriend()
+    {
+        StartCoroutine(IERequestHotFirends());
+    }
+
+     IEnumerator IERequestHotFirends(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Hot Friends Data" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.ShowHotFirend(searchUserRoot);
+                //APIController.Instance.FeedGetAllSearchUser();
             }
         }
     }
@@ -2378,12 +2489,14 @@ public class APIManager : MonoBehaviour
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
+    public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
 
     [Space]
     [Header("Profile Follower Following")]
     public AllFollowersRoot profileAllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot profileAllFollowingRoot = new AllFollowingRoot();
-
+    public AllFollowingRoot AdFrndFollowingRoot = new AllFollowingRoot();
+    
     [Space]
     [Header("Current Feed Comment List Response")]
     [SerializeField]
@@ -3004,11 +3117,12 @@ public class SearchUserRow
     public int id;
     public string name;
     public string avatar;
-    public AllUserWithFeedUserProfile userProfile;
-    public int followerCount;
     public int followingCount;
     public int feedCount;
-    public bool isFollowing;
+    public int followerCount;
+    public bool is_following_me;
+    public bool am_i_following;
+    public AllUserWithFeedUserProfile userProfile;
 }
 
 [System.Serializable]

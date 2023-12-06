@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public Animator m_CharacterAnimator;
 
     RuntimeAnimatorController m_AnimControlller;
-    
+    public int defaultSelection; // for footer bottom Manager
 
     [Header("Camera's")]
     public Camera m_MainCamera;
