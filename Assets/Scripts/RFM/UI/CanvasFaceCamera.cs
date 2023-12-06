@@ -7,9 +7,15 @@ namespace RFM.UI
         private Transform _cameraTransform;
         private void Start()
         {
-            if (Camera.main != null)
+            _cameraTransform = RFM.Managers.RFMManager.Instance._mainCam?.transform;
+
+            if (_cameraTransform == null)
             {
-                _cameraTransform = Camera.main.transform;
+                Debug.LogError("RFM RFM Camera not found!");
+                //if (Camera.main != null)
+                //{
+                //    _cameraTransform = Camera.main.transform;
+                //}
             }
         }
 
@@ -17,10 +23,12 @@ namespace RFM.UI
         {
             if (!_cameraTransform)
             {
-                if (Camera.main)
-                {
-                    _cameraTransform = Camera.main.transform;
-                }
+                Debug.LogError("RFM RFM Camera not found!");
+                _cameraTransform = RFM.Managers.RFMManager.Instance._mainCam?.transform;
+                //if (Camera.main)
+                //{
+                //    _cameraTransform = Camera.main.transform;
+                //}
             }
         
             transform.LookAt(2 * transform.position - _cameraTransform.position);

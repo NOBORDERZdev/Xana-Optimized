@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5512921157957538766}
   - component: {fileID: 7439238384242927016}
   - component: {fileID: 3825765084889301420}
+  - component: {fileID: 1583802709}
   m_Layer: 0
   m_Name: RFM Manager
   m_TagString: Untagged
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f903c156864d64dae2379bc111ff8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbySpawnPoint: {fileID: 0}
+  isPlayerHunter: 0
   playersSpawnArea: {fileID: 0}
   huntersCage: {fileID: 0}
   npcCameraPrefab: {fileID: 385691644926765286, guid: 9ea0e5f2e350d1446a06a5dee73c6aa7, type: 3}
@@ -55,22 +56,13 @@ MonoBehaviour:
   gameplayTimeText: {fileID: 0}
   statusTMP: {fileID: 0}
   statusBG: {fileID: 0}
-  gameOverPanel: {fileID: 0}
   timerTextScaleShaker: {fileID: 0}
   countdownTimerTextScaleShaker: {fileID: 0}
   statusMMFPlayer: {fileID: 0}
   rfmCameraManager: {fileID: 0}
+  _mainCam: {fileID: 0}
   playerSpawnVFX: {fileID: 0}
   hunterSpawnVFX: {fileID: 0}
-  CurrentGameConfiguration:
-    MatchMakingTime: 0
-    TakePositionTime: 0
-    GameplayTime: 0
-    GameRestartWaitTime: 0
-    MaxPlayersInRoom: 0
-    EscapeesToHuntersRatio: {x: 0, y: 0}
-    GainingMoneyTimeInterval: 0
-    MoneyPerInterval: 0
 --- !u!114 &7439238384242927016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +99,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   helpPanel: {fileID: 0}
   instructionsPanelPanel: {fileID: 0}
+  setLayoutPanel: {fileID: 0}
+  gameOverPanel: {fileID: 0}
   leaderboardEntryContainer: {fileID: 0}
   leaderboardEntryPrefab: {fileID: 5730339693681912621, guid: 78ba5a1871c9c374ebf665db69dba77f, type: 3}
+  playerXanaStones: {fileID: 0}
+  xanaStonePopup: {fileID: 0}
+  notEnoughXanaStonesPopup: {fileID: 0}
   showMoney: {fileID: 0}
+--- !u!114 &1583802709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5512921157957538764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df40b8399cb08fb488b452bd84ee17bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  devMode: 0

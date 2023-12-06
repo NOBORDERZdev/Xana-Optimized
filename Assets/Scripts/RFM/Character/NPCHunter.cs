@@ -150,11 +150,11 @@ namespace RFM.Character
                 _navMeshAgent.isStopped = true;
             }
 
-            //if (_target == null) // sometimes, the target is null even though _hasTarget is true
-            //                     // such as when the target is caught by another hunter
-            //{
-            //    _hasTarget = false;
-            //}
+            if (_target == null) // sometimes, the target is null even though _hasTarget is true
+                                 // such as when the target is caught by another hunter
+            {
+                _hasTarget = false;
+            }
 
             //if (_hasTarget) return;
 
@@ -261,24 +261,22 @@ namespace RFM.Character
                 if (_catchTimer >= timeToCatchRunner)
                 {
                     _catchTimer = 0;
-                    _allRunners.Remove(_inRangePlayer);
-                    _hasTarget = false;
-                    //killVFX.SetActive(true);
-
-                    _inRangePlayer.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
+                    //_allRunners.Remove(_inRangePlayer);
+                    //_hasTarget = false;
+                    killVFX.SetActive(true);
 
 
                     // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
 
-                    //var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
-                    //var myViewId = GetComponent<PhotonView>().ViewID;
+                    var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
+                    var myViewId = GetComponent<PhotonView>().ViewID;
 
-                    //object[] prameters = new object[] { runnerViewId, myViewId };
+                    object[] prameters = new object[] { runnerViewId, myViewId };
 
-                    //PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                    //    prameters,
-                    //    new RaiseEventOptions { Receivers = ReceiverGroup.All },
-                    //    SendOptions.SendReliable);
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                        prameters,
+                        new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                        SendOptions.SendReliable);
 
                 }
             }
@@ -339,29 +337,24 @@ namespace RFM.Character
                 // if the playerRunner is the local player, call the PlayerRunnerCaught() method on the PlayerRunner script
                 if (other.GetComponent<PhotonView>().IsMine)
                 {
-                    _allRunners.Remove(other.gameObject);
-                    _hasTarget = false;
+                    //_allRunners.Remove(other.gameObject);
+                    //_hasTarget = false;
                     killVFX.SetActive(true);
-                    other.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
+                    //other.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
+
+                    //// Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
+                    //// The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
+                    //// Send photonview ID of other in parameters.
+                    var runnerViewId = other.GetComponent<PhotonView>().ViewID;
+                    var myViewId = GetComponent<PhotonView>().ViewID;
+
+                    object[] prameters = new object[] { runnerViewId, myViewId };
+
+                    PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
+                        prameters,
+                        new RaiseEventOptions { Receivers = ReceiverGroup.All },
+                        SendOptions.SendReliable);
                 }
-
-
-                //_allRunners.Remove(other.gameObject);
-                //_hasTarget = false;
-                //killVFX.SetActive(true);
-
-                //// Raise a PhotonNetwork.RaiseEvent() event here to notify other clients that the player has been caught
-                //// The other clients will then call the PlayerRunnerCaught() method on their respective PlayerRunner script
-                //// Send photonview ID of other in parameters.
-                //var runnerViewId = other.GetComponent<PhotonView>().ViewID;
-                //var myViewId = GetComponent<PhotonView>().ViewID;
-
-                //object[] prameters = new object[] { runnerViewId, myViewId};
-
-                //PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
-                //    prameters, 
-                //    new RaiseEventOptions { Receivers = ReceiverGroup.All }, 
-                //    SendOptions.SendReliable);
             }
         }
 
@@ -388,6 +381,12 @@ namespace RFM.Character
                 {
                     _navMeshAgent.SetDestination(_targetPosition);
                 }
+
+                //// teleport to the new position if the distance is too far
+                //if (Vector3.Distance(transform.position, _targetPosition) > 5.0f)
+                //{
+                //    transform.position = _targetPosition;
+                //}
 
                 // Additional security and validation checks can be implemented here
             }
