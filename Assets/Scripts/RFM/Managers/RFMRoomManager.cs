@@ -48,6 +48,10 @@ namespace RFM.Managers
         public override void OnJoinedRoom()
         {
             Debug.LogError("RFM OnJoinedRoom() after reconnecting");
+            //FindObjectsOfType<RFM.Timer>().ForEachItem(t => Destroy(t.gameObject));
+
+            //StartCoroutine(RFM.Managers.RFMManager.Instance.Start());
+
         }
     }
 }
