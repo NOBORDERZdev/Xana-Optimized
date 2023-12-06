@@ -8,9 +8,7 @@ namespace RFM.Utility
     {
         public TextMeshProUGUI isMaster;
         public TextMeshProUGUI roomName;
-        public TextMeshProUGUI roomIsOpen;
-        public TextMeshProUGUI maxPlayers;
-        public TextMeshProUGUI currentPlayers;
+        public TextMeshProUGUI players;
         public TextMeshProUGUI rfmStatus;
 
         private void Awake()
@@ -28,10 +26,8 @@ namespace RFM.Utility
         private void Update()
         {
             isMaster.text = $"isMaster: {PhotonNetwork.IsMasterClient}";
-            roomName.text = $"roomName: {PhotonNetwork.CurrentRoom.Name}";
-            roomIsOpen.text = $"room isOpen: {PhotonNetwork.CurrentRoom.IsOpen}";
-            maxPlayers.text = $"room maxPlayers: {PhotonNetwork.CurrentRoom.MaxPlayers}";
-            currentPlayers.text = $"room currentPlayers: {PhotonNetwork.CurrentRoom.Players.Count}";
+            roomName.text = $"roomName: {PhotonNetwork.CurrentRoom.Name} ({(PhotonNetwork.CurrentRoom.IsOpen ? "Open" : "Closed")})";
+            players.text = $"players: {PhotonNetwork.CurrentRoom.Players.Count}/{PhotonNetwork.CurrentRoom.MaxPlayers}";
             rfmStatus.text = $"RFM Status: {RFM.Globals.gameState}";
         }
     }
