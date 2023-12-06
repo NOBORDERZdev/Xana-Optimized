@@ -43,6 +43,7 @@ public class YoutubeAPIHandler : MonoBehaviour
         //form.AddField("token", "piyush55");
         //if (!_urlDataInitialized)
         //{
+
         if (WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
@@ -395,7 +396,46 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
+        else if (WorldItemView.m_EnvName.Contains("PMY"))
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
+                {
+                    www.timeout = 10;
 
+                    yield return www.SendWebRequest();
+
+                    while (!www.isDone)
+                    {
+                        yield return null;
+                    }
+                    if (www.isHttpError || www.isNetworkError)
+                    {
+                        _response = null;
+                        Debug.Log("Youtube API returned no result");
+                    }
+                    else
+                    {
+                        //Debug.Log("You tube respns===" + www.downloadHandler.text.Trim());
+                        _response = JsonUtility.FromJson<StreamResponse>(www.downloadHandler.text.Trim());
+                        if (_response != null)
+                        {
+                            string incominglink = _response.data.link;
+                            if (!string.IsNullOrEmpty(incominglink))
+                            {
+                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
+                                _urlDataInitialized = true;
+                                // print("Stage 3 video link:" + Data);
+                            }
+                            else
+                            {
+                                Debug.Log("No Link Found Turning off player");
+                                Data = null;
+                            }
+                        }
+
+                    }
+                }
+        }
     }
 
     public bool checkEventStartTime()
