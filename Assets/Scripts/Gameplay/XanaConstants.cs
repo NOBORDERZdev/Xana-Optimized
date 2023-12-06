@@ -124,8 +124,8 @@ public class XanaConstants : MonoBehaviour
     private AsyncOperationHandle downloadHandle;
 
     // PMY-Class Codes
-    public List<int> pmy_ClassCode;
-    public int pmy_joinedClassCode;
+    public List<string> pmy_ClassCode;
+    public string pmy_joinedClassCode;
     public bool pmy_isClassAvailable = false;
 
 

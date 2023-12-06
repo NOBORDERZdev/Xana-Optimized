@@ -95,7 +95,7 @@ public class FeedEventPrefab : MonoBehaviour
             // Yes Class Available, Create Room for that Class
             Debug.Log("<color=green> PMY -- Class Available  </color>");
             XanaConstants.xanaConstants.pmy_isClassAvailable = true;
-            XanaConstants.xanaConstants.pmy_joinedClassCode = int.Parse(classCodeInputField.text);
+            XanaConstants.xanaConstants.pmy_joinedClassCode = classCodeInputField.text;
             WorldManager.instance.PlayWorld();
         }
         else
@@ -116,7 +116,7 @@ public class FeedEventPrefab : MonoBehaviour
         if (string.IsNullOrEmpty("classCodeInputField")) return false;
         classCodeInputField.Replace(" ", "");
 
-        try { return XanaConstants.xanaConstants.pmy_ClassCode.Contains(int.Parse(classCodeInputField)); }
+        try { return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); }
         catch { return false; }
 
     }

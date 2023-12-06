@@ -8,6 +8,8 @@ using TMPro;
 
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System;
+using Newtonsoft.Json;
 
 public class GameManager : MonoBehaviour
 {
@@ -303,7 +305,7 @@ public class GameManager : MonoBehaviour
             string token = ConstantsGod.AUTH_TOKEN;
 
             string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" + 1 + "/" + 5;
-            Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+            Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
 
             UnityWebRequest www;
             www = UnityWebRequest.Get(api);
@@ -320,24 +322,27 @@ public class GameManager : MonoBehaviour
 
             if (!www.isHttpError && !www.isNetworkError)
             {
-                Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
-                ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
-                
-                if (response.success)
-                    CheckResponse(response.data);
+                Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
+                string jsonString = www.downloadHandler.text;
+                //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
+                ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
+           
+
+                if (rootObject.success)
+                    CheckResponse(rootObject.data);
             }
             else
-                Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+                Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
 
             www.Dispose();
     }
 
 
-    private void CheckResponse(ClassCode[] response)
+    private void CheckResponse(List<ClassCode> response)
     {
-        for (int i = 0; i < response.Length; i++)
+        for (int i = 0; i < response.Count; i++)
         {
-            XanaConstants.xanaConstants.pmy_ClassCode.Add(int.Parse(response[i].codeText));
+            XanaConstants.xanaConstants.pmy_ClassCode.Add(response[i].codeText);
         }
     }
 }
@@ -346,12 +351,17 @@ public class GameManager : MonoBehaviour
 public class ClassAPIResponse
 {
     public bool success;
-    public ClassCode[] data;
-    public string message;
+    public List<ClassCode> data;
+    public string msg;
 }
+
 public class ClassCode
 {
-    public string id;
+    public int id;
+    public string loginId;
     public string subject;
     public string codeText;
+    public bool isActive;
+    public DateTime createdAt;
+    public DateTime updatedAt;
 }
