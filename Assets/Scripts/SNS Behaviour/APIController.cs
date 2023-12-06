@@ -442,6 +442,23 @@ public class APIController : MonoBehaviour
         }
     }
 
+    public void ShowHotFirend(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.hotFriendContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+            }
+        }
+    }
+
     //this method is used to create feed top story panel in follower item.......
     public void GetSetAllfollowerInTopStoryPanelUser()
     {
@@ -468,6 +485,27 @@ public class APIController : MonoBehaviour
             FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
         }
     }
+
+    public void AdFrndFollowingFetch(){
+        foreach (Transform item in FeedUIController.Instance.adFrndFollowingListContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        APIManager.Instance.SetAdFrndFollowing();
+    }
+
+    public void SpwanAdFrndFollowing(){ 
+        for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
+        {
+            if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+            {
+                GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i],false);
+                followingObject.GetComponent<Button>().enabled= false;
+            }
+        }
+    }
+
     #endregion
 
     #region Chat Module Reference................................................................................

@@ -76,7 +76,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
 
     public void DisplayDownText()
     {
-        if (scrollView.content.anchoredPosition.y + singleLineHeight * 5 < infopopuptotalHeight)
+        if (scrollView.content.anchoredPosition.y + singleLineHeight * 4 <= infopopuptotalHeight)
         {
             scrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }

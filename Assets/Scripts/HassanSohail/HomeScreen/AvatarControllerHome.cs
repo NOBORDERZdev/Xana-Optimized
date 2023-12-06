@@ -169,8 +169,11 @@ public class AvatarControllerHome : MonoBehaviour
             animator.SetBool("idel", true);
             GetComponent<FaceIK>().ikActive = true;
             GetComponent<FootStaticIK>().ikActive = true;
-            transform.position = startpos;
-            transform.eulerAngles = startRot;
+            if (GameManager.Instance.defaultSelection != 0)
+            {
+                transform.position = startpos;
+                transform.eulerAngles = startRot;
+            }
             if(cineCam!=null)
             cineCam.SetActive(true);
             if(storeCam!=null)

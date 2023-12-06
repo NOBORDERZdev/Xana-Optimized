@@ -311,6 +311,8 @@ public class PlayerControllerNew : MonoBehaviour
             OnInvokeCameraChange(firstPersonCameraObj.GetComponent<Camera>());
             //gameObject.transform.localScale = new Vector3(0, 1, 0);
             DisablePlayerOnFPS();
+            controllerCamera.SetActive(false);
+            firstPersonCameraObj.tag = "MainCamera";
             ActiveCamera = firstPersonCameraObj;
             // MuseumRaycaster.instance.playerCamera = firstPersonCameraObj.GetComponent<Camera>();
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Continuous;
@@ -322,10 +324,12 @@ public class PlayerControllerNew : MonoBehaviour
             gyroButton.SetActive(false);
             gyroButton_Portait.SetActive(false);
 
+            firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
             StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(ReferrencesForDynamicMuseum.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
+            controllerCamera.SetActive(true);
             EnablePlayerOnThirdPerson();
             ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Disabled;
@@ -849,7 +853,10 @@ public class PlayerControllerNew : MonoBehaviour
 
         _IsGrounded = characterController.isGrounded;
         if (_IsGrounded)
+        {
             canDoubleJump = false;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+        }
 
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -1113,6 +1120,8 @@ public class PlayerControllerNew : MonoBehaviour
         else if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             gravityVector.y = JumpVelocity * 2;
         }
 
@@ -1309,9 +1318,16 @@ public class PlayerControllerNew : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             Debug.Log("Double jump testing ");
             gravityVector.y = JumpVelocity * 2;
         }
+    }
+
+    void StopDoubleJump()
+    {
+        animator.SetBool("canDoubleJump", false);
     }
     /// </summary>
 
@@ -1490,6 +1506,7 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
         }
+        animator.SetBool("standJump", false);
     }
 
     void AnimationBehaviourNinjaMode()

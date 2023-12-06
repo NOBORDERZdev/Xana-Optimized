@@ -130,7 +130,7 @@ public class BuildingDetect : MonoBehaviour
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
-        nameCanvasDefaultYpos = ArrowManager.Instance.nameCanvas.transform.localPosition.y;
+        nameCanvasDefaultYpos = GamificationComponentData.instance.nameCanvas.transform.localPosition.y;
     }
 
     private void OnEnable()
@@ -193,9 +193,9 @@ public class BuildingDetect : MonoBehaviour
 
         if (avatarIndex == 1)
         {
-            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            Vector3 canvasPos = GamificationComponentData.instance.nameCanvas.transform.localPosition;
             canvasPos.y = -1.3f;
-            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+            GamificationComponentData.instance.nameCanvas.transform.localPosition = canvasPos;
         }
 
         if (avatarChangeCoroutine != null)
@@ -215,6 +215,7 @@ public class BuildingDetect : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
+        AppearanceChange.transform.localPosition = Vector3.up*(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
@@ -313,9 +314,9 @@ public class BuildingDetect : MonoBehaviour
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
 
-            Vector3 canvasPos = ArrowManager.Instance.nameCanvas.transform.localPosition;
+            Vector3 canvasPos = GamificationComponentData.instance.nameCanvas.transform.localPosition;
             canvasPos.y = nameCanvasDefaultYpos;
-            ArrowManager.Instance.nameCanvas.transform.localPosition = canvasPos;
+            GamificationComponentData.instance.nameCanvas.transform.localPosition = canvasPos;
             if (avatarChangeCoroutine != null)
                 StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;

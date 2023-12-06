@@ -325,6 +325,9 @@ public class WorldItemView : MonoBehaviour
         {
             XanaConstants.xanaConstants.userLimit = userLimit;
         }
+        if (m_EnvironmentName == "ZONE-X")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
+       
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
