@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.92156863, g: 0.92941177, b: 0.9607843, a: 0.9019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -950,7 +950,6 @@ GameObject:
   - component: {fileID: 5288105764084679813}
   - component: {fileID: 5288105764084679815}
   - component: {fileID: 5288105764084679814}
-  - component: {fileID: 8702110988148757022}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -973,8 +972,8 @@ RectTransform:
   m_Father: {fileID: 5288105764144757279}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: -0.0000006390129, y: 0.13647634}
-  m_AnchorMax: {x: 1.000002, y: 0.88974047}
+  m_AnchorMin: {x: 0.0030682753, y: 0.0000018171784}
+  m_AnchorMax: {x: 1.003071, y: 0.99999934}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1007,9 +1006,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
-    m_FontSize: 35
-    m_FontStyle: 1
+    m_Font: {fileID: 12800000, guid: b4b42b128b9685a4db8072add04b3964, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 51
@@ -1020,21 +1019,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: LOG IN
---- !u!114 &8702110988148757022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5288105764084679812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  LocalizeText: {fileID: 5288105764084679814}
-  LocalizeTextTMP: {fileID: 0}
 --- !u!1 &5288105764144757278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,7 +1081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.92156863, g: 0.92941177, b: 0.9607843, a: 0.9019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1220,7 +1204,6 @@ GameObject:
   - component: {fileID: 5288105764187524473}
   - component: {fileID: 5288105764187524475}
   - component: {fileID: 5288105764187524474}
-  - component: {fileID: 1457583572588242454}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1243,10 +1226,10 @@ RectTransform:
   m_Father: {fileID: 5288105763010136719}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: -0.010201694, y: 0.20321964}
-  m_AnchorMax: {x: 1.0102009, y: 0.8168578}
-  m_AnchoredPosition: {x: 0, y: 0.37083054}
-  m_SizeDelta: {x: 0, y: 0.75683}
+  m_AnchorMin: {x: -0.010201694, y: 0.0014902742}
+  m_AnchorMax: {x: 1.0102009, y: 1.0218965}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5288105764187524475
 CanvasRenderer:
@@ -1277,11 +1260,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: e8db0ad75778c634b99860105c4811d3, type: 3}
-    m_FontSize: 35
-    m_FontStyle: 1
+    m_Font: {fileID: 12800000, guid: b4b42b128b9685a4db8072add04b3964, type: 3}
+    m_FontSize: 41
+    m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 84
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1289,22 +1272,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SIGN IN
---- !u!114 &1457583572588242454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5288105764187524472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  LocalizeText: {fileID: 5288105764187524474}
-  LocalizeTextTMP: {fileID: 0}
+  m_Text: SIGN UP
 --- !u!1 &5288105764306880259
 GameObject:
   m_ObjectHideFlags: 0
