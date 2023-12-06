@@ -229,8 +229,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 isConnecting = false;
 
-                if (lobbyName == "PMYRoomA")
-                    lobbyName = Guid.NewGuid().ToString();    // Generate unique room name everytime for PMYRoomA only
+                //if (lobbyName == "PMYRoomA")
+                //    lobbyName = Guid.NewGuid().ToString();    // Generate unique room name everytime for PMYRoomA only
 
                 print("Join Random Room in: " + lobbyName);
                 PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
@@ -242,9 +242,13 @@ namespace Photon.Pun.Demo.PunBasics
                 PhotonNetwork.GameVersion = this.gameVersion;
             }
 
-			SetMaxPlayer(int.Parse(XanaConstants.xanaConstants.userLimit));
-			//SetMaxPlayer(10);
-		}
+            if (lobbyName == "PMYRoomA")
+                SetMaxPlayer(1);
+            else
+                SetMaxPlayer(int.Parse(XanaConstants.xanaConstants.userLimit));
+
+            //SetMaxPlayer(10);
+        }
 
         void LogFeedback(string message)
         {
