@@ -433,6 +433,7 @@ public class BottomTabManager : MonoBehaviour
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
             FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
+            FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
             MyProfileDataManager.Instance.MyProfileSceenShow(false);
             //Invoke(nameof(InvokeDisableFeed),1f);

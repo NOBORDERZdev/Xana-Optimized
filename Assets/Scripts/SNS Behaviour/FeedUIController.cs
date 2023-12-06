@@ -184,10 +184,14 @@ public class FeedUIController : MonoBehaviour
 
     [Space]
     [Header("Add Friends")]
+    [SerializeField] public List<TMP_Text> FrndsPanelBtns;
+    [SerializeField] public List<Image> FrndsPanelBtnLines;
     [SerializeField] public GameObject AddFriendPanel;
     [SerializeField] public GameObject HotFriendPanel;
     public GameObject hotFriendContainer;
     [SerializeField] GameObject AddFrndFollowingPanel;
+    [SerializeField] GameObject AddFrndRecommendedPanel;
+    [SerializeField] GameObject AddFrndRecommendedContainer;
     [SerializeField] GameObject AddFrndFollowingContainer;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
@@ -930,6 +934,7 @@ public class FeedUIController : MonoBehaviour
         {
             AddFrndFollowingPanel.SetActive(true);
             APIController.Instance.AdFrndFollowingFetch();
+            UpdateAdFrndBtnStatus(2);
         }
     }
 
@@ -2828,6 +2833,28 @@ public class FeedUIController : MonoBehaviour
             }
         }
     #endregion
+    }
+
+    public void UpdateAdFrndBtnStatus(int index){
+        foreach (TMP_Text text in FrndsPanelBtns)
+        {
+            text.color= unSelectedColor;
+        }
+        foreach (Image line in FrndsPanelBtnLines)
+        {
+            line.color = Color.white;
+        }
+
+        FrndsPanelBtns[index].color= selectedColor;
+        FrndsPanelBtnLines[index].color= selectedColor;
+    }
+
+    public void OnClickHotFrnd()
+    {
+        HotFriendPanel.SetActive(true);
+        AddFrndFollowingPanel.SetActive(false);
+        AddFrndRecommendedPanel.SetActive(false);
+        UpdateAdFrndBtnStatus(0);
     }
     
 }
