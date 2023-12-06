@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -45,10 +46,23 @@ namespace RFM.Managers
         //    //}
         //}
 
-        public override void OnJoinedRoom()
+        public async override void OnJoinedRoom()
         {
             Debug.LogError("RFM OnJoinedRoom() after reconnecting");
+
+            await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("RFMDummy");
+
+            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RFMDummy", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            
+            LoadingHandler.Instance.HideLoading();
+            
+            // Reset all timers
             //FindObjectsOfType<RFM.Timer>().ForEachItem(t => Destroy(t.gameObject));
+
+            // Reset all scores
+
+            // Enable or Disable respective UI elements
+
 
             //StartCoroutine(RFM.Managers.RFMManager.Instance.Start());
 
