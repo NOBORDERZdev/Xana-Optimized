@@ -23,9 +23,9 @@ public class DoorKeyComponent : ItemComponent
         {
             if (isCollisionHandled)
                 return;
-            if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
+            if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
             {
-                PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+                PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
                 PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
             }
@@ -55,8 +55,8 @@ public class DoorKeyComponent : ItemComponent
 
             if (this.doorKeyComponentData.isDoor && !this.doorKeyComponentData.isKey)
             {
-
                 if (!DoorKeyValidation()) return;
+
                 bool isDoorFind = false;
                 KeyValues values = _other.gameObject.GetComponent<KeyValues>();
                 foreach (var item in values._dooKeyValues)
@@ -96,7 +96,7 @@ public class DoorKeyComponent : ItemComponent
                 }
                 if (values._dooKeyValues.Count > 0)
                     PlayerCanvas.Instance.ToggleWrongKey();
-
+                return;
             }
             isCollisionHandled = true;
         }
@@ -127,10 +127,10 @@ public class DoorKeyComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 

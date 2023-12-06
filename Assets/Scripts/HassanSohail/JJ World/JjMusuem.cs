@@ -65,14 +65,15 @@ public class JjMusuem : MonoBehaviour
     //    }
     //}
 
-    IEnumerator changePos(Transform destinationPoint) {
+    IEnumerator changePos(Transform destinationPoint)
+    {
         //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.7f, 0.85f), 4f, false);
-        //yield return new WaitForSeconds(.02f);
+       // yield return new WaitForSeconds(.02f);
         manager.allowTeleportation = false;
         player.allowTeleport = false;
         player.m_IsMovementActive = false;
-       // StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         yield return new WaitForSeconds(.2f);
         Vector3 tempSpawn = destinationPoint.position;
         RaycastHit hit;
