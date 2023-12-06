@@ -71,8 +71,6 @@ namespace RFM.Managers
         public override void OnEnable()
         {
             base.OnEnable();
-            //EventsManager.onPlayerCaught += PlayerCaught;
-            //EventsManager.onPlayerCaughtByPlayer += PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
 
         }
@@ -81,8 +79,6 @@ namespace RFM.Managers
         public override void OnDisable()
         {
             base.OnDisable();
-            //EventsManager.onPlayerCaught -= PlayerCaught;
-            //EventsManager.onPlayerCaughtByPlayer -= PlayerCaughtByPlayer;
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
