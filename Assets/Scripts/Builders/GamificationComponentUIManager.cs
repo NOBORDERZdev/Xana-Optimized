@@ -421,7 +421,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
         DisplayMessageText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
-        Debug.LogError(isJPText);
+        //Debug.LogError(isJPText);
         if (isJPText)
             DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
         else
