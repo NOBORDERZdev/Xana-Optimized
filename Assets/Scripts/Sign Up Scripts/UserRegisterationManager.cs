@@ -210,7 +210,22 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
     }
-
+    public void ShowWelcomeScreenessintial()
+    {
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 0)
+        {
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
+                if (PlayerPrefs.GetInt("GuestUser") == 0)
+                {
+                    welcomeScreen.SetActive(true);
+                    shownWelcome = true;
+                    PlayerPrefs.SetInt("GuestUser", 1);
+                    //PlayerPrefs.SetInt("shownWelcome", 1);
+                }
+            }
+        }
+    }
     public void ShowWelcomeClosed()
     {
         //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
@@ -399,10 +414,13 @@ public class UserRegisterationManager : MonoBehaviour
         {
             welcomeScreen.SetActive(true);
         }
-
-        if (btnClickedNo == 1)
+        else if (btnClickedNo == 1)
         {
             NewSignUp_Panal.SetActive(true);
+        }
+        else if (btnClickedNo == 2)
+        {
+            FirstPanal.SetActive(true);
         }
         MoveButtonBacktoPreviousPos();
         LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
@@ -1616,7 +1634,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         LoggedInAsGuest = false;
-
+        PlayerPrefs.SetInt("GuestUser", 0);
         yield return new WaitForSeconds(0.1f);
         resetClothstoGuest();
 
