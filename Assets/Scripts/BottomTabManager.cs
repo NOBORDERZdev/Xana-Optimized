@@ -412,7 +412,12 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
-    public void OnClickAddFriends(){ 
+    public void OnClickAddFriends(){
+        if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
+        {
+             UserRegisterationManager.instance.OpenUIPanal(17);
+            return;
+        }
         if (GameManager.Instance.defaultSelection != 5){ 
             GameManager.Instance.defaultSelection =5;
             GlobalVeriableClass.callingScreen = "Feed";
