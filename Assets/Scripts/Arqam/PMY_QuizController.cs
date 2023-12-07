@@ -25,7 +25,7 @@ public class PMY_QuizController : MonoBehaviour
     public TMP_Text wrongText;
     public TMP_Text scorePercentage;
 
-    private QuizComponentData quizComponentData = new();
+    public QuizComponentData quizComponentData = new();
     private TMP_Text nextButtonText;
     string confirm = "Confirm";
     string result = "Result";
