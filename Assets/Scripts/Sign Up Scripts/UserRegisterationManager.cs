@@ -211,7 +211,19 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
     }
-
+    public void ShowWelcomeScreenessintial()
+    {
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 0)
+        {
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
+                welcomeScreen.SetActive(true);
+               // shownWelcome = true;
+                //PlayerPrefs.SetInt("shownWelcome", 1);
+            }
+        }
+        
+    }
     public void ShowWelcomeClosed()
     {
         //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));

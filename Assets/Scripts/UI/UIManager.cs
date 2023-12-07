@@ -57,8 +57,7 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(IsSplashEnable(false, 3f));
                
             }
-           
-        }
+         }
         else
         {
 
@@ -77,6 +76,7 @@ public class UIManager : MonoBehaviour
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
+        UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
    
   
