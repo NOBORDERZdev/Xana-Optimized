@@ -19,8 +19,11 @@ public class FollowingItemController : MonoBehaviour
     public Image followFollowingImage;
     public Color followColor, followingColor;
 
-    public Sprite defaultSP;
+    [SerializeField] GameObject MakeBfBtn;
+    [SerializeField] GameObject RemoveBfBtn;
 
+    public Sprite defaultSP;
+    int userId ;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -61,7 +64,6 @@ public class FollowingItemController : MonoBehaviour
     public void SetupData(AllFollowingRow allFollowingRow, bool isFromProfile= true)
     {
         followingRawData = allFollowingRow;
-
         userNameText.text = followingRawData.following.name;
         if (!string.IsNullOrEmpty(followingRawData.following.avatar))
         {
@@ -85,6 +87,7 @@ public class FollowingItemController : MonoBehaviour
         {
             FollowFollowingSetUp(false);
         }
+        UpdateBfBtn(false);
     }
 
     public void OnClickUserProfileButton()
@@ -329,4 +332,34 @@ public class FollowingItemController : MonoBehaviour
         return (ExtentionType)0;
     }*/
     #endregion
+
+
+    /// <summary>
+    /// To Add Following in BFF list
+    /// </summary>
+    public void AddBff(){ 
+        APIManager.Instance.AddBestFriend(followingRawData.userId,gameObject);
+    }
+
+    /// <summary>
+    /// To Remove BFF that already are in BFF
+    /// </summary>
+    public void RemoveBff(){ 
+          APIManager.Instance.RemoveBestFriend(followingRawData.userId,gameObject);
+    }
+
+    public void UpdateBfBtn(bool isBf){
+        if (isBf)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+       
+    }
+
 }

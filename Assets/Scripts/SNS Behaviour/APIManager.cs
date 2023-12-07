@@ -34,7 +34,8 @@ public class APIManager : MonoBehaviour
     private int commnetFeedPagesize = 50;
     private bool scrollToTop;
     public bool isCommentDataLoaded = false;
-
+    private int BFCount = 0;
+    private int maxBfCount=2;
 
     private void Awake()
     {
@@ -1583,6 +1584,89 @@ public class APIManager : MonoBehaviour
             }
         }
     }
+
+    IEnumerator GetBestFriends()
+    {
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetBestFrnd + APIManager.Instance.userId;
+        using (UnityWebRequest www= UnityWebRequest.Get(uri))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Get Best Friends list : " + data);
+                CloseFrndRoot CloseFrnds = JsonUtility.FromJson<CloseFrndRoot>(data);
+            }
+        }
+    }
+
+    public void AddBestFriend(int userId, GameObject FrndBtn)
+    {
+        if (BFCount<maxBfCount)
+        {
+          StartCoroutine(IEAddBestFriend(userId, FrndBtn));
+        }
+        else
+        {
+            SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
+        }
+    }
+    IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn){ 
+       string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
+        using (UnityWebRequest www= UnityWebRequest.Post(uri,"POST"))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Add Best Friend : " + data);
+                AdCloseFrndRoot AdCloseFrnds = JsonUtility.FromJson<AdCloseFrndRoot>(data);
+                if (AdCloseFrnds.success)
+                {
+                    BFCount++;
+                    FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
+                }
+            }
+        }
+    }
+
+    public void RemoveBestFriend(int userId, GameObject FrndBtn)
+    {
+        StartCoroutine(IERemoveBestFriend(userId, FrndBtn));
+    }
+    IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn){ 
+       string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveBestFrnd + userId.ToString();
+        //WWWForm form = new WWWForm();
+        //form.AddField("friendId", userId.ToString());
+        using (UnityWebRequest www= UnityWebRequest.Delete(uri))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                if (BFCount<0)
+                {
+                   BFCount--;
+                }
+               FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
+            }
+        }
+    }
+
     #endregion
 
     #region UserAPI.......... 
@@ -2978,6 +3062,57 @@ public class AllFollowingRoot
     public AllFollowingData data;
     public string msg;
 }
+
+[System.Serializable]
+public class CloseFrndRoot
+{
+    public bool success;
+    public CloseFrndData data;
+    public string msg;
+}
+
+[System.Serializable]
+public class CloseFrndData
+{
+    public int count;
+    public List<CloseFrndRow> rows;
+}
+
+
+[System.Serializable]
+public class CloseFrndRow
+{
+    public int id;
+    public int json;
+}
+
+[System.Serializable]
+public class AdCloseFrndRoot
+{
+    public bool success;
+    public AdCloseFrndRow data;
+    public string msg;
+}
+
+//[System.Serializable]
+//public class AdCloseFrndData
+//{
+//    public int count;
+//    public List<AdCloseFrndRow> rows;
+//}
+
+
+[System.Serializable]
+public class AdCloseFrndRow
+{
+    public int id;
+    public int userId;
+    public int friendId;
+    public DateTime updatedAt;
+    public DateTime createdAt;
+}
+
+
 //---------------------------------------------------
 
 /// <summary>

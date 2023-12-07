@@ -156,6 +156,9 @@ public class ConstantsGod
 
     public static string r_url_SearchUser = /*"/users/search-user"*/ "/users/v2/search-user/";
     public static string r_url_NonFriendUser = "/social/get-non-friends/";
+    public static string r_url_GetBestFrnd ="/social/get-close-friends/";
+    public static string r_url_AdBestFrnd ="/social/create-close-friend/";
+    public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";
