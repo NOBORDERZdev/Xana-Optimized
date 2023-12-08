@@ -117,6 +117,7 @@ public class UIManager : MonoBehaviour
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
+        UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
    
   

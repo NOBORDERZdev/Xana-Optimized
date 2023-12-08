@@ -165,7 +165,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.6f, 6.41f);
 
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
-        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
+        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
 
         CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
