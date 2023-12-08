@@ -220,7 +220,6 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     welcomeScreen.SetActive(true);
                     shownWelcome = true;
-                    PlayerPrefs.SetInt("GuestUser", 1);
                     //PlayerPrefs.SetInt("shownWelcome", 1);
                 }
             }
@@ -242,7 +241,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-
+            PlayerPrefs.SetInt("GuestUser", 1);
             welcomeScreen.SetActive(false);
             shownWelcome = false;
             print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
