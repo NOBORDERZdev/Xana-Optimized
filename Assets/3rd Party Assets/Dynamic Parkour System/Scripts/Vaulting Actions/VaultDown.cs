@@ -81,10 +81,18 @@ namespace Climbing
             bool ret = false;
             if (controller.isVaulting)
             {
-                if (!controller.dummy && controller.isJumping)
+                if (!controller.dummy && controller.isJumping && !controller.characterAnimation.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 {
                     //Grants movement while falling
-                    controller.characterMovement.rb.position += (controller.transform.forward * controller.characterMovement.walkSpeed) * Time.fixedDeltaTime;
+                    Debug.Log("Rigidbody move");
+                    if (controller.characterInput.run)
+                    {
+                        controller.characterMovement.rb.position += (controller.transform.forward * controller.characterMovement.RunSpeed) * Time.fixedDeltaTime;
+                    }
+                    else
+                    {
+                        controller.characterMovement.rb.position += (controller.transform.forward * controller.characterMovement.walkSpeed) * Time.fixedDeltaTime;
+                    }
                     ret = true;
                 }
             }
