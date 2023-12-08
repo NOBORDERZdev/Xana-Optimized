@@ -307,6 +307,7 @@ namespace Metaverse
             string lastRoomName = PlayerPrefs.GetString("roomname");
             if (!PhotonNetwork.ReconnectAndRejoin())
             {
+                Debug.LogError("RFM Failed to reconnect and rejoin!");
                 if (PhotonNetwork.RejoinRoom(lastRoomName))
                 {
                     Debug.Log(" Successful reconnected!", this);
@@ -314,6 +315,7 @@ namespace Metaverse
             }
             else
             {
+                Debug.LogError("RFM Successfully reconnected and rejoined!");
                 Debug.Log("Successful reconnected and joined!", this);
                 PhotonNetwork.AutomaticallySyncScene = true;
                 roomOptions = new RoomOptions();
@@ -323,7 +325,7 @@ namespace Metaverse
                 roomOptions.PublishUserId = true;
                 roomOptions.CleanupCacheOnLeave = true;
                 PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("roomname"), roomOptions, new TypedLobby(PlayerPrefs.GetString("lb"), LobbyType.Default), null);
-                Invoke("ChangeButtonCommit", 2);
+                Invoke(nameof(ChangeButtonCommit), 2);
             }
         }
 
