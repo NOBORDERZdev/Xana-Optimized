@@ -191,7 +191,7 @@ public class FeedUIController : MonoBehaviour
     public GameObject hotFriendContainer;
     [SerializeField] GameObject AddFrndFollowingPanel;
     [SerializeField] GameObject AddFrndRecommendedPanel;
-    [SerializeField] GameObject AddFrndRecommendedContainer;
+    [SerializeField] public GameObject AddFrndRecommendedContainer;
     [SerializeField] GameObject AddFrndFollowingContainer;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
@@ -922,6 +922,7 @@ public class FeedUIController : MonoBehaviour
     {
         //findFriendInputField.text = "";
         findFriendInputFieldAdvanced.Text = "";
+        APIManager.Instance.GetBestFriend();
         //findFriendScreen.SetActive(true);
     }
 
@@ -932,6 +933,8 @@ public class FeedUIController : MonoBehaviour
     {
         if (!AddFrndFollowingPanel.activeInHierarchy)
         {
+            HotFriendPanel.SetActive(false);
+            AddFrndRecommendedPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(true);
             APIController.Instance.AdFrndFollowingFetch();
             UpdateAdFrndBtnStatus(2);
@@ -2855,6 +2858,17 @@ public class FeedUIController : MonoBehaviour
         AddFrndFollowingPanel.SetActive(false);
         AddFrndRecommendedPanel.SetActive(false);
         UpdateAdFrndBtnStatus(0);
+    }
+
+     public void OnClickRecommedationFrnd()
+    {
+        if (!AddFrndRecommendedPanel.activeInHierarchy){ 
+            HotFriendPanel.SetActive(false);
+            AddFrndFollowingPanel.SetActive(false);
+            AddFrndRecommendedPanel.SetActive(true);
+            APIManager.Instance.SetRecommendedFriend();
+            UpdateAdFrndBtnStatus(1);
+        }
     }
     
 }

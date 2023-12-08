@@ -87,7 +87,7 @@ public class FollowingItemController : MonoBehaviour
         {
             FollowFollowingSetUp(false);
         }
-        UpdateBfBtn(false);
+        UpdateBfBtn(allFollowingRow.following.is_close_friend);
     }
 
     public void OnClickUserProfileButton()

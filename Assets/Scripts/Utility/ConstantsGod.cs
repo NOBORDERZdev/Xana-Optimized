@@ -140,6 +140,7 @@ public class ConstantsGod
 
     public static string r_url_FollowAUser = "/follow/user";
     public static string r_url_GetAllFollowing = "/follow/get-all-following";
+    public static string r_url_AdFrndGetAllAolowing = "/social/follow/get-all-following/";
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
@@ -156,6 +157,7 @@ public class ConstantsGod
 
     public static string r_url_SearchUser = /*"/users/search-user"*/ "/users/v2/search-user/";
     public static string r_url_NonFriendUser = "/social/get-non-friends/";
+    public static string r_url_RecommendedUser = "/social/get-friends-recommendations/";
     public static string r_url_GetBestFrnd ="/social/get-close-friends/";
     public static string r_url_AdBestFrnd ="/social/create-close-friend/";
     public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";

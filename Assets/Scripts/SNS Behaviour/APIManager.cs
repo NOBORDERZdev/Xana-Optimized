@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using static ServerSIdeCharacterHandling;
 
 public class APIManager : MonoBehaviour
 {
@@ -672,7 +673,7 @@ public class APIManager : MonoBehaviour
                 Debug.Log("GetAllFollowing Data" + data);
                 adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
                 APIController.Instance.SpwanAdFrndFollowing();
-                
+                GetBestFriend();
 
                 //switch (getFollowingFor)
                 //{
@@ -907,7 +908,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetAllFollowingFromProfile(string user_Id, int pageNum, int pageSize)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdFrndGetAllAolowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -1585,7 +1586,38 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    IEnumerator GetBestFriends()
+
+    public void SetRecommendedFriend()
+    {
+
+        StartCoroutine(IERequestRecommendedFirends());
+    }
+
+     IEnumerator IERequestRecommendedFirends(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RecommendedUser + "1/50";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Hot Friends Data" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.ShowRecommendedFriends(searchUserRoot);
+                //APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+
+    public void GetBestFriend(){
+        StartCoroutine(IEGetBestFriends());
+    }
+
+    IEnumerator IEGetBestFriends()
     {
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetBestFrnd + APIManager.Instance.userId;
         using (UnityWebRequest www= UnityWebRequest.Get(uri))
@@ -1601,6 +1633,7 @@ public class APIManager : MonoBehaviour
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Get Best Friends list : " + data);
                 CloseFrndRoot CloseFrnds = JsonUtility.FromJson<CloseFrndRoot>(data);
+                BFCount = CloseFrnds.data.count;
             }
         }
     }
@@ -1633,7 +1666,8 @@ public class APIManager : MonoBehaviour
                 AdCloseFrndRoot AdCloseFrnds = JsonUtility.FromJson<AdCloseFrndRoot>(data);
                 if (AdCloseFrnds.success)
                 {
-                    BFCount++;
+                    //BFCount++;
+                    GetBestFriend();
                     if (FrndBtn.GetComponent<FollowingItemController>())
                     {
                         FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
@@ -1666,10 +1700,11 @@ public class APIManager : MonoBehaviour
             }
             else
             {
-                if (BFCount<0)
-                {
-                   BFCount--;
-                }
+                //if (BFCount<0)
+                //{
+                //   BFCount--;
+                //}
+                GetBestFriend();
                 if (FrndBtn.GetComponent<FollowingItemController>())
                 {
                     FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
@@ -3044,6 +3079,7 @@ public class AllFollowing
     public string name;
     public string email;
     public string avatar;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -3091,6 +3127,7 @@ public class CloseFrndData
 {
     public int count;
     public List<CloseFrndRow> rows;
+    public string msg;
 }
 
 
@@ -3098,7 +3135,9 @@ public class CloseFrndData
 public class CloseFrndRow
 {
     public int id;
-    public int json;
+    public string name;
+    public string thumbnail;
+    public Row json;
 }
 
 [System.Serializable]
