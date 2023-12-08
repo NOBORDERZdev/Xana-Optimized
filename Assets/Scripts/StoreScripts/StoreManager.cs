@@ -1001,8 +1001,8 @@ public class StoreManager : MonoBehaviour
         }
         GetAllInfoSUBOFCategories JsonDataObj = new GetAllInfoSUBOFCategories();
         JsonDataObj = GetDataofSUBCategories(request.downloadHandler.text);
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         if (!request.isHttpError && !request.isNetworkError)
         {
