@@ -28,6 +28,24 @@ public class ChangeOrientation_waqas : MonoBehaviour
         _instance = this;
         landscapeCanvas = landscapeObj[1].GetComponent<CanvasGroup>();
         potraitCanvas = potraitObj[1].GetComponent<CanvasGroup>();
+
+        //Invoke("CheckOrienataionWhenComeFromLobby", 1f);
+        CheckOrienataionWhenComeFromLobby();
+    }
+
+
+    void CheckOrienataionWhenComeFromLobby()
+    {
+        if (XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.orientationchanged)
+        {
+            MyOrientationChangeCode(DeviceOrientation.Portrait);
+        }
+        else
+        {
+            XanaConstants.xanaConstants.orientationchanged = false;
+        }
+
+        isPotrait = XanaConstants.xanaConstants.orientationchanged;
     }
 
     private void OnEnable()
