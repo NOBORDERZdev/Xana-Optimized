@@ -1634,7 +1634,15 @@ public class APIManager : MonoBehaviour
                 if (AdCloseFrnds.success)
                 {
                     BFCount++;
-                    FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
+                    if (FrndBtn.GetComponent<FollowingItemController>())
+                    {
+                        FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
+                    }
+                    else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
+                    {
+                         FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(true);
+                    }
+                    
                 }
             }
         }
@@ -1662,7 +1670,14 @@ public class APIManager : MonoBehaviour
                 {
                    BFCount--;
                 }
-               FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
+                if (FrndBtn.GetComponent<FollowingItemController>())
+                {
+                    FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
+                }
+                else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
+                {
+                        FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(false);
+                }
             }
         }
     }
@@ -3257,6 +3272,7 @@ public class SearchUserRow
     public int followerCount;
     public bool is_following_me;
     public bool am_i_following;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 

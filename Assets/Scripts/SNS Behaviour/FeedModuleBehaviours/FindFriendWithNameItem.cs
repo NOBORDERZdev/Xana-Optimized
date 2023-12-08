@@ -21,6 +21,9 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     public Sprite defaultSP;
 
+    [SerializeField] GameObject MakeBfBtn;
+    [SerializeField] GameObject RemoveBfBtn;
+
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -58,7 +61,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
     }
 
-    public void SetupData(SearchUserRow searchUserRow1)
+    public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false)
     {
         searchUserRow = searchUserRow1;
 
@@ -83,6 +86,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
         FollowFollowingSetUp(searchUserRow.am_i_following);
+        if (searchUserRow.am_i_following)
+        {
+             UpdateBfBtn(searchUserRow.is_close_friend);
+        }
+       
     }
 
     public void OnClickUserProfileButton()
@@ -322,4 +330,37 @@ public class FindFriendWithNameItem : MonoBehaviour
         return (ExtentionType)0;
     }*/
     #endregion
+
+        /// <summary>
+    /// To Add Following in BFF list
+    /// </summary>
+    public void AddBff(){ 
+        APIManager.Instance.AddBestFriend(searchUserRow.id,gameObject);
+    }
+
+    /// <summary>
+    /// To Remove BFF that already are in BFF
+    /// </summary>
+    public void RemoveBff(){ 
+          APIManager.Instance.RemoveBestFriend(searchUserRow.id,gameObject);
+    }
+
+    public void UpdateBfBtn(bool isBf){
+        if (isBf)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+       
+    }
+
+    public void OffBffBtns(){ 
+        MakeBfBtn.SetActive(false);
+        RemoveBfBtn.SetActive(false);
+    }
 }
