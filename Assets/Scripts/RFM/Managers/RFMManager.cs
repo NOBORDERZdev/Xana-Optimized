@@ -21,7 +21,7 @@ namespace RFM.Managers
         //public Transform lobbySpawnPoint;
         //public GameObject playerObject;
         [SerializeField] public Transform playersSpawnArea;
-        [SerializeField] private GameObject huntersCage;
+        //[SerializeField] private GameObject huntersCage;
         [SerializeField] private FollowNPC npcCameraPrefab;
         [SerializeField] public Transform huntersSpawnArea;
 
@@ -31,16 +31,16 @@ namespace RFM.Managers
         //[SerializeField] private GameObject gameOverPanel;
 
         //MM effects
-        [SerializeField] private MMScaleShaker timerTextScaleShaker;
-        [SerializeField] private MMScaleShaker countdownTimerTextScaleShaker;
-        [SerializeField] private MMF_Player statusMMFPlayer;
+        //[SerializeField] private MMScaleShaker timerTextScaleShaker;
+        //[SerializeField] private MMScaleShaker countdownTimerTextScaleShaker;
+        //[SerializeField] private MMF_Player statusMMFPlayer;
 
         //Camera Manager
-        [SerializeField] private RFMCameraManager rfmCameraManager;
+        //[SerializeField] private RFMCameraManager rfmCameraManager;
         [SerializeField] public GameObject _mainCam;
 
-        //VFX
-        [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
+        ////VFX
+        //[SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
 
         #endregion
 
@@ -145,7 +145,7 @@ namespace RFM.Managers
 
             statusTMP.text = "Waiting for other players to join:";
             statusBG.SetActive(true);
-            statusMMFPlayer.PlayFeedbacks();
+            //statusMMFPlayer.PlayFeedbacks();
         }
 
         // private void OnGUI()
@@ -239,9 +239,9 @@ namespace RFM.Managers
             countDownText.transform.parent.gameObject.SetActive(true);
             statusTMP.text = "Resetting position in:";
             statusBG.SetActive(true);
-            statusMMFPlayer.PlayFeedbacks();
+            //statusMMFPlayer.PlayFeedbacks();
 
-            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up");
+            //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up");
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -372,7 +372,7 @@ namespace RFM.Managers
 
                 statusTMP.text = "CATCH THE <#FF36D3>RUNNERS!</color>";
                 statusBG.SetActive(true);
-                statusMMFPlayer.PlayFeedbacks();
+                //statusMMFPlayer.PlayFeedbacks();
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, 
                     /*AfterTakePositionTimerHunter*/StartGameplay,
@@ -400,7 +400,7 @@ namespace RFM.Managers
 
                 statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
                 statusBG.SetActive(true);
-                statusMMFPlayer.PlayFeedbacks();
+                //statusMMFPlayer.PlayFeedbacks();
 
                 //Globals.gameState = Globals.GameState.TakePosition;
 
@@ -491,7 +491,7 @@ namespace RFM.Managers
             gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
             statusBG.SetActive(false);
-            statusMMFPlayer.PlayFeedbacks();
+            //statusMMFPlayer.PlayFeedbacks();
 
             Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver,
                 gameplayTimeText, AfterEachSecondGameplayTimer);
@@ -499,26 +499,26 @@ namespace RFM.Managers
 
         private void AfterEachSecondGameplayTimer(float time)
         {
-            if (timerTextScaleShaker) timerTextScaleShaker.Play();
+            //if (timerTextScaleShaker) timerTextScaleShaker.Play();
         }
 
         private void AfterEachSecondCountdownTimer(float time)
         {
-            if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
+            //if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
 
-            //camera logic
-            if (Globals.gameState == Globals.GameState.TakePosition)
-            {
-                if (time < 7)
-                    rfmCameraManager.SwtichCamera(0);
-                if (time < 4)
-                {
-                    huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-                    rfmCameraManager.SwtichCamera(1);
-                }
-                if (time < 1)
-                    rfmCameraManager.SwitchOffAllCameras();
-            }
+            ////camera logic
+            //if (Globals.gameState == Globals.GameState.TakePosition)
+            //{
+            //    if (time < 7)
+            //        rfmCameraManager.SwtichCamera(0);
+            //    if (time < 4)
+            //    {
+            //        //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+            //        rfmCameraManager.SwtichCamera(1);
+            //    }
+            //    if (time < 1)
+            //        rfmCameraManager.SwitchOffAllCameras();
+            //}
         }
 
         private async void GameplayTimeOver()
@@ -549,7 +549,7 @@ namespace RFM.Managers
             _gameCanvas.SetActive(false);
             statusTMP.text = "Player caught! Spectating...";
             statusBG.SetActive(true);
-            statusMMFPlayer.PlayFeedbacks();
+            //statusMMFPlayer.PlayFeedbacks();
 
             if (_npcCamera == null)
             {
