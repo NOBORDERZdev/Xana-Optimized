@@ -17,6 +17,14 @@ public class UserPostFeature : MonoBehaviour
     public UpdatePostText OnUpdatePostText;
     public void SendPost()
     {
+        Debug.LogError("GameManager.MoodSelected ----> " + GameManager.Instance.userAnimationPostFeature.MoodSelected);
+        Debug.LogError("_postInputField.text ----> " + _postInputField.text);
+        if(_postInputField.text=="" && GameManager.Instance.userAnimationPostFeature.MoodSelected=="")
+        {
+            SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
+            return;
+        }
+        UIManager.Instance.SwitchToPostScreen(false);
         string moodToSend = GameManager.Instance.userAnimationPostFeature.MoodSelected;
         if(GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
         {
@@ -41,10 +49,14 @@ public class UserPostFeature : MonoBehaviour
 
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
             GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected, flagg);
+            GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected));
+
             GameManager.Instance.moodManager.LastMoodSelected = "";
         }
         else
         {
+            Debug.LogError("GameManager.Instance.moodManager.PostMood ----> " + "   Fun Happy");
+
             GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
         }
     }
@@ -94,8 +106,10 @@ public class UserPostFeature : MonoBehaviour
             www.Dispose();
         }
     }
+    TMPro.TMP_Text _previousTextElement;
     IEnumerator GetLatestPostsentToServer(TMPro.TMP_Text textElement)
     {
+        _previousTextElement = textElement;
         string FinalUrl = PrepareApiURL("Receive");
        // Debug.LogError("Prepared URL ----> " + FinalUrl);
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
@@ -142,10 +156,44 @@ public class UserPostFeature : MonoBehaviour
                 }
                 else
                 {
+                    Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
                     GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
                 }
             }
             www.Dispose();
+        }
+    }
+    public void SetLastPostToPlayer()
+    {
+        Debug.LogError("Reset to last post --->> ");
+
+        if (RetrievedPost.data != null)
+        {
+            Bubble.gameObject.SetActive(true);
+        }
+        else
+        {
+            Bubble.gameObject.SetActive(false);
+        }
+        Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+        if (RetrievedPost.data.text_post == "null")
+        {
+            Bubble.gameObject.SetActive(false);
+        }
+        else if(_previousTextElement!=null)
+            _previousTextElement.text = RetrievedPost.data.text_post;
+        if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
+        {
+            Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+            bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
+            GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg);
+            Debug.LogError("Behaviour Assign ---->   " + GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+            GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+        }
+        else
+        {
+            Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
+            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
         }
     }
     [System.Serializable]

@@ -52,12 +52,16 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            _postScreen.gameObject.SetActive(flag);
-            HomePage.gameObject.SetActive(!flag);
-            _postCamera.gameObject.SetActive(flag);
-            ShowFooter(!flag);
+           _postScreen.gameObject.SetActive(flag);
+           HomePage.gameObject.SetActive(!flag);
+           _postCamera.gameObject.SetActive(flag);
+            ////---- ShowFooter(!flag);
             GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(flag);
         }
+    }
+    public void ResetPlayerToLastPostPosted()
+    {
+        GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
     }
     public void AvaterButtonCustomPushed()
     {

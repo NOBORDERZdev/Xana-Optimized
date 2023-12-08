@@ -103,7 +103,7 @@ public class Actor : MonoBehaviour
                 }
                 break;
         }
-        StartCoroutine(StartActorBehaviour());
+       StartCoroutine(StartActorBehaviour());
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
@@ -118,6 +118,7 @@ public class Actor : MonoBehaviour
         {
             _PlayerAnimator.SetBool("IdleMenu", flag);
             _PlayerAnimator.SetBool("Menu Action", false);
+            StateMoveBehaviour = 1;
             _moveFlag = true;
         }
         NameTagHolderObj.gameObject.SetActive(!flag);

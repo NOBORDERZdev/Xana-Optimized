@@ -64,6 +64,8 @@ public class BottomTabManager : MonoBehaviour
         }
         else
             return;
+
+
         for (int i = 0; i < allButtonIcon.Count; i++)
         {
             if (i == index)
@@ -72,7 +74,7 @@ public class BottomTabManager : MonoBehaviour
                 GameManager.Instance.defaultSelection = index;
                 if (i == 2)
                 {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.white;
+                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = ActiveButtonColor;
                 }
             }
             else
@@ -113,9 +115,9 @@ public class BottomTabManager : MonoBehaviour
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
            // PostButton.transform.GetComponent<Button>().interactable = true;
 
-            allButtonIcon[2].transform.GetComponent<Image>().color = Color.white;
-            allButtonIcon[3].transform.GetComponent<Image>().color = Color.white;
-            allButtonIcon[4].transform.GetComponent<Image>().color = Color.white;
+            allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
+            allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
+            allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
             // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
         if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
@@ -141,7 +143,9 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                allButtonIcon[i].color = Color.white;
+                Debug.LogError("BC ---->>>>");
+
+                allButtonIcon[i].color = ActiveButtonColor;
                 if (i == 2)
                 {
                     allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
@@ -174,7 +178,7 @@ public class BottomTabManager : MonoBehaviour
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
                 FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
             }
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+          //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
             if (UIManager.Instance != null)
             {
                 CheckLoginOrNotForFooterButton();
@@ -194,7 +198,7 @@ public class BottomTabManager : MonoBehaviour
         if (GameManager.Instance.defaultSelection != 1)
         {
             GameManager.Instance.defaultSelection=1;
-            GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+          //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
@@ -376,7 +380,7 @@ public class BottomTabManager : MonoBehaviour
             OnSelectedClick(3);
             GameManager.Instance.defaultSelection = 3;
             GlobalVeriableClass.callingScreen = "Feed";
-            GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+           // GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
@@ -436,7 +440,7 @@ public class BottomTabManager : MonoBehaviour
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
             }
-            GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+          //  GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
             FeedUIController.Instance.SetAddFriendScreen(true);
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
