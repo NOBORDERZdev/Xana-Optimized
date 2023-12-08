@@ -1,5 +1,6 @@
 ﻿using AdvancedInputFieldPlugin;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
     public GameObject _SplashScreen;
+
+    public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
 
@@ -39,7 +42,27 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
     }
-
+    bool a =false;
+    public void SwitchToPostScreen(bool flag)
+    {
+       
+        if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
+        {
+            SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
+        }
+        else
+        {
+           _postScreen.gameObject.SetActive(flag);
+           HomePage.gameObject.SetActive(!flag);
+           _postCamera.gameObject.SetActive(flag);
+            ////---- ShowFooter(!flag);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(flag);
+        }
+    }
+    public void ResetPlayerToLastPostPosted()
+    {
+        GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
+    }
     public void AvaterButtonCustomPushed()
     {
         WorldItemPreviewTab.m_WorldIsClicked = false;
