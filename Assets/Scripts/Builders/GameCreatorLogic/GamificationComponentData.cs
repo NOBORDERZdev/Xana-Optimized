@@ -83,6 +83,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     //Font
     public TMPro.TMP_FontAsset orbitronFont;
     public TMPro.TMP_FontAsset hiraginoFont;
+    public TMPro.TMP_FontAsset arialFont;
 
     //Name canvas
     internal Canvas nameCanvas;

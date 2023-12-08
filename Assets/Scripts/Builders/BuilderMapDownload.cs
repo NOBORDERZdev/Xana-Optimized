@@ -354,7 +354,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
                 Material _mat = loadRealisticMaterial.Result as Material;
-                Debug.LogError(realisticMaterialData.shaderName);
+                //Debug.LogError(realisticMaterialData.shaderName);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;

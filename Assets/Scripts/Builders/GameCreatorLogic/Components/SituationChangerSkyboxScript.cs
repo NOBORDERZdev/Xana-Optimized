@@ -86,7 +86,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
                 loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
                 if (!flag)
                     loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
-                Debug.LogError("indexx == " + indexx);
+                //Debug.LogError("indexx == " + indexx);
 
                 loadSkyBox.Completed += LoadSkyBox_Completed;
             }
@@ -112,7 +112,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
         if (obj.Status == AsyncOperationStatus.Succeeded)
             AddressableDownloader.Instance.MemoryManager.AddToReferenceList(obj, skyboxMatKey);
         Material _mat = obj.Result as Material;
-        Debug.LogError("indexx == " + indexx);
+        //Debug.LogError("indexx == " + indexx);
         _mat.shader = Shader.Find(skyBoxesData.skyBoxes[indexx].shaderName);
         RenderSettings.skybox = _mat;
         directionLight.color = skyBoxesData.skyBoxes[indexx].directionalLightData.directionLightColor;
