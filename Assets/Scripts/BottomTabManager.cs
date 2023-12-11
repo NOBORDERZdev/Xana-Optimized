@@ -143,8 +143,6 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("BC ---->>>>");
-
                 allButtonIcon[i].color = ActiveButtonColor;
                 if (i == 2)
                 {
