@@ -1,3 +1,4 @@
+using BestHTTP.SocketIO.Events;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using System.Collections;
@@ -32,6 +33,12 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            if (WorldName.Contains("CommingSoon"))
+            {
+                SNSNotificationManager.Instance.ShowNotificationMsg("Coming Soon");
+                return;
+            }
+
             CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
