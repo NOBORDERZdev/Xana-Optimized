@@ -17,8 +17,8 @@ public class UserPostFeature : MonoBehaviour
     public UpdatePostText OnUpdatePostText;
     public void SendPost()
     {
-        Debug.LogError("GameManager.MoodSelected ----> " + GameManager.Instance.userAnimationPostFeature.MoodSelected);
-        Debug.LogError("_postInputField.text ----> " + _postInputField.text);
+       // Debug.LogError("GameManager.MoodSelected ----> " + GameManager.Instance.userAnimationPostFeature.MoodSelected);
+       // Debug.LogError("_postInputField.text ----> " + _postInputField.text);
         if(_postInputField.text=="" && GameManager.Instance.userAnimationPostFeature.MoodSelected=="")
         {
             SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
@@ -30,7 +30,7 @@ public class UserPostFeature : MonoBehaviour
         {
             moodToSend = "null";
         }
-        Debug.LogError("GameManager.MoodSelected ----> " + moodToSend);
+       // Debug.LogError("GameManager.MoodSelected ----> " + moodToSend);
         if (_postInputField.text == "")
         {
             StartCoroutine(SendPostDataToServer("null", moodToSend));
@@ -45,7 +45,7 @@ public class UserPostFeature : MonoBehaviour
         if(GameManager.Instance.moodManager.PostMood)
         {
             GameManager.Instance.moodManager.PostMood = false;
-            Debug.LogError("PostMood ----> " + GameManager.Instance.moodManager.LastMoodSelected);
+           // Debug.LogError("PostMood ----> " + GameManager.Instance.moodManager.LastMoodSelected);
 
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
             GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected, flagg);
@@ -55,7 +55,7 @@ public class UserPostFeature : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GameManager.Instance.moodManager.PostMood ----> " + "   Fun Happy");
+           // Debug.LogError("GameManager.Instance.moodManager.PostMood ----> " + "   Fun Happy");
 
             GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
         }
@@ -96,12 +96,12 @@ public class UserPostFeature : MonoBehaviour
             //     yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError("SendPostDataToServer ----> " + postMessage);
-                Debug.LogError("Error Post --->  "+www.downloadHandler.text);
+              //  Debug.LogError("SendPostDataToServer ----> " + postMessage);
+              //  Debug.LogError("Error Post --->  "+www.downloadHandler.text);
             }
             else
             {
-                Debug.LogError("Posted ---->  "+www.downloadHandler.text);
+               // Debug.LogError("Posted ---->  "+www.downloadHandler.text);
             }
             www.Dispose();
         }
@@ -129,7 +129,7 @@ public class UserPostFeature : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Posted ---->  " + www.downloadHandler.text);
+               // Debug.LogError("Posted ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data !=null)
                 {
@@ -139,7 +139,7 @@ public class UserPostFeature : MonoBehaviour
                 {
                     Bubble.gameObject.SetActive(false);
                 }
-                Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+               // Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_post == "null")
                 {
                     Bubble.gameObject.SetActive(false);
@@ -148,15 +148,15 @@ public class UserPostFeature : MonoBehaviour
                     textElement.text = RetrievedPost.data.text_post;
                 if(RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood!=null && RetrievedPost.data.text_mood != "")
                 {
-                    Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+                  //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
                     bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
                     GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg);
-                    Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+                  //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
                     GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
                 }
                 else
                 {
-                    Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
+                  //  Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
                     GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
                 }
             }
@@ -165,7 +165,7 @@ public class UserPostFeature : MonoBehaviour
     }
     public void SetLastPostToPlayer()
     {
-        Debug.LogError("Reset to last post --->> ");
+     //   Debug.LogError("Reset to last post --->> ");
 
         if (RetrievedPost.data != null)
         {
@@ -175,7 +175,7 @@ public class UserPostFeature : MonoBehaviour
         {
             Bubble.gameObject.SetActive(false);
         }
-        Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+      //  Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
         if (RetrievedPost.data.text_post == "null")
         {
             Bubble.gameObject.SetActive(false);
@@ -184,15 +184,15 @@ public class UserPostFeature : MonoBehaviour
             _previousTextElement.text = RetrievedPost.data.text_post;
         if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
         {
-            Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+         //   Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
             GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg);
-            Debug.LogError("Behaviour Assign ---->   " + GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+         //   Debug.LogError("Behaviour Assign ---->   " + GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
         }
         else
         {
-            Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
+          //  Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
             GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
         }
     }

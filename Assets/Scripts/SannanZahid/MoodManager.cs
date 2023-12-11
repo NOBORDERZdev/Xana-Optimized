@@ -46,7 +46,7 @@ public class MoodManager : MonoBehaviour
                     for (int i = 0; i < clips.Count; i++)
                     {
                         var stateName = clips[i].Key.name;
-                        Debug.LogError("Tag ----> " + stateName.ToString());
+                      //  Debug.LogError("Tag ----> " + stateName.ToString());
                         if (stateName.Contains("Idle"))
                         {
                             clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, loadOp.Result);
@@ -63,7 +63,7 @@ public class MoodManager : MonoBehaviour
     }
     public void SetMoodPosted(string animkey, bool walkFlag)
     {
-        Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + animkey);
+       // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + animkey);
 
         int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
         if(NoOfAnimations == 1)
@@ -75,7 +75,7 @@ public class MoodManager : MonoBehaviour
     }
     public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace)
     {
-        Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + key);
+       // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + key);
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
             AsyncOperationHandle<AnimationClip> loadOp;
@@ -100,10 +100,10 @@ public class MoodManager : MonoBehaviour
                     for (int i = 0; i < clips.Count; i++)
                     {
                         var stateName = clips[i].Key.name;
-                        Debug.LogError("Tag ----> " + stateName.ToString()+"  Replace ---->  "+ NodeAnimToReplace);
+                      //  Debug.LogError("Tag ----> " + stateName.ToString()+"  Replace ---->  "+ NodeAnimToReplace);
                         if (stateName.Contains(NodeAnimToReplace))
                         {
-                            Debug.LogError("Replaced");
+                          //  Debug.LogError("Replaced");
                             clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, loadOp.Result);
                             if (NodeAnimToReplace == "Idle")
                             {
@@ -120,7 +120,6 @@ public class MoodManager : MonoBehaviour
             else
             {
                 Debug.LogError("Get Animation Failed ----> ");
-
             }
         }
     }
