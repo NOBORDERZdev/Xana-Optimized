@@ -66,7 +66,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         searchUserRow = searchUserRow1;
 
         userNameText.text = searchUserRow.name;
-        if (!string.IsNullOrEmpty(searchUserRow.userProfile.bio)){ 
+        if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio)){ 
             userBioText.text =  APIManager.DecodedString(searchUserRow.userProfile.bio);
         }
         else

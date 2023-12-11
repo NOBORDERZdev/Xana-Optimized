@@ -69,7 +69,7 @@ public class FollowingItemController : MonoBehaviour
         userNameText.text = followingRawData.following.name;
         if(BioText!=null){
             //BioText.text = followingRawData.following.userProfile.bio;
-            if (!string.IsNullOrEmpty(followingRawData.following.userProfile.bio)){ 
+            if (followingRawData.following != null && followingRawData.following.userProfile!= null && !string.IsNullOrEmpty(followingRawData.following.userProfile.bio)){ 
                 BioText.text =  APIManager.DecodedString(followingRawData.following.userProfile.bio);
             }
             else
