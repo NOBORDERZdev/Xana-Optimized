@@ -36,7 +36,7 @@ public class APIManager : MonoBehaviour
     private bool scrollToTop;
     public bool isCommentDataLoaded = false;
     private int BFCount = 0;
-    private int maxBfCount=2;
+    private int maxBfCount=20;
 
     private void Awake()
     {
