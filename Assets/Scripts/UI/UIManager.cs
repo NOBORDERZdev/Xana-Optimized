@@ -55,8 +55,9 @@ public class UIManager : MonoBehaviour
            _postScreen.gameObject.SetActive(flag);
            HomePage.gameObject.SetActive(!flag);
            _postCamera.gameObject.SetActive(flag);
-            ////---- ShowFooter(!flag);
+            ShowFooter(!flag);
             GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(flag);
+            GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(!flag);
         }
     }
     public void ResetPlayerToLastPostPosted()
