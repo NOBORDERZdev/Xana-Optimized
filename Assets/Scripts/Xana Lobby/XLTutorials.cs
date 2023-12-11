@@ -24,5 +24,6 @@ public class XLTutorials : MonoBehaviour
     {
         PlayerPrefs.SetInt("ShowLobbyTutorial",1);
         tutorialPanel.SetActive(false);
+        this.transform.parent.gameObject.SetActive(false);
     }
 }

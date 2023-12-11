@@ -164,6 +164,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void CloseEmoteSelectionPanel()
     {
+        BuilderEventManager.UIToggle?.Invoke(false);
 
         EmoteAnimationPlay.Instance.isEmoteActive = false;      // AH working
 
