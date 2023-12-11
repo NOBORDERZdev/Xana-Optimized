@@ -464,6 +464,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 StartCoroutine(setPlayerCamAngle(-1.6f, 0.5f));
             }
+            else if (WorldItemView.m_EnvName.Contains("PMYGallery"))
+            {
+                //mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                StartCoroutine(setPlayerCamAngle(1.74f, 0.5f));
+            }
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
