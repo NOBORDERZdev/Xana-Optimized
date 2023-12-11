@@ -170,7 +170,7 @@ public class BottomTabManager : MonoBehaviour
         if (/*GameManager.Instance.defaultSelection!=0*/ true)
         {
             GameManager.Instance.defaultSelection=0;
-        
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
@@ -336,6 +336,7 @@ public class BottomTabManager : MonoBehaviour
            
             //OnSelectedClick(5);
             GameManager.Instance.defaultSelection = 5;
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
             {
                 Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
@@ -377,6 +378,7 @@ public class BottomTabManager : MonoBehaviour
             // LoaderShow(true);
             OnSelectedClick(3);
             GameManager.Instance.defaultSelection = 3;
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             GlobalVeriableClass.callingScreen = "Feed";
            // GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
@@ -423,6 +425,15 @@ public class BottomTabManager : MonoBehaviour
     }
 
     public void OnClickAddFriends(){
+        if (!PremiumUsersDetails.Instance.CheckSpecificItem("AdFriends"))
+        {
+            print("Please Upgrade to Premium account");
+            return;
+        }
+        else
+        {
+            print("Horayyy you have Access");
+        }
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {
              UserRegisterationManager.instance.OpenUIPanal(17);
@@ -431,6 +442,7 @@ public class BottomTabManager : MonoBehaviour
         if (GameManager.Instance.defaultSelection != 5){ 
             GameManager.Instance.defaultSelection =5;
             GlobalVeriableClass.callingScreen = "Feed";
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
@@ -494,7 +506,7 @@ public class BottomTabManager : MonoBehaviour
             GlobalVeriableClass.callingScreen = "Profile";
 
             // LoaderShow(true);
-
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);

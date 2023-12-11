@@ -831,6 +831,7 @@ MonoBehaviour:
     followerCount: 0
     is_following_me: 0
     am_i_following: 0
+    is_close_friend: 0
     userProfile:
       id: 0
       userId: 0
@@ -848,6 +849,8 @@ MonoBehaviour:
   followColor: {r: 0, g: 0, b: 0, a: 1}
   followingColor: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   defaultSP: {fileID: 0}
+  MakeBfBtn: {fileID: 0}
+  RemoveBfBtn: {fileID: 0}
   cnt: 0
 --- !u!114 &526696485743192148
 MonoBehaviour:
@@ -927,6 +930,7 @@ MonoBehaviour:
       name: 
       email: 
       avatar: 
+      is_close_friend: 0
       userProfile:
         id: 0
         userId: 0
@@ -941,6 +945,7 @@ MonoBehaviour:
     feedCount: 0
     isFollowing: 0
   userNameText: {fileID: 5333363856199227687}
+  BioText: {fileID: 1734628346159710465}
   profileImage: {fileID: 1289804007355833246}
   followFollowingText: {fileID: 0}
   followFollowingImage: {fileID: 0}

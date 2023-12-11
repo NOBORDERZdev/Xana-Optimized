@@ -14,6 +14,8 @@ public class FollowingItemController : MonoBehaviour
     public AllFollowingRow followingRawData;
 
     public TextMeshProUGUI userNameText;
+    public TextMeshProUGUI BioText;
+
     public Image profileImage;
     public TextMeshProUGUI followFollowingText;
     public Image followFollowingImage;
@@ -65,6 +67,16 @@ public class FollowingItemController : MonoBehaviour
     {
         followingRawData = allFollowingRow;
         userNameText.text = followingRawData.following.name;
+        if(BioText!=null){
+            //BioText.text = followingRawData.following.userProfile.bio;
+            if (!string.IsNullOrEmpty(followingRawData.following.userProfile.bio)){ 
+                BioText.text =  APIManager.DecodedString(followingRawData.following.userProfile.bio);
+            }
+            else
+            {
+                BioText.text = "";
+            }
+        }
         if (!string.IsNullOrEmpty(followingRawData.following.avatar))
         {
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(followingRawData.following.avatar);
