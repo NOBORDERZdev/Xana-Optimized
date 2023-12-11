@@ -44,7 +44,7 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerController.isFirstPerson)
+        if (!playerController.isFirstPerson && !playerController.m_FreeFloatCam)
             return;
         if (IsPointerOverUI())
         {

@@ -181,6 +181,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to logout success.......
     public void LogoutSuccess()
     {
+        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
         Debug.Log("logout success calling from SNSSetting");
         if (FeedUIController.Instance != null)
         {

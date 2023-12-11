@@ -33,6 +33,11 @@ public class NFTFromServer : MonoBehaviour
     //public List<Datum> TestList;
     void Start()
     {
+        if(dynamicManager == null)
+        {
+            dynamicManager = FindObjectOfType<DynamicMuseumManager>();
+        }   
+
 
         if (APIBaseUrlChange.instance.IsXanaLive)
         {

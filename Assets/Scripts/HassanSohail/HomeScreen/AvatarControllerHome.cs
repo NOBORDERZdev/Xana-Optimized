@@ -33,6 +33,7 @@ public class AvatarControllerHome : MonoBehaviour
     Vector3 startpos;
     Vector3 startRot;
     Vector3 lastpos;
+    public Transform PostBubble;
     private void OnEnable()
     {
        // timer = wanderTimer;
@@ -154,7 +155,7 @@ public class AvatarControllerHome : MonoBehaviour
     /// <summary>
     /// To change player from Home to store and viceversa
     /// </summary>
-    public void UpdateState(bool setToStore) {
+   /* public void UpdateState(bool setToStore) {
 
         animator.SetFloat("Blend", 0.0f);
         if (setToStore) // set player avatar for store
@@ -181,7 +182,7 @@ public class AvatarControllerHome : MonoBehaviour
             worldCam.SetActive(false);
             if(worldObj!=null)
             worldObj.SetActive(false);
-            gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled = false;
+            PostBubble.gameObject.SetActive(false);
         }
         else
         {
@@ -200,9 +201,9 @@ public class AvatarControllerHome : MonoBehaviour
             GetComponent<FootStaticIK>().ikActive = false;
             GetComponent<NavMeshAgent>().enabled = true;
             Wander();
-            gameObject.GetComponent<CharacterOnScreenNameHandler>().enabled = true;
+            PostBubble.gameObject.SetActive(true);
         }
-    }
+    }*/
 
 
 

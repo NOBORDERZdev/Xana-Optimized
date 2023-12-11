@@ -13,7 +13,7 @@ public class HomeCameraController : MonoBehaviour
     float[] BoundsX = new float[]{-2f, 2f};
     [SerializeField]
     float[] BoundsZ = new float[]{-5f, -2f};
-    float[] ZoomBounds = new float[]{40f, 85f};
+    float[] ZoomBounds = new float[]{35f, 45f};
     
     private Camera cam;
     

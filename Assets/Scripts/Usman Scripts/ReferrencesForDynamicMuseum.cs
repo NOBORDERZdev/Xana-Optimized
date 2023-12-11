@@ -130,7 +130,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
 
 
-        if (ReferenceObjectPotrait.activeInHierarchy)
+        if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null)
         {
             Debug.Log("call hua texture potriat");
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
