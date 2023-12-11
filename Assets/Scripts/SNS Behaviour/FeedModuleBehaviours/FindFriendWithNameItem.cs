@@ -66,7 +66,13 @@ public class FindFriendWithNameItem : MonoBehaviour
         searchUserRow = searchUserRow1;
 
         userNameText.text = searchUserRow.name;
-        userBioText.text = searchUserRow.userProfile.bio;
+        if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio)){ 
+            userBioText.text =  APIManager.DecodedString(searchUserRow.userProfile.bio);
+        }
+        else
+        {
+            userBioText.text = "";
+        }
         if (!string.IsNullOrEmpty(searchUserRow.avatar))
         {
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);

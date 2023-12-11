@@ -36,7 +36,7 @@ public class APIManager : MonoBehaviour
     private bool scrollToTop;
     public bool isCommentDataLoaded = false;
     private int BFCount = 0;
-    private int maxBfCount=2;
+    private int maxBfCount=20;
 
     private void Awake()
     {
@@ -655,9 +655,11 @@ public class APIManager : MonoBehaviour
     public AllFollowingRoot adFrndFollowing;
     public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
     {
-        using (/*UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + pageNum + "/" + pageSize))*/
-            UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + PlayerPrefs.GetString("UserName") + "/" + pageNum + "/" + pageSize)))
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing  + userId + "/" + pageNum + "/" + pageSize;
+        print("uri"+uri);
+        using (UnityWebRequest www = UnityWebRequest.Get(uri))
         {
+            print("Authorization"+ userAuthorizeToken);
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             yield return www.SendWebRequest();
@@ -932,37 +934,37 @@ public class APIManager : MonoBehaviour
     }
 
 
-    public void AdFrndFollowingFetch(){ 
-       foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
-       {
-            Destroy(item.gameObject);
-       }
+    //public void AdFrndFollowingFetch(){ 
+    //   foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
+    //   {
+    //        Destroy(item.gameObject);
+    //   }
        
-    }
+    //}
 
-     public IEnumerator IEAdFrndFollowingUser(string user_Id, int pageNum, int pageSize)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    // public IEnumerator IEAdFrndFollowingUser(string user_Id, int pageNum, int pageSize)
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            //FeedUIController.Instance.ShowLoader(false);
+    //        //FeedUIController.Instance.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string data = www.downloadHandler.text;
-                Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
-                AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
-                FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
+    //            AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+    //            FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Feed Comment.......

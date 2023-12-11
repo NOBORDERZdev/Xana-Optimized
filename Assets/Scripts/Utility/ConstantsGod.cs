@@ -139,7 +139,7 @@ public class ConstantsGod
     public static string r_url_GetTaggedFeedsByUserId = "/hot/tagged-feeds";
 
     public static string r_url_FollowAUser = "/follow/user";
-    public static string r_url_GetAllFollowing = "/follow/get-all-following";
+    public static string r_url_GetAllFollowing = /*"/follow/get-all-following"*/ "/social/follow/get-all-following/";
     public static string r_url_AdFrndGetAllAolowing = "/social/follow/get-all-following/";
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
