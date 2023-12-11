@@ -1506,7 +1506,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
         }
-        animator.SetBool("standJump", false);
+        if (animator.GetBool("standJump"))
+            animator.SetBool("standJump", false);
     }
 
     void AnimationBehaviourNinjaMode()
