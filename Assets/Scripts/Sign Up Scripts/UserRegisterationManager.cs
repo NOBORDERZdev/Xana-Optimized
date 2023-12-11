@@ -1204,11 +1204,11 @@ public class UserRegisterationManager : MonoBehaviour
             case 4:
                 {
                     Invoke("blackscrreefalse", 0.2f);
-                    this.gameObject.GetComponent<SplashVideoPlay>().RefrenceDownloafVideo();
-                    this.gameObject.GetComponent<SplashVideoPlay>().SplashvideoObj.SetActive(true);
-                   
-                       
-                   
+                    // this.gameObject.GetComponent<SplashVideoPlay>().RefrenceDownloafVideo();
+                    // this.gameObject.GetComponent<SplashVideoPlay>().SplashvideoObj.SetActive(false);
+
+                    this.gameObject.GetComponent<SplashVideoPlay>().OnAvatarSelectionPanal();
+
                     //PasswordPanal.SetActive(true);
                     //Password1New.Text = "";
                     //Password2New.Text = "";
