@@ -70,7 +70,7 @@ public class Actor : MonoBehaviour
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
                     {
                         MoveBehaviour move = _playerMoves.Dequeue();
-                    Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
+                    //Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
