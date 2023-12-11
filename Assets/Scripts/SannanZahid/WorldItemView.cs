@@ -324,7 +324,9 @@ public class WorldItemView : MonoBehaviour
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
-       
+       else if (m_EnvironmentName == "PMY ACADEMY")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PMY.ToString());
+
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
