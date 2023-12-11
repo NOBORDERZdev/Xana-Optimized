@@ -518,6 +518,8 @@ public class WorldManager : MonoBehaviour
         }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
+        else if (WorldItemView.m_EnvName == "PMY ACADEMY")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn_PMY.ToString());
     }
     public async void JoinBuilderWorld()
     {
