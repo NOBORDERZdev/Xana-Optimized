@@ -113,10 +113,23 @@ public class FeedEventPrefab : MonoBehaviour
     }
     bool IsClassCodeValid(string classCodeInputField)
     {
-        if (string.IsNullOrEmpty("classCodeInputField")) return false;
+        if (string.IsNullOrEmpty(classCodeInputField)) return false;
         classCodeInputField.Replace(" ", "");
 
-        try { return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); }
+        try 
+        {
+            //return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); 
+            foreach (var item in XanaConstants.xanaConstants.pmy_ClassCode)
+            {
+                if (item.codeText.Contains(classCodeInputField))
+                {
+                    XanaConstants.xanaConstants.pmySchooldDataID = item.id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
         catch { return false; }
 
     }

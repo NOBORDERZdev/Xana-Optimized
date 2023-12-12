@@ -156,14 +156,14 @@ public class GameManager : MonoBehaviour
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
 
-        if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
+        if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY" && !XanaConstants.xanaConstants.pmy_isTesting)
         {
             if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
             {
                 XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
                 return;
             }
-        }//
+        }
 
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
@@ -340,9 +340,17 @@ public class GameManager : MonoBehaviour
 
     private void CheckResponse(List<ClassCode> response)
     {
+        // Clear Old Data
+        // Stop Duplicate Data
+        XanaConstants.xanaConstants.pmy_ClassCode.Clear();
+        XanaConstants.xanaConstants.pmy_ClassCode = new List<PMYAvailableClassCode>(response.Count);
+
+        // Add New Data
         for (int i = 0; i < response.Count; i++)
         {
-            XanaConstants.xanaConstants.pmy_ClassCode.Add(response[i].codeText);
+            XanaConstants.xanaConstants.pmy_ClassCode.Add(new PMYAvailableClassCode());
+            XanaConstants.xanaConstants.pmy_ClassCode[i].id = (response[i].id);
+            XanaConstants.xanaConstants.pmy_ClassCode[i].codeText = (response[i].codeText);
         }
     }
 }
@@ -364,4 +372,11 @@ public class ClassCode
     public bool isActive;
     public DateTime createdAt;
     public DateTime updatedAt;
+}
+
+[System.Serializable]
+public class PMYAvailableClassCode
+{
+    public int id;
+    public string codeText;
 }
