@@ -80,8 +80,9 @@ public class Swipe_menu : MonoBehaviour
     {
         if (SelectedOBJ != null)
         {
-             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
-            this.gameObject.SetActive(false);
+            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
+           // this.gameObject.SetActive(false);
 
 
         }
