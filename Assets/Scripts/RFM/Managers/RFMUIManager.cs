@@ -16,7 +16,7 @@ namespace RFM.Managers
         [SerializeField] private GameObject helpPanel;
         [SerializeField] private GameObject instructionsPanelPanel;
         [SerializeField] private GameObject setLayoutPanel;
-
+        [SerializeField] private GameObject rearViewMirror;
         // Leaderboard
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private RectTransform leaderboardEntryContainer;
@@ -58,6 +58,7 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart += OnCountdownStart;
             RFM.EventsManager.onGameTimeup += OnGameOver;
             RFM.EventsManager.onShowScores += OnShowScores;
+            RFM.EventsManager.onTakePositionTimeStart += OnTakePosition;
             // CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.AddListener(ToggleLayoutPanel);
         }
 
@@ -75,6 +76,10 @@ namespace RFM.Managers
             instructionsPanelPanel.SetActive(false);
         }
 
+        private void OnTakePosition() 
+        {
+
+        }
 
         public void ToggleLayoutPanel() 
         {
@@ -128,6 +133,7 @@ namespace RFM.Managers
         private void OnGameOver()
         {
             showMoney.gameObject.SetActive(false);
+            rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
             int earnedMoney = 0;
             if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("money", out object _money))
