@@ -4,6 +4,7 @@ using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class JjWorldChanger : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class JjWorldChanger : MonoBehaviour
 
     private GameObject triggerObject;
     public bool isEnteringPopup;
+    public UnityEvent performAction;
+
     private void Start()
     {
         collider = GetComponent<Collider>();
@@ -59,6 +62,7 @@ public class JjWorldChanger : MonoBehaviour
             collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
+                performAction?.Invoke();
                 this.StartCoroutine(swtichScene(WorldName));
             }
             else
