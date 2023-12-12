@@ -51,7 +51,9 @@ namespace RFM.Character
 
         private void Start()
         {
-            nickName = $"Player{GetComponent<PhotonView>().ViewID}";
+            nickName = RFM.Character.StaticData.CharacterNames[
+                Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
+            //nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             _maxSpeed = _navMeshAgent.speed;
         }
 
