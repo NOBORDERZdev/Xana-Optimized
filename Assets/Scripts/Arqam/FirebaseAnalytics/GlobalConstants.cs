@@ -34,7 +34,14 @@ public class GlobalConstants
         CL_IMG_ZoneX,
         CL_IMG_FiveElements, // Done
         URL_ZoneX, 
-        URL_FiveElements
+        URL_FiveElements,
+        // For PMY Worlds
+        Home_Thumbnail_PMY,
+        Home_Thumbnail_PlayBtn_PMY,
+        StayTime_PMYLobby,
+        StayTime_PMYGallery,
+        StayTime_PMYRoomA,
+        Corporate_Room
     }
 
     public static void SendFirebaseEvent(string eventName)
