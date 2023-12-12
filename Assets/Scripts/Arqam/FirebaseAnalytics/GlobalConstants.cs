@@ -38,6 +38,10 @@ public class GlobalConstants
         // For PMY Worlds
         Home_Thumbnail_PMY,
         Home_Thumbnail_PlayBtn_PMY,
+        StayTime_PMYLobby,
+        StayTime_PMYGallery,
+        StayTime_PMYRoomA,
+        Corporate_Room
     }
 
     public static void SendFirebaseEvent(string eventName)

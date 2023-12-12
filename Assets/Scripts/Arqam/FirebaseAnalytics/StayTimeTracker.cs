@@ -32,6 +32,13 @@ public class StayTimeTracker : MonoBehaviour
 
         else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
             worldName = FirebaseTrigger.StayTime_AtomRental.ToString();
+
+        else if(worldName.Contains("PMY ACADEMY"))
+            worldName = FirebaseTrigger.StayTime_PMYLobby.ToString();
+        else if (worldName.Contains("PMYRoomA"))
+            worldName = FirebaseTrigger.StayTime_PMYRoomA.ToString();
+        else if (worldName.Contains("PMYGallery"))
+            worldName = FirebaseTrigger.StayTime_PMYGallery.ToString();
     }
 
     private void StartTrackingTime()
