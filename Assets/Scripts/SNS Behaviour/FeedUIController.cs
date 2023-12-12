@@ -196,6 +196,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] GameObject AddFrndMutalFrndPanel;
     [SerializeField] public GameObject AddFrndMutalFrndContainer;
     [SerializeField] public GameObject AddFrndNoMutalFrnd;
+    [SerializeField] public GameObject BestFriendFull;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
@@ -2887,6 +2888,10 @@ public class FeedUIController : MonoBehaviour
         }
     }
 
-    
+    public void SetMainMenuFooter(){ 
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
+    }
 }
 

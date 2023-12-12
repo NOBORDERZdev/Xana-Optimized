@@ -36,7 +36,7 @@ public class APIManager : MonoBehaviour
     private bool scrollToTop;
     public bool isCommentDataLoaded = false;
     private int BFCount = 0;
-    private int maxBfCount=20;
+    private int maxBfCount=0;
 
     private void Awake()
     {
@@ -1679,7 +1679,11 @@ public class APIManager : MonoBehaviour
         }
         else
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=0;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=false;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
+            FeedUIController.Instance.BestFriendFull.SetActive(true);
+            //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn){ 
