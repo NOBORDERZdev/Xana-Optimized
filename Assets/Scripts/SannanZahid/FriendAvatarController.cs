@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class AvatarController : MonoBehaviour
+public class FriendAvatarController : MonoBehaviour
 {
     public delegate void CharacterLoaded();
     public static event CharacterLoaded characterLoaded;
@@ -165,7 +165,7 @@ public class AvatarController : MonoBehaviour
     public async void IntializeAvatar(bool canWriteFile = false)
     {
         Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -910,8 +910,8 @@ public class AvatarController : MonoBehaviour
         //Equipment equipment = applyOn.GetComponent<Equipment>();
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
-        float _size3 = 1f + ((float)bodyFat / 100f );
-        
+        float _size3 = 1f + ((float)bodyFat / 100f);
+
         Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size3);
 
         if (bodyparts._scaleBodyParts.Count > 0)
