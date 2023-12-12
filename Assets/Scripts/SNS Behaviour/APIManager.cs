@@ -1615,6 +1615,37 @@ public class APIManager : MonoBehaviour
         }
     }
 
+
+     public void SetMutalFrndList(){
+        StartCoroutine(IERequestSetMutalFrndList());
+     }
+
+     IEnumerator IERequestSetMutalFrndList(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_MutalFrnd +APIManager.Instance.userId+ "/1/100";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ MutalFrnd Data" + data);
+                SearchUserRoot mutalFrnd = JsonUtility.FromJson<SearchUserRoot>(data);
+                FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(false);
+                if (mutalFrnd.data.count>0)
+                {
+                    APIController.Instance.ShowMutalFrnds(mutalFrnd);
+                }
+                else{ // to Show no mutal Frnd
+                     FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(true);   
+                }
+            }
+        }
+    }
+
     public void GetBestFriend(){
         StartCoroutine(IEGetBestFriends());
     }
@@ -3313,7 +3344,7 @@ public class SearchUserRow
     public int followerCount;
     public bool is_following_me;
     public bool am_i_following;
-    public bool is_close_friend;
+    public bool is_my_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 

@@ -92,9 +92,9 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
         FollowFollowingSetUp(searchUserRow.am_i_following);
-        if (searchUserRow.am_i_following)
+        if (searchUserRow.am_i_following ||searchUserRow.is_following_me )
         {
-             UpdateBfBtn(searchUserRow.is_close_friend);
+           UpdateBfBtn(searchUserRow.is_my_close_friend);
         }
        
     }

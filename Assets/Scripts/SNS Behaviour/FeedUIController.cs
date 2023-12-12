@@ -189,10 +189,13 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFriendPanel;
     [SerializeField] public GameObject HotFriendPanel;
     public GameObject hotFriendContainer;
-    [SerializeField] GameObject AddFrndFollowingPanel;
     [SerializeField] GameObject AddFrndRecommendedPanel;
     [SerializeField] public GameObject AddFrndRecommendedContainer;
+    [SerializeField] GameObject AddFrndFollowingPanel;
     [SerializeField] GameObject AddFrndFollowingContainer;
+    [SerializeField] GameObject AddFrndMutalFrndPanel;
+    [SerializeField] public GameObject AddFrndMutalFrndContainer;
+    [SerializeField] public GameObject AddFrndNoMutalFrnd;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
@@ -935,6 +938,7 @@ public class FeedUIController : MonoBehaviour
         {
             HotFriendPanel.SetActive(false);
             AddFrndRecommendedPanel.SetActive(false);
+            AddFrndMutalFrndPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(true);
             APIController.Instance.AdFrndFollowingFetch();
             UpdateAdFrndBtnStatus(2);
@@ -2856,20 +2860,33 @@ public class FeedUIController : MonoBehaviour
     {
         HotFriendPanel.SetActive(true);
         AddFrndFollowingPanel.SetActive(false);
+        AddFrndMutalFrndPanel.SetActive(false);
         AddFrndRecommendedPanel.SetActive(false);
         UpdateAdFrndBtnStatus(0);
     }
 
-     public void OnClickRecommedationFrnd()
-    {
+     public void OnClickRecommedationFrnd(){
         if (!AddFrndRecommendedPanel.activeInHierarchy){ 
             HotFriendPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(false);
+            AddFrndMutalFrndPanel.SetActive(false);
             AddFrndRecommendedPanel.SetActive(true);
             APIManager.Instance.SetRecommendedFriend();
             UpdateAdFrndBtnStatus(1);
         }
+     }
+     
+    public void OnClickMutalFrnd(){
+         if (!AddFrndMutalFrndPanel.activeInHierarchy){ 
+            HotFriendPanel.SetActive(false);
+            AddFrndFollowingPanel.SetActive(false);
+            AddFrndRecommendedPanel.SetActive(false);
+            AddFrndMutalFrndPanel.SetActive(true);
+            APIManager.Instance.SetMutalFrndList();
+            UpdateAdFrndBtnStatus(3);
+        }
     }
+
     
 }
 
