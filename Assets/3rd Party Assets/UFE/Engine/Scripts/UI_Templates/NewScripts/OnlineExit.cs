@@ -54,6 +54,7 @@ public class OnlineExit : MonoBehaviour
                 exitImage.enabled = false;
                 pausePanelInstance = Instantiate(onlinePausePanel_Prefab);
                 pausePanelInstance.transform.SetParent(UFE.canvas.transform, false);
+                UFE.touchControllerBridge.ShowBattleControls(false,true);
             }
         }
     }

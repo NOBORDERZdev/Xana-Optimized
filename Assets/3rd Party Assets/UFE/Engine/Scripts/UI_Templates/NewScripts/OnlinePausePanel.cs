@@ -17,6 +17,7 @@ public class OnlinePausePanel : MonoBehaviour
     public void ResumeGame()
     {
         OnlineExit scriptInstance = FindObjectOfType<OnlineExit>();
+        UFE.touchControllerBridge.ShowBattleControls(true, true);
         if (scriptInstance != null)
         {
             scriptInstance.CheckMode();

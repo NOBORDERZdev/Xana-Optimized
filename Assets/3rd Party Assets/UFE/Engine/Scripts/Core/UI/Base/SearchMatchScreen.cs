@@ -13,6 +13,11 @@ namespace UFE3D
         public int searchDelay = 180;
         public int maxSearchTimes = 20;
         public UFE.MultiplayerMode multiplayerMode;
+
+        //Attizaz 
+        public float secondPanelTime = 50;
+        public GameObject firstPanel;
+        public GameObject secondPanel;
         #endregion
 
         #region protected instance field
@@ -216,6 +221,8 @@ namespace UFE3D
             {
                 if (increamentCoroutine == null)
                 {
+                    secondPanel.SetActive(false);
+                    firstPanel.SetActive(true);
                     increamentCoroutine = StartCoroutine(IncrementValueOverTime());
                 }
                 UFE.DelayLocalAction(StartSearchingGames, searchDelay);
@@ -241,6 +248,11 @@ namespace UFE3D
                 uiText.text = currentValue.ToString("F0") + "%";
 
                 elapsedTime += Time.deltaTime;
+
+                if (currentValue >= secondPanelTime) {
+                    firstPanel.SetActive(false);
+                    secondPanel.SetActive(true);
+                }
                 yield return null;
             }
 
