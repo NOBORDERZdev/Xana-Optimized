@@ -125,10 +125,11 @@ public class XanaConstants : MonoBehaviour
     private AsyncOperationHandle downloadHandle;
 
     // PMY-Class Codes
-    public List<string> pmy_ClassCode;
+    public List<PMYAvailableClassCode> pmy_ClassCode;
     public string pmy_joinedClassCode;
     public bool pmy_isClassAvailable = false;
-
+    public int pmySchooldDataID;
+    public bool pmy_isTesting = false;
 
     public string r_EmoteReactionPersistentPath
     {

@@ -120,6 +120,10 @@ public class XanaChatSocket : MonoBehaviour
         {
             eventId = XanaEventDetails.eventDetails.id;
         }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
+        {
+            eventId = XanaConstants.xanaConstants.pmySchooldDataID;
+        }        
         
 
         // Custom Method
@@ -216,6 +220,11 @@ public class XanaChatSocket : MonoBehaviour
         {
             event_Id = XanaEventDetails.eventDetails.id.ToString();
         }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
+        {
+            event_Id = ""+XanaConstants.xanaConstants.pmySchooldDataID;
+        }
+
         eventId = int.Parse(event_Id);
 
         if (!npcId.IsNullOrEmpty())
