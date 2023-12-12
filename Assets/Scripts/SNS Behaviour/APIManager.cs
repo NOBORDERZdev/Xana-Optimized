@@ -1568,7 +1568,7 @@ public class APIManager : MonoBehaviour
         StartCoroutine(IERequestHotFirends());
     }
 
-     IEnumerator IERequestHotFirends(){ 
+    IEnumerator IERequestHotFirends(){ 
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
         using (UnityWebRequest www= UnityWebRequest.Get(uri)){
              www.SetRequestHeader("Authorization", userAuthorizeToken);

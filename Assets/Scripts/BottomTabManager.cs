@@ -434,6 +434,7 @@ public class BottomTabManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {
              UserRegisterationManager.instance.OpenUIPanal(17);
@@ -442,7 +443,7 @@ public class BottomTabManager : MonoBehaviour
         if (GameManager.Instance.defaultSelection != 5){ 
             GameManager.Instance.defaultSelection =5;
             GlobalVeriableClass.callingScreen = "Feed";
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+            
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
