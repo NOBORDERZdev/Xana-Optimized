@@ -5,8 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Models;
 using System.Globalization;
-using System;
 using Photon.Pun;
+using System.Text.RegularExpressions;
 
 public class GamificationComponentUIManager : MonoBehaviour
 {
@@ -46,6 +46,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
         DisableThrowThingUI();
         DisableAllComponentUIObject(Constants.ItemComponentType.none);
+
 
     }
     private void OnDisable()
@@ -100,7 +101,12 @@ public class GamificationComponentUIManager : MonoBehaviour
             GamificationComponentData.instance.Ninja_Throw_InitPosY = NinjaMotionUIButtonPanel2.transform.localPosition;
         else
             GamificationComponentData.instance.Ninja_Throw_InitPosX = NinjaMotionUIButtonPanel.transform.localPosition;
+
+        defaultFont = GamificationComponentData.instance.arialFont;
+
     }
+
+    TMP_FontAsset defaultFont;
 
     //Narration Comopnent
     internal NarrationComponent narrationComponent;
@@ -221,6 +227,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
+            if (defaultFont)
+                narrationTextUI.font = defaultFont;
             storyCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
@@ -241,7 +249,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public void DisplayDownText()
     {
-        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 5 < narrationtotalHeight)
+        if (narrationScroll.content.anchoredPosition.y + singleLineHeight * 4 <= narrationtotalHeight)
         {
             narrationScroll.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
@@ -262,6 +270,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         DisableAllComponentUIObject(Constants.ItemComponentType.RandomNumberComponent);
         RandomNumberUIParent.SetActive(true);
+        if (defaultFont)
+            RandomNumberText.font = defaultFont;
         string s = TextLocalization.GetLocaliseTextByKey("Generated Number On This");
         RandomNumberText.text = s + " : " + r.ToString();
     }
@@ -354,7 +364,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine ElapsedTimerCoroutine;
     public void EnableElapseTimeCounDownUI(float time, bool isRunning)
     {
-        //Debug.Log("EnableElapseTimeCounDownUI" + time);
+        //Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
         if (isRunning)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent);
@@ -380,13 +390,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
-        while (time >= 0 && isRunning)
-        {
-            ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
-            yield return new WaitForSeconds(1);
-            time++;
-        }
-        yield return new WaitForSeconds(time);
+        if (isRunning)
+            while (time >= 0)
+            {
+                ElapseTimerText.text = ConvertTimetoSecondsandMinute(time);
+                yield return new WaitForSeconds(1);
+                time++;
+            }
+        else
+            yield return new WaitForSeconds(time);
         DisableElapseTimeCounDownUI();
     }
     public void DisableElapseTimeCounDownUI()
@@ -415,7 +427,15 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         //if (!DisplayMessageParentUI.activeInHierarchy)
         //{
+
         DisplayMessageText.text = DisplayMessage;
+        bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
+        //Debug.LogError(isJPText);
+        if (isJPText)
+            DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
+        else
+            DisplayMessageText.font = GamificationComponentData.instance.orbitronFont;
+
         DisplayMessageParentUI.SetActive(true);
         //yield return new WaitForSeconds(.1f);
         //}
@@ -465,6 +485,11 @@ public class GamificationComponentUIManager : MonoBehaviour
         //    HelpText.text = HelpTexts + "\n";
         //}
         helpButtonComponentResizer.titleText.text = HelpButtonTitleText.text;
+        if (defaultFont)
+        {
+            HelpButtonTitleText.font = defaultFont;
+            helpButtonComponentResizer.titleText.font = defaultFont;
+        }
         //helpButtonComponentResizer.contentText.text = HelpText.text;
         helpButtonComponentResizer.msg = HelpTexts.Length == 0 ? "Define Rules here !" : HelpTexts + "\n";
         HelpButtonParentUI.SetActive(true);
@@ -525,11 +550,11 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     #region Quiz Component
 
-    public TMP_Text quizButtonTextInformation;
-    public TMP_Text numberOfQuestions;
-    public TMP_Text correctText;
-    public TMP_Text wrongText;
-    public TMP_Text scorePercentage;
+    public TextMeshProUGUI quizButtonTextInformation;
+    public TextMeshProUGUI numberOfQuestions;
+    public TextMeshProUGUI correctText;
+    public TextMeshProUGUI wrongText;
+    public TextMeshProUGUI scorePercentage;
 
     public GameObject[] correctWrongImageObjects;
     public GameObject quizParentReference;
@@ -554,7 +579,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public bool isDissapearing = false;
 
     private QuizComponentData quizComponentData = new();
-    private TMP_Text nextButtonText;
+    private TextMeshProUGUI nextButtonText;
 
     string confirm = "Confirm";
     string result = "Result";
@@ -618,10 +643,11 @@ public class GamificationComponentUIManager : MonoBehaviour
         correct = 0;
         wrong = 0;
 
-        nextButtonText = nextButton.GetComponentInChildren<TMP_Text>();
+        nextButtonText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
         confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
         nextButtonText.text = confirm;
-
+        if (defaultFont)
+            nextButtonText.font = defaultFont;
         isFirstQuestion = true;
         isOptionSelected = false;
     }
@@ -644,6 +670,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         //Debug.Log("TextLocalization==>" + next + " " + result);
 
         nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
+        if (defaultFont)
+            nextButtonText.font = defaultFont;
         SetButtonInteractability(true, false);
     }
 
@@ -661,6 +689,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             //Debug.Log("TextLocalization==>" + confirm);
 
             nextButtonText.text = confirm;
+            if (defaultFont)
+                nextButtonText.font = defaultFont;
         }
     }
 
@@ -705,7 +735,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         //Debug.Log("Confirm Localise " + confirm);
 
         nextButtonText.text = confirm;
-
+        if (defaultFont)
+            nextButtonText.font = defaultFont;
         if (questionIndex < numOfQuestions)
         {
             string s = TextLocalization.GetLocaliseTextByKey("Question");
@@ -716,17 +747,26 @@ public class GamificationComponentUIManager : MonoBehaviour
             numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
             quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
 
+            if (defaultFont)
+            {
+                numberOfQuestions.font = defaultFont;
+                quizButtonTextInformation.font = defaultFont;
+            }
+
             for (int i = 1; i < inputFieldsPerQuestion; i++)
             {
                 string sb = quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
-                options[i - 1].GetComponentInChildren<TMP_Text>().text =
+                options[i - 1].GetComponentInChildren<TextMeshProUGUI>().text =
                     sb;
+
+                if (defaultFont)
+                    options[i - 1].GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
                 if (!isPotrait)
                 {
                     if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
-                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 11.3f;
+                        options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 11.3f;
                     else
-                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 12;
+                        options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 12;
                 }
             }
         }
@@ -853,6 +893,14 @@ public class GamificationComponentUIManager : MonoBehaviour
         isOptionSelected = false;
 
         nextButtonText.text = s4;
+
+        if (defaultFont)
+        {
+            correctText.font = defaultFont;
+            wrongText.font = defaultFont;
+            scorePercentage.font = defaultFont;
+            nextButtonText.font = defaultFont;
+        }
     }
 
     public void CheckScorePercentage()
@@ -1107,6 +1155,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public ScrollRect hyperLinkScrollView;
     public GameObject hyperLinkScrollbar;
     public Button hyperlinkDownArrowbtn;
+    public Button hyperlinkBrowseURLbtn;
     string url;
     float hyperlinkTotalHeight;
     int hyperLinkCharCount = 0;
@@ -1121,10 +1170,15 @@ public class GamificationComponentUIManager : MonoBehaviour
         HyperLinkPopupUIParent.SetActive(true);
         DisableAllComponentUIObject(Constants.ItemComponentType.HyperLinkPopComponent);
         hyperLinkPopupTitleText.text = hyperLinkPopupTitle;
+        if (defaultFont)
+        {
+            hyperLinkPopupTitleText.font = defaultFont;
+            hyperlinkBrowseURLbtn.GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
+        }
         hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
-        string msg= hyperLinkPopupTexts.Length == 0 ? "Define Rules here !": hyperLinkPopupTexts + "\n";
+        string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
         hyperLinkCharCount = 0;
@@ -1149,6 +1203,9 @@ public class GamificationComponentUIManager : MonoBehaviour
         while (hyperLinkCharCount < msg.Length && !isAgainHyperLinkCollided)
         {
             hyperLinkPopupText.text += msg[hyperLinkCharCount];
+            if (defaultFont)
+                hyperLinkPopupText.font = defaultFont;
+
             hyperLinkCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
@@ -1183,7 +1240,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void HyperLinkDownText()
     {
-        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 5 < hyperlinkTotalHeight)
+        if (hyperLinkScrollView.content.anchoredPosition.y + singleLineHeight * 4 <= hyperlinkTotalHeight)
         {
             hyperLinkScrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }
@@ -1324,6 +1381,12 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         DisplayMessage = TextLocalization.GetLocaliseTextByKey(DisplayMessage);
         DoorKeyText.text = DisplayMessage;
+        bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
+        //Debug.LogError(isJPText);
+        if (isJPText)
+            DoorKeyText.font = GamificationComponentData.instance.hiraginoFont;
+        else
+            DoorKeyText.font = GamificationComponentData.instance.orbitronFont;
         DoorKeyParentUI.SetActive(true);
 
         float time = 5f;
@@ -1392,20 +1455,9 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableDoorKeyUI();
     }
 
-    bool CheckJapaneseDisplayMessage(TextMeshProUGUI displayTitle)
+    bool CheckJapaneseDisplayMessage(string displayTitle)
     {
-
-        for (int i = 0; i < displayTitle.text.Length; i++)
-        {
-            TMP_CharacterInfo charInfo = displayTitle.textInfo.characterInfo[i];
-            int unicode = charInfo.character;
-            if ((unicode >= 0x3040 && unicode <= 0x30FF) || (unicode >= 0x4E00 && unicode <= 0x9FFF))
-            {
-                print("JP font");
-                return true;
-            }
-        }
-        print("JP font not");
-        return false;
+        Regex regex = new Regex(@"\p{IsHiragana}|\p{IsKatakana}|\p{IsCJKUnifiedIdeographs}");
+        return regex.IsMatch(displayTitle);
     }
 }

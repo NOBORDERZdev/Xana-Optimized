@@ -8,6 +8,7 @@ public class NpcChatSystem : MonoBehaviour
 {
     public enum ResponseChecker { CallAfterIterationEnd, InstantlyCall };
     public ResponseChecker responseChecker = ResponseChecker.CallAfterIterationEnd;
+    public enum NameType { EnglishName, JapaneseName };
 
     [Serializable]
     public class NPCAttributes
@@ -17,15 +18,19 @@ public class NpcChatSystem : MonoBehaviour
         public int aiIds;
         [Header("For Live user")]
         public int actualAiIds;
+        public NameType nameType;
     }
     public List<NPCAttributes> npcAttributes;
-    [HideInInspector]
+    //[HideInInspector]
     public List<NPCAttributes> npcDB;
     public static Action<NpcChatSystem> npcNameAction;
 
     private int id = 0;
     private string msg = "Hello";
     private int numOfResponseWantToShow = 5;
+    private int enNamePeriority = 3;
+    private int jpNamePeriority = 2;
+    private int totalFreeSpeechNpc = 5;
     private int counter = 0;
     private int tempResponseNum = 0;
     private const int userId = 0;
@@ -58,17 +63,76 @@ public class NpcChatSystem : MonoBehaviour
     private void Awake()
     {
         npcDB = new List<NPCAttributes>();
-        for (int i = 0; i < numOfResponseWantToShow; i++)
+        // my changes
+        List<NPCAttributes> japaneseNames = npcAttributes.FindAll(npc => npc.nameType == NameType.JapaneseName);
+        List<NPCAttributes> englishNames = npcAttributes.FindAll(npc => npc.nameType == NameType.EnglishName);
+        // select english name npc for chat
+        for (int i = 0; i < enNamePeriority; i++)
         {
-            int rand = UnityEngine.Random.Range(0, npcAttributes.Count);
-            npcDB.Add(npcAttributes[rand]);      // Set npc names
-            npcAttributes.RemoveAt(rand);
+            int rand = UnityEngine.Random.Range(0, englishNames.Count);
+            npcDB.Add(englishNames[rand]);      // Set npc for chat
+            englishNames.RemoveAt(rand);
         }
-        tempResponseNum = numOfResponseWantToShow;
+        // select japanese name npc for chat
+        for (int i = 0; i < jpNamePeriority; i++)
+        {
+            int rand = UnityEngine.Random.Range(0, japaneseNames.Count);
+            npcDB.Add(japaneseNames[rand]);      // Set npc for chat
+            japaneseNames.RemoveAt(rand);
+        }
+        // rest of them select for npc free speech
+        npcAttributes.Clear();
+        int temp = 0;
+        for (int i = 0; i < enNamePeriority + jpNamePeriority; i++)
+        {
+            if (i < enNamePeriority)
+                npcAttributes.Add(englishNames[i]);
+            else
+            {
+                npcAttributes.Add(japaneseNames[temp]);
+                temp++;
+            }
+        }
+        englishNames.Clear();
+        japaneseNames.Clear();
 
+        ShuffleNpcs();     // shuffle selected user chat npc 
+        ShuffleFreeNpcs(); // shuffle free speech selected user chat npc 
+        numOfResponseWantToShow = enNamePeriority + jpNamePeriority;
+        // my changes end
+
+        tempResponseNum = numOfResponseWantToShow;
         npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
     }
 
+    private void ShuffleNpcs()
+    {
+        int count = npcDB.Count;
+        System.Random random = new System.Random();
+        while (count > 1)
+        {
+            count--;
+            int k = random.Next(count + 1);
+            NPCAttributes value = npcDB[k];
+            npcDB[k] = npcDB[count];
+            npcDB[count] = value;
+            //Debug.Log("<color=red>User NPC: " + npcDB[count].aiNames + "</color>");
+        }
+    }
+    private void ShuffleFreeNpcs()
+    {
+        int count = npcAttributes.Count;
+        System.Random random = new System.Random();
+        while (count > 1)
+        {
+            count--;
+            int k = random.Next(count + 1);
+            NPCAttributes value = npcAttributes[k];
+            npcAttributes[k] = npcAttributes[count];
+            npcAttributes[count] = value;
+            //Debug.Log("FreeSpeech NPC: " + npcAttributes[count].aiNames);
+        }
+    }
     private void OnEnable()
     {
         if (XanaChatSystem.instance)
@@ -160,6 +224,7 @@ public class NpcChatSystem : MonoBehaviour
             {
                 counter = 0;
                 tempResponseNum = numOfResponseWantToShow;
+                ShuffleNpcs();
             }
             yield return null;
         }

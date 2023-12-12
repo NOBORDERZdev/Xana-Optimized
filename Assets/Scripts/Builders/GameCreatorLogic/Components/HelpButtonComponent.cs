@@ -10,6 +10,13 @@ public class HelpButtonComponent : ItemComponent
     public void Init(HelpButtonComponentData helpButtonComponentData)
     {
         this.helpButtonComponentData = helpButtonComponentData;
+        // Remove leading and trailing spaces
+        string inputText = this.helpButtonComponentData.titleHelpButtonText.Trim();
+        // Replace all spaces between lines with an empty string
+        string hyperLinkCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+
+        this.helpButtonComponentData.titleHelpButtonText = hyperLinkCleanedText;
+
         if (this.helpButtonComponentData.IsAlwaysOn)
         {
             GamificationComponentData.instance.worldCameraEnable = true;

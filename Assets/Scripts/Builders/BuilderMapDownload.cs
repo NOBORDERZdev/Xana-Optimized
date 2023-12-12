@@ -354,7 +354,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
                 Material _mat = loadRealisticMaterial.Result as Material;
-                Debug.LogError(realisticMaterialData.shaderName);
+                //Debug.LogError(realisticMaterialData.shaderName);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
@@ -677,8 +677,8 @@ public class BuilderMapDownload : MonoBehaviour
             }
         }
 
-
-        meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        if (!newObj.name.Contains("pfBLD1210015_XANA"))
+            meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         {

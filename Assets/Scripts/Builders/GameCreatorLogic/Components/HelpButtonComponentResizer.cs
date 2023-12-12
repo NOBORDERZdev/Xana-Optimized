@@ -60,6 +60,8 @@ public class HelpButtonComponentResizer : MonoBehaviour
         while (textCharCount < msg.Length && !isAgainCollided)
         {
             contentText.text += msg[textCharCount];
+            if (GamificationComponentData.instance.arialFont)
+                contentText.font = GamificationComponentData.instance.arialFont;
             textCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
@@ -76,7 +78,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
 
     public void DisplayDownText()
     {
-        if (scrollView.content.anchoredPosition.y + singleLineHeight * 5 < infopopuptotalHeight)
+        if (scrollView.content.anchoredPosition.y + singleLineHeight * 4 <= infopopuptotalHeight)
         {
             scrollView.content.anchoredPosition += new Vector2(0, singleLineHeight);
         }

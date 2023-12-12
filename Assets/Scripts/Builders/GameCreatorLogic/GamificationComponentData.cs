@@ -80,6 +80,14 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     internal GameObject DoorKeyObject;
     internal int doorKeyCount = 0;
 
+    //Font
+    public TMPro.TMP_FontAsset orbitronFont;
+    public TMPro.TMP_FontAsset hiraginoFont;
+    public TMPro.TMP_FontAsset arialFont;
+
+    //Name canvas
+    internal Canvas nameCanvas;
+
     private void Awake()
     {
         instance = this;
