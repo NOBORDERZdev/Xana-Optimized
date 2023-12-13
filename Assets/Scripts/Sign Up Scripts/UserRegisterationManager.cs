@@ -58,6 +58,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField EmailFieldNew;
     //   public MobileInputField UsernameTextNew;
     public AdvancedInputField UsernameFieldAdvance;
+    public AdvancedInputField Username2FieldAdvance;
     public Text CountryCodeText;
     // public MobileInputField PhoneInputTextNew;      
     public AdvancedInputField PhoneFieldNew;
@@ -192,6 +193,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal;
     public GameObject LogoImage;
+    public GameObject LogoImageforname;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
     String _LoadingTitle = "";
@@ -1221,6 +1223,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //usernamePanal.SetActive(true);
                    // setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
+                    Username2FieldAdvance.Text = "";
                     //StartCoroutine(WaitandActive());
                     //UsernameTextNew.Text = "";
                     //UsernameTextNew.enabled = false;
@@ -3279,7 +3282,7 @@ public class UserRegisterationManager : MonoBehaviour
         //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
-
+        Localusername = Username2FieldAdvance.Text;
         if (Localusername == "")// || Localusername.Contains(" "))
         {
             //  print("Username Field should not be empty");

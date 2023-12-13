@@ -99,7 +99,7 @@ namespace WaheedDynamicScrollRect
             //}
             _CharaceterName.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[WaheedDynamicScrollRect.Counter].GetComponent<Image>().sprite;
             AttachPresetDataScript();
-            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
+           // UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = _CharaceterName.GetComponent<Image>().sprite;
             //Invoke("AttachPresetDataScript", 1f);
             //_FirstAvatar = DynamicScrollRect.content.GetChild(DynamicScrollRect.Counter).gameObject;
             //_FirstAvatar.GetComponent<Image>().sprite = DynamicScrollRect.avatarData[DynamicScrollRect.Counter].GetComponent<Image>().sprite;
