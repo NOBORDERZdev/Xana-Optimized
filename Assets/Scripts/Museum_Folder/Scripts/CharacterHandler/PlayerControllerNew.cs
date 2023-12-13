@@ -1320,7 +1320,7 @@ public class PlayerControllerNew : MonoBehaviour
             canDoubleJump = true;
             animator.SetBool("canDoubleJump", canDoubleJump);
             Invoke(nameof(StopDoubleJump), 0.2f);
-            Debug.Log("Double jump testing ");
+            //Debug.Log("Double jump testing ");
             gravityVector.y = JumpVelocity * 2;
         }
     }
@@ -1348,6 +1348,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
+        animator.SetFloat("Blend", 0.0f);
 
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("NinjaJump", _IsGrounded);
@@ -1437,7 +1438,7 @@ public class PlayerControllerNew : MonoBehaviour
             else// player is walking
             {
 
-                //PlayerIsWalking?.Invoke();
+                PlayerIsWalking?.Invoke();
 
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
@@ -1496,7 +1497,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            //PlayerIsIdle?.Invoke();
+            PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
