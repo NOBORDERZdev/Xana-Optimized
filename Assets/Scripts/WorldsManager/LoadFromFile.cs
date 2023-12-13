@@ -396,7 +396,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-            CheckAgain:
+        CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -599,7 +599,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -669,7 +669,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-        End:
+    End:
         //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -816,15 +816,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
-            {
-                mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
-            }
-            else
-            {
-                mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
-            }
+            //RaycastHit hit;
+            //if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
+            //{
+            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+            //}
+            //else
+            //{
+            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
+            //}
+            //Player respawn at spawn point after jump down from world
+            mainController.transform.localPosition = spawnPoint;
+
         }
         else
         {
@@ -988,7 +991,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
