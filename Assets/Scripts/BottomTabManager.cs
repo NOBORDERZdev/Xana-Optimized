@@ -167,10 +167,10 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        if (/*GameManager.Instance.defaultSelection!=0*/ true)
+        if (GameManager.Instance.defaultSelection != 0 /*true*/)
         {
             GameManager.Instance.defaultSelection=0;
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
