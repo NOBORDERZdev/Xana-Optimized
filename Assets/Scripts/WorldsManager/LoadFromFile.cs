@@ -452,7 +452,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             else if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
             {
                 if (XanaConstants.xanaConstants.isFromPMYLobby)  // Set spawn pos when ReEnter into PMY lobby
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 30.62f);
+                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
 
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
