@@ -300,7 +300,7 @@ public class APIController : MonoBehaviour
                     //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
                     HotFeedObject.name = "Hot_" + HotFeedItemController.HotFeed.id;
                     HotFeedItemController.LoadFeed();
-                    Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
+                    //Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
                     if (callingFrom == "PullRefresh")
                     {
                         feedHotIdList.Insert(0, HotFeedItemController.HotFeed.id);

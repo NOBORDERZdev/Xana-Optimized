@@ -922,7 +922,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetAllFollowingFromProfile(string user_Id, int pageNum, int pageSize)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdFrndGetAllAolowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdFrndGetAllAolowing /*+ "/"*/ + user_Id + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
