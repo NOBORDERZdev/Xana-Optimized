@@ -7,18 +7,16 @@ namespace RFM.Character
 {
     public class PlayerHunter : Hunter
     {
-        // [SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
-        //[SerializeField] private Animator npcAnim;
-        //[SerializeField] private string velocityNameX, velocityNameY;
 
-        //private List<GameObject> _players;
-        //private Transform _target;
-
-        // public Transform cameraTarget/* => cameraPosition*/;
-
-        private void Start()
+        private void OnEnable()
         {
+            RFM.EventsManager.onGameStart += OnGameStarted;
+        }
+
+        private void OnDisable()
+        {
+            RFM.EventsManager.onGameStart -= OnGameStarted;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -37,7 +35,6 @@ namespace RFM.Character
             //}
             
 
-            //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             if (other.GetComponentInParent<NPCRunner>())
             {
                 // Cannot directly call AIRunnerCaught() because NPCRunners are owned by the master client
@@ -56,7 +53,6 @@ namespace RFM.Character
                 return;
             }
             
-            //else if (other.CompareTag(Globals.PLAYER_TAG))
             var playerRunner = other.GetComponent<PlayerRunner>();
             if (playerRunner != null && playerRunner.enabled)
             {

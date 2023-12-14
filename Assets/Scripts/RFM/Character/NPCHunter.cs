@@ -4,7 +4,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
-using static StoreManager;
 
 namespace RFM.Character
 {
@@ -41,12 +40,33 @@ namespace RFM.Character
 
         private void OnEnable()
         {
-            EventsManager.onGameStart/*onTakePositionTimeStart*/ += OnGameStart;
+            EventsManager.onGameStart/*onTakePositionTimeStart*/ += OnGameStarted;
             EventsManager.onGameTimeup += GameOver;
         }
 
-        private void OnGameStart()
+        private void Start()
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                nickName = RFM.Character.StaticData.CharacterNames[
+                    Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
+
+                // Send an RPC to only this PhotonView on all clients to set the nickname.
+
+                GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
+            }
+        }
+
+        [PunRPC]
+        private void SetNickname(string _nickName)
+        {
+            nickName = _nickName;
+        }
+
+        internal override void OnGameStarted()
+        {
+            base.OnGameStarted();
+
             if (PhotonNetwork.IsMasterClient)// Only the master client controls the hunter.
                                              // Other clients just sync the movement
             {
@@ -57,36 +77,13 @@ namespace RFM.Character
 
         private void OnDisable()
         {
-            EventsManager.onGameStart -= OnGameStart;
+            EventsManager.onGameStart -= OnGameStarted;
             EventsManager.onGameTimeup -= GameOver;
         }
 
-        //private void Start()
-        //{
-        //    _maxSpeed = _navMeshAgent.speed;
-        //}
-
         private void GetAllRunners()
         {
-            //_allRunners = new List<GameObject>(
-            //                   GameObject.FindGameObjectsWithTag(Globals.LOCAL_PLAYER_TAG));
-            //_allRunners.AddRange(new List<GameObject>(
-            //                   GameObject.FindGameObjectsWithTag(Globals.RUNNER_NPC_TAG)));
             _allRunners = new List<GameObject>();
-
-            //var playerRunners = FindObjectsOfType<PlayerRunner>();
-            //var botRunners = FindObjectsOfType<NPCRunner>();
-            //foreach (var runner in playerRunners)
-            //{
-            //    if (runner.enabled)
-            //    {
-            //        _allRunners.Add(runner.gameObject);
-            //    }
-            //}
-            //foreach (var botRunner in botRunners)
-            //{
-            //    _allRunners.Add(botRunner.gameObject);
-            //}
 
             var runners = FindObjectsOfType<Runner>();
             foreach (var runner in runners)
@@ -278,6 +275,8 @@ namespace RFM.Character
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
 
+                    rewardMultiplier++;
+
                 }
             }
         }
@@ -325,6 +324,8 @@ namespace RFM.Character
                     killVFX.SetActive(true);
                     other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
 
+                    rewardMultiplier++;
+
                     return;
                 }
                 
@@ -354,6 +355,8 @@ namespace RFM.Character
                         prameters,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
+
+                    rewardMultiplier++;
                 }
             }
         }

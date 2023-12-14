@@ -524,6 +524,8 @@ namespace RFM.Managers
         private async void GameplayTimeOver()
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
+
+            EventsManager.CalculateScores();
             EventsManager.GameOver();
             Globals.gameState = Globals.GameState.GameOver;
             statusTMP.text = "Time's Up!";
@@ -538,7 +540,6 @@ namespace RFM.Managers
 
             await Task.Delay(1000);
             EventsManager.ShowScores();
-
         }
 
         public void PlayerCaught(int hunterViewID = -1/*Transform hunter*/)
