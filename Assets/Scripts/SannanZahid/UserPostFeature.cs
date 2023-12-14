@@ -72,6 +72,9 @@ public class UserPostFeature : MonoBehaviour
                 return ConstantsGod.API_BASEURL + ConstantsGod.SendPostToServer;
             case "Receive":
                 return ConstantsGod.API_BASEURL + ConstantsGod.GetPostSentToServer;
+            case "GetFriendPost":
+                return ConstantsGod.API_BASEURL + ConstantsGod.GetPostSentToServer;
+
             default:
                 return "";
         }
@@ -109,13 +112,22 @@ public class UserPostFeature : MonoBehaviour
     TMPro.TMP_Text _previousTextElement;
     IEnumerator GetLatestPostsentToServer(TMPro.TMP_Text textElement)
     {
+     
         _previousTextElement = textElement;
-        string FinalUrl = PrepareApiURL("Receive");
-       // Debug.LogError("Prepared URL ----> " + FinalUrl);
+
+
+        while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
+            yield return new WaitForSeconds(0.5f);
+
+        string FinalUrl = PrepareApiURL("Receive") + XanaConstants.xanaConstants.userId;
+        Debug.LogError("----- URL ----> " + FinalUrl + XanaConstants.xanaConstants.userId);
+
+       // WWWForm form = new WWWForm();
+       // form.AddField("user_id", XanaConstants.xanaConstants.userId);
+
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
-            while(ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
-                yield return new WaitForSeconds(0.5f);
+           
         //    Debug.LogError("Token ----> " + ConstantsGod.AUTH_TOKEN);
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
@@ -125,11 +137,11 @@ public class UserPostFeature : MonoBehaviour
             //      yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError("Error Post --->  " + www.downloadHandler.text);
+                Debug.LogError("Error Post -------- Response --->  " + www.downloadHandler.text);
             }
             else
             {
-               // Debug.LogError("Posted ---->  " + www.downloadHandler.text);
+                Debug.LogError("Posted--------- Response ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data !=null)
                 {
@@ -139,7 +151,7 @@ public class UserPostFeature : MonoBehaviour
                 {
                     Bubble.gameObject.SetActive(false);
                 }
-               // Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+                Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_post == "null")
                 {
                     Bubble.gameObject.SetActive(false);
@@ -194,6 +206,68 @@ public class UserPostFeature : MonoBehaviour
         {
           //  Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
             GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
+        }
+    }
+
+
+    public void GetLatestPostOfFriend(int friend_id)
+    {
+        StartCoroutine(GetLatestPostOfFriendFromServer(friend_id));
+    }
+
+    IEnumerator GetLatestPostOfFriendFromServer(int friend_id)
+    {
+        string FinalUrl = PrepareApiURL("Receive") + friend_id;
+        // Debug.LogError("Prepared URL ----> " + FinalUrl);
+        using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
+        {
+            while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
+                yield return new WaitForSeconds(0.5f);
+            //    Debug.LogError("Token ----> " + ConstantsGod.AUTH_TOKEN);
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SendWebRequest();
+            while (!www.isDone)
+                yield return new WaitForSecondsRealtime(Time.deltaTime);
+            // while (!www.isDone)
+            //      yield return null;
+            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            {
+                Debug.LogError("Error Post --->  " + www.downloadHandler.text);
+            }
+            else
+            {
+                // Debug.LogError("Posted ---->  " + www.downloadHandler.text);
+                RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
+                if (RetrievedPost.data != null)
+                {
+                    Bubble.gameObject.SetActive(true);
+                }
+                else
+                {
+                    Bubble.gameObject.SetActive(false);
+                }
+                // Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+                if (RetrievedPost.data.text_post == "null")
+                {
+                    Bubble.gameObject.SetActive(false);
+                }
+               // else
+                //    textElement.text = RetrievedPost.data.text_post;
+                if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
+                {
+                    //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+                    bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
+                    GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg);
+                    //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+                    GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+                }
+                else
+                {
+                    //  Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
+                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false);
+                }
+            }
+            www.Dispose();
         }
     }
     [System.Serializable]
