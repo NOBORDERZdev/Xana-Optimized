@@ -73,7 +73,8 @@ namespace RFM.Character
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
-            PhotonNetwork.Destroy(transform.root.gameObject);
+            transform.root.gameObject.SetActive(false);
+            //PhotonNetwork.Destroy(transform.root.gameObject);
         }
 
         private IEnumerator AddMoney()
@@ -99,7 +100,9 @@ namespace RFM.Character
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
 
-            PhotonNetwork.Destroy(transform.root.gameObject);
+            // disable the player object on all clients
+            transform.root.gameObject.SetActive(false);
+            //PhotonNetwork.Destroy(transform.root.gameObject);
             RFM.Managers.RFMManager.Instance.PlayerCaught(/*hunter*/hunterViewID);
         }
         

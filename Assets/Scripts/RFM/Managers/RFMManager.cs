@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
@@ -10,6 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
@@ -83,9 +85,23 @@ namespace RFM.Managers
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
+        public void RestartRFM()
+        {
+            // clear all custom properties of all players
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                player.CustomProperties.Clear();
+            }
+
+            _mainCam.SetActive(true);
+            RFM.Globals.player.transform.root.gameObject.SetActive(true);
+            StartCoroutine(Start());
+        }
+
 
         private IEnumerator Start()
         {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
             // RFMUIManager.Instance.ShowXanaStonePopup();
 
             Application.runInBackground = true;
@@ -158,41 +174,6 @@ namespace RFM.Managers
         #endregion
 
         #region Private Methods
-
-        //[PunRPC]
-        //private void PlayerJoined()
-        //{
-        //    CheckForGameStartCondition();
-        //}
-
-        //private void CheckForGameStartCondition()
-        //{
-        //    if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
-        //    {
-        //        if (Globals.gameState != Globals.GameState.InLobby) return;
-        //        if (PhotonNetwork.IsMasterClient)
-        //        {
-        //            PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
-        //                new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Globals.gameState = Globals.GameState.InLobby;
-        //        countDownText.transform.parent.gameObject.SetActive(false);
-
-        //        statusTMP.text = "Waiting for other players to join:";
-        //        statusBG.SetActive(true);
-        //        //statusMMFPlayer.PlayFeedbacks();
-
-        //        if (PhotonNetwork.IsMasterClient)
-        //        {
-        //            PhotonNetwork.CurrentRoom.IsOpen = true;
-        //        }
-
-        //        StopAllCoroutines();
-        //    }
-        //}
 
         public void RFMStartInterrupted()
         {

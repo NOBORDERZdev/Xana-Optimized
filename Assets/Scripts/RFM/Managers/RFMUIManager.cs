@@ -37,6 +37,8 @@ namespace RFM.Managers
 
         private Dictionary<string[], int> scores;
 
+        [SerializeField] private GameObject restartButton;
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -142,6 +144,34 @@ namespace RFM.Managers
             }
 
             //playerEarnedXanaStones.text = $"You have earned <color=purple>${earnedMoney}</color> XanaStones";
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                restartButton.SetActive(true);
+            }
+        }
+
+        public void RestartButtonClicked()
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            GetComponent<PhotonView>().RPC(nameof(RestartRFM), RpcTarget.AllBuffered);
+            Awake();
+        }
+
+        // Enable the restart button 
+
+        [PunRPC]
+        private void RestartRFM()
+        {
+            // Destroy all children of leaderboardEntryContainer
+            foreach (Transform child in leaderboardEntryContainer)
+            {
+                Destroy(child.gameObject);
+            }
+            gameOverPanel.gameObject.SetActive(false);
+
+            RFM.Managers.RFMManager.Instance.RestartRFM();
         }
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
