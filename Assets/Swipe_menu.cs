@@ -81,7 +81,6 @@ public class Swipe_menu : MonoBehaviour
         if (SelectedOBJ != null)
         {
             UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            UserRegisterationManager.instance.LogoImageforname .GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
 
 
