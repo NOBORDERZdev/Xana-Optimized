@@ -58,6 +58,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField EmailFieldNew;
     //   public MobileInputField UsernameTextNew;
     public AdvancedInputField UsernameFieldAdvance;
+  //  public AdvancedInputField Username2FieldAdvance;
     public Text CountryCodeText;
     // public MobileInputField PhoneInputTextNew;      
     public AdvancedInputField PhoneFieldNew;
@@ -3281,7 +3282,14 @@ public class UserRegisterationManager : MonoBehaviour
         //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
-        UserNameSetter.text = UsernameFieldAdvance.Text;
+        //if (Username2FieldAdvance.Text != null)
+        //{
+        //    Localusername = Username2FieldAdvance.Text;
+        //}
+       
+            UserNameSetter.text = UsernameFieldAdvance.Text;
+       
+     
         if (Localusername == "")// || Localusername.Contains(" "))
         {
             //  print("Username Field should not be empty");
