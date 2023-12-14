@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -47,7 +48,7 @@ namespace RFM.Managers
         #region Fields
 
         public static RFMManager Instance;
-        
+
         private GameObject _gameCanvas;
         private FollowNPC _npcCamera;
         //private PlayerControllerNew _player;
@@ -113,7 +114,7 @@ namespace RFM.Managers
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
-            Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime - 10, () => 
+            Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime - 10, () =>
             { // Close the room before the last 10 seconds
                 if (RFM.Globals.gameState == Globals.GameState.InLobby)
                 {
@@ -350,7 +351,7 @@ namespace RFM.Managers
             }
         }
 
-
+        float spawnOffset = 0;
         private void ResetPosition()
         {
             EventsManager.TakePositionTime();
@@ -374,7 +375,7 @@ namespace RFM.Managers
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
-                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime, 
+                Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
                     /*AfterTakePositionTimerHunter*/StartGameplay,
                     countDownText);
 
@@ -405,7 +406,7 @@ namespace RFM.Managers
                 //Globals.gameState = Globals.GameState.TakePosition;
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
-                    /*AfterTakePositionTimerRunner*/StartGameplay, 
+                    /*AfterTakePositionTimerRunner*/StartGameplay,
                     countDownText,
                     AfterEachSecondCountdownTimer);
 
@@ -413,12 +414,13 @@ namespace RFM.Managers
                 var randomPos = new Vector3(
                     position.x + Random.Range(-2.0f, 2.0f),
                     position.y,
-                    position.z + Random.Range(-3.0f, 3.0f));
+                    position.z + spawnOffset);
+                spawnOffset += 1;
 
                 //play VFX
                 //playerSpawnVFX.SetActive(true);
                 //Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
-                                              // Should be instantiated or disabled.
+                // Should be instantiated or disabled.
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
@@ -454,14 +456,15 @@ namespace RFM.Managers
 
 
             Debug.Log("RFM numOfAIRunners: " + numOfRunners);
+            GameObject hunterNPC, runnerNPC;
             for (int i = 0; i < numOfRunners; i++)
             {
-                PhotonNetwork.InstantiateRoomObject("RFM/RunnerNPC",
+                runnerNPC = PhotonNetwork.InstantiateRoomObject("RFM/RunnerNPC",
                     playersSpawnArea.position + new Vector3(
                         Random.Range(-1.0f, 1.0f), 0,
-                        Random.Range(-1.0f, 1.0f)),
+                      i),
                     playersSpawnArea.rotation);
-
+                runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f);
                 yield return new WaitForSeconds(delay);
             }
 
@@ -469,11 +472,11 @@ namespace RFM.Managers
             Debug.Log("RFM numOfAIHunters: " + numOfHunters);
             for (int i = 0; i < numOfHunters; i++)
             {
-                PhotonNetwork.InstantiateRoomObject("RFM/HunterNPC",
+                hunterNPC = PhotonNetwork.InstantiateRoomObject("RFM/HunterNPC",
                     huntersSpawnArea.position + new Vector3(Random.Range(-1.0f, 1.0f), 0,
                         Random.Range(-1.0f, 1.0f)),
                     huntersSpawnArea.rotation);
-
+                hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f);
                 yield return new WaitForSeconds(delay);
             }
 
@@ -509,8 +512,7 @@ namespace RFM.Managers
             //camera logic
             if (Globals.gameState == Globals.GameState.TakePosition)
             {
-                if (time < 7)
-                    rfmCameraManager.SwtichCamera(0);
+
                 if (time < 4)
                 {
                     huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
@@ -603,22 +605,22 @@ namespace RFM.Managers
                         StartCoroutine(StartRFM());
                         break;
                     }
-                //case PhotonEventCodes.PlayerRunnerCaught:
-                //    {
-                //        // PhotonView.Find(id)
-                //        //var viewId = (int)photonEvent.CustomData;
-                //        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
-                //        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
+                    //case PhotonEventCodes.PlayerRunnerCaught:
+                    //    {
+                    //        // PhotonView.Find(id)
+                    //        //var viewId = (int)photonEvent.CustomData;
+                    //        int runnerViewID = (int)((object[])photonEvent.CustomData)[0];
+                    //        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
 
-                //        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
-                //        {
-                //            PlayerCaught(hunterViewID);
-                //        }
+                    //        if (runnerViewID == RFM.Globals.player.GetComponent<PhotonView>().ViewID)
+                    //        {
+                    //            PlayerCaught(hunterViewID);
+                    //        }
 
-                //        // Game should be over if all runners are caught
+                    //        // Game should be over if all runners are caught
 
-                //        break;
-                //    }
+                    //        break;
+                    //    }
             }
         }
 
