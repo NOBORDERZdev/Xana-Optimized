@@ -102,13 +102,13 @@ public class PMY_Nft_Manager : MonoBehaviour
                 JJMusuemId = JJMusuemId_main;
             else
                 JJMusuemId = JJMusuemId_test;
-            IntJjInfoManager();
+            Int_PMY_Nft_Manager();
     }
 
     /// <summary>
     /// It will clear the worldInfos list and Set infos
     /// </summary>
-    public async void IntJjInfoManager()
+    public async void Int_PMY_Nft_Manager()
     {
         StringBuilder apiUrl = new StringBuilder();
         apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JJWORLDASSET + JJMusuemId);
@@ -150,32 +150,32 @@ public class PMY_Nft_Manager : MonoBehaviour
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
-                            if (JJFrameManager.instance)
-                                JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+                            //if (JJFrameManager.instance)
+                            //    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                             compersionPrfex = "?width=512&height=512";
                             break;
                         case "16:9":
-                            if (JJFrameManager.instance)
-                                JJFrameManager.instance.SetTransformForFrameSpotLight(1);
+                            //if (JJFrameManager.instance)
+                            //    JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                             worldInfos[i].pmyRatio = PMY_Ratio.SixteenXNineWithDes;
                             compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
                             break;
                         case "9:16":
-                            if (JJFrameManager.instance)
-                                JJFrameManager.instance.SetTransformForFrameSpotLight(2);
+                            //if (JJFrameManager.instance)
+                            //    JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                             worldInfos[i].pmyRatio = PMY_Ratio.NineXSixteenWithDes;
                             compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
                             break;
                         case "4:3":
-                            if (JJFrameManager.instance)
-                                JJFrameManager.instance.SetTransformForFrameSpotLight(3);
+                            //if (JJFrameManager.instance)
+                            //    JJFrameManager.instance.SetTransformForFrameSpotLight(3);
                             worldInfos[i].pmyRatio = PMY_Ratio.FourXThreeWithDes;
                             compersionPrfex = "?width=640&height=480";
                             break;
                         default:
-                            if (JJFrameManager.instance)
-                                JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+                            //if (JJFrameManager.instance)
+                            //    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                             worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                             compersionPrfex = "?width=512&height=512";
                             break;

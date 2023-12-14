@@ -54,14 +54,14 @@ public class PMY_WorldInfo : MonoBehaviour
         // for firebase analytics
         int languageMode = CustomLocalization.forceJapanese ? 1 : 0;
         Debug.Log("<color=red> LanguageMode: " + languageMode + "</color>");
-        if (JjInfoManager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
+        if (PMY_Nft_Manager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
         {
             string sceneName = FindObjectOfType<StayTimeTracker>().worldName;
             //Firebase.Analytics.FirebaseAnalytics.LogEvent(sceneName + "_NFT" + id + "_Click");
             Debug.Log("<color=red>" + sceneName + "_NFT" + id + "_Click </color>");
         }
         else
-            SendFBLogs(JjInfoManager.Instance.worldInfos[id].Title[languageMode]);
+            SendFBLogs(PMY_Nft_Manager.Instance.worldInfos[id].Title[languageMode]);
     }
 
     private void SendFBLogs(string data)
