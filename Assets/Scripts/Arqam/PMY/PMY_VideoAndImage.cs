@@ -42,8 +42,6 @@ public class PMY_VideoAndImage : MonoBehaviour
 
     public bool isMultipleScreen = false;
 
-
-    public bool isCreateFrame = true;
     public enum RoomType
     {
         RoomA_1,
@@ -61,21 +59,16 @@ public class PMY_VideoAndImage : MonoBehaviour
     private void Start()
     {
         imgVideo16x9.AddComponent<Button>();
-        //JjWorldInfo jjWorldInfo=imgVideo16x9.GetComponent<JjWorldInfo>();
         imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
         imgVideo9x16.AddComponent<Button>();
-        //JjWorldInfo jjWorldInfo1 = imgVideo9x16.GetComponent<JjWorldInfo>();
         imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
         imgVideo1x1.AddComponent<Button>();
-        //JjWorldInfo jjWorldInfo2 = imgVideo1x1.GetComponent<JjWorldInfo>();
         imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
         imgVideo4x3.AddComponent<Button>();
-        //JjWorldInfo jjWorldInfo3 = imgVideo4x3.GetComponent<JjWorldInfo>();
         imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
-
     }
 
 
@@ -89,9 +82,6 @@ public class PMY_VideoAndImage : MonoBehaviour
             SetImage();
         else if (dataType == PMY_DataType.Video)
             SetVideo();
-
-        //if(isCreateFrame)
-        //    CreateFrame();   //create frame
     }
 
     void SetImage()
@@ -205,9 +195,6 @@ public class PMY_VideoAndImage : MonoBehaviour
                 }
             }
         }));
-
-        if (isCreateFrame)
-            CreateFrame();   //create frame
     }
 
     void EnableImageVideoFrame(GameObject frameToEnable)
@@ -427,30 +414,8 @@ public class PMY_VideoAndImage : MonoBehaviour
             }
         }
 
-        if (isCreateFrame)
-            CreateFrame();   //create frame
-
         if (PMY_Nft_Manager.Instance && renderTexture_temp != null)
             PMY_Nft_Manager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
-    }
-
-    private void CreateFrame()
-    {
-        GameObject frame = JJFrameManager.instance.ref_JJObjectPooler.GetPooledObjectFrame();
-        frame.transform.SetParent(this.gameObject.transform);
-        frame.transform.position = transform.position;
-        frame.SetActive(true);
-        frame.transform.localPosition = new Vector3(JJFrameManager.instance.frameLocalPos.x, JJFrameManager.instance.frameLocalPos.y, JJFrameManager.instance.frameLocalPos.z);
-        frame.transform.localEulerAngles = new Vector3(90, -180.0f, 0);
-        frame.transform.localScale = new Vector3(JJFrameManager.instance.frameLocalScale.x, JJFrameManager.instance.frameLocalScale.y, JJFrameManager.instance.frameLocalScale.z);
-
-        GameObject spotLightObj = JJFrameManager.instance.ref_JJObjectPooler.GetPooledObjectSpotLight();
-        spotLightObj.transform.SetParent(this.gameObject.transform);
-        spotLightObj.transform.position = transform.position;
-        spotLightObj.SetActive(true);
-        spotLightObj.transform.localScale = new Vector3(JJFrameManager.instance.spotLightScale.x, JJFrameManager.instance.spotLightScale.y, JJFrameManager.instance.spotLightScale.z);
-        spotLightObj.transform.localPosition = JJFrameManager.instance.spotLightPrefabPos;
-        spotLightObj.transform.localEulerAngles = new Vector3(-22.857f, 180f, 0f);
     }
 
     public void OpenWorldInfo()
