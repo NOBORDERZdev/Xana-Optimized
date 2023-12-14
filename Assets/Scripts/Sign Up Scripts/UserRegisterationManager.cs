@@ -58,6 +58,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField EmailFieldNew;
     //   public MobileInputField UsernameTextNew;
     public AdvancedInputField UsernameFieldAdvance;
+  //  public AdvancedInputField Username2FieldAdvance;
     public Text CountryCodeText;
     // public MobileInputField PhoneInputTextNew;      
     public AdvancedInputField PhoneFieldNew;
@@ -156,6 +157,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject phoneTabSelected;
     public GameObject emailTabSelected;
     public GameObject WalletTabSelected;
+   
 
 
     [Tooltip("Pass Animator Component attached to the slider")]
@@ -192,6 +194,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal;
     public GameObject LogoImage;
+    public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
     String _LoadingTitle = "";
@@ -3279,7 +3282,14 @@ public class UserRegisterationManager : MonoBehaviour
         //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
-
+        //if (Username2FieldAdvance.Text != null)
+        //{
+        //    Localusername = Username2FieldAdvance.Text;
+        //}
+       
+            UserNameSetter.text = UsernameFieldAdvance.Text;
+       
+     
         if (Localusername == "")// || Localusername.Contains(" "))
         {
             //  print("Username Field should not be empty");

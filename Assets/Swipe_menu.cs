@@ -56,7 +56,7 @@ public class Swipe_menu : MonoBehaviour
             if(scroll_pos < pos[i] + (distance / 2) && scroll_pos > pos[i] - (distance / 2))
             {
                
-                transform.GetChild(i).localScale = Vector2.Lerp(transform.GetChild(i).localScale, new Vector2(1f, 1f), 0.1f);
+                transform.GetChild(i).localScale = Vector2.Lerp(transform.GetChild(i).localScale, new Vector2(1.2f, 1.2f), 0.1f);
                 transform.GetChild(i).GetComponent<Image>().enabled = true;
                 SelectedOBJ = transform.GetChild(i).gameObject;
 
@@ -64,7 +64,7 @@ public class Swipe_menu : MonoBehaviour
                 {
                     if(a != i)
                     {
-                        transform.GetChild(a).localScale = Vector2.Lerp(transform.GetChild(a).localScale, new Vector2(0.9f, 0.9f), 0.1f);
+                        transform.GetChild(a).localScale = Vector2.Lerp(transform.GetChild(a).localScale, new Vector2(1f, 1f), 0.1f);
                        
                     }
                    
@@ -80,8 +80,8 @@ public class Swipe_menu : MonoBehaviour
     {
         if (SelectedOBJ != null)
         {
-             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
-            this.gameObject.SetActive(false);
+            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
 
 
         }
