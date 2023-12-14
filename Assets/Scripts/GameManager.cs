@@ -304,7 +304,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(10f);
             string token = ConstantsGod.AUTH_TOKEN;
 
-            string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" + 1 + "/" + 5;
+            string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
             Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
 
             UnityWebRequest www;

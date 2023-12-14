@@ -213,7 +213,7 @@ public class XanaChatSocket : MonoBehaviour
         }
 
         string userId = XanaConstants.xanaConstants.userId;
-        string event_Id = "1";
+        string event_Id = "1";  // If there is no Event  then send 1 as a default
 
         // Checking For Event
         if (XanaEventDetails.eventDetails.DataIsInitialized)
