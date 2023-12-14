@@ -50,6 +50,19 @@ namespace RFM.Character
                     prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
                     SendOptions.SendReliable);
+
+                // if custom properties of current player contains "rewardMultiplier", add 1 to it. otherwise, create it.
+                if (GetComponent<PhotonView>().Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                {
+                    GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] = 
+                        (int)GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] + 1;
+                }
+                else
+                {
+                    GetComponent<PhotonView>().Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        { { "rewardMultiplier", 1 } });
+                }
+
                 return;
             }
             
@@ -69,6 +82,18 @@ namespace RFM.Character
                     prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
+
+                // if custom properties of current player contains "rewardMultiplier", add 1 to it. otherwise, create it.
+                if (GetComponent<PhotonView>().Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                {
+                    GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] =
+                        (int)GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] + 1;
+                }
+                else
+                {
+                    GetComponent<PhotonView>().Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        { { "rewardMultiplier", 1 } });
+                }
             }
         }
 
