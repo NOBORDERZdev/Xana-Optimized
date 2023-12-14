@@ -901,9 +901,10 @@ namespace Paroxe.PdfRenderer
                         float firstPageHeight = referencePageSize.y + 2.0f * m_VerticalMarginBetweenPages;
                         float viewportWidth = m_Internal.Viewport.rect.size.x;
                         float viewportHeight = m_Internal.Viewport.rect.size.y;
-
+                        //Debug.Log("<color=red>VPW: " + viewportWidth + " : FPW: " + firstPageWidth + " Result= " + (viewportWidth / firstPageWidth) + "</color>");
+                        //Debug.Log("<color=red>VPH: " + viewportHeight + " : FPH: " + firstPageHeight + " Result= " + (viewportHeight / firstPageHeight) + "</color>");
                         m_ZoomToGo = Mathf.Min(viewportWidth / firstPageWidth, viewportHeight / firstPageHeight);
-
+                        Debug.Log("<color=red>m_ZoomToGo: " + m_ZoomToGo + "</color>");
                         break;
                     }
                 case PageFittingType.Zoom:
@@ -1554,7 +1555,7 @@ namespace Paroxe.PdfRenderer
 #else
                 float w = m_Document.GetPageWidth(i) * m_ZoomFactor;
                 float h = m_Document.GetPageHeight(i) * m_ZoomFactor;
-
+                Debug.Log("<color=red>Pages Height: " + h + "</color>");
                 m_PageSizes[i] = new Vector2(w, h);
 #endif
             }
