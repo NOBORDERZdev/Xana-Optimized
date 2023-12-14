@@ -34,6 +34,7 @@ public class APIController : MonoBehaviour
     //public GameObject followingFeedMainContainer; //rik
 
     public GameObject findFriendFeedPrefab;
+    public GameObject mutalFrndPrefab;
 
     public GameObject feedTopStoryFollowerPrefab;
 
@@ -299,7 +300,7 @@ public class APIController : MonoBehaviour
                     //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
                     HotFeedObject.name = "Hot_" + HotFeedItemController.HotFeed.id;
                     HotFeedItemController.LoadFeed();
-                    Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
+                    //Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
                     if (callingFrom == "PullRefresh")
                     {
                         feedHotIdList.Insert(0, HotFeedItemController.HotFeed.id);
@@ -454,7 +455,7 @@ public class APIController : MonoBehaviour
             {
                 GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
                 //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
             }
         }
     }
@@ -473,6 +474,22 @@ public class APIController : MonoBehaviour
                 GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
                 //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
                 searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+            }
+        }
+    }
+
+     public void ShowMutalFrnds(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.AddFrndMutalFrndContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(mutalFrndPrefab, FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
             }
         }
     }
