@@ -157,24 +157,34 @@ public class UserPostFeature : MonoBehaviour
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data !=null)
                 {
-                    _postBubbleFlag = true;
-                    Bubble.gameObject.SetActive(true);
-                    if (RetrievedPost.data.text_post == "null")
+                    Debug.LogError("Posted--------- Response ---->   is not null");
+                    if (string.IsNullOrEmpty(RetrievedPost.data.text_post))
+                    {
+                        _postBubbleFlag = false;
+                        Bubble.gameObject.SetActive(false);
+                    }
+                    else
                     {
                         _postBubbleFlag = true;
                         Bubble.gameObject.SetActive(true);
                     }
-                    else
-                        textElement.text = RetrievedPost.data.text_post;
                 }
                 else
                 {
+                    Debug.LogError("Posted--------- Response ---->   is null");
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
+          
                 Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
-    
-                if(RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood!=null && RetrievedPost.data.text_mood != "")
+                if (RetrievedPost.data.text_post == "null")
+                {
+                    _postBubbleFlag = true;
+                    Bubble.gameObject.SetActive(true);
+                }
+                else
+                    textElement.text = RetrievedPost.data.text_post;
+                if(RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
                 {
                   //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
                     bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
