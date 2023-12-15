@@ -39,8 +39,8 @@ public class FriendAvatarController : MonoBehaviour
 
     private void OnEnable()
     {
-        BoxerNFTEventManager.OnNFTequip += EquipNFT;
-        BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
+       // BoxerNFTEventManager.OnNFTequip += EquipNFT;
+       // BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
 
         itemDatabase = ItemDatabase.instance;
 
@@ -58,8 +58,8 @@ public class FriendAvatarController : MonoBehaviour
 
     private void OnDisable()
     {
-        BoxerNFTEventManager.OnNFTequip -= EquipNFT;
-        BoxerNFTEventManager.OnNFTUnequip -= UnequipNFT;
+       // BoxerNFTEventManager.OnNFTequip -= EquipNFT;
+       // BoxerNFTEventManager.OnNFTUnequip -= UnequipNFT;
     }
 
     public void EquipNFT(bool canModifyFile = false)
@@ -89,7 +89,7 @@ public class FriendAvatarController : MonoBehaviour
 
         BoxerNFTEventManager.OnNFTequipShaderUpdate?.Invoke();
 
-        IntializeAvatar(canModifyFile);
+      //  IntializeAvatar(canModifyFile);
 
         if (EyesBlinking.instance)
         {
@@ -122,7 +122,7 @@ public class FriendAvatarController : MonoBehaviour
 
         BoxerNFTEventManager.OnNFTUnequipShaderUpdate?.Invoke();
         BoxerNFTEventManager.NFTLightUpdate?.Invoke(LightPresetNFT.DefaultSkin);
-        IntializeAvatar();
+       // IntializeAvatar();
     }
 
     public void SetAvatarClothDefault(GameObject applyOn)
@@ -162,30 +162,30 @@ public class FriendAvatarController : MonoBehaviour
 
     Color presetHairColor;
 
-    public async void IntializeAvatar(bool canWriteFile = false)
+    public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
-        Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        while (!XanaConstants.isAddressableCatalogDownload)
-        {
-            await Task.Yield();
-        }
+      Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        //while (!XanaConstants.isAddressableCatalogDownload)
+        //{
+        //    await Task.Yield();
+        //}
 
-        if (canWriteFile && /*XanaConstants.xanaConstants.isHoldCharacterNFT &&*/ XanaConstants.xanaConstants.isNFTEquiped)
-        {
-            BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
-            string _Path = Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson;
-            nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
-            CreateOrUpdateBoxerFile(nftAttributes);
-        }
-        Custom_IntializeAvatar();
+        //if (canWriteFile && /*XanaConstants.xanaConstants.isHoldCharacterNFT &&*/ XanaConstants.xanaConstants.isNFTEquiped)
+        //{
+        //    BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
+        //    string _Path = Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson;
+        //    nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
+        //    CreateOrUpdateBoxerFile(nftAttributes);
+        //}
+        Custom_IntializeAvatar(_CharacterData);
 
     }
-    void Custom_IntializeAvatar()
+    void Custom_IntializeAvatar(SavingCharacterDataClass _CharacterData)
     {
-        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
+       // if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
         {
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+           // SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+          //  _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
                 if (_CharacterData.myItemObj.Count > 0)

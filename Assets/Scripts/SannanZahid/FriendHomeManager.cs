@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class FriendHomeManager : MonoBehaviour
 {
+    public Transform FriendAvatarPrefab, NameTagFriendAvatarPrefab;
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
@@ -33,7 +34,18 @@ public class FriendHomeManager : MonoBehaviour
             if (isSucess)
             {
                 Debug.LogError("Successssss-----> ");
-
+                foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
+                {
+                    Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
+                    Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
+                    CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
+                    CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
+                    CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
+                    CreatedFriend.gameObject.SetActive(true);
+                    CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
+                    CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+                }
+             
             }
             else
             {
@@ -91,5 +103,18 @@ public class FriendsDetail
     public string name;
     [NonReorderable]
     [SerializeField]
-    public List<SavingCharacterDataClass> userOccupiedAssets;
+    public List<tempclassfordatafeed> userOccupiedAssets;
+}
+[Serializable]
+public class tempclassfordatafeed
+{
+    [NonReorderable]
+    [SerializeField]
+    public SavingCharacterDataClass json;
+    public string description;
+    public bool isDeleted;
+    public int createdBy;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+
 }
