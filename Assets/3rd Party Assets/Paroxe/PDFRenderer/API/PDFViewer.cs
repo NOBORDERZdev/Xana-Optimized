@@ -1555,7 +1555,7 @@ namespace Paroxe.PdfRenderer
 #else
                 float w = m_Document.GetPageWidth(i) * m_ZoomFactor;
                 float h = m_Document.GetPageHeight(i) * m_ZoomFactor;
-                Debug.Log("<color=red>Pages Height: " + h + "</color>");
+                Debug.Log("<color=red>Pages Height</color>");
                 m_PageSizes[i] = new Vector2(w, h);
 #endif
             }
@@ -2546,7 +2546,8 @@ namespace Paroxe.PdfRenderer
                 Vector2 pageContainerSizeDelta = m_Internal.PageContainer.sizeDelta;
                 Vector2 viewportRectSize = m_Internal.Viewport.rect.size;
 
-                vScrollVisible = pageContainerSizeDelta.y > viewportRectSize.y;
+                //vScrollVisible = pageContainerSizeDelta.y > viewportRectSize.y; // disable vertical scrollbar visibility 
+                vScrollVisible = pageContainerSizeDelta.x > viewportRectSize.x; // enable vertical scrollbar on the base of zoom
                 hScrollVisible = pageContainerSizeDelta.x > viewportRectSize.x;
             }
 
