@@ -10,6 +10,11 @@ public class RoomA_Logic : MonoBehaviour
 
     private void OnEnable()
     {
+        StartCoroutine(StartDelay());
+    }
+    IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
         PMY_Nft_Manager.Instance.exitClickedAction += ExitBtnClicked;
     }
     private void OnDisable()
