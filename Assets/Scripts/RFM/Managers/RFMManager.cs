@@ -94,6 +94,7 @@ namespace RFM.Managers
             }
 
             _mainCam.SetActive(true);
+            _gameCanvas.SetActive(true);
             RFM.Globals.player.transform.root.gameObject.SetActive(true);
             StartCoroutine(Start());
         }
