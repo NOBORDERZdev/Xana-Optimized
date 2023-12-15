@@ -23,8 +23,10 @@ public class PMY_VideoAndImage : MonoBehaviour
     public GameObject liveVideoPlayer;
     public GameObject preRecordedPlayer;
 
-    public GameObject pdfPanel;
-    public GameObject quizPanel;
+    public GameObject pdfPanelLanscape;
+    public GameObject pdfPanelPortrait;
+    public GameObject quizPanelLanscape;
+    public GameObject quizPanelPortrait;
 
     public string videoLink;
     public string imageLink;
@@ -460,10 +462,17 @@ public class PMY_VideoAndImage : MonoBehaviour
 
     private void EnableQuizPanel()
     {
-        quizPanel.SetActive(true);
+        if (!ChangeOrientation_waqas._instance.isPotrait)
+            quizPanelLanscape.SetActive(true);
+        else
+            quizPanelPortrait.SetActive(true);
     }
     private void Enable_PDF_Panel()
     {
-        pdfPanel.SetActive(true);
+        if (!ChangeOrientation_waqas._instance.isPotrait)
+            pdfPanelLanscape.SetActive(true);
+        else
+            pdfPanelPortrait.SetActive(true);   
     }
+
 }
