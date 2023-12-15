@@ -157,7 +157,7 @@ public class StoreManager : MonoBehaviour
     List<GameObject> itemButtonsPool = new List<GameObject>();
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
-    public GameObject backbutton_preset;
+   // public GameObject backbutton_preset;
     public Transform contentList;
 
     public GameObject faceTapButton;
@@ -408,7 +408,7 @@ public class StoreManager : MonoBehaviour
         //{
         //    LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         //}
-        backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
+       // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
     }
     void BackTrackPreset()
     {
@@ -1276,6 +1276,7 @@ public class StoreManager : MonoBehaviour
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
         GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);

@@ -56,8 +56,8 @@ public class UIManager : MonoBehaviour
            HomePage.gameObject.SetActive(!flag);
            _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(flag);
-            GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(!flag);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
+            GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
         }
     }
     public void ResetPlayerToLastPostPosted()
@@ -88,8 +88,7 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(IsSplashEnable(false, 3f));
                
             }
-           
-        }
+         }
         else
         {
 

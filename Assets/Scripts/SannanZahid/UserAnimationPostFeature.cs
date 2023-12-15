@@ -23,7 +23,6 @@ public class UserAnimationPostFeature : MonoBehaviour
     {
        return "https://api-test.xana.net/item/app-emojis";
     }
-   // int CallBackCheck = 0;
     IEnumerator BuildMoodDialog()
     {
         yield return new WaitForSeconds(1f);

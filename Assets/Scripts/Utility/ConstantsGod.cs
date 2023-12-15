@@ -224,7 +224,7 @@ public class ConstantsGod
     #endregion
 
     #region XANABuilder Api's
-    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v3/get-xana-universe/";
+    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/get-world-creator-list-paginated/";    //"/item/v3/get-xana-universe/";
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
@@ -234,7 +234,7 @@ public class ConstantsGod
     #endregion
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
-    public static string GetPostSentToServer = "/item/get-latest-text-post";///"/item/get-user-text-post/1/100";
+    public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
 
     #endregion
 

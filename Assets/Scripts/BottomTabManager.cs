@@ -167,7 +167,7 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        if (GameManager.Instance.defaultSelection != 0 /*true*/)
+        if (/*GameManager.Instance.defaultSelection != 0*/ true)
         {
             GameManager.Instance.defaultSelection=0;
             GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
@@ -549,6 +549,7 @@ public class BottomTabManager : MonoBehaviour
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
         GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+        GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
         // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
     }

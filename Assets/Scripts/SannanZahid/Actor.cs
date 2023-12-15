@@ -16,6 +16,22 @@ public class Actor : MonoBehaviour
     Transform MoveTarget;
     public float ActionClipTime = 0f;
     public Transform NameTagHolderObj;
+    bool _startCoroutineFLag = false;
+
+    private void OnEnable()
+    {
+        if(_startCoroutineFLag)
+        {
+            StartCoroutine(StartActorBehaviour());
+        }
+    }
+    private void OnDisable()
+    {
+        if (_startCoroutineFLag)
+        {
+            StopCoroutine(StartActorBehaviour());
+        }
+    }
     void SetMoveActions(MoveBehaviour move)
     {
        // Debug.LogError("Add Moves --->  "+ move.behaviour.ToString());
@@ -29,6 +45,7 @@ public class Actor : MonoBehaviour
     }
     public void Init(ActorBehaviour playerBehaviour)
     {
+        _startCoroutineFLag = true;
         _PlayerAnimator = GetComponent<Animator>();
         _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
         _PlayerCategory = playerBehaviour.CategoryOfMode;

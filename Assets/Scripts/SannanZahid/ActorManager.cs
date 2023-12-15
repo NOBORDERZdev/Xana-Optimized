@@ -11,7 +11,7 @@ public class ActorManager : MonoBehaviour
     [SerializeField] GameObject _storeCam;
     [SerializeField] GameObject _worldCam;
     [SerializeField] GameObject _cinemaCam;
-    [SerializeField] Transform _menuViewPoint;
+    [SerializeField] Transform _menuViewPoint, _postViewPoint;
     Vector3 _previousPos, _previousRot;
     private void Awake()
     {
@@ -32,8 +32,9 @@ public class ActorManager : MonoBehaviour
     public void IdlePlayerAvatorForMenu(bool flag)
     {
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
-       // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
-        if(flag)
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
+        // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
+        if (flag)
         {
             _cinemaCam.SetActive(true);
             _storeCam.SetActive(true);
@@ -44,6 +45,33 @@ public class ActorManager : MonoBehaviour
             GameManager.Instance.mainCharacter.transform.position = _menuViewPoint.position;
             GameManager.Instance.mainCharacter.transform.eulerAngles = _menuViewPoint.eulerAngles;
            // Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
+        }
+        else
+        {
+            _cinemaCam.SetActive(false);
+            _storeCam.SetActive(false);
+            _worldCam.SetActive(true);
+            _worldObj.SetActive(true);
+            GameManager.Instance.mainCharacter.transform.position = _previousPos;
+            GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
+        }
+    }
+    public void IdlePlayerAvatorForPostMenu(bool flag)
+    {
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
+        // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
+        if (flag)
+        {
+            _cinemaCam.SetActive(true);
+            _storeCam.SetActive(true);
+            _worldCam.SetActive(false);
+            _worldObj.SetActive(false);
+            _previousPos = GameManager.Instance.mainCharacter.transform.position;
+            _previousRot = GameManager.Instance.mainCharacter.transform.eulerAngles;
+            GameManager.Instance.mainCharacter.transform.position = _postViewPoint.position;
+            GameManager.Instance.mainCharacter.transform.eulerAngles = _postViewPoint.eulerAngles;
+            // Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
         }
         else
         {

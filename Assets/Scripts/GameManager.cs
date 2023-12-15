@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public ActorManager ActorManager;
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
+    public Transform FriendsHomeManager;
     private void Awake()
     {
         if (Instance == null)
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour
     }
     public void ComeFromWorld()
     {
-       StartCoroutine( WaitForInstancefromWorld());
+       StartCoroutine(WaitForInstancefromWorld());
     }
     public IEnumerator HitReloadUnloadScene()
     {
@@ -96,11 +97,11 @@ public class GameManager : MonoBehaviour
          yield return new WaitForSeconds(1f);
         print("wait");
         print("Loaded");
-     }  
+    }  
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 60;
+       // Application.targetFrameRate = 60;
         OnceGuestBool = false;
         OnceLoginBool = false;
     }
