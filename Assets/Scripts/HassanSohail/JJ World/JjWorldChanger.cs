@@ -23,6 +23,7 @@ public class JjWorldChanger : MonoBehaviour
     bool reSetCollider = false;
 
     private GameObject triggerObject;
+    public bool isShowPopup=true;
     public bool isEnteringPopup;
     public UnityEvent performAction;
 
@@ -48,10 +49,17 @@ public class JjWorldChanger : MonoBehaviour
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
-            if (isEnteringPopup)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+            if (isShowPopup)
+            {
+                if (isEnteringPopup)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                else
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            }
             else
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            {
+                RedirectToWorld();
+            }
         }
 
     }
