@@ -6,8 +6,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using Firebase.DynamicLinks;
-using Firebase.Crashlytics;
+using Firebase.Firestore;
+using Firebase.Analytics;
+//using Firebase.DynamicLinks;
+//using Firebase.Crashlytics;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
@@ -82,10 +84,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
                 // When this property is set to true, Crashlytics will report all
                 // uncaught exceptions as fatal events. This is the recommended behavior.
-                Crashlytics.ReportUncaughtExceptionsAsFatal = true;
+            //    Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
                 // Set a flag here for indicating that your project is ready to use Firebase.
-                
+
+
+                GlobalConstants.db = FirebaseFirestore.DefaultInstance;
+                FirebaseAnalytics.SetAnalyticsCollectionEnabled(true);
+
                 BindAfterInitilization();
                 XanaConstants.xanaConstants.isFirebaseInit = true;
                 InvokeDeepLink("focus");
@@ -101,7 +107,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     public void BindAfterInitilization()
     {
-        DynamicLinks.DynamicLinkReceived += OnDynamicLink;
+    //    DynamicLinks.DynamicLinkReceived += OnDynamicLink;
         DynamicEventManager.deepLink += InvokeDeepLink;
     }
 
@@ -127,7 +133,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             StartFocusCounter = 2;
             FocusCount += 1;
             //  receivingn.Instance._text2.text = "Focus count is : " + FocusCount;
-            DynamicLinks.DynamicLinkReceived += OnDynamicLink;
+    //        DynamicLinks.DynamicLinkReceived += OnDynamicLink;
         }
     }
 
@@ -142,44 +148,44 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             return;
         }
 
-        var dynamicLinkEventArgs = args as ReceivedDynamicLinkEventArgs;
-        Debug.LogFormat("Received dynamic link {0}",
-                        dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-            {
-                using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-                {
-                    var intent = activity.Call<AndroidJavaObject>("getIntent");
-                    intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
-                    intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
-                }
-            }
-        }
+        //var dynamicLinkEventArgs = args as ReceivedDynamicLinkEventArgs;
+        //Debug.LogFormat("Received dynamic link {0}",
+        //                dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        //    {
+        //        using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+        //        {
+        //            var intent = activity.Call<AndroidJavaObject>("getIntent");
+        //            intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
+        //            intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
+        //        }
+        //    }
+        //}
 
-        vec2 = dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString.Split("=");
-        foreach (string word in vec2)
-        {
-            if (vec2[1] == word)
-            {
+        //vec2 = dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString.Split("=");
+        //foreach (string word in vec2)
+        //{
+        //    if (vec2[1] == word)
+        //    {
 
-                //print("Argument are :" + word);
-                EventArguments = word;
-                DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
-                if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
-                {
-                    InvokeDeepLink("focus");
-                    StartFocusCounter = 0;
+        //        //print("Argument are :" + word);
+        //        EventArguments = word;
+        //        //DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
+        //        if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
+        //        {
+        //            InvokeDeepLink("focus");
+        //            StartFocusCounter = 0;
 
-                }
-                else if (StartFocusCounter == 1)
-                {
-                    StartFocusCounter = 0;
-                }
-                // receivingn.Instance._text2.text = "Arguments are  : " + word + "  Bool is  " + Startbool;
-            }
-        }
+        //        }
+        //        else if (StartFocusCounter == 1)
+        //        {
+        //            StartFocusCounter = 0;
+        //        }
+        //        // receivingn.Instance._text2.text = "Arguments are  : " + word + "  Bool is  " + Startbool;
+        //    }
+        //}
     }
 
     private void OnDynamicLinkEmpty(object sender, EventArgs args)
