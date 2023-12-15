@@ -63,6 +63,7 @@ public class PMY_Nft_Manager : MonoBehaviour
 
     public int clRoomId;
     public string roomName;
+    public Action<int> exitClickedAction;
 
     private void Awake()
     {
@@ -98,7 +99,7 @@ public class PMY_Nft_Manager : MonoBehaviour
 
     private void Start()
     {
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
                 JJMusuemId = JJMusuemId_main;
             else
                 JJMusuemId = JJMusuemId_test;
@@ -572,7 +573,7 @@ public class PMY_Nft_Manager : MonoBehaviour
         {
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
         }
-
+        exitClickedAction?.Invoke(clickedNftInd);
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)
@@ -627,7 +628,8 @@ public enum PMY_DataType
 {
     Image,
     Video,
-    PFD
+    PFD,
+    Quiz
 }
 
 public enum PMY_VideoTypeRes
