@@ -563,6 +563,7 @@ public class PMY_Nft_Manager : MonoBehaviour
 
     public void CloseInfoPop()
     {
+        exitClickedAction?.Invoke(clickedNftInd);
         ratioReferences[ratioId].l_obj.SetActive(false);
         ratioReferences[ratioId].p_obj.SetActive(false);
         ratioReferences[ratioId].p_Loader.SetActive(false);
@@ -573,7 +574,7 @@ public class PMY_Nft_Manager : MonoBehaviour
         {
             CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
         }
-        exitClickedAction?.Invoke(clickedNftInd);
+        
     }
 
     private void ErrorOnVideo(VideoPlayer source, string message)
