@@ -2175,6 +2175,8 @@ namespace Paroxe.PdfRenderer
             m_Internal.PasswordDialog.gameObject.SetActive(true);
         }
 
+        private CheckScreenRotationForPdf screenType;
+
         protected override void Start()
         {
             m_StartZoom = m_ZoomToGo;
@@ -2546,8 +2548,8 @@ namespace Paroxe.PdfRenderer
                 Vector2 pageContainerSizeDelta = m_Internal.PageContainer.sizeDelta;
                 Vector2 viewportRectSize = m_Internal.Viewport.rect.size;
 
-                //vScrollVisible = pageContainerSizeDelta.y > viewportRectSize.y; // disable vertical scrollbar visibility 
-                vScrollVisible = pageContainerSizeDelta.x > viewportRectSize.x; // enable vertical scrollbar on the base of zoom
+                vScrollVisible = pageContainerSizeDelta.y > viewportRectSize.y; // disable vertical scrollbar visibility 
+                //vScrollVisible = pageContainerSizeDelta.x > viewportRectSize.x; // enable vertical scrollbar on the base of zoom
                 hScrollVisible = pageContainerSizeDelta.x > viewportRectSize.x;
             }
 
