@@ -12,14 +12,24 @@ public class UserPostFeature : MonoBehaviour
     public Transform _postScreen;
     [SerializeField]
     PostInfo RetrievedPost;
+    bool _postBubbleFlag = false;
 
     public delegate void UpdatePostText(string txt);
     public UpdatePostText OnUpdatePostText;
+
+
+    public void ActivatePostButtbleHome(bool flag)
+    {
+        if(_postBubbleFlag)
+        {
+            Bubble.gameObject.SetActive(flag);
+        }
+    }
     public void SendPost()
     {
        // Debug.LogError("GameManager.MoodSelected ----> " + GameManager.Instance.userAnimationPostFeature.MoodSelected);
        // Debug.LogError("_postInputField.text ----> " + _postInputField.text);
-        if(_postInputField.text=="" && GameManager.Instance.userAnimationPostFeature.MoodSelected=="")
+        if(_postInputField.text == "" && GameManager.Instance.userAnimationPostFeature.MoodSelected=="")
         {
             SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
             return;
@@ -34,11 +44,13 @@ public class UserPostFeature : MonoBehaviour
         if (_postInputField.text == "")
         {
             StartCoroutine(SendPostDataToServer("null", moodToSend));
+            _postBubbleFlag= false;
             Bubble.gameObject.SetActive(false);
         }
         else
         {
             StartCoroutine(SendPostDataToServer(_postInputField.text, moodToSend));
+            _postBubbleFlag = true;
             Bubble.gameObject.SetActive(true);
         }
         
@@ -145,16 +157,19 @@ public class UserPostFeature : MonoBehaviour
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data !=null)
                 {
+                    _postBubbleFlag = true;
                     Bubble.gameObject.SetActive(true);
                 }
                 else
                 {
+                    _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
                 Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_post == "null")
                 {
-                    Bubble.gameObject.SetActive(false);
+                    _postBubbleFlag = true;
+                    Bubble.gameObject.SetActive(true);
                 }
                 else
                     textElement.text = RetrievedPost.data.text_post;
@@ -181,15 +196,18 @@ public class UserPostFeature : MonoBehaviour
 
         if (RetrievedPost.data != null)
         {
+            _postBubbleFlag = true;
             Bubble.gameObject.SetActive(true);
         }
         else
         {
+            _postBubbleFlag = false;
             Bubble.gameObject.SetActive(false);
         }
       //  Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
         if (RetrievedPost.data.text_post == "null")
         {
+            _postBubbleFlag = false;
             Bubble.gameObject.SetActive(false);
         }
         else if(_previousTextElement!=null)
@@ -210,12 +228,12 @@ public class UserPostFeature : MonoBehaviour
     }
 
 
-    public void GetLatestPostOfFriend(int friend_id)
+    public void GetLatestPostOfFriend(int friend_id, PlayerPostBubbleHandler friendBubbleRef)
     {
-        StartCoroutine(GetLatestPostOfFriendFromServer(friend_id));
+        StartCoroutine(GetLatestPostOfFriendFromServer(friend_id, friendBubbleRef));
     }
 
-    IEnumerator GetLatestPostOfFriendFromServer(int friend_id)
+    IEnumerator GetLatestPostOfFriendFromServer(int friend_id, PlayerPostBubbleHandler friendBubbleRef)
     {
         string FinalUrl = PrepareApiURL("Receive") + friend_id;
         // Debug.LogError("Prepared URL ----> " + FinalUrl);
@@ -240,18 +258,18 @@ public class UserPostFeature : MonoBehaviour
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data != null)
                 {
-                    Bubble.gameObject.SetActive(true);
+                    friendBubbleRef.ActivatePostFirendBubble(true);
                 }
                 else
                 {
-                    Bubble.gameObject.SetActive(false);
+                    friendBubbleRef.ActivatePostFirendBubble(false);
                 }
                 // Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_post == "null")
                 {
-                    Bubble.gameObject.SetActive(false);
+                    friendBubbleRef.ActivatePostFirendBubble(false);
                 }
-               // else
+                // else
                 //    textElement.text = RetrievedPost.data.text_post;
                 if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
                 {

@@ -3,8 +3,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
-using System.Security.Cryptography.X509Certificates;
 
 public class MoodManager : MonoBehaviour
 {

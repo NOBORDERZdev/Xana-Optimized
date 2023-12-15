@@ -1276,6 +1276,7 @@ public class StoreManager : MonoBehaviour
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
         GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);

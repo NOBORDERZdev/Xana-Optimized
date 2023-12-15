@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public ActorManager ActorManager;
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
+    public Transform FriendsHomeManager;
     private void Awake()
     {
         if (Instance == null)
