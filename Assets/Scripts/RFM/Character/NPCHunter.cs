@@ -258,8 +258,11 @@ namespace RFM.Character
                 if (_catchTimer >= timeToCatchRunner)
                 {
                     _catchTimer = 0;
-                    //_allRunners.Remove(_inRangePlayer);
-                    //_hasTarget = false;
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        _allRunners.Remove(_inRangePlayer);
+                        _hasTarget = false;
+                    }
                     killVFX.SetActive(true);
 
 
@@ -338,8 +341,11 @@ namespace RFM.Character
                 // if the playerRunner is the local player, call the PlayerRunnerCaught() method on the PlayerRunner script
                 if (other.GetComponent<PhotonView>().IsMine)
                 {
-                    //_allRunners.Remove(other.gameObject);
-                    //_hasTarget = false;
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        _allRunners.Remove(other.gameObject);
+                        _hasTarget = false;
+                    }
                     killVFX.SetActive(true);
                     //other.GetComponent<PlayerRunner>().PlayerRunnerCaught(/*this.cameraTarget*/);
 
