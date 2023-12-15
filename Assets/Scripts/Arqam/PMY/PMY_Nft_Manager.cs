@@ -111,7 +111,7 @@ public class PMY_Nft_Manager : MonoBehaviour
     public async void Int_PMY_Nft_Manager()
     {
         StringBuilder apiUrl = new StringBuilder();
-        apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JJWORLDASSET + JJMusuemId);
+        apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.PMYWorldASSET + JJMusuemId);
 
         using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()))
         {
@@ -688,7 +688,7 @@ public class PMY_Json
 public class PMY_Asset
 {
     public int id;
-    public int museumId;
+    public int worldId;
     public int index;
     public string asset_link;
     public bool check;
@@ -699,7 +699,8 @@ public class PMY_Asset
     public string ratio;
     public string thumbnail;
     public string media_type;
-    public string env_class;
+    public string pdf_url;
+    public QuizData quiz_data;
     public string user_id;
     public string event_id;
     public string category;
@@ -708,4 +709,12 @@ public class PMY_Asset
     public DateTime createdAt;
     public DateTime updatedAt;
     public string event_env_class;
+}
+
+
+public class QuizData
+{
+    public string question;
+    public string[] answer;
+    public string correct;
 }

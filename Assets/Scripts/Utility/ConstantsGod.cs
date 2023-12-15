@@ -229,4 +229,8 @@ public class ConstantsGod
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
+
+    #region PMY World Api's
+    public static string PMYWorldASSET = "/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
 }
