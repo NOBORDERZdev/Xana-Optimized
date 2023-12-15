@@ -4,9 +4,13 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
+using System.Diagnostics.Eventing.Reader;
 
 public class PMY_VideoAndImage : MonoBehaviour
 {
+    public enum MyDataType { None, PDF, Quiz};
+    public MyDataType myDataType;
+    [Space(5)]
     public int id;
 
     private Texture2D _texture;
@@ -18,6 +22,11 @@ public class PMY_VideoAndImage : MonoBehaviour
 
     public GameObject liveVideoPlayer;
     public GameObject preRecordedPlayer;
+
+    public GameObject pdfPanelLanscape;
+    public GameObject pdfPanelPortrait;
+    public GameObject quizPanelLanscape;
+    public GameObject quizPanelPortrait;
 
     public string videoLink;
     public string imageLink;
@@ -58,17 +67,30 @@ public class PMY_VideoAndImage : MonoBehaviour
 
     private void Start()
     {
-        imgVideo16x9.AddComponent<Button>();
-        imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+        if (myDataType.Equals(MyDataType.PDF))
+        {
+            imgVideo1x1.AddComponent<Button>();
+            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => Enable_PDF_Panel());
+        }
+        else if (myDataType.Equals(MyDataType.Quiz))
+        {
+            imgVideo1x1.AddComponent<Button>();
+            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => EnableQuizPanel());
+        }
+        else
+        {
+            imgVideo16x9.AddComponent<Button>();
+            imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-        imgVideo9x16.AddComponent<Button>();
-        imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo9x16.AddComponent<Button>();
+            imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-        imgVideo1x1.AddComponent<Button>();
-        imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo1x1.AddComponent<Button>();
+            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-        imgVideo4x3.AddComponent<Button>();
-        imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo4x3.AddComponent<Button>();
+            imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+        }
     }
 
 
@@ -436,6 +458,21 @@ public class PMY_VideoAndImage : MonoBehaviour
 
             }
         }
+    }
+
+    private void EnableQuizPanel()
+    {
+        if (!ChangeOrientation_waqas._instance.isPotrait)
+            quizPanelLanscape.SetActive(true);
+        else
+            quizPanelPortrait.SetActive(true);
+    }
+    private void Enable_PDF_Panel()
+    {
+        if (!ChangeOrientation_waqas._instance.isPotrait)
+            pdfPanelLanscape.SetActive(true);
+        else
+            pdfPanelPortrait.SetActive(true);   
     }
 
 }
