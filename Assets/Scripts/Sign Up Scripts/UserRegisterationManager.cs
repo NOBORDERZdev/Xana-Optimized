@@ -3256,6 +3256,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
         TutorialsManager.instance.ShowTutorials();
+        ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
