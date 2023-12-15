@@ -169,7 +169,7 @@ public class CharacterCustomizationManager : MonoBehaviour
     {
         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
-        m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
+        m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
 
         m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
         m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
@@ -185,7 +185,7 @@ public class CharacterCustomizationManager : MonoBehaviour
     public void OnLeftSide()
     {
         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 225f, 0f);
-        m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
+        m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
         m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
 
         m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(false);

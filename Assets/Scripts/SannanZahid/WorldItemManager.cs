@@ -102,4 +102,7 @@ public class WorldItemDetail
     public string BannerLink;
     public int PressedIndex;
     public string[] WorldTags;
+    public string Creator_Name;
+    public string CreatorAvatarURL;
+    public string CreatorDescription;
 }

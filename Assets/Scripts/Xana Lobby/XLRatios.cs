@@ -25,6 +25,15 @@ public class XLRatios : MonoBehaviour
     {
         
     }
+    public void CloseInfoPop()
+    {
+        LandscapeObj.SetActive(false);
+        PotraiteObj.SetActive(false);
+        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        {
+            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+        }
+    }
 }
 [Serializable]
 public class XLRatioReferences

@@ -83,6 +83,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     //Font
     public TMPro.TMP_FontAsset orbitronFont;
     public TMPro.TMP_FontAsset hiraginoFont;
+    public TMPro.TMP_FontAsset arialFont;
 
     //Name canvas
     internal Canvas nameCanvas;
@@ -185,6 +186,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     }
     #endregion
 
+    #region WarpComponent location update
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -241,7 +243,9 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         if (portalSystemEndPoint != null)
             portalSystemEndPoint.portalEndLocation = location;
     }
+    #endregion
 
+    #region Components for multiplayer
     //All components for multiplayer
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -349,6 +353,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         hash.Add("gamificationMultiplayerComponentDatas", json);
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
+    #endregion
 
     #region Photon Events
     public void OnPlayerEnteredRoom(Player newPlayer)

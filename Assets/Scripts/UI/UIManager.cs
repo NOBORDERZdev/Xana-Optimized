@@ -1,13 +1,16 @@
 ﻿using AdvancedInputFieldPlugin;
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
+    public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
     public GameObject _SplashScreen;
+
+    public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
 
@@ -30,8 +33,36 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Canvas.GetComponent<CanvasGroup>().alpha = 0;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        Canvas.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        _footerCan.GetComponent<CanvasGroup>().interactable = false;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
+    }
+    bool a =false;
+    public void SwitchToPostScreen(bool flag)
+    {
+       
+        if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
+        {
+            SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
+        }
+        else
+        {
+           _postScreen.gameObject.SetActive(flag);
+           HomePage.gameObject.SetActive(!flag);
+           _postCamera.gameObject.SetActive(flag);
+            ShowFooter(!flag);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
+            GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
+        }
+    }
+    public void ResetPlayerToLastPostPosted()
+    {
+        GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
     }
     public void AvaterButtonCustomPushed()
     {
@@ -71,10 +102,20 @@ public class UIManager : MonoBehaviour
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
-         yield return new WaitForSeconds(_time);
+        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+         Canvas.GetComponent<CanvasGroup>().interactable =false;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =false;
+        _footerCan.GetComponent<CanvasGroup>().interactable=false;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
+        yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Canvas.GetComponent<CanvasGroup>().interactable =true;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts =true;
+        _footerCan.GetComponent<CanvasGroup>().interactable=true;
+        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
+        _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
@@ -91,7 +132,7 @@ public class UIManager : MonoBehaviour
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
-                    AvatarWindowHolder.gameObject.SetActive(true);
+                    AvatarWindowHolder.gameObject.SetActive(false);
                     LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
                     HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);

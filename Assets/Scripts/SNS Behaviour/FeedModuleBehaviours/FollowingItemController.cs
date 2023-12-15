@@ -14,13 +14,18 @@ public class FollowingItemController : MonoBehaviour
     public AllFollowingRow followingRawData;
 
     public TextMeshProUGUI userNameText;
+    public TextMeshProUGUI BioText;
+
     public Image profileImage;
     public TextMeshProUGUI followFollowingText;
     public Image followFollowingImage;
     public Color followColor, followingColor;
 
-    public Sprite defaultSP;
+    [SerializeField] GameObject MakeBfBtn;
+    [SerializeField] GameObject RemoveBfBtn;
 
+    public Sprite defaultSP;
+    int userId ;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -58,11 +63,20 @@ public class FollowingItemController : MonoBehaviour
         }
     }
 
-    public void SetupData(AllFollowingRow allFollowingRow)
+    public void SetupData(AllFollowingRow allFollowingRow, bool isFromProfile= true)
     {
         followingRawData = allFollowingRow;
-
         userNameText.text = followingRawData.following.name;
+        if(BioText!=null){
+            //BioText.text = followingRawData.following.userProfile.bio;
+            if (followingRawData.following != null && followingRawData.following.userProfile!= null && !string.IsNullOrEmpty(followingRawData.following.userProfile.bio)){ 
+                BioText.text =  APIManager.DecodedString(followingRawData.following.userProfile.bio);
+            }
+            else
+            {
+                BioText.text = "";
+            }
+        }
         if (!string.IsNullOrEmpty(followingRawData.following.avatar))
         {
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(followingRawData.following.avatar);
@@ -81,7 +95,11 @@ public class FollowingItemController : MonoBehaviour
                 GetImageFromAWS(followingRawData.following.avatar, profileImage);
             }
         }
-        FollowFollowingSetUp(false);
+        if (isFromProfile)
+        {
+            FollowFollowingSetUp(false);
+        }
+        UpdateBfBtn(allFollowingRow.following.is_close_friend);
     }
 
     public void OnClickUserProfileButton()
@@ -326,4 +344,34 @@ public class FollowingItemController : MonoBehaviour
         return (ExtentionType)0;
     }*/
     #endregion
+
+
+    /// <summary>
+    /// To Add Following in BFF list
+    /// </summary>
+    public void AddBff(){ 
+        APIManager.Instance.AddBestFriend(followingRawData.userId,gameObject);
+    }
+
+    /// <summary>
+    /// To Remove BFF that already are in BFF
+    /// </summary>
+    public void RemoveBff(){ 
+          APIManager.Instance.RemoveBestFriend(followingRawData.userId,gameObject);
+    }
+
+    public void UpdateBfBtn(bool isBf){
+        if (isBf)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+       
+    }
+
 }
