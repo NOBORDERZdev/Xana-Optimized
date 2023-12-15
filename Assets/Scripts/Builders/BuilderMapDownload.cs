@@ -167,6 +167,10 @@ public class BuilderMapDownload : MonoBehaviour
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
+        yield return StartCoroutine(DownloadAddressableGamificationObject());
+
+        yield return StartCoroutine(GemificationObjectLoadWait(1f));
+
         Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -179,6 +183,61 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 LoadAddressableSceneAfterDownload();
             }));
+        }
+    }
+
+    public IEnumerator GemificationObjectLoadWait(float waitTime)
+    {
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+        Debug.Log("GemificationObject assets count====" + GamificationComponentData.instance.multiplayerComponentsObject.Count);
+        yield return new WaitForSeconds(waitTime);
+        if (pool != null && GamificationComponentData.instance.multiplayerComponentsObject != null)
+        {
+            foreach (GameObject prefab in GamificationComponentData.instance.multiplayerComponentsObject)
+            {
+                pool.ResourceCache.Add(prefab.name, prefab);
+            }
+        }
+    }
+
+    public IEnumerator DownloadAddressableGamificationObject()
+    {
+        GamificationComponentData.instance.multiplayerComponentsObject.Clear();
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            foreach (string key in GamificationComponentData.instance.multiplayerComponentsName)
+            {
+                bool flag = false;
+                AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
+                if (!flag)
+                {
+                    if (key != "Hiragino-Sans")
+                        loadOp = Addressables.LoadAssetAsync<GameObject>(key);
+                    else
+                        loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
+                }
+                while (!loadOp.IsDone)
+                    yield return loadOp;
+                if (loadOp.Status == AsyncOperationStatus.Failed)
+                {
+                }
+                else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+                {
+                    Debug.Log("Gamification Loaded" + loadOp.Result);
+                    if (key != "Hiragino-Sans")
+                    {
+                        GameObject assets = loadOp.Result as GameObject;
+                        GamificationComponentData.instance.multiplayerComponentsObject.Add(assets);
+                        if (key == "SpecialItemParticleFlame")
+                            GamificationComponentData.instance.specialItemParticleEffect = assets;
+                        Debug.Log("GemificationObject=== " + assets.name);
+                    }
+                    else
+                        GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
+
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                }
+            }
         }
     }
 
