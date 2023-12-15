@@ -35,7 +35,7 @@ public class FriendHomeManager : MonoBehaviour
         {
             if (isSucess)
             {
-                Debug.LogError("Successssss-----> ");
+               // Debug.LogError("Successssss-----> ");
                 foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
                    // for(int i=0;i<20;i++)
@@ -69,14 +69,14 @@ public class FriendHomeManager : MonoBehaviour
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
             // yield return www;
-            Debug.LogError("ConstantsGod.AUTH_TOKEN "+ ConstantsGod.AUTH_TOKEN);
-            Debug.LogError("XanaConstants.xanaConstants.userId " + XanaConstants.xanaConstants.userId);
+           // Debug.LogError("ConstantsGod.AUTH_TOKEN "+ ConstantsGod.AUTH_TOKEN);
+           // Debug.LogError("XanaConstants.xanaConstants.userId " + XanaConstants.xanaConstants.userId);
 
             while (!www.isDone)
                 yield return new WaitForSeconds(Time.deltaTime);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                 Debug.LogError("FAILED "+www.downloadHandler.text);
+                // Debug.LogError("FAILED "+www.downloadHandler.text);
                 callback(false);
             }
             else

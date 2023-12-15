@@ -159,6 +159,13 @@ public class UserPostFeature : MonoBehaviour
                 {
                     _postBubbleFlag = true;
                     Bubble.gameObject.SetActive(true);
+                    if (RetrievedPost.data.text_post == "null")
+                    {
+                        _postBubbleFlag = true;
+                        Bubble.gameObject.SetActive(true);
+                    }
+                    else
+                        textElement.text = RetrievedPost.data.text_post;
                 }
                 else
                 {
@@ -166,13 +173,7 @@ public class UserPostFeature : MonoBehaviour
                     Bubble.gameObject.SetActive(false);
                 }
                 Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
-                if (RetrievedPost.data.text_post == "null")
-                {
-                    _postBubbleFlag = true;
-                    Bubble.gameObject.SetActive(true);
-                }
-                else
-                    textElement.text = RetrievedPost.data.text_post;
+    
                 if(RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood!=null && RetrievedPost.data.text_mood != "")
                 {
                   //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
