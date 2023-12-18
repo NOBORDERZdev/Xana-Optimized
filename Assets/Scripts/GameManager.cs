@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
            
 
                 if (rootObject.success)
-                    CheckResponse(rootObject.data);
+                    CheckResponse(rootObject.data.rows);
             }
             else
                 Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
@@ -359,10 +359,14 @@ public class GameManager : MonoBehaviour
 public class ClassAPIResponse
 {
     public bool success;
-    public List<ClassCode> data;
-    public string msg;
+    public DataContain data;
+    //public string msg;
 }
-
+public class DataContain
+{
+    public int count;
+    public List<ClassCode> rows;
+}
 public class ClassCode
 {
     public int id;
