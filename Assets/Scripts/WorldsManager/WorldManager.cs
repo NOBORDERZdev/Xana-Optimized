@@ -25,7 +25,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberEventWorld = 1;
     private int pageNumberSearchWorld = 1;
     private int pageNumberTestWorld = 1;
-    private int pageCount = 200;
+    private int pageCount = 50;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
@@ -364,6 +364,13 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
 
+            if (_WorldInfo.data.rows[i].creatorDetails != null)
+            {
+                _event.Creator_Name = _WorldInfo.data.rows[i].creatorDetails.userName;
+                _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
+                _event.CreatorAvatarURL = _WorldInfo.data.rows[i].creatorDetails.avatar;
+            }
+
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
                 _event.CreatorName = _WorldInfo.data.rows[i].user.name;
@@ -381,7 +388,7 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                if(EventPrefabLobby.activeInHierarchy)
+               // if(EventPrefabLobby.activeInHierarchy)
                     EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
@@ -398,13 +405,14 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        WorldItemManager.DisplayWorlds(_apiURL);
+        if(WorldItemManager.gameObject.activeInHierarchy)
+            WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        if (!UIManager.Instance.IsSplashActive)
-        {
-            Invoke(nameof(ShowTutorial), 1f);
-        }
+        //if (!UIManager.Instance.IsSplashActive)
+        //{
+        //    Invoke(nameof(ShowTutorial), 1f);
+        //}
        
     }
 
@@ -723,6 +731,7 @@ public class RowList
     public string createdBy;
     public string[] tags;
     public UserInfo user;
+    public WorldCreatorDetail creatorDetails;
 }
 [System.Serializable]
 public class UserInfo
@@ -732,6 +741,16 @@ public class UserInfo
     public string email;
     public string avatar;
 }
+
+
+[Serializable]
+public class WorldCreatorDetail
+{
+    public string userName;
+    public string avatar;
+    public string description;
+}
+
 public enum APIURL
 {
     Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld, SearchWorldByTag

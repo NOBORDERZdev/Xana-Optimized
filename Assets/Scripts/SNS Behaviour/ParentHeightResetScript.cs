@@ -107,7 +107,8 @@ public class ParentHeightResetScript : MonoBehaviour
         }
 
         mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        StartCoroutine(waitToReset());
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(waitToReset());
     }
 
     IEnumerator waitToReset()

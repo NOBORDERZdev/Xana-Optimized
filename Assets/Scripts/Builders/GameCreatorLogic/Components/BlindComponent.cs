@@ -70,6 +70,7 @@ public class BlindComponent : ItemComponent
     private void OnCollisionExit(Collision collision)
     {
         IsAgainTouchable = true;
+        playerObject = null;
     }
 
     #region BehaviourControl
@@ -94,17 +95,17 @@ public class BlindComponent : ItemComponent
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent",out object blindComponent))
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponent))
             {
                 string blindComponentstr = blindComponent.ToString();
-                DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr).ToUniversalTime(); ;
+                DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr); ;
                 DateTime currentDateTime = DateTime.UtcNow;
-                TimeSpan diff = dateTimeRPC - currentDateTime;
+                TimeSpan diff = currentDateTime - dateTimeRPC;
 
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
                 time = timeDiff;
 
-                if (time == 0 || time > blindComponentData.time)
+                if ((time == 0 || time > blindComponentData.time) && !blindToggle)
                     return;
             }
         }
@@ -124,14 +125,15 @@ public class BlindComponent : ItemComponent
     private void StopComponent()
     {
         TimeStats._blindComponentStop?.Invoke();
+        playerObject = null;
     }
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 

@@ -42,7 +42,10 @@ public class WorldItemView : MonoBehaviour
        m_PressedIndex = detail.PressedIndex;
        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
         worldTags = detail.WorldTags;
-       Init();
+        Creator_Name = detail.Creator_Name;
+        CreatorAvatarURL = detail.CreatorAvatarURL;
+        CreatorDescription = detail.CreatorDescription;
+        Init();
     }
 
     public static string m_EnvName;
@@ -76,6 +79,9 @@ public class WorldItemView : MonoBehaviour
 
     [Header("Tags and Category")]
     public string[] worldTags;
+    public string Creator_Name;
+    public string CreatorAvatarURL;
+    public string CreatorDescription;
 
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
@@ -102,7 +108,8 @@ public class WorldItemView : MonoBehaviour
     public void Init()
     {
         GetEventType(entityType);
-        StartCoroutine(DownloadPrefabSprite());
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(DownloadPrefabSprite());
         if (!m_EnvironmentName.Contains("XANA Lobby"))
             this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
@@ -115,12 +122,14 @@ public class WorldItemView : MonoBehaviour
         {
             if (!isBannerLoaded)
             {
-                StartCoroutine(DownloadAndLoadBanner());
+                if (gameObject.activeInHierarchy)
+                    StartCoroutine(DownloadAndLoadBanner());
             }
         }
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
-            StartCoroutine(DownloadAndLoadFeed());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(DownloadAndLoadFeed());
         }
     }
     void UpdateUserCount()
@@ -302,12 +311,14 @@ public class WorldItemView : MonoBehaviour
         if(m_EnvironmentName.Contains("XANA Lobby"))
         {
             worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags,
+           entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
         }
         else
         {
             worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags,
+        entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
         }
        
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;

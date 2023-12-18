@@ -1001,8 +1001,8 @@ public class StoreManager : MonoBehaviour
         }
         GetAllInfoSUBOFCategories JsonDataObj = new GetAllInfoSUBOFCategories();
         JsonDataObj = GetDataofSUBCategories(request.downloadHandler.text);
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -1275,9 +1275,12 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
+        UIManager.Instance.ShowFooter(true);
         if (saveStoreBtnButton.interactable == true)
             ReturnHomePopUp.SetActive(true);
         else
@@ -1287,6 +1290,8 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
+      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);

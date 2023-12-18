@@ -139,7 +139,8 @@ public class ConstantsGod
     public static string r_url_GetTaggedFeedsByUserId = "/hot/tagged-feeds";
 
     public static string r_url_FollowAUser = "/follow/user";
-    public static string r_url_GetAllFollowing = "/follow/get-all-following";
+    public static string r_url_GetAllFollowing = /*"/follow/get-all-following"*/ "/social/follow/get-all-following/";
+    public static string r_url_AdFrndGetAllAolowing = "/social/follow/get-all-following/";
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
@@ -154,7 +155,13 @@ public class ConstantsGod
 
     public static string r_url_FeedLikeDisLike = "/feeds/like-dislike-post";
 
-    public static string r_url_SearchUser = "/users/search-user";
+    public static string r_url_SearchUser = /*"/users/search-user"*/ "/users/v2/search-user/";
+    public static string r_url_NonFriendUser = "/social/get-non-friends/";
+    public static string r_url_RecommendedUser = "/social/get-friends-recommendations/";
+    public static string r_url_MutalFrnd = "/social/follow/get-user-mutual-followers/";
+    public static string r_url_GetBestFrnd ="/social/get-close-friends/";
+    public static string r_url_AdBestFrnd ="/social/create-close-friend/";
+    public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";
@@ -217,7 +224,7 @@ public class ConstantsGod
     #endregion
 
     #region XANABuilder Api's
-    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v3/get-xana-universe/";
+    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/get-world-creator-list-paginated/";    //"/item/v3/get-xana-universe/";
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
@@ -225,6 +232,12 @@ public class ConstantsGod
     public static string SearchWorldAPI = "/item/search-worlds/";
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     #endregion
+    #region UserPost
+    public static string SendPostToServer = "/item/new-text-post";
+    public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
+
+    #endregion
+
 
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";

@@ -34,6 +34,7 @@ public class APIController : MonoBehaviour
     //public GameObject followingFeedMainContainer; //rik
 
     public GameObject findFriendFeedPrefab;
+    public GameObject mutalFrndPrefab;
 
     public GameObject feedTopStoryFollowerPrefab;
 
@@ -299,7 +300,7 @@ public class APIController : MonoBehaviour
                     //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
                     HotFeedObject.name = "Hot_" + HotFeedItemController.HotFeed.id;
                     HotFeedItemController.LoadFeed();
-                    Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
+                    //Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
                     if (callingFrom == "PullRefresh")
                     {
                         feedHotIdList.Insert(0, HotFeedItemController.HotFeed.id);
@@ -436,8 +437,59 @@ public class APIController : MonoBehaviour
                 {
                     GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.findFriendContainer);
                     //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
                 }
+            }
+        }
+    }
+
+    public void ShowHotFirend(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.hotFriendContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+            }
+        }
+    }
+
+
+     public void ShowRecommendedFriends(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.AddFrndRecommendedContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
+                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+            }
+        }
+    }
+
+     public void ShowMutalFrnds(SearchUserRoot searchUserRoot)
+    {
+        foreach (Transform item in FeedUIController.Instance.AddFrndMutalFrndContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (searchUserRoot.data.rows.Count > 0)
+        {
+            for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
+            {
+                GameObject searchUserObj = Instantiate(mutalFrndPrefab, FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
+                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
             }
         }
     }
@@ -468,6 +520,27 @@ public class APIController : MonoBehaviour
             FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
         }
     }
+
+    public void AdFrndFollowingFetch(){
+        foreach (Transform item in FeedUIController.Instance.adFrndFollowingListContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        APIManager.Instance.SetAdFrndFollowing();
+    }
+
+    public void SpwanAdFrndFollowing(){ 
+        for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
+        {
+            if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+            {
+                GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i],false);
+                followingObject.GetComponent<Button>().enabled= false;
+            }
+        }
+    }
+
     #endregion
 
     #region Chat Module Reference................................................................................
