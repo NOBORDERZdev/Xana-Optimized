@@ -164,7 +164,7 @@ public class FriendAvatarController : MonoBehaviour
 
     public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
-      Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+      //Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
         //while (!XanaConstants.isAddressableCatalogDownload)
         //{
         //    await Task.Yield();
