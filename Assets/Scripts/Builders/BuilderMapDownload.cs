@@ -86,8 +86,10 @@ public class BuilderMapDownload : MonoBehaviour
     IEnumerator FetchUserMapFromServer(int _mapId, string userToken)
     {
         string _url = ConstantsGod.API_BASEURL + ConstantsGod.BUILDERGETSINGLEWORLDBYID + _mapId;
+        //Debug.LogError("URL ==> " + _url);
         using (UnityWebRequest www = UnityWebRequest.Get(_url))
         {
+            //Debug.LogError("UserToken ==> " + userToken);
             www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
             while (!www.isDone)
@@ -195,7 +197,8 @@ public class BuilderMapDownload : MonoBehaviour
         {
             foreach (GameObject prefab in GamificationComponentData.instance.multiplayerComponentsObject)
             {
-                pool.ResourceCache.Add(prefab.name, prefab);
+                if (!pool.ResourceCache.ContainsKey(prefab.name))
+                    pool.ResourceCache.Add(prefab.name, prefab);
             }
         }
     }

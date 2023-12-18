@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1956891594}
   m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -358,7 +358,6 @@ MonoBehaviour:
   aiPPVolumeProfile: {fileID: 11400000, guid: 313c192bc6b244e6f871ec28dc3ba0d6, type: 2}
   withMultiplayer: 0
   orbitronFont: {fileID: 11400000, guid: 10b30e17fde3c449a94e3fea1bec4fc1, type: 2}
-  hiraginoFont: {fileID: 11400000, guid: a8139906170d44873ad5c167d2bd394e, type: 2}
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
@@ -437,7 +436,7 @@ ReflectionProbe:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 532676407
   m_IntensityMultiplier: 1
   m_BlendDistance: 1
   m_HDR: 1
@@ -622,6 +621,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 795381228416995604, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680463021435520345, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965747545503586478, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7965747545624217528, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
       propertyPath: m_Name
       value: Plane_Player
@@ -702,7 +713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &920890880
 Transform:
   m_ObjectHideFlags: 0
@@ -2443,10 +2454,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5863899272732676176, guid: 230541453524e456793384e55666fbee, type: 3}
-      propertyPath: sceneDirectionalLightBind
-      value: 
-      objectReference: {fileID: 1956891592}
     - target: {fileID: 9045005784315193013, guid: 230541453524e456793384e55666fbee, type: 3}
       propertyPath: m_Name
       value: PlayerHeadKey
