@@ -37,6 +37,7 @@ public class WorldCanvasCamera : MonoBehaviour
         foreach (GameObject camObj in uiCamerasforBuilder)
         {
             camObj.SetActive(true);
+            camObj.GetComponent<Camera>().farClipPlane = 12f;
         }
     }
 
