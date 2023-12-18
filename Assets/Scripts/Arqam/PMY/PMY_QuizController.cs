@@ -8,426 +8,428 @@ using System.Globalization;
 using UnityEngine.Events;
 
 
-
-public class PMY_QuizController : MonoBehaviour
+namespace PMY
 {
-    public string quizJson;
-    //public GameObject quizComponentUI;
-    public Button nextButton;
-    public GameObject quizParentReference;
-    public GameObject scoreCanvas;
-    public Button[] options = new Button[4];
-    public Sprite wrongImage;
-    public Sprite correctImage;
-    public GameObject[] correctWrongImageObjects;
-    public bool isDissapearing = false;
-    public TMP_Text numberOfQuestions;
-    public TMP_Text quizButtonTextInformation;
-    public TMP_Text correctText;
-    public TMP_Text wrongText;
-    public TMP_Text scorePercentage;
-    [Space(5)]
-    public UnityEvent passFirstQuiz;
-    public UnityEvent passSecondQuiz;
-
-    [Tooltip("Quiz data fetch from server")]
-    public QuizComponentData quizComponentData = new();
-    private TMP_Text nextButtonText;
-    string confirm = "Confirm";
-    string result = "Result";
-    string next = "Next";
-    int questionIndex;
-    int numOfQuestions;
-    int correct, wrong;
-    int currentAnswer;
-    readonly int inputFieldsPerQuestion = 5; //one question and four options
-    bool isOptionSelected = false;
-    bool isFirstQuestion = true;
-    bool isPassFirstQuiz = false;
-    Outline currentOutline;
-
-
-    private void OnEnable()
+    public class PMY_QuizController : MonoBehaviour
     {
-        quizComponentData = JsonUtility.FromJson<QuizComponentData>(quizJson);
-        EnableQuizComponentUI(quizComponentData);
-    }
+        public string quizJson;
+        //public GameObject quizComponentUI;
+        public Button nextButton;
+        public GameObject quizParentReference;
+        public GameObject scoreCanvas;
+        public Button[] options = new Button[4];
+        public Sprite wrongImage;
+        public Sprite correctImage;
+        public GameObject[] correctWrongImageObjects;
+        public bool isDissapearing = false;
+        public TMP_Text numberOfQuestions;
+        public TMP_Text quizButtonTextInformation;
+        public TMP_Text correctText;
+        public TMP_Text wrongText;
+        public TMP_Text scorePercentage;
+        [Space(5)]
+        public UnityEvent passFirstQuiz;
+        public UnityEvent passSecondQuiz;
 
-    void EnableQuizComponentUI(QuizComponentData quizComponentData)
-    {
-        confirm = "Confirm";
-        result = "Result";
-        next = "Next";
-        //quizComponentUI.SetActive(true);
-        StartQuiz(quizComponentData);
-    }
+        [Tooltip("Quiz data fetch from server")]
+        public QuizComponentData quizComponentData = new();
+        private TMP_Text nextButtonText;
+        string confirm = "Confirm";
+        string result = "Result";
+        string next = "Next";
+        int questionIndex;
+        int numOfQuestions;
+        int correct, wrong;
+        int currentAnswer;
+        readonly int inputFieldsPerQuestion = 5; //one question and four options
+        bool isOptionSelected = false;
+        bool isFirstQuestion = true;
+        bool isPassFirstQuiz = false;
+        Outline currentOutline;
 
-    public void StartQuiz(QuizComponentData data)
-    {
-        for (int i = 0; i < options.Length; i++)
-            options[i].onClick.RemoveAllListeners();
 
-        nextButton.onClick.RemoveAllListeners();
-        nextButton.onClick.AddListener(delegate { DisplayNextQuestion(); });
-        for (int i = 0; i < options.Length; i++)
+        private void OnEnable()
         {
-            int c = i;
-            options[c].onClick.AddListener(delegate { OnSelectOption(c); });
-            options[c].GetComponent<Outline>().enabled = false;
-            correctWrongImageObjects[c].SetActive(false);
+            quizComponentData = JsonUtility.FromJson<QuizComponentData>(quizJson);
+            EnableQuizComponentUI(quizComponentData);
         }
 
-        this.quizComponentData = null;
-        quizParentReference.SetActive(false);
-        this.quizComponentData = data;
-
-        SetInitialValues();
-
-        if (scoreCanvas.activeInHierarchy)
-            scoreCanvas.SetActive(false);
-
-        DisplayNextQuestion();
-        quizParentReference.SetActive(true);
-    }
-
-    private void SetInitialValues()
-    {
-        numOfQuestions = quizComponentData.answers.Count;
-
-        questionIndex = 0;
-        correct = 0;
-        wrong = 0;
-
-        nextButtonText = nextButton.GetComponentInChildren<TMP_Text>();
-        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-        nextButtonText.text = confirm;
-
-        isFirstQuestion = true;
-        isOptionSelected = false;
-    }
-
-    private void CheckAnswer()
-    {
-        if (quizComponentData.answers[questionIndex] == currentAnswer)
-            UpdateQuizData(0);
-        else
+        void EnableQuizComponentUI(QuizComponentData quizComponentData)
         {
-            currentOutline.enabled = false;
-            UpdateQuizData(1);
+            confirm = "Confirm";
+            result = "Result";
+            next = "Next";
+            //quizComponentUI.SetActive(true);
+            StartQuiz(quizComponentData);
         }
 
-        questionIndex += 1;
-        next = TextLocalization.GetLocaliseTextByKey("Next");
-        result = TextLocalization.GetLocaliseTextByKey("Result");
-
-        nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
-        SetButtonInteractability(true, false);
-    }
-
-    void UpdateQuizData(int option)
-    {
-        string colorString = "";
-        Sprite image = correctImage;
-
-        //0 if the answer is correct, 1 if wrong, 2 is for selecting only (answer not yet confirmed)
-        switch (option)
+        public void StartQuiz(QuizComponentData data)
         {
-            case 0:
-                correct++;
-                image = correctImage;
-                if (ReferrencesForDynamicMuseum.instance)
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+            for (int i = 0; i < options.Length; i++)
+                options[i].onClick.RemoveAllListeners();
 
-                colorString = "#36C34E";
-                break;
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(delegate { DisplayNextQuestion(); });
+            for (int i = 0; i < options.Length; i++)
+            {
+                int c = i;
+                options[c].onClick.AddListener(delegate { OnSelectOption(c); });
+                options[c].GetComponent<Outline>().enabled = false;
+                correctWrongImageObjects[c].SetActive(false);
+            }
 
-            case 1:
-                wrong++;
-                image = wrongImage;
-                if (ReferrencesForDynamicMuseum.instance)
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+            this.quizComponentData = null;
+            quizParentReference.SetActive(false);
+            this.quizComponentData = data;
 
-                break;
+            SetInitialValues();
 
-            case 2:
-                colorString = "#008FFF";
-                break;
+            if (scoreCanvas.activeInHierarchy)
+                scoreCanvas.SetActive(false);
+
+            DisplayNextQuestion();
+            quizParentReference.SetActive(true);
         }
 
-        if (option == 0 || option == 1)
+        private void SetInitialValues()
         {
-            correctWrongImageObjects[currentAnswer].SetActive(true);
+            numOfQuestions = quizComponentData.answers.Count;
+
+            questionIndex = 0;
+            correct = 0;
+            wrong = 0;
+
+            nextButtonText = nextButton.GetComponentInChildren<TMP_Text>();
+            confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+            nextButtonText.text = confirm;
+
+            isFirstQuestion = true;
+            isOptionSelected = false;
         }
 
-        correctWrongImageObjects[currentAnswer].GetComponent<Image>().sprite = image;
-
-        Outline thisButtonOutine = options[currentAnswer].GetComponent<Outline>();
-
-        if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+        private void CheckAnswer()
         {
-            thisButtonOutine.effectColor = color;
+            if (quizComponentData.answers[questionIndex] == currentAnswer)
+                UpdateQuizData(0);
+            else
+            {
+                currentOutline.enabled = false;
+                UpdateQuizData(1);
+            }
+
+            questionIndex += 1;
+            next = TextLocalization.GetLocaliseTextByKey("Next");
+            result = TextLocalization.GetLocaliseTextByKey("Result");
+
+            nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
+            SetButtonInteractability(true, false);
         }
 
-        if (option == 0 || option == 2)
+        void UpdateQuizData(int option)
         {
+            string colorString = "";
+            Sprite image = correctImage;
+
+            //0 if the answer is correct, 1 if wrong, 2 is for selecting only (answer not yet confirmed)
+            switch (option)
+            {
+                case 0:
+                    correct++;
+                    image = correctImage;
+                    if (ReferrencesForDynamicMuseum.instance)
+                        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+
+                    colorString = "#36C34E";
+                    break;
+
+                case 1:
+                    wrong++;
+                    image = wrongImage;
+                    if (ReferrencesForDynamicMuseum.instance)
+                        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+
+                    break;
+
+                case 2:
+                    colorString = "#008FFF";
+                    break;
+            }
+
+            if (option == 0 || option == 1)
+            {
+                correctWrongImageObjects[currentAnswer].SetActive(true);
+            }
+
+            correctWrongImageObjects[currentAnswer].GetComponent<Image>().sprite = image;
+
+            Outline thisButtonOutine = options[currentAnswer].GetComponent<Outline>();
+
+            if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+            {
+                thisButtonOutine.effectColor = color;
+            }
+
+            if (option == 0 || option == 2)
+            {
+                thisButtonOutine.enabled = true;
+                currentOutline = thisButtonOutine;
+            }
+
+            if (option == 1)
+            {
+                WrongAnswerUIAdjustments(correctImage, "#36C34E");
+            }
+        }
+
+        private void WrongAnswerUIAdjustments(Sprite image, string colorString)
+        {
+            correctWrongImageObjects[quizComponentData.answers[questionIndex]].SetActive(true);
+            correctWrongImageObjects[quizComponentData.answers[questionIndex]].GetComponent<Image>().sprite = image;
+
+            Outline thisButtonOutine = options[quizComponentData.answers[questionIndex]].GetComponent<Outline>();
+
+            if (ColorUtility.TryParseHtmlString(colorString, out Color color))
+            {
+                thisButtonOutine.effectColor = color;
+            }
+
             thisButtonOutine.enabled = true;
             currentOutline = thisButtonOutine;
         }
 
-        if (option == 1)
+        private void SetButtonInteractability(bool isOptions, bool isInteractable)
         {
-            WrongAnswerUIAdjustments(correctImage, "#36C34E");
-        }
-    }
-
-    private void WrongAnswerUIAdjustments(Sprite image, string colorString)
-    {
-        correctWrongImageObjects[quizComponentData.answers[questionIndex]].SetActive(true);
-        correctWrongImageObjects[quizComponentData.answers[questionIndex]].GetComponent<Image>().sprite = image;
-
-        Outline thisButtonOutine = options[quizComponentData.answers[questionIndex]].GetComponent<Outline>();
-
-        if (ColorUtility.TryParseHtmlString(colorString, out Color color))
-        {
-            thisButtonOutine.effectColor = color;
-        }
-
-        thisButtonOutine.enabled = true;
-        currentOutline = thisButtonOutine;
-    }
-
-    private void SetButtonInteractability(bool isOptions, bool isInteractable)
-    {
-        if (isOptions)
-        {
-            for (int i = 0; i < options.Length; i++)
+            if (isOptions)
             {
-                options[i].transition = Selectable.Transition.None;
-                options[i].interactable = isInteractable;
-                if (isInteractable)
+                for (int i = 0; i < options.Length; i++)
                 {
-                    options[i].GetComponent<Outline>().enabled = false;
-                    correctWrongImageObjects[i].SetActive(false);
+                    options[i].transition = Selectable.Transition.None;
+                    options[i].interactable = isInteractable;
+                    if (isInteractable)
+                    {
+                        options[i].GetComponent<Outline>().enabled = false;
+                        correctWrongImageObjects[i].SetActive(false);
+                    }
                 }
             }
         }
-    }
 
-    void OnSelectOption(int answer)
-    {
-        currentAnswer = answer;
-        SetButtonInteractability(true, true);
-        UpdateQuizData(2);
-
-        if (!isOptionSelected)
+        void OnSelectOption(int answer)
         {
-            isOptionSelected = true;
-            confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-            //Debug.Log("TextLocalization==>" + confirm);
+            currentAnswer = answer;
+            SetButtonInteractability(true, true);
+            UpdateQuizData(2);
 
-            nextButtonText.text = confirm;
-        }
-    }
-
-    public void QuizResultPopupClose()
-    {
-        CheckScorePercentage();
-    }
-
-    public void CheckScorePercentage()
-    {
-        StartCoroutine(CheckScorePercentageRoutine());
-    }
-
-    IEnumerator CheckScorePercentageRoutine()
-    {
-        float division = (((float)correct / numOfQuestions) * 100);
-
-        if (division >= quizComponentData.correctAnswerRate)
-        {
-            isDissapearing = true;
-            yield return new WaitForSeconds(0);
-            isDissapearing = false;
-
-            if (!isPassFirstQuiz)
-            {
-                isPassFirstQuiz = true;
-                passFirstQuiz.Invoke();
-            }
-            else
-                passSecondQuiz.Invoke();
-            ResetCredentials();
-        }
-        else
-        {
-            if (scoreCanvas.activeInHierarchy)
-                scoreCanvas.SetActive(false);
-            quizParentReference.SetActive(true);
-            ResetParams();
-            ShowQuestion();
-        }
-        Debug.Log("<color=red>*****_____Quiz End_____*****</color>");
-    }
-
-    void ResetCredentials()
-    {
-        ResetParams();
-        DisableQuizComponentUI();
-    }
-
-    private void ResetParams()
-    {
-        correct = 0;
-        wrong = 0;
-        questionIndex = 0;
-    }
-    internal void DisableQuizComponentUI()
-    {
-        //quizComponentUI.SetActive(false);
-        this.gameObject.SetActive(false);
-    }
-
-    private void DisplayNextQuestion()
-    {
-        if (nextButtonText.text == confirm)
-        {
             if (!isOptionSelected)
             {
-                if (isFirstQuestion)
-                    ShowQuestion();
-                else
-                    Debug.Log("Please Select an Option First");
+                isOptionSelected = true;
+                confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+                //Debug.Log("TextLocalization==>" + confirm);
 
-                isFirstQuestion = false;
+                nextButtonText.text = confirm;
+            }
+        }
+
+        public void QuizResultPopupClose()
+        {
+            CheckScorePercentage();
+        }
+
+        public void CheckScorePercentage()
+        {
+            StartCoroutine(CheckScorePercentageRoutine());
+        }
+
+        IEnumerator CheckScorePercentageRoutine()
+        {
+            float division = (((float)correct / numOfQuestions) * 100);
+
+            if (division >= quizComponentData.correctAnswerRate)
+            {
+                isDissapearing = true;
+                yield return new WaitForSeconds(0);
+                isDissapearing = false;
+
+                if (!isPassFirstQuiz)
+                {
+                    isPassFirstQuiz = true;
+                    passFirstQuiz.Invoke();
+                }
+                else
+                    passSecondQuiz.Invoke();
+                ResetCredentials();
             }
             else
             {
-                CheckAnswer();
+                if (scoreCanvas.activeInHierarchy)
+                    scoreCanvas.SetActive(false);
+                quizParentReference.SetActive(true);
+                ResetParams();
+                ShowQuestion();
             }
-
-            return;
+            Debug.Log("<color=red>*****_____Quiz End_____*****</color>");
         }
 
-        if (nextButtonText.text == next)
+        void ResetCredentials()
         {
-            ShowQuestion();
-            return;
+            ResetParams();
+            DisableQuizComponentUI();
         }
 
-        if (nextButtonText.text == result)
+        private void ResetParams()
         {
-            quizParentReference.SetActive(false);
-            ShowScoreCanvasRoutine();
+            correct = 0;
+            wrong = 0;
+            questionIndex = 0;
         }
-    }
-
-    void ShowQuestion()
-    {
-        SetButtonInteractability(true, true);
-        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-        nextButtonText.text = confirm;
-
-        if (questionIndex < numOfQuestions)
+        internal void DisableQuizComponentUI()
         {
-            string s = TextLocalization.GetLocaliseTextByKey("Question");
-            string s2 = "/";
-            string s3 = TextLocalization.GetLocaliseTextByKey("Q");
+            //quizComponentUI.SetActive(false);
+            this.gameObject.SetActive(false);
+        }
 
-            numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
-            quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
-
-            for (int i = 1; i < inputFieldsPerQuestion; i++)
+        private void DisplayNextQuestion()
+        {
+            if (nextButtonText.text == confirm)
             {
-                string sb = quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
-                options[i - 1].GetComponentInChildren<TMP_Text>().text =
-                    sb;
+                if (!isOptionSelected)
+                {
+                    if (isFirstQuestion)
+                        ShowQuestion();
+                    else
+                        Debug.Log("Please Select an Option First");
 
-                if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
-                    options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 11.3f;
+                    isFirstQuestion = false;
+                }
                 else
-                    options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 12;
+                {
+                    CheckAnswer();
+                }
+
+                return;
             }
-        }
 
-        isOptionSelected = false;
-    }
-
-    private void ShowScoreCanvasRoutine()
-    {
-        scoreCanvas.SetActive(true);
-        string s = TextLocalization.GetLocaliseTextByKey("Correct");
-        string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
-        string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
-        string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
-
-        correctText.text = s + ": " + correct;
-        wrongText.text = s2 + ": " + wrong;
-        float percentage = (((float)correct / numOfQuestions) * 100);
-        scorePercentage.text = s3 + " " + percentage.ToString("0.#") + "%";
-
-        isFirstQuestion = true;
-        isOptionSelected = false;
-        nextButtonText.text = s4;
-    }
-
-    bool ContainsJapaneseText(string input)
-    {
-        foreach (char c in input)
-        {
-            // Check if the character belongs to the Unicode category of Japanese scripts
-            UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
-            if (category == UnicodeCategory.OtherLetter || category == UnicodeCategory.LetterNumber)
+            if (nextButtonText.text == next)
             {
-                return true;
+                ShowQuestion();
+                return;
+            }
+
+            if (nextButtonText.text == result)
+            {
+                quizParentReference.SetActive(false);
+                ShowScoreCanvasRoutine();
             }
         }
-        return false;
-    }
 
-
-    [System.Serializable]
-    public class QuizComponentData
-    {
-        public bool IsActive;
-        public bool isOptionSelected;
-        public List<TMPro.TMP_InputField> rewritingInputList;
-        public List<string> rewritingStringList;
-        public List<int> answers;
-        public List<int> charLimit;
-        public float correctAnswerRate;
-
-        public QuizComponentData()
+        void ShowQuestion()
         {
-            IsActive = false;
+            SetButtonInteractability(true, true);
+            confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+            nextButtonText.text = confirm;
+
+            if (questionIndex < numOfQuestions)
+            {
+                string s = TextLocalization.GetLocaliseTextByKey("Question");
+                string s2 = "/";
+                string s3 = TextLocalization.GetLocaliseTextByKey("Q");
+
+                numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
+                quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
+
+                for (int i = 1; i < inputFieldsPerQuestion; i++)
+                {
+                    string sb = quizComponentData.rewritingStringList[i + (questionIndex * inputFieldsPerQuestion)];
+                    options[i - 1].GetComponentInChildren<TMP_Text>().text =
+                        sb;
+
+                    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
+                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 11.3f;
+                    else
+                        options[i - 1].GetComponentInChildren<TMP_Text>().fontSize = 12;
+                }
+            }
+
             isOptionSelected = false;
-            rewritingInputList = new List<TMPro.TMP_InputField>();
-            rewritingStringList = new List<string>();
-            answers = new List<int>();
-            charLimit = new List<int>();
-            correctAnswerRate = 100;
+        }
 
-        }
-        public void Reset()
+        private void ShowScoreCanvasRoutine()
         {
-            IsActive = false;
+            scoreCanvas.SetActive(true);
+            string s = TextLocalization.GetLocaliseTextByKey("Correct");
+            string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
+            string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
+            string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
+
+            correctText.text = s + ": " + correct;
+            wrongText.text = s2 + ": " + wrong;
+            float percentage = (((float)correct / numOfQuestions) * 100);
+            scorePercentage.text = s3 + " " + percentage.ToString("0.#") + "%";
+
+            isFirstQuestion = true;
             isOptionSelected = false;
-            rewritingInputList = new List<TMPro.TMP_InputField>();
-            rewritingStringList = new List<string>();
-            answers = new List<int>();
-            charLimit = new List<int>();
-            correctAnswerRate = 100;
+            nextButtonText.text = s4;
         }
-        public QuizComponentData(QuizComponentData data)
+
+        bool ContainsJapaneseText(string input)
         {
-            IsActive = data.IsActive;
-            isOptionSelected = data.isOptionSelected;
-            rewritingInputList = data.rewritingInputList;
-            rewritingStringList = data.rewritingStringList;
-            answers = data.answers;
-            charLimit = data.charLimit;
-            correctAnswerRate = data.correctAnswerRate;
+            foreach (char c in input)
+            {
+                // Check if the character belongs to the Unicode category of Japanese scripts
+                UnicodeCategory category = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (category == UnicodeCategory.OtherLetter || category == UnicodeCategory.LetterNumber)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        [System.Serializable]
+        public class QuizComponentData
+        {
+            public bool IsActive;
+            public bool isOptionSelected;
+            public List<TMPro.TMP_InputField> rewritingInputList;
+            public List<string> rewritingStringList;
+            public List<int> answers;
+            public List<int> charLimit;
+            public float correctAnswerRate;
+
+            public QuizComponentData()
+            {
+                IsActive = false;
+                isOptionSelected = false;
+                rewritingInputList = new List<TMPro.TMP_InputField>();
+                rewritingStringList = new List<string>();
+                answers = new List<int>();
+                charLimit = new List<int>();
+                correctAnswerRate = 100;
+
+            }
+            public void Reset()
+            {
+                IsActive = false;
+                isOptionSelected = false;
+                rewritingInputList = new List<TMPro.TMP_InputField>();
+                rewritingStringList = new List<string>();
+                answers = new List<int>();
+                charLimit = new List<int>();
+                correctAnswerRate = 100;
+            }
+            public QuizComponentData(QuizComponentData data)
+            {
+                IsActive = data.IsActive;
+                isOptionSelected = data.isOptionSelected;
+                rewritingInputList = data.rewritingInputList;
+                rewritingStringList = data.rewritingStringList;
+                answers = data.answers;
+                charLimit = data.charLimit;
+                correctAnswerRate = data.correctAnswerRate;
+            }
+
         }
 
     }
-
 }
