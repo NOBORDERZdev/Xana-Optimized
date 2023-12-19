@@ -75,7 +75,8 @@ public class SoundManagerSettings : MonoBehaviour
         //PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
         if (PlayerPrefs.GetInt("DefaultSensivity") == 0)
         {
-            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+            PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
     }
@@ -117,10 +118,17 @@ public class SoundManagerSettings : MonoBehaviour
         if (videoSource == null)
             videoSource = SoundManager.Instance.videoPlayerSource;
         YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
+        YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
         if (Videoplayer != null)
         {
             videoSource = Videoplayer.videoPlayerAudioSource;
             liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
+            Debug.Log("VideoSource Set ");
+        }
+        else if (Videoplayer2 != null)
+        {
+            //videoSource = Videoplayer.videoPlayerAudioSource;
+            liveVideoSource = Videoplayer2.mPlayer;
             Debug.Log("VideoSource Set ");
         }
         else
@@ -164,7 +172,7 @@ public class SoundManagerSettings : MonoBehaviour
         totalVolumeSlider.onValueChanged.AddListener((float vol) =>
         {
            
-            //SetBgmVolume(vol);
+            SetBgmVolume(vol);
             SetVideoVolume(vol);
         });
         bgmSlider.onValueChanged.AddListener((float vol) =>
@@ -246,7 +254,7 @@ public class SoundManagerSettings : MonoBehaviour
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
-            SetMicVolume(totalVolumeSliderPotrait.value);
+            SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
             SetEffectsVolume(totalVolumeSliderPotrait.value);
            // bgmSliderPotariat.value = videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
             SetBgmVolume(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -278,6 +286,8 @@ public class SoundManagerSettings : MonoBehaviour
                 SetAudioSourceSliderValLive(liveVideoSource, Vol);
             }
         }
+
+        BuilderEventManager.BGMVolume?.Invoke(Vol);
     }
     public void SetVideoVolume(float Vol)
     {
@@ -336,20 +346,20 @@ public class SoundManagerSettings : MonoBehaviour
             }
         }
     }
-    public void SetMicVolume(float vol)
+    public void SetMicVolume(float vol) //Opponent Player Mic Volume Setting Using UserSldier&UserSliderPotrait
     {
-        //PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, vol);
-        //Debug.Log("Volume SetMicVolume===" + vol);
-        //Debug.Log("Volume SetMicVolume 1 ===" + PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
-       
-            foreach (var gameobject in Launcher.instance.playerobjects)
+        PlayerPrefs.SetFloat(ConstantsGod.MIC, vol);
+        UserSlider.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
+        UserSliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
+
+        foreach (var gameobject in Launcher.instance.playerobjects)
+        {
+            if (!gameobject.GetComponent<PhotonView>().IsMine) 
             {
-                if (!gameobject.GetComponent<PhotonView>().IsMine)
-                {
-                    gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value; 
-                }
+                gameobject.GetComponent<SpeakerRefrence>().RangeVolSpeaker.volume = UserSlider.value;
             }
-       
+        }
+
         //else
         //{
         //    foreach (var gameobject in Launcher.instance.playerobjects)

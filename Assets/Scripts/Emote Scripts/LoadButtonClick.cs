@@ -82,55 +82,124 @@ public class LoadButtonClick : MonoBehaviour
                 StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
         }
     }
-
-    public void OnButtonClick()
+    public bool danceAnim;
+    public void OnButtonClick() //add by kamran
     {
-        //if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationPlay.Instance.lastAnimClickButton)
-        if (EmoteAnimationPlay.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationPlay.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown"))
-            return;
-        else if (EmoteAnimationPlay.Instance.lastAnimClickButton != null)
-            EmoteAnimationPlay.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
-        //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
-        //foreach (Transform obj in ContentPanel.transform)
-        //{
-        //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-        //}
-        highlighter.SetActive(true);
-        EmoteAnimationPlay.Instance.lastAnimClickButton = this.gameObject;
-        if (GamePlayButtonEvents.inst != null && GamePlayButtonEvents.inst.selectionPanelOpen)
+        if (PlayerControllerNew.isJoystickDragging == true)
         {
-            OnSaveDataOnButton();
             return;
         }
-
-        if (EmoteAnimationPlay.Instance.alreadyRuning)
+        if (EmoteAnimationPlay.Instance.currentAnimationTab == "Sit & lying")
         {
-            //LoadFromFile.animClick = true;
-            EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
-            EmoteAnimationPlay.remoteUrlAnimationName = animationName;
-            //  PlayerPrefs.Save();
-            //prefabObj.transform.GetChild(3).gameObject.SetActive(true);
-            EmoteAnimationPlay.Instance.Load(objectUrl, prefabObj);
-
+            Debug.Log("this is sit and laying animation tab");
+            //if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationPlay.Instance.lastAnimClickButton)
+            if (EmoteAnimationPlay.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationPlay.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown"))
+                return;
+            else if (EmoteAnimationPlay.Instance.lastAnimClickButton != null)
+                EmoteAnimationPlay.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
+            Debug.Log("OnClick button is :: ");
+            //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
             //foreach (Transform obj in ContentPanel.transform)
             //{
-
             //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
-            //    // }
-
             //}
-            //highlighter.SetActive(true);
-        }
-        try
-        {
-            LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+            highlighter.SetActive(true);
+            EmoteAnimationPlay.Instance.lastAnimClickButton = this.gameObject;
+            if (GamePlayButtonEvents.inst != null && GamePlayButtonEvents.inst.selectionPanelOpen)
+            {
+                OnSaveDataOnButton();
+                return;
+            }
 
-        }
-        catch (Exception e)
-        {
+            if (EmoteAnimationPlay.Instance.alreadyRuning)
+            {
+                //LoadFromFile.animClick = true;
+                EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
+                EmoteAnimationPlay.remoteUrlAnimationName = animationName;
+                //  PlayerPrefs.Save();
+                //prefabObj.transform.GetChild(3).gameObject.SetActive(true);
+                EmoteAnimationPlay.Instance.Load(objectUrl, prefabObj);
 
+                //foreach (Transform obj in ContentPanel.transform)
+                //{
+
+                //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //    // }
+
+                //}
+                //highlighter.SetActive(true);
+            }
+            try
+            {
+                LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+
+            }
+            catch (Exception e)
+            {
+
+            }
         }
-        // StartCoroutine(ButtonClick());
+        else
+        {
+            Debug.Log("this is dance animation tab");
+
+            if (danceAnim)
+            {
+                Debug.Log("this is sit and laying animation tab");
+                //if (EmoteAnimationPlay.Instance.animatorremote != null && EmoteAnimationPlay.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationPlay.Instance.lastAnimClickButton)
+                if (EmoteAnimationPlay.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationPlay.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown") && !this.gameObject.name.Contains("Dance") && !this.gameObject.name.Contains("dance"))
+                    return;
+                else if (EmoteAnimationPlay.Instance.lastAnimClickButton != null)
+                    EmoteAnimationPlay.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
+                Debug.Log("OnClick button is :: ");
+                //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
+                //foreach (Transform obj in ContentPanel.transform)
+                //{
+                //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //}
+                highlighter.SetActive(true);
+                EmoteAnimationPlay.Instance.lastAnimClickButton = this.gameObject;
+                if (GamePlayButtonEvents.inst != null && GamePlayButtonEvents.inst.selectionPanelOpen)
+                {
+                    OnSaveDataOnButton();
+                    return;
+                }
+
+                if (EmoteAnimationPlay.Instance.alreadyRuning)
+                {
+                    //LoadFromFile.animClick = true;
+                    EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
+                    EmoteAnimationPlay.remoteUrlAnimationName = animationName;
+                    //  PlayerPrefs.Save();
+                    //prefabObj.transform.GetChild(3).gameObject.SetActive(true);
+                    EmoteAnimationPlay.Instance.Load(objectUrl, prefabObj);
+
+                    //foreach (Transform obj in ContentPanel.transform)
+                    //{
+
+                    //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                    //    // }
+
+                    //}
+                    //highlighter.SetActive(true);
+                }
+                try
+                {
+                    LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+
+                }
+                catch (Exception e)
+                {
+
+                }
+                danceAnim = false;
+            }
+            else
+            {
+                EmoteAnimationPlay.Instance.StopAnimation();
+                danceAnim = true;
+            }
+        }
     }
 
     public void OnSaveDataOnButton()

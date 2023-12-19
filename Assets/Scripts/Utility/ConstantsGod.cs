@@ -117,6 +117,9 @@ public class ConstantsGod
 
     // Xana Lobby WOrlds
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
+    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";  
+
+    public static string GETXANAOFFICIALWORLDBYID = "";
 
     #endregion
 
@@ -201,7 +204,7 @@ public class ConstantsGod
     #endregion
 
     #region Analatic Api's
-   
+
     public static string API_GetWorldId = "/analytical/enter-xana-world";
     public static string API_GetWorldId_Guest = "/analytical/guest-enter-xana-world";
 
@@ -219,7 +222,11 @@ public class ConstantsGod
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
     public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
-    public static string SearchWorldAPI = "/item/search-worlds";
-    public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag";  //:tag/:pageNumber/:pageSize
+    public static string SearchWorldAPI = "/item/search-worlds/";
+    public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
+    #endregion
+
+    #region Jj World Api's
+    public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
 }

@@ -7,20 +7,14 @@ public class TagPrefabInfo : MonoBehaviour
 
     public TextMeshProUGUI tagName;
     public TextMeshProUGUI tagNameHighlighter;
-    public GameObject descriptionPanel;
     public GameObject hightLighter;
+    [HideInInspector]
+    public GameObject descriptionPanel;
 
     public void ClickOnTag()
     {
-        hightLighter.SetActive(true);
         WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
-        StartCoroutine(DisableHighlighter());
+        WorldSearchManager.SearchWorld?.Invoke(tagName.text);
         descriptionPanel.SetActive(false);
-    }
-
-    IEnumerator DisableHighlighter()
-    {
-        yield return new WaitForSeconds(1);
-        hightLighter.SetActive(false);
     }
 }

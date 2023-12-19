@@ -48,6 +48,8 @@ public class NinjaComponent : ItemComponent
 
     private void StartComponent()
     {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Ninja);
+
         pc.Ninja_Throw(true);
         pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);
         pc.movementSpeed = ninjaComponentData.ninjaSpeedVar;
@@ -62,8 +64,11 @@ public class NinjaComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()

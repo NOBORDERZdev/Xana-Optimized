@@ -10,7 +10,7 @@ public class TermsAndConditions : MonoBehaviour
     public Toggle allAgreeToggle;
     public Toggle termsAndPolicyToggle;
     public Toggle privacyPolicyToggle;
-
+    public static TermsAndConditions instance;
     public Button agreeButton;
 
     private string privacyPolicyLink = "https://cdn.xana.net/xanaprod/privacy-policy/PRIVACYPOLICY-2.pdf";
@@ -74,6 +74,8 @@ public class TermsAndConditions : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
+        UserRegisterationManager.instance.welcomeScreen.SetActive(true);
+        UIManager.Instance.StartCoroutine(UIManager.Instance.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
     }
 

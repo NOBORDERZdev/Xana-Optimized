@@ -9272,7 +9272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5.965027, y: -1.0233994}
+  m_AnchoredPosition: {x: -5.965027, y: -1.023407}
   m_SizeDelta: {x: -11.9299, y: -2.0468}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &656179823
@@ -12118,6 +12118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b72c3b5739e04afc8b0df04ca69fd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ref_PlayerControllerNew: {fileID: 0}
   gamePlayUIParent: {fileID: 2734019585078237247}
   actionsContainer: {fileID: 4161355176556536759}
   actionToggleImg: {fileID: 7191887790607126008}
@@ -12131,6 +12132,12 @@ MonoBehaviour:
   jumpBtn: {fileID: 0}
   JJPortalPopup: {fileID: 8583794900848685379}
   currentPortalObject: {fileID: 0}
+  JJPortalPopupText: {fileID: 3394830635896419107}
+  JJPortalPopupTextData:
+  - Do you want to redirect to world?
+  - Do you want to redirect to Lobby?
+  - Do you want to redirect to Room?
+  - Do you want to redirect to Outside?
 --- !u!114 &3121479418151846205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12863,10 +12870,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8583794900848685379}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1440768809}
+        m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+        m_MethodName: ClosePortalPopup
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -35080,10 +35087,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8583794900848685379}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1440768809}
+        m_TargetAssemblyTypeName: CanvasButtonsHandler, Assembly-CSharp
+        m_MethodName: ClosePortalPopup
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -37578,7 +37585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 30.000214}
+  m_AnchoredPosition: {x: 0, y: 30.000244}
   m_SizeDelta: {x: 230, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6907531792610345426

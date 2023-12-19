@@ -22,7 +22,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     Transform mainPlayerParent;
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
-   
+
 
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
@@ -51,7 +51,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public PhotonVoiceView VoiceView;
 
     //Gautam added for changing the position of the name canvas for avatar changer
-    public Canvas nameCanvas;
+    internal Canvas nameCanvas;
 
     private void Awake()
     {
@@ -70,7 +70,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
         //    PhotonUserName.enabled = false;
         //}
-
+        nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
         if (XanaChatSystem.instance.UserName.Length > 12)
         {
             PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
@@ -87,6 +87,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
+            if (XanaConstants.xanaConstants.isBuilderScene)
+                GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
                 this.transform.parent = mainPlayerParent;
@@ -141,7 +143,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
             else
             {
-               // Debug.Log("Speaker in use false");
+                // Debug.Log("Speaker in use false");
                 VoiceImage.gameObject.SetActive(false);
                 IsSpeak = false;
             }
@@ -197,9 +199,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
 
         //sendDataReactionUrl(url);
-       
-            gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
-       
+
+        gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+
 
     }
     private void OnChangeText(string text)
@@ -346,29 +348,31 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataUserNAmeToggle(int UserNameContantToggle, int viewId)
     {
-        Debug.Log("ThisidToggle:" +UserNameContantToggle);
-        Debug.Log("ThisitOGGLEid:" +viewId);
-        NameToggle(UserNameContantToggle,viewId);
+        Debug.Log("ThisidToggle:" + UserNameContantToggle);
+        Debug.Log("ThisitOGGLEid:" + viewId);
+        NameToggle(UserNameContantToggle, viewId);
 
 
     }
-    public void NameToggle(int ToggleConstant,int id) {
-        if (gameObject.GetComponent<PhotonView>().ViewID == id) {
-            Debug.Log("USERNAME VALUE:"+ XanaConstants.xanaConstants.userName);
+    public void NameToggle(int ToggleConstant, int id)
+    {
+        if (gameObject.GetComponent<PhotonView>().ViewID == id)
+        {
+            Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
             if (ToggleConstant == 0)
             {
-                Debug.Log("Onbtn:"+ReferrencesForDynamicMuseum.instance.onBtnUsername);
+                Debug.Log("Onbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
 
             }
-                else 
-             {
-                Debug.Log("Offbtn:"+ReferrencesForDynamicMuseum.instance.onBtnUsername);
+            else
+            {
+                Debug.Log("Offbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);
                 PhotonUserName.enabled = false;
             }
         }
-        
-  }
+
+    }
 
 
     [PunRPC]
@@ -495,7 +499,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //LoadingManager.Instance.HideLoading();
         //LoadingHandler.Instance.HideLoading();
 
-        if (XanaConstants.xanaConstants.IsMuseum && FeedEventPrefab.m_EnvName.Contains("J & J WORLD_5"))
+        if (XanaConstants.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5"))
             go.SetActive(false);
         if (SoundManager.Instance)
         {

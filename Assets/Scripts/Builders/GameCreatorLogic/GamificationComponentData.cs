@@ -5,10 +5,11 @@ using System.Linq;
 using DG.Tweening;
 using Models;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviourPun
+public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 {
     public static GamificationComponentData instance;
 
@@ -16,13 +17,12 @@ public class GamificationComponentData : MonoBehaviourPun
     public BuildingDetect buildingDetect;
     public Volume postProcessVol;
     public RuntimeAnimatorController cameraBlurEffect;
-    public GameObject specialItemParticleEffect;
+    internal GameObject specialItemParticleEffect;
     public Material hologramMaterial;
     public Shader superMarioShader;
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    public GameObject[] FootSteps;
     internal PlayerControllerNew playerControllerNew;
     internal AvatarController avatarController;
     internal CharcterBodyParts charcterBodyParts;
@@ -30,11 +30,8 @@ public class GamificationComponentData : MonoBehaviourPun
 
     public Vector3 spawnPointPosition;
     public GameObject raycast;
-    public GameObject katanaPrefab;
-    public GameObject shurikenPrefab;
     public GameObject throwAimPrefab;
     public Material lineMaterial;
-    public Ball ThrowBall;
     public GameObject handBall;
 
     public GameObject helpParentReference;
@@ -46,24 +43,30 @@ public class GamificationComponentData : MonoBehaviourPun
     internal Vector3 Ninja_Throw_InitPosX;
     internal bool worldCameraEnable;
 
-    public Shader proceduralRingShader;
-    public Shader uberShader;
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
     bool isPotrait = false;
 
+    internal IComponentBehaviour activeComponent;
+
     internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
 
     public static Action WarpComponentLocationUpdate;
 
-    public List<GameObject> AvatarChangerModels;
+    //public List<GameObject> AvatarChangerModels;
+    public List<string> AvatarChangerModelNames;
 
     internal bool isNight;
     internal bool isBlindToogle;
+    internal bool isAvatarChanger;
+    internal bool isBlindfoldedFootPrinting;
     internal int previousSkyID;
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
+    internal List<XanaItem> multiplayerComponentsxanaItems = new List<XanaItem>();
+    internal List<GameObject> multiplayerComponentsObject = new List<GameObject>();
+    public List<string> multiplayerComponentsName = new List<string>();
 
     //AI Generated Skybox
     public Material aiSkyMaterial;
@@ -72,6 +75,16 @@ public class GamificationComponentData : MonoBehaviourPun
 
     //Gamification components with multipler
     public bool withMultiplayer = false;
+    internal GameObject DoorKeyObject;
+    internal int doorKeyCount = 0;
+
+    //Font
+    public TMPro.TMP_FontAsset orbitronFont;
+    internal TMPro.TMP_FontAsset hiraginoFont;
+    //public TMPro.TMP_FontAsset arialFont;
+
+    //Name canvas
+    internal Canvas nameCanvas;
 
     private void Awake()
     {
@@ -171,6 +184,7 @@ public class GamificationComponentData : MonoBehaviourPun
     }
     #endregion
 
+    #region WarpComponent location update
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -187,26 +201,26 @@ public class GamificationComponentData : MonoBehaviourPun
                 {
                     string startKey = data1.warpPortalStartKeyValue;
 
-                    if (startKey == data2.warpPortalEndKeyValue  && startKey!="")
+                    if (startKey == data2.warpPortalEndKeyValue && startKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        startPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
                     }
                 }
                 else
                 {
                     string endKey = data1.warpPortalEndKeyValue;
-                    if (endKey == data2.warpPortalStartKeyValue && endKey!="")
+                    if (endKey == data2.warpPortalStartKeyValue && endKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.extents.y + 2;
+                        startPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
                     }
                 }
@@ -227,7 +241,9 @@ public class GamificationComponentData : MonoBehaviourPun
         if (portalSystemEndPoint != null)
             portalSystemEndPoint.portalEndLocation = location;
     }
+    #endregion
 
+    #region Components for multiplayer
     //All components for multiplayer
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -316,6 +332,57 @@ public class GamificationComponentData : MonoBehaviourPun
             }
         }
     }
+
+    internal void SetMultiplayerComponentData(MultiplayerComponentData multiplayerComponentData)
+    {
+        //Debug.LogError(JsonUtility.ToJson(multiplayerComponentData));
+        var hash = new ExitGames.Client.Photon.Hashtable();
+
+        MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
+
+        // Multiplayer component data list
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
+        {
+            multiplayerComponentdatas = JsonUtility.FromJson<MultiplayerComponentDatas>(multiplayerComponentdatasObj.ToString());
+        }
+
+        multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
+        string json = JsonUtility.ToJson(multiplayerComponentdatas);
+        hash.Add("gamificationMultiplayerComponentDatas", json);
+        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+    }
+    #endregion
+
+    #region Photon Events
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        //throw new NotImplementedException();
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+        foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        {
+            if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+                xanaItem.SetData(xanaItem.itemData);
+        }
+    }
+    #endregion
 }
 
 [Serializable]

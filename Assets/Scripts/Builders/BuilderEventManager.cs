@@ -15,7 +15,13 @@ public static class BuilderEventManager
 
     public static Action<float, float> ApplyPlayerProperties;
 
+    public static Action AfterMapDataDownloaded;
+    public static Action<string> XanaMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
+
+    public static Action AfterWorldInstantiated;
+    public static Action AfterWorldOffcialWorldsInatantiated;
+
     public static Action ReSpawnPlayer;
 
     //Mesh Combiner
@@ -26,7 +32,7 @@ public static class BuilderEventManager
     //Gamification Module Events
 
     //Narration Component
-    public static Action<string, bool> OnNarrationCollisionEnter;
+    public static Action<string, bool, bool> OnNarrationCollisionEnter;
     public static Action OnNarrationCollisionExit;
 
     //Random Number Component
@@ -38,15 +44,20 @@ public static class BuilderEventManager
 
     //Timer Component
     public static Action<string, float> OnTimerTriggerEnter;
+    public static Action OnTimerLimitEnd;
 
     //Elapse Time Component
     public static Action<float, bool> OnElapseTimeCounterTriggerEnter;
+    public static Action elapsedEndTime;
 
     //CountDown Component
     public static Action<int, bool> OnTimerCountDownTriggerEnter;
 
     //Display Message Component
     public static Action<string, float, bool> OnDisplayMessageCollisionEnter;
+
+    //Door Key Component
+    public static Action<string> OnDoorKeyCollisionEnter;
 
     //Help Button Component
     public static Action<string, string, GameObject> OnHelpButtonCollisionEnter;
@@ -92,16 +103,22 @@ public static class BuilderEventManager
     public static Action<bool> StopAvatarChangeComponent;
 
     //ChangeNinja_ThrowUIPosition
-    public static Action<float,bool> ChangeNinja_ThrowUIPosition;
+    public static Action<float, bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
 
     //UI toggle
     public static Action<bool> UIToggle;
     public static Action<Constants.ItemComponentType> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
+    public static Action<bool> DisableAnimationsButtons;
 
     //Component Restriction
     public static Action<Constants.ItemComponentType> onComponentActivated;
     public static Action<IComponentBehaviour> AddItemComponent;
     public static Action RPCcallwhenPlayerJoin;
+
+    //BGM sound manager
+    public static Action<AudioPropertiesBGM> BGMDownloader;
+    public static Action BGMStart;
+    public static Action<float> BGMVolume;
 }

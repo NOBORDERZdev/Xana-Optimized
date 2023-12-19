@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Models;
 using Photon.Pun;
+using System;
 
 public class SituationChangerComponent : ItemComponent
 {
@@ -12,7 +13,10 @@ public class SituationChangerComponent : ItemComponent
     public Light[] _light;
     public float[] _lightsIntensity;
     private bool IsAgainTouchable = true;
-    float time;
+    float time, defaultTimer;
+
+    GameObject playerObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +33,7 @@ public class SituationChangerComponent : ItemComponent
         this.situationChangerComponentData = situationChangerComponentData;
         isActivated = true;
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
+        defaultTimer = this.situationChangerComponentData.Timer;
     }
 
     Coroutine situationCo;
@@ -36,11 +41,13 @@ public class SituationChangerComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            playerObject = _other.gameObject;
+
             if (!IsAgainTouchable) return;
 
             IsAgainTouchable = false;
 
-            if(GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
@@ -63,32 +70,73 @@ public class SituationChangerComponent : ItemComponent
     private void OnCollisionExit(Collision collision)
     {
         IsAgainTouchable = true;
+        playerObject = null;
     }
 
     #region BehaviourControl
     private void StartComponent()
     {
-        if (time == 0 && !situationChangerComponentData.isOff)
+        float timeDiff = 0;
+        if (playerObject != null)
         {
-            time = situationChangerComponentData.Timer;
-            situationCo = null;
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            }
         }
+        else
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
+            {
+                string situationChangerComponentstr = situationChangerComponent.ToString();
+                DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr);
+                DateTime currentDateTime = DateTime.UtcNow;
+
+                TimeSpan diff = currentDateTime - dateTimeRPC;
+                timeDiff = (diff.Minutes * 60) + diff.Seconds;
+                time = timeDiff;
+
+                if (time == 0 || time > situationChangerComponentData.Timer)
+                    return;
+            }
+        }
+
+        //if (time == 0 && !situationChangerComponentData.isOff)
+        //{
+        //    time = situationChangerComponentData.Timer;
+        //    situationCo = null;
+        //}
+        if (time != 0)
+        {
+            situationChangerComponentData.Timer = time;
+            time = 0;
+        }
+        else
+            situationChangerComponentData.Timer = defaultTimer;
 
         //if (situationCo == null && time > 0)
         //    situationCo = StartCoroutine(nameof(SituationChange));
 
+        //Debug.LogError(situationChangerComponentData.Timer);
         TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
 
     }
     private void StopComponent()
     {
+        //playerObject = null;
         TimeStats._intensityChangerStop?.Invoke();
     }
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()
