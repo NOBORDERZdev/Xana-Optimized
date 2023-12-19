@@ -317,22 +317,15 @@ MonoBehaviour:
   buildingDetect: {fileID: 0}
   postProcessVol: {fileID: 1635598668}
   cameraBlurEffect: {fileID: 9100000, guid: 2e47300d06a9ffe4ea3266bb794eceec, type: 2}
-  specialItemParticleEffect: {fileID: 2448950938470861970, guid: e9786f820a8e34b8286d7fe5958eec76, type: 3}
   hologramMaterial: {fileID: 2100000, guid: 7c0e0e56aed3a0b499e84cb7f11b97fa, type: 2}
   superMarioShader: {fileID: -6465566751694194690, guid: f12321e52d250a54592277f96f60ee2d, type: 3}
   superMarioShader2: {fileID: -6465566751694194690, guid: 981d0fd79d32c48d2bb4790b23365c11, type: 3}
   skinShader: {fileID: -6465566751694194690, guid: c052675ef47f9ba4381203f07cde1192, type: 3}
   cloathShader: {fileID: -6465566751694194690, guid: 09b53c40f9a7246448be60bc83a776f7, type: 3}
-  FootSteps:
-  - {fileID: 8404368408049616048, guid: 7bc5a367252244826839122b44e4c01c, type: 3}
-  - {fileID: 8238114203954984938, guid: b8655709dd6cb4c7c812e24431bb54b3, type: 3}
   spawnPointPosition: {x: 0, y: 0, z: 0}
   raycast: {fileID: 2071949839}
-  katanaPrefab: {fileID: 919132149155446097, guid: 03771c62d1d2868448e1bcf7ac5697a8, type: 3}
-  shurikenPrefab: {fileID: 5364510417891784068, guid: 09f6901e7d8a2924ea993c8ccd16d2dd, type: 3}
   throwAimPrefab: {fileID: 1083430825}
   lineMaterial: {fileID: 2100000, guid: 541ee55200ae5014b9be06a5f91354ae, type: 2}
-  ThrowBall: {fileID: 8676204229453754626, guid: c6f3dbffb42c58847bcb92f0fc5ce2eb, type: 3}
   handBall: {fileID: 7640187605134265245, guid: e9b3160b3b3a04101ac731c94af2d487, type: 3}
   helpParentReference: {fileID: 938320014}
   worldSpaceCanvas: {fileID: 1720940399}
@@ -346,12 +339,26 @@ MonoBehaviour:
   - Sakuya
   - Xiaolan
   - NEMU
+  multiplayerComponentsName:
+  - Ball
+  - DoorKey
+  - Footprint
+  - InvisibleAvatar
+  - Katana
+  - MultiplayerComponent
+  - AssetsControler
+  - ShurikenPrefab
+  - SpecialItemParticleFlame
+  - Bear05
+  - NEMU
+  - Sakuya
+  - Xiaolan
+  - Hiragino-Sans
   aiSkyMaterial: {fileID: 2100000, guid: afcc95ce3ebcf4a5092b5d61d6418503, type: 2}
   aiPPVolumeProfile: {fileID: 11400000, guid: 313c192bc6b244e6f871ec28dc3ba0d6, type: 2}
   withMultiplayer: 0
   orbitronFont: {fileID: 11400000, guid: 10b30e17fde3c449a94e3fea1bec4fc1, type: 2}
   hiraginoFont: {fileID: 11400000, guid: a8139906170d44873ad5c167d2bd394e, type: 2}
-  arialFont: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
