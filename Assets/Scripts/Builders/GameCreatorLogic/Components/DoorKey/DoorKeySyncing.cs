@@ -3,8 +3,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
+using Photon.Pun.Demo.PunBasics;
 
 public class DoorKeySyncing : MonoBehaviourPun
 {
@@ -12,7 +12,6 @@ public class DoorKeySyncing : MonoBehaviourPun
     [SerializeField] GameObject wrongKey;
     public TMP_Text keyCounter;
     GameObject playerObj;
-    private List<PhotonView> allPhotonViews = new List<PhotonView>();
 
     private void OnEnable()
     {
@@ -23,8 +22,6 @@ public class DoorKeySyncing : MonoBehaviourPun
             gameObject.SetActive(false);
             return;
         }
-        allPhotonViews.Clear();
-        allPhotonViews.Add(GetComponent<PhotonView>());
         StartCoroutine(SyncingCoroutin());
     }
 
@@ -51,11 +48,12 @@ public class DoorKeySyncing : MonoBehaviourPun
     GameObject FindPlayerusingPhotonView(PhotonView pv)
     {
         Player player = pv.Owner;
-        foreach (PhotonView photonView in allPhotonViews)
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
-            if (photonView.Owner == player && photonView.GetComponent<AvatarController>())
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
             {
-                return photonView.gameObject;
+                return playerObject;
             }
         }
         return null;
