@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
@@ -10,6 +11,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
@@ -18,9 +20,6 @@ namespace RFM.Managers
     public class RFMManager : MonoBehaviourPunCallbacks
     {
         #region Serialized Fields
-        public bool isPlayerHunter;
-        //public Transform lobbySpawnPoint;
-        //public GameObject playerObject;
         [SerializeField] public Transform playersSpawnArea;
         [SerializeField] private GameObject huntersCage;
         [SerializeField] private FollowNPC npcCameraPrefab;
@@ -29,7 +28,6 @@ namespace RFM.Managers
         [SerializeField] private TextMeshProUGUI countDownText;
         [SerializeField] private TextMeshProUGUI gameplayTimeText, statusTMP;
         [SerializeField] private GameObject statusBG;
-        //[SerializeField] private GameObject gameOverPanel;
 
         //MM effects
         [SerializeField] private MMScaleShaker timerTextScaleShaker;
@@ -49,13 +47,12 @@ namespace RFM.Managers
 
         public static RFMManager Instance;
 
+        [HideInInspector] public bool isPlayerHunter;
         private GameObject _gameCanvas;
         private FollowNPC _npcCamera;
-        //private PlayerControllerNew _player;
         [HideInInspector] public static GameConfiguration CurrentGameConfiguration;
+        private float spawnOffset = 0;
 
-        //double startTime = -1;
-        //float currentTime = 0;
 
         #endregion
 
@@ -86,6 +83,7 @@ namespace RFM.Managers
 
         private IEnumerator Start()
         {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
             // RFMUIManager.Instance.ShowXanaStonePopup();
 
             Application.runInBackground = true;
@@ -100,7 +98,6 @@ namespace RFM.Managers
             //_mainCam = GameObject.FindGameObjectWithTag(Globals.MAIN_CAMERA_TAG);
             _gameCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             //RFMButtonsLayoutManager.instance.LoadLayout();
-            //gameOverPanel.SetActive(false);
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
             StartMatchMaking();
@@ -109,6 +106,26 @@ namespace RFM.Managers
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
         }
+
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    if (PhotonNetwork.PlayerListOthers.Length > 0)
+                    {
+                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer.GetNext());
+
+                        PhotonNetwork.SendAllOutgoingCommands();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
 
         public void StartMatchMaking() // Need to be called from UI if XanaStone is required to play
         {
@@ -149,51 +166,6 @@ namespace RFM.Managers
             statusMMFPlayer.PlayFeedbacks();
         }
 
-        // private void OnGUI()
-        // {
-        //     GUI.Label(new Rect(10, 10, 200, 75), PhotonNetwork.IsMasterClient.ToString());
-        //     GUI.Label(new Rect(10, 30, 200, 75), Globals.gameState.ToString());
-        // }
-
-        #endregion
-
-        #region Private Methods
-
-        //[PunRPC]
-        //private void PlayerJoined()
-        //{
-        //    CheckForGameStartCondition();
-        //}
-
-        //private void CheckForGameStartCondition()
-        //{
-        //    if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
-        //    {
-        //        if (Globals.gameState != Globals.GameState.InLobby) return;
-        //        if (PhotonNetwork.IsMasterClient)
-        //        {
-        //            PhotonNetwork.RaiseEvent(PhotonEventCodes.StartRFMEventCode, null,
-        //                new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Globals.gameState = Globals.GameState.InLobby;
-        //        countDownText.transform.parent.gameObject.SetActive(false);
-
-        //        statusTMP.text = "Waiting for other players to join:";
-        //        statusBG.SetActive(true);
-        //        //statusMMFPlayer.PlayFeedbacks();
-
-        //        if (PhotonNetwork.IsMasterClient)
-        //        {
-        //            PhotonNetwork.CurrentRoom.IsOpen = true;
-        //        }
-
-        //        StopAllCoroutines();
-        //    }
-        //}
-
         public void RFMStartInterrupted()
         {
             Globals.gameState = Globals.GameState.InLobby;
@@ -210,24 +182,18 @@ namespace RFM.Managers
             StopAllCoroutines();
         }
 
-        void OnApplicationPause(bool pauseStatus)
+        public void RestartRFM()
         {
-            if (pauseStatus)
+            // clear all custom properties of all players
+            foreach (var player in PhotonNetwork.PlayerList)
             {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    if (PhotonNetwork.PlayerListOthers.Length > 0)
-                    {
-                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer.GetNext());
-
-                        //Debug.LogError("RPC Called");
-                        //GetComponent<PhotonView>().RPC(nameof(ChangeMasterClientifAvailble), PhotonNetwork.PlayerListOthers[0]);
-                        PhotonNetwork.SendAllOutgoingCommands();
-                    }
-                    //ChangeMasterClientifAvailble();
-
-                }
+                player.CustomProperties.Clear();
             }
+
+            _mainCam.SetActive(true);
+            _gameCanvas.SetActive(true);
+            RFM.Globals.player.transform.root.gameObject.SetActive(true);
+            StartCoroutine(Start());
         }
 
 
@@ -305,78 +271,31 @@ namespace RFM.Managers
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
 
-                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
-                //RFM.Globals.player.GetComponent<RFM.Character.PlayerRunner>().enabled = false;
-                //RFM.Globals.player.GetComponent<RFM.Character.PlayerHunter>().enabled = true;
                 Globals.IsLocalPlayerHunter = true;
-
-                //statusTMP.text = "CATCH THE <#FF36D3>RUNNERS!</color>";
-
-                //var hunterPosition = huntersSpawnArea.position;
-                //var randomHunterPos = new Vector3(
-                //    hunterPosition.x + Random.Range(-2, 2),
-                //    hunterPosition.y,
-                //    hunterPosition.z + Random.Range(-2, 2));
-
-                ////play VFX
-                //hunterSpawnVFX.SetActive(true);
-                //Destroy(hunterSpawnVFX, 10f);
-                //Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
-
             }
 
             else // Player spawning as Runner
             {
                 Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
 
-                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
-                //RFM.Globals.player.GetComponent<RFM.Character.PlayerHunter>().enabled = false;
-                //RFM.Globals.player.GetComponent<RFM.Character.PlayerRunner>().enabled = true;
                 Globals.IsLocalPlayerHunter = false;
-
-                //statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
-
-                //var position = playersSpawnArea.position;
-                //var randomPos = new Vector3(
-                //    position.x + Random.Range(-2, 2),
-                //    position.y,
-                //    position.z + Random.Range(-2, 2));
-
-                ////play VFX
-                //playerSpawnVFX.SetActive(true);
-                //Destroy(playerSpawnVFX, 10f); // Causes a null reference on game restart.
-                //                              // Should be instantiated or disabled.
-
-                //Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
         }
 
-        float spawnOffset = 0;
         private void ResetPosition()
         {
             EventsManager.TakePositionTime();
             Globals.gameState = Globals.GameState.TakePosition;
 
-            //bool isHunter = false;
-            //if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("isHunter", out object _isHunter))
-            //{
-            //    isPlayerHunter = isHunter = (bool)_isHunter;
-            //}
 
-
-            if (/*isHunter*/RFM.Globals.IsLocalPlayerHunter) // Player spawning as Hunter
+            if (RFM.Globals.IsLocalPlayerHunter) // Player spawning as Hunter
             {
-                //Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Hunter.");
-
-                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
-                //Globals.IsLocalPlayerHunter = true;
-
                 statusTMP.text = "CATCH THE <#FF36D3>RUNNERS!</color>";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
-                    /*AfterTakePositionTimerHunter*/StartGameplay,
+                    StartGameplay,
                     countDownText);
 
                 var hunterPosition = huntersSpawnArea.position;
@@ -388,25 +307,19 @@ namespace RFM.Managers
                 //play VFX
                 //hunterSpawnVFX.SetActive(true);
                 //Destroy(hunterSpawnVFX, 10f);
+
                 Globals.player.transform.SetPositionAndRotation(randomHunterPos, Quaternion.identity);
 
             }
 
             else // Player spawning as Runner
             {
-                //Debug.Log($"RFM {PhotonNetwork.NickName} Spawning as Runner.");
-
-                //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
-                //Globals.IsLocalPlayerHunter = false;
-
                 statusTMP.text = "<#FF36D3>HUNTERS</color> RELEASING IN:";
                 statusBG.SetActive(true);
                 statusMMFPlayer.PlayFeedbacks();
 
-                //Globals.gameState = Globals.GameState.TakePosition;
-
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
-                    /*AfterTakePositionTimerRunner*/StartGameplay,
+                    StartGameplay,
                     countDownText,
                     AfterEachSecondCountdownTimer);
 
@@ -424,30 +337,8 @@ namespace RFM.Managers
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
             }
-            //RFMCharacter.gameStartAction?.Invoke();
         }
 
-
-        //private void AfterTakePositionTimerHunter()
-        //{
-        //    //Globals.player.gameObject.AddComponent<RFM.Character.PlayerHunter>();
-        //    //Globals.IsLocalPlayerHunter = true;
-        //    //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-        //    //countDownText.transform.parent.gameObject.SetActive(false);
-
-        //    //StartGameplay();
-        //}
-
-
-        //private void AfterTakePositionTimerRunner()
-        //{
-        //    //Globals.player.gameObject.AddComponent<RFM.Character.PlayerRunner>();
-        //    //Globals.IsLocalPlayerHunter = false;
-        //    //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-        //    //countDownText.transform.parent.gameObject.SetActive(false);
-
-        //    //StartGameplay();
-        //}
 
         private IEnumerator SpawnNPCs(int numOfHunters, int numOfRunners)
         {
@@ -464,7 +355,7 @@ namespace RFM.Managers
                         Random.Range(-1.0f, 1.0f), 0,
                       i),
                     playersSpawnArea.rotation);
-                runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f);
+                runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCRunner.cs
                 yield return new WaitForSeconds(delay);
             }
 
@@ -476,11 +367,9 @@ namespace RFM.Managers
                     huntersSpawnArea.position + new Vector3(Random.Range(-1.0f, 1.0f), 0,
                         Random.Range(-1.0f, 1.0f)),
                     huntersSpawnArea.rotation);
-                hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f);
+                hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCHunter.cs
                 yield return new WaitForSeconds(delay);
             }
-
-
         }
 
 
@@ -489,7 +378,6 @@ namespace RFM.Managers
         {
             EventsManager.StartGame();
             Globals.gameState = Globals.GameState.Gameplay;
-            //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
             gameplayTimeText.gameObject.SetActive(true);
             countDownText.transform.parent.gameObject.SetActive(false);
@@ -498,6 +386,8 @@ namespace RFM.Managers
 
             Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver,
                 gameplayTimeText, AfterEachSecondGameplayTimer);
+
+            InvokeRepeating(nameof(CheckForGameOverCondition), 10, 3);
         }
 
         private void AfterEachSecondGameplayTimer(float time)
@@ -523,9 +413,24 @@ namespace RFM.Managers
             }
         }
 
+        private void CheckForGameOverCondition()
+        {
+            if (Globals.gameState != Globals.GameState.Gameplay) return;
+
+            var runners = FindObjectsOfType<RFM.Character.Runner>(false);
+
+            if (runners.Length == 0)
+            {
+                Timer.StopAllTimers();
+                GameplayTimeOver();
+            }
+        }
+
         private async void GameplayTimeOver()
         {
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
+
+            EventsManager.CalculateScores();
             EventsManager.GameOver();
             Globals.gameState = Globals.GameState.GameOver;
             statusTMP.text = "Time's Up!";
@@ -540,10 +445,9 @@ namespace RFM.Managers
 
             await Task.Delay(1000);
             EventsManager.ShowScores();
-
         }
 
-        public void PlayerCaught(int hunterViewID = -1/*Transform hunter*/)
+        public void PlayerCaught(int hunterViewID = -1)
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
@@ -557,13 +461,6 @@ namespace RFM.Managers
             {
                 _npcCamera = Instantiate(npcCameraPrefab);
             }
-
-            //var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
-
-            //if (randomHunter != null)
-            //{
-            //    _npcCamera.Init(randomHunter.cameraTarget);
-            //}
 
 
             if (hunterViewID != -1)
@@ -769,10 +666,3 @@ namespace RFM.Managers
         #endregion
     }
 }
-
-//public class RFMPlayerClass
-//{
-//    public string playerName;
-//    public bool isHunter;
-//    public bool isRunner;
-//}

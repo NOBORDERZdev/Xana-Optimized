@@ -667,6 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f849d1813862f4baa827c84edc04b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  money: 0
   nickName: 
   timeSurvived: 0
   Money: 0
@@ -683,6 +684,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 8828376533855872956}
+  nickName: Player
+  rewardMultiplier: 0
   killVFX: {fileID: 792521511357202139}
 --- !u!1 &5883316665671374823
 GameObject:
@@ -694,7 +697,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5229925956610143823}
   - component: {fileID: 4712141515410198810}
-  m_Layer: 22
+  m_Layer: 0
   m_Name: TriggerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

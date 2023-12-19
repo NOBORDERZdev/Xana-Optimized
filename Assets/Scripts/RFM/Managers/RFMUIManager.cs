@@ -37,6 +37,8 @@ namespace RFM.Managers
 
         private Dictionary<string[], int> scores;
 
+        [SerializeField] private GameObject restartButton;
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -142,6 +144,34 @@ namespace RFM.Managers
             }
 
             //playerEarnedXanaStones.text = $"You have earned <color=purple>${earnedMoney}</color> XanaStones";
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                restartButton.SetActive(true);
+            }
+        }
+
+        public void RestartButtonClicked()
+        {
+            if (!PhotonNetwork.IsMasterClient) return;
+
+            GetComponent<PhotonView>().RPC(nameof(RestartRFM), RpcTarget.AllBuffered);
+            Awake();
+        }
+
+        // Enable the restart button 
+
+        [PunRPC]
+        private void RestartRFM()
+        {
+            // Destroy all children of leaderboardEntryContainer
+            foreach (Transform child in leaderboardEntryContainer)
+            {
+                Destroy(child.gameObject);
+            }
+            gameOverPanel.gameObject.SetActive(false);
+
+            RFM.Managers.RFMManager.Instance.RestartRFM();
         }
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
@@ -162,19 +192,36 @@ namespace RFM.Managers
 
             foreach (var player in PhotonNetwork.PlayerList)
             {
-                int money = 0;
-                float timeSurvived = 0;
-                if (player.CustomProperties.TryGetValue("money", out object _money))
+                if (player.CustomProperties.TryGetValue("isHunter", out object _isHunter))
                 {
-                    money = (int)_money;
-                }
-                if (player.CustomProperties.TryGetValue("timeSurvived", out object _timeSurvived))
-                {
-                    timeSurvived = (float)_timeSurvived;
-                }
+                    if ((bool)_isHunter) // player was a hunter
+                    {
+                        int rewardMultiplier = 0;
+                        if (player.CustomProperties.TryGetValue("rewardMultiplier", out object _rewardMultiplier))
+                        {
+                            rewardMultiplier = (int)_rewardMultiplier;
+                        }
 
-                string[] array = { player.NickName, timeSurvived.ToString() };
-                scores.Add(array, money);
+                        string[] array = { player.NickName + " [H]", 0.ToString() };
+                        scores.Add(array, rewardMultiplier * 100); // TODO : change 100 to the participation amount
+                    }
+                    else // player was a runner
+                    {
+                        int money = 0;
+                        float timeSurvived = 0;
+                        if (player.CustomProperties.TryGetValue("money", out object _money))
+                        {
+                            money = (int)_money;
+                        }
+                        if (player.CustomProperties.TryGetValue("timeSurvived", out object _timeSurvived))
+                        {
+                            timeSurvived = (float)_timeSurvived;
+                        }
+
+                        string[] array = { player.NickName, timeSurvived.ToString() };
+                        scores.Add(array, money);
+                    }
+                }
             }
 
 

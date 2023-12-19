@@ -7,18 +7,16 @@ namespace RFM.Character
 {
     public class PlayerHunter : Hunter
     {
-        // [SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
-        //[SerializeField] private Animator npcAnim;
-        //[SerializeField] private string velocityNameX, velocityNameY;
 
-        //private List<GameObject> _players;
-        //private Transform _target;
-
-        // public Transform cameraTarget/* => cameraPosition*/;
-
-        private void Start()
+        private void OnEnable()
         {
+            RFM.EventsManager.onGameStart += OnGameStarted;
+        }
+
+        private void OnDisable()
+        {
+            RFM.EventsManager.onGameStart -= OnGameStarted;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -37,7 +35,6 @@ namespace RFM.Character
             //}
             
 
-            //if (other.CompareTag(Globals.RUNNER_NPC_TAG))
             if (other.GetComponentInParent<NPCRunner>())
             {
                 // Cannot directly call AIRunnerCaught() because NPCRunners are owned by the master client
@@ -53,10 +50,22 @@ namespace RFM.Character
                     prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
                     SendOptions.SendReliable);
+
+                // if custom properties of current player contains "rewardMultiplier", add 1 to it. otherwise, create it.
+                if (GetComponent<PhotonView>().Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                {
+                    GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] = 
+                        (int)GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] + 1;
+                }
+                else
+                {
+                    GetComponent<PhotonView>().Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        { { "rewardMultiplier", 1 } });
+                }
+
                 return;
             }
             
-            //else if (other.CompareTag(Globals.PLAYER_TAG))
             var playerRunner = other.GetComponent<PlayerRunner>();
             if (playerRunner != null && playerRunner.enabled)
             {
@@ -73,6 +82,18 @@ namespace RFM.Character
                     prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
+
+                // if custom properties of current player contains "rewardMultiplier", add 1 to it. otherwise, create it.
+                if (GetComponent<PhotonView>().Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                {
+                    GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] =
+                        (int)GetComponent<PhotonView>().Owner.CustomProperties["rewardMultiplier"] + 1;
+                }
+                else
+                {
+                    GetComponent<PhotonView>().Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        { { "rewardMultiplier", 1 } });
+                }
             }
         }
 

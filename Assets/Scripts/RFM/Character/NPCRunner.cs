@@ -9,8 +9,6 @@ namespace RFM.Character
 {
     public class NPCRunner : Runner
     {
-        public string nickName = "Player";
-        public int money;
         public float timeSurvived;
         
         [SerializeField] private Animator animator;
@@ -51,10 +49,24 @@ namespace RFM.Character
 
         private void Start()
         {
-            nickName = RFM.Character.StaticData.CharacterNames[
+            if (PhotonNetwork.IsMasterClient)
+            {
+                nickName = RFM.Character.StaticData.CharacterNames[
                 Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
+
+                // Send an RPC to only this PhotonView on all clients to set the nickname.
+
+                GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
+            }
+                
             //nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             _maxSpeed = _navMeshAgent.speed;
+        }
+
+        [PunRPC]
+        private void SetNickname(string _nickName)
+        {
+            nickName = _nickName;
         }
 
 
@@ -67,8 +79,10 @@ namespace RFM.Character
         }
 
 
-        private void OnGameStarted()
+        internal override void OnGameStarted()
         {
+            base.OnGameStarted();
+
             StartCoroutine(AddMoney());
             StartCoroutine(TimeSurvived());
         }

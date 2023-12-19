@@ -123,6 +123,15 @@ namespace RFM
 	        yield return new WaitUntil(() => timer._finished);
         }
 
+        public static void StopAllTimers()
+        {
+            var timers = FindObjectsOfType<Timer>();
+            foreach (var timer in timers)
+            {
+                Destroy(timer.gameObject);
+            }
+        }
+
         #endregion
     }
 }

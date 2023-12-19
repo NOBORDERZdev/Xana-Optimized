@@ -19,6 +19,4 @@ public class RFMDevmodeManager : MonoBehaviour
             instance = this;
         }
     }
-
-
 }
