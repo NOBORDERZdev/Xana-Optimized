@@ -61,6 +61,7 @@ namespace RFM.Managers
             RFM.EventsManager.onGameTimeup += OnGameOver;
             RFM.EventsManager.onShowScores += OnShowScores;
             RFM.EventsManager.onTakePositionTimeStart += OnTakePosition;
+            RFM.EventsManager.onShowRearViewMirror += OnShowRearViewMirror;
             // CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.AddListener(ToggleLayoutPanel);
         }
 
@@ -70,6 +71,7 @@ namespace RFM.Managers
             RFM.EventsManager.onCountdownStart -= OnCountdownStart;
             RFM.EventsManager.onGameTimeup -= OnGameOver;
             RFM.EventsManager.onShowScores -= OnShowScores;
+            RFM.EventsManager.onShowRearViewMirror -= OnShowRearViewMirror;
             // CanvasButtonsHandler.inst.setControlsLayoutBtnRFM.onClick.RemoveAllListeners();
         }
         
@@ -80,7 +82,12 @@ namespace RFM.Managers
 
         private void OnTakePosition() 
         {
+            //leave empty for now
+        }
 
+        private void OnShowRearViewMirror(bool active)
+        {
+            rearViewMirror.SetActive(active);
         }
 
         public void ToggleLayoutPanel() 
