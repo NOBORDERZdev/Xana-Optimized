@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.AI;
+using static StoreManager;
 
 namespace RFM.Character
 {
@@ -85,10 +86,10 @@ namespace RFM.Character
         {
             _allRunners = new List<GameObject>();
 
-            var runners = FindObjectsOfType<Runner>();
+            var runners = FindObjectsOfType<Runner>(false); // TODO
             foreach (var runner in runners)
             {
-                if (runner.enabled)
+                if (runner.enabled && runner.gameObject.activeInHierarchy)
                 {
                     _allRunners.Add(runner.gameObject);
                 }
@@ -102,7 +103,7 @@ namespace RFM.Character
             // if any of the object in _players list is missing, remove it from the list.
             for (int i = 0; i < _allRunners.Count; i++)
             {
-                if (_allRunners[i] == null)
+                if (_allRunners[i] == null || !_allRunners[i].gameObject.activeInHierarchy)
                 {
                     _allRunners.RemoveAt(i);
                 }
