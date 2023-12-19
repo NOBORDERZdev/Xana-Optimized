@@ -1338,7 +1338,7 @@ public class PlayerControllerNew : MonoBehaviour
     ///Ninja Move
     //////////////////////////////////////////
     ///
-    [SerializeField] private GameObject _shurikenPrefab, swordModel;
+    [SerializeField] private GameObject swordModel;
     [SerializeField] private Transform _ballSpawn;
     [SerializeField] private Transform swordHook, swordhandHook;
 
@@ -1627,7 +1627,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        GameObject spawned = PhotonNetwork.Instantiate("ShurikenPrefab", _ballSpawn.position, Quaternion.Euler(90, 90, 0));
         spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
 
         animator.SetBool("NinjaThrow", false);
@@ -1657,7 +1657,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (swordModel == null && time > 0)
         {
-            swordModel = PhotonNetwork.Instantiate(GamificationComponentData.instance.katanaPrefab.name, Vector3.zero, new Quaternion(0, 0, 0, 0));
+            swordModel = PhotonNetwork.Instantiate("Katana", Vector3.zero, new Quaternion(0, 0, 0, 0));
             swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
 
@@ -1834,7 +1834,7 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        GameObject spawned = PhotonNetwork.Instantiate("Ball", handBall.transform.position, handBall.transform.rotation);
         spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
@@ -1891,7 +1891,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        _shurikenPrefab = GamificationComponentData.instance.shurikenPrefab;
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
         swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
         _ballSpawn = swordhandHook;

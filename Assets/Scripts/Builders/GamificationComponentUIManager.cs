@@ -102,7 +102,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         else
             GamificationComponentData.instance.Ninja_Throw_InitPosX = NinjaMotionUIButtonPanel.transform.localPosition;
 
-        defaultFont = GamificationComponentData.instance.arialFont;
+        //defaultFont = GamificationComponentData.instance.arialFont;
 
     }
 
