@@ -88,8 +88,7 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(IsSplashEnable(false, 3f));
                
             }
-           
-        }
+         }
         else
         {
 

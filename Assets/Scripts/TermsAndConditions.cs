@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TermsAndConditions : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class TermsAndConditions : MonoBehaviour
     public Toggle privacyPolicyToggle;
     public static TermsAndConditions instance;
     public Button agreeButton;
+    public TextMeshProUGUI termsAndConditionText;
 
     private string privacyPolicyLink = "https://cdn.xana.net/xanaprod/privacy-policy/PRIVACYPOLICY-2.pdf";
     private string termsAndConditionLink = "https://cdn.xana.net/xanaprod/privacy-policy/termsofuse.pdf";
@@ -69,18 +71,20 @@ public class TermsAndConditions : MonoBehaviour
     {
         if(privacyPolicyToggle.isOn && termsAndPolicyToggle.isOn)
         {
-            termsAndPolicyToggle.SetIsOnWithoutNotify(false);
-            privacyPolicyToggle.SetIsOnWithoutNotify(false);
-            allAgreeToggle.SetIsOnWithoutNotify(false);
-            agreeButton.interactable = false;
+            //termsAndPolicyToggle.SetIsOnWithoutNotify(false);
+            //privacyPolicyToggle.SetIsOnWithoutNotify(false);
+            //allAgreeToggle.SetIsOnWithoutNotify(false);
+            //agreeButton.interactable = false;
         }
         else
         {
-            termsAndPolicyToggle.SetIsOnWithoutNotify(true);
-            privacyPolicyToggle.SetIsOnWithoutNotify(true);
-            allAgreeToggle.SetIsOnWithoutNotify(true);
-            agreeButton.interactable = true;
+            //termsAndPolicyToggle.SetIsOnWithoutNotify(true);
+            //privacyPolicyToggle.SetIsOnWithoutNotify(true);
+            //allAgreeToggle.SetIsOnWithoutNotify(true);
+            //agreeButton.interactable = true;
         }
+        termsAndConditionText.color = Color.black;
+        Invoke("OnAgreeButtonClick", 1f);
     }
 
     public void OnAgreeButtonClick()
