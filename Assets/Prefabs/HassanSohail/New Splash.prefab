@@ -1,5 +1,81 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1904622503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1904622504}
+  - component: {fileID: 1904622506}
+  - component: {fileID: 1904622505}
+  m_Layer: 19
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1904622504
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904622503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7247741920690057839}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1.06, y: -372.82977}
+  m_SizeDelta: {x: 227.37, y: 276.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1904622506
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904622503}
+  m_CullTransparentMesh: 1
+--- !u!114 &1904622505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904622503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 834ed048cf38d4a458e58195e0ffa67c, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8644395317770665681
 GameObject:
   m_ObjectHideFlags: 0
@@ -4868,7 +4944,7 @@ GameObject:
   - component: {fileID: 8644395317795473458}
   - component: {fileID: 8644395317795473459}
   - component: {fileID: 8644395317795473457}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Camera-UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4930,7 +5006,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!114 &8644395317795473457
@@ -4948,7 +5024,7 @@ MonoBehaviour:
   m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 1
+  m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -9918,7 +9994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 565914019138894726}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: New Splash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10080,7 +10156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1911378301, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 226
+      value: 245.36
       objectReference: {fileID: 0}
     - target: {fileID: 1911378301, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_SizeDelta.y
@@ -10088,16 +10164,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1911378301, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -173
+      value: -173.20001
       objectReference: {fileID: 0}
     - target: {fileID: 1911378301, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 95
+      value: 92.099976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_text
+      value: Ver.23.02.20
       objectReference: {fileID: 0}
     - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_fontSize
-      value: 40.2
+      value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_margin.x
+      value: 0.656166
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: efe8077e2ee7cb24dace629db490038f, type: 2}
     - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_fontColor.b
       value: 0.53333336
@@ -10109,6 +10197,18 @@ PrefabInstance:
     - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_fontColor.r
       value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 7688683175590287136, guid: efe8077e2ee7cb24dace629db490038f, type: 2}
+    - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1911378302, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_fontColor32.rgba
@@ -10257,7 +10357,7 @@ PrefabInstance:
     - target: {fileID: 4001809488581476101, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 52611879d27475c47a515c9a3c9ff6cb, type: 3}
+      objectReference: {fileID: 21300000, guid: 3d0449d8dbb00544c9a079de4f88e047, type: 3}
     - target: {fileID: 4001809488581476101, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -10312,6 +10412,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+--- !u!224 &7247741920690057839 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1396724317205998774, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
+  m_PrefabInstance: {fileID: 8644395316973838041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8619502357902959954 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 29713220771265419, guid: ce81111c06962ec41a8dfac1a613bb87, type: 3}
