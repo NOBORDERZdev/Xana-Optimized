@@ -103,7 +103,13 @@ public class NpcChatSystem : MonoBehaviour
 
         tempResponseNum = numOfResponseWantToShow;
         npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated+=InvokeNPCName;
     }
+
+    void InvokeNPCName()
+    {
+       // npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+    }   
 
     private void ShuffleNpcs()
     {
