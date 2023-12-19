@@ -149,15 +149,15 @@ public class UserPostFeature : MonoBehaviour
             //      yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError("Error Post -------- Response --->  " + www.downloadHandler.text);
+                //Debug.LogError("Error Post -------- Response --->  " + www.downloadHandler.text);
             }
             else
             {
-                Debug.LogError("Posted--------- Response ---->  " + www.downloadHandler.text);
+              //  Debug.LogError("Posted--------- Response ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data !=null)
                 {
-                    Debug.LogError("Posted--------- Response ---->   is not null");
+                   // Debug.LogError("Posted--------- Response ---->   is not null");
                     if (string.IsNullOrEmpty(RetrievedPost.data.text_post))
                     {
                         _postBubbleFlag = false;
@@ -171,12 +171,12 @@ public class UserPostFeature : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Posted--------- Response ---->   is null");
+                   // Debug.LogError("Posted--------- Response ---->   is null");
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
           
-                Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
+               // Debug.LogError("Message --->> " + RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_post == "null")
                 {
                     _postBubbleFlag = true;
