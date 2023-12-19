@@ -1757,6 +1757,8 @@ public class PlayerControllerNew : MonoBehaviour
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
                     BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
+                    if (animator.GetBool("standJump"))
+                        animator.SetBool("standJump", false);
                 }
                 else
                 {

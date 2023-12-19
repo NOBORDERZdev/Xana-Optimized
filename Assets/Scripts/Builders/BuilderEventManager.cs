@@ -44,9 +44,11 @@ public static class BuilderEventManager
 
     //Timer Component
     public static Action<string, float> OnTimerTriggerEnter;
+    public static Action OnTimerLimitEnd;
 
     //Elapse Time Component
     public static Action<float, bool> OnElapseTimeCounterTriggerEnter;
+    public static Action elapsedEndTime;
 
     //CountDown Component
     public static Action<int, bool> OnTimerCountDownTriggerEnter;
