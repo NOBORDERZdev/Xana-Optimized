@@ -26,7 +26,8 @@ namespace RFM.Managers
         [SerializeField] public Transform huntersSpawnArea;
 
         [SerializeField] private TextMeshProUGUI countDownText;
-        [SerializeField] private TextMeshProUGUI gameplayTimeText, statusTMP;
+        [SerializeField] private TextMeshProUGUI gameplayTimeText;
+        [SerializeField] private TextMeshProUGUI statusTMP;
         [SerializeField] private GameObject statusBG;
 
         //MM effects
@@ -154,7 +155,7 @@ namespace RFM.Managers
                     //CancelInvoke(nameof(CheckForGameStartCondition));
                 }
 
-            }, gameplayTimeText);
+            }, gameplayTimeText, true);
 
             //photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
             //Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
@@ -246,7 +247,7 @@ namespace RFM.Managers
             gameplayTimeText.gameObject.SetActive(false);
 
             yield return StartCoroutine(Timer.SetDurationAndRunEnumerator(10, null,
-                countDownText, AfterEachSecondCountdownTimer));
+                countDownText, false, AfterEachSecondCountdownTimer));
 
             SetRunnerOrHunterStatusOfPlayer();
 
@@ -320,7 +321,7 @@ namespace RFM.Managers
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
                     StartGameplay,
-                    countDownText,
+                    countDownText, false,
                     AfterEachSecondCountdownTimer);
 
                 var position = playersSpawnArea.position;
@@ -385,7 +386,7 @@ namespace RFM.Managers
             statusMMFPlayer.PlayFeedbacks();
 
             Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver,
-                gameplayTimeText, AfterEachSecondGameplayTimer);
+                gameplayTimeText, true, AfterEachSecondGameplayTimer);
 
             InvokeRepeating(nameof(CheckForGameOverCondition), 10, 3);
         }
