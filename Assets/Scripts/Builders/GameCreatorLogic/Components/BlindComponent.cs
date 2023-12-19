@@ -89,13 +89,16 @@ public class BlindComponent : ItemComponent
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            var hash = new ExitGames.Client.Photon.Hashtable();
-            hash.Add("blindComponent", DateTime.UtcNow.ToString());
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("blindComponent", DateTime.UtcNow.ToString());
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            }
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponent))
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponent) && !blindToggle)
             {
                 string blindComponentstr = blindComponent.ToString();
                 DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr); ;
@@ -105,7 +108,7 @@ public class BlindComponent : ItemComponent
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
                 time = timeDiff;
 
-                if ((time == 0 || time > blindComponentData.time) && !blindToggle)
+                if (time == 0 || time > blindComponentData.time)
                     return;
             }
         }
