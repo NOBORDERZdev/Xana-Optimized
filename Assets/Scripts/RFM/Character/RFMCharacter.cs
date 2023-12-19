@@ -10,6 +10,7 @@ public class RFMCharacter : MonoBehaviour
     public PhotonVoiceView voiceView;
     //public RFMPlayerClass RFMPlayer;
     public bool isHunter;
+    public GameObject rearViewCamera;
     //public static Action gameStartAction;
 
 
@@ -17,17 +18,23 @@ public class RFMCharacter : MonoBehaviour
     {
         RFM.EventsManager.onTakePositionTimeStart += OnTakePositionStart;
         RFM.EventsManager.onGameStart += GameStart;
+        RFM.EventsManager.OnShowRearViewMirror(true);
     }
 
     private void OnDisable()
     {
         RFM.EventsManager.onTakePositionTimeStart -= OnTakePositionStart;
         RFM.EventsManager.onGameStart -= GameStart;
+        RFM.EventsManager.OnShowRearViewMirror(false);
     }
 
     void Start()
     {
         voiceView.SpeakerInUse.GetComponent<AudioSource>().spatialBlend = 0;
+        if (!photonView.IsMine)
+        {
+            Destroy(rearViewCamera);
+        }
     }
 
     private void OnTakePositionStart()
@@ -45,6 +52,8 @@ public class RFMCharacter : MonoBehaviour
             GetComponent<RFM.Character.PlayerRunner>().enabled = true;
         }
     }
+
+
 
 
     public void GameStart()

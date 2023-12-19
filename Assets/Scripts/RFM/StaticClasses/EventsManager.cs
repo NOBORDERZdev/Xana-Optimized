@@ -13,6 +13,8 @@ namespace RFM
         public static event Action onCountdownStart, onTakePositionTimeStart, onGameStart, onGameTimeup,
             onShowScores, onHideCanvasElements, onToggleHelpPanel, onToggleSetLayoutPanel;
 
+        public static event Action<bool> onShowRearViewMirror;
+
         public static void TakePositionTime() => onTakePositionTimeStart?.Invoke();
         public static void StartGame() => onGameStart?.Invoke();
         public static void StartCountdown() => onCountdownStart?.Invoke();
@@ -24,5 +26,7 @@ namespace RFM
         public static void OnHideCanvasElements() => onHideCanvasElements?.Invoke();
         public static void OnToggleHelpPanel() => onToggleHelpPanel?.Invoke();
         public static void onSetLayoutPanelActivate() => onToggleSetLayoutPanel?.Invoke();
+
+        public static void OnShowRearViewMirror(bool active) => onShowRearViewMirror?.Invoke(active);
     }
 }
