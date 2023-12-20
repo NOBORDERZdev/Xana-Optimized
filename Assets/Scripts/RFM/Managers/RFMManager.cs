@@ -193,7 +193,11 @@ namespace RFM.Managers
 
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
-            RFM.Globals.player.transform.root.gameObject.SetActive(true);
+            //RFM.Globals.player.transform.root.gameObject.SetActive(true);
+            var newPlayer = PhotonNetwork.Instantiate("XANA Player", playersSpawnArea.position, Quaternion.identity, 0);
+            RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
+
+
             StartCoroutine(Start());
         }
 

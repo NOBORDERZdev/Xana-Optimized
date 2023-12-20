@@ -93,7 +93,7 @@ namespace RFM.Character
         
         public void PlayerRunnerCaught(/*Transform hunter*/int hunterViewID)
         {
-            if (!this.enabled) return;
+            //if (!this.enabled) return;
             StopCoroutine(TimeSurvived());
             StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
@@ -101,8 +101,8 @@ namespace RFM.Character
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
 
             // disable the player object on all clients
-            transform.root.gameObject.SetActive(false);
-            //PhotonNetwork.Destroy(transform.root.gameObject);
+            //transform.root.gameObject.SetActive(false);
+            PhotonNetwork.Destroy(transform.root.gameObject);
             RFM.Managers.RFMManager.Instance.PlayerCaught(/*hunter*/hunterViewID);
         }
         
@@ -132,7 +132,7 @@ namespace RFM.Character
 
         private void ReceivePhotonEvents(EventData photonEvent)
         {
-            if (!this.enabled) return;
+            //if (!this.enabled) return;
             switch (photonEvent.Code)
             {
                 case PhotonEventCodes.PlayerRunnerCaught:
