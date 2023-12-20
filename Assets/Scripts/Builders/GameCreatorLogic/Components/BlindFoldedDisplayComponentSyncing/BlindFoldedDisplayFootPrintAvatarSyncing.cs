@@ -1,0 +1,94 @@
+using System.Collections;
+using System.Collections.Generic;
+using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
+using UnityEngine;
+
+public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
+{
+    SkinnedMeshRenderer playerHair;
+    SkinnedMeshRenderer playerBody;
+    SkinnedMeshRenderer playerShirt;
+    SkinnedMeshRenderer playerPants;
+    SkinnedMeshRenderer playerShoes;
+    SkinnedMeshRenderer playerHead;
+    MeshRenderer playerFreeCamConsole;
+    MeshRenderer playerFreeCamConsoleOther;
+
+    GameObject playerObj;
+    bool isInitialise = false;
+
+    void OnEnable()
+    {
+        if (photonView.IsMine)
+            return;
+        StartCoroutine(SyncingCoroutin());
+    }
+
+    private IEnumerator SyncingCoroutin()
+    {
+        yield return new WaitForSeconds(0.5f);
+        playerObj = FindPlayerusingPhotonView(photonView);
+        if (playerObj != null)
+        {
+            yield return new WaitForSeconds(0.5f);
+            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
+            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
+            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
+            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.Body;
+            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+            playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
+
+            this.transform.SetParent(playerShoes.transform);
+            this.transform.localPosition = Vector3.up * 0.0207f;
+            transform.localEulerAngles = Vector3.zero;
+            RingbufferFootSteps ringbufferFootStep = gameObject.GetComponentInChildren<RingbufferFootSteps>();
+            //for (int i = 0; i < ringbufferFootSteps.Length; i++)
+            //{
+            ringbufferFootStep.enabled = true;
+            ringbufferFootStep.transform.GetChild(0).gameObject.SetActive(true);
+            AvatarFootPrintVisible(false);
+            isInitialise = true;
+        }
+    }
+
+    void OnDisable()
+    {
+        if (photonView.IsMine)
+            return;
+        if (isInitialise)
+            AvatarFootPrintVisible(true);
+    }
+
+    GameObject FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
+        {
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            {
+                return playerObject;
+            }
+        }
+        return null;
+    }
+
+    void AvatarFootPrintVisible(bool state)
+    {
+        playerHair.enabled = state;
+        playerBody.enabled = state;
+        playerShirt.enabled = state;
+        playerPants.enabled = state;
+        playerShoes.enabled = state;
+        playerHead.enabled = state;
+        playerFreeCamConsole.enabled = state;
+        playerFreeCamConsoleOther.enabled = state;
+    }
+}

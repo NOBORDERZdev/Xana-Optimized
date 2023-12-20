@@ -12,14 +12,6 @@ public class RandomNumberComponent : ItemComponent
     private bool isActivated = false;
     string RuntimeItemID = "";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _minNumber = randomNumberComponentData.minNumber;
-        _maxNumber = randomNumberComponentData.maxNumber;
-        GenerateNumber();
-    }
-
     void GenerateNumber()
     {
         GeneratedNumber = (int)Random.Range(_minNumber, _maxNumber);
@@ -31,6 +23,9 @@ public class RandomNumberComponent : ItemComponent
 
         isActivated = true;
         RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        _minNumber = this.randomNumberComponentData.minNumber;
+        _maxNumber = this.randomNumberComponentData.maxNumber;
+        GenerateNumber();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -65,6 +60,8 @@ public class RandomNumberComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
+
         BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
         GenerateNumber();
     }

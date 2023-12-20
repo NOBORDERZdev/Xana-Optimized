@@ -17,6 +17,7 @@ public class StreamingCamera : MonoBehaviour
     bool isDynamicMusuem;
     [SerializeField] DynamicMuseumManager dynamicMuseumManager;
 
+    bool isInfiniteStremaing=true; // for infinte streaming any world
     private void Awake()
     {
         if (instance == null)
@@ -189,6 +190,7 @@ public class StreamingCamera : MonoBehaviour
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
                     XanaChatSystem.instance.OpenCloseChatDialog();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+                    if(!isInfiniteStremaing)
                    LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
                 }
                

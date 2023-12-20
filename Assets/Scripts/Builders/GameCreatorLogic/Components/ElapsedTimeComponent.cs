@@ -1,28 +1,48 @@
 using UnityEngine;
 using Models;
 using Photon.Pun;
+using System.Collections;
+using UnityEngine.UI;
 
 public class ElapsedTimeComponent : ItemComponent
 {
     private bool isActivated = false;
+    private bool IsAgainTouchable = true;
     [SerializeField]
     private ElapsedTimeComponentData elapsedTimeComponentData;
-    string RuntimeItemID = "";
 
     public void Init(ElapsedTimeComponentData elapsedTimeComponentData)
     {
         this.elapsedTimeComponentData = elapsedTimeComponentData;
         isActivated = true;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
+            if (isActivated && elapsedTimeComponentData.IsStart)
+            {
+                if (!IsAgainTouchable) return;
+
+                IsAgainTouchable = false;
+                BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+                PlayBehaviour();
+            }
+            if (isActivated && elapsedTimeComponentData.IsEnd)
+            {
+                BuilderEventManager.elapsedEndTime?.Invoke();
+            }
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
     }
 
     #region BehaviourControler
@@ -31,15 +51,24 @@ public class ElapsedTimeComponent : ItemComponent
         if (isActivated && elapsedTimeComponentData.IsStart)
         {
             TimeStats._timeStop?.Invoke(0, () => { TimeStats._timeStart?.Invoke(); });
-        }
-        if (isActivated && elapsedTimeComponentData.IsEnd)
-        {
-            TimeStats._timeStop?.Invoke(5, () => { });
+            BuilderEventManager.elapsedEndTime += OnSubscribe;
         }
     }
+    public void OnSubscribe()
+    {
+        StartCoroutine(OnDisableUI());
+    }
+
+    public IEnumerator OnDisableUI()
+    {
+        yield return new WaitForSeconds(5f);
+        StopBehaviour();
+    }
+
     private void StopComponent()
     {
         TimeStats._timeStop?.Invoke(0, () => { });
+        BuilderEventManager.elapsedEndTime -= OnSubscribe;
     }
 
     public override void PlayBehaviour()
@@ -49,8 +78,11 @@ public class ElapsedTimeComponent : ItemComponent
     }
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void ResumeBehaviour()

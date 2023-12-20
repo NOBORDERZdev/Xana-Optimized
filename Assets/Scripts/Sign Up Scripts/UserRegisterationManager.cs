@@ -43,6 +43,10 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
     public GameObject BlackScreen;
+
+    //Waheed Changes
+    public GameObject setAvatarGiftPanal;
+
     //hardik changes
     public string nftlist;
     //end
@@ -67,6 +71,9 @@ public class UserRegisterationManager : MonoBehaviour
     //  public MobileInputField mainfield_for_opt;
     public AdvancedInputField mainfieldOTPNew;
     public Text[] text_to_show;
+    public Image[] image_to_Change;
+    public Sprite OTPbox_highlighter;
+    public Sprite oldOTP_Box;
     [Space(5)]
     [Header("Login-InputFields")]
     // public MobileInputField LoginEmailNew;
@@ -165,6 +172,8 @@ public class UserRegisterationManager : MonoBehaviour
     public bool XanaliaBool;
     public Web3APIforWeb2 _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
+    /// 
+    public int btnClickedNo = 0;
 
     #region WelcomeScreen
     public GameObject welcomeScreen;
@@ -179,6 +188,15 @@ public class UserRegisterationManager : MonoBehaviour
     private bool _disposedValue;
 
 
+    public GameObject EntertheWorld_Panal;
+    public GameObject NewSignUp_Panal;
+    public GameObject LogoImage;
+    public GameObject NewLoadingScreen;
+    public Text _NewLoadingText;
+    String _LoadingTitle = "";
+    public bool _IsWalletSignUp = false;
+    public int SignUpButtonSelected = 0;
+
     public void ShowWelcomeScreen()
     {
         if (!PlayerPrefs.HasKey("shownWelcome"))
@@ -192,7 +210,21 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
     }
-
+    public void ShowWelcomeScreenessintial()
+    {
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 0)
+        {
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
+                if (PlayerPrefs.GetInt("GuestUser") == 0)
+                {
+                    welcomeScreen.SetActive(true);
+                    shownWelcome = true;
+                    //PlayerPrefs.SetInt("shownWelcome", 1);
+                }
+            }
+        }
+    }
     public void ShowWelcomeClosed()
     {
         //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
@@ -204,18 +236,21 @@ public class UserRegisterationManager : MonoBehaviour
                 PlayerPrefs.SetInt("presetPanel", 1);
                 ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
                 StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
+                //Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
             }
         }
         else
         {
-
+            PlayerPrefs.SetInt("GuestUser", 1);
             welcomeScreen.SetActive(false);
             shownWelcome = false;
             print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
+                
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
         }
 
@@ -233,10 +268,42 @@ public class UserRegisterationManager : MonoBehaviour
 
     }
 
+    public void NewWalletSignUp() 
+    {
+        _IsWalletSignUp = true;
+    }
+
+    public void WalletLoginCheck() 
+    {
+        _IsWalletSignUp = false;
+        LoginPanal.SetActive(false);
+    }
+
+    public void NextScreenAfterWalletConnected() 
+    {
+        if (_IsWalletSignUp)
+        {
+            setAvatarGiftPanal.SetActive(true);
+        }
+        else {
+            setAvatarGiftPanal.SetActive(false);
+            
+        }
+        if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
+        {
+            PlayerPrefs.SetInt("CloseLoginScreen", 1);
+            PlayerPrefs.SetInt("iSignup", 1);
+            PlayerPrefs.SetInt("IsProcessComplete", 1);
+            PlayerPrefs.SetInt("shownWelcome",1);
+        }
+        
+    }
+
     public void iwanto_signUp()
     {
         PlayerPrefs.SetInt("iSignup", 1);
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
     public void CoutinueAsAGuest()
     {
@@ -289,6 +356,25 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("iSignup", 0);
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
+
+      //  CloseLoginScreen();
+    }
+
+
+   
+
+    public void CloseLoginScreen() 
+    {
+        if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("CloseLoginScreen") == 0)
+        {
+            //if () 
+            welcomeScreen.SetActive(true);
+
+        }
+        else
+        {
+            welcomeScreen.SetActive(false);
+        }
     }
 
     public void WalletConnectBtnClicked()
@@ -310,6 +396,47 @@ public class UserRegisterationManager : MonoBehaviour
         Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
     }
 
+    public void BacktoAvatarSelectionPanel() 
+    {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+    }
+
+    public void LoginScreenClicked(int btn) 
+    {
+        btnClickedNo = btn;
+    }
+
+    public void BackFromLoginScreen() 
+    {
+        if (btnClickedNo == 0) 
+        {
+            welcomeScreen.SetActive(true);
+        }
+        else if (btnClickedNo == 1)
+        {
+            NewSignUp_Panal.SetActive(true);
+        }
+        else if (btnClickedNo == 2)
+        {
+            FirstPanal.SetActive(true);
+        }
+        MoveButtonBacktoPreviousPos();
+        LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
+        LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
+        LoginPanal.SetActive(false);
+        if (chk_forAccountALreadyLogedin)
+        {
+            chk_forAccountALreadyLogedin = false;
+            ShowWelcomeScreen();
+
+        }
+    }
+
+    public void MoveButtonBacktoPreviousPos() 
+    {
+        FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
+    }
 
     private async void eventcalled(string _userType)
     {
@@ -691,6 +818,7 @@ public class UserRegisterationManager : MonoBehaviour
         emailTabSelected.SetActive(true);
         phoneTabSelected.SetActive(false);
         WalletTabSelected.SetActive(false);
+
         // emailTabText.fontStyle = FontStyle.Bold;
         // phoneTabText.fontStyle = FontStyle.Normal;
 
@@ -738,11 +866,11 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void OnSignUpWalletTabPressed()
     {
-        if (WalletScreen.activeInHierarchy)
-            return;
+        //if (WalletScreen.activeInHierarchy)
+        //    return;
         emailScreen.SetActive(false);
         numberScreen.SetActive(false);
-        WalletScreen.SetActive(true);
+        //WalletScreen.SetActive(true);
         // tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
         StartCoroutine(Animate(WalletSelectedImg.rectTransform));
         WalletTabText.gameObject.GetComponent<Text>().color = HighlightedColor;
@@ -750,7 +878,7 @@ public class UserRegisterationManager : MonoBehaviour
         phoneTabText.gameObject.GetComponent<Text>().color = NormalColor;
         emailTabSelected.SetActive(false);
         phoneTabSelected.SetActive(false);
-        WalletTabSelected.SetActive(true);
+        //WalletTabSelected.SetActive(true);
         //  tabSelectorAnimator.Play("Wallet");   
     }
     private IEnumerator Animate(RectTransform targetPos)
@@ -806,9 +934,16 @@ public class UserRegisterationManager : MonoBehaviour
     //    //end reset
 
     //}
+
+    public void SignUpMethodSelected(int btn) 
+    {
+        SignUpButtonSelected = btn;
+    }
+
+
     public void BackFtn(int Openbackint)
     {
-        print(Openbackint);
+        print(SignUpButtonSelected);
         if (ForgetPasswordBool)
         {
             OpenUIPanal(14);
@@ -816,26 +951,37 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (SignUpWithPhoneBool)
-            {
-                if (Openbackint == 2)
-                {
-                    // PhoneInputTextNew.Text = "";
-                    PhoneFieldNew.Text = "";
-                    //Openbackint = 9;
-                }
-                if (Openbackint == 8)
-                {
-                    //   PhoneInputTextNew.Text = "";
-                    PhoneFieldNew.Text = "";
-                }
+            OpenUIPanal(20);
+            //if (!WalletScreen.activeInHierarchy)
+            //{
+            //    if (SignUpButtonSelected == 1)
+            //    {
+            //        OnSignUpPhoneTabPressed();
+            //        PhoneFieldNew.Text = "";
+            //        //if (Openbackint == 2)
+            //        //{
+            //        //    // PhoneInputTextNew.Text = "";
+            //        //    PhoneFieldNew.Text = "";
+            //        //    OpenUIPanal(Openbackint);
+            //        //    //Openbackint = 9;
+            //        //}
+            //        //if (Openbackint == 8)
+            //        //{
+            //        //    //   PhoneInputTextNew.Text = "";
+            //        //    PhoneFieldNew.Text = "";
+            //        //}
+            //    }
+            //    else if (SignUpButtonSelected == 2)
+            //    {
+            //        OnSignUpEmailTabPressed();
+            //        EmailFieldNew.Text = "";
+            //    }
+            //    SignUpPanal.SetActive(true);
             }
-            else if (SignUpWithEmailBool)
-            {
-
-            }
-            OpenUIPanal(Openbackint);
-        }
+            
+            //OpenUIPanal(Openbackint);
+            image_to_Change[0].sprite = OTPbox_highlighter;
+            image_to_Change[3].sprite = oldOTP_Box;
     }
 
     public void GoToRegistrationScreen(int R_Integer)
@@ -861,6 +1007,7 @@ public class UserRegisterationManager : MonoBehaviour
     // Invoked when the value of the text field changes.
     public void ValueChangeCheck()
     {
+        image_to_Change[0].sprite = OTPbox_highlighter;
         string[] myOtpTxt = new string[text_to_show.Length];
         //  char[] charArr = new char[mainfield_for_opt.Text.Length];
         char[] charArr = new char[mainfieldOTPNew.Text.Length];
@@ -868,19 +1015,42 @@ public class UserRegisterationManager : MonoBehaviour
         charArr = mainfieldOTPNew.Text.ToCharArray();
         for (int i = 0; i < myOtpTxt.Length; i++)
         {
-            if (i < charArr.Length)
+            if (i == 0)
             {
+                image_to_Change[0].sprite = OTPbox_highlighter;
+            }
+            if (i < charArr.Length)//1 2 3 4
+            {
+                //Debug.Log("VALUE OF Char" + charArr.Length);
                 myOtpTxt[i] = charArr[i].ToString();
                 text_to_show[i].text = myOtpTxt[i].ToString();
-
+                if (i < 3)
+                {
+                    image_to_Change[i + 1].sprite = OTPbox_highlighter;
+                    image_to_Change[i].sprite = oldOTP_Box;
+                }
+                
             }
             else
             {
                 myOtpTxt[i] = "";
+                Debug.Log("VALUE OF OTP" + myOtpTxt[i]);
                 text_to_show[i].text = myOtpTxt[i].ToString();
+                //Debug.Log("VALUE OF I" + i);
+                //Debug.Log("VALUE OF Char" + charArr.Length);
+                //Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
+                if (charArr.Length < 4) //1 2 3 
+                {
+                    if (charArr.Length != 3)
+                    {
+                        image_to_Change[charArr.Length + 1].sprite = oldOTP_Box;
+                    }
+                }
 
             }
         }
+
+        
     }
 
     public void BackButtonPressedhere()
@@ -912,6 +1082,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PresetData_Jsons.lastSelectedPreset = null;
             PresetData_Jsons.clickname = null;
 
+            //EntertheWorld_Panal.SetActive(true);
             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             UserRegisterationManager.instance.usernamePanal.SetActive(false);
 
@@ -985,13 +1156,15 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        FirstPanal.SetActive(true);
+                        //FirstPanal.SetActive(true);
+                        welcomeScreen.SetActive(true);
+                        //SignUpPanal.SetActive(false);
                     }
                     break;
                 }
             case 2:
                 {
-                    PlayerPrefs.SetInt("iSignup", 1);
+                    //PlayerPrefs.SetInt("iSignup", 1);
                     //  EmailPanal.SetActive(true);
                     SignUpPanal.SetActive(true);
                     if (!WalletScreen.activeInHierarchy)
@@ -1012,6 +1185,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 3:
                 {
                     OTPPanal.SetActive(true);
+                    //SignUpPanal.SetActive(false);
                     //  mainfield_for_opt.Text = "";
                     //  mainfield_for_opt.SelectOtherField();
                     mainfieldOTPNew.Text = "";
@@ -1042,7 +1216,8 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 5:
                 {
-                    usernamePanal.SetActive(true);
+                    //usernamePanal.SetActive(true);
+                    setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
                     //StartCoroutine(WaitandActive());
                     //UsernameTextNew.Text = "";
@@ -1088,7 +1263,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         Debug.Log("show welcome else");
                         LoggedIn = true;
-                        GameManager.Instance.SignInSignUpCompleted();
+                        //GameManager.Instance.SignInSignUpCompleted();
                     }
                     break;
                 }
@@ -1097,7 +1272,7 @@ public class UserRegisterationManager : MonoBehaviour
 
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
-                    OnSignUpPhoneTabPressed();
+                    //OnSignUpPhoneTabPressed();
                     //  OnSignUpWalletTabPressed();
 
                     break;
@@ -1178,7 +1353,9 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
-                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        
+                        //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        EntertheWorld_Panal.SetActive(true);
                     }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
@@ -1189,6 +1366,66 @@ public class UserRegisterationManager : MonoBehaviour
                         if (shownWelcome)
                             ShowWelcomeClosed();
                      }
+                    break;
+                }
+            case 17:
+                {
+                    if (shownWelcome)
+                    {
+
+                        if (PlayerPrefs.GetInt("iSignup") == 1)
+                        {
+                            PlayerPrefs.SetInt("iSignup", 0);
+
+                            welcomeScreen.SetActive(true);
+                            shownWelcome = true;
+                        }
+                        else
+                            ShowWelcomeClosed();
+
+                        //welcomeScreen.SetActive(true);
+                    }
+                    else
+                    {
+                        FirstPanal.SetActive(true);
+                       // welcomeScreen.SetActive(true);
+                        //SignUpPanal.SetActive(false);
+                    }
+                    break;
+                }
+
+            case 18:
+                {
+
+                    PlayerPrefs.SetInt("iSignup", 1);// going for Wallet register user
+                    //SignUpPanal.SetActive(true);
+                    //OnSignUpPhoneTabPressed();
+                    //  OnSignUpWalletTabPressed();
+
+                    break;
+                }
+            case 19:
+                {
+                    PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
+                    break;
+                }
+
+            case 20: 
+                {
+                    if (!WalletScreen.activeInHierarchy)
+                    {
+                        if (SignUpButtonSelected == 1)
+                        {
+                            OnSignUpPhoneTabPressed();
+                            PhoneFieldNew.Text = "";
+                        }
+                        else if (SignUpButtonSelected == 2)
+                        {
+                            OnSignUpEmailTabPressed();
+                            EmailFieldNew.Text = "";
+                        }
+                        SignUpPanal.SetActive(true);
+                    }
                     break;
                 }
         }
@@ -1396,7 +1633,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         LoggedInAsGuest = false;
-
+        PlayerPrefs.SetInt("GuestUser", 0);
         yield return new WaitForSeconds(0.1f);
         resetClothstoGuest();
 
@@ -1457,11 +1694,14 @@ public class UserRegisterationManager : MonoBehaviour
         //    PresetData_Jsons.lastSelectedPreset = null;
         //}
         PresetData_Jsons.clickname = "";
-        for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+        if (StoreManager.instance.PresetArrayContent)
         {
-            StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+            {
+                StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+            }
+            StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         }
-        StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         //end reset
         if (StoreManager.instance != null)
         {
@@ -2684,6 +2924,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     OpenUIPanal(3);
                     Email = localEmail;
+                    SignUpWithPhoneBool = false;
                 }
             }
         }
@@ -2768,7 +3009,8 @@ public class UserRegisterationManager : MonoBehaviour
     public void SubmitOTP()
     {
         string OTP = "";
-
+        NewLoadingScreen.SetActive(true);
+        _NewLoadingText.text = "";
         //  OTP = mainfield_for_opt.Text;
         OTP = mainfieldOTPNew.Text;
         // for (int i = 0; i < pinNew.Count; i++)
@@ -2935,7 +3177,6 @@ public class UserRegisterationManager : MonoBehaviour
             password = pass1;
 
             OpenUIPanal(5);
-
         }
         else
         {
@@ -3018,6 +3259,7 @@ public class UserRegisterationManager : MonoBehaviour
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver();
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
@@ -3079,14 +3321,37 @@ public class UserRegisterationManager : MonoBehaviour
 
     // End Register User with password
 
+    public void LoadingFadeOutScreen() 
+    {
+        
+        BlackScreen.SetActive(true);
+        BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+        StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
+        TutorialsManager.instance.ShowTutorials();
+    }
+    IEnumerator LerpFunction(Color endValue, float duration)
+    {
+        float time = 0;
+        Color startValue = BlackScreen.GetComponent<Image>().color;
+        while (time < duration)
+        {
+            BlackScreen.GetComponent<Image>().color = Color.Lerp(startValue, endValue, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        BlackScreen.GetComponent<Image>().color = endValue;
+        BlackScreen.SetActive(false);
+    }
+
+    
 
 
     public void EnterUserName()
     {
-
-        //    print(PlayerPrefs.GetInt("shownWelcome"));
-        //  print(PlayerPrefs.GetInt("iSignup"));
-        //   print(PlayerPrefs.GetInt("IsProcessComplete"));
+        
+        //print(PlayerPrefs.GetInt("shownWelcome")); // 0
+        //print(PlayerPrefs.GetInt("iSignup")); // 1
+        //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
 
@@ -3146,6 +3411,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             usernamePanal.SetActive(false);
+            EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
 
             //  StoreManager.instance.OnSaveBtnClicked();
@@ -3184,6 +3450,10 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithNumber myobjectOfPhone = new MyClassOfRegisterWithNumber();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
+                Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+                PlayerPrefs.SetInt("CloseLoginScreen", 1);
+                //StoreManager.instance.OnSaveBtnClicked();
+
             }
             else
             {
@@ -3191,10 +3461,13 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(Email, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
+                PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
+            //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
         }
     }
 
+   
 
     public void SubmitLoginCredentials()
     {
@@ -3457,6 +3730,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
                 else
@@ -3465,6 +3739,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (myObjectForOPT.success)
                     {
                         OpenUIPanal(4);
+                        NewLoadingScreen.SetActive(false);
                     }
                 }
 
@@ -3528,12 +3803,12 @@ public class UserRegisterationManager : MonoBehaviour
 
                     }
                 }
-                if (myObjectofOTPForResetPassword.data.tempToken == null)
-                {
-                    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
-                    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
-                }
+                //if (myObjectofOTPForResetPassword.data.tempToken == null)
+                //{
+                //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
+                //    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                //}
 
             }
 
@@ -3579,13 +3854,15 @@ public class UserRegisterationManager : MonoBehaviour
                         SubmitSetDeviceToken();
                         //  print("Registration With Name Completed ");
                         LoggedInAsGuest = false;
-
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
+                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
                         ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
-
+                        Debug.Log("IS LOGGED VALUE CHANGED");
 
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
+                        //nb
                         LoggedIn = true;
                         //OpenUIPanal(6);  
                     }
@@ -3757,10 +4034,10 @@ public class UserRegisterationManager : MonoBehaviour
                         //{
                         //    EventList.instance.GetWorldAPISNew();
                         //}
-                        if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        {
-                            StoreManager.instance.GetAllMainCategories();
-                        }
+                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
+                        //{
+                        //    StoreManager.instance.GetAllMainCategories();
+                        //}
 
                     }
                 }
@@ -3926,7 +4203,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
-                        PlayerPrefs.SetInt("FristPresetSet", 1);
+                        //PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetString("PlayerName", myObject1.data.user.name);
                         PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
                         print("Welcome " + PlayerPrefs.GetString("UserName"));
@@ -3956,10 +4233,10 @@ public class UserRegisterationManager : MonoBehaviour
                         //    EventList.instance.GetWorldAPISNew();
                         //    StoreManager.instance.GetAllMainCategories();
                         //}
-                        if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        {
-                            StoreManager.instance.GetAllMainCategories();
-                        }
+                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
+                        //{
+                        //    StoreManager.instance.GetAllMainCategories();
+                        //}
                     }
                 }
             }
@@ -4305,7 +4582,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
-        OpenUIPanal(7);
+       // OpenUIPanal(7);
         SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         getdatafromserver();

@@ -125,9 +125,7 @@ namespace Metaverse
             InternetLost = go;
              }
 
-            if (LoadingHandler.Instance != null &&
-
-                !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+            if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 //CameraLook.instance.DisAllowControl();
                 OffSelfie();
@@ -389,7 +387,7 @@ namespace Metaverse
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
                     currentDummyPlayer.transform.parent = spawnPoint.transform;
                     //Debug.Log("1");
-                    if (FeedEventPrefab.m_EnvName.Contains("AfterParty"))
+                    if (WorldItemView.m_EnvName.Contains("AfterParty"))
                     {
                         //Debug.Log("2");
                         for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)

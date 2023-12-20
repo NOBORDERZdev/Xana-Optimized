@@ -6,9 +6,19 @@ public class HyperLinkPopComponent : ItemComponent
 {
     HyperLinkComponentData hyperLinkComponentData;
     string titleText, buttonData;
+    string RuntimeItemID = "";
+
     public void Init(HyperLinkComponentData hyperLinkComponentData)
     {
         this.hyperLinkComponentData = hyperLinkComponentData;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
+
+        // Remove leading and trailing spaces
+        string inputText = this.hyperLinkComponentData.titleHelpButtonText.Trim();
+        // Replace all spaces between lines with an empty string
+        string hyperLinkCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+
+        this.hyperLinkComponentData.titleHelpButtonText = hyperLinkCleanedText;
     }
 
     void SetHelpButtonNarration()
@@ -30,7 +40,8 @@ public class HyperLinkPopComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            SetHelpButtonNarration();
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
         }
     }
 
@@ -45,7 +56,7 @@ public class HyperLinkPopComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-
+        SetHelpButtonNarration();
     }
     private void StopComponent()
     {
@@ -55,8 +66,11 @@ public class HyperLinkPopComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()

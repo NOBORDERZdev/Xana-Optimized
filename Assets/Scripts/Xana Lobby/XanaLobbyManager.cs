@@ -24,6 +24,7 @@ public class XanaLobbyManager : MonoBehaviour
     string _Des;
     Texture2D _image;
     MediaType _Type;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,7 +41,6 @@ public class XanaLobbyManager : MonoBehaviour
     {
         InitXanaLobbyWorlds();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -70,6 +70,7 @@ public class XanaLobbyManager : MonoBehaviour
                 StartCoroutine(InitData(json,placedWorlds));
             }
         }
+        
     }
     public IEnumerator InitData(XanaLobbyJson data,List<GameObject> placedWorldsList)
     {

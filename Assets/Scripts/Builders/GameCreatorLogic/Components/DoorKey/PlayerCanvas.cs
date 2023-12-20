@@ -10,7 +10,7 @@ public class PlayerCanvas : MonoBehaviour
 
     [SerializeField] GameObject keyImage;
     [SerializeField] GameObject wrongKey;
-    public TextMeshPro keyCounter;
+    public TextMeshProUGUI keyCounter;
 
     [SerializeField] GameObject blindLight;
     [SerializeField] GameObject[] blindAdditionalLights;
@@ -64,7 +64,10 @@ public class PlayerCanvas : MonoBehaviour
     {
         if (isKeyEnabled && cameraMain != null)
         {
-            Quaternion cameraRotation = cameraMain.rotation;
+            if (!cameraMain.gameObject.activeInHierarchy)
+            {
+                cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+            }
             Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 180);
             keyImage.transform.rotation = targetRotation;
         }

@@ -82,7 +82,7 @@ public class YoutubeStreamController : MonoBehaviour
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 #if UNITY_EDITOR && !UNITY_IOS
-        if (!FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena") && !FeedEventPrefab.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        if (!WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !WorldItemView.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
@@ -90,25 +90,25 @@ public class YoutubeStreamController : MonoBehaviour
         }
 #endif
 #if UNITY_IOS
-        if (FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        if (WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale = scale;
         }
-        if (FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament") || FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
+        if (WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
@@ -184,7 +184,7 @@ public class YoutubeStreamController : MonoBehaviour
                 player.GetLivestreamUrl(APIHandler.Data.URL);
             }
 
-            if (!FeedEventPrefab.m_EnvName.Contains("Xana Festival") || !FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+            if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.SetActive(false);
             }

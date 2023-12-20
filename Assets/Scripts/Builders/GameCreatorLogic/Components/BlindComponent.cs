@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Models;
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -17,6 +18,9 @@ public class BlindComponent : ItemComponent
 
     float time;
     string RuntimeItemID = "";
+
+    GameObject playerObject;
+
     void Start()
     {
         _light = FindObjectsOfType<Light>();
@@ -39,11 +43,12 @@ public class BlindComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            playerObject = _other.gameObject;
             if (!IsAgainTouchable) return;
 
             IsAgainTouchable = false;
 
-            if(GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
@@ -65,19 +70,49 @@ public class BlindComponent : ItemComponent
     private void OnCollisionExit(Collision collision)
     {
         IsAgainTouchable = true;
+        playerObject = null;
     }
 
     #region BehaviourControl
     private void StartComponent()
     {
-        if (PlayerCanvas.Instance.transform.parent != ArrowManager.Instance.nameCanvas.transform)
+        if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
         {
-            PlayerCanvas.Instance.transform.SetParent(ArrowManager.Instance.nameCanvas.transform);
+            PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
             PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
 
         }
         PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
-        
+
+
+        float timeDiff = 0;
+        if (playerObject != null)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("blindComponent", DateTime.UtcNow.ToString());
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            }
+        }
+        else
+        {
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponent) && !blindToggle)
+            {
+                string blindComponentstr = blindComponent.ToString();
+                DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr); ;
+                DateTime currentDateTime = DateTime.UtcNow;
+                TimeSpan diff = currentDateTime - dateTimeRPC;
+
+                timeDiff = (diff.Minutes * 60) + diff.Seconds;
+                time = timeDiff;
+
+                if (time == 0 || time > blindComponentData.time)
+                    return;
+            }
+        }
+
         if (time == 0 && !blindComponentData.isOff)
         {
             time = blindComponentData.time;
@@ -93,12 +128,16 @@ public class BlindComponent : ItemComponent
     private void StopComponent()
     {
         TimeStats._blindComponentStop?.Invoke();
+        playerObject = null;
     }
 
     public override void StopBehaviour()
     {
-        isPlaying = false;
-        StopComponent();
+        if (isPlaying)
+        {
+            isPlaying = false;
+            StopComponent();
+        }
     }
 
     public override void PlayBehaviour()

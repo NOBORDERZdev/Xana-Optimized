@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class StreamingSockets : MonoBehaviour
 {
+    public bool EnableEventStreaming ;
     public static StreamingSockets Instance;
     //public string [] WorldNames ;
     public SocketManager Manager;
@@ -38,7 +39,7 @@ public class StreamingSockets : MonoBehaviour
 
     public void ConnectSockets()
     {
-        if (isFristTime)
+        if (isFristTime ) 
         {
             isFristTime= false;
             if (APIBaseUrlChange.instance.IsXanaLive)
@@ -78,9 +79,12 @@ public class StreamingSockets : MonoBehaviour
     }
 
     public async void RecvieStreamingEvent(string EventDetail){
-       
-      //  print("~~~~~~~~~~~~~~ "+EventDetail);
-       
+
+        //  print("~~~~~~~~~~~~~~ "+EventDetail);
+        if ( EnableEventStreaming)
+        {
+
+        
         EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(EventDetail);
         Debug.Log("<color=green> EventDetail --  : " + eventDetails.data.id + " : " + eventDetails.data.environmentName + "</color>");
         if (isInEvent)
@@ -113,6 +117,7 @@ public class StreamingSockets : MonoBehaviour
             XanaConstants.xanaConstants.newStreamEntery=true;
             isInEvent= true;
             DynamicEventManager.Instance.SetSceneData();
+        }
         }
     }
 
