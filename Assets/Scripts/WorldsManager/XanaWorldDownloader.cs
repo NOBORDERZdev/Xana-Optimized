@@ -178,9 +178,9 @@ public class XanaWorldDownloader : MonoBehaviour
         // Now, distances contains the vector positions sorted by proximity to the player position
         foreach (var item in distances)
         {
-            //Debug.LogError(item.Item1.ItemID+"---"+item.Item2);
+            ////Debug.LogError(item.Item1.ItemID+"---"+item.Item2);
             downloadDataQueue.Add(item.Item1);
-            // Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
+            // //Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
         }
         dataSorted = true;
     }
@@ -209,7 +209,7 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             downloadDataQueue.Insert(x, item.Item1);
             x++;
-            //Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
+            ////Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
         }
     }
 
@@ -254,7 +254,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("Error while downloading Addressable :- " + downloadKey);
+                    //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
                 }
             }
             while (!_async.IsDone)
@@ -268,9 +268,9 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Download Failed......");
+                //Debug.LogError("Download Failed......");
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadDataQueue.RemoveAt(0);
@@ -305,7 +305,7 @@ public class XanaWorldDownloader : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("Error while downloading Addressable :- " + downloadKey);
+                    //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
                 }
             }
             while (!_async.IsDone)
@@ -319,7 +319,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Download Failed......");
+                //Debug.LogError("Download Failed......");
             }
             yield return new WaitForSeconds(0.1f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
@@ -363,7 +363,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             else
             {
-                Debug.LogError(_async.Status);
+                //Debug.LogError(_async.Status);
             }
             yield return new WaitForSeconds(0.01f);
         }
@@ -448,7 +448,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Error while applying lightmap data :- " + e.Message);
+            //Debug.LogError("Error while applying lightmap data :- " + e.Message);
         }
 
     }

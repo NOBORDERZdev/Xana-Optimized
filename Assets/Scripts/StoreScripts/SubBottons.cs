@@ -35,8 +35,6 @@ public class SubBottons : MonoBehaviour
         if (ClothBool)
         {
             StoreManager.instance.OpenClothContainerPanel(m_Index);
-            
-            print("~~~~~~~~~~~~");
             if (m_Index == 2)
             {
                 CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
@@ -52,8 +50,6 @@ public class SubBottons : MonoBehaviour
         {
             StoreManager.instance.OpenAvatarContainerPanel(m_Index);
             currentSelectedCategoryIndex = m_Index;
-
-            //       print(m_Index);
 
             if (m_Index == 10 || m_Index == 6)
             {

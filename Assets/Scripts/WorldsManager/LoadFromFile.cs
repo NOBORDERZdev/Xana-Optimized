@@ -152,7 +152,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             if (CheckVoid())
             {
-                Debug.Log("Resetting Position");
+                //Debug.Log("Resetting Position");
                 ResetPlayerPosition();
             }
             yield return new WaitForSeconds(1f);
@@ -163,7 +163,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void LoadFile()
     {
         mainPlayer.SetActive(false);
-        //Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
+        ////Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
         //if (!setLightOnce)
         //{
         //    LoadLightSettings(FeedEventPrefab.m_EnvName);
@@ -199,7 +199,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (YoutubeStreamPlayer == null)
         {
-            Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
+            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
             if (WorldItemView.m_EnvName.Contains("DJ Event"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
@@ -328,12 +328,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             else
             {
-                Debug.LogWarning("No Environment Light Properties Found");
+                //Debug.LogWarning("No Environment Light Properties Found");
             }
         }
         else
         {
-            Debug.LogWarning("No Environment Name Found");
+            //Debug.LogWarning("No Environment Name Found");
         }
     }
 
@@ -528,16 +528,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //}
             //catch (System.Exception e)
             //{
-            //    Debug.Log("<color = red>Exception here..............</color>");
+            //    //Debug.Log("<color = red>Exception here..............</color>");
             //}
         }
         // Yes Join APi Call Here
-        //Debug.Log("Waqas : Room Joined.");
-        Debug.Log("<color=green> Analytics -- Joined </color>");
+        ////Debug.Log("Waqas : Room Joined.");
+        //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
         // Join Room Activate Chat
-        //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             string worldId = 0.ToString();
@@ -577,7 +577,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
-        Debug.Log("<color=red> NPC Chat Object Loaded </color>");
+        //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
     [SerializeField] int autoSwitchTime;
@@ -681,7 +681,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //}
             //catch (System.Exception e)
             //{
-            //    Debug.Log("<color = red> Exception here..............</color>");
+            //    //Debug.Log("<color = red> Exception here..............</color>");
             //}
         }
 
@@ -721,8 +721,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
 
         // Yes Join APi Call Here
-        //Debug.Log("Waqas : Room Joined.");
-        Debug.Log("<color=green> Analytics -- Joined </color>");
+        ////Debug.Log("Waqas : Room Joined.");
+        //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
@@ -854,7 +854,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        Debug.Log("Instantiating Photon Complete");
+        //Debug.Log("Instantiating Photon Complete");
 
         ResetPlayerPosition();
     }
@@ -1024,7 +1024,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (BuilderAssetDownloader.isPostLoading)
         {
-            Debug.LogError("here resetting player .... ");
+            //Debug.LogError("here resetting player .... ");
             if (BuilderData.spawnPoint.Count == 1)
             {
                 spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
@@ -1080,7 +1080,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        //Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
+        ////Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (XanaConstants.xanaConstants.isBuilderScene)
