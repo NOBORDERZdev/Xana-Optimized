@@ -1249,7 +1249,8 @@ public class PlayerControllerNew : MonoBehaviour
         innerJoystick.GetComponent<JoyStickIssue>().ResetJoyStick();
         innerJoystick_Portrait.GetComponent<JoyStickIssue>().ResetJoyStick();
 
-        characterController.Move(Vector3.zero);
+        if (!isNinjaMotion)
+            characterController.Move(Vector3.zero);
         //JumpNotAllowed();
         //StopCoroutine(nameof(Jump));
         //StopCoroutine(nameof(JumpEnd));

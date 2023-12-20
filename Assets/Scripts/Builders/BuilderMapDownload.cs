@@ -28,6 +28,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     public SkyBoxesData skyBoxData;
     public RealisticTerrainMaterials realisticTerrainMaterials;
+    public LightPPScriptableData lightAndPPData;
     public Color skyBoxColor;
     public Light directionalLight;
     public Light characterLight;
@@ -535,6 +536,7 @@ public class BuilderMapDownload : MonoBehaviour
                 GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out whiteBalance);
                 GamificationComponentData.instance.aiPPVolumeProfile.TryGet(out colorAdjustments);
                 UpdateDirectionLightAndPPData(skyBoxItem);
+                skyBoxItem.lightPPData.directionalLightData.lensFlareData.falreData = GamificationComponentData.instance.lensFlareDataSRP;
                 lensFlareData = skyBoxItem.lightPPData.directionalLightData.lensFlareData;
             }
         }
@@ -614,10 +616,18 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareComponent = directionalLight.gameObject.AddComponent<LensFlareComponentSRP>();
             lensFlareComponent.occlusionRadius = 0.35f;
         }
-        lensFlareComponent.lensFlareData = lensFlareData;
-        lensFlareComponent.intensity = lensFlareIntensity;
-        lensFlareComponent.scale = lensFlareScale;
-
+        if (lensFlareData != null)
+        {
+            lensFlareComponent.lensFlareData = lensFlareData;
+            lensFlareComponent.intensity = lensFlareIntensity;
+            lensFlareComponent.scale = lensFlareScale;
+        }
+        else
+        {
+            lensFlareComponent.lensFlareData = null;
+            lensFlareComponent.intensity = 1;
+            lensFlareComponent.scale = 1;
+        }
     }
 
     void SetPlayerProperties()
@@ -661,9 +671,13 @@ public class BuilderMapDownload : MonoBehaviour
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
         BuilderEventManager.BGMStart?.Invoke();
-
-
         reflectionProbe.enabled = true;
+        if (levelData.skyProperties.skyId != -1)
+        {
+            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+        }
+        UpdateScene();
     }
 
 

@@ -71,6 +71,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     //AI Generated Skybox
     public Material aiSkyMaterial;
     public VolumeProfile aiPPVolumeProfile;
+    public LensFlareDataSRP lensFlareDataSRP;
     internal bool isSkyLoaded;
 
     //Gamification components with multipler
