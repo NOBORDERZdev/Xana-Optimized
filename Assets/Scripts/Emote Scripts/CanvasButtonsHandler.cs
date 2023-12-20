@@ -128,7 +128,6 @@ public class CanvasButtonsHandler : MonoBehaviour
     public Coroutine addSpiritCoroutine;
     public IEnumerator IEUseSpirit()
     {
-        Debug.LogError("IEUseSpirit" + ((spirit / maxSpirit * 100) > 0));
         while ((spirit / maxSpirit * 100) > 0)
         {
             if (RFMInputController.movement != Vector2.zero)
