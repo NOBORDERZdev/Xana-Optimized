@@ -20,7 +20,7 @@ public class FadeOutScreenScript : MonoBehaviour
     {
         while (alpha > 0.0f)
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.04f);
             alpha -= 0.05f;
             blackScreen.color = new Color(1f, 1f, 1f, alpha);
         }
