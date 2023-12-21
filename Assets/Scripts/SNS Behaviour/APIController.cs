@@ -435,9 +435,11 @@ public class APIController : MonoBehaviour
             {
                 for (int j = 0; j < APIManager.Instance.searchUserRoot.data.rows.Count; j++)
                 {
-                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.findFriendContainer);
-                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
+                    if (!APIManager.Instance.searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId)){ 
+                        GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.findFriendContainer);
+                        //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
+                    }
                 }
             }
         }
@@ -453,9 +455,12 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
             {
-                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
-                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                if (!searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId))
+                {
+                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                }
             }
         }
     }
@@ -471,9 +476,11 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
             {
-                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
-                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                if (!searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId)){
+                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
+                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                }
             }
         }
     }
