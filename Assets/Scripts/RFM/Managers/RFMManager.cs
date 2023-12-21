@@ -48,6 +48,9 @@ namespace RFM.Managers
         public List<RFM.Character.NPCHunter> hunterNPCList = new List<RFM.Character.NPCHunter>();
         public Dictionary<RFM.Character.NPCHunter, Transform> hunterTargetsDictionary = new Dictionary<NPCHunter, Transform>();
 
+        //RFM Water light 
+        public Light rfmWaterLight;
+        public LayerMask rfmWaterLightMask;
         #endregion
 
         #region Fields
@@ -111,7 +114,7 @@ namespace RFM.Managers
 
             _gameCanvas.SetActive(true);
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
-
+            rfmWaterLight.cullingMask = rfmWaterLightMask;
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
@@ -199,7 +202,7 @@ namespace RFM.Managers
             {
                 player.CustomProperties.Clear();
             }
-
+            huntersCage.GetComponent<Animator>().Play("RFMCloseDoor");
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
