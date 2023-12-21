@@ -411,6 +411,8 @@ public class SelfieController : MonoBehaviour
         if (!ChangeOrientation_waqas._instance.isPotrait)
         {
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
+            m_RenderTexture.width = 960;
+            m_RenderTexture.height = 540;
             screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
 
             if (!screenShotCameraCapture.gameObject.activeSelf)
@@ -425,6 +427,8 @@ public class SelfieController : MonoBehaviour
         else if (ChangeOrientation_waqas._instance.isPotrait)
         {
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).GetComponent<Camera>();    // my changes 
+            m_RenderTexture.width = 730;
+            m_RenderTexture.height = 1580;
             screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
 
             if (!screenShotCameraCapture.gameObject.activeSelf)
