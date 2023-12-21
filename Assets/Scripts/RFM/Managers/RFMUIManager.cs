@@ -32,6 +32,7 @@ namespace RFM.Managers
         public TextMeshProUGUI showMoney;
 
         private GameObject _controlsCanvas; // 375
+        private GameObject _mainCanvas;
 
         private bool _wasInstructionsPanelActive;
 
@@ -39,11 +40,13 @@ namespace RFM.Managers
 
         [SerializeField] private GameObject restartButton;
 
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
             
             _controlsCanvas = GameObject.FindGameObjectWithTag("NewCanvas");
+            _mainCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
 
@@ -145,6 +148,9 @@ namespace RFM.Managers
             showMoney.gameObject.SetActive(false);
             rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
+
+            _mainCanvas.SetActive(false);
+            CanvasButtonsHandler.inst.ShowRFMButtons(false);
             int earnedMoney = 0;
             if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("money", out object _money))
             {
