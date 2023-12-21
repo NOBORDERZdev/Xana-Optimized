@@ -142,7 +142,7 @@ namespace RFM.Managers
         
         private void OnGameOver()
         {
-            showMoney.gameObject.SetActive(false);
+            showMoney.transform.parent.gameObject.SetActive(false);
             rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
             int earnedMoney = 0;
