@@ -1057,8 +1057,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
             {
-                spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
-                goto CheckAgain;
+                PhotonView pv = hit.collider.GetComponent<PhotonView>();
+                if (pv == null || !pv.IsMine)
+                {
+                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                    goto CheckAgain;
+                }
             } //else if()
 
             else if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
@@ -1066,8 +1070,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-2, 2), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-2, 2));
                 goto CheckAgain;
             }
-
             spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+            this.spawnPoint = spawnPoint;
         }
         return spawnPoint;
     }
