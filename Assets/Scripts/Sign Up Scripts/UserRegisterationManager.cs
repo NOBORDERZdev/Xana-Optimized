@@ -3251,7 +3251,13 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void LoadingFadeOutScreen() 
     {
-        
+        if (Swipe_menu.instance.contentParent.childCount > 0)
+        {
+            foreach (Transform child in Swipe_menu.instance.contentParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
