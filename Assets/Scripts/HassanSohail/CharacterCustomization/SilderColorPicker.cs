@@ -89,7 +89,8 @@ public class SilderColorPicker : MonoBehaviour
             {
                 if (sliderCategory != SliderType.Skin)
                 {
-                    currColor = new Color(0.7647f, 0.7019f, 0.5098f, 1.000f);
+                    //currColor = new Color(0.7647f, 0.7019f, 0.5098f, 1.000f);
+                    currColor = new Color(0.5907187f, 0.6320754f, 0.2355375f, 1.000f);
                 }
             }
 
