@@ -158,6 +158,14 @@ public class CanvasButtonsHandler : MonoBehaviour
         }
     }
 
+    public void ShowRFMButtons(bool visible) 
+    {
+        slideBtn.SetActive(visible);
+        runBtn.SetActive(visible);
+        jumpBtnRFM.SetActive(visible);
+        joyStickRFM.SetActive(visible); ;
+    }
+
     void ChangeOrientation()
     {
         ChangeOrientation_waqas._instance.ChangeOrientation_editor();
