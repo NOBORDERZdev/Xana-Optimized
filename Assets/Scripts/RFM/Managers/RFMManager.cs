@@ -74,6 +74,7 @@ namespace RFM.Managers
             RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
             EventsManager.OnHideCanvasElements();
+            //StartCoroutine(CheckandFixLights());
         }
 
 
@@ -81,6 +82,7 @@ namespace RFM.Managers
         {
             base.OnEnable();
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
+            //StartCoroutine(CheckandFixLights());
 
         }
 
@@ -96,7 +98,7 @@ namespace RFM.Managers
         {
             PhotonNetwork.CurrentRoom.IsOpen = true;
             // RFMUIManager.Instance.ShowXanaStonePopup();
-
+            //StartCoroutine(CheckandFixLights());
             Application.runInBackground = true;
             yield return StartCoroutine(FetchConfigDataFromServer());
 
@@ -115,13 +117,15 @@ namespace RFM.Managers
 
             _gameCanvas.SetActive(true);
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
-
+            CanvasButtonsHandler.inst.RFMResetSprintButton();
 
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
-            yield return new WaitForSecondsRealtime(1);
-            rfmWaterLight.cullingMask = rfmWaterLightMask;
+
+
+            StartCoroutine(CheckandFixLights());
+
         }
 
         void OnApplicationPause(bool pauseStatus)
@@ -211,6 +215,7 @@ namespace RFM.Managers
             _gameCanvas.SetActive(true);
 
 
+
             var spawnPosition = playersSpawnArea.position;
             spawnPosition = new Vector3(
                 spawnPosition.x + Random.Range(-1.0f, 1.0f),
@@ -224,13 +229,22 @@ namespace RFM.Managers
             StartCoroutine(Start());
         }
 
-
+        IEnumerator CheckandFixLights() 
+        {
+            print("RFM KUSH CHECKING LIGHTS STARTED");
+            while (true)
+            {
+                yield return new WaitForSecondsRealtime(1);
+                if(rfmWaterLight.cullingMask != rfmWaterLightMask)
+                    rfmWaterLight.cullingMask = rfmWaterLightMask;
+            }
+        }
         private IEnumerator StartRFM()
         {
             EventsManager.StartCountdown();
             Globals.gameState = Globals.GameState.Countdown;
             //CancelInvoke(nameof(CheckForGameStartCondition));
-
+            //StartCoroutine(CheckandFixLights());
             countDownText.transform.parent.gameObject.SetActive(true);
             statusTMP.text = "Resetting position in:";
             statusBG.SetActive(true);
@@ -285,6 +299,7 @@ namespace RFM.Managers
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
             }
+
         }
 
         private void SetRunnerOrHunterStatusOfPlayer()
