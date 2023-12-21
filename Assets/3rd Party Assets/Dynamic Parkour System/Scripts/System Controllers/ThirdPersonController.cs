@@ -113,7 +113,6 @@ namespace Climbing
         [PunRPC]
         public void JumpRPC(bool isJump, int photonViewId)
         {
-            Debug.LogError("JumpRPC Called: " + isJump + "  " + photonViewId + "  " + GetComponent<PhotonView>().ViewID);
             if (GetComponent<PhotonView>().ViewID == photonViewId)
             {
                 characterInput.jump = isJump;
@@ -123,7 +122,6 @@ namespace Climbing
         [PunRPC]
         public void SlideRPC(bool isDrop, int photonViewId)
         {
-            Debug.LogError("SlideRPC Called: " + isDrop + "  " + photonViewId + "  " + GetComponent<PhotonView>().ViewID);
             if (GetComponent<PhotonView>().ViewID == photonViewId)
             {
                 characterInput.drop = isDrop;

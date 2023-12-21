@@ -13,6 +13,7 @@ public class AddressableDownloader : MonoBehaviour
     public int presetItemCount;
     public static AddressableDownloader Instance;
     public AddressableMemoryReleaser MemoryManager;
+    public static Action RemoveAddresables;
     private void Start()
     {
         presetItemCount = 0;
@@ -30,6 +31,11 @@ public class AddressableDownloader : MonoBehaviour
         {
             //Destroy(this.gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        RemoveAddresables += delegate { MemoryManager.RemoveAllAddressables(); };
     }
     bool isDownloading = false;
     public void DownloadCatalogFile()
@@ -51,6 +57,7 @@ public class AddressableDownloader : MonoBehaviour
 #endif
         }
     }
+
     void OnCatalogDownload(AsyncOperationHandle handle)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -99,10 +106,13 @@ public class AddressableDownloader : MonoBehaviour
                 bool flag = false;
                 loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
                 if (!flag)
+                {
                     loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                }
 
                 SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
                 yield return loadOp;
+
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                     if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
