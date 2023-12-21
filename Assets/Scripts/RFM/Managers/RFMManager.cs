@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
 using Photon.Realtime;
+using RFM.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -40,6 +42,11 @@ namespace RFM.Managers
 
         //VFX
         [SerializeField] private GameObject playerSpawnVFX, hunterSpawnVFX;
+
+        //list of references of NPCS
+        public List<RFM.Character.NPCRunner> runnerNPCList = new List<RFM.Character.NPCRunner>();
+        public List<RFM.Character.NPCHunter> hunterNPCList = new List<RFM.Character.NPCHunter>();
+        public Dictionary<RFM.Character.NPCHunter, Transform> hunterTargetsDictionary = new Dictionary<NPCHunter, Transform>();
 
         #endregion
 
@@ -101,6 +108,9 @@ namespace RFM.Managers
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
 
             StartMatchMaking();
+
+            _gameCanvas.SetActive(true);
+            CanvasButtonsHandler.inst.ShowRFMButtons(true);
 
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
@@ -192,6 +202,7 @@ namespace RFM.Managers
 
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
+            CanvasButtonsHandler.inst.ShowRFMButtons(true);
             RFM.Globals.player.transform.root.gameObject.SetActive(true);
             StartCoroutine(Start());
         }
@@ -222,7 +233,8 @@ namespace RFM.Managers
 
                 Debug.Log($"RFM roles: {roles}");
 
-
+                runnerNPCList.Clear();
+                hunterNPCList.Clear();
                 StartCoroutine(SpawnNPCs(roles.Item4, roles.Item3));
 
                 var numberOfPlayerHunters = roles.Item2;
@@ -240,8 +252,8 @@ namespace RFM.Managers
                             { { "isHunter", false } });
                     }
                 }
-            }
 
+            }
 
             gameplayTimeText.gameObject.SetActive(false);
 
@@ -336,6 +348,7 @@ namespace RFM.Managers
                 // Should be instantiated or disabled.
 
                 Globals.player.transform.SetPositionAndRotation(randomPos, Quaternion.identity);
+
             }
         }
 
@@ -355,6 +368,7 @@ namespace RFM.Managers
                         Random.Range(-1.0f, 1.0f), 0,
                       i),
                     playersSpawnArea.rotation);
+                runnerNPCList.Add(runnerNPC.GetComponent<NPCRunner>());
                 runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCRunner.cs
                 yield return new WaitForSeconds(delay);
             }
@@ -367,6 +381,7 @@ namespace RFM.Managers
                     huntersSpawnArea.position + new Vector3(Random.Range(-1.0f, 1.0f), 0,
                         Random.Range(-1.0f, 1.0f)),
                     huntersSpawnArea.rotation);
+                hunterNPCList.Add(hunterNPC.GetComponent<NPCHunter>());
                 hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCHunter.cs
                 yield return new WaitForSeconds(delay);
             }
@@ -452,7 +467,9 @@ namespace RFM.Managers
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
             _mainCam.SetActive(false);
-            _gameCanvas.SetActive(false);
+            //_gameCanvas.SetActive(false);
+            CanvasButtonsHandler.inst.ShowRFMButtons(false);
+
             statusTMP.text = "Player caught! Spectating...";
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
