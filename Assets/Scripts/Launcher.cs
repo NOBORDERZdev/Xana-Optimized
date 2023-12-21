@@ -324,6 +324,14 @@ namespace Photon.Pun.Demo.PunBasics
        
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
+            if (RFM.Globals.DevMode)
+            {
+                print("Launcher Joining RFM Dev World");
+                PhotonNetwork.JoinOrCreateRoom("RFMDev", new RoomOptions(), TypedLobby.Default);
+                return;
+            }
+
+
           
             bool joinedRoom = false;
             string CameraManRoomName=null;

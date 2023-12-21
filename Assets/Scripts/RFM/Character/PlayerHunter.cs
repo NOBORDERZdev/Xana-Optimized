@@ -12,11 +12,13 @@ namespace RFM.Character
         private void OnEnable()
         {
             RFM.EventsManager.onGameStart += OnGameStarted;
+            EventsManager.onGameTimeup += OnGameOver;
         }
 
         private void OnDisable()
         {
             RFM.EventsManager.onGameStart -= OnGameStarted;
+            EventsManager.onGameTimeup -= OnGameOver;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -63,6 +65,8 @@ namespace RFM.Character
                         { { "rewardMultiplier", 1 } });
                 }
 
+                other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
+
                 return;
             }
             
@@ -94,7 +98,16 @@ namespace RFM.Character
                     GetComponent<PhotonView>().Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
                         { { "rewardMultiplier", 1 } });
                 }
+
+                other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
             }
+        }
+
+        private void OnGameOver()
+        {
+            if (!this.enabled) return;
+
+            PhotonNetwork.Destroy(transform.root.gameObject);
         }
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

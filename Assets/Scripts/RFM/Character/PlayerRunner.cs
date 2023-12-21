@@ -73,8 +73,7 @@ namespace RFM.Character
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
-            transform.root.gameObject.SetActive(false);
-            //PhotonNetwork.Destroy(transform.root.gameObject);
+            PhotonNetwork.Destroy(transform.root.gameObject);
         }
 
         private IEnumerator AddMoney()
@@ -93,27 +92,17 @@ namespace RFM.Character
         
         public void PlayerRunnerCaught(/*Transform hunter*/int hunterViewID)
         {
-            if (!this.enabled) return;
+            //if (!this.enabled) return;
             StopCoroutine(TimeSurvived());
             StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
 
-            // disable the player object on all clients
-            transform.root.gameObject.SetActive(false);
-            //PhotonNetwork.Destroy(transform.root.gameObject);
-            RFM.Managers.RFMManager.Instance.PlayerCaught(/*hunter*/hunterViewID);
+            PhotonNetwork.Destroy(transform.root.gameObject);
+            RFM.Managers.RFMManager.Instance.PlayerCaught(hunterViewID);
         }
         
-        //public void PlayerRunnerCaughtByPlayer(PlayerHunter npcHunter)
-        //{
-        //    StopCoroutine(TimeSurvived());
-        //    StopCoroutine(AddMoney());
-        //    // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
-        //    PhotonNetwork.Destroy(transform.root.gameObject);
-        //    EventsManager.PlayerCaughtByPlayer(npcHunter);
-        //}
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
@@ -132,7 +121,7 @@ namespace RFM.Character
 
         private void ReceivePhotonEvents(EventData photonEvent)
         {
-            if (!this.enabled) return;
+            //if (!this.enabled) return;
             switch (photonEvent.Code)
             {
                 case PhotonEventCodes.PlayerRunnerCaught:

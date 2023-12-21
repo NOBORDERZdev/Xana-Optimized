@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace RFM
 {
@@ -22,6 +23,7 @@ namespace RFM
         private Action _onFinishedCallback;
         private Action<float> _onTickCallback;
         private TMPro.TextMeshProUGUI TimeText;
+        private bool showTimeInMMSS;
 
         #endregion
     	
@@ -44,7 +46,7 @@ namespace RFM
         /// <param name="timeText">Text that shows remaining time</param>
         /// <param name="onOneSecondCallback">Called after each second</param>
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null, Action<float> onOneSecondCallback = null)
+	        TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
 	        var timerObj = new GameObject("timerObj");
 	        var timer = timerObj.AddComponent<RFM.Timer>();
@@ -57,7 +59,11 @@ namespace RFM
 	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
 
 	        timer.TimeText = null;
-	        if (timeText) timer.TimeText = timeText;
+            if (timeText)
+            {
+                timer.TimeText = timeText;
+                timer.showTimeInMMSS = showTimeInMMSS;
+            }
 
 	        timer._finished = false;
 	        timer.Run();
@@ -71,9 +77,29 @@ namespace RFM
 	        _elapsedSeconds += Time.deltaTime;
 	        _elapsedSeconds2 += Time.deltaTime;
 
-	        if (TimeText) TimeText.text = (_totalSeconds - _elapsedSeconds).ToString("F0");
+            if (TimeText != null)
+            {
+                if (showTimeInMMSS)
+                {
+                    TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds).ToString(@"mm\:ss");
+                }
+                else
+                {
+                    TimeText.text = (_totalSeconds - _elapsedSeconds).ToString("F0");
+                }
 
-	        if (_elapsedSeconds2 > 1)
+                ////if (TimeText) TimeText.text = (_totalSeconds - _elapsedSeconds).ToString("F0");
+
+                //TimeSpan timeSpan = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds);
+
+                //// Format the time as Minutes:Seconds
+                //string formattedTime = string.Format("{0:D2}:{1:D2}", timeSpan.Minutes, timeSpan.Seconds);
+
+                //TimeText.text = formattedTime;
+            }
+	        
+
+            if (_elapsedSeconds2 > 1)
 	        {
 		        _elapsedSeconds2 = 0;
 		        _onTickCallback?.Invoke(_totalSeconds - _elapsedSeconds);
@@ -100,7 +126,7 @@ namespace RFM
     	}
 
         public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null, Action<float> onOneSecondCallback = null)
+	        TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
 	        // SetDurationAndRun(value, onFinishedCallback, timeText);
 	        
@@ -115,9 +141,13 @@ namespace RFM
 	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
 
 	        timer.TimeText = null;
-	        if (timeText) timer.TimeText = timeText;
+            if (timeText)
+            {
+                timer.TimeText = timeText;
+                timer.showTimeInMMSS = showTimeInMMSS;
+            }
 
-	        timer._finished = false;
+            timer._finished = false;
 	        timer.Run();
 	        
 	        yield return new WaitUntil(() => timer._finished);
