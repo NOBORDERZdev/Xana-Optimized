@@ -115,10 +115,13 @@ namespace RFM.Managers
 
             _gameCanvas.SetActive(true);
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
-            rfmWaterLight.cullingMask = rfmWaterLightMask;
+
+
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
             cameraData.renderPostProcessing = true;
+            yield return new WaitForSecondsRealtime(1);
+            rfmWaterLight.cullingMask = rfmWaterLightMask;
         }
 
         void OnApplicationPause(bool pauseStatus)
@@ -217,8 +220,7 @@ namespace RFM.Managers
             //RFM.Globals.player.transform.root.gameObject.SetActive(true);
             var newPlayer = PhotonNetwork.Instantiate("XANA Player", spawnPosition, Quaternion.identity, 0);
             RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
-
-
+            CanvasButtonsHandler.inst.ShowRFMButtons(true);
             StartCoroutine(Start());
         }
 
