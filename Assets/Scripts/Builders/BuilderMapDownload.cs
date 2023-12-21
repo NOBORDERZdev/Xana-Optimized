@@ -562,13 +562,12 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
-        reflectionProbe.enabled = true;
+        reflectionProbe.gameObject.SetActive(true);
         if (lensFlareData != null)
             SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
         else
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
-        reflectionProbe.RenderProbe();
         DynamicGI.UpdateEnvironment();
     }
 
@@ -647,9 +646,30 @@ public class BuilderMapDownload : MonoBehaviour
         SetObjectHirarchy();
 
         BuilderEventManager.CombineMeshes?.Invoke();
+
+        PlayerSetupforBuilderWorld();
+
+        //call for Execute all rpcs of this room
+        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
+        BuilderEventManager.BGMStart?.Invoke();
+        if (levelData.skyProperties.skyId != -1)
+        {
+            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+        }
+        UpdateScene();
+        reflectionProbe.gameObject.SetActive(true);
+    }
+
+    private void PlayerSetupforBuilderWorld()
+    {
+        if (!GamificationComponentData.instance.buildingDetect)
+            return;
+
         CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
+
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
         mainPlayerCharacterController.center = Vector3.up * 0.498f;
         mainPlayerCharacterController.height = 1f;
@@ -659,27 +679,13 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
 
-        //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
         capsuleCollider_34.height = 1.5f;
         capsuleCollider_34.center = Vector3.up * (capsuleCollider_34.height / 2);
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
         playerCharacterController.height = capsuleCollider_34.height;
         playerCharacterController.center = capsuleCollider_34.center;
-
         //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
-
-        //call for Execute all rpcs of this room
-        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
-        BuilderEventManager.BGMStart?.Invoke();
-        reflectionProbe.enabled = true;
-        if (levelData.skyProperties.skyId != -1)
-        {
-            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
-            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
-        }
-        UpdateScene();
     }
-
 
     public void UpdateScene()
     {
