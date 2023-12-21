@@ -924,7 +924,8 @@ public class StoreManager : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(url + Jsondata))
         {
-            ObjofMainCategory = GetAllDataNewAPI(url + Jsondata);
+            string res= apiResponseHolder.GetResponse(url + Jsondata);
+            ObjofMainCategory = GetAllDataNewAPI(res);
             SaveAllMainCategoriesToArray();
             yield break;
         }
@@ -938,6 +939,7 @@ public class StoreManager : MonoBehaviour
                 yield return null;
             }
             ObjofMainCategory = GetAllDataNewAPI(request.downloadHandler.text);
+            //Debug.LogError(request.downloadHandler.text);
             if (!request.isHttpError && !request.isNetworkError)
             {
                 if (request.error == null)
@@ -946,6 +948,7 @@ public class StoreManager : MonoBehaviour
                     {
                         SaveAllMainCategoriesToArray();
                         apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
+                        //Debug.LogError(request.downloadHandler.text);
                     }
                 }
             }
