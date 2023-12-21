@@ -47,7 +47,7 @@ namespace RFM.Managers
             XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
 
-            showMoney.text = "00";
+            showMoney.text = "000";
 
             scores = new Dictionary<string[], int>();
 
@@ -164,7 +164,7 @@ namespace RFM.Managers
             if (!PhotonNetwork.IsMasterClient) return;
 
             GetComponent<PhotonView>().RPC(nameof(RestartRFM), RpcTarget.AllBuffered);
-            Awake();
+            
         }
 
         // Enable the restart button 
@@ -172,12 +172,13 @@ namespace RFM.Managers
         [PunRPC]
         private void RestartRFM()
         {
+            Awake();
             // Destroy all children of leaderboardEntryContainer
             foreach (Transform child in leaderboardEntryContainer)
             {
                 Destroy(child.gameObject);
             }
-            gameOverPanel.gameObject.SetActive(false);
+            //gameOverPanel.gameObject.SetActive(false);
 
             RFM.Managers.RFMManager.Instance.RestartRFM();
         }
