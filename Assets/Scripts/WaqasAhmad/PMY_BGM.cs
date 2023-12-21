@@ -23,9 +23,9 @@ public class PMY_BGM : MonoBehaviour
 
         //Update Music Source Parameters
         SoundManager.Instance.MusicSource.loop = true;
-        SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 18);
+        SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 30f);
         SoundManager.Instance.MusicSource.spatialBlend = 1;
-        SoundManager.Instance.MusicSource.minDistance = 4;
+        SoundManager.Instance.MusicSource.minDistance = 20;
     }
 
     private void OnDisable()

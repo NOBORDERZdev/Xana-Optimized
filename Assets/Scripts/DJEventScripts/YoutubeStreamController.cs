@@ -9,6 +9,8 @@ using LightShaft.Scripts;
 
 public class YoutubeStreamController : MonoBehaviour
 {
+    [Tooltip("If false then youtube video player volume will not be effect by changing setting volume slider value")]
+    public bool isChangeVolumeBySlider = true;
     [SerializeField]
     public GameObject LiveStreamPlayer;
     [SerializeField]
@@ -55,7 +57,7 @@ public class YoutubeStreamController : MonoBehaviour
     {
 
         Instance = this;
-        if (SoundManager.Instance)
+        if (isChangeVolumeBySlider && SoundManager.Instance)
         {
             if (NormalPlayer.GetComponent<YoutubeSimplified>().player.GetComponent<YoutubePlayer>().playInAVPRO)
             {
