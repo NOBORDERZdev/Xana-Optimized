@@ -109,7 +109,7 @@ public class GalleryImageManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e.ToString());
+            //Debug.Log(e.ToString());
         }
 
     }
@@ -361,7 +361,7 @@ public class GalleryImageManager : MonoBehaviour
             //m_LoadingIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, 0);
 
             StopAllCoroutines();
-            Debug.Log("Picture Index: " + l_PictureIndex);
+            //Debug.Log("Picture Index: " + l_PictureIndex);
             if (m_PictureSpriteDownloadLinks[l_PictureIndex - 1] != "")
             {
                 StartCoroutine(DownloadImage(m_PictureSpriteDownloadLinks[l_PictureIndex - 1]));
@@ -466,7 +466,7 @@ public class GalleryImageManager : MonoBehaviour
             {
                 //m_ExceptionText.SetActive(true);
                 m_ExceptionText.GetComponent<Text>().text = uwr.error;
-                Debug.Log(uwr.error);
+                //Debug.Log(uwr.error);
                 HandleErrors();
             }
             else

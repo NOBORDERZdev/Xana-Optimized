@@ -213,7 +213,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             //request.SetRequestHeader("Authorization", Auth);
             yield return request.SendWebRequest();
-            Debug.Log("Event data is here :  " + request.downloadHandler.text);
+            //Debug.Log("Event data is here :  " + request.downloadHandler.text);
             EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(request.downloadHandler.text);
 
             //  XanaEventDetails JsonDataObj1 = JsonUtility.FromJson<XanaEventDetails>(_jsonData);

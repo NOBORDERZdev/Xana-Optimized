@@ -150,7 +150,7 @@ public class WorldItemView : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
+                    //Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID()) // For Xana Lobby
                         joinedUserCount.text = allWorldData.player_count[i].count + 5 + "";
                     else
@@ -189,7 +189,7 @@ public class WorldItemView : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
+                    //Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID())
                     { // For Xana Lobby
                         joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
@@ -336,7 +336,7 @@ public class WorldItemView : MonoBehaviour
 
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log("<color = red>" + www.error + "</color>");
+            //Debug.Log("<color = red>" + www.error + "</color>");
         }
         else
         {

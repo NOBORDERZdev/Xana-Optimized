@@ -10,11 +10,15 @@ using UnityEngine.UI;
 using SuperStar.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using DG.DemiLib;
 //using HSVPicker;
 
 
 public class StoreManager : MonoBehaviour
 {
+    [Header("Holds Api response")]
+    public ResponseHolder apiResponseHolder;
+
     //public DownloadandRigClothes _DownloadRigClothes;
     public static StoreManager instance;
     [Header("Main Panels Store")]
@@ -101,7 +105,9 @@ public class StoreManager : MonoBehaviour
     public Transform ParentOfBtnsCustomLipsPalette;
     public Transform ParentOfBtnsCustomSkin;
 
-
+    private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
+        shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
+        eyeBrowColorDwonloadedCount, eyeLashesDwonloadedCount, eyesDwonloadedCount, lipsDwonloadedCount;
 
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
@@ -154,7 +160,6 @@ public class StoreManager : MonoBehaviour
     public bool checkforSavebutton;  // its just for to check if item is downloaded or not
     public GameObject UndoBtn, RedoBtn, AvatarSaved, AvatarSavedGuest, AvatarUpdated;
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
-    List<GameObject> itemButtonsPool = new List<GameObject>();
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
     public GameObject backbutton_preset;
@@ -393,7 +398,7 @@ public class StoreManager : MonoBehaviour
 
         //if (Defaultreset)
         //    Defaultreset.GetComponent<Button>().onClick.AddListener(delegate { Character_DefaultReset(true); });
-    
+
         //if (UndoBtn)
         //{
         //    UndoBtn.GetComponent<Button>().onClick.AddListener(UndoStepBtn);
@@ -532,7 +537,7 @@ public class StoreManager : MonoBehaviour
 
     public void DeletePreviousItems()
     {
-        Resources.UnloadUnusedAssets();
+        //Resources.UnloadUnusedAssets();
         //   Caching.ClearCache();
 
         if (ParentOfBtnsAvatarHairs.childCount >= 1) // hairs
@@ -615,14 +620,34 @@ public class StoreManager : MonoBehaviour
             }
         }
 
-
+        headsDownlaodedCount = 0;
+        faceDownlaodedCount = 0;
+        innerDownlaodedCount = 0;
+        outerDownlaodedCount = 0;
+        accesaryDownlaodedCount = 0;
+        bottomDownlaodedCount = 0;
+        socksDownlaodedCount = 0;
+        shoesDownlaodedCount = 0;
+        hairDwonloadedCount = 0;
+        LipsColorDwonloadedCount = 0;
+        EyesColorDwonloadedCount = 0;
+        EyeBrowColorDwonloadedCount = 0;
+        HairColorDwonloadedCount = 0;
+        skinColorDwonloadedCount = 0;
+        eyeBrowDwonloadedCount = 0;
+        eyeBrowColorDwonloadedCount = 0;
+        eyeLashesDwonloadedCount = 0;
+        eyesDwonloadedCount = 0;
+        lipsDwonloadedCount = 0;
+        if(LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
     }
 
     void ClearingLists(int index)
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         ItemDatabase itemsData = ItemDatabase.instance;
         //Equipment equipment = GameManager.Instance.mainCharacter.GetComponent<Equipment>();
@@ -639,8 +664,8 @@ public class StoreManager : MonoBehaviour
 
     IEnumerator StoreSelection()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         yield return new WaitForSeconds(0.5f);
 
@@ -653,8 +678,8 @@ public class StoreManager : MonoBehaviour
 
     public void OnSaveBtnClicked()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         // print("ppp");
         if (ItemDatabase.instance.gameObject != null)
@@ -746,8 +771,8 @@ public class StoreManager : MonoBehaviour
     }
     public void SubmitAllItemswithSpecificSubCategory(int GetCategoryIndex, bool check)
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         bool Once;
         Once = check;
@@ -771,11 +796,22 @@ public class StoreManager : MonoBehaviour
     Coroutine itemLoading, hitAllItemAPICorountine;
     IEnumerator HitALLItemsAPI(string url, string Jsondata)
     {
-
+        if (apiResponseHolder.CheckResponse(url + Jsondata))
+        {
+            GetItemInfoNewAPI JsonDataObj1 = new GetItemInfoNewAPI();
+            JsonDataObj1 = JsonUtility.FromJson<GetItemInfoNewAPI>(apiResponseHolder.GetResponse(url + Jsondata));
+            dataListOfItems.Clear();
+            dataListOfItems = JsonDataObj1.data[0].items;
+            PutDataInOurAPPNewAPI();
+            yield break;
+        }
+        Debug.LogError("HitALLItemsAPI");
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(true);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         if (UserRegisterationManager.instance.LoggedIn)
         {
@@ -792,9 +828,9 @@ public class StoreManager : MonoBehaviour
         }
         GetItemInfoNewAPI JsonDataObj = new GetItemInfoNewAPI();
         JsonDataObj = JsonUtility.FromJson<GetItemInfoNewAPI>(request.downloadHandler.text);
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
 
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
         if (!request.isHttpError && !request.isNetworkError)
         {
             if (request.error == null)
@@ -805,6 +841,9 @@ public class StoreManager : MonoBehaviour
 
                     dataListOfItems = JsonDataObj.data[0].items;
                     PutDataInOurAPPNewAPI();
+                    apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
+                    if (LoadingHandler.Instance)
+                        LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
                 }
             }
         }
@@ -882,6 +921,14 @@ public class StoreManager : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(1f);
         }
+
+        if (apiResponseHolder.CheckResponse(url + Jsondata))
+        {
+            ObjofMainCategory = GetAllDataNewAPI(url + Jsondata);
+            SaveAllMainCategoriesToArray();
+            yield break;
+        }
+
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -897,8 +944,8 @@ public class StoreManager : MonoBehaviour
                 {
                     if (ObjofMainCategory.success == true)
                     {
-
                         SaveAllMainCategoriesToArray();
+                        apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
                     }
                 }
             }
@@ -930,8 +977,8 @@ public class StoreManager : MonoBehaviour
             purchaseItemsIDs.Add(ObjofMainCategory.data[i].id);
         }
         ArrayofMainCategories = purchaseItemsIDs.ToArray();
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         GetAllSubCategories();
     }
@@ -1003,7 +1050,7 @@ public class StoreManager : MonoBehaviour
         JsonDataObj = GetDataofSUBCategories(request.downloadHandler.text);
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
-
+        //Debug.LogError("all sub categories :- " + request.downloadHandler.text);
         if (!request.isHttpError && !request.isNetworkError)
         {
             if (request.error == null)
@@ -1069,7 +1116,7 @@ public class StoreManager : MonoBehaviour
         PreviousSelectionCount = -1;
         XanaConstants.xanaConstants.currentButtonIndex = 0;
         BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
-        //Debug.Log("Store hair data call====");
+        ////Debug.Log("Store hair data call====");
         SelectPanel(1);
         PlayerPrefs.SetInt("TotalCoins", 0);
         //UpdateUserCoins();
@@ -1089,12 +1136,12 @@ public class StoreManager : MonoBehaviour
         if (!GameManager.Instance.BottomAvatarButtonBool)
         {
             //BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(0);
-            BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
+            //BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
             SelectPanel(1);
         }
         else
         {
-            BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(3);
+            //BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(3);
             SelectPanel(0);
         }
         SubmitUserDetailAPI();
@@ -1107,7 +1154,7 @@ public class StoreManager : MonoBehaviour
     }
     public void SignUpAndLoginPanel(int TakeString)
     {
-        Debug.Log("<color=red> OpenPanelIndex:::" + TakeString + "</color>");
+        //Debug.Log("<color=red> OpenPanelIndex:::" + TakeString + "</color>");
         switch (TakeString)
         {
             case 0:
@@ -1141,7 +1188,7 @@ public class StoreManager : MonoBehaviour
                     OpenMainPanel("StoreItemsPanel");
 
                     GetDataAfterLogin();
-                    if(PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
+                    if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
                     {
                         myAvatarButton.gameObject.SetActive(true);
                     }
@@ -1198,15 +1245,15 @@ public class StoreManager : MonoBehaviour
             storeOpen.Invoke();                     // call store open event
     }
 
-    private void OnDisable()
-    {
-        Resources.UnloadUnusedAssets();
-    }
+    //private void OnDisable()
+    //{
+    //    Resources.UnloadUnusedAssets();
+    //}
 
-    private void OnDestroy()
-    {
-        Resources.UnloadUnusedAssets();
-    }
+    //private void OnDestroy()
+    //{
+    //    Resources.UnloadUnusedAssets();
+    //}
     public void BackToHomeFromCharCustomization()
     {
 
@@ -1318,24 +1365,25 @@ public class StoreManager : MonoBehaviour
         //LoadPlayerAvatar.instance_loadplayer.UpdateExistingUserData();
 
     }
- 
+
     public void SelectPanel(int TakeIndex)
     {
-        //Debug.Log("<color=red> Panel Index:" + TakeIndex + "</color>");
+        ////Debug.Log("<color=red> Panel Index:" + TakeIndex + "</color>");
         panelIndex = TakeIndex;
 
         //  StoreManager.instance.DeletePreviousItems();
-        Resources.UnloadUnusedAssets();
+        //Resources.UnloadUnusedAssets();
 
         if (TakeIndex == 0)
         {
+            ////Debug.LogError("<color=red> Panel Index:" + TakeIndex + "</color>");
             //Resources.UnloadUnusedAssets();
             // CLoth
             buttonIndex = 3;
             XanaConstants.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(true);
             MainPanelAvatar.SetActive(false);
-            OpenClothContainerPanel(0);
+            //OpenClothContainerPanel(0);
             BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(3);
             ClothBtnLine.SetActive(true);
             AvatarBtnLine.SetActive(false);
@@ -1345,12 +1393,13 @@ public class StoreManager : MonoBehaviour
         }
         else
         {
+            ////Debug.LogError("<color=red> Panel Index:" + TakeIndex + "</color>");
             buttonIndex = 0;
             XanaConstants.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(false);
             MainPanelAvatar.SetActive(true);
-            OpenAvatarContainerPanel(0);
-            //Debug.Log("Undo Redo Call the btn functionality");
+            //OpenAvatarContainerPanel(0);
+            ////Debug.Log("Undo Redo Call the btn functionality");
             BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
             ClothBtnLine.SetActive(false);
             AvatarBtnLine.SetActive(true);
@@ -1415,7 +1464,7 @@ public class StoreManager : MonoBehaviour
     }
     public void OpenAvatarContainerPanel(int m_GetIndex)
     {
-     
+
         buttonIndex = m_GetIndex;
         Clothdatabool = false;
         IndexofPanel = m_GetIndex + 8; //16
@@ -1437,12 +1486,14 @@ public class StoreManager : MonoBehaviour
         {
             if (SubCategoriesList.Count > 0)
             {
+                // Debug.LogError("second time :- " + m_GetIndex);
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex + 8].id, false);
             }
         }
         else
         {
+            // Debug.LogError("second time :- " + m_GetIndex);
             StartCoroutine(WaitForAPICallCompleted(m_GetIndex));
         }
     }
@@ -1452,7 +1503,7 @@ public class StoreManager : MonoBehaviour
         switch (num)
         {
             case 0:
-                return ParentOfBtnsCustomHair.gameObject.activeSelf ? true : false; 
+                return ParentOfBtnsCustomHair.gameObject.activeSelf ? true : false;
                 break;
             case 2:
                 return ParentOfBtnsCustomEyeBrows.gameObject.activeSelf ? true : false;
@@ -1471,7 +1522,7 @@ public class StoreManager : MonoBehaviour
 
     public void OpenColorPanel(int index)
     {
-        Debug.Log("<color=blue> Open Color Panel Index: " + index + "</color>");
+        //Debug.Log("<color=blue> Open Color Panel Index: " + index + "</color>");
         if (index == 0)
         {
             ParentOfBtnsCustomHair.gameObject.SetActive(true);
@@ -1492,7 +1543,7 @@ public class StoreManager : MonoBehaviour
         }
         else if (index == 5)
         {
-            Debug.Log("Open color palette");
+            //Debug.Log("Open color palette");
             ParentOfBtnsCustomLipsPalette.gameObject.SetActive(true);
             ParentOfBtnsAvatarLips.gameObject.SetActive(false);
             SetContentOnScroll(AvatarPanel[5], (RectTransform)ParentOfBtnsCustomLipsPalette);
@@ -1525,7 +1576,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomEyesPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomEyesPalette.gameObject.SetActive(false);
-            ParentOfBtnsCustomEyes.gameObject.SetActive(false);  
+            ParentOfBtnsCustomEyes.gameObject.SetActive(false);
             ParentOfBtnsAvatarEyes.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[3], (RectTransform)ParentOfBtnsAvatarEyes);
             return tempBool;
@@ -1535,7 +1586,7 @@ public class StoreManager : MonoBehaviour
             //if (ParentOfBtnsCustomLipsPalette.gameObject.activeInHierarchy)
             //    tempBool = true;
             ParentOfBtnsCustomLipsPalette.gameObject.SetActive(false);
-            ParentOfBtnsCustomLips.gameObject.SetActive(false);  
+            ParentOfBtnsCustomLips.gameObject.SetActive(false);
             ParentOfBtnsAvatarLips.gameObject.SetActive(true);
             SetContentOnScroll(AvatarPanel[5], (RectTransform)ParentOfBtnsAvatarLips);
             return tempBool;
@@ -1564,10 +1615,10 @@ public class StoreManager : MonoBehaviour
 
     void SwitchColorMode(int index)
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
-        //Debug.Log("ColorBtn : " + index);
+        ////Debug.Log("ColorBtn : " + index);
         ActivePanelCallStack.obj.UpdatePanelStatus(index, false);    // AR changes
         textskin.enabled = false;
         colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -1612,15 +1663,15 @@ public class StoreManager : MonoBehaviour
                 SetContentOnScroll(AvatarPanel[8], (RectTransform)ParentOfBtnsCustomSkin);
                 break;
         }
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         UpdateStoreSelection(index);
     }
     public void OnColorButtonClicked(int _index)
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
         colorBtn.GetComponent<Button>().onClick.AddListener(() => SwitchColorMode(_index));
@@ -1676,7 +1727,7 @@ public class StoreManager : MonoBehaviour
     // update color call when open color selection
     public void UpdateColor(int _index)
     {
-        //Debug.Log("<color=red>Update Color Index</color>" + _index);
+        ////Debug.Log("<color=red>Update Color Index</color>" + _index);
         textskin.enabled = true;
         switch (_index)
         {
@@ -1688,11 +1739,11 @@ public class StoreManager : MonoBehaviour
                         childObject = ParentOfBtnsCustomHair.transform.GetChild(i).gameObject;
                         if (childObject.GetComponent<ItemDetail>().id == XanaConstants.xanaConstants.hairColoPalette)
                         {
-                            Debug.Log("ID = " + childObject.GetComponent<ItemDetail>().id);
+                            //Debug.Log("ID = " + childObject.GetComponent<ItemDetail>().id);
 
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[2] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 2);
@@ -1712,7 +1763,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[3] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 3);
@@ -1732,7 +1783,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[0] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColor, 4);
@@ -1750,7 +1801,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[4] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 4);
@@ -1771,7 +1822,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[1] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.lipColor, 5);
@@ -1789,7 +1840,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[5] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.lipColorPalette, 5);
@@ -1810,7 +1861,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.avatarStoreSelection[7] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.skinColor, 6);
@@ -1847,8 +1898,8 @@ public class StoreManager : MonoBehaviour
         {
             case EnumClass.CategoryEnum.Head:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    // Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistHeads.Count; i++)
                     {
@@ -1870,8 +1921,8 @@ public class StoreManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Face:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistFace.Count; i++)
                     {
@@ -1893,8 +1944,8 @@ public class StoreManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Inner:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistInner.Count; i++)
                     {
@@ -1917,8 +1968,8 @@ public class StoreManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Outer:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistOuter.Count; i++)
                     {
@@ -1940,8 +1991,8 @@ public class StoreManager : MonoBehaviour
 
             case EnumClass.CategoryEnum.Accesary:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistAccesary.Count; i++)
                     {
@@ -1964,8 +2015,8 @@ public class StoreManager : MonoBehaviour
 
             case EnumClass.CategoryEnum.Bottom:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistBottom.Count; i++)
                     {
@@ -1987,8 +2038,8 @@ public class StoreManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Socks:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistSocks.Count; i++)
                     {
@@ -2010,8 +2061,8 @@ public class StoreManager : MonoBehaviour
             // CategorieslistShoes
             case EnumClass.CategoryEnum.Shoes:
                 {
-                    AssetBundle.UnloadAllAssetBundles(false);
-                    Resources.UnloadUnusedAssets();
+                    //AssetBundle.UnloadAllAssetBundles(false);
+                    //Resources.UnloadUnusedAssets();
 
                     for (int i = 0; i < CategorieslistShoes.Count; i++)
                     {
@@ -2036,8 +2087,8 @@ public class StoreManager : MonoBehaviour
 
     public void SelectBtnObjs()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
 
         int TotalPrice = 0;
         for (int i = 0; i < TotalBtnlist.Count; i++)
@@ -2442,11 +2493,6 @@ public class StoreManager : MonoBehaviour
         CategorieslistEyesColor.Clear();
         TotalBtnlist.Clear();
 
-        foreach (GameObject temp in itemButtonsPool)
-        {
-            temp.SetActive(false);
-        }
-        //CloseCheckOutPanel();
         BuyCountertxt.text = "0";
     }
     [System.Serializable]
@@ -2479,19 +2525,17 @@ public class StoreManager : MonoBehaviour
     private string MainNetXenyTokenAPI = ""; // Mainnet Api here
     public void SubmitUserDetailAPI()
     {
-        //StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
-        string localAPI = "";
-        if (!APIBaseUrlChange.instance.IsXanaLive)
-        {
-            //  localAPI = string.Format(TestNetOwnednftAPI, OwnedNFTPageNumb, OwnedNFTPageSize) + publicID + Postfix;
-            localAPI = TestNetXenyTokenAPI;
-        }
-        else
-        {
-            // Mainnet Api
-            localAPI = MainNetXenyTokenAPI;
-        }
-        StartCoroutine(XenyTokenUserAddrerss(localAPI));
+        //string localAPI = "";
+        //if (!APIBaseUrlChange.instance.IsXanaLive)
+        //{
+        //    localAPI = TestNetXenyTokenAPI;
+        //}
+        //else
+        //{
+        //    // Mainnet Api
+        //    localAPI = MainNetXenyTokenAPI;
+        //}
+        //StartCoroutine(XenyTokenUserAddrerss(localAPI));
     }
     private RequestedData requestData;
 
@@ -2512,7 +2556,7 @@ public class StoreManager : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log("hamara data v" + request.downloadHandler.text);
+        //Debug.Log("hamara data v" + request.downloadHandler.text);
 
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -2663,7 +2707,7 @@ public class StoreManager : MonoBehaviour
             {
                 if (request.error == null)
                 {
-                    Debug.Log(request.downloadHandler.text);
+                    //Debug.Log(request.downloadHandler.text);
                     if (JsonDataObj.success == true)
                     {
                         print("Success True All Default Data Fetched for Guest");
@@ -2711,7 +2755,7 @@ public class StoreManager : MonoBehaviour
             {
                 if (request.error == null)
                 {
-                    Debug.Log(request.downloadHandler.text);
+                    //Debug.Log(request.downloadHandler.text);
                     if (JsonDataObj.success == true)
                     {
                         print("Success True All Default Data Fetched");
@@ -2957,7 +3001,7 @@ public class StoreManager : MonoBehaviour
                 {
                     if (SendCoinsDataExtractObj.success == false)
                     {
-                     //   print("Hey success false " + SendCoinsDataExtractObj.msg);
+                        //   print("Hey success false " + SendCoinsDataExtractObj.msg);
                     }
                 }
             }
@@ -3006,7 +3050,7 @@ public class StoreManager : MonoBehaviour
         List<ItemDetail> TempitemDetail;
         TempitemDetail = new List<ItemDetail>();
         Transform TempSubcategoryParent = null;
-    //    Debug.Log("<color=red>Planel Index: " + IndexofPanel + "</color>");
+        //    //Debug.Log("<color=red>Planel Index: " + IndexofPanel + "</color>");
         switch (IndexofPanel)
         {
             case 0:
@@ -3063,7 +3107,7 @@ public class StoreManager : MonoBehaviour
                 {
                     if (!colorMode)
                     {
-                       // Debug.Log("Hairs List 3-----" + ParentOfBtnsAvatarHairs.transform.childCount);
+                        // //Debug.Log("Hairs List 3-----" + ParentOfBtnsAvatarHairs.transform.childCount);
                         TempSubcategoryParent = ParentOfBtnsAvatarHairs;
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatar;
                     }
@@ -3147,44 +3191,29 @@ public class StoreManager : MonoBehaviour
                     break;
                 }
         }
-        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        //    TempSubcategoryParent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(220, 220);
-        if (TempSubcategoryParent != null && (TempSubcategoryParent.childCount <= 2)) // Child Count == 1 for eyeBrowsCustomization // Added by WaqasAhmad
-        {
-            //return;
 
-            //if(dataListOfItems.Count > itemButtonsPool.Count)
-            //{
-            //    while(dataListOfItems.Count > itemButtonsPool.Count)
-            //    {
-            //        itemButtonsPool.Add(Instantiate(ItemsBtnPrefab));
-            //    }
-            //}
-            //foreach(GameObject temp in itemButtonsPool)
-            //{
-            //    temp.SetActive(false);
-            //}
+        if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar)
+        {
+            eyeBrowTapButton.SetActive(true);
+            eyeBrowsColorButton.gameObject.SetActive(true);
+        }
+        else if (TempEnumVar == EnumClass.CategoryEnum.HairAvatar)
+            hairColorButton.gameObject.SetActive(true);
+
+        if (TempSubcategoryParent != null /*&& (TempSubcategoryParent.childCount <= 2)*/) // Child Count == 1 for eyeBrowsCustomization // Added by WaqasAhmad
+        {
             // HeadSelection
             if (TempEnumVar == EnumClass.CategoryEnum.SkinToneAvatar)
             {
-                for (int i = 0; i < CharcterBodyParts.instance.skinColor.Count; i++)
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < CharcterBodyParts.instance.skinColor.Count; i++)
                 {
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
+
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    //abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    //abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    //abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    //abc.createdAt = dataListOfItems[i].createdAt;
-                    //abc.createdBy = dataListOfItems[i].createdBy;
-                    //abc.iconLink = dataListOfItems[i].iconLink;
-                    //abc.id = dataListOfItems[i].id.ToString();
                     abc.isFavourite = "False";
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
@@ -3193,16 +3222,13 @@ public class StoreManager : MonoBehaviour
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
-                    //abc.isDeleted = dataListOfItems[i].isDeleted;
-                    //abc.updatedAt = dataListOfItems[i].updatedAt;
-                    //abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
                     {
-
                         abc.StartRun();
                         abc.enableUpdate = true;
                     }
@@ -3214,24 +3240,14 @@ public class StoreManager : MonoBehaviour
             }
             else if (TempEnumVar == EnumClass.CategoryEnum.HairAvatarColor)
             {
-                for (int i = 0; i < CharcterBodyParts.instance.hairColor.Count; i++)
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < CharcterBodyParts.instance.hairColor.Count; i++)
                 {
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    //abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    //abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    //abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    //abc.createdAt = dataListOfItems[i].createdAt;
-                    //abc.createdBy = dataListOfItems[i].createdBy;
-                    //abc.iconLink = dataListOfItems[i].iconLink;
-                    //abc.id = dataListOfItems[i].id.ToString();
                     abc.id = (i + 1).ToString();
                     abc.isFavourite = "False";
                     abc.isOccupied = "False";
@@ -3241,16 +3257,13 @@ public class StoreManager : MonoBehaviour
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
-                    //abc.isDeleted = dataListOfItems[i].isDeleted;
-                    //abc.updatedAt = dataListOfItems[i].updatedAt;
-                    //abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
                     {
-
                         abc.StartRun();
                         abc.enableUpdate = true;
                     }
@@ -3262,24 +3275,14 @@ public class StoreManager : MonoBehaviour
             }
             else if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatarColor)
             {
-                for (int i = 0; i < CharcterBodyParts.instance.eyeBrowsColor.Count; i++)
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < CharcterBodyParts.instance.eyeBrowsColor.Count; i++)
                 {
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    //abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    //abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    //abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    //abc.createdAt = dataListOfItems[i].createdAt;
-                    //abc.createdBy = dataListOfItems[i].createdBy;
-                    //abc.iconLink = dataListOfItems[i].iconLink;
-                    //abc.id = dataListOfItems[i].id.ToString();
                     abc.id = (i + 1).ToString();
                     abc.isFavourite = "False";
                     abc.isOccupied = "False";
@@ -3289,11 +3292,9 @@ public class StoreManager : MonoBehaviour
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
-                    //abc.isDeleted = dataListOfItems[i].isDeleted;
-                    //abc.updatedAt = dataListOfItems[i].updatedAt;
-                    //abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
@@ -3310,24 +3311,14 @@ public class StoreManager : MonoBehaviour
             }
             else if (TempEnumVar == EnumClass.CategoryEnum.EyesAvatarColor)
             {
-                for (int i = 0; i < CharcterBodyParts.instance.eyeColor.Count; i++)
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < CharcterBodyParts.instance.eyeColor.Count; i++)
                 {
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    //abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    //abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    //abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    //abc.createdAt = dataListOfItems[i].createdAt;
-                    //abc.createdBy = dataListOfItems[i].createdBy;
-                    //abc.iconLink = dataListOfItems[i].iconLink;
-                    //abc.id = dataListOfItems[i].id.ToString();
                     abc.id = (i + 1).ToString();
                     abc.isFavourite = "False";
                     abc.isOccupied = "False";
@@ -3337,11 +3328,9 @@ public class StoreManager : MonoBehaviour
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
-                    //abc.isDeleted = dataListOfItems[i].isDeleted;
-                    //abc.updatedAt = dataListOfItems[i].updatedAt;
-                    //abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
@@ -3358,24 +3347,14 @@ public class StoreManager : MonoBehaviour
             }
             else if (TempEnumVar == EnumClass.CategoryEnum.LipsAvatarColor)
             {
-                for (int i = 0; i < CharcterBodyParts.instance.lipColorPalette.Count; i++)
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < CharcterBodyParts.instance.lipColorPalette.Count; i++)
                 {
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    //abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    //abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    //abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    //abc.createdAt = dataListOfItems[i].createdAt;
-                    //abc.createdBy = dataListOfItems[i].createdBy;
-                    //abc.iconLink = dataListOfItems[i].iconLink;
-                    //abc.id = dataListOfItems[i].id.ToString();
                     abc.id = (i + 1).ToString();
                     abc.isFavourite = "False";
                     abc.isOccupied = "False";
@@ -3385,11 +3364,9 @@ public class StoreManager : MonoBehaviour
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
-                    //abc.isDeleted = dataListOfItems[i].isDeleted;
-                    //abc.updatedAt = dataListOfItems[i].updatedAt;
-                    //abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
@@ -3405,30 +3382,15 @@ public class StoreManager : MonoBehaviour
                 }
             }
             else
-                for (int i = 0; i < dataListOfItems.Count; i++)
+            {
+                int loopStart = GetDownloadedNumber(TempEnumVar);
+                for (int i = loopStart; i < dataListOfItems.Count; i++)
                 {
-                    //Debug.Log("hair data call hua====" + i);
-                    //while (TempSubcategoryParent.transform.childCount > 0)
-                    //{
-                    //    foreach (Transform game in TempSubcategoryParent)
-                    //    {
-                    //        DestroyImmediate(game);
-                    //    }
-                    //}
+                    yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
-                    //GameObject L_ItemBtnObj = itemButtonsPool[i];
                     L_ItemBtnObj.transform.parent = TempSubcategoryParent.transform;
                     L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
-                    //AWAIS//
-                    //if (dataListOfItems[i].iconLink != null)
-                    //    yield return StartCoroutine(addsprite(L_ItemBtnObj.GetComponent<ItemDetail>()._iconImg, dataListOfItems[i].iconLink));
                     ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
-                    //AWAIS//
-                    abc.assetLinkAndroid = dataListOfItems[i].assetLinkAndroid;
-                    abc.assetLinkIos = dataListOfItems[i].assetLinkIos;
-                    abc.assetLinkWindows = dataListOfItems[i].assetLinkWindows;
-                    abc.createdAt = dataListOfItems[i].createdAt;
-                    abc.createdBy = dataListOfItems[i].createdBy;
                     abc.iconLink = dataListOfItems[i].iconLink;
                     abc.id = dataListOfItems[i].id.ToString();
                     abc.isFavourite = dataListOfItems[i].isFavourite.ToString();
@@ -3439,11 +3401,10 @@ public class StoreManager : MonoBehaviour
                     abc.price = dataListOfItems[i].price;
                     abc.categoryId = dataListOfItems[i].categoryId.ToString();
                     abc.subCategory = dataListOfItems[i].subCategoryId.ToString();
-                    abc.isDeleted = dataListOfItems[i].isDeleted;
-                    abc.updatedAt = dataListOfItems[i].updatedAt;
                     abc.itemTags = dataListOfItems[i].itemTags;
                     abc.MyIndex = i;
                     abc.CategoriesEnumVar = TempEnumVar;
+                    UpdateCategoryDownloadedInt(TempEnumVar);
                     TempitemDetail.Add(abc);
                     L_ItemBtnObj.SetActive(true);
                     if (abc.transform.parent.gameObject.activeSelf)
@@ -3457,6 +3418,7 @@ public class StoreManager : MonoBehaviour
                         abc.enableUpdate = true;
                     }
                 }
+            }
 
             if (TempitemDetail.Count > 0)
             {
@@ -3536,13 +3498,7 @@ public class StoreManager : MonoBehaviour
                 }
             }
 
-            if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar)
-            {
-                eyeBrowTapButton.SetActive(true);
-                eyeBrowsColorButton.gameObject.SetActive(true);
-            }
-            else if (TempEnumVar == EnumClass.CategoryEnum.HairAvatar)
-                hairColorButton.gameObject.SetActive(true);
+
 
         }
 
@@ -3551,6 +3507,150 @@ public class StoreManager : MonoBehaviour
         //    UpdateStoreSelection(0);
         //}
     }
+
+    int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)
+    {
+        switch (TempEnumVar)
+        {
+            case EnumClass.CategoryEnum.Head:
+                return headsDownlaodedCount;
+            case EnumClass.CategoryEnum.Face:
+                return faceDownlaodedCount;
+            case EnumClass.CategoryEnum.Inner:
+                return innerDownlaodedCount;
+            case EnumClass.CategoryEnum.Outer:
+                return outerDownlaodedCount;
+            case EnumClass.CategoryEnum.Accesary:
+                return accesaryDownlaodedCount;
+            case EnumClass.CategoryEnum.Bottom:
+                return bottomDownlaodedCount;
+            case EnumClass.CategoryEnum.Socks:
+                return socksDownlaodedCount;
+            case EnumClass.CategoryEnum.Shoes:
+                return shoesDownlaodedCount;
+            case EnumClass.CategoryEnum.HairAvatar:
+                return hairDwonloadedCount;
+            case EnumClass.CategoryEnum.HairAvatarColor:
+                return HairColorDwonloadedCount;
+            case EnumClass.CategoryEnum.EyesAvatarColor:
+                return EyesColorDwonloadedCount;
+            case EnumClass.CategoryEnum.LipsAvatarColor:
+                return LipsColorDwonloadedCount;
+            case EnumClass.CategoryEnum.SkinToneAvatar:
+                return skinColorDwonloadedCount;
+            case EnumClass.CategoryEnum.EyeBrowAvatar:
+                return eyeBrowDwonloadedCount;
+            case EnumClass.CategoryEnum.EyeBrowAvatarColor:
+                return eyeBrowColorDwonloadedCount;
+            case EnumClass.CategoryEnum.EyeLashesAvatar:
+                return eyeLashesDwonloadedCount;
+            case EnumClass.CategoryEnum.EyesAvatar:
+                return eyesDwonloadedCount;
+            case EnumClass.CategoryEnum.LipsAvatar:
+                return lipsDwonloadedCount;
+
+        }
+        return 0;
+    }
+
+    void UpdateCategoryDownloadedInt(EnumClass.CategoryEnum TempEnumVar)
+    {
+        switch (TempEnumVar)
+        {
+            case EnumClass.CategoryEnum.Head:
+                {
+                    headsDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Face:
+                {
+                    faceDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Inner:
+                {
+                    innerDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Outer:
+                {
+                    outerDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Accesary:
+                {
+                    accesaryDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Bottom:
+                {
+                    bottomDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Socks:
+                {
+                    socksDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.Shoes:
+                {
+                    shoesDownlaodedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.HairAvatar:
+                {
+                    hairDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.HairAvatarColor:
+                {
+                    HairColorDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.EyesAvatarColor:
+                {
+                    EyesColorDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.LipsAvatarColor:
+                {
+                    LipsColorDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.SkinToneAvatar:
+                {
+                    skinColorDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.EyeBrowAvatar:
+                {
+                    eyeBrowDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.EyeBrowAvatarColor:
+                {
+                    eyeBrowColorDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.EyeLashesAvatar:
+                {
+                    eyeLashesDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.EyesAvatar:
+                {
+                    eyesDwonloadedCount++;
+                    break;
+                }
+            case EnumClass.CategoryEnum.LipsAvatar:
+                {
+                    lipsDwonloadedCount++;
+                    break;
+                }
+
+        }
+    }
+
     public void LoadLocalItems()
     {
 
@@ -3840,7 +3940,7 @@ public class StoreManager : MonoBehaviour
             {
                 childObject.GetComponent<Image>().enabled = true;
                 XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                 XanaConstants.xanaConstants.avatarStoreSelection[0] = childObject;
 
                 CheckForItemDetail(XanaConstants.xanaConstants.hair, 3);
@@ -3851,7 +3951,7 @@ public class StoreManager : MonoBehaviour
 
     public void UpdateStoreSelection(int index)
     {
-        //Debug.Log("<color=blue>Update Store Selection: "+index+"</color>");
+        ////Debug.Log("<color=blue>Update Store Selection: "+index+"</color>");
         switch (index)
         {
             case 0:
@@ -3860,8 +3960,8 @@ public class StoreManager : MonoBehaviour
                 {
                     if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornHair.name == "MDhairs")
                     {
-                        // Debug.Log("Hairs list------"+ ParentOfBtnsAvatarHairs.transform.childCount);
-                        //Debug.Log("<color=blue>Store Selection if</color>");
+                        // //Debug.Log("Hairs list------"+ ParentOfBtnsAvatarHairs.transform.childCount);
+                        ////Debug.Log("<color=blue>Store Selection if</color>");
                         for (int i = 0; i < ParentOfBtnsAvatarHairs.transform.childCount; i++)
                         {
                             childObject = ParentOfBtnsAvatarHairs.transform.GetChild(i).gameObject;
@@ -3872,19 +3972,19 @@ public class StoreManager : MonoBehaviour
 
 
                     }
-                    else if(!ParentOfBtnsCustomHair.gameObject.activeSelf)
+                    else if (!ParentOfBtnsCustomHair.gameObject.activeSelf)
                     {
-                       // Debug.Log("<color=blue>Store Selection else</color>");
-                        //Debug.Log("Hairs list 2------" + ParentOfBtnsAvatarHairs.transform.childCount);
+                        // //Debug.Log("<color=blue>Store Selection else</color>");
+                        ////Debug.Log("Hairs list 2------" + ParentOfBtnsAvatarHairs.transform.childCount);
                         for (int i = 0; i < ParentOfBtnsAvatarHairs.transform.childCount; i++)
                         {
                             childObject = ParentOfBtnsAvatarHairs.transform.GetChild(i).gameObject;
                             if (childObject.GetComponent<ItemDetail>().id == XanaConstants.xanaConstants.hair)
                             {
-                              //  Debug.Log("<color=blue>Enabled Selection</color>");
+                                //  //Debug.Log("<color=blue>Enabled Selection</color>");
                                 childObject.GetComponent<Image>().enabled = true;
                                 XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                               // Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                                // //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
                                 XanaConstants.xanaConstants.avatarStoreSelection[0] = childObject;
 
                                 CheckForItemDetail(XanaConstants.xanaConstants.hair, 3);
@@ -4019,7 +4119,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 3:
-                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isEyeMorphed)
@@ -4107,7 +4207,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 4:
-                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isNoseMorphed)
@@ -4178,7 +4278,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 5:
-                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
                     if (!XanaConstants.xanaConstants.isLipMorphed)
@@ -4234,7 +4334,7 @@ public class StoreManager : MonoBehaviour
                 {
                     if (XanaConstants.xanaConstants.pants != "")
                     {
-                        //Debug.Log(ParentOfBtnsForOuter.transform.childCount);
+                        ////Debug.Log(ParentOfBtnsForOuter.transform.childCount);
                         if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornPant.name == "MDpant")
                         {
                             for (int i = 0; i < ParentOfBtnsForBottom.transform.childCount; i++)
@@ -4267,7 +4367,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 6:
-                  GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (XanaConstants.xanaConstants.bodyNumber != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarBody.transform.childCount; i++)
@@ -4286,7 +4386,7 @@ public class StoreManager : MonoBehaviour
                 break;
 
             case 7:
-                  GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (panelIndex == 0)
                 {
                     if (XanaConstants.xanaConstants.shoes != "")
@@ -4322,7 +4422,7 @@ public class StoreManager : MonoBehaviour
 
                 break;
             case 8:
-                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
+                GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (XanaConstants.xanaConstants.eyeLashesIndex != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarEyeLashes.transform.childCount; i++)
@@ -4366,7 +4466,7 @@ public class StoreManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (XanaConstants.xanaConstants.PresetValueString != "")
                 {
-                    
+
                     for (int i = 0; i < ParentOfBtnsAvatarAccessary.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsAvatarAccessary.transform.GetChild(i).gameObject;
@@ -4473,7 +4573,7 @@ public class StoreManager : MonoBehaviour
         else
             UpdateStoreSelection(XanaConstants.xanaConstants.currentButtonIndex);
 
-        //Debug.Log("IsLoggedIn " + PlayerPrefs.GetInt("IsLoggedIn"));
+        ////Debug.Log("IsLoggedIn " + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (isSaveFromreturnHomePopUp)
@@ -4693,7 +4793,7 @@ public class StoreManager : MonoBehaviour
     }
     public void UpdateXanaConstants()
     {
-        //Debug.Log("<color=red> Update Xana Constant </color>");
+        ////Debug.Log("<color=red> Update Xana Constant </color>");
         XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.characterController.wornHairId.ToString();
         XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.characterController.hairColorPaletteId.ToString();
         XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.characterController.wornShirtId.ToString();

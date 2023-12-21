@@ -87,10 +87,10 @@ public class BuilderMapDownload : MonoBehaviour
     IEnumerator FetchUserMapFromServer(int _mapId, string userToken)
     {
         string _url = ConstantsGod.API_BASEURL + ConstantsGod.BUILDERGETSINGLEWORLDBYID + _mapId;
-        //Debug.LogError("URL ==> " + _url);
+        ////Debug.LogError("URL ==> " + _url);
         using (UnityWebRequest www = UnityWebRequest.Get(_url))
         {
-            //Debug.LogError("UserToken ==> " + userToken);
+            ////Debug.LogError("UserToken ==> " + userToken);
             www.SetRequestHeader("Authorization", userToken);
             www.SendWebRequest();
             while (!www.isDone)
@@ -154,7 +154,7 @@ public class BuilderMapDownload : MonoBehaviour
             },
             (onfalse) =>
             {
-                Debug.Log("Failed to load json....");
+                //Debug.Log("Failed to load json....");
             }));
         }
 
@@ -174,10 +174,10 @@ public class BuilderMapDownload : MonoBehaviour
 
         yield return StartCoroutine(GemificationObjectLoadWait(1f));
 
-        Debug.LogError("Map is downloaed");
+        //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
-            Debug.LogError("Map is downloaed start post loading");
+            //Debug.LogError("Map is downloaed start post loading");
             BuilderEventManager.AfterMapDataDownloaded?.Invoke();
         }
         else
@@ -192,7 +192,7 @@ public class BuilderMapDownload : MonoBehaviour
     public IEnumerator GemificationObjectLoadWait(float waitTime)
     {
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
-        Debug.Log("GemificationObject assets count====" + GamificationComponentData.instance.multiplayerComponentsObject.Count);
+        //Debug.Log("GemificationObject assets count====" + GamificationComponentData.instance.multiplayerComponentsObject.Count);
         yield return new WaitForSeconds(waitTime);
         if (pool != null && GamificationComponentData.instance.multiplayerComponentsObject != null)
         {
@@ -227,14 +227,14 @@ public class BuilderMapDownload : MonoBehaviour
                 }
                 else if (loadOp.Status == AsyncOperationStatus.Succeeded)
                 {
-                    Debug.Log("Gamification Loaded" + loadOp.Result);
+                    //Debug.Log("Gamification Loaded" + loadOp.Result);
                     if (key != "Hiragino-Sans")
                     {
                         GameObject assets = loadOp.Result as GameObject;
                         GamificationComponentData.instance.multiplayerComponentsObject.Add(assets);
                         if (key == "SpecialItemParticleFlame")
                             GamificationComponentData.instance.specialItemParticleEffect = assets;
-                        Debug.Log("GemificationObject=== " + assets.name);
+                        //Debug.Log("GemificationObject=== " + assets.name);
                     }
                     else
                         GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
@@ -340,7 +340,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(www.error);
+            //Debug.Log(www.error);
         }
         else
         {
@@ -376,7 +376,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (meshRenderer != null)
         {
-            Debug.Log(textureUrl);
+            //Debug.Log(textureUrl);
             StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
@@ -407,17 +407,17 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if (loadRealisticMaterial.Status == AsyncOperationStatus.None)
             {
-                //Debug.LogError(" ---------- NONE ------------ SKY BOXX");
+                ////Debug.LogError(" ---------- NONE ------------ SKY BOXX");
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Failed)
             {
-                //Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
+                ////Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
             }
             else if (loadRealisticMaterial.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadRealisticMaterial, loadRealisticMatKey);
                 Material _mat = loadRealisticMaterial.Result as Material;
-                //Debug.LogError(realisticMaterialData.shaderName);
+                ////Debug.LogError(realisticMaterialData.shaderName);
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
@@ -441,7 +441,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void SetPlaneScaleAndPosition(Vector3 scale, Vector3 pos)
     {
-        //Debug.Log(scale + "  " + pos);
+        ////Debug.Log(scale + "  " + pos);
         terrainPlane.transform.localScale = scale;
         terrainPlane.transform.position = pos + new Vector3(0, -0.001f, 0);
     }
@@ -478,15 +478,15 @@ public class BuilderMapDownload : MonoBehaviour
                 }
                 if (loadSkyBox.Status == AsyncOperationStatus.None)
                 {
-                    //Debug.LogError(" ---------- NONE ------------ SKY BOXX");
+                    ////Debug.LogError(" ---------- NONE ------------ SKY BOXX");
                 }
                 else if (loadSkyBox.Status == AsyncOperationStatus.Failed)
                 {
-                    //Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
+                    ////Debug.LogError(" ----------- FAILED ----------- SKY BOXX");
                 }
                 else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
                 {
-                    // Debug.LogError(" ---------- Success ------------ SKY BOXX");
+                    // //Debug.LogError(" ---------- Success ------------ SKY BOXX");
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
@@ -504,7 +504,7 @@ public class BuilderMapDownload : MonoBehaviour
             {
                 AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
 
-                //Debug.LogError(JsonUtility.ToJson(skyBoxItem));
+                ////Debug.LogError(JsonUtility.ToJson(skyBoxItem));
                 if (skyBoxItem.texture == null)
                 {
                     var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
@@ -602,7 +602,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void LoadSkyBox_Completed(AsyncOperationHandle<Material> obj)
     {
-        Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
+        //Debug.Log(obj.Result.shader.name + "-----" + obj.Status);
         RenderSettings.skybox = obj.Result;
         DynamicGI.UpdateEnvironment();
     }
@@ -709,7 +709,7 @@ public class BuilderMapDownload : MonoBehaviour
                 break;
 
             case AsyncOperationStatus.Failed:
-                Debug.Log("Download error");
+                //Debug.Log("Download error");
                 break;
 
             default:
@@ -947,7 +947,7 @@ public class SkyProperties
             Color color;
             ColorUtility.TryParseHtmlString("#" + "", out color);
             this.skyColorTop = ColorUtility.ToHtmlStringRGBA(color);
-            Debug.Log("skyColorTop : " + skyColorTop);
+            //Debug.Log("skyColorTop : " + skyColorTop);
         }
         if (skyColorMiddle == null)
         {
@@ -959,7 +959,7 @@ public class SkyProperties
             Color color;
             ColorUtility.TryParseHtmlString("#" + "", out color);
             this.skyColorMiddle = ColorUtility.ToHtmlStringRGBA(color);
-            Debug.Log("skyColorMiddle : " + skyColorMiddle);
+            //Debug.Log("skyColorMiddle : " + skyColorMiddle);
         }
         if (skyColorBottom == null)
             this.skyColorBottom = ColorUtility.ToHtmlStringRGBA(Color.white);  //init default color as white
@@ -968,7 +968,7 @@ public class SkyProperties
             Color color;
             ColorUtility.TryParseHtmlString("#" + "", out color);
             this.skyColorBottom = ColorUtility.ToHtmlStringRGBA(color);
-            Debug.Log("skyColorBottom : " + skyColorBottom);
+            //Debug.Log("skyColorBottom : " + skyColorBottom);
         }
 
         aISkyboxItem = new AISkyboxItem();
