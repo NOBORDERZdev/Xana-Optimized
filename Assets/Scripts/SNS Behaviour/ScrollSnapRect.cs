@@ -82,7 +82,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         _container = _scrollRectComponent.content;
         _pageCount = _container.childCount;
 
-        //Debug.LogError("PageCount.......:" + _pageCount);
+        //Debug.Log("PageCount.......:" + _pageCount);
 
         // is it horizontal or vertical scrollrect
         if (_scrollRectComponent.horizontal && !_scrollRectComponent.vertical)
@@ -208,7 +208,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         if (FeedUIController.Instance != null)//vishal
         {
-            //Debug.LogError("SetPage:" + _currentPage);
+            //Debug.Log("SetPage:" + _currentPage);
             StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
         }        
     }
@@ -216,7 +216,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     //------------------------------------------------------------------------
     public void LerpToPage(int aPageIndex)
     {
-        //Debug.LogError("LerpToPage:" + aPageIndex);
+        //Debug.Log("LerpToPage:" + aPageIndex);
         aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
         _lerpTo = _pagePositions[aPageIndex];
         _lerp = true;
@@ -299,7 +299,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     //------------------------------------------------------------------------
     public void NextScreen()
     {
-        //Debug.LogError("NextScreenScroll:" + _currentPage);
+        //Debug.Log("NextScreenScroll:" + _currentPage);
         LerpToPage(_currentPage + 1);
     }
 
@@ -311,7 +311,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void OnCLickTabButton(int pageIndex)
     {
-        Debug.LogError("OnCLickTabButton:" + pageIndex);
+       Debug.Log("OnCLickTabButton:" + pageIndex);
         LerpToPage(pageIndex);
     }
 
@@ -323,7 +323,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         float distance = float.MaxValue;
         int nearestPage = _currentPage;
-        //Debug.LogError("_pagePositions:" + _pagePositions.Count);
+        //Debug.Log("_pagePositions:" + _pagePositions.Count);
         for (int i = 0; i < _pagePositions.Count; i++)
         {
             float testDist = Vector2.SqrMagnitude(currentPosition - _pagePositions[i]);
@@ -381,7 +381,7 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         else
         {
             // if not fast time, look to which page we got to
-            //Debug.LogError("OnEndDrag else");
+            //Debug.Log("OnEndDrag else");
             LerpToPage(GetNearestPage());
         }
         _dragging = false;

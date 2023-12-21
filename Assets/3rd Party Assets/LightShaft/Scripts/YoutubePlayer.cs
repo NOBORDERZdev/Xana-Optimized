@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RenderHeads.Media.AVProVideo;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,8 +26,12 @@ namespace LightShaft.Scripts
         {
             Debug.Log("Video is started ....");
 
-            thumbnailObject.material.color = Color.white;
-            videoPlayer.targetMaterialRenderer.material.color = Color.white;
+            if(thumbnailObject!=null)
+                thumbnailObject.material.color = Color.white;
+            if(videoPlayer!=null && videoPlayer.targetMaterialRenderer)
+                videoPlayer.targetMaterialRenderer.material.color = Color.white;
+            if (mPlayer != null)
+                mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = Color.white;
         }
         ///<summary>This function is callback only, only will be called when the on url are ready to use.</summary>
         private void UrlReadyToUse(string urlToUse)
@@ -128,6 +133,7 @@ namespace LightShaft.Scripts
         ///<summary>Play the loaded video.</summary>
         public override void Play()
         {
+
             base.Play();
             _events.OnVideoStarted.Invoke();
             DisableThumbnailObject();
@@ -139,10 +145,13 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-                if (_controller.volumeSlider != null)
-                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                else
-                    audioPlayer.GetTargetAudioSource(0).volume = 1;
+
+                audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
+
+                //if (_controller.volumeSlider != null)
+                //    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                //else
+                //    audioPlayer.GetTargetAudioSource(0).volume = 1;
 
                 if (!noAudioAtacched)
                 {

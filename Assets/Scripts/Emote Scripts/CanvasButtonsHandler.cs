@@ -17,6 +17,8 @@ public class CanvasButtonsHandler : MonoBehaviour
         }
     }
 
+    public PlayerControllerNew ref_PlayerControllerNew;
+
     [Header("GamePlay ui")]
     public GameObject gamePlayUIParent;
 
@@ -36,15 +38,22 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject portraitJoystick;
 
     public GameObject jumpBtn;
+
+    public GameObject JJPortalPopup;
+    public GameObject currentPortalObject;
+    public Text JJPortalPopupText;
+    public string[] JJPortalPopupTextData;
     private void Start()
     {
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
+        ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
     }
 
     private void OnEnable()
     {
-
+        if (_inst != this)
+            _inst = this;
     }
     void ChangeOrientation()
     {
@@ -92,6 +101,33 @@ public class CanvasButtonsHandler : MonoBehaviour
         GamePlayButtonEvents.inst.OnInviteClick();
     }
 
+    public void EnableJJPortalPopup(GameObject obj, int indexForText)
+    {
+        if(LoadingHandler.Instance != null)
+        {
+            LoadingHandler.Instance.ResetLoadingValues();
+        }
+        JJPortalPopupText.text = JJPortalPopupTextData[indexForText].ToString();
+        currentPortalObject = obj;
+        JJPortalPopup.SetActive(true);
+    }
+
+    public void MoveFromPortal()
+    {
+        JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
+        if (currentPortalObject.GetComponent<PlayerPortal>())
+            currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        else if (currentPortalObject.GetComponent<JjWorldChanger>())
+            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+    }
+
+    public void ClosePortalPopup()
+    {
+        JJPortalPopup.SetActive(false);
+        ref_PlayerControllerNew.m_IsMovementActive = true;
+    }
+
     public void OnSwitchCameraClick()
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("fp_camera"))
@@ -128,6 +164,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void CloseEmoteSelectionPanel()
     {
+        BuilderEventManager.UIToggle?.Invoke(false);
 
         EmoteAnimationPlay.Instance.isEmoteActive = false;      // AH working
 
@@ -185,5 +222,10 @@ public class CanvasButtonsHandler : MonoBehaviour
         actionToggleImg.rotation = Quaternion.Euler(rot);
         if (jumpBtn)
             jumpBtn.transform.DOLocalMoveX((isActionShowing) ? 277f : 372.6f, 0.1f);
+    }
+    public void EnableJJPortalPopup(GameObject obj)
+    {
+        currentPortalObject = obj;
+        JJPortalPopup.SetActive(true);
     }
 }

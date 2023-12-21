@@ -4,40 +4,86 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
-public class DisplayMessagesComponent : MonoBehaviour
+public class DisplayMessagesComponent : ItemComponent
 {
     [SerializeField]
     private DisplayMessageComponentData displayMessageComponentData;
     public static IEnumerator currentCoroutine;
-    public bool isCoroutineRunning = false;
 
     public void Init(DisplayMessageComponentData displayMessageComponentData)
     {
         this.displayMessageComponentData = displayMessageComponentData;
+        // Remove leading and trailing spaces
+        string inputText = this.displayMessageComponentData.startDisplayMessage.Trim();
+        // Replace all spaces between lines with an empty string
+        string displayMessageCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+        this.displayMessageComponentData.startDisplayMessage = displayMessageCleanedText;
     }
 
     //oncollisionEnter to OnTriggerEnter
     private void OnCollisionEnter(Collision _other)
     {
-
-        //}
-        //private void OnTriggerEnter(Collider _other)
-        //{
-        Debug.Log("Display Message Collision Enter " + _other.gameObject.name);
-        if (_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine))
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            isCoroutineRunning = true;
-
-            //TimeStats.canRun = false;
-            if (displayMessageComponentData.isStart)
-            {
-                BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.startDisplayMessage, displayMessageComponentData.startTimerCount, true);
-            }
-            else
-            {
-                BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.endDisplayMessage, 5, false);
-            }
+            BuilderEventManager.onComponentActivated(_componentType);
+            PlayBehaviour();
         }
     }
+
+    #region BehaviourControl
+
+    private void StartComponent()
+    {
+        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
+
+        if (displayMessageComponentData.isStart)
+        {
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.startDisplayMessage, displayMessageComponentData.startTimerCount, true);
+        }
+        else
+        {
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.endDisplayMessage, 5, false);
+        }
+
+    }
+    private void StopComponent()
+    {
+        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke(displayMessageComponentData.endDisplayMessage, 0, false);
+    }
+
+    public override void StopBehaviour()
+    {
+        if(isPlaying)
+        {
+        isPlaying = false;
+        StopComponent();
+        }
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.DisplayMessagesComponent;
+    }
+
+    #endregion
 }

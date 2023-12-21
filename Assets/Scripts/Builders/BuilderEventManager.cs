@@ -15,7 +15,13 @@ public static class BuilderEventManager
 
     public static Action<float, float> ApplyPlayerProperties;
 
+    public static Action AfterMapDataDownloaded;
+    public static Action<string> XanaMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
+
+    public static Action AfterWorldInstantiated;
+    public static Action AfterWorldOffcialWorldsInatantiated;
+
     public static Action ReSpawnPlayer;
 
     //Mesh Combiner
@@ -26,7 +32,7 @@ public static class BuilderEventManager
     //Gamification Module Events
 
     //Narration Component
-    public static Action<string, bool> OnNarrationCollisionEnter;
+    public static Action<string, bool, bool> OnNarrationCollisionEnter;
     public static Action OnNarrationCollisionExit;
 
     //Random Number Component
@@ -48,6 +54,9 @@ public static class BuilderEventManager
     //Display Message Component
     public static Action<string, float, bool> OnDisplayMessageCollisionEnter;
 
+    //Door Key Component
+    public static Action<string> OnDoorKeyCollisionEnter;
+
     //Help Button Component
     public static Action<string, string, GameObject> OnHelpButtonCollisionEnter;
     public static Action OnHelpButtonCollisionExit;
@@ -57,6 +66,7 @@ public static class BuilderEventManager
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
+    public static Action OnQuizComponentColse;
 
     //Special Item Component
     public static Action<float> OnSpecialItemComponentCollisionEnter;
@@ -83,12 +93,30 @@ public static class BuilderEventManager
     public static Action<string, string, string, Transform> OnHyperLinkPopupCollisionEnter;
     public static Action OnHyperLinkPopupCollisionExit;
 
-    public static Action<ComponentType> ResetComponentUI;
+    //Blind Component
+    public static Action<float> OnBlindComponentTriggerEnter;
+
+    //Avatar change Component
+    public static Action<float> OnAvatarChangeComponentTriggerEnter;
+    public static Action<bool> StopAvatarChangeComponent;
 
     //ChangeNinja_ThrowUIPosition
-    public static Action<float,bool> ChangeNinja_ThrowUIPosition;
+    public static Action<float, bool> ChangeNinja_ThrowUIPosition;
     public static Action PositionUpdateOnOrientationChange;
-    public static Action<bool> SelfiActive;
 
+    //UI toggle
+    public static Action<bool> UIToggle;
+    public static Action<Constants.ItemComponentType> ResetComponentUI;
     public static Action EnableWorldCanvasCamera;
+    public static Action<bool> DisableAnimationsButtons;
+
+    //Component Restriction
+    public static Action<Constants.ItemComponentType> onComponentActivated;
+    public static Action<IComponentBehaviour> AddItemComponent;
+    public static Action RPCcallwhenPlayerJoin;
+
+    //BGM sound manager
+    public static Action<AudioPropertiesBGM> BGMDownloader;
+    public static Action BGMStart;
+    public static Action<float> BGMVolume;
 }

@@ -34,6 +34,11 @@ public class SNSSettingController : MonoBehaviour
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
 
+    [Space]
+    [Header("Simultaneous Connections Items")]
+    public Image btnImage;
+    public Sprite offBtn, onBtn;
+
     private void Awake()
     {
         if (Instance == null)
@@ -100,7 +105,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Personal Information Button Click.......
     public void OnClickPersonalInformationButton()
     {
-        Debug.LogError("Personal information button click");
+       Debug.Log("Personal information button click");
 
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {
@@ -164,6 +169,12 @@ public class SNSSettingController : MonoBehaviour
         if (UserRegisterationManager.instance != null)
         {
             UserRegisterationManager.instance.LogoutAccount();
+            //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
+            if(PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
+            {
+                SimultaneousConnectionButton();
+            }
+            //SimultaneousConnectionButton();
         }
     }
 
@@ -223,14 +234,12 @@ public class SNSSettingController : MonoBehaviour
         PlayerPrefs.DeleteKey("FaceBlendShapeApplied");
         PlayerPrefs.DeleteKey("AppliedShapeIndexppp");
         PlayerPrefs.DeleteKey("SelectedAvatarID");
-        //PlayerPrefs.DeleteKey("IsChanged");
     }
 
     public void DeleteAccountConfirmation()
     {
         deleteAccountPopup.SetActive(true);
     }
-
     public void DeleteAccount()
     {
         if (UserRegisterationManager.instance != null)
@@ -241,5 +250,32 @@ public class SNSSettingController : MonoBehaviour
             });
         }
     }
-
+    public void SimultaneousConnectionButton()
+    {
+        int status = PlayerPrefs.GetInt("ShowLiveUserCounter");
+        if (status == 0)
+        {
+            // Currently Btn is OFF, enable Btn Here
+            btnImage.sprite = onBtn;
+            status = 1;
+        }
+        else
+        {
+            // Currently Btn is ON, disable Btn Here
+            status = 0;
+            btnImage.sprite = offBtn;
+        }
+        PlayerPrefs.SetInt("ShowLiveUserCounter", status);
+    }
+    void CheckBtnStatus(int status)
+    {
+        if (status == 0)
+            btnImage.sprite = offBtn;
+        else
+            btnImage.sprite = onBtn;
+    }
+    private void OnEnable()
+    {
+        CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
+    }
 }

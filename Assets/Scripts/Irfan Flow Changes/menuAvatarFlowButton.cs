@@ -18,14 +18,9 @@ public class menuAvatarFlowButton : MonoBehaviour
     void OnClickMenuAvatarBtn()
     {
         GameManager.Instance.AvatarMenuBtnPressed();
-
+        StoreManager.instance.SubmitUserDetailAPI();
     }
 
-    //private void OnEnable()
-    //{
-    //    StoreBtnController();
-    //}
-  
     public void StoreBtnController()
     {
         if (XanaConstants.xanaConstants != null)
@@ -36,7 +31,6 @@ public class menuAvatarFlowButton : MonoBehaviour
                 OnNFTAvatarEnableStore();
         }
     }
-
 
     void OnNFTAvatarDisableStore()
     {

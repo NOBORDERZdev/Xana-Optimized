@@ -1,13 +1,8 @@
 ﻿using Cinemachine;
-using Metaverse;
 using Photon.Pun;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.OnScreen;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 public class PlayerControllerNew : MonoBehaviour
@@ -107,6 +102,7 @@ public class PlayerControllerNew : MonoBehaviour
     [SerializeField]
     CinemachineFreeLook cinemachineFreeLook;
 
+    internal float animationBlendValue = 0;
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -135,7 +131,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     void Start()
     {
-
         originalSprintSpeed = sprintSpeed;
         originalJumpSpeed = JumpVelocity;
 
@@ -166,8 +161,8 @@ public class PlayerControllerNew : MonoBehaviour
         ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
 
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
 
 
@@ -184,8 +179,8 @@ public class PlayerControllerNew : MonoBehaviour
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt -= JumpNotAllowed;
         }
 
-        //Update jump height according to builder
-        BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        ////Update jump height according to builder
+        //BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -294,7 +289,7 @@ public class PlayerControllerNew : MonoBehaviour
     // Toogle camera first person to therd person
     public void SwitchCameraButton()
     {
-        //Debug.LogError("0");
+        //Debug.Log("0");
         isFirstPerson = !isFirstPerson;
         gravityVector.y = 0;
 
@@ -302,7 +297,7 @@ public class PlayerControllerNew : MonoBehaviour
         if (isFirstPerson)
         {
 
-            //Debug.LogError("1");
+            //Debug.Log("1");
             //Debug.Log("first person call ");
             //Enable_DisableObjects.Instance.ActionsObject.GetComponent<Button>().interactable = true;
             //Enable_DisableObjects.Instance.EmoteObject.GetComponent<Button>().interactable = true;
@@ -316,21 +311,25 @@ public class PlayerControllerNew : MonoBehaviour
             OnInvokeCameraChange(firstPersonCameraObj.GetComponent<Camera>());
             //gameObject.transform.localScale = new Vector3(0, 1, 0);
             DisablePlayerOnFPS();
+            controllerCamera.SetActive(false);
+            firstPersonCameraObj.tag = "MainCamera";
             ActiveCamera = firstPersonCameraObj;
             // MuseumRaycaster.instance.playerCamera = firstPersonCameraObj.GetComponent<Camera>();
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Continuous;
         }
         else
         {
-            //Debug.LogError("2");
+            //Debug.Log("2");
             //MuseumRaycaster.instance.playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
             gyroButton.SetActive(false);
             gyroButton_Portait.SetActive(false);
 
+            firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
             StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(ReferrencesForDynamicMuseum.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
+            controllerCamera.SetActive(true);
             EnablePlayerOnThirdPerson();
             ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Disabled;
@@ -375,6 +374,13 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else if (transforms[i].GetComponent<CanvasGroup>())
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
+        }
+
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (GamificationComponentData.instance.isAvatarChanger ||
+                GamificationComponentData.instance.isBlindfoldedFootPrinting)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(false);
         }
     }
 
@@ -423,8 +429,11 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    {
+                        EmoteAnimationPlay.Instance.StopAnimation();
+                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    }
                 }
                 Move();
                 // CanvasObject = GameObject.FindGameObjectWithTag("HeadItem").gameObject;
@@ -473,7 +482,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             animator.SetBool("standJump", false);
         }
-        //Debug.LogError("MovmentInput:" + movementInput + "  :Move:" + move);
+        //Debug.Log("MovmentInput:" + movementInput + "  :Move:" + move);
         if (animator != null && movementInput.sqrMagnitude >= inputThershold)
         {
             float horizontal1 = horizontal * 1.2f;
@@ -524,7 +533,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
-                //Debug.LogError("Move Sprint:" + firstPersonSprintSpeed + "    :Move:" + move);
+                //Debug.Log("Move Sprint:" + firstPersonSprintSpeed + "    :Move:" + move);
                 characterController.Move(move * sprintSpeed * Time.deltaTime);
                 velocity.y += gravity * Time.deltaTime;
                 characterController.Move(velocity * Time.deltaTime);
@@ -536,7 +545,7 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else
             {
-                //Debug.LogError("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
+                //Debug.Log("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
                 PlayerIsWalking?.Invoke();
                 UpdateSefieBtn(false);
                 //if (Mathf.Abs(horizontal) > .5f || Mathf.Abs(vertical) > .5f)
@@ -606,7 +615,7 @@ public class PlayerControllerNew : MonoBehaviour
             JumpTimePostion = firstPersonCameraObj.transform.localPosition;
             //CanvasJumpTimePostion = CanvasObject.transform.localPosition;
             //StartCoroutine(CanvasJump(diff));
-            //Debug.LogError("FirstPersonCameraMove jump");
+            //Debug.Log("FirstPersonCameraMove jump");
             StartCoroutine(Jump(diff));
         }
         /*else if (characterController.isGrounded && velocity.y < 0 && !IsJumping)
@@ -615,6 +624,10 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetBool("standJump", false);
             jumpNow = false;
         }*/
+
+        float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     /// <summary>
@@ -624,7 +637,7 @@ public class PlayerControllerNew : MonoBehaviour
     /// <returns></returns>
     IEnumerator Jump(Vector3 diff)
     {
-        //Debug.LogError("Jump");
+        //Debug.Log("Jump");
         float progress = 0.0f;
         float d = camStartPosition.y + diff.y;
 
@@ -633,7 +646,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             tempWait /= 3f;
         }
-        //Debug.LogError("jump TempWait:" + tempWait + "    :Horizontal:" + horizontal + "    :Vertical:" + vertical);
+        //Debug.Log("jump TempWait:" + tempWait + "    :Horizontal:" + horizontal + "    :Vertical:" + vertical);
 
         while (progress < tempWait)//0.75f
         {
@@ -675,7 +688,7 @@ public class PlayerControllerNew : MonoBehaviour
             tempWait /= 3f;
             tempWait2 /= 3f;
         }
-        //Debug.LogError("JumpEnd TempWait:" + tempWait + "   :TempWait2:" + tempWait2 + "    :Horizontal:"+horizontal + "    :Vertical:" + vertical);
+        //Debug.Log("JumpEnd TempWait:" + tempWait + "   :TempWait2:" + tempWait2 + "    :Horizontal:"+horizontal + "    :Vertical:" + vertical);
 
         while (progress < tempWait)//0.35f
         {
@@ -684,7 +697,7 @@ public class PlayerControllerNew : MonoBehaviour
             yield return null;
         }
         firstPersonCameraObj.transform.localPosition = new Vector3(0f, 1.1f, 0.1f);
-        //Debug.LogError("Jump end");
+        //Debug.Log("Jump end");
         Invoke(nameof(JumpNotAllowed), tempWait2);//0.3f
         allowFpsJump = true;
     }
@@ -754,9 +767,10 @@ public class PlayerControllerNew : MonoBehaviour
     public void ButtonsToggleOnOff(bool b)
     {
         m_FreeFloatCam = b;
+        StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);
         animator.SetBool("freecam", b);
-        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(b);
+        animator.GetComponent<IKMuseum>().ConsoleObj.SetActive(isFirstPerson == true ? false : b);
 
         if (!b)
         {
@@ -772,10 +786,43 @@ public class PlayerControllerNew : MonoBehaviour
             animator.GetComponent<IKMuseum>().RPCForFreeCamEnable();
         }
 
-
+        if (isFirstPerson)
+        {
+            if (!XanaConstants.xanaConstants.isBuilderScene)
+                animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
+            else if (!b)
+            {
+                DisablePlayerOnFPS();
+            }
+        }
         Debug.Log("FreeFloatCam" + FreeFloatCamCharacterController);
     }
 
+    public void StopBuilderComponent()
+    {
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            if (isNinjaMotion)
+            {
+                isNinjaMotion = false;
+                NinjaComponentTimerStart(0);
+            }
+            else if (isThrowModeActive)
+            {
+                StartCoroutine(nameof(ThrowEnd));
+                isThrow = false;
+                isThrowModeActive = false;
+                BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+            }
+            else if (GamificationComponentData.instance.isBlindfoldedFootPrinting)
+            {
+                if (GamificationComponentData.instance.activeComponent != null)
+                    GamificationComponentData.instance.activeComponent.StopBehaviour();
+            }
+            else if (GamificationComponentData.instance.isAvatarChanger)
+                BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        }
+    }
 
     void Move()
     {
@@ -806,7 +853,10 @@ public class PlayerControllerNew : MonoBehaviour
 
         _IsGrounded = characterController.isGrounded;
         if (_IsGrounded)
+        {
             canDoubleJump = false;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+        }
 
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
@@ -826,10 +876,14 @@ public class PlayerControllerNew : MonoBehaviour
         //    right.Normalize();
 
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
-        //Debug.LogError("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
-        //Debug.LogError("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
+        //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
+        //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+            }
             allowJump = false;
             IsJumpButtonPress = false;
             //Debug.Log("call hua for 1==="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
@@ -905,14 +959,14 @@ public class PlayerControllerNew : MonoBehaviour
         {
             /*if (animator != null)
             {
-                Debug.LogError("FP Normal Movement.......");
+               Debug.Log("FP Normal Movement.......");
                 animator.SetFloat("Blend", horizontal, speedSmoothTime, Time.deltaTime);
                 animator.SetFloat("BlendY", vertical, speedSmoothTime, Time.deltaTime);
             }*/
 
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
-                //Debug.LogError("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
+                //Debug.Log("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 characterController.Move(desiredMoveDirection * sprintSpeed * Time.deltaTime);
 
                 gravityVector.y += gravityValue * Time.deltaTime;
@@ -927,7 +981,7 @@ public class PlayerControllerNew : MonoBehaviour
             }
             else// player is walking
             {
-                //Debug.LogError("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
+                //Debug.Log("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 PlayerIsWalking?.Invoke();
                 UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
@@ -999,6 +1053,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         float values = animator.GetFloat("Blend");
+
+        animationBlendValue = values;
     }
 
     bool lastSelfieCanClick = false;
@@ -1032,6 +1088,7 @@ public class PlayerControllerNew : MonoBehaviour
             this.vertical = 0.0f;
             this.horizontal = 0.0f;
         }
+
     }
 
     void ClientEnd(float animationFloat, Transform transformPos)
@@ -1051,6 +1108,11 @@ public class PlayerControllerNew : MonoBehaviour
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
+        if (ReferrencesForDynamicMuseum.instance.m_34player)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+        }
+
         if (_IsGrounded)
         {
             IsJumpButtonPress = true;
@@ -1058,9 +1120,11 @@ public class PlayerControllerNew : MonoBehaviour
         else if (!_IsGrounded && specialItem && !canDoubleJump)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             gravityVector.y = JumpVelocity * 2;
         }
-       
+
 
     }
 
@@ -1072,9 +1136,9 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 jumpNow = true;
                 IsJumping = true;
-               
+
                 //tpsJumpAnim();
-                //Debug.LogError("JumpAllowed");
+                //Debug.Log("JumpAllowed");
                 //jump camera start...
                 Vector3 diff = playerRig.transform.localPosition - camStartPosition;
                 JumpTimePostion = firstPersonCameraObj.transform.localPosition;
@@ -1095,7 +1159,7 @@ public class PlayerControllerNew : MonoBehaviour
                 CameraLook.instance.DisAllowControl();
                 if (isFirstPerson)
                 {
-                    //Debug.LogError("JumpAllowed1111111");
+                    //Debug.Log("JumpAllowed1111111");
                     Invoke(nameof(JumpNotAllowed), 1.3f);
                 }
                 else
@@ -1117,12 +1181,12 @@ public class PlayerControllerNew : MonoBehaviour
             EmoteAnimationPlay.Instance.StopAnimation();
             EmoteAnimationPlay.Instance.StopAllCoroutines();
         }
-        
+
     }
 
     public void JumpNotAllowed()
     {
-        //Debug.LogError("JumpNotAllowed");
+        //Debug.Log("JumpNotAllowed");
         IsJumping = false;
         jumpNow = false;
         allowJump = true;
@@ -1233,6 +1297,7 @@ public class PlayerControllerNew : MonoBehaviour
     //update player jump according to builder setting 
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
+        sprintSpeed = 5;
         JumpVelocity += (jumpValue - 1);
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;
@@ -1253,12 +1318,18 @@ public class PlayerControllerNew : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
         {
             canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
             Debug.Log("Double jump testing ");
             gravityVector.y = JumpVelocity * 2;
         }
     }
-    /// </summary>
 
+    void StopDoubleJump()
+    {
+        animator.SetBool("canDoubleJump", false);
+    }
+    /// </summary>
 
     public bool isNinjaMotion = false;
     public bool isMovementAllowed = true;
@@ -1366,7 +1437,7 @@ public class PlayerControllerNew : MonoBehaviour
             else// player is walking
             {
 
-                PlayerIsWalking?.Invoke();
+                //PlayerIsWalking?.Invoke();
 
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
@@ -1425,7 +1496,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            PlayerIsIdle?.Invoke();
+            //PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
@@ -1435,6 +1506,7 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
         }
+        animator.SetBool("standJump", false);
     }
 
     void AnimationBehaviourNinjaMode()
@@ -1494,6 +1566,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 1);
         animator.CrossFade("NinjaAttack", 0.1f);
         yield return new WaitForSecondsRealtime(0.8f);
         isMovementAllowed = true;
@@ -1502,6 +1575,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 2);
         animator.CrossFade("NinjaAmimationSlash3", 0.1f);
         yield return new WaitForSecondsRealtime(1f);
         isMovementAllowed = true;
@@ -1511,6 +1585,7 @@ public class PlayerControllerNew : MonoBehaviour
     IEnumerator NinjaAttack3()
     {
         //StopCoroutine(NinjaAttack());
+        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 3);
         isMovementAllowed = false;
         animator.CrossFade("Sword And Shield Attack", 0.1f);
         yield return new WaitForSecondsRealtime(1.5f);
@@ -1524,6 +1599,7 @@ public class PlayerControllerNew : MonoBehaviour
         if (isDrawSword)
         {
             isMovementAllowed = false;
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, true, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
             animator.CrossFade("SheathingSword", 0.2f);
             yield return new WaitForSecondsRealtime(0.8f);
             swordModel.transform.SetParent(swordhandHook, false);
@@ -1531,17 +1607,17 @@ public class PlayerControllerNew : MonoBehaviour
             swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
             swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
             isMovementAllowed = true;
-
-
         }
         if (!isDrawSword)
         {
             isMovementAllowed = false;
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, false, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+
             isMovementAllowed = true;
         }
     }
@@ -1549,14 +1625,13 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = Instantiate(_shurikenPrefab, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
-        spawned.GetComponent<Rigidbody>().AddForce((transform.forward * 3000f) * 0.25f);
-        //(cinemachineFreeLook.m_YAxis.Value<=0.1f?0.1f: cinemachineFreeLook.m_YAxis.Value));
-        //Toast.Show(cinemachineFreeLook.m_YAxis.Value+"");
+        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
+
         animator.SetBool("NinjaThrow", false);
         yield return new WaitForSeconds(0.4f);
         isMovementAllowed = true;
-        Destroy(spawned, 5f);
+
     }
 
     Coroutine NinjaCo;
@@ -1569,35 +1644,53 @@ public class PlayerControllerNew : MonoBehaviour
         }
         //else
         //    return;
-        isThrow = false;
-        isThrowModeActive = false;
+        if (isThrowModeActive)
+        {
+            isThrow = false;
+            isThrowModeActive = false;
+        }
+
         if (throwMainCo != null)
             throwMainCo = null;
+
+        if (swordModel == null && time > 0)
+        {
+            swordModel = PhotonNetwork.Instantiate(GamificationComponentData.instance.katanaPrefab.name, Vector3.zero, new Quaternion(0, 0, 0, 0));
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+        }
+
+        BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
         NinjaCo = StartCoroutine(NinjaComponentTimer(time));
     }
     public IEnumerator NinjaComponentTimer(float time)
     {
+        BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
         isDrawSword = false;
-        if (swordModel)
+        if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-            swordModel.SetActive(true);
+            //swordModel.SetActive(true);
         }
-        yield return new WaitForSecondsRealtime(time);
+        yield return new WaitForSeconds(time);
         isNinjaMotion = false;
+        StopCoroutine(nameof(DrawNinjaSword));
         if (swordModel)
         {
-            swordModel.SetActive(false);
+            //swordModel.SetActive(false);
+            PhotonNetwork.Destroy(swordModel.GetComponent<PhotonView>());
         }
         animator.SetBool("NinjaJump", true);
         animator.SetBool("isNinjaMotion", false);
-
+        animator.SetFloat("Blend", 0f, 0.0f, Time.deltaTime); // applying values to animator.
+        animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
         sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
+        BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
+
     }
     bool attackwithSword, attackwithShuriken, hideoropenSword;
     void AttackwithSword() => attackwithSword = true;
@@ -1623,9 +1716,12 @@ public class PlayerControllerNew : MonoBehaviour
     {
         trajectoryController = this.GetComponent<TrajectoryController>();
         throwLineRenderer = this.GetComponent<LineRenderer>();
-        NinjaComponentTimerStart(0);
-        isNinjaMotion = false;
-        animator.SetBool("isNinjaMotion", false);
+        if (isNinjaMotion)
+        {
+            NinjaComponentTimerStart(0);
+            isNinjaMotion = false;
+            animator.SetBool("isNinjaMotion", false);
+        }
         isThrow = true;
         isThrowModeActive = true;
         if (throwMainCo == null)
@@ -1636,7 +1732,7 @@ public class PlayerControllerNew : MonoBehaviour
     private Coroutine throwStart, throwEnd, throwAction;
     bool isThrowReady = false;
     public Vector3 curveOffset;
-    bool isThrowPose = true;
+    internal bool isThrowPose = true;
 
     IEnumerator Throw()
     {
@@ -1653,20 +1749,22 @@ public class PlayerControllerNew : MonoBehaviour
                     tempRotation.x = this.transform.eulerAngles.x;
                     tempRotation.z = this.transform.eulerAngles.z;
                     this.transform.eulerAngles = tempRotation;
-                    //Debug.LogError("Throw Pose Active");
+                    //Debug.Log("Throw Pose Active");
                     trajectoryController.UpdateTrajectory(_ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     throwLineRenderer.enabled = true;
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
+                    BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
                 }
                 else
                 {
                     throwLineRenderer.enabled = false;
                     trajectoryController.colliderAim.SetActive(false);
                     handBall.SetActive(false);
+                    BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
                 }
 
-                //Debug.LogError("Throw Mode Active");
+                //Debug.Log("Throw Mode Active");
 
 #if UNITY_EDITOR
                 if (Input.GetKeyDown(KeyCode.Q) && throwAction == null)
@@ -1686,6 +1784,7 @@ public class PlayerControllerNew : MonoBehaviour
                             throwStart = StartCoroutine(ThrowStart());
                         }
                     }
+
                     if (!isThrowPose && animator.GetCurrentAnimatorStateInfo(0).IsName("throw") && throwStart == null && throwAction == null)
                     {
                         isThrowPose = !isThrowPose;
@@ -1733,9 +1832,8 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        var spawned = Instantiate(GamificationComponentData.instance.ThrowBall, handBall.transform.position, handBall.transform.rotation);
-        spawned.Init(((ActiveCamera.transform.forward + curveOffset) * _force), false);
-        Destroy(spawned.gameObject, 10);
+        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
         yield return new WaitForSeconds(1f);
@@ -1748,7 +1846,7 @@ public class PlayerControllerNew : MonoBehaviour
         StopCoroutine(throwAction);
         throwAction = null;
     }
-    IEnumerator ThrowEnd()
+    public IEnumerator ThrowEnd()
     {
         Debug.Log("Throw End Co");
         yield return new WaitForSeconds(0f);
@@ -1763,11 +1861,21 @@ public class PlayerControllerNew : MonoBehaviour
 
         yield return new WaitForSeconds(01.3f);
         isMovementAllowed = true;
-        StopCoroutine(throwEnd);
+        if (throwEnd != null)
+            StopCoroutine(throwEnd);
         throwEnd = null;
     }
 
+    internal void ThrowThingsEnded()
+    {
+        StartCoroutine(ThrowEnd());
+        isThrow = false;
+        isThrowModeActive = false;
+        BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+    }
+
     bool throwBallPositionSet, throwBall;
+
     void BallPositionSet()
     {
         if (throwAction == null)
@@ -1781,22 +1889,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        //if (state)
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.ninjaMotion;
-        //else
-        //{
-        //    animator.runtimeAnimatorController = GamificationComponentData.instance.defaultAnimation;
-        //    return;
-        //}
-
-        if (swordModel == null)
-        {
-            swordModel = Instantiate(GamificationComponentData.instance.katanaPrefab, transform.parent);
-            swordModel.transform.localPosition = Vector3.zero;
-            swordModel.transform.localScale = Vector3.one;
-            swordModel.SetActive(false);
-        }
-
         _shurikenPrefab = GamificationComponentData.instance.shurikenPrefab;
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
         swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;

@@ -23,7 +23,6 @@ public class PixelPerfectScrollRect : ScrollRect
     public override void OnEndDrag(PointerEventData eventData)
     {
         base.OnEndDrag(eventData);
-
         OnDragEndVerticalCustom?.Invoke(verticalNormalizedPosition);
     }
 }

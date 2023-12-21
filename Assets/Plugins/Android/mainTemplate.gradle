@@ -6,7 +6,7 @@
             url "https://maven.google.com"
         }
         maven {
-            url (unityProjectPath + "/Assets/GeneratedLocalRepo/Firebase/m2repository") // Assets/Firebase/Editor/AppDependencies.xml:22, Assets/Firebase/Editor/CrashlyticsDependencies.xml:20, Assets/Firebase/Editor/DynamicLinksDependencies.xml:20
+            url (unityProjectPath + "/Assets/GeneratedLocalRepo/Firebase/m2repository") // Assets/Firebase/Editor/AnalyticsDependencies.xml:18, Assets/Firebase/Editor/AppDependencies.xml:22, Assets/Firebase/Editor/CrashlyticsDependencies.xml:20, Assets/Firebase/Editor/DynamicLinksDependencies.xml:20
         }
         mavenLocal()
         mavenCentral()
@@ -23,12 +23,13 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth-api-phone:17.1.0' // Assets/3rd Party Assets/AdvancedInputField/Editor/Dependencies.xml:12
     implementation 'com.google.android.gms:play-services-base:18.2.0' // Assets/Firebase/Editor/AppDependencies.xml:17
     implementation 'com.google.firebase:firebase-analytics:21.3.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:15
-    implementation 'com.google.firebase:firebase-app-unity:11.1.0' // Assets/Firebase/Editor/AppDependencies.xml:22
-    implementation 'com.google.firebase:firebase-common:20.3.2' // Assets/Firebase/Editor/AppDependencies.xml:13
+    implementation 'com.google.firebase:firebase-analytics-unity:11.2.0' // Assets/Firebase/Editor/AnalyticsDependencies.xml:18
+    implementation 'com.google.firebase:firebase-app-unity:11.2.0' // Assets/Firebase/Editor/AppDependencies.xml:22
+    implementation 'com.google.firebase:firebase-common:20.3.3' // Assets/Firebase/Editor/AppDependencies.xml:13
     implementation 'com.google.firebase:firebase-crashlytics-ndk:18.3.7' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:13
-    implementation 'com.google.firebase:firebase-crashlytics-unity:11.1.0' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
+    implementation 'com.google.firebase:firebase-crashlytics-unity:11.2.0' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
     implementation 'com.google.firebase:firebase-dynamic-links:21.1.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:13
-    implementation 'com.google.firebase:firebase-dynamic-links-unity:11.1.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:20
+    implementation 'com.google.firebase:firebase-dynamic-links-unity:11.2.0' // Assets/Firebase/Editor/DynamicLinksDependencies.xml:20
 // Android Resolver Dependencies End
 **DEPS**}
 

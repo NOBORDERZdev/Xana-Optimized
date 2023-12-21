@@ -12,12 +12,14 @@ public class ButtonsOnOff : MonoBehaviour
        otherButton.SetActive(true);
        this.gameObject.SetActive(false);
         ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
+        BuilderEventManager.UIToggle?.Invoke(true);
     }
     public void ClickHidebtnOff()
     {
         this.gameObject.SetActive(true);
         otherButton.SetActive(false);
         ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
+        BuilderEventManager.UIToggle?.Invoke(false);
     }
 
     
@@ -27,6 +29,8 @@ public class ButtonsOnOff : MonoBehaviour
         otherButton.GetComponent<Button>().interactable = !b;
         if(GetComponent<Button>())
             GetComponent<Button>().interactable = !b;
+
+        BuilderEventManager.UIToggle?.Invoke(b);
 
         if (b)
         {

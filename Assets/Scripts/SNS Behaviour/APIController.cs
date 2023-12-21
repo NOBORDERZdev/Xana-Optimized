@@ -91,7 +91,7 @@ public class APIController : MonoBehaviour
     //this method is used to instantiate Following tab items.......
     public void OnGetAllFeedForFollowingTab(int pageNum, string callingFrom)
     {
-        Debug.LogError("OnGetAllFeedFollowingTab:" + APIManager.Instance.followingUserRoot.Data.Rows.Count);
+       Debug.Log("OnGetAllFeedFollowingTab:" + APIManager.Instance.followingUserRoot.Data.Rows.Count);
         if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0)
         {
             //set defaut followingFeedInitiateTotalCount and followingFeedImageLoadedCount 0
@@ -114,7 +114,7 @@ public class APIController : MonoBehaviour
                     }*/
                     followingFeedTabContainer = FeedUIController.Instance.followingFeedTabContainer;
 
-                    //Debug.LogError("prefab");
+                    //Debug.Log("prefab");
                     GameObject followingFeedObject = Instantiate(followingFeedPrefab, followingFeedTabContainer);
                     FeedFollowingItemController feedFollowingItemController = followingFeedObject.GetComponent<FeedFollowingItemController>();
                     feedFollowingItemController.FeedsByFollowingUserRowData = APIManager.Instance.followingUserRoot.Data.Rows[i];
@@ -134,7 +134,7 @@ public class APIController : MonoBehaviour
                 }
             }
             //StartCoroutine(SetContentOnFeed());//new cmnt
-            //Debug.LogError("isDataLoad true");
+            //Debug.Log("isDataLoad true");
             StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
         }
 
@@ -176,17 +176,17 @@ public class APIController : MonoBehaviour
         //FeedUIController.Instance.hotForYouFeedInitiateTotalCount = 0;
         //FeedUIController.Instance.hotForYouFeedImageLoadedCount = 0;
 
-        /*Debug.LogError("AllUserForYouFeeds.......:" + APIManager.Instance.root.data.rows.Count + "  :CallingFrom:" + callingFrom);
+        /*Debug.Log("AllUserForYouFeeds.......:" + APIManager.Instance.root.data.rows.Count + "  :CallingFrom:" + callingFrom);
         for (int i = 0; i < APIManager.Instance.root.data.rows.Count; i++)
         {
             if (APIManager.Instance.root.data.rows[i].feeds.Count > 0)
             {
-                //Debug.LogError("AllUserForYouFeeds1111111.......:" + APIManager.Instance.root.data.rows[i].feeds.Count);
+                //Debug.Log("AllUserForYouFeeds1111111.......:" + APIManager.Instance.root.data.rows[i].feeds.Count);
                 for (int j = 0; j < APIManager.Instance.root.data.rows[i].feeds.Count; j++)
                 {
                     if (!feedForYouIdList.Contains(APIManager.Instance.root.data.rows[i].feeds[j].id))
                     {
-                        // Debug.LogError("add prebab ");
+                        //Debug.Log("add prebab ");
                         GameObject forYouFeedObject = Instantiate(forYouFeedPrefab, FeedUIController.Instance.forYouFeedTabContainer);
                         FeedForYouItemController feedForYouItemController = forYouFeedObject.GetComponent<FeedForYouItemController>();
 
@@ -221,7 +221,7 @@ public class APIController : MonoBehaviour
             }*/
         }
 
-        //Debug.LogError("isDataLoad true");
+        //Debug.Log("isDataLoad true");
         StartCoroutine(HotWaitToEnableDataLoadedBool(pageNum));
         //FeedUIController.Instance.isDataLoad = true;        
     }
@@ -229,7 +229,7 @@ public class APIController : MonoBehaviour
     public IEnumerator HotWaitToEnableDataLoadedBool(int pageNum)
     {
         yield return new WaitForSeconds(0.5f);
-        //Debug.LogError("isDataLoad true");
+        //Debug.Log("isDataLoad true");
         FeedUIController.Instance.isDataLoad = true;
         //Riken
         //if (pageNum > 1 && APIManager.Instance.root.data.rows.Count > 0)
@@ -246,7 +246,7 @@ public class APIController : MonoBehaviour
         //FeedUIController.Instance.hotFeedInitiateTotalCount = 0;
         //FeedUIController.Instance.HotFeedImageLoadedCount = 0;
 
-        Debug.LogError("AllUsersWithHotFeeds.......:" + APIManager.Instance.root.data.rows.Count + "    :CallingFrom:" + callingFrom);
+       Debug.Log("AllUsersWithHotFeeds.......:" + APIManager.Instance.root.data.rows.Count + "    :CallingFrom:" + callingFrom);
         /*for (int i = 0; i < APIManager.Instance.root.data.rows.Count; i++)
         {
             if (!feedHotIdList.Contains(APIManager.Instance.root.data.rows[i].id))
@@ -292,7 +292,7 @@ public class APIController : MonoBehaviour
             {
                 if (!feedHotIdList.Contains(APIManager.Instance.allhotFeedRoot.data.rows[i].id))
                 {
-                    //Debug.LogError("prefab");
+                    //Debug.Log("prefab");
                     GameObject HotFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
                     FeedItemController HotFeedItemController = HotFeedObject.GetComponent<FeedItemController>();
                     HotFeedItemController.HotFeed = APIManager.Instance.allhotFeedRoot.data.rows[i];
@@ -336,23 +336,23 @@ public class APIController : MonoBehaviour
             }
         }
 
-        //Debug.LogError("isDataLoad true");
+        //Debug.Log("isDataLoad true");
         //FeedUIController.Instance.isDataLoad = true;
     }
 
     //this method is used to Remove items and reset data of hot and discover tab.......
     public void RemoveFollowedUserFromHot(int id)
     {
-        Debug.LogError("RemoveFollowedUserFromHot id:" + id);
+       Debug.Log("RemoveFollowedUserFromHot id:" + id);
         if (feedHotIdList.Contains(id))
         {
             int index = feedHotIdList.IndexOf(id);
-            //Debug.LogError("Index:" + index);
+            //Debug.Log("Index:" + index);
             APIManager.Instance.HotAndDiscoverSaveAndUpdateJson(id, index);//remove data from main data list and updatejson.......
 
             List<AllUserWithFeed> allFeedsForUser = new List<AllUserWithFeed>();
 
-            //Debug.LogError("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.hotTabContainer.childCount);
+            //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.hotTabContainer.childCount);
             if (FeedUIController.Instance.hotTabContainer.childCount > 0 && index >= 0)
             {
                 FeedRawItemController feedRawItemController = FeedUIController.Instance.hotTabContainer.GetChild(index).GetComponent<FeedRawItemController>();
@@ -366,7 +366,7 @@ public class APIController : MonoBehaviour
                     feedRawItemController.hotItemPrefabParent.GetChild(i).GetComponent<FeedItemController>().ClearMemoryAfterDestroyObj();
                 }
                 feedRawItemController.ClearMororyAfterDestroyObject();
-                Debug.LogError("Delete from hot.......index:" + index);
+               Debug.Log("Delete from hot.......index:" + index);
                 DestroyImmediate(FeedUIController.Instance.hotTabContainer.GetChild(index).gameObject);
                 feedHotIdList.RemoveAt(index);
             }
@@ -375,7 +375,7 @@ public class APIController : MonoBehaviour
                 for (int i = 0; i < allFeedsForUser.Count; i++)
                 {
                     int feedIndex = feedForYouIdList.IndexOf(allFeedsForUser[i].id);
-                    Debug.LogError("allFeedsForUser id:" + allFeedsForUser[i].id + "    :FeedIndex:" + feedIndex);
+                   Debug.Log("allFeedsForUser id:" + allFeedsForUser[i].id + "    :FeedIndex:" + feedIndex);
                     if (feedIndex >= 0)
                     {
                         if (!FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().isImageSuccessDownloadAndSave)
@@ -398,12 +398,12 @@ public class APIController : MonoBehaviour
     //this method is used to Remove items and reset data of following tab.......
     public void RemoveFollowingItemAndResetData(int id)
     {
-        Debug.LogError("RemoveUnFollowedUserFromFollowing id:" + id);
+       Debug.Log("RemoveUnFollowedUserFromFollowing id:" + id);
         if (feedFollowingIdList.Contains(id))
         {
             int index = feedFollowingIdList.IndexOf(id);
 
-            //Debug.LogError("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.followingFeedTabContainer.childCount);
+            //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.followingFeedTabContainer.childCount);
             if (FeedUIController.Instance.followingFeedTabContainer.childCount > 0 && index >= 0)
             {
                 FeedFollowingItemController feedFollowingItemController = FeedUIController.Instance.followingFeedTabContainer.GetChild(index).GetComponent<FeedFollowingItemController>();
@@ -413,7 +413,7 @@ public class APIController : MonoBehaviour
                     FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;
                 }
                 feedFollowingItemController.ClearMemoryAfterDestroyObj();
-                //Debug.LogError("Delete from Following tab.......index:" + index);
+                //Debug.Log("Delete from Following tab.......index:" + index);
                 DestroyImmediate(FeedUIController.Instance.followingFeedTabContainer.GetChild(index).gameObject);
                 feedFollowingIdList.RemoveAt(index);
             }
@@ -474,7 +474,7 @@ public class APIController : MonoBehaviour
     //this method is used to instantiate following user in chat module.......
     public void GetAllFollowingUser(int pageNum)
     {
-        //Debug.LogError("GetAllFollowingUser");
+        //Debug.Log("GetAllFollowingUser");
         if (pageNum == 1)
         {
             allFollowingUserList.Clear();
@@ -511,7 +511,7 @@ public class APIController : MonoBehaviour
                         }
                     }
                 }
-                //Debug.LogError("Ismatch:" + isMatch);
+                //Debug.Log("Ismatch:" + isMatch);
                 if (!isMatch)
                 {
                     GameObject followingUserObject = Instantiate(followingUser, MessageController.Instance.followingUserParent);
@@ -537,7 +537,7 @@ public class APIController : MonoBehaviour
         allConversationList.Clear();
         foreach (Transform item in MessageController.Instance.conversationPrefabParent)
         {
-            //Debug.LogError("dgfg");
+            //Debug.Log("dgfg");
             Destroy(item.gameObject);
         }
         for (int i = 0; i < APIManager.Instance.allChatGetConversationRoot.data.Count; i++)
@@ -545,7 +545,7 @@ public class APIController : MonoBehaviour
             //if (!conversationUserList.Contains(APIManager.Instance.allChatGetConversationRoot.data[i].id))
             //  {
             GameObject ChatGetConversationObject = Instantiate(conversationPrefab, MessageController.Instance.conversationPrefabParent);
-            // Debug.LogError("here");
+            //Debug.Log("here");
             ChatGetConversationObject.GetComponent<AllConversationData>().allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[i];
             ChatGetConversationObject.GetComponent<AllConversationData>().LoadFeed();
             //  conversationUserList.Add(APIManager.Instance.allChatGetConversationRoot.data[i].id);
@@ -553,7 +553,7 @@ public class APIController : MonoBehaviour
 
             if (!string.IsNullOrEmpty(MessageController.Instance.isDirectCreateFirstTimeGroupName) && APIManager.Instance.allChatGetConversationRoot.data[i].group != null)//rik first time create group assign current data
             {
-                Debug.LogError("for first time group:" + MessageController.Instance.isDirectCreateFirstTimeGroupName + "   :Id:" + APIManager.Instance.allChatGetConversationRoot.data[i].group.name);
+               Debug.Log("for first time group:" + MessageController.Instance.isDirectCreateFirstTimeGroupName + "   :Id:" + APIManager.Instance.allChatGetConversationRoot.data[i].group.name);
                 if (APIManager.Instance.allChatGetConversationRoot.data[i].group.name == MessageController.Instance.isDirectCreateFirstTimeGroupName)
                 {
                     MessageController.Instance.allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[i];
@@ -562,7 +562,7 @@ public class APIController : MonoBehaviour
             }
             else if (!string.IsNullOrEmpty(MessageController.Instance.isDirectMessageFirstTimeRecivedID))//rik first time create one to one message to assign current data
             {
-                Debug.LogError("for first time message:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID + "   :Id:" + APIManager.Instance.allChatGetConversationRoot.data[i].receiverId);
+               Debug.Log("for first time message:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID + "   :Id:" + APIManager.Instance.allChatGetConversationRoot.data[i].receiverId);
                 if (APIManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(MessageController.Instance.isDirectMessageFirstTimeRecivedID) || APIManager.Instance.allChatGetConversationRoot.data[i].senderId == int.Parse(MessageController.Instance.isDirectMessageFirstTimeRecivedID))
                 {
                     MessageController.Instance.allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[i];
@@ -575,7 +575,7 @@ public class APIController : MonoBehaviour
             {
                 if (MessageController.Instance.allChatGetConversationDatum.group.id == APIManager.Instance.allChatGetConversationRoot.data[i].group.id)
                 {
-                    Debug.LogError("Add meber after refresh details screen");
+                   Debug.Log("Add meber after refresh details screen");
                     MessageController.Instance.allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[i];
                     SetChatMember();
                     MessageController.Instance.addFrindCallingScreenIndex = 0;
@@ -598,7 +598,7 @@ public class APIController : MonoBehaviour
             MessageController.Instance.startConversationPopup.SetActive(false);
         }
 
-        //Debug.LogError("befor calling.......:" + MessageController.Instance.conversationPrefabParent.childCount);
+        //Debug.Log("befor calling.......:" + MessageController.Instance.conversationPrefabParent.childCount);
         StartCoroutine(MessageController.Instance.searchManagerAllConversation.SetUpAllConversationData());//rik
     }
 
@@ -607,7 +607,7 @@ public class APIController : MonoBehaviour
     public DateTime lastMsgTime;
     public void GetAllChat(int pageNumber, string callingFrom)
     {
-        //Debug.LogError("APIController GetAllChat pageNumber.......:" + pageNumber);
+        //Debug.Log("APIController GetAllChat pageNumber.......:" + pageNumber);
 
         // allChatMessageId.Clear();
         for (int i = 0; i < APIManager.Instance.allChatMessagesRoot.data.rows.Count; i++)
@@ -625,7 +625,7 @@ public class APIController : MonoBehaviour
                 //rik show message for user leaved and other special message
                 if (!string.IsNullOrEmpty(APIManager.Instance.allChatMessagesRoot.data.rows[i].message.type))
                 {
-                    //Debug.LogError("message type:" + APIManager.Instance.allChatMessagesRoot.data.rows[i].message.type);
+                    //Debug.Log("message type:" + APIManager.Instance.allChatMessagesRoot.data.rows[i].message.type);
                     if (APIManager.Instance.allChatMessagesRoot.data.rows[i].message.type == "LeaveGroup")
                     {
                         GameObject leaveUserMsg = Instantiate(chatTimePrefab, MessageController.Instance.chatPrefabParent);
@@ -648,19 +648,19 @@ public class APIController : MonoBehaviour
 
                 if (!isSpecialMsg)//rik for all other message show
                 {
-                    //  Debug.LogError("i : " + i + "+PageNum:" + pageNumber + ":responce:" + APIManager.Instance.allChatMessagesRoot.data.rows[i]);
+                    // Debug.Log("i : " + i + "+PageNum:" + pageNumber + ":responce:" + APIManager.Instance.allChatMessagesRoot.data.rows[i]);
                     if (APIManager.Instance.allChatMessagesRoot.data.rows[i].senderId == APIManager.Instance.userId)
                     {
                         if (APIManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments.Count > 0)
                         {
-                            //Debug.LogError("urllllll " + APIManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments[0].url);
+                            //Debug.Log("urllllll " + APIManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments[0].url);
                             // MessageController.Instance.ChatScreen.SetActive(true);
                             //SetChetDay(APIManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
                             GameObject ChatPhotoObject = Instantiate(chatPhotoPrefabUser, MessageController.Instance.chatPrefabParent);
                             ChatPhotoObject.GetComponent<ChatDataScript>().MessageRow = APIManager.Instance.allChatMessagesRoot.data.rows[i];
                             ChatPhotoObject.GetComponent<ChatDataScript>().LoadFeed();
 
-                            //Debug.LogError("r_isCreateMessage" + APIManager.Instance.r_isCreateMessage);
+                            //Debug.Log("r_isCreateMessage" + APIManager.Instance.r_isCreateMessage);
                             if (pageNumber == 1 && APIManager.Instance.r_isCreateMessage)
                             {
                                 ChatPhotoObject.transform.SetAsLastSibling();
@@ -763,7 +763,7 @@ public class APIController : MonoBehaviour
         MessageController.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         if (APIManager.Instance.allChatMessagesRoot.data.rows.Count > 0)
         {
-            //Debug.LogError("here");
+            //Debug.Log("here");
             MessageController.Instance.isChatDataLoaded = false;
         }
     }
@@ -785,7 +785,7 @@ public class APIController : MonoBehaviour
         {
             if (!chatTimeList.Contains("TODAY"))
             {
-                Debug.LogError("TODAY");
+               Debug.Log("TODAY");
                 chatTimeObject1 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
                 chatTimeObject1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("TODAY");
                 //chatTimeObject1.transform.GetChild(0).GetComponent<TextLocalization>().LocalizeTextText();
@@ -802,7 +802,7 @@ public class APIController : MonoBehaviour
             }
             else
             {
-                // Debug.LogError("today chatTimeObject:" + chatTimeObject1);
+                //Debug.Log("today chatTimeObject:" + chatTimeObject1);
                 if (chatTimeObject1 != null && !APIManager.Instance.r_isCreateMessage)
                 {
                     chatTimeObject1.transform.SetAsFirstSibling();
@@ -813,12 +813,12 @@ public class APIController : MonoBehaviour
         {
             DateTime converTime = TimeZoneInfo.ConvertTimeFromUtc(updatedAt, TimeZoneInfo.Local);
             TimeSpan dateDiff = (DateTime.Now.Date - converTime.Date);
-            //Debug.LogError("dateDiff" + dateDiff);
+            //Debug.Log("dateDiff" + dateDiff);
             if (dateDiff.TotalDays == 1)
             {
                 if (!chatTimeList.Contains("YESTERDAY"))
                 {
-                    // Debug.LogError("YESTERDAY");
+                    //Debug.Log("YESTERDAY");
                     chatTimeObject2 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
                     chatTimeObject2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("YESTERDAY");
                     //chatTimeObject2.transform.GetChild(0).GetComponent<TextLocalization>().LocalizeTextText();
@@ -848,7 +848,7 @@ public class APIController : MonoBehaviour
                 string msgDateStr = converTime.Date.ToString("dd/MM/yyyy") + " " + TextLocalization.GetLocaliseTextByKey(converTime.DayOfWeek.ToString());
                 if (!chatTimeList.Contains(msgDateStr))
                 {
-                    // Debug.LogError("DATE" + converTime.Date + "days" + converTime.DayOfWeek);
+                    //Debug.Log("DATE" + converTime.Date + "days" + converTime.DayOfWeek);
                     chatTimeObject3 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
                     chatTimeObject3.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = msgDateStr;
                     chatTimeList.Add(msgDateStr);
@@ -880,7 +880,7 @@ public class APIController : MonoBehaviour
     {
         if (index == 0)
         {
-            // Debug.LogError("herwer");
+            //Debug.Log("herwer");
             foreach (Transform item in MessageController.Instance.chatShareAttechmentparent)
             {
                 Destroy(item.gameObject);
@@ -902,7 +902,7 @@ public class APIController : MonoBehaviour
 
             for (int i = 0; i < APIManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
             {
-                //  Debug.LogError("herwer");
+                // Debug.Log("herwer");
                 if (i < 4)
                 {
                     GameObject attechmentObject = Instantiate(chatShareAttechmentPrefab, MessageController.Instance.chatShareAttechmentparent);
@@ -970,7 +970,7 @@ public class APIController : MonoBehaviour
         //MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         //MessageController.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         //MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        Debug.LogError("SetChatMember calling.......");
+       Debug.Log("SetChatMember calling.......");
         foreach (Transform item in MessageController.Instance.chatMemberParent)
         {
             Destroy(item.gameObject);
@@ -1051,7 +1051,7 @@ public class APIController : MonoBehaviour
         MessageController.Instance.isLeaveGroup = true;
         //after leave group then create leave user msg on this group.......
         APIManager.Instance.r_isCreateMessage = true;
-        Debug.LogError("removed User Name:" + etc.user.name);
+       Debug.Log("removed User Name:" + etc.user.name);
         string messageStr = etc.user.name + " Left";
         APIManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");
     }
@@ -1072,13 +1072,13 @@ public class APIController : MonoBehaviour
                     return;
                 }
 
-                Debug.LogError("OnPickGroupAvatarFromGellery path: " + path);
+               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
                 string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-                Debug.LogError("OnPickGroupAvatarFromGellery FileName: " + fileName);
+               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
                 AWSHandler.Instance.PostAvatarObject(path, fileName, "UpdateUserAvatar");
             }
@@ -1088,7 +1088,7 @@ public class APIController : MonoBehaviour
 
     public void UpdateAvatarOnServer(string key, string callingFrom)
     {
-        Debug.LogError("test update avatr key:" + key);
+       Debug.Log("test update avatr key:" + key);
         APIManager.Instance.RequestUpdateUserAvatar(key, callingFrom);
     }
     #endregion

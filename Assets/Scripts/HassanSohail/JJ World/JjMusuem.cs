@@ -25,13 +25,16 @@ public class JjMusuem : MonoBehaviour
         
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        //if (player.gameObject.GetComponentInChildren<PhotonView>().IsMine)
-        //    SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        SetPlayerPos();
     }
 
 
+    void SetPlayerPos()
+    {
+        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+    }
     /// <summary>
     /// Set player position in room according to the point on which the player enter
     /// </summary>
@@ -62,13 +65,15 @@ public class JjMusuem : MonoBehaviour
     //    }
     //}
 
-    IEnumerator changePos(Transform destinationPoint) {
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        yield return new WaitForSeconds(.02f);
+    IEnumerator changePos(Transform destinationPoint)
+    {
+        //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.7f, 0.85f), 4f, false);
+       // yield return new WaitForSeconds(.02f);
         manager.allowTeleportation = false;
         player.allowTeleport = false;
         player.m_IsMovementActive = false;
-       // StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         yield return new WaitForSeconds(.2f);
         Vector3 tempSpawn = destinationPoint.position;
         RaycastHit hit;
@@ -113,8 +118,8 @@ public class JjMusuem : MonoBehaviour
             LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(0f, 0.5f));
         }
 
-        yield return new WaitForSeconds(.15f);
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        //yield return new WaitForSeconds(.15f);
+        //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
 
 }

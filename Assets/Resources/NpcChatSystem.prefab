@@ -1,0 +1,177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7861484208692460306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5727525722268911528}
+  - component: {fileID: 6064654722453747370}
+  - component: {fileID: 795303163645620554}
+  - component: {fileID: -4114564411297842832}
+  m_Layer: 0
+  m_Name: NpcChatSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5727525722268911528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.131964, y: 1.33482, z: -70.16509}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6064654722453747370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dceed4a23dec6a4685b02fe281be65c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  responseChecker: 0
+  npcAttributes:
+  - aiNames: Maverick
+    aiIds: 7893
+    actualAiIds: 37183
+    nameType: 0
+  - aiNames: blaze
+    aiIds: 7896
+    actualAiIds: 37184
+    nameType: 0
+  - aiNames: Hunter
+    aiIds: 7898
+    actualAiIds: 37187
+    nameType: 0
+  - aiNames: Jaxon
+    aiIds: 7899
+    actualAiIds: 37188
+    nameType: 0
+  - aiNames: Phoenix
+    aiIds: 7901
+    actualAiIds: 37189
+    nameType: 0
+  - aiNames: "\u30CE\u30D6"
+    aiIds: 7902
+    actualAiIds: 37190
+    nameType: 1
+  - aiNames: "\u30B5\u30E4"
+    aiIds: 7903
+    actualAiIds: 37191
+    nameType: 1
+  - aiNames: "\u30DF\u30AA"
+    aiIds: 7904
+    actualAiIds: 37192
+    nameType: 1
+  - aiNames: "\u30B7\u30F3"
+    aiIds: 7905
+    actualAiIds: 37193
+    nameType: 1
+  - aiNames: "\u30A2\u30AD"
+    aiIds: 7906
+    actualAiIds: 37194
+    nameType: 1
+  - aiNames: "\u30EA\u30E7\u30A6"
+    aiIds: 7907
+    actualAiIds: 37195
+    nameType: 1
+  - aiNames: Scarlett
+    aiIds: 7908
+    actualAiIds: 37196
+    nameType: 0
+  - aiNames: Freya
+    aiIds: 7909
+    actualAiIds: 37197
+    nameType: 0
+  - aiNames: Liam
+    aiIds: 7910
+    actualAiIds: 37198
+    nameType: 0
+  - aiNames: Willow
+    aiIds: 7911
+    actualAiIds: 37199
+    nameType: 0
+  npcDB: []
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 
+--- !u!114 &795303163645620554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0bd48adc70866438d856d23205278e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feed:
+    response_jp: 
+    response_en: 
+    emotion: 
+--- !u!114 &-4114564411297842832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7861484208692460306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78021e8b441c9144fa2ad06eb339861b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcAttributes:
+  - aiNames: Mason
+    aiIds: 8011
+    actualAiIds: 37525
+  - aiNames: "\u30E6\u30A6\u30B4"
+    aiIds: 8012
+    actualAiIds: 37526
+  - aiNames: "\u30A2\u30E6"
+    aiIds: 8013
+    actualAiIds: 37527
+  - aiNames: Mia
+    aiIds: 8014
+    actualAiIds: 37528
+  - aiNames: Jolly
+    aiIds: 8015
+    actualAiIds: 37529
+  responseData:
+    response_jp: 
+    response_en: 
+    emotion: 
+  feed:
+    input_data:
+      target_npc_id: 0
+      target_npc_msg: 
+    output_data:
+      user_id: 0
+      user_msg_jp: 
+      user_msg_en: 
+      emotion: 

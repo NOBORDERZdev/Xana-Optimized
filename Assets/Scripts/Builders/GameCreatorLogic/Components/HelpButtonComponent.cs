@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using Models;
 using Photon.Pun;
 
-//[RequireComponent(typeof(Rigidbody))]
 public class HelpButtonComponent : ItemComponent
 {
     [SerializeField]
@@ -14,10 +9,14 @@ public class HelpButtonComponent : ItemComponent
 
     public void Init(HelpButtonComponentData helpButtonComponentData)
     {
-        Debug.Log(JsonUtility.ToJson(helpButtonComponentData));
-
         this.helpButtonComponentData = helpButtonComponentData;
-        //this.helpButtonComponentData.IsAlwaysOn = false;
+        // Remove leading and trailing spaces
+        string inputText = this.helpButtonComponentData.titleHelpButtonText.Trim();
+        // Replace all spaces between lines with an empty string
+        string hyperLinkCleanedText = System.Text.RegularExpressions.Regex.Replace(inputText, @"\s+", " ");
+
+        this.helpButtonComponentData.titleHelpButtonText = hyperLinkCleanedText;
+
         if (this.helpButtonComponentData.IsAlwaysOn)
         {
             GamificationComponentData.instance.worldCameraEnable = true;
@@ -29,28 +28,77 @@ public class HelpButtonComponent : ItemComponent
             infoPopup = go.GetComponent<HelpButtonComponentResizer>();
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
-            infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
+            infoPopup.msg= helpButtonComponentData.helpButtonData.Length == 0 ? "Define Rules here !" : helpButtonComponentData.helpButtonData + "\n";
+            //infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
+            infoPopup.scrollView.enabled = false;
+            infoPopup.scrollbar.SetActive(false);
             go.SetActive(true);
+            infoPopup.Init();
+            BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
         }
     }
 
     private void OnCollisionEnter(Collision _other)
     {
-        //Debug.Log("Help Button Collision Enter: " + _other.gameObject.name);
-        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
+                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
+
             }
         }
     }
 
     private void OnCollisionExit(Collision _other)
     {
-        //Debug.Log("Help Button Collision Exit: " + _other.gameObject.name);
-        if ((_other.gameObject.CompareTag("Player") || (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)) && !this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }
     }
+
+    #region BehaviourControl
+    private void StartComponent()
+    {
+
+    }
+    private void StopComponent()
+    {
+
+
+    }
+
+    public override void StopBehaviour()
+    {
+        isPlaying = false;
+        StopComponent();
+    }
+
+    public override void PlayBehaviour()
+    {
+        isPlaying = true;
+        StartComponent();
+    }
+
+    public override void ToggleBehaviour()
+    {
+        isPlaying = !isPlaying;
+
+        if (isPlaying)
+            PlayBehaviour();
+        else
+            StopBehaviour();
+    }
+    public override void ResumeBehaviour()
+    {
+        PlayBehaviour();
+    }
+
+    public override void AssignItemComponentType()
+    {
+        _componentType = Constants.ItemComponentType.HelpButtonComponent;
+    }
+
+    #endregion
 }

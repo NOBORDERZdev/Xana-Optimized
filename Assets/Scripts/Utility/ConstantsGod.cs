@@ -61,7 +61,7 @@ public class ConstantsGod
 
     public static string GETENVIRONMENTSAPINew = "/item/environment/1/30";
     public static string GetAllMuseumsAPI = "/item/museums/2/1/25";
-    public static string SearchWorldAPI = "/item/search-worlds";
+    
     // public static string GetAllMuseumsAPI = "/item/museums/v2/1/20";
     public static string BACKGROUNDFILES = "/item/background-files";
     public static string ANIMATIONFILES = "/item/animations";
@@ -107,10 +107,19 @@ public class ConstantsGod
     public static string ForgetPasswordResetAPI = "/auth/reset-password";
     //[Header("Guest API")]
     public static string guestAPI = "/auth/login-as-guest";
-    public static string GetAllAnimatons = "/item/animations";
+    //  public static string GetAllAnimatons = "/item/animations";
+    public static string GetAllAnimatons = "/item/v2/animations";
     public static string GetAllReactions = "/item/get-all-reactions";
     public static string GetVersion = "/item/get-version";
     public static string MaintenanceAPI = "/item/get-version/";
+
+
+
+    // Xana Lobby WOrlds
+    public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
+    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";  
+
+    public static string GETXANAOFFICIALWORLDBYID = "";
 
     #endregion
 
@@ -184,6 +193,7 @@ public class ConstantsGod
     public static readonly string GetXanaliaNounceURL = "/auth/get-address-nonce";
     public static readonly string GetXanaliaNFTURL = "/xanalia/mydata";
     public static readonly string GetGroupDetailsAPI = "/item/get-sets";
+    public static readonly string SaveNonce = "/auth/save-user-nonce";
 
 
     #endregion
@@ -194,7 +204,7 @@ public class ConstantsGod
     #endregion
 
     #region Analatic Api's
-   
+
     public static string API_GetWorldId = "/analytical/enter-xana-world";
     public static string API_GetWorldId_Guest = "/analytical/guest-enter-xana-world";
 
@@ -211,5 +221,12 @@ public class ConstantsGod
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
+    public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
+    public static string SearchWorldAPI = "/item/search-worlds/";
+    public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
+    #endregion
+
+    #region Jj World Api's
+    public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
 }

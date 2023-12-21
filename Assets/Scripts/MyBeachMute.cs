@@ -13,7 +13,7 @@ public class MyBeachMute : MonoBehaviour
     public GameObject otherButtonPotrait;
     void Start()
     {
-        if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament") || FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         {
             if (XanaConstants.xanaConstants.mic == 1)
             {

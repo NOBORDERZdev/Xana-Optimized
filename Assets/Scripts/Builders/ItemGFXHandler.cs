@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing.Printing;
 using UnityEngine;
 
 public class ItemGFXHandler : ItemComponent
@@ -15,7 +12,8 @@ public class ItemGFXHandler : ItemComponent
 
     private void OnEnable()
     {
-        if ((ItemBase.categoryId.Value + ItemBase.subCategoryId.Value).Equals("EFT02")) UpdateMaterialShaders();
+        if (gameObject.name.Contains("pfEFT02"))
+            UpdateMaterialShaders();
     }
 
     public void SetMaterialColorFromItemData(Color color)
@@ -24,10 +22,11 @@ public class ItemGFXHandler : ItemComponent
 
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _renderers[i].materials.ForEachItem((d) =>
+            for (int j = 0; j < _renderers[i].materials.Length; j++)
             {
-                d.SetColor(Constants.BaseColor, color);
-            });
+                color.a = _renderers[i].materials[j].color.a;
+                _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+            }
         }
     }
 
@@ -43,25 +42,35 @@ public class ItemGFXHandler : ItemComponent
                 {
                     _renderers[i].sharedMaterials.ForEachItem((d) =>
                     {
-                        if (d.shader.name.Contains("Procedural") || d.shader.name.Contains("Ubershader"))
+                        string shaderName = d.shader.name;
+
+                        if (shaderName.Contains("Procedural") || shaderName.Contains("Particles Additive Alpha8") || shaderName.Contains("Ubershader"))
                         {
-                            //Debug.LogFormat("{0}-{1}", _renderers[i].name, d.shader.name);
-                            //Debug.LogFormat("{0}-{1}", d.shader.isSupported, d.shader.subshaderCount);
-                            if (s == null || !s.name.Equals(d.shader.name))
-                            {
-                                //Debug.Log("finding shader: " + d.shader.name);
-                                s = Shader.Find(d.shader.name);
-                            }
-                            if (s != null)
-                            {
-                                //Debug.Log("found shader: " + s.name);
-                                //Debug.LogFormat("{0}-{1}", s.isSupported, s.subshaderCount);
-                                d.shader = s;
-                            }
+                            d.shader = Shader.Find(shaderName);
+                        }
+                        else if (d.name == "mtEFT0210004_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended");
+                        }
+                        else if (d.name == "mtEFT0210005_PlaceMode" || d.name == "mtEFT0210026_PlaceMode_04")
+                        {
+                            d.shader = Shader.Find("Mobile/Particles/Alpha Blended");
+                        }
+                        else if (d.name == "mtEFT0210018_PlaceMode" || d.name == "mtEFT0210021_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Additive");
+                        }
+                        else if (d.name == "mtEFT0210019_PlaceMode_02" || d.name == "mtEFT0210026_PlaceMode")
+                        {
+                            d.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply");
                         }
                     });
                 }
             }
         }
+    }
+
+    public override void AssignItemComponentType()
+    {
     }
 }

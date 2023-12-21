@@ -134,6 +134,7 @@ public class EmoteActionBtn : MonoBehaviour {
         {
             print("No Animation Assigned");
             //when empty emote button is clicked open selection panel  ----- amit-21-06-2022
+            BuilderEventManager.UIToggle?.Invoke(true);
             btnClickNHold.OnLongClick();
             return;
         }

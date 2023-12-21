@@ -182,7 +182,7 @@ public class SelfieController : MonoBehaviour
 
 #if UNITY_IOS
 
-            if (Input.touchCount <= 1)
+           if (Input.touchCount != 0 && Input.touchCount <= 1)
                         {
                             Touch l_Touch = Input.GetTouch(0);
 
@@ -499,7 +499,7 @@ public class SelfieController : MonoBehaviour
 #elif UNITY_ANDROID || UNITY_IOS
 
        
-        if (Input.touchCount <= 1 || isReconnecting)
+        if (Input.touchCount != 0 && Input.touchCount <= 1 || isReconnecting)
         {
             isReconnecting=false;
             m_IsSelfieFeatureActive = false;
@@ -547,7 +547,11 @@ public class SelfieController : MonoBehaviour
             m_PlayerController.GetComponent<PlayerControllerNew>().firstPersonCameraObj.SetActive(true);
         }
 
-        BuilderEventManager.SelfiActive?.Invoke(false);
+        BuilderEventManager.UIToggle?.Invoke(false);
+
+        m_RenderTexture.Release();
+        Resources.UnloadUnusedAssets();
+        GC.Collect();
     }
 
 
@@ -607,7 +611,7 @@ public class SelfieController : MonoBehaviour
 
     public void TakeScreenShootAndSaveToGallary()
     {
-        Texture2D l_Texture2d = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGB24, false);
+        Texture2D l_Texture2d = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGB24, false);  // RGB24
         RenderTexture.active = m_RenderTexture;
         l_Texture2d.ReadPixels(new Rect(0, 0, m_RenderTexture.width, m_RenderTexture.height), 0, 0);
         l_Texture2d.Apply();
@@ -618,6 +622,11 @@ public class SelfieController : MonoBehaviour
 
         m_Texture2D = l_Texture2d;
         m_CapturedImage.texture = m_Texture2D;
+
+        // optimize the render texture data     // AR changes start
+        m_RenderTexture.Release();
+        Resources.UnloadUnusedAssets();
+        GC.Collect();                           // AR changes end
     }
 
     public int picCount;

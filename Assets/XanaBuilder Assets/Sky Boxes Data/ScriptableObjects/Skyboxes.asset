@@ -15,9 +15,9 @@ MonoBehaviour:
   skyBoxes:
   - skyId: 0
     skyName: Golden Sky
-    icon: {fileID: 21300000, guid: cb9aa8ffb1ae1f241ba220e0e2725bcd, type: 3}
-    skyMaterial: {fileID: 2100000, guid: b2193072a85930e42a540e43930e0d26, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -26,12 +26,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 1891ab98624fbf34da08e685087fe60a, type: 2}
-    HideInUI: 0
   - skyId: 1
     skyName: Day Sky
-    icon: {fileID: 21300000, guid: bf95c3c209881e14c9caff9b6aa71633, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 9de9c8d1cf3c2d24583b35f91a0c7eaa, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -40,12 +39,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: e8c58b91dc8cf7f458945d327b5f04fb, type: 2}
-    HideInUI: 0
   - skyId: 4
     skyName: Day Sky 02
-    icon: {fileID: 21300000, guid: aa235a006b16b4db7a40a558d58563db, type: 3}
-    skyMaterial: {fileID: 2100000, guid: ad7c1e064f7aa884fb1d90f932c65dfd, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -54,12 +52,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: ab69cd8309343ff41b768a7e5c631254, type: 2}
-    HideInUI: 0
   - skyId: 5
     skyName: Day Sky 03
-    icon: {fileID: 21300000, guid: 499cc9c5d66174e3fb7af32998a0cff5, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 01210524c7185c74babbd24988b46fc0, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -68,12 +65,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: 5172ad79e90356e44a609ff3bccd9aa8, type: 2}
-    HideInUI: 0
   - skyId: 6
     skyName: Day Sky 04
-    icon: {fileID: 21300000, guid: d761e1b18262d46548485a32e8e713b0, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 1474982501a6ef743a225abaa1258796, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -82,12 +78,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: d516988f7d956fa45b8c843be419cbf0, type: 2}
-    HideInUI: 0
   - skyId: 7
     skyName: Cloudy Sky
-    icon: {fileID: 21300000, guid: e269df5a0fd8f4d638565cdf54c5d5c5, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 14878b4045d624f3da908fb45f4c3ae1, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -96,12 +91,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: 48fd25b4b870941fb893fa17cf066e96, type: 2}
-    HideInUI: 0
   - skyId: 8
     skyName: Cloudy Sky 02
-    icon: {fileID: 21300000, guid: 16322e920d5de4812918db4adb400a9c, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 2f100e2f5946f4f2bbad6f2e32615e40, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -110,12 +104,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: 836505cc1a68c6a4c85eb77241515895, type: 2}
-    HideInUI: 0
   - skyId: 9
     skyName: Cloudy Sky 03
-    icon: {fileID: 21300000, guid: aa340df77136c48928082ddfb6868778, type: 3}
-    skyMaterial: {fileID: 2100000, guid: a3443426390464163b0cf924a24011da, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -124,12 +117,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 632ff411dbbf5d54593d6e684940a2bf, type: 2}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 18f9e50002f285e4da455833343c0dec, type: 2}
-    HideInUI: 0
   - skyId: 10
     skyName: Cloudy Sky 04
-    icon: {fileID: 21300000, guid: d6b47dce25e2946d28a89edef98a8427, type: 3}
-    skyMaterial: {fileID: 2100000, guid: b682e0f1a8c1a4fdeada28f59640309e, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1.05
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -138,12 +130,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 632ff411dbbf5d54593d6e684940a2bf, type: 2}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: fc0f545a569eb8444994b50373d6a64a, type: 2}
-    HideInUI: 0
   - skyId: 2
     skyName: Cloudy Sky 05
-    icon: {fileID: 21300000, guid: 694064a928464a2489a928a612927011, type: 3}
-    skyMaterial: {fileID: 2100000, guid: d9f093fc5efc9aa4e9e9a63248ad9ff3, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.85
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -152,12 +143,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 8db7eea24b9b3c94c886bcd9050cf9c8, type: 2}
-    HideInUI: 0
   - skyId: 11
     skyName: Sunny Sky
-    icon: {fileID: 21300000, guid: a29c8bab4c13f4861acfb916b8234f8d, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 2f04dca2b442b4bbe8148a1af7719a0d, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.15
@@ -166,12 +156,11 @@ MonoBehaviour:
         falreData: {fileID: 11400000, guid: 6b28070d7d5aba847bf95ab97d42428d, type: 2}
         flareScale: 0.3
     ppVolumeProfile: {fileID: 11400000, guid: 8dde79a1344331f438832a043d7b2145, type: 2}
-    HideInUI: 0
   - skyId: 12
     skyName: Stormy Sky
-    icon: {fileID: 21300000, guid: fa79c4e9039014b298edc2cf55610ba0, type: 3}
-    skyMaterial: {fileID: 2100000, guid: b63e59039cb564494b85882be45aa045, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 1
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -180,12 +169,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: d37a19a2ab0d478419ada52c9c32ad89, type: 2}
-    HideInUI: 0
   - skyId: 13
     skyName: Dusk Sky
-    icon: {fileID: 21300000, guid: 99cc870c18ed04211bfd15eb7e97082c, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 1dd78ce31370a41e78c06bba165edd05, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.85
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -194,12 +182,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 8ff0a3b86a1381e449de6ad22c4df6da, type: 2}
-    HideInUI: 0
   - skyId: 14
     skyName: Dusk Sky 02
-    icon: {fileID: 21300000, guid: c0bf29b03e2354addab4a1c2e01a4503, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 508148fdf65724d8a9ba848eec4cbd54, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.85
       directionLightColor: {r: 1, g: 0.8627451, b: 0.9137255, a: 1}
       directionLightShadowStrength: 0.1
@@ -208,12 +195,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 4d46b6c3a2150b54b9073a6a26fd8239, type: 2}
-    HideInUI: 0
   - skyId: 15
     skyName: Dusk Sky 03
-    icon: {fileID: 21300000, guid: ca6d87c122e14504fbf9a605f7c5aa0c, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 91b89776b1d1b444e8f2b27983fdd118, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.55
       directionLightColor: {r: 1, g: 0.84313726, b: 0.91764706, a: 1}
       directionLightShadowStrength: 0.1
@@ -222,12 +208,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 34e8484ca9355cb47a536373922d1f27, type: 2}
-    HideInUI: 0
   - skyId: 3
     skyName: Night Sky
-    icon: {fileID: 21300000, guid: 888eaf21a8d7e264896a258b158b2f2e, type: 3}
-    skyMaterial: {fileID: 2100000, guid: d328e26bd685cde4cb354c2d3b72f4a1, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.6
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -236,12 +221,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: d7c47b80d6a95f241ac461ef2ccffa21, type: 2}
-    HideInUI: 0
   - skyId: 16
     skyName: Night Sky 02
-    icon: {fileID: 21300000, guid: 92c49594022b743e89e3f25482bf9f8f, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 75919e5ffe5e44a498745e90ff421f6d, type: 2}
+    shaderName: Skybox/6 Sided
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.6
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -250,12 +234,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 1cba110c625df0e4ea27edf26935d420, type: 2}
-    HideInUI: 0
   - skyId: 17
     skyName: Night Sky 03
-    icon: {fileID: 21300000, guid: c5d07145b68eb4a90be46564481c2f32, type: 3}
-    skyMaterial: {fileID: 2100000, guid: b5055a01b089443938678ac3fd71ab43, type: 2}
+    shaderName: Skybox/Panoramic
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.65
       directionLightColor: {r: 0.78431374, g: 0.87058824, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -264,12 +247,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: ec28fd20593c6c54580b5c6f1c3238d0, type: 2}
-    HideInUI: 0
   - skyId: 18
     skyName: Night Sky 04
-    icon: {fileID: 21300000, guid: aeda4f64edfaf41278ce749a5dd69ec0, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 41df6db391b39ed42a10a4b9eedd1742, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.62
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -278,12 +260,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: cb302e501fe689c479936498f826d39b, type: 2}
-    HideInUI: 0
   - skyId: 19
     skyName: Dark Sky
-    icon: {fileID: 21300000, guid: 2c247f3d8f7814bb3be592d030aaf6aa, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 670de39e5029f40c68c2c4ec4f6eff93, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.8
       directionLightColor: {r: 0.9882353, g: 0.85490197, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -292,12 +273,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 7735528b066ecc14db5c985dbf92bbd4, type: 2}
-    HideInUI: 0
   - skyId: 20
     skyName: No Moon Sky
-    icon: {fileID: 21300000, guid: 3bb04ac0fac6b794ea1c8543b4c825dc, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 00b6bdccbab345547832476cfd603703, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.5
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -306,12 +286,11 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: 2938cdbca4b27264c8348ad026ef735a, type: 2}
-    HideInUI: 0
   - skyId: 21
     skyName: Blind Sky
-    icon: {fileID: 21300000, guid: 9e812c941215f2a4aafe1d8ab1df1688, type: 3}
-    skyMaterial: {fileID: 2100000, guid: 4490437022dc190479747e40008806e9, type: 2}
+    shaderName: Skybox/Cubemap
     directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
       lightIntensity: 0.5
       directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
       directionLightShadowStrength: 0.1
@@ -320,4 +299,341 @@ MonoBehaviour:
         falreData: {fileID: 0}
         flareScale: 0.6
     ppVolumeProfile: {fileID: 11400000, guid: e942bbc0e8748dd4c9f44bd20584eac9, type: 2}
-    HideInUI: 0
+  - skyId: 22
+    skyName: Above Day
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: -187, z: 0}
+      lightIntensity: 1.1
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.95686275, a: 1}
+      directionLightShadowStrength: 0.6
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: ed97e5199c9e82a48b4190531b7e16c8, type: 2}
+  - skyId: 23
+    skyName: Orange Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 20, y: 180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.54509807, b: 0.3254902, a: 1}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: ef0ef4a8f3320474ab9ec37f75927202, type: 2}
+  - skyId: 24
+    skyName: Above Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 25, y: 180, z: 0}
+      lightIntensity: 0.65
+      directionLightColor: {r: 1, g: 0.9269392, b: 0.8066038, a: 1}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: c1253d9e8b9de0e4d90d5943bb0c1fab, type: 2}
+  - skyId: 25
+    skyName: Blouberg Sunrise
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 40, y: 180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.9529412, g: 0.9137255, b: 0.8509804, a: 1}
+      directionLightShadowStrength: 0.2
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: c30a64f53363d33408b3787cfc75120f, type: 2}
+  - skyId: 26
+    skyName: Cloud Layers
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 0.75
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: f56d985c1b9eefe49a673fb0fb59b2e1, type: 2}
+  - skyId: 27
+    skyName: Sunny SummerSky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.85
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.4
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 8d048562fd071bd4c8328c5580c9d973, type: 2}
+  - skyId: 28
+    skyName: Day Sun High
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.75
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.4
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: f99fca3bda4117c4bb5c3577d9c0b0af, type: 2}
+  - skyId: 29
+    skyName: Sun Summersky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 20, y: 180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.54509807, b: 0.3254902, a: 1}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 4b2d6cf379922c74e9155875b79220b9, type: 2}
+  - skyId: 30
+    skyName: Day Sun Low
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 35, y: 180, z: 0}
+      lightIntensity: 0.75
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 8d39cef8cee903f4995e1d6383e6e853, type: 2}
+  - skyId: 31
+    skyName: Sun Autumnal
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.95
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.88235295, a: 1}
+      directionLightShadowStrength: 0.5
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 72f38796f127a694b9e73dd4d096a4cc, type: 2}
+  - skyId: 32
+    skyName: Summersky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 40, y: 180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.88235295, a: 1}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 207d1e62c3a175b4dae2044d46729b6a, type: 2}
+  - skyId: 33
+    skyName: Mid SummerSky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.9
+      directionLightColor: {r: 1, g: 0.9764706, b: 0.92156863, a: 1}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: da2ed41ce6a5ae948b3a2707fac74d51, type: 2}
+  - skyId: 34
+    skyName: Sunset Summersky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 20, y: 180, z: 0}
+      lightIntensity: 0.9
+      directionLightColor: {r: 1, g: 0.6666667, b: 0.33333334, a: 1}
+      directionLightShadowStrength: 0.4
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: f58ea7fc4dadaea42be9fece72c92e3e, type: 2}
+  - skyId: 35
+    skyName: Bright Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 1.15
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 103d3ca7f44627c42be2d14fb0091e49, type: 2}
+  - skyId: 36
+    skyName: Epic Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.78431374, b: 0.85490197, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 47d6602180f29734da59895c10c36a79, type: 2}
+  - skyId: 37
+    skyName: Blue Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 1.1
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 1}
+      directionLightShadowStrength: 0.4
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 26168e576ab3765409572321443114e5, type: 2}
+  - skyId: 38
+    skyName: Glorious Pink
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 1.2
+      directionLightColor: {r: 0.94509804, g: 0.75686276, b: 0.7254902, a: 1}
+      directionLightShadowStrength: 0.5
+      character_directionLightIntensity: 0.5
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: da31ca8c6c7984c45937897774d2c9c2, type: 2}
+  - skyId: 39
+    skyName: Sunset Golden
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 0.8
+      directionLightColor: {r: 1, g: 0.63529414, b: 0.3647059, a: 1}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 6430cdc93ee525e43952decd573b68cd, type: 2}
+  - skyId: 40
+    skyName: Night Moon
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.3529412, g: 0.7294118, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: f01898c56ab512e498477da0eec6f5c9, type: 2}
+  - skyId: 41
+    skyName: Pink Sunset
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 35, y: 180, z: 0}
+      lightIntensity: 0.75
+      directionLightColor: {r: 1, g: 0.9019608, b: 0.96862745, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: b1214871a6718f84b8655ac346ff573d, type: 2}
+  - skyId: 42
+    skyName: Space Planet
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.4, g: 0.8039216, b: 1, a: 1}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 6d905b792e3e6c34187d79ada9a546e3, type: 2}
+  - skyId: 43
+    skyName: 'Epic Planet '
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 30, y: 180, z: 0}
+      lightIntensity: 0.6
+      directionLightColor: {r: 0.27058825, g: 0.74509805, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: e72ee9a2d0a7d244998196dea1910e36, type: 2}
+  - skyId: 44
+    skyName: Space Starfield
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: 180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.44705883, g: 0.8039216, b: 1, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: bd7b4e8e10cc75046bcb06a8e9268edc, type: 2}
+  - skyId: 45
+    skyName: Nebula Green
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 35, y: 170, z: 0}
+      lightIntensity: 0.65
+      directionLightColor: {r: 0.5411765, g: 1, b: 0.65882355, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: ba575d3391aedbe48a91edf4870b6bd6, type: 2}
+  - skyId: 46
+    skyName: Nebula Orange
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 40, y: 180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 1, g: 0.6392157, b: 0.6, a: 1}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: 83584f0b32aacfa4c900e667b4ac6fa8, type: 2}
+  - skyId: 47
+    skyName: Table Mountain
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 0.7137255, g: 0.8784314, b: 1, a: 1}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+    ppVolumeProfile: {fileID: 11400000, guid: b28ff51476a4fda43b7ad5b8e5ddbba1, type: 2}

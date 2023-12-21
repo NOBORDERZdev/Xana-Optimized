@@ -22,7 +22,7 @@ public class YoutubeAPIHandler : MonoBehaviour
     private Camera mainCam;
     private void Start()
     {
-        if(FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena") || FeedEventPrefab.m_EnvName.Contains("DJ Event") || FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage") || FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        if(WorldItemView.m_EnvName.Contains("BreakingDown Arena") || WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage") || WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
         {
             if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             {
@@ -43,7 +43,7 @@ public class YoutubeAPIHandler : MonoBehaviour
         //form.AddField("token", "piyush55");
         //if (!_urlDataInitialized)
         //{
-        if (FeedEventPrefab.m_EnvName.Contains("DJ Event"))
+        if (WorldItemView.m_EnvName.Contains("DJ Event"))
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             //{
@@ -88,7 +88,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     {
                         _response = null;
                         Data = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
@@ -112,9 +112,9 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        else if (FeedEventPrefab.m_EnvName.Contains("XANA Festival Stage"))
+        else if (WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
         {
-            if (FeedEventPrefab.m_EnvName.Contains("Dubai."))
+            if (WorldItemView.m_EnvName.Contains("Dubai."))
             {
                 //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
                 //{
@@ -145,7 +145,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 else
                 {
                     //print("============Setting WWW data");
-                    using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName))
+                    using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
                     {
                         www.timeout = 10;
 
@@ -158,7 +158,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (www.isHttpError || www.isNetworkError)
                         {
                             _response = null;
-                            //Debug.LogError("Youtube API returned no result");
+                            //Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -229,7 +229,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         {
                             _response = null;
                             Data = null;
-                            Debug.LogError("Youtube API returned no result");
+                           Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -255,7 +255,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        else if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
+        else if (WorldItemView.m_EnvName.Contains("XANA Lobby") || WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             //{
@@ -286,7 +286,8 @@ public class YoutubeAPIHandler : MonoBehaviour
             else
             {
                 //print("============Setting WWW data");
-                using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName))
+               //Debug.LogError("WaqasApi============" + ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName);
+                using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
                 {
                     www.timeout = 10;
 
@@ -324,7 +325,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        else if (FeedEventPrefab.m_EnvName.Contains("BreakingDown Arena"))
+        else if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
         {
             //if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             //{
@@ -355,7 +356,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             else
             {
                 //print("============Setting WWW data");
-                using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName))
+                using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
                 {
                     www.timeout = 10;
 
@@ -368,7 +369,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (www.isHttpError || www.isNetworkError)
                     {
                         _response = null;
-                        Debug.LogError("Youtube API returned no result");
+                       Debug.Log("Youtube API returned no result");
                     }
                     else
                     {

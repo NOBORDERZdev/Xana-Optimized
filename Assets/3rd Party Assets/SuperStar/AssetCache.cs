@@ -495,7 +495,12 @@ namespace SuperStar.Helpers
         private IEnumerator LoadResourceRemote(int id, string key, string imageUrl, string forceLocalFileName, int _expirationDays, SpriteMeshType meshType)
         {
             UnityWebRequest www = UnityWebRequest.Get(imageUrl);
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             if (!string.IsNullOrEmpty(www.error))
             {
@@ -503,7 +508,11 @@ namespace SuperStar.Helpers
                 {
                     imageUrl = imageUrl.Remove(4, 1); // remove "s"
                     www = UnityWebRequest.Get(imageUrl);
-                    yield return www.SendWebRequest();
+                    www.SendWebRequest();
+                    while(!www.isDone)
+                    {
+                        yield return null;
+                    }
                 }
             }
 
@@ -513,7 +522,11 @@ namespace SuperStar.Helpers
                 if (www.error.Contains("timeout"))
                 {
                     www = UnityWebRequest.Get(imageUrl);
-                    yield return www.SendWebRequest();
+                    www.SendWebRequest();
+                    while(!www.isDone)
+                    {
+                        yield return null;
+                    }
                 }
                 timeoutRetryCounter++;
             }
@@ -719,6 +732,35 @@ namespace SuperStar.Helpers
                 return builder.ToString();
             }
         }
+        public void RemoveFromMemoryDelayCoroutine(string key, bool force)
+        {
+            StartCoroutine(RemoveFromMemoryDelay(key, force));
+        }
+        public IEnumerator RemoveFromMemoryDelay(string key, bool force)
+        {
+            yield return null;
+            if (sprites.ContainsKey(key))
+            {
+                sprites.TryGetValue(key, out SpriteCacheItem spriteCacheItem);
+                spriteCacheItem.refCnt--;
+                if ((spriteCacheItem.refCnt <= 0) || force)
+                {
+                    try
+                    {
+                        Destroy(spriteCacheItem.sprite.texture);
+                    }
+                    catch { }
+                    try
+                    {
+                        Destroy(spriteCacheItem.sprite);
+                    }
+                    catch { }
+                    sprites.Remove(key);
+                }
+            }
+        }
+
+
 
         public void RemoveFromMemory(string key, bool force)
         {
