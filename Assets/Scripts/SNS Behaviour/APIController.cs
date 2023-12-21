@@ -425,6 +425,7 @@ public class APIController : MonoBehaviour
     //this method is used to Instantiate search user.......
     public void FeedGetAllSearchUser()
     {
+         FeedUIController.Instance.AddFrndNoSearchFound.SetActive(false);
         foreach (Transform item in FeedUIController.Instance.findFriendContainer)
         {
             Destroy(item.gameObject);
@@ -441,6 +442,10 @@ public class APIController : MonoBehaviour
                         searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
                     }
                 }
+            }
+            else
+            {
+                FeedUIController.Instance.AddFrndNoSearchFound.SetActive(true);
             }
         }
     }
@@ -536,23 +541,31 @@ public class APIController : MonoBehaviour
         APIManager.Instance.SetAdFrndFollowing();
     }
 
-    public void SpwanAdFrndFollowing(){ 
-        for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
+    public void SpwanAdFrndFollowing(){
+        FeedUIController.Instance.AddFrndNoFollowing.SetActive(false);
+        if (APIManager.Instance.adFrndFollowing.data.rows.Count > 0)
         {
-            if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+            for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
             {
-                GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
-                followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i],false);
-                followingObject.GetComponent<Button>().enabled= false;
+                if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+                {
+                    GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+                    followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i], false);
+                    followingObject.GetComponent<Button>().enabled = false;
+                }
             }
         }
-    }
+        else
+        {
+            FeedUIController.Instance.AddFrndNoFollowing.SetActive(true);
+        }
+}
 
-    #endregion
+        #endregion
 
-    #region Chat Module Reference................................................................................
-    //this method is used to instantiate following user in chat module.......
-    public void GetAllFollowingUser(int pageNum)
+        #region Chat Module Reference................................................................................
+        //this method is used to instantiate following user in chat module.......
+        public void GetAllFollowingUser(int pageNum)
     {
         //Debug.Log("GetAllFollowingUser");
         if (pageNum == 1)
