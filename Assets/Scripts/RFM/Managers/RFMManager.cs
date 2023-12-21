@@ -193,8 +193,16 @@ namespace RFM.Managers
 
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
+
+
+            var spawnPosition = playersSpawnArea.position;
+            spawnPosition = new Vector3(
+                spawnPosition.x + Random.Range(-1.0f, 1.0f),
+                spawnPosition.y,
+                spawnPosition.z + Random.Range(-1.0f, 1.0f));
+
             //RFM.Globals.player.transform.root.gameObject.SetActive(true);
-            var newPlayer = PhotonNetwork.Instantiate("XANA Player", playersSpawnArea.position, Quaternion.identity, 0);
+            var newPlayer = PhotonNetwork.Instantiate("XANA Player", spawnPosition, Quaternion.identity, 0);
             RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
 
 
@@ -423,8 +431,17 @@ namespace RFM.Managers
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
             var runners = FindObjectsOfType<RFM.Character.Runner>(false);
+            var count = 0;
 
-            if (runners.Length == 0)
+            for (int i = 0; i < runners.Length; i++)
+            {
+                if (runners[i].enabled)
+                {
+                    count++;
+                }
+            }
+
+            if (count == 0)
             {
                 Timer.StopAllTimers();
                 GameplayTimeOver();
