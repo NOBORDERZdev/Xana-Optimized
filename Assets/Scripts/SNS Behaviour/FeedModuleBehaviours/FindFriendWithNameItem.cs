@@ -18,6 +18,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public TextMeshProUGUI followFollowingText;
     public Image followFollowingImage;
     public Color followColor, followingColor;
+    public Color followingTextColor,followTextColor;
 
     public Sprite defaultSP;
 
@@ -158,12 +159,13 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
-
+            followFollowingText.color= followingTextColor;
         }
         else
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
+            followFollowingText.color= followTextColor;
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
         //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
