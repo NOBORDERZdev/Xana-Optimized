@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
 /*#if UNITY_EDITOR
-        Debug.unityLogger.logEnabled = true;
+        //Debug.unityLogger.logEnabled = true;
 #else
-        Debug.unityLogger.logEnabled=false;
+        //Debug.unityLogger.logEnabled=false;
 #endif*/
     }
     public string GetStringFolderPath()
@@ -169,9 +169,9 @@ public class GameManager : MonoBehaviour
     public void AvatarMenuBtnPressed()
     {
         UIManager.Instance.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+       // CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         //mainCharacter.GetComponent<FaceIK>().ikActive= false;
-        Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+       // //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
         if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
         {
             UIManager.Instance.HomePage.SetActive(false);

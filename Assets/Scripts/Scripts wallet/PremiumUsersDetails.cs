@@ -117,7 +117,7 @@ public class PremiumUsersDetails : MonoBehaviour
         }
         else {
 
-            Debug.Log(" <color=red> String not exist </color>");
+            //Debug.Log(" <color=red> String not exist </color>");
         }
         return false;
     }
@@ -311,7 +311,7 @@ public class PremiumUsersDetails : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", AuthToken);
         yield return request.SendWebRequest();
-        Debug.Log("features response :-"+request.downloadHandler.text);
+        //Debug.Log("features response :-"+request.downloadHandler.text);
         MainClass mainClassObj = new MainClass();
         mainClassObj = JsonUtility.FromJson<MainClass>(request.downloadHandler.text);
         if (!request.isHttpError && !request.isNetworkError)
@@ -337,7 +337,7 @@ public class PremiumUsersDetails : MonoBehaviour
                 {
                     if (!mainClassObj.success)
                     {
-                        Debug.Log("<color = red> Hey success false in Getting Group data " + mainClassObj.msg + "</color>");
+                        //Debug.Log("<color = red> Hey success false in Getting Group data " + mainClassObj.msg + "</color>");
                     }
                 }
             }
