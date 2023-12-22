@@ -22,7 +22,7 @@ public class SelfieController : MonoBehaviour
     [HideInInspector]
     public GameObject m_IKObject;
     public GameObject m_IKLookAt;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject m_IKComponenet;
 
     //[HideInInspector]
@@ -407,23 +407,38 @@ public class SelfieController : MonoBehaviour
 
     void GetRenderTexture()
     {
-        screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
-        screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
-
-        if (!screenShotCameraCapture.gameObject.activeSelf)
-            screenShotCameraCapture.gameObject.SetActive(true);
 
         if (!ChangeOrientation_waqas._instance.isPotrait)
         {
+            screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
+            m_RenderTexture.width = 960;
+            m_RenderTexture.height = 540;
+            screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
+
+            if (!screenShotCameraCapture.gameObject.activeSelf)
+                screenShotCameraCapture.gameObject.SetActive(true);
+
+            m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).transform.gameObject.SetActive(false);
             screenShotCameraCapture.fieldOfView = 60;
             m_IKComponenet.GetComponent<IKMuseum>().m_SelfieStick.transform.GetChild(0)
                 .GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = 60;
+            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = m_RenderTexture;
         }
         else if (ChangeOrientation_waqas._instance.isPotrait)
         {
+            screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).GetComponent<Camera>();    // my changes 
+            m_RenderTexture.width = 730;
+            m_RenderTexture.height = 1580;
+            screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
+
+            if (!screenShotCameraCapture.gameObject.activeSelf)
+                screenShotCameraCapture.gameObject.SetActive(true);
+
+            m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).transform.gameObject.SetActive(false);
             screenShotCameraCapture.fieldOfView = 90;
             m_IKComponenet.GetComponent<IKMuseum>().m_SelfieStick.transform.GetChild(0)
                 .GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = 90;
+            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = m_RenderTexture;
         }
     }
 

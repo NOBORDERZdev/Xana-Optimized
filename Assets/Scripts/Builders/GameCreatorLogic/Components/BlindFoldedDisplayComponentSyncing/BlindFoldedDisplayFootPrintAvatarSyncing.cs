@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -68,12 +69,12 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     GameObject FindPlayerusingPhotonView(PhotonView pv)
     {
         Player player = pv.Owner;
-        PhotonView[] photonViews = GameObject.FindObjectsOfType<PhotonView>();
-        foreach (PhotonView photonView in photonViews)
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
-            if (photonView.Owner == player && photonView.GetComponent<AvatarController>())
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
             {
-                return photonView.gameObject;
+                return playerObject;
             }
         }
         return null;

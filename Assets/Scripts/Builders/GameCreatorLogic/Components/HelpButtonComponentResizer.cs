@@ -60,8 +60,8 @@ public class HelpButtonComponentResizer : MonoBehaviour
         while (textCharCount < msg.Length && !isAgainCollided)
         {
             contentText.text += msg[textCharCount];
-            if (GamificationComponentData.instance.arialFont)
-                contentText.font = GamificationComponentData.instance.arialFont;
+            //if (GamificationComponentData.instance.arialFont)
+            //    contentText.font = GamificationComponentData.instance.arialFont;
             textCharCount++;
 
             yield return new WaitForSeconds(letterDelay);

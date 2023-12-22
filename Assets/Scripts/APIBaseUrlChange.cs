@@ -100,13 +100,13 @@ public class APIBaseUrlChange : MonoBehaviour
 
         if (uwr.isNetworkError)
         {
-            Debug.Log("Error While Sending: " + uwr.error);
+            //Debug.Log("Error While Sending: " + uwr.error);
         }
         else
         {
             try
             {
-                Debug.Log("Response server===" + uwr.downloadHandler.text);
+                //Debug.Log("Response server===" + uwr.downloadHandler.text);
                 GetServerDetils bean = JsonUtility.FromJson<GetServerDetils>(uwr.downloadHandler.text.ToString().Trim());
                 if (bean.success)
                 {
