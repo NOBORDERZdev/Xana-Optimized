@@ -23,16 +23,16 @@ namespace RFM.Managers
 
         private void OnCalculateScores()
         {
-            foreach (var runner in FindObjectsOfType<RFM.Character.Runner>())
-            {
-                Debug.LogError($"Runner {runner.nickName} has {runner.money}");
-            }
+            //foreach (var runner in FindObjectsOfType<RFM.Character.Runner>())
+            //{
+            //    Debug.LogError($"Runner {runner.nickName} has {runner.money}");
+            //}
 
 
-            foreach (var hunter in FindObjectsOfType<RFM.Character.Hunter>())
-            {
-                Debug.LogError($"Hunter {hunter.nickName} has {hunter.rewardMultiplier} x {hunter.participationAmount}");
-            }
+            //foreach (var hunter in FindObjectsOfType<RFM.Character.Hunter>())
+            //{
+            //    Debug.LogError($"Hunter {hunter.nickName} has {hunter.rewardMultiplier} x {hunter.participationAmount}");
+            //}
         }
 
 

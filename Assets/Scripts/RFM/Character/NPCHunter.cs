@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static StoreManager;
@@ -42,7 +43,7 @@ namespace RFM.Character
         private void OnEnable()
         {
             EventsManager.onGameStart/*onTakePositionTimeStart*/ += OnGameStarted;
-            EventsManager.onGameTimeup += GameOver;
+            EventsManager.onDestroyAllNPCHunters += OnDestroyAllNPCHunters;
         }
 
         private void Start()
@@ -79,7 +80,7 @@ namespace RFM.Character
         private void OnDisable()
         {
             EventsManager.onGameStart -= OnGameStarted;
-            EventsManager.onGameTimeup -= GameOver;
+            EventsManager.onDestroyAllNPCHunters += OnDestroyAllNPCHunters;
         }
 
         private void GetAllRunners()
@@ -280,6 +281,7 @@ namespace RFM.Character
                         SendOptions.SendReliable);
 
                     rewardMultiplier++;
+                    _inRangePlayer.gameObject.SetActive(false);
 
                 }
             }
@@ -363,12 +365,13 @@ namespace RFM.Character
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
 
+                    other.GetComponent<Collider>().enabled = false;
                     rewardMultiplier++;
                 }
             }
         }
 
-        private void GameOver()
+        private void OnDestroyAllNPCHunters()
         {
             PhotonNetwork.Destroy(gameObject);
         }
@@ -380,11 +383,13 @@ namespace RFM.Character
             {
                 // Master client sends data
                 stream.SendNext(_navMeshAgent.destination);
+                stream.SendNext(rewardMultiplier);
             }
             else
             {
                 // Other clients receive data
                 _targetPosition = (Vector3)stream.ReceiveNext();
+                rewardMultiplier = (int)stream.ReceiveNext();
 
                 // Check for discrepancies and lag compensation
                 if (Vector3.Distance(_navMeshAgent.destination, _targetPosition) > 1.0f)
