@@ -17,6 +17,7 @@ public class Actor : MonoBehaviour
     public float ActionClipTime = 0f;
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
+    public AnimatorOverrideController overrideController;
 
     private void OnEnable()
     {
@@ -47,6 +48,8 @@ public class Actor : MonoBehaviour
     {
         _startCoroutineFLag = true;
         _PlayerAnimator = GetComponent<Animator>();
+         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
+        _PlayerAnimator.runtimeAnimatorController = overrideController;
         _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
         _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)

@@ -7,17 +7,17 @@ using System.Collections.Generic;
 public class MoodManager : MonoBehaviour
 {
     public Animator PlayerAnimator;
-    [SerializeField]
-    AnimatorOverrideController overrideController;
+  //  [SerializeField]
+  //  AnimatorOverrideController overrideController;
     public bool PostMood = false;
     public string LastMoodSelected = "";
-    public void ViewMoodActionAnimation(string animkey,string originalKey)
+    public void ViewMoodActionAnimation(string animkey,string originalKey, AnimatorOverrideController overrideController)
     {
         PostMood = true;
         LastMoodSelected = originalKey;
-        StartCoroutine(DownloadAddressableAnimation(animkey));
+        StartCoroutine(DownloadAddressableAnimation(animkey,  overrideController));
     }
-    public IEnumerator DownloadAddressableAnimation(string key)
+    public IEnumerator DownloadAddressableAnimation(string key, AnimatorOverrideController overrideController)
     {
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -60,19 +60,19 @@ public class MoodManager : MonoBehaviour
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
     }
-    public void SetMoodPosted(string animkey, bool walkFlag)
+    public void SetMoodPosted(string animkey, bool walkFlag,AnimatorOverrideController overrideController)
     {
        // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + animkey);
 
         int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
         if(NoOfAnimations == 1)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle"));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle", overrideController));
         else
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle"));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle", overrideController));
        if(!walkFlag)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk"));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk", overrideController));
     }
-    public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace)
+    public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace, AnimatorOverrideController overrideController)
     {
        // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + key);
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)

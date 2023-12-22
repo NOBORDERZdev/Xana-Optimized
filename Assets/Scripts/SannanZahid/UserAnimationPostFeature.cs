@@ -116,11 +116,11 @@ public class UserAnimationPostFeature : MonoBehaviour
         NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(MoodSelected);
         if(NoOfAnimations == 1)
         {
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle", MoodSelected);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle", MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
         }
         else
         {
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle "+ UnityEngine.Random.Range(1,3), MoodSelected);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle "+ UnityEngine.Random.Range(1,3), MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
         }
     }
 }
