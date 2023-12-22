@@ -16,7 +16,9 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
     public string mainScene = "Main";
+    public static Action onExitAction;
     bool exitOnce = true;
+
     private void OnEnable()
     {
         mainScene = "Main";
@@ -56,6 +58,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LoadMain(bool changeOritentationChange)
     {
+        onExitAction?.Invoke();
         disableSoundXanalobby();
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)

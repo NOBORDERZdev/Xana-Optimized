@@ -28,7 +28,17 @@ public class PMY_BGM : MonoBehaviour
         SoundManager.Instance.MusicSource.minDistance = 20;
     }
 
+    private void OnEnable()
+    {
+        SceneManage.onExitAction += OnSceneExit;
+    }
+
     private void OnDisable()
+    {
+        SceneManage.onExitAction -= OnSceneExit;
+    }
+
+    private void OnSceneExit()
     {
         // Reset Parameters of Music Source
         SoundManager.Instance.MusicSource.loop = isLoopable;

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
+using System.Diagnostics;
 
 namespace PMY
 {
@@ -53,7 +54,6 @@ namespace PMY
         PMY_VideoTypeRes _videoType;
 
         public string nftTitle;
-        public string firebaseEventName;
         public int clickedNftInd;
         public List<Texture> NFTLoadedSprites = new List<Texture>();
         public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
@@ -63,8 +63,8 @@ namespace PMY
         public AudioSource videoPlayerSource;
         public MediaPlayer livePlayerSource;
 
-        public int clRoomId;
-        public string roomName;
+        //public int clRoomId;
+        //public string roomName;
         public Action<int> exitClickedAction;
 
         private void Awake()
@@ -122,7 +122,7 @@ namespace PMY
                 await request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                 {
-                    Debug.Log("<color=red>" + request.error + " </color>");
+                    UnityEngine.Debug.Log("<color=red>" + request.error + " </color>");
                 }
                 else
                 {
@@ -237,7 +237,7 @@ namespace PMY
                         {
                             NftPlaceholderList[i].gameObject.SetActive(false);
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().TurnOffAllImageAndVideo();
-                            Debug.Log("INDEX is off!");
+                            UnityEngine.Debug.Log("INDEX is off!");
                         }
                     }
                 }
@@ -277,7 +277,7 @@ namespace PMY
 
                 if (www.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.Log("ERror in loading sprite" + www.error);
+                    UnityEngine.Debug.Log("ERror in loading sprite" + www.error);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace PMY
         }
 
 
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_1, int roomNum = 1)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -310,7 +310,6 @@ namespace PMY
 
             ratioId = ((int)ratio);
 
-            //renderTexture.Release();
             // Setting Landscape Data
             ratioReferences[ratioId].l_image.gameObject.SetActive(true);
             ratioReferences[ratioId].p_image.gameObject.SetActive(true);
@@ -442,13 +441,11 @@ namespace PMY
             }
 
             #region For firebase analytics
-            if (roomNum != 0)
-                SendCallAnalytics(type, title, nftId, roomType, roomNum);         // firebase event calling in this method
+            SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
             clickedNftInd = nftId;
-            clRoomId = roomNum;
-            roomName = roomType.ToString();
             #endregion
         }
+
         public void SetInfoForXanaLobby(PMY_Ratio ratio, string title, string aurthur, string des, Texture2D image, PMY_DataType type)
         {
             nftTitle = title;
@@ -509,58 +506,25 @@ namespace PMY
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
             }
         }
-        public void SendCallAnalytics(PMY_DataType type, string title, int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_2, int roomNum = 1)
+        public void SendCallAnalytics(int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
-            string worldName = XanaConstants.xanaConstants.EnviornmentName;
-
             // For firebase event
-            if (worldName.Contains("ZONE-X"))
-            {
-                string eventName = "";
-                switch (id)
-                {
-                    case 0:
-                        eventName = FirebaseTrigger.WP_MainLobby_A_ZoneX.ToString();
-                        break;
-
-                    case 1:
-                        eventName = FirebaseTrigger.WP_MainLobby_B_FiveElement.ToString();
-                        break;
-
-                    case 2:
-                        eventName = FirebaseTrigger.WP_MainLobby_C_AtomMuseum.ToString();
-                        break;
-
-                    case 3:
-                        eventName = FirebaseTrigger.WP_MainLobby_D_RentalSpace.ToString();
-                        break;
-                }
-                SendFirebaseEvent(eventName);
+            string eventName = "";
+            switch (roomType){
+                case PMY_VideoAndImage.RoomType.PMYLobby:
+                    eventName = FirebaseTrigger.CL_NFT_PMYLobby.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_1:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom1.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_2:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom2.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.Gallery:
+                    eventName = FirebaseTrigger.CL_NFT_Gallery.ToString() + "_" + (id + 1);
+                    break;
             }
-            else if (worldName.Contains("ZONE X Musuem"))
-            {
-                // we don't have this museum yet
-                string eventName = "";
-                eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
-                SendFirebaseEvent(eventName);
-            }
-            else if (worldName.Contains("FIVE ELEMENTS"))
-            {
-                // we don't have this museum yet
-                string eventName = "";
-                eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
-                SendFirebaseEvent(eventName);
-            }
-            else
-            {
-                string eventName = "";
-                if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_1))
-                    eventName = FirebaseTrigger.CL_NFT_AtomRoom.ToString() + roomNum + "_" + (id + 1);
-                else if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_2))
-                    eventName = FirebaseTrigger.CL_NFT_AtomRental.ToString() + roomNum + "_" + (id + 1);
-
-                SendFirebaseEvent(eventName);
-            }
+            SendFirebaseEvent(eventName);
         }
 
         public void CloseInfoPop()

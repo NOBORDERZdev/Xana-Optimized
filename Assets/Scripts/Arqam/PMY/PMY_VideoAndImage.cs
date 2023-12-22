@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
 using System.Diagnostics.Eventing.Reader;
 
-namespace PMY {
+namespace PMY
+{
     public class PMY_VideoAndImage : MonoBehaviour
     {
         public enum MyDataType { None, PDF, Quiz };
@@ -54,6 +55,7 @@ namespace PMY {
 
         public enum RoomType
         {
+            PMYLobby,
             RoomA_1,
             RoomA_2,
             Gallery
@@ -61,10 +63,10 @@ namespace PMY {
         [Space(5)]
         [Header("For Firebase Enum")]
         public RoomType roomType;
-        [Space(5)]
-        [Header("For Firebase roomNumber")]
-        [Range(0, 12)]
-        public int roomNumber = 1;
+        //[Space(5)]
+        //[Header("For Firebase roomNumber")]
+        //[Range(0, 12)]
+        //public int roomNumber = 1;
 
         private void Start()
         {
@@ -450,14 +452,9 @@ namespace PMY {
             if (PMY_Nft_Manager.Instance != null && _videoType != PMY_VideoTypeRes.islive)
             {
                 if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
-                {
-                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[0], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[0], PMY_Nft_Manager.Instance.worldInfos[id].Des[0], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType, roomNumber);
-                }
+                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[0], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[0], PMY_Nft_Manager.Instance.worldInfos[id].Des[0], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType);
                 else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
-                {
-                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[1], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[1], PMY_Nft_Manager.Instance.worldInfos[id].Des[1], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType, roomNumber);
-
-                }
+                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[1], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[1], PMY_Nft_Manager.Instance.worldInfos[id].Des[1], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType);
             }
         }
 
@@ -476,6 +473,6 @@ namespace PMY {
                 pdfPanelPortrait.SetActive(true);
         }
 
-    
+
     }
 }

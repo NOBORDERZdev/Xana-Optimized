@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AvProDirectionalSound : MonoBehaviour
+public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 {
+    [Tooltip("Enable/Disable Screen sound toggle in screen panel")]
+    public bool isShowScreenSoundOption = true;
+    [Space(5)]
     public MediaPlayer mediaPlayer;
     [Space(5)]
     public float maxDistance = 10f; // Max distance for full volume
@@ -15,13 +18,57 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private Transform playerCam; // Reference to your player object or camera
     private WaitForSeconds updateDelay;
+    private Coroutine volumeCoroutine;
+    private GameObject screenSoundBtnPort, screenSoundBtnLand;
+
+    private void OnEnable()
+    {
+        ChangeOrientation_waqas.switchOrientation += OrientationChanged;
+        SceneManage.onExitAction += OnSceneExit;
+    }
+    private void OnDisable()
+    {
+        ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
+        SceneManage.onExitAction -= OnSceneExit;
+    }
+
+    private void OrientationChanged()
+    {
+        StartCoroutine(ShowScreenSoundBtnInSettingPanel());
+    }
 
     private void Start()
     {
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
+        if (isShowScreenSoundOption)
+        {
+            // set the interface reference to SoundOnOff script
+            ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
+                screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
+
+            StartCoroutine(ShowScreenSoundBtnInSettingPanel());
+        }
+
         updateDelay = new WaitForSeconds(updateInterval);
-        StartCoroutine(AdjustScreenVolume());
+        volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+    }
+
+    private IEnumerator ShowScreenSoundBtnInSettingPanel()
+    {
+        yield return updateDelay;
+        if (ChangeOrientation_waqas._instance.isPotrait)
+        {
+            if (screenSoundBtnPort is null)
+                screenSoundBtnPort = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
+            screenSoundBtnPort.SetActive(true);
+        }
+        else
+        {
+            if (screenSoundBtnLand is null)
+                screenSoundBtnLand = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
+            screenSoundBtnLand.SetActive(true);
+        }
     }
 
     IEnumerator AdjustScreenVolume()
@@ -44,6 +91,21 @@ public class AvProDirectionalSound : MonoBehaviour
 
             yield return updateDelay;
         }
+    }
+
+    private void OnSceneExit()
+    {
+        screenSoundBtnPort.SetActive(false);
+        screenSoundBtnLand.SetActive(false);
+    }
+
+    public void ToggleScreenSound(bool isSoundOn)
+    {
+        mediaPlayer.AudioMuted = isSoundOn;
+        if (isSoundOn)
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        else if (volumeCoroutine != null)
+            StopCoroutine(volumeCoroutine);
     }
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 using static GlobalConstants;
+using PMY;
 
 /// <summary>
 /// This class handles basic link color behavior, supports also underline (static only)
@@ -13,6 +14,8 @@ using static GlobalConstants;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public enum EnvType { JJWorld, PMYWorld}
+    public EnvType envType;
     [SerializeField]
     private Color32 hoveredColor = new Color32(0x00, 0x59, 0xFF, 0xFF);
     [SerializeField]
@@ -89,48 +92,53 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
 
     void CallFirebaseEventForLinkClicked()
     {
-        //int maxLength = 10;
-        //string originalString = JjInfoManager.Instance.nftTitle;
-        //originalString = Regex.Replace(originalString, @"\s", "");
-        //string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
-
-        //if (uniqueClick)
-        //{
-        //    uniqueClick = false;
-        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
-        //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
-        //}
-
-        string eventName = XanaConstants.xanaConstants.EnviornmentName;
-
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+        if (envType.Equals(EnvType.JJWorld))
         {
-            // we don't have this museum yet
-            ////worldName = "1F_Mainloby_NFTclick";
-        }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
-        {
-            //// we don't have this museum yet
-            //worldName = "1F_ZoneX_NFTclick";
-            eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-        }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
-        {
-            //// worldName = "1F_FiveElement_NFTclick";
-            // we don't have this museum yet
+            string eventName = XanaConstants.xanaConstants.EnviornmentName;
 
-            eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-        }
-        else
-        {
-            if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.AtomMuseum.ToString()))
-                eventName = FirebaseTrigger.URL_AtomRoom.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-            else if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.RentalSpace.ToString()))
-                eventName = FirebaseTrigger.URL_AtomRental.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-        }
+            if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            {
+                // we don't have this museum yet
+                ////worldName = "1F_Mainloby_NFTclick";
+            }
+            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+            {
+                eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+            }
+            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+            {
+                eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+            }
+            else
+            {
+                if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.AtomMuseum.ToString()))
+                    eventName = FirebaseTrigger.URL_AtomRoom.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+                else if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.RentalSpace.ToString()))
+                    eventName = FirebaseTrigger.URL_AtomRental.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+            }
 
-        if (JjInfoManager.Instance.clRoomId != 0)
+            if (JjInfoManager.Instance.clRoomId != 0)
+                SendFirebaseEvent(eventName);
+        }
+        else if (environmentType.Equals(EnvType.PMYWorld))
+        {
+            string eventName = XanaConstants.xanaConstants.EnviornmentName;
+            switch (eventName)
+            {
+                case "PMY ACADEMY":
+                    eventName = FirebaseTrigger.URL_PMYLobby.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                    break;
+                case "PMYGallery":
+                    eventName = FirebaseTrigger.URL_Gallery.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                    break;
+                case "PMYRoomA":
+                    {
+                        eventName = FirebaseTrigger.URL_CRoom1.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                        break;
+                    }
+            }
             SendFirebaseEvent(eventName);
+        }
     }
 
     private int GetLinkIndex()
