@@ -52,6 +52,7 @@ namespace RFM.Managers
             XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
 
+            showMoney.transform.parent.gameObject.SetActive(true);
             showMoney.text = "000";
 
             runnersScores = new Dictionary<string[], int>();
