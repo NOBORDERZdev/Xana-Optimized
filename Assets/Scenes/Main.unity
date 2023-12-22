@@ -26771,7 +26771,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 1
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
   m_CharacterValidation: 0
@@ -26815,7 +26815,7 @@ MonoBehaviour:
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
   m_isRichTextEditingAllowed: 0
-  m_LineLimit: 0
+  m_LineLimit: 2
   m_InputValidator: {fileID: 0}
 --- !u!114 &932734465
 MonoBehaviour:
@@ -34405,6 +34405,61 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000030517578, y: 0.00018310547}
   m_SizeDelta: {x: 846, y: 64.40407}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &1264385118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1264385120}
+  - component: {fileID: 1264385119}
+  m_Layer: 0
+  m_Name: FriendPostSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1264385119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264385118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14eeb84a0f71e304bbe8951d37a1ed93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  socketId: 
+  oldChatResponse: 
+  receivedMsgForTesting:
+    socket_id: 
+    username: 
+    avatar: 
+    message: 
+    world: 
+    event_id: 0
+    world_id: 0
+    time: 0
+--- !u!4 &1264385120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264385118}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.1897767, y: 0.9442463, z: 3.295845}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 53
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1272562285
 GameObject:
   m_ObjectHideFlags: 0
@@ -38174,8 +38229,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.30898255, y: 0.22999954}
+  m_SizeDelta: {x: -1.8620349, y: -6.4599996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418604412
 MonoBehaviour:
@@ -38240,7 +38295,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
@@ -49964,8 +50019,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2153b777dbf9f4429ae91ce647f5af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Idle: {fileID: 7400000, guid: da06086d071ea4745b20ecb0fb0b2107, type: 2}
-  Move: {fileID: 7400000, guid: 3cfa74b6c2fec2147a02e013213083ab, type: 2}
   PlayerAnimator: {fileID: 3836157402595034107}
   overrideController: {fileID: 22100000, guid: 25907ba7df1c54447b46ceda32ea5f1d, type: 2}
   PostMood: 0

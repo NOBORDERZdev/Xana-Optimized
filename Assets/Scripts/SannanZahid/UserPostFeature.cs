@@ -126,16 +126,20 @@ public class UserPostFeature : MonoBehaviour
     {
      
         _previousTextElement = textElement;
-
-
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
+        // WWWForm form = new WWWForm();
+        // form.AddField("user_id", XanaConstants.xanaConstants.userId);
+        Debug.LogError("----- AUTH_TOKEN GIVEN ----> " );
+
+        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+            yield return new WaitForSeconds(0.5f);
+
+        Debug.LogError("----- User Loged In ----> ");
+
         string FinalUrl = PrepareApiURL("Receive") + XanaConstants.xanaConstants.userId;
         Debug.LogError("----- URL ----> " + FinalUrl + XanaConstants.xanaConstants.userId);
-
-       // WWWForm form = new WWWForm();
-       // form.AddField("user_id", XanaConstants.xanaConstants.userId);
 
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {

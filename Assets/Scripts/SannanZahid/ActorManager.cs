@@ -22,6 +22,9 @@ public class ActorManager : MonoBehaviour
     void Start()
     {
         GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[0]);
+        Transform defaultPoint = GameManager.Instance.avatarPathSystemManager.GetStartPoint();
+        _previousPos = defaultPoint.position;
+        _previousRot = defaultPoint.eulerAngles;
     }
     public void SetMood(string mood)
     {

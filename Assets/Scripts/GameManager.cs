@@ -199,10 +199,15 @@ public class GameManager : MonoBehaviour
         m_CharacterAnimator.runtimeAnimatorController = m_AnimControlller;
         mainCharacter.GetComponent<Animator>().runtimeAnimatorController = m_AnimControlller;
     }
-    public void ReloadMainScene() {
+    public void ReloadMainScene() 
+    {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             SceneManager.LoadSceneAsync("Main");
         }
+    }
+    public void UpdatePlayerName(string newName)
+    {
+        mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(newName);
     }
 }
