@@ -48,6 +48,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject jumpBtnRFM;
     public GameObject joyStickRFM;
     public Button setControlsLayoutBtnRFM;
+    public JoyStickIssue joystickIssuesReference;
 
     public GameObject favouriteBtn;
     public Action<bool> jumpAction;
@@ -102,6 +103,17 @@ public class CanvasButtonsHandler : MonoBehaviour
     public void HandleSlideBtnAction(bool slide)
     {
         slideAction?.Invoke(slide);
+    }
+    public void RFMResetSprintButton() 
+    {
+        if (isSpiritInUse)
+            OnSpiritButtonDown();
+        spirit = maxSpirit;
+        spiritFillImg.fillAmount = spirit / maxSpirit;
+        spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+        joystickIssuesReference = gameObject.GetComponentInChildren<JoyStickIssue>();
+        if(joystickIssuesReference)
+            joystickIssuesReference.ResetJoyStick();
     }
     public void OnSpiritButtonDown()
     {
