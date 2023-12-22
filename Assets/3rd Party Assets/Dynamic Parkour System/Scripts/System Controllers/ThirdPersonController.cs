@@ -101,6 +101,11 @@ namespace Climbing
             characterMovement.OnFall += characterAnimation.Fall;
         }
 
+        private void OnDestroy()
+        {
+            CanvasButtonsHandler.inst.jumpAction -= JumpAction;
+            CanvasButtonsHandler.inst.slideAction -= SlideAction;
+        }
         public void JumpAction(bool jump)
         {
             GetComponent<PhotonView>().RPC("JumpRPC", RpcTarget.Others, jump, GetComponent<PhotonView>().ViewID);
