@@ -16,15 +16,12 @@ public class FriendHomeManager : MonoBehaviour
     {
         StartCoroutine(BuildMoodDialog());
     }
-
     string PrepareApiURL()
     {
         return "https://api-test.xana.net/social/get-close-friends/"+ XanaConstants.xanaConstants.userId;
     }
     IEnumerator BuildMoodDialog()
     {
-       // while (XanaConstants.xanaConstants.userId == "")
-         //   yield return new WaitForSeconds(0.5f);
 
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
@@ -35,7 +32,6 @@ public class FriendHomeManager : MonoBehaviour
         {
             if (isSucess)
             {
-               // Debug.LogError("Successssss-----> ");
                 foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
                    if(SpawnFriendsObj.Find(x => x.id == friend.id) == null)
@@ -48,13 +44,11 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
-                        CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json, friend.id);
+                        CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
                         FriendSpawn.id = friend.id;
                         FriendSpawn.friendObj = CreatedFriend;
                         FriendSpawn.friendNameObj = CreatedNameTag;
                         SpawnFriendsObj.Add(FriendSpawn);
-                        //SpawnFriendsObj.Add(CreatedNameTag);
-                       // Debug.LogError("Friend Spawned ----->  " + friend.id);
                         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
                             friend.id, 
                             CreatedFriend.GetComponent<PlayerPostBubbleHandler>(), 
@@ -66,7 +60,6 @@ public class FriendHomeManager : MonoBehaviour
             }
             else
             {
-
                 StartCoroutine(BuildMoodDialog());
             }
         }));
@@ -77,15 +70,10 @@ public class FriendHomeManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
-            // yield return www;
-           // Debug.LogError("ConstantsGod.AUTH_TOKEN "+ ConstantsGod.AUTH_TOKEN);
-           // Debug.LogError("XanaConstants.xanaConstants.userId " + XanaConstants.xanaConstants.userId);
-
             while (!www.isDone)
                 yield return new WaitForSeconds(Time.deltaTime);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                // Debug.LogError("FAILED "+www.downloadHandler.text);
                 callback(false);
             }
             else
@@ -110,18 +98,14 @@ public class FriendHomeManager : MonoBehaviour
         _friendtoRemove = null;
         foreach (FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
         {
-            //if(SpawnFriendsObjref.GetComponent<FriendAvatarController>())
-            {
                 if(SpawnFriendsObjref.id == friendId)
                 {
                     _friendtoRemove = SpawnFriendsObjref;
                     break;
                 }
-            }
         }
         if(_friendtoRemove != null)
         {
-           // _friendNameRemove = _friendtoRemove.GetComponent<Actor>().NameTagHolderObj;
             SpawnFriendsObj.Remove(_friendtoRemove);
             Destroy(_friendtoRemove.friendNameObj.gameObject);
             Destroy(_friendtoRemove.friendObj.gameObject);
