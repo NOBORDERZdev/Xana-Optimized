@@ -37,6 +37,10 @@ public class AddressableDownloader : MonoBehaviour
     {
         RemoveAddresables += delegate { MemoryManager.RemoveAllAddressables(); };
     }
+    private void OnDestroy()
+    {
+        RemoveAddresables -= delegate { MemoryManager.RemoveAllAddressables(); };
+    }
     bool isDownloading = false;
     public void DownloadCatalogFile()
     {
