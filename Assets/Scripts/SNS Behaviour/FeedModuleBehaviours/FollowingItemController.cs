@@ -361,6 +361,10 @@ public class FollowingItemController : MonoBehaviour
     }
 
     public void UpdateBfBtn(bool isBf){
+        if (MakeBfBtn== null || RemoveBfBtn == null)
+        {
+            return;
+        }
         if (isBf)
         {
             MakeBfBtn.SetActive(false);
