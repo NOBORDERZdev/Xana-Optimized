@@ -7,6 +7,7 @@ using SuperStar.Helpers;
 using UnityEngine.Networking;
 using System;
 using System.IO;
+using UnityEngine.Events;
 
 public class APIController : MonoBehaviour
 {
@@ -436,9 +437,11 @@ public class APIController : MonoBehaviour
             {
                 for (int j = 0; j < APIManager.Instance.searchUserRoot.data.rows.Count; j++)
                 {
-                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.findFriendContainer);
-                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
+                    if (!APIManager.Instance.searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId)){ 
+                        GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.findFriendContainer);
+                        //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
+                    }
                 }
             }
             else
@@ -458,9 +461,12 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
             {
-                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
-                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                if (!searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId))
+                {
+                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                }
             }
         }
     }
@@ -476,9 +482,11 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
             {
-                GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
-                //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                if (!searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId)){
+                    GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.AddFrndRecommendedContainer.transform);
+                    //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
+                }
             }
         }
     }
@@ -545,6 +553,23 @@ public class APIController : MonoBehaviour
                     GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
                     followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i], false);
                     followingObject.GetComponent<Button>().enabled = false;
+                    print("~~"+followingObject.GetComponent<Button>()+"~~~~~"+followingObject);
+                    //followingObject.GetComponent<Button>().onClick.AddListener(FeedUIController.Instance.CheckFollowingCount);
+                    print(followingObject.gameObject.activeInHierarchy+"-------------");	
+                    followingObject.GetComponent<FindFriendWithNameItem>().IsInFollowingTab=true;
+                    //#if UNITY_EDITOR
+                    //    //GameObject go = new GameObject("myObject");
+                    //    UnityEditor.Events.UnityEventTools.AddPersistentListener(followingObject.GetComponent<Button>().onClick, new UnityAction(() =>
+                    //{
+                    //  check();
+                    //}));
+                    
+                    //#else
+                    //followingObject.GetComponent<Button>().onClick.AddListener(() =>
+                    //{
+                    //    FeedUIController.Instance.CheckFollowingCount();
+                    //});
+                    //#endif
                 }
             }
         }
