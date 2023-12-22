@@ -81,7 +81,14 @@ public class LoadButtonClick : MonoBehaviour
             else                                                     // AH Working
                 StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
         }
+
+        //EmoteAnimationPlay.AnimationStopped += AnimationStopped;
     }
+
+    //private void OnDisable()
+    //{
+    //    EmoteAnimationPlay.AnimationStopped -= AnimationStopped;
+    //}
     public bool danceAnim;
     public void OnButtonClick() //add by kamran
     {
@@ -89,6 +96,8 @@ public class LoadButtonClick : MonoBehaviour
         {
             return;
         }
+        EmoteAnimationPlay.Instance.StopAllCoroutines();
+
         if (EmoteAnimationPlay.Instance.currentAnimationTab == "Sit & lying")
         {
             //Debug.Log("this is sit and laying animation tab");
@@ -197,6 +206,7 @@ public class LoadButtonClick : MonoBehaviour
             else
             {
                 EmoteAnimationPlay.Instance.StopAnimation();
+                AnimationStopped();
                 danceAnim = true;
             }
         }
@@ -214,7 +224,7 @@ public class LoadButtonClick : MonoBehaviour
         animData.bgColor = GetComponent<Image>().color;
         GamePlayButtonEvents.inst.OnAnimationSelect(animData);
     }
-    private void AnimationStopped(string animName)
+    private void AnimationStopped()
     {
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
