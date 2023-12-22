@@ -11,7 +11,7 @@ namespace RFM.Utility
         public TextMeshProUGUI players;
         public TextMeshProUGUI rfmStatus;
 
-        private void OnEanble()
+        private void Awake()
         {
             if (RFM.Globals.DevMode)
             {
