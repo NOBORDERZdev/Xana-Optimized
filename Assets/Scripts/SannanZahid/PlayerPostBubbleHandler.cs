@@ -10,7 +10,8 @@ public class PlayerPostBubbleHandler : MonoBehaviour
 
     public void ActivatePostFirendBubble(bool flag)
     {
-        BubbleObj.gameObject.SetActive(flag);
+       // Debug.LogError("ActivatePostFirendBubble -----> " + flag);
+        BubbleObj.GetChild(0).gameObject.SetActive(flag);
     }
     void Update()
     {

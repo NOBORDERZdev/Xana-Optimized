@@ -243,15 +243,15 @@ public class UserPostFeature : MonoBehaviour
     }
 
 
-    public void GetLatestPostOfFriend(int friend_id, PlayerPostBubbleHandler friendBubbleRef, AnimatorOverrideController overrideController)
+    public void GetLatestPostOfFriend(int friend_id, PlayerPostBubbleHandler friendBubbleRef, Actor friendActor)
     {
-        StartCoroutine(GetLatestPostOfFriendFromServer(friend_id, friendBubbleRef, overrideController));
+        StartCoroutine(GetLatestPostOfFriendFromServer(friend_id, friendBubbleRef, friendActor));
     }
 
-    IEnumerator GetLatestPostOfFriendFromServer(int friend_id, PlayerPostBubbleHandler friendBubbleRef,AnimatorOverrideController overrideController)
+    IEnumerator GetLatestPostOfFriendFromServer(int friend_id, PlayerPostBubbleHandler friendBubbleRef, Actor friendActor)
     {
         string FinalUrl = PrepareApiURL("Receive") + friend_id;
-        // Debug.LogError("Prepared URL ----> " + FinalUrl);
+       // Debug.LogError("Friend ID ----> " + friend_id);
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
             while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
@@ -269,11 +269,19 @@ public class UserPostFeature : MonoBehaviour
             }
             else
             {
-                // Debug.LogError("Posted ---->  " + www.downloadHandler.text);
+               // Debug.LogError(friend_id + "  ---- Posted ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data != null)
                 {
-                    friendBubbleRef.ActivatePostFirendBubble(true);
+                   // Debug.LogError("Post Data Is Not Null --->> " + RetrievedPost.data.text_post);
+                    if (string.IsNullOrEmpty(RetrievedPost.data.text_post))
+                    {
+                        friendBubbleRef.ActivatePostFirendBubble(false);
+                    }
+                    else
+                    {
+                        friendBubbleRef.ActivatePostFirendBubble(true);
+                    }
                 }
                 else
                 {
@@ -284,28 +292,28 @@ public class UserPostFeature : MonoBehaviour
                 {
                     friendBubbleRef.ActivatePostFirendBubble(false);
                 }
-                // else
-                //    textElement.text = RetrievedPost.data.text_post;
+                 else
+                    friendBubbleRef.UpdateText(RetrievedPost.data.text_post);
                 if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
                 {
-                     // Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+                  //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
                     ActorBehaviour tempBehav = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood);
-                    if(tempBehav!=null)
+                    if(tempBehav != null)
                     {
                         bool flagg = tempBehav.IdleAnimationFlag;
-                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg, overrideController);
-                        //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
-                        GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg, friendActor.overrideController);
+                      //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+                        friendActor.SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
                     }
                     else
                     {
-                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, overrideController);
+                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController);
                     }
                 }
                 else
                 {
-                    //  Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, overrideController);
+                   // Debug.LogError("Last Mood Posted ELSE ---->  " + "   Fun Happy");
+                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController);
                 }
             }
             www.Dispose();

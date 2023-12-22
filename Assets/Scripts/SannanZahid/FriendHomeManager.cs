@@ -11,7 +11,7 @@ public class FriendHomeManager : MonoBehaviour
     [SerializeField]
     BestFriendData _friendsDataFetched;
 
-    public List<Transform> SpawnFriendsObj = new List<Transform>();
+    public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
@@ -38,9 +38,9 @@ public class FriendHomeManager : MonoBehaviour
                // Debug.LogError("Successssss-----> ");
                 foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
-                   // for(int i=0;i<20;i++)
+                   if(SpawnFriendsObj.Find(x => x.id == friend.id) == null)
                     {
-
+                        FriendSpawnData FriendSpawn= new FriendSpawnData();
                         Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
                         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
                         CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
@@ -48,14 +48,17 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
-                        CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
-                        SpawnFriendsObj.Add(CreatedFriend);
-                        SpawnFriendsObj.Add(CreatedNameTag);
+                        CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json, friend.id);
+                        FriendSpawn.id = friend.id;
+                        FriendSpawn.friendObj = CreatedFriend;
+                        FriendSpawn.friendNameObj = CreatedNameTag;
+                        SpawnFriendsObj.Add(FriendSpawn);
+                        //SpawnFriendsObj.Add(CreatedNameTag);
                        // Debug.LogError("Friend Spawned ----->  " + friend.id);
                         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
                             friend.id, 
                             CreatedFriend.GetComponent<PlayerPostBubbleHandler>(), 
-                            CreatedFriend.GetComponent<Actor>().overrideController
+                            CreatedFriend.GetComponent<Actor>()
                             );
                     }
                 }
@@ -95,10 +98,38 @@ public class FriendHomeManager : MonoBehaviour
     }
     public void EnableFriendsView(bool flag)
     {
-        foreach(Transform SpawnFriendsObjref in SpawnFriendsObj)
+        foreach(FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
         {
-            SpawnFriendsObjref.gameObject.SetActive(flag);
+            SpawnFriendsObjref.friendNameObj.gameObject.SetActive(flag);
+            SpawnFriendsObjref.friendObj.gameObject.SetActive(flag);
         }
+    }
+    FriendSpawnData _friendtoRemove;
+    public void RemoveFriendFromHome(int friendId)
+    {
+        _friendtoRemove = null;
+        foreach (FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
+        {
+            //if(SpawnFriendsObjref.GetComponent<FriendAvatarController>())
+            {
+                if(SpawnFriendsObjref.id == friendId)
+                {
+                    _friendtoRemove = SpawnFriendsObjref;
+                    break;
+                }
+            }
+        }
+        if(_friendtoRemove != null)
+        {
+           // _friendNameRemove = _friendtoRemove.GetComponent<Actor>().NameTagHolderObj;
+            SpawnFriendsObj.Remove(_friendtoRemove);
+            Destroy(_friendtoRemove.friendNameObj.gameObject);
+            Destroy(_friendtoRemove.friendObj.gameObject);
+        }
+    }
+    public void AddFriendToHome()
+    {
+        StartCoroutine(BuildMoodDialog());
     }
 }
 
@@ -138,4 +169,10 @@ public class tempclassfordatafeed
     public DateTime createdAt;
     public DateTime updatedAt;
 
+}
+public class FriendSpawnData
+{
+   public int id;
+   public Transform friendObj;
+   public Transform friendNameObj;
 }
