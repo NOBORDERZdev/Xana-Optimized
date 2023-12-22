@@ -269,7 +269,7 @@ public class UserPostFeature : MonoBehaviour
             }
             else
             {
-                // Debug.LogError("Posted ---->  " + www.downloadHandler.text);
+                 Debug.LogError("Posted ---->  " + www.downloadHandler.text);
                 RetrievedPost = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPost.data != null)
                 {
@@ -288,11 +288,19 @@ public class UserPostFeature : MonoBehaviour
                 //    textElement.text = RetrievedPost.data.text_post;
                 if (RetrievedPost.data.text_mood != "null" && RetrievedPost.data.text_mood != null && RetrievedPost.data.text_mood != "")
                 {
-                    //  Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
-                    bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).IdleAnimationFlag;
-                    GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg, overrideController);
-                    //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
-                    GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+                      Debug.LogError("Last Mood Posted ---->  " + RetrievedPost.data.text_mood);
+                    ActorBehaviour tempBehav = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood);
+                    if(tempBehav!=null)
+                    {
+                        bool flagg = tempBehav.IdleAnimationFlag;
+                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPost.data.text_mood, flagg, overrideController);
+                        //  Debug.LogError("Behaviour Assign ---->   "+GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood).Name);
+                        GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPost.data.text_mood));
+                    }
+                    else
+                    {
+                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, overrideController);
+                    }
                 }
                 else
                 {
