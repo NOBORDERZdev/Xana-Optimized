@@ -95,8 +95,8 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
     private void OnSceneExit()
     {
-        screenSoundBtnPort.SetActive(false);
-        screenSoundBtnLand.SetActive(false);
+        screenSoundBtnPort?.SetActive(false);
+        screenSoundBtnLand?.SetActive(false);
     }
 
     public void ToggleScreenSound(bool isSoundOn)
