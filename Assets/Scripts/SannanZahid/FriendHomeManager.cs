@@ -51,7 +51,7 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
                         SpawnFriendsObj.Add(CreatedFriend);
                         SpawnFriendsObj.Add(CreatedNameTag);
-                        Debug.LogError("Friend Spawned ----->  " + friend.id);
+                       // Debug.LogError("Friend Spawned ----->  " + friend.id);
                         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
                             friend.id, 
                             CreatedFriend.GetComponent<PlayerPostBubbleHandler>(), 

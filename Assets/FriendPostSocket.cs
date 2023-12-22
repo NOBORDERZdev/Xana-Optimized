@@ -47,7 +47,7 @@ public class FriendPostSocket : MonoBehaviour
 
     void Start()
     {
-        Debug.LogError("FInal Address ----> " + address);
+      //  Debug.LogError("FInal Address ----> " + address);
         Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
@@ -57,29 +57,29 @@ public class FriendPostSocket : MonoBehaviour
     }
     void OnSocketDisconnect(CustomError args)
     {
-        Debug.LogError("FInal Address ----> OnSocketDisconnect");
-        Debug.LogError("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+      //  Debug.LogError("FInal Address ----> OnSocketDisconnect");
+       // Debug.LogError("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
     }
     void OnError(CustomError args)
     {
-        Debug.LogError("FInal Address ----> OnError");
-        Debug.LogError("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+       // Debug.LogError("FInal Address ----> OnError");
+      //  Debug.LogError("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
     }
     void OnConnected(ConnectResponse resp)
     {
         socketId = resp.sid;
-        Debug.LogError("FInal Address ----> OnConnected");
-        Debug.LogError("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
+       // Debug.LogError("FInal Address ----> OnConnected");
+      //  Debug.LogError("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         EmitUserSocketToApi();
 
     }
     void ReceivePost(ChatUserData msg)
     {
-        Debug.LogError("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+       // Debug.LogError("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
     }
     void SendPost(ChatUserData msg)
     {
-        Debug.LogError("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+       // Debug.LogError("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
     }
     void EmitUserSocketToApi()
     {
@@ -116,15 +116,15 @@ public class FriendPostSocket : MonoBehaviour
 
         // WWWForm form = new WWWForm();
         // form.AddField("user_id", XanaConstants.xanaConstants.userId);
-        Debug.LogError("----- AUTH_TOKEN GIVEN ----> ");
+       // Debug.LogError("----- AUTH_TOKEN GIVEN ----> ");
 
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        Debug.LogError(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket ---- >  " + socketId);
+        //Debug.LogError(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket ---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
-        Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
+       // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
         WWWForm form = new WWWForm();
         form.AddField("userId", int.Parse(XanaConstants.xanaConstants.userId));
         form.AddField("socketId", socketId);
@@ -140,12 +140,12 @@ public class FriendPostSocket : MonoBehaviour
             //     yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                  Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
+                 // Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
                 //  Debug.LogError("Error Post --->  "+www.downloadHandler.text);
             }
             else
             {
-                 Debug.LogError("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
+                // Debug.LogError("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
         }
