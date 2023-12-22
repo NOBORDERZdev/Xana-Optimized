@@ -6710,7 +6710,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 49707099}
-  - component: {fileID: 49707100}
   m_Layer: 0
   m_Name: MenuPoint - Post
   m_TagString: Untagged
@@ -6733,19 +6732,6 @@ Transform:
   m_Father: {fileID: 1572280002}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &49707100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49707098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54ed90ac3e577a24eae0a4effe99c6be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 0.1
 --- !u!1 &50558875 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7835817087714230135, guid: dda715bd388aee748a3fc7fb1707d5f9, type: 3}
@@ -7373,7 +7359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941223772646, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -62.229134
+      value: -62.229248
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941223772646, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7510,6 +7496,14 @@ PrefabInstance:
     - target: {fileID: 6676399821861719115, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -2.1999512
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912537893974696327, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 3.543213
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912537893974696327, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -12.115723
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2305304787677582681, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
@@ -8478,6 +8472,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 0}
   isVisibleOnCam: 0
+  FriendId: 0
 --- !u!114 &106914949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8492,6 +8487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 905011725}
+  overrideController: {fileID: 0}
 --- !u!114 &106914950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12977,7 +12973,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 289178981}
-  - component: {fileID: 289178983}
   - component: {fileID: 289178982}
   m_Layer: 0
   m_Name: StartPoint
@@ -13019,19 +13014,6 @@ MonoBehaviour:
   DownPoint: {fileID: 0}
   IsInUse: 0
   GridPoint: {x: 0, y: 0}
---- !u!114 &289178983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 289178980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54ed90ac3e577a24eae0a4effe99c6be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 0.1
 --- !u!1 &297029299 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1136433873693387805, guid: 8d1e70d1270216540b49e6958b452378, type: 3}
@@ -31356,7 +31338,6 @@ MonoBehaviour:
       count: 0
       rows: []
     msg: 
-  SpawnFriendsObj: []
 --- !u!4 &1131415202
 Transform:
   m_ObjectHideFlags: 0
@@ -43663,7 +43644,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1636669827}
-  - component: {fileID: 1636669828}
   m_Layer: 0
   m_Name: MenuPoint - Store
   m_TagString: Untagged
@@ -43686,19 +43666,6 @@ Transform:
   m_Father: {fileID: 1572280002}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &1636669828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636669826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54ed90ac3e577a24eae0a4effe99c6be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 0.1
 --- !u!114 &1642769025 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3791715670680288188, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
@@ -50036,7 +50003,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 3836157402595034107}
-  overrideController: {fileID: 22100000, guid: 25907ba7df1c54447b46ceda32ea5f1d, type: 2}
   PostMood: 0
   LastMoodSelected: 
 --- !u!4 &1900354415
@@ -73569,6 +73535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 905011725}
+  overrideController: {fileID: 0}
 --- !u!114 &6698694767192346403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73649,6 +73616,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  FriendId: 0
 --- !u!114 &6698694767192346406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76187,6 +76155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 905011725}
+  overrideController: {fileID: 0}
 --- !u!212 &7574426618912661149
 SpriteRenderer:
   m_ObjectHideFlags: 0
