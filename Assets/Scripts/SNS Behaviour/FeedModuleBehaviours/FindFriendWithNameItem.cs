@@ -18,12 +18,13 @@ public class FindFriendWithNameItem : MonoBehaviour
     public TextMeshProUGUI followFollowingText;
     public Image followFollowingImage;
     public Color followColor, followingColor;
+    public Color followingTextColor,followTextColor;
 
     public Sprite defaultSP;
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
-
+    public bool IsInFollowingTab;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -158,12 +159,13 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
-
+            followFollowingText.color= followingTextColor;
         }
         else
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
+            followFollowingText.color= followTextColor;
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
         //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
@@ -257,6 +259,10 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = false;
                 //FollowFollowingSetUp(false);
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                if (IsInFollowingTab)
+                {
+                    FeedUIController.Instance.CheckFollowingCount();
+                }
                 this.gameObject.SetActive(false);
             }
         }

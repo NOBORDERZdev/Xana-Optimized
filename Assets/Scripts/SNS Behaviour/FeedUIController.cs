@@ -193,12 +193,14 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFrndRecommendedContainer;
     [SerializeField] GameObject AddFrndFollowingPanel;
     [SerializeField] GameObject AddFrndFollowingContainer;
+    [SerializeField] public GameObject AddFrndNoFollowing;
     [SerializeField] GameObject AddFrndMutalFrndPanel;
     [SerializeField] public GameObject AddFrndMutalFrndContainer;
     [SerializeField] public GameObject AddFrndNoMutalFrnd;
     [SerializeField] public GameObject BestFriendFull;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
+    [SerializeField] public GameObject AddFrndNoSearchFound;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
 
     private void Awake()
@@ -364,6 +366,7 @@ public class FeedUIController : MonoBehaviour
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
         AddFriendFollowing.SetActive(false);
+        AddFrndNoSearchFound.SetActive(false);
     }
 
     public void OnClickAddFriendSearchBtn(){ 
@@ -2892,6 +2895,27 @@ public class FeedUIController : MonoBehaviour
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
+    }
+
+
+     /// <summary>
+    /// Check following count. if count is less than zero than show no following panel
+    /// </summary>
+    /// 
+    public void CheckFollowingCount(){ 
+        StartCoroutine(IEnumCheckFollowingCount());
+    }
+    IEnumerator IEnumCheckFollowingCount(){
+        print("~~~~~~~~CheckFollowingCount");
+        yield return new WaitForSeconds(1);
+        foreach(Transform child in AddFrndFollowingContainer.transform)
+        {
+            if(child.gameObject.activeInHierarchy)
+            {
+               yield return null;
+            }
+        }
+        AddFrndNoFollowing.SetActive(true);
     }
 }
 
