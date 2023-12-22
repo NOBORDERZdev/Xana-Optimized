@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using ExitGames.Client.Photon;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
@@ -13,7 +12,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Random = UnityEngine.Random;
 
@@ -117,7 +115,7 @@ namespace RFM.Managers
 
             _gameCanvas.SetActive(true);
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
-            CanvasButtonsHandler.inst.RFMResetSprintButton();
+            CanvasButtonsHandler.inst.RFMResetSprintButton(); // TODO: Call this function in the above function
 
             //this is to turn post processing on
             var cameraData = Camera.main.GetUniversalAdditionalCameraData();
@@ -501,6 +499,8 @@ namespace RFM.Managers
 
             await Task.Delay(1000);
             EventsManager.ShowScores();
+            await Task.Delay(1000);
+            EventsManager.DestroyAllNPCHunters();
         }
 
         public void PlayerCaught(int hunterViewID = -1)

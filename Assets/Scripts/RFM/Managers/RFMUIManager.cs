@@ -19,7 +19,8 @@ namespace RFM.Managers
         [SerializeField] private GameObject rearViewMirror;
         // Leaderboard
         [SerializeField] private GameObject gameOverPanel;
-        [SerializeField] private RectTransform leaderboardEntryContainer;
+        [SerializeField] private RectTransform runnersLeaderboardEntryContainer;
+        [SerializeField] private RectTransform huntersLeaderboardEntryContainer;
         [SerializeField] private LeaderboardEntry leaderboardEntryPrefab;
 
         [Header("XanaStones")]
@@ -36,7 +37,8 @@ namespace RFM.Managers
 
         private bool _wasInstructionsPanelActive;
 
-        private Dictionary<string[], int> scores;
+        private Dictionary<string[], int> runnersScores;
+        private Dictionary<string[], int> huntersScores;
 
         [SerializeField] private GameObject restartButton;
 
@@ -52,7 +54,8 @@ namespace RFM.Managers
 
             showMoney.text = "000";
 
-            scores = new Dictionary<string[], int>();
+            runnersScores = new Dictionary<string[], int>();
+            huntersScores = new Dictionary<string[], int>();
 
             gameOverPanel.SetActive(false);
         }
@@ -145,7 +148,7 @@ namespace RFM.Managers
         
         private void OnGameOver()
         {
-            showMoney.gameObject.SetActive(false);
+            showMoney.transform.parent.gameObject.SetActive(false);
             rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
 
@@ -180,7 +183,12 @@ namespace RFM.Managers
         {
             Awake();
             // Destroy all children of leaderboardEntryContainer
-            foreach (Transform child in leaderboardEntryContainer)
+            foreach (Transform child in runnersLeaderboardEntryContainer)
+            {
+                Destroy(child.gameObject);
+            }
+
+            foreach (Transform child in huntersLeaderboardEntryContainer)
             {
                 Destroy(child.gameObject);
             }
@@ -192,7 +200,7 @@ namespace RFM.Managers
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
             string[] array = { nickName, timeSurvived.ToString() };
-            scores.Add(array, money);
+            runnersScores.Add(array, money);
         }
 
 
@@ -204,6 +212,12 @@ namespace RFM.Managers
             //    string[] array = { runner.nickName, runner.timeSurvived.ToString() };
             //    scores.Add(array, runner.money);
             //}
+
+            foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
+            {
+                string[] array = { "Hunter" + " [H]", 0.ToString() };
+                huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
+            }
 
             foreach (var player in PhotonNetwork.PlayerList)
             {
@@ -218,7 +232,7 @@ namespace RFM.Managers
                         }
 
                         string[] array = { player.NickName + " [H]", 0.ToString() };
-                        scores.Add(array, rewardMultiplier * 100); // TODO : change 100 to the participation amount
+                        huntersScores.Add(array, rewardMultiplier * 100); // TODO : change 100 to the participation amount
                     }
                     else // player was a runner
                     {
@@ -234,18 +248,25 @@ namespace RFM.Managers
                         }
 
                         string[] array = { player.NickName, timeSurvived.ToString() };
-                        scores.Add(array, money);
+                        runnersScores.Add(array, money);
                     }
                 }
             }
 
 
-            scores = scores.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            runnersScores = runnersScores.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            huntersScores = huntersScores.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
-            foreach (var score in scores)
+            foreach (var score in runnersScores)
             {
-                var entry = Instantiate(leaderboardEntryPrefab, leaderboardEntryContainer);
-                entry.Init(score.Key[0], score.Value, score.Key[1], 1 + scores.Keys.ToList().IndexOf(score.Key));
+                var entry = Instantiate(leaderboardEntryPrefab, runnersLeaderboardEntryContainer);
+                entry.Init(score.Key[0], score.Value, score.Key[1], 1 + runnersScores.Keys.ToList().IndexOf(score.Key));
+            }
+
+            foreach (var score in huntersScores)
+            {
+                var entry = Instantiate(leaderboardEntryPrefab, huntersLeaderboardEntryContainer);
+                entry.Init(score.Key[0], score.Value, score.Key[1], 1 + huntersScores.Keys.ToList().IndexOf(score.Key));
             }
         }
 

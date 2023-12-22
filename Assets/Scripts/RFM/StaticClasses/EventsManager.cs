@@ -9,6 +9,7 @@ namespace RFM
     public static class EventsManager
     {
         public static event Action onCalculateScores;
+        public static event Action onDestroyAllNPCHunters;
 
         public static event Action onCountdownStart, onTakePositionTimeStart, onGameStart, onGameTimeup,
             onShowScores, onHideCanvasElements, onToggleHelpPanel, onToggleSetLayoutPanel;
@@ -20,6 +21,7 @@ namespace RFM
         public static void StartCountdown() => onCountdownStart?.Invoke();
 
         public static void CalculateScores() => onCalculateScores?.Invoke();
+        public static void DestroyAllNPCHunters() => onDestroyAllNPCHunters?.Invoke();
 
         public static void GameOver() => onGameTimeup?.Invoke();
         public static void ShowScores() => onShowScores?.Invoke();

@@ -11,16 +11,16 @@ namespace RFM.Utility
         public TextMeshProUGUI players;
         public TextMeshProUGUI rfmStatus;
 
-        private void Awake()
+        private void OnEanble()
         {
-            //if (RFM.Globals.DevMode)
+            if (RFM.Globals.DevMode)
             {
                 gameObject.SetActive(true);
             }
-            //else
-            //{
-            //    gameObject.SetActive(false);
-            //}
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         private void Update()

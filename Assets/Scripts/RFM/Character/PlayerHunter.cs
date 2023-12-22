@@ -65,7 +65,7 @@ namespace RFM.Character
                         { { "rewardMultiplier", 1 } });
                 }
 
-                other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
+                other.GetComponent<Collider>().enabled = false; // disable the runner collider on local client to avoid duplicate calls
 
                 return;
             }
