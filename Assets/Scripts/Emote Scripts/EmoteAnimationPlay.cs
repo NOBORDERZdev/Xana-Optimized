@@ -161,11 +161,11 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     IEnumerator GetAssetBundleFromServerRemotePlayerUrl(string BundleURL, int id)
     {
-        if (!isPreviousBundleLoad)
-        {
-            yield return new WaitUntil(() => isPreviousBundleLoad);
-        }
-        isPreviousBundleLoad = false;
+        //if (!isPreviousBundleLoad)
+        //{
+        //    yield return new WaitUntil(() => isPreviousBundleLoad);
+        //}
+        //isPreviousBundleLoad = false;
         //if (counter > 4)
         //{
         //AssetBundle.UnloadAllAssetBundles(false);
@@ -534,7 +534,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     }
 
 
-
+    
     private void NetworkingClient_EventReceived(EventData obj)
     {
         ////Debug.Log("call hua obj==" + obj.Code);
