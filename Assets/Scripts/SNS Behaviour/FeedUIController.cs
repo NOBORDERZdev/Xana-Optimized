@@ -352,6 +352,7 @@ public class FeedUIController : MonoBehaviour
         feedVideoScreen.SetActive(false);
         //findFriendScreen.SetActive(false);
         createFeedScreen.SetActive(false);
+        FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
         OtherPlayerProfileData.Instance.backKeyManageList.Clear();
@@ -371,8 +372,8 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickAddFriendSearchBtn(){ 
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
+        FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
-        
     }
 
     /*public IEnumerator WaitToResetAllFeedScreen(bool isFeedScreen)
@@ -944,6 +945,8 @@ public class FeedUIController : MonoBehaviour
             AddFrndRecommendedPanel.SetActive(false);
             AddFrndMutalFrndPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(true);
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.SetActive(false);
             APIController.Instance.AdFrndFollowingFetch();
             UpdateAdFrndBtnStatus(2);
         }
@@ -968,6 +971,7 @@ public class FeedUIController : MonoBehaviour
             //if user typed character clear then clear all search user list.
             if (findFriendScreen.gameObject.activeInHierarchy)
             {
+                findFriendInputFieldAdvanced.Text = "";
                 findFriendScreen.gameObject.SetActive(false);
             }
             foreach (Transform item in findFriendContainer)
@@ -2866,6 +2870,8 @@ public class FeedUIController : MonoBehaviour
         AddFrndFollowingPanel.SetActive(false);
         AddFrndMutalFrndPanel.SetActive(false);
         AddFrndRecommendedPanel.SetActive(false);
+        findFriendInputFieldAdvanced.Text = "";
+        findFriendScreen.SetActive(false);
         UpdateAdFrndBtnStatus(0);
     }
 
@@ -2875,6 +2881,8 @@ public class FeedUIController : MonoBehaviour
             AddFrndFollowingPanel.SetActive(false);
             AddFrndMutalFrndPanel.SetActive(false);
             AddFrndRecommendedPanel.SetActive(true);
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.SetActive(false);
             APIManager.Instance.SetRecommendedFriend();
             UpdateAdFrndBtnStatus(1);
         }
@@ -2886,6 +2894,8 @@ public class FeedUIController : MonoBehaviour
             AddFrndFollowingPanel.SetActive(false);
             AddFrndRecommendedPanel.SetActive(false);
             AddFrndMutalFrndPanel.SetActive(true);
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.SetActive(false);
             APIManager.Instance.SetMutalFrndList();
             UpdateAdFrndBtnStatus(3);
         }
