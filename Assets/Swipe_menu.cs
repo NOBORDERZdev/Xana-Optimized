@@ -10,12 +10,17 @@ public class Swipe_menu : MonoBehaviour
 {
     public GameObject scrollbar;
     public List<GameObject> items;
-    [SerializeField] private Transform contentParent;
+    public Transform contentParent;
     [SerializeField] private float scroll_pos = 0;
     [SerializeField] private float[] pos;
     [SerializeField] private GameObject SelectedOBJ;
+    public static Swipe_menu instance;
 
 
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
