@@ -24,7 +24,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
-
+    public bool IsInFollowingTab;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -259,6 +259,10 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = false;
                 //FollowFollowingSetUp(false);
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                if (IsInFollowingTab)
+                {
+                    FeedUIController.Instance.CheckFollowingCount();
+                }
                 this.gameObject.SetActive(false);
             }
         }

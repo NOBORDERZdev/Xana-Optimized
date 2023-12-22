@@ -2896,5 +2896,26 @@ public class FeedUIController : MonoBehaviour
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
     }
+
+
+     /// <summary>
+    /// Check following count. if count is less than zero than show no following panel
+    /// </summary>
+    /// 
+    public void CheckFollowingCount(){ 
+        StartCoroutine(IEnumCheckFollowingCount());
+    }
+    IEnumerator IEnumCheckFollowingCount(){
+        print("~~~~~~~~CheckFollowingCount");
+        yield return new WaitForSeconds(1);
+        foreach(Transform child in AddFrndFollowingContainer.transform)
+        {
+            if(child.gameObject.activeInHierarchy)
+            {
+               yield return null;
+            }
+        }
+        AddFrndNoFollowing.SetActive(true);
+    }
 }
 
