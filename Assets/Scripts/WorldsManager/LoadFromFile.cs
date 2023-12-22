@@ -1071,7 +1071,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 goto CheckAgain;
             }
             spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
-            this.spawnPoint = spawnPoint;
+            //this.spawnPoint = spawnPoint;
         }
         return spawnPoint;
     }

@@ -393,13 +393,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
         }
 
-        if (!newObj.name.Contains("pfBLD1210015_XANA"))
-            meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
-
-        foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
-        {
-            childTransform.tag = "Item";
-        }
+        meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         //Add game object into XanaItems List for Hirarchy
         if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
