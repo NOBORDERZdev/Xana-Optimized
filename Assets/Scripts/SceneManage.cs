@@ -63,7 +63,6 @@ public class SceneManage : MonoBehaviourPunCallbacks
         if (exitOnce)
         {
             exitOnce = false;
-            AddressableDownloader.RemoveAddresables?.Invoke();
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
