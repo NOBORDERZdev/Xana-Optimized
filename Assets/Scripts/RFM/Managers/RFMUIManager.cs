@@ -142,8 +142,11 @@ namespace RFM.Managers
 
             if (sceneManage)
             {
-                AddressableDownloader.RemoveAddresables?.Invoke();
                 sceneManage.ReturnToHome(true);
+                if (AddressableDownloader.RemoveAddresablesAction != null)
+                {
+                    AddressableDownloader.RemoveAddresablesAction?.Invoke();
+                }
             }
         }
         

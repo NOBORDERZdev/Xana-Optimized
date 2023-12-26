@@ -17,7 +17,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
-    public string mainScene= "Main";
+    public string mainScene = "Main";
     bool exitOnce = true;
     private void OnEnable()
     {
@@ -48,11 +48,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
             if (SoundManagerSettings.soundManagerSettings != null)
             {
                 if (SoundManagerSettings.soundManagerSettings.bgmSource)
-                SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
                 if (SoundManagerSettings.soundManagerSettings.videoSource)
-                SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
                 if (SoundManagerSettings.soundManagerSettings.effectsSource)
-                SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
             }
         }
     }
@@ -63,6 +63,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
         if (exitOnce)
         {
             exitOnce = false;
+            if (AddressableDownloader.RemoveAddresablesAction != null)
+            {
+                AddressableDownloader.RemoveAddresablesAction?.Invoke();
+            }
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
@@ -93,8 +97,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
             }
         }
     }
-     private IEnumerator LobbySceneSwitch()
-     {
+    private IEnumerator LobbySceneSwitch()
+    {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -170,10 +174,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
         print("Hello Scene Manager");
         StartCoroutine(LoadMianScene());
     }
-    IEnumerator LoadMianScene() {
+    IEnumerator LoadMianScene()
+    {
         yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
-        print("mian scne "+mainScene);
+        print("mian scne " + mainScene);
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
