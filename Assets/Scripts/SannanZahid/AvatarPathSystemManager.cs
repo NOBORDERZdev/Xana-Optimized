@@ -13,6 +13,10 @@ public class AvatarPathSystemManager : MonoBehaviour
         points = new Transform[_row, _col];
         GeneratePoints();
     }
+    public Transform GetStartPoint()
+    {
+        return _startPoint;
+    }
     void GeneratePoints()
     {
         Transform tempTransform;
