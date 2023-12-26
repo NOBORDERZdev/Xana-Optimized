@@ -43,10 +43,9 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
         if (isShowScreenSoundOption)
         {
-            // set the interface reference to SoundOnOff script
-            ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
-                screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
-
+            //// set the interface reference to SoundOnOff script
+            //ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
+            //    screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
             StartCoroutine(ShowScreenSoundBtnInSettingPanel());
         }
 
@@ -56,7 +55,11 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
     private IEnumerator ShowScreenSoundBtnInSettingPanel()
     {
-        yield return updateDelay;
+        yield return new WaitForSeconds(1f); //updateDelay;
+        // set the interface reference to SoundOnOff script
+        ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
+                screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
+
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
             if (screenSoundBtnPort is null)
@@ -102,6 +105,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     public void ToggleScreenSound(bool isSoundOn)
     {
         mediaPlayer.AudioMuted = isSoundOn;
+        XanaConstants.xanaConstants.isScreenSoundOn = !isSoundOn;
         if (isSoundOn)
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
         else if (volumeCoroutine != null)
