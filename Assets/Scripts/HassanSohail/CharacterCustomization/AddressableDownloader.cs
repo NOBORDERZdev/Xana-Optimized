@@ -13,7 +13,7 @@ public class AddressableDownloader : MonoBehaviour
     public int presetItemCount;
     public static AddressableDownloader Instance;
     public AddressableMemoryReleaser MemoryManager;
-    public static Action RemoveAddresables;
+    public static Action RemoveAddresablesAction;
     private void Start()
     {
         presetItemCount = 0;
@@ -24,6 +24,7 @@ public class AddressableDownloader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+            Debug.Log("Memoryvala");
             MemoryManager = GetComponent<AddressableMemoryReleaser>();
             DownloadCatalogFile();
         }
@@ -33,7 +34,18 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnEnable()
+    {
+        RemoveAddresablesAction += RemoveAddresables;
+    }
+
+    private void OnDisable()
+    {
+        RemoveAddresablesAction -= RemoveAddresables;
+    }
+
+
+    public void RemoveAddresables()
     {
         MemoryManager.RemoveAllAddressables();
     }
