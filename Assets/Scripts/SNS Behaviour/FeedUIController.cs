@@ -2917,13 +2917,25 @@ public class FeedUIController : MonoBehaviour
     }
     IEnumerator IEnumCheckFollowingCount(){
         print("~~~~~~~~CheckFollowingCount");
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
         yield return new WaitForSeconds(1);
         foreach(Transform child in AddFrndFollowingContainer.transform)
         {
             if(child.gameObject.activeInHierarchy)
             {
-               yield return null;
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+              yield break;
             }
+        }
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(false);
         }
         AddFrndNoFollowing.SetActive(true);
     }
