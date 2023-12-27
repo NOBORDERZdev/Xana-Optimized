@@ -8,6 +8,7 @@ public class PMYFrameManager : MonoBehaviour
     public static PMYFrameManager instance;
     public GameObject framePrefab;
     public Vector3 frameLocalPos;
+    public Vector3 frameLocalRot;
     public Vector3 frameLocalScale;
     public Vector3 spotLightPos;
     public Vector3 spotLightScale;
