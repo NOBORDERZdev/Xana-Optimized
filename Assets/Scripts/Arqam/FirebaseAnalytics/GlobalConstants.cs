@@ -33,8 +33,8 @@ public class GlobalConstants
 
         CL_NFT_AtomRoom,
         CL_NFT_AtomRental,
-        
-        URL_ZoneX, 
+
+        URL_ZoneX,
         URL_FiveElements,
         URL_AtomRoom,
         URL_AtomRental,

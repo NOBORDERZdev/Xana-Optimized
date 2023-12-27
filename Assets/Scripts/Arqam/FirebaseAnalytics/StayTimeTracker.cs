@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using static GlobalConstants;
 using System;
+using PMY;
+using static PMY.PMY_VideoAndImage;
 
 public class StayTimeTracker : MonoBehaviour
 {
@@ -35,12 +37,23 @@ public class StayTimeTracker : MonoBehaviour
         else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
             worldName = FirebaseTrigger.StayTime_AtomRental.ToString();
 
-        else if(worldName.Contains("PMY ACADEMY"))
+        else if (worldName.Contains("PMY ACADEMY"))
             worldName = FirebaseTrigger.StayTime_PMYLobby.ToString();
-        else if (worldName.Contains("PMYRoomA"))
-            worldName = FirebaseTrigger.StayTime_CRoom1.ToString();
         else if (worldName.Contains("PMYGallery"))
             worldName = FirebaseTrigger.StayTime_PMYGallery.ToString();
+        else if (worldName.Contains("PMYRoomA"))
+        {
+            switch (PMY_Nft_Manager.Instance.PMY_RoomId)
+            {
+                case 8:
+                    worldName = FirebaseTrigger.StayTime_CRoom1.ToString();
+                    break;
+                case 9:
+                    worldName = FirebaseTrigger.StayTime_CRoom2.ToString();
+                    break;
+            }
+            
+        }
     }
 
     private void StartTrackingTime()

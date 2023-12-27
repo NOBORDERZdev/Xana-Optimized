@@ -1,6 +1,7 @@
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
@@ -34,31 +35,31 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
     private void OrientationChanged()
     {
-        StartCoroutine(ShowScreenSoundBtnInSettingPanel());
+        ShowScreenSoundBtnInSettingPanel(); // StartCoroutine(ShowScreenSoundBtnInSettingPanel());
     }
 
     private void Start()
     {
+        if (!XanaConstants.xanaConstants.isScreenSoundOn)
+            mediaPlayer.AudioMuted = false;
+
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
         if (isShowScreenSoundOption)
-        {
-            //// set the interface reference to SoundOnOff script
-            //ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
-            //    screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
-            StartCoroutine(ShowScreenSoundBtnInSettingPanel());
-        }
+            ShowScreenSoundBtnInSettingPanel(); // StartCoroutine(ShowScreenSoundBtnInSettingPanel());
 
         updateDelay = new WaitForSeconds(updateInterval);
         volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
 
-    private IEnumerator ShowScreenSoundBtnInSettingPanel()
+    private void ShowScreenSoundBtnInSettingPanel()
     {
-        yield return new WaitForSeconds(1f); //updateDelay;
+        //yield return updateDelay;
         // set the interface reference to SoundOnOff script
         ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
                 screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
+        //UnityEngine.Debug.LogError("Errorrrr::" + ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
+        //        screenSoundToggle.GetComponent<ScreenSoundOnOff>().gameObject.name);
 
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
@@ -68,6 +69,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         }
         else
         {
+            Handheld.Vibrate();
             if (screenSoundBtnLand is null)
                 screenSoundBtnLand = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
             screenSoundBtnLand.SetActive(true);

@@ -52,7 +52,7 @@ namespace PMY
         [SerializeField] int RetryChances = 3;
         [SerializeField] int PMY_RoomId_test;
         [SerializeField] int PMY_RoomId_main;
-        [SerializeField] int PMY_RoomId;
+        public int PMY_RoomId;
         public bool PMY_RoomIdFromXanaConstant = false;
 
         public string analyticMuseumID;
@@ -83,8 +83,6 @@ namespace PMY
         public AudioSource videoPlayerSource;
         public MediaPlayer livePlayerSource;
 
-        public int clRoomId;
-        public string roomName;
         public Action<int> exitClickedAction;
 
         private void Awake()
@@ -123,7 +121,7 @@ namespace PMY
         {
             if (APIBaseUrlChange.instance.IsXanaLive)
             {
-                if(PMY_RoomIdFromXanaConstant)
+                if (PMY_RoomIdFromXanaConstant)
                     PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Main;
                 else
                     PMY_RoomId = PMY_RoomId_main;
@@ -349,7 +347,7 @@ namespace PMY
         }
 
 
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_1, int roomNum = 1)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -514,125 +512,31 @@ namespace PMY
             }
 
             #region For firebase analytics
-            if (roomNum != 0)
-                SendCallAnalytics(type, title, nftId, roomType, roomNum);         // firebase event calling in this method
+            SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
             clickedNftInd = nftId;
-            clRoomId = roomNum;
-            roomName = roomType.ToString();
             #endregion
         }
-        public void SetInfoForXanaLobby(PMY_Ratio ratio, string title, string aurthur, string des, Texture2D image, PMY_DataType type)
+
+        public void SendCallAnalytics(int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
-            nftTitle = title;
-            _Ratio = ratio;
-            _Title = title;
-            _Aurthor = aurthur;
-            _Des = des;
-            _image = image;
-            _Type = type;
-            ratioId = ((int)ratio);
-
-            ratioReferences[ratioId].l_image.gameObject.SetActive(true);
-            ratioReferences[ratioId].p_image.gameObject.SetActive(true);
-            ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
-            ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
-            ratioReferences[ratioId].l_Title.text = title;
-            ratioReferences[ratioId].l_Aurthur.text = aurthur;
-            ratioReferences[ratioId].l_Description.text = des;
-            if (type == PMY_DataType.Image)
-            {
-                ratioReferences[ratioId].l_image.texture = image;
-                ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
-            }
-            else
-            {
-                ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-            }
-
-            ratioReferences[ratioId].p_Title.text = title;
-            ratioReferences[ratioId].p_Aurthur.text = aurthur;
-            ratioReferences[ratioId].p_Description.text = des;
-            ratioReferences[ratioId].p_image.texture = image;
-            if (type == PMY_DataType.Image)
-            {
-                ratioReferences[ratioId].p_image.texture = image;
-                ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
-            }
-            else
-            {
-                ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-            }
-            if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
-            {
-                LandscapeObj.SetActive(true);
-                PotraiteObj.SetActive(false);
-                ratioReferences[ratioId].l_obj.SetActive(true);
-                ratioReferences[ratioId].p_obj.SetActive(false);
-            }
-            else
-            {
-                LandscapeObj.SetActive(false);
-                PotraiteObj.SetActive(true);
-                ratioReferences[ratioId].l_obj.SetActive(false);
-                ratioReferences[ratioId].p_obj.SetActive(true);
-            }
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
-            {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
-            }
-        }
-        public void SendCallAnalytics(PMY_DataType type, string title, int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_2, int roomNum = 1)
-        {
-            string worldName = XanaConstants.xanaConstants.EnviornmentName;
-
             // For firebase event
-            if (worldName.Contains("ZONE-X"))
+            string eventName = "";
+            switch (roomType)
             {
-                string eventName = "";
-                switch (id)
-                {
-                    case 0:
-                        eventName = FirebaseTrigger.WP_MainLobby_A_ZoneX.ToString();
-                        break;
-
-                    case 1:
-                        eventName = FirebaseTrigger.WP_MainLobby_B_FiveElement.ToString();
-                        break;
-
-                    case 2:
-                        eventName = FirebaseTrigger.WP_MainLobby_C_AtomMuseum.ToString();
-                        break;
-
-                    case 3:
-                        eventName = FirebaseTrigger.WP_MainLobby_D_RentalSpace.ToString();
-                        break;
-                }
-                SendFirebaseEvent(eventName);
+                case PMY_VideoAndImage.RoomType.PMYLobby:
+                    eventName = FirebaseTrigger.CL_NFT_PMYLobby.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_1:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom1.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.RoomA_2:
+                    eventName = FirebaseTrigger.CL_NFT_CRoom2.ToString() + "_" + (id + 1);
+                    break;
+                case PMY_VideoAndImage.RoomType.Gallery:
+                    eventName = FirebaseTrigger.CL_NFT_Gallery.ToString() + "_" + (id + 1);
+                    break;
             }
-            else if (worldName.Contains("ZONE X Musuem"))
-            {
-                // we don't have this museum yet
-                string eventName = "";
-                eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
-                SendFirebaseEvent(eventName);
-            }
-            else if (worldName.Contains("FIVE ELEMENTS"))
-            {
-                // we don't have this museum yet
-                string eventName = "";
-                eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
-                SendFirebaseEvent(eventName);
-            }
-            else
-            {
-                string eventName = "";
-                if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_1))
-                    eventName = FirebaseTrigger.CL_NFT_AtomRoom.ToString() + roomNum + "_" + (id + 1);
-                else if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_2))
-                    eventName = FirebaseTrigger.CL_NFT_AtomRental.ToString() + roomNum + "_" + (id + 1);
-
-                SendFirebaseEvent(eventName);
-            }
+            SendFirebaseEvent(eventName);
         }
 
         public void ActionOnExitBtn()
