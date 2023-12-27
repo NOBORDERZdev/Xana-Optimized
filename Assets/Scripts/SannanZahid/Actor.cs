@@ -17,6 +17,7 @@ public class Actor : MonoBehaviour
     public float ActionClipTime = 0f;
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
+    public AnimatorOverrideController overrideController;
 
     private void OnEnable()
     {
@@ -34,19 +35,18 @@ public class Actor : MonoBehaviour
     }
     void SetMoveActions(MoveBehaviour move)
     {
-       // Debug.LogError("Add Moves --->  "+ move.behaviour.ToString());
-
         _playerMoves.Enqueue(move);
     }
     void ClearMoves()
     {
-       // Debug.LogError("ClearMoves");
         _playerMoves.Clear();
     }
     public void Init(ActorBehaviour playerBehaviour)
     {
         _startCoroutineFLag = true;
         _PlayerAnimator = GetComponent<Animator>();
+         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
+        _PlayerAnimator.runtimeAnimatorController = overrideController;
         _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
         _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
@@ -87,7 +87,6 @@ public class Actor : MonoBehaviour
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
                     {
                         MoveBehaviour move = _playerMoves.Dequeue();
-                   // Debug.LogError("Behaviour ---> " + move.behaviour.ToString());
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
@@ -104,7 +103,6 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
-              //  Debug.LogError("Action ---> "+ ActionClipTime);
                 yield return new WaitForSeconds(ActionClipTime*2f);
                 if(!_moveFlag)
                 {
@@ -124,7 +122,6 @@ public class Actor : MonoBehaviour
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
-       // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
         if(flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;

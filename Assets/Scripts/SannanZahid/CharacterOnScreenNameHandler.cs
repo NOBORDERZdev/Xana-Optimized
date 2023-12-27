@@ -12,6 +12,10 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     {
         StartCoroutine(SetName());
     }
+    public void UpdateNameText(string newName)
+    {
+        _onScreenName.text = newName;
+    }
     IEnumerator SetName()
     {
         while(true)
@@ -45,7 +49,8 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             else
             {
                 GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
-                _onScreenName.text = tempMyProfileDataRoot.data.name;
+               // _onScreenName.text = tempMyProfileDataRoot.data.name;
+                UpdateNameText(tempMyProfileDataRoot.data.name);
             }
         }
     }

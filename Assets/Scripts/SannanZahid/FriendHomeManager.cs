@@ -11,20 +11,17 @@ public class FriendHomeManager : MonoBehaviour
     [SerializeField]
     BestFriendData _friendsDataFetched;
 
-    public List<Transform> SpawnFriendsObj = new List<Transform>();
+    public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
     }
-
     string PrepareApiURL()
     {
         return "https://api-test.xana.net/social/get-close-friends/"+ XanaConstants.xanaConstants.userId;
     }
     IEnumerator BuildMoodDialog()
     {
-       // while (XanaConstants.xanaConstants.userId == "")
-         //   yield return new WaitForSeconds(0.5f);
 
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
@@ -35,12 +32,11 @@ public class FriendHomeManager : MonoBehaviour
         {
             if (isSucess)
             {
-               // Debug.LogError("Successssss-----> ");
                 foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
-                   // for(int i=0;i<20;i++)
+                   if(SpawnFriendsObj.Find(x => x.id == friend.id) == null)
                     {
-
+                        FriendSpawnData FriendSpawn= new FriendSpawnData();
                         Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
                         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
                         CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
@@ -49,15 +45,21 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
                         CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
-                        SpawnFriendsObj.Add(CreatedFriend);
-                        SpawnFriendsObj.Add(CreatedNameTag);
+                        FriendSpawn.id = friend.id;
+                        FriendSpawn.friendObj = CreatedFriend;
+                        FriendSpawn.friendNameObj = CreatedNameTag;
+                        SpawnFriendsObj.Add(FriendSpawn);
+                        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
+                            friend.id, 
+                            CreatedFriend.GetComponent<PlayerPostBubbleHandler>(), 
+                            CreatedFriend.GetComponent<Actor>()
+                            );
                     }
                 }
              
             }
             else
             {
-
                 StartCoroutine(BuildMoodDialog());
             }
         }));
@@ -68,15 +70,10 @@ public class FriendHomeManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
-            // yield return www;
-           // Debug.LogError("ConstantsGod.AUTH_TOKEN "+ ConstantsGod.AUTH_TOKEN);
-           // Debug.LogError("XanaConstants.xanaConstants.userId " + XanaConstants.xanaConstants.userId);
-
             while (!www.isDone)
                 yield return new WaitForSeconds(Time.deltaTime);
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                // Debug.LogError("FAILED "+www.downloadHandler.text);
                 callback(false);
             }
             else
@@ -89,10 +86,34 @@ public class FriendHomeManager : MonoBehaviour
     }
     public void EnableFriendsView(bool flag)
     {
-        foreach(Transform SpawnFriendsObjref in SpawnFriendsObj)
+        foreach(FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
         {
-            SpawnFriendsObjref.gameObject.SetActive(flag);
+            SpawnFriendsObjref.friendNameObj.gameObject.SetActive(flag);
+            SpawnFriendsObjref.friendObj.gameObject.SetActive(flag);
         }
+    }
+    FriendSpawnData _friendtoRemove;
+    public void RemoveFriendFromHome(int friendId)
+    {
+        _friendtoRemove = null;
+        foreach (FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
+        {
+                if(SpawnFriendsObjref.id == friendId)
+                {
+                    _friendtoRemove = SpawnFriendsObjref;
+                    break;
+                }
+        }
+        if(_friendtoRemove != null)
+        {
+            SpawnFriendsObj.Remove(_friendtoRemove);
+            Destroy(_friendtoRemove.friendNameObj.gameObject);
+            Destroy(_friendtoRemove.friendObj.gameObject);
+        }
+    }
+    public void AddFriendToHome()
+    {
+        StartCoroutine(BuildMoodDialog());
     }
 }
 
@@ -132,4 +153,10 @@ public class tempclassfordatafeed
     public DateTime createdAt;
     public DateTime updatedAt;
 
+}
+public class FriendSpawnData
+{
+   public int id;
+   public Transform friendObj;
+   public Transform friendNameObj;
 }

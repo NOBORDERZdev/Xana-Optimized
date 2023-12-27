@@ -161,24 +161,9 @@ public class FriendAvatarController : MonoBehaviour
     /// 
 
     Color presetHairColor;
-
     public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
-      //Debug.Log("AVATAR Initializeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-        //while (!XanaConstants.isAddressableCatalogDownload)
-        //{
-        //    await Task.Yield();
-        //}
-
-        //if (canWriteFile && /*XanaConstants.xanaConstants.isHoldCharacterNFT &&*/ XanaConstants.xanaConstants.isNFTEquiped)
-        //{
-        //    BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
-        //    string _Path = Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson;
-        //    nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
-        //    CreateOrUpdateBoxerFile(nftAttributes);
-        //}
         Custom_IntializeAvatar(_CharacterData);
-
     }
     void Custom_IntializeAvatar(SavingCharacterDataClass _CharacterData)
     {
