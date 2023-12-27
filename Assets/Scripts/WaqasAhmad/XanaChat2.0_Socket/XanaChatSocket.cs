@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text;
 
-public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc};
+public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc };
 public class XanaChatSocket : MonoBehaviour
 {
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
@@ -123,8 +123,8 @@ public class XanaChatSocket : MonoBehaviour
         else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
         {
             eventId = XanaConstants.xanaConstants.pmySchooldDataID;
-        }        
-        
+        }
+
 
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
@@ -222,7 +222,7 @@ public class XanaChatSocket : MonoBehaviour
         }
         else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY"))
         {
-            event_Id = ""+XanaConstants.xanaConstants.pmySchooldDataID;
+            event_Id = "" + XanaConstants.xanaConstants.pmySchooldDataID;
         }
 
         eventId = int.Parse(event_Id);
@@ -230,7 +230,7 @@ public class XanaChatSocket : MonoBehaviour
         if (!npcId.IsNullOrEmpty())
             userId = "npc-" + npcId;
 
-        if(callBy.Equals(CallBy.NpcToNpc))
+        if (callBy.Equals(CallBy.NpcToNpc))
             npcSendMsg.Invoke(msg);
 
         // Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
@@ -257,7 +257,8 @@ public class XanaChatSocket : MonoBehaviour
             //tempUser = msg.socket_id;
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
-        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
+        if (XanaChatSystem.instance.gameObject.activeSelf)
+            XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
     }
     bool CheckUserNameIsValid(string _UserName)
     {
