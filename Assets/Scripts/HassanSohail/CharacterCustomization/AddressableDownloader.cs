@@ -37,7 +37,6 @@ public class AddressableDownloader : MonoBehaviour
         if (!isDownloading)
         {
             isDownloading = true;
-            XanaConstants.isAddressableCatalogDownload = true;
 #if UNITY_EDITOR
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());

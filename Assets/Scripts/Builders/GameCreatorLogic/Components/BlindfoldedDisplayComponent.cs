@@ -62,7 +62,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
         //if (shoes.transform.childCount == 0)
         //{
-        footPrintAvatar = PhotonNetwork.Instantiate(GamificationComponentData.instance.FootSteps[0].name,Vector3.zero, Quaternion.identity);
+        footPrintAvatar = PhotonNetwork.Instantiate("Footprint", Vector3.zero, Quaternion.identity);
         footPrintAvatar.transform.SetParent(shoes);
         footPrintAvatar.transform.localPosition = Vector3.up * 0.0207f;
         footPrintAvatar.transform.localEulerAngles = Vector3.zero;
@@ -126,7 +126,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         yield return new WaitForEndOfFrame();
         BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
-        invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar",Vector3.zero,Quaternion.identity);
+        invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar", Vector3.zero, Quaternion.identity);
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
         DeactivateAvatarInivisibility();
     }
@@ -220,7 +220,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         if (!isPlaying)
             return;
-                isPlaying = false;
+        isPlaying = false;
         StopComponent();
         StopComponent();
     }

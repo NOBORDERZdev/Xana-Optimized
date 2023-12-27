@@ -37,6 +37,7 @@ public class WorldCanvasCamera : MonoBehaviour
         foreach (GameObject camObj in uiCamerasforBuilder)
         {
             camObj.SetActive(true);
+            camObj.GetComponent<Camera>().farClipPlane = 12f;
         }
     }
 
@@ -46,8 +47,13 @@ public class WorldCanvasCamera : MonoBehaviour
         FavBtn.interactable = state;
         AnimationBtnPortrait.interactable = state;
         FavBtnPortrait.interactable = state;
-        CircullerScrollBtns.SetActive(state);
-        CircullerScrollBtnsPortrait.SetActive(state);
+
+        //Close circullerscroll btns
+        if(!state && (CircullerScrollBtns.activeInHierarchy || CircullerScrollBtnsPortrait.activeInHierarchy))
+        {
+            FavBtn.onClick.Invoke();
+            FavBtnPortrait.onClick.Invoke();
+        }
 
         if (!state && (AnimationPanel.activeInHierarchy || AnimationPanelPortrait.activeInHierarchy))
         {

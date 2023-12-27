@@ -65,6 +65,9 @@ public class LoadingHandler : MonoBehaviour
     public CanvasGroup teleportFeader;
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
+    [Header("Store Loading")]
+    public GameObject storeLoadingScreen;
+
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 

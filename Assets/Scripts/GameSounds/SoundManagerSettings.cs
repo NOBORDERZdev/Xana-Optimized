@@ -75,7 +75,7 @@ public class SoundManagerSettings : MonoBehaviour
         //PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
         if (PlayerPrefs.GetInt("DefaultSensivity") == 0)
         {
-            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.395f);
+            PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
             PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
@@ -94,7 +94,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     void OnOrientationChanged()
     {
-        Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
+        //Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         //bgmSlider.value = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
         //videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
@@ -123,17 +123,17 @@ public class SoundManagerSettings : MonoBehaviour
         {
             videoSource = Videoplayer.videoPlayerAudioSource;
             liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
-            Debug.Log("VideoSource Set ");
+            //Debug.Log("VideoSource Set ");
         }
         else if (Videoplayer2 != null)
         {
             //videoSource = Videoplayer.videoPlayerAudioSource;
             liveVideoSource = Videoplayer2.mPlayer;
-            Debug.Log("VideoSource Set ");
+            //Debug.Log("VideoSource Set ");
         }
         else
         {
-            Debug.Log("VideoSource not Set ");
+            //Debug.Log("VideoSource not Set ");
         }
     }
 
@@ -250,7 +250,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetAllVolumes(float volume)
     {
-        Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
+        //Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
         if (ChangeOrientation_waqas._instance.isPotrait)
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
@@ -291,14 +291,14 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetVideoVolume(float Vol)
     {
-        Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
+        //Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
         
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             videoSliderPotriat.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
             videoSlider.value = PlayerPrefs.GetFloat(ConstantsGod.VIDEO_VOLUME);
 
-           // Debug.Log("LiveVideo" + liveVideoSource);
+           // //Debug.Log("LiveVideo" + liveVideoSource);
             if (videoSource)
             {
                 if (videoSource.GetComponent<MediaPlayer>())
@@ -335,7 +335,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetEffectsVolume(float Vol)
     {
-        Debug.Log("Volume effect===" + Vol);
+        //Debug.Log("Volume effect===" + Vol);
         PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, Vol);
         if (effectsSource)
         {
