@@ -180,6 +180,7 @@ namespace RFM.Managers
             if (!PhotonNetwork.IsMasterClient) return;
 
             GetComponent<PhotonView>().RPC(nameof(RestartRFM), RpcTarget.AllBuffered);
+            restartButton.SetActive(false);
             
         }
 
