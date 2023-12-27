@@ -9,6 +9,8 @@ using UnityEngine.Events;
 public class JjWorldChanger : MonoBehaviour
 {
     public string WorldName;
+    public bool isPMYWorld;
+    public int WorldID=0;
     [SerializeField] bool HaveMultipleSpwanPoint;
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
@@ -51,6 +53,23 @@ public class JjWorldChanger : MonoBehaviour
             triggerObject = other.gameObject;
             if (isShowPopup)
             {
+                if (isPMYWorld)
+                {
+                    if (WorldID == 1)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 8;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 8;
+                    }
+                    else if(WorldID == 2)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 9;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 9;
+                    }
+                }
                 if (isEnteringPopup)
                     CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
                 else
@@ -70,6 +89,7 @@ public class JjWorldChanger : MonoBehaviour
             collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
+
                 performAction?.Invoke();
                 this.StartCoroutine(swtichScene(WorldName));
             }
