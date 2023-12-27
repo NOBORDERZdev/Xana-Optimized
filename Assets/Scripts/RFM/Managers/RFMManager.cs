@@ -482,6 +482,8 @@ namespace RFM.Managers
 
         private async void GameplayTimeOver()
         {
+            CancelInvoke(nameof(CheckForGameOverCondition));
+
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
 
             EventsManager.CalculateScores();

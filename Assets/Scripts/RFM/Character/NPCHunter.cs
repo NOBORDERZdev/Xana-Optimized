@@ -42,8 +42,14 @@ namespace RFM.Character
 
         private void OnEnable()
         {
-            EventsManager.onGameStart/*onTakePositionTimeStart*/ += OnGameStarted;
+            EventsManager.onGameStart += OnGameStarted;
             EventsManager.onDestroyAllNPCHunters += OnDestroyAllNPCHunters;
+        }
+
+        private void OnDisable()
+        {
+            EventsManager.onGameStart -= OnGameStarted;
+            EventsManager.onDestroyAllNPCHunters -= OnDestroyAllNPCHunters;
         }
 
         private void Start()
@@ -75,12 +81,6 @@ namespace RFM.Character
                 GetAllRunners();
                 InvokeRepeating(nameof(SearchForTarget), 1, 1);
             }
-        }
-
-        private void OnDisable()
-        {
-            EventsManager.onGameStart -= OnGameStarted;
-            EventsManager.onDestroyAllNPCHunters += OnDestroyAllNPCHunters;
         }
 
         private void GetAllRunners()
@@ -154,37 +154,6 @@ namespace RFM.Character
             {
                 _hasTarget = false;
             }
-
-            //if (_hasTarget) return;
-
-            //if (_allRunners.Count > 0)
-            //{
-            //    // if any of the runners in _allRunners list is closer than 5 units, set it as target and set _hasTarget
-            //    // to true. otherwise, set a random target and set _hasTarget to true.
-            //    foreach (var runner in _allRunners)
-            //    {
-            //        if (runner == null) continue;
-
-            //        if (Vector3.Distance(transform.position, runner.transform.position) < 50)
-            //        {
-            //            _target = runner.transform;
-            //            _hasTarget = true;
-            //            Debug.LogError("Closest target locked");
-            //            break;
-            //        }
-            //    }
-            //    if (!_hasTarget)
-            //    {
-            //        _target = _allRunners[Random.Range(0, _allRunners.Count)].transform;
-            //        _hasTarget = true;
-            //        Debug.LogError("Random target locked");
-            //    } 
-            //}
-            //else
-            //{
-            //    _hasTarget = false;
-            //    _navMeshAgent.isStopped = true;
-            //}
         }
 
         private void ControlBotMovement()

@@ -51,7 +51,10 @@ namespace RFM.Managers
             _mainCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
+        }
 
+        private void Start()
+        {
             showMoney.transform.parent.gameObject.SetActive(true);
             showMoney.text = "000";
 
@@ -185,7 +188,7 @@ namespace RFM.Managers
         [PunRPC]
         private void RestartRFM()
         {
-            Awake();
+            Start();
             // Destroy all children of leaderboardEntryContainer
             foreach (Transform child in runnersLeaderboardEntryContainer)
             {
