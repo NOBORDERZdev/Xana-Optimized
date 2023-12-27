@@ -1049,7 +1049,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &282386704549094234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,7 +1894,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &612643495973976632
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,7 +2356,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &927217188598051278
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,7 +3460,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &1548260900148370337
 GameObject:
   m_ObjectHideFlags: 0
@@ -4010,7 +4006,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &1796099199044030315
 GameObject:
   m_ObjectHideFlags: 0
@@ -5789,7 +5784,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &2133265519418321411
 GameObject:
   m_ObjectHideFlags: 0
@@ -5914,7 +5908,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &2315111588399059323
 GameObject:
   m_ObjectHideFlags: 0
@@ -7827,7 +7820,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &3426745311988298105
 GameObject:
   m_ObjectHideFlags: 0
@@ -8053,7 +8045,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &3564093340896402700
 GameObject:
   m_ObjectHideFlags: 0
@@ -8935,7 +8926,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &4175317109541328712
 GameObject:
   m_ObjectHideFlags: 0
@@ -14277,8 +14267,9 @@ MonoBehaviour:
   videoRenderObject: {fileID: 0}
   videoPlayerSource: {fileID: 0}
   livePlayerSource: {fileID: 0}
-  clRoomId: 0
-  roomName: 
+  OnVideoEnlargeAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5007422990968410711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17754,6 +17745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -20700,6 +20692,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -22905,6 +22898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5007422991549548461}
+  - component: {fileID: 5102470149682414805}
   m_Layer: 0
   m_Name: PMY_NFT
   m_TagString: Untagged
@@ -22933,6 +22927,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5102470149682414805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007422991549548460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: PMY_NFT
+  objectPriority: 2
 --- !u!1 &5007422991562040840
 GameObject:
   m_ObjectHideFlags: 0
@@ -25166,6 +25174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -29494,6 +29503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -30212,6 +30222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -32321,6 +32332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -33215,6 +33227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -38566,6 +38579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d922ab0eb4196b34ba9f24d8512fc4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   hoveredColor:
     serializedVersion: 2
     rgba: 4294924544
@@ -39166,7 +39180,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &5233944453881617651
 GameObject:
   m_ObjectHideFlags: 0
@@ -40491,7 +40504,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &5475869979686280123
 GameObject:
   m_ObjectHideFlags: 0
@@ -44603,7 +44615,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &7202868725856469321
 GameObject:
   m_ObjectHideFlags: 0
@@ -45071,7 +45082,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &7474373824745118392
 GameObject:
   m_ObjectHideFlags: 0
@@ -47703,7 +47713,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8011472304007893401
 GameObject:
   m_ObjectHideFlags: 0
@@ -47774,7 +47783,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8014285617516014047
 GameObject:
   m_ObjectHideFlags: 0
@@ -50030,7 +50038,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8472034159336127754
 GameObject:
   m_ObjectHideFlags: 0
@@ -50806,7 +50813,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8607135425718247050
 GameObject:
   m_ObjectHideFlags: 0
@@ -51019,7 +51025,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8721928382448426700
 GameObject:
   m_ObjectHideFlags: 0
@@ -51199,7 +51204,6 @@ MonoBehaviour:
   isMultipleScreen: 0
   isCreateFrame: 1
   roomType: 0
-  roomNumber: 1
 --- !u!1 &8957987337503165593
 GameObject:
   m_ObjectHideFlags: 0

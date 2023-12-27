@@ -1,3 +1,4 @@
+using PMY;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,16 +22,19 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private WaitForSeconds updateDelay;
     private Coroutine volumeCoroutine;
     private GameObject screenSoundBtnPort, screenSoundBtnLand;
+    private bool isScreenSoundPlaying = true;
 
     private void OnEnable()
     {
         ChangeOrientation_waqas.switchOrientation += OrientationChanged;
         SceneManage.onExitAction += OnSceneExit;
     }
+
     private void OnDisable()
     {
         ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
         SceneManage.onExitAction -= OnSceneExit;
+        PMY_Nft_Manager.Instance.exitClickedAction -= UpdateScreenMusicStatus;
     }
 
     private void OrientationChanged()
@@ -40,6 +44,8 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
     private void Start()
     {
+        PMY_Nft_Manager.Instance.exitClickedAction += UpdateScreenMusicStatus;
+
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
             mediaPlayer.AudioMuted = false;
 
@@ -114,5 +120,17 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
             StopCoroutine(volumeCoroutine);
     }
 
+    public void OnVideoEnlargeAction()
+    {
+        isScreenSoundPlaying = false;
+        mediaPlayer.AudioMuted = true;
+    }
+
+    private void UpdateScreenMusicStatus(int nftNum)
+    {
+        if (isScreenSoundPlaying) return;
+        mediaPlayer.AudioMuted = false;
+        isScreenSoundPlaying = true;
+    }
 
 }

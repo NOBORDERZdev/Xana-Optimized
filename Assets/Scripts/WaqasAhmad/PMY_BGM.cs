@@ -1,10 +1,12 @@
+using PMY;
+using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PMY_BGM : MonoBehaviour
 {
-    public enum SoundType { TwoD, ThreeD}
+    public enum SoundType { TwoD, ThreeD }
     public SoundType soundType = SoundType.TwoD;
     [Space(5)]
     public AudioClip bgmAudioSource;
@@ -12,6 +14,7 @@ public class PMY_BGM : MonoBehaviour
     private bool isLoopable = false;
     private float currentSpatialBlend = 0;
     private float currentMinDistance = 0;
+    public bool isMusicPlaying = true;
 
     private void Awake()
     {
@@ -44,6 +47,12 @@ public class PMY_BGM : MonoBehaviour
     {
         if (soundType.Equals(SoundType.ThreeD))
             SceneManage.onExitAction -= OnSceneExit;
+        PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
+    }
+
+    private void Start()
+    {
+        PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
     }
 
     private void OnSceneExit()
@@ -52,6 +61,19 @@ public class PMY_BGM : MonoBehaviour
         SoundManager.Instance.MusicSource.loop = isLoopable;
         SoundManager.Instance.MusicSource.spatialBlend = currentSpatialBlend;
         SoundManager.Instance.MusicSource.minDistance = currentMinDistance;
+    }
+
+    public void OnVideoEnlargeAction()
+    {
+        isMusicPlaying = false;
+        SoundManager.Instance.MusicSource.mute = true; 
+    }
+
+    private void UpdateMusicStatus(int nftNum)
+    {
+        if (isMusicPlaying) return;
+        SoundManager.Instance.MusicSource.mute = false;
+        isMusicPlaying = true;
     }
 
 }
