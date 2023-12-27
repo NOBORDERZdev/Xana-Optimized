@@ -495,7 +495,7 @@ namespace PMY
             frame.transform.position = transform.position;
             frame.SetActive(true);
             frame.transform.localPosition = new Vector3(PMYFrameManager.instance.frameLocalPos.x, PMYFrameManager.instance.frameLocalPos.y, PMYFrameManager.instance.frameLocalPos.z);
-            frame.transform.localEulerAngles = new Vector3(0, -180.0f, 0);
+            frame.transform.localEulerAngles = PMYFrameManager.instance.frameLocalRot;
             frame.transform.localScale = new Vector3(PMYFrameManager.instance.frameLocalScale.x, PMYFrameManager.instance.frameLocalScale.y, PMYFrameManager.instance.frameLocalScale.z);
 
             //GameObject spotLightObj = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectSpotLight();
