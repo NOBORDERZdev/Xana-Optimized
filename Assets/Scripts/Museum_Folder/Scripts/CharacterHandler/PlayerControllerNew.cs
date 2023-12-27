@@ -164,7 +164,16 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            CinemachineCollider cinemachineCollider = LoadFromFile.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+            if (cinemachineCollider != null)
+            {
+                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                // Remove the layer from the collide against mask
+                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+            }
+        }
 
 
     }
