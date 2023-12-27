@@ -263,6 +263,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 {
                     FeedUIController.Instance.CheckFollowingCount();
                 }
+                GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(int.Parse(user_Id));
                 this.gameObject.SetActive(false);
             }
         }
