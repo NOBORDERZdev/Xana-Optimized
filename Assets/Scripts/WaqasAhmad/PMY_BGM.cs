@@ -48,11 +48,13 @@ public class PMY_BGM : MonoBehaviour
         if (soundType.Equals(SoundType.ThreeD))
             SceneManage.onExitAction -= OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
     }
 
     private void Start()
     {
         PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
     }
 
     private void OnSceneExit()
@@ -63,7 +65,7 @@ public class PMY_BGM : MonoBehaviour
         SoundManager.Instance.MusicSource.minDistance = currentMinDistance;
     }
 
-    public void OnVideoEnlargeAction()
+    private void OnVideoEnlargeAction()
     {
         isMusicPlaying = false;
         SoundManager.Instance.MusicSource.mute = true; 

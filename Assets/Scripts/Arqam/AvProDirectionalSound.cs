@@ -35,6 +35,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
         SceneManage.onExitAction -= OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateScreenMusicStatus;
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
     }
 
     private void OrientationChanged()
@@ -45,6 +46,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private void Start()
     {
         PMY_Nft_Manager.Instance.exitClickedAction += UpdateScreenMusicStatus;
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
 
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
             mediaPlayer.AudioMuted = false;
@@ -120,7 +122,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
             StopCoroutine(volumeCoroutine);
     }
 
-    public void OnVideoEnlargeAction()
+    private void OnVideoEnlargeAction()
     {
         isScreenSoundPlaying = false;
         mediaPlayer.AudioMuted = true;

@@ -12,7 +12,6 @@ using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
 using Paroxe.PdfRenderer;
 using Models;
-using UnityEngine.Events;
 
 namespace PMY
 {
@@ -84,7 +83,7 @@ namespace PMY
         public AudioSource videoPlayerSource;
         public MediaPlayer livePlayerSource;
 
-        public UnityEvent OnVideoEnlargeAction;
+        public Action OnVideoEnlargeAction;
         public Action<int> exitClickedAction;
 
         private void Awake()
@@ -462,7 +461,7 @@ namespace PMY
 
                         }
 
-                        OnVideoEnlargeAction.Invoke();
+                        OnVideoEnlargeAction?.Invoke();
                     }
                 }
                 else // for Potraite
