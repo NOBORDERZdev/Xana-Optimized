@@ -20,5 +20,11 @@ namespace PMY {
             SendFirebaseEvent(eventName + portalIndex);
         }
 
+        public void GalleryEvent()
+        {
+            string eventName = FirebaseTrigger.Gallery.ToString();
+            SendFirebaseEvent(eventName);
+        }
+
     }
 }

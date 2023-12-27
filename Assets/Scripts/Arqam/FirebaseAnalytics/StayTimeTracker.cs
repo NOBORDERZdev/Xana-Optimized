@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using static GlobalConstants;
+using System;
+using PMY;
+using static PMY.PMY_VideoAndImage;
 
 public class StayTimeTracker : MonoBehaviour
 {
     public string worldName;
+    public DateTime sceneEnterTime;
 
     private float startTime;
     private bool isTrackingTime = false;
@@ -33,17 +37,29 @@ public class StayTimeTracker : MonoBehaviour
         else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
             worldName = FirebaseTrigger.StayTime_AtomRental.ToString();
 
-        else if(worldName.Contains("PMY ACADEMY"))
+        else if (worldName.Contains("PMY ACADEMY"))
             worldName = FirebaseTrigger.StayTime_PMYLobby.ToString();
-        else if (worldName.Contains("PMYRoomA"))
-            worldName = FirebaseTrigger.StayTime_PMYRoomA.ToString();
         else if (worldName.Contains("PMYGallery"))
             worldName = FirebaseTrigger.StayTime_PMYGallery.ToString();
+        else if (worldName.Contains("PMYRoomA"))
+        {
+            switch (PMY_Nft_Manager.Instance.PMY_RoomId)
+            {
+                case 8:
+                    worldName = FirebaseTrigger.StayTime_CRoom1.ToString();
+                    break;
+                case 9:
+                    worldName = FirebaseTrigger.StayTime_CRoom2.ToString();
+                    break;
+            }
+            
+        }
     }
 
     private void StartTrackingTime()
     {
-        startTime = Time.time;
+        sceneEnterTime = DateTime.Now;
+        //startTime = Time.time;
         isTrackingTime = true;
     }
 
@@ -64,23 +80,26 @@ public class StayTimeTracker : MonoBehaviour
 
     private void CalculateAndLogStayTime()
     {
-        float stayTime = Time.time - startTime;
-        startTime = Mathf.Abs(startTime);
-        int minutes = Mathf.FloorToInt(stayTime / 60f);
+        TimeSpan stayTime = DateTime.Now - sceneEnterTime;
+        double minutes = stayTime.TotalMinutes;
+        int min = (int)minutes;
+        //float stayTime = Time.time - startTime;
+        //startTime = Mathf.Abs(startTime);
+        //int minutes = Mathf.FloorToInt(stayTime / 60f);
 
-        if (minutes < 3)
-            SendFirebaseEvent(worldName + "_" + (minutes + 1));
+        if (min < 3)
+            SendFirebaseEvent(worldName + "_" + (min + 1));
         else
         {
             SendFirebaseEvent(worldName + "_1");
             SendFirebaseEvent(worldName + "_2");
             SendFirebaseEvent(worldName + "_3");
         }
-        if (minutes >= 3) SendFirebaseEvent(worldName + "_5");
-        if (minutes >= 5) SendFirebaseEvent(worldName + "_10");
-        if (minutes >= 10) SendFirebaseEvent(worldName + "_20");
-        if (minutes >= 20) SendFirebaseEvent(worldName + "_30");
-        if (minutes >= 30) SendFirebaseEvent(worldName + "_30+");
+        if (min >= 3) SendFirebaseEvent(worldName + "_5");
+        if (min >= 5) SendFirebaseEvent(worldName + "_10");
+        if (min >= 10) SendFirebaseEvent(worldName + "_20");
+        if (min >= 20) SendFirebaseEvent(worldName + "_30");
+        if (min >= 30) SendFirebaseEvent(worldName + "_30+");
     }
 
 }

@@ -9,13 +9,8 @@ namespace PMY {
         public int nftIndex;
         public UnityEvent onExitAction;
 
-        private void OnEnable()
+        private void Start()
         {
-            StartCoroutine(StartDelay());
-        }
-        IEnumerator StartDelay()
-        {
-            yield return new WaitForSeconds(0.5f);
             PMY_Nft_Manager.Instance.exitClickedAction += ExitBtnClicked;
         }
         private void OnDisable()

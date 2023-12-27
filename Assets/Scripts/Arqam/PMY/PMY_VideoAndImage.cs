@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
 using System.Diagnostics.Eventing.Reader;
 
-namespace PMY {
+namespace PMY
+{
     public class PMY_VideoAndImage : MonoBehaviour
     {
         public int id;
@@ -48,6 +49,7 @@ namespace PMY {
 
         public enum RoomType
         {
+            PMYLobby,
             RoomA_1,
             RoomA_2,
             Gallery
@@ -55,26 +57,39 @@ namespace PMY {
         [Space(5)]
         [Header("For Firebase Enum")]
         public RoomType roomType;
-        [Space(5)]
-        [Header("For Firebase roomNumber")]
-        [Range(0, 12)]
-        public int roomNumber = 1;
 
         private void Start()
         {
-                imgVideo16x9.AddComponent<Button>();
-                imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo16x9.AddComponent<Button>();
+            imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo9x16.AddComponent<Button>();
-                imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo9x16.AddComponent<Button>();
+            imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo1x1.AddComponent<Button>();
-                imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo1x1.AddComponent<Button>();
+            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo4x3.AddComponent<Button>();
-                imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo4x3.AddComponent<Button>();
+            imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+
+            if (PMY_Nft_Manager.Instance.PMY_RoomIdFromXanaConstant)
+                StartCoroutine(UpdateRoomType());
         }
 
+        IEnumerator UpdateRoomType()
+        {
+            yield return new WaitForSeconds(1f);
+
+            switch (PMY_Nft_Manager.Instance.PMY_RoomId)
+            {
+                case 8:
+                    roomType = RoomType.RoomA_1;
+                    break;
+                case 9:
+                    roomType = RoomType.RoomA_2;
+                    break;
+            }
+        }
 
         public void InitData(string imageurl, string videourl, PMY_Ratio imgvideores, PMY_DataType dataType, PMY_VideoTypeRes videoType)
         {
@@ -503,19 +518,19 @@ namespace PMY {
                 if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
                 {
                     PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[0], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[0], PMY_Nft_Manager.Instance.worldInfos[id].Des[0], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType,
-                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType, roomNumber);
+                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType);
                 }
                 else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
                 {
                     PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[1], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[1], PMY_Nft_Manager.Instance.worldInfos[id].Des[1], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType,
-                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType, roomNumber);
+                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType);
 
                 }
             }
         }
 
-        
 
-    
+
+
     }
 }
