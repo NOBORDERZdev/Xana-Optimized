@@ -6278,6 +6278,95 @@ MonoBehaviour:
   _audioOutputMode: 1
   _channelMask: 65535
   _supportPositionalAudio: 0
+--- !u!1 &2095774579684323787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6452219362073389779}
+  - component: {fileID: 2383228516418121397}
+  m_Layer: 0
+  m_Name: JJFrameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6452219362073389779
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095774579684323787}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5007422991549548461}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2383228516418121397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095774579684323787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab257672043ab441bd3fc0f8b84579c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  framePrefab: {fileID: 9202033141663485158, guid: 92842c9b531510e499202b90acd8b62f, type: 3}
+  frameLocalPos: {x: 0, y: 0, z: 0}
+  frameLocalScale: {x: 0, y: 0, z: 0}
+  spotLightPos: {x: 0, y: 0, z: 0}
+  spotLightScale: {x: 25.94, y: 25.94, z: 25.94}
+  colliderSize: {x: 0, y: 0, z: 0}
+  coliderPos: {x: 0, y: 0, z: 0}
+  spotLightPrefabPos: {x: 0, y: 0, z: 0}
+  spotLightPrefab: {fileID: 5858837961160933806, guid: 7a54894123706624eb7bd6ced385f66e, type: 3}
+  frame: {fileID: 0}
+  FrameMaterial: {fileID: 0}
+  squarSize: ?width=512&height=512
+  VideosquarSize: 
+  potraiteSize: ?width=500&height=600
+  landscapeSize: ?width=700&height=500
+  exhibitsSizes:
+  - name: square
+    FrameLocalScale: {x: 0.020254388, y: 0.020254388, z: 0.024105964}
+    FrameLocalPos: {x: -0.04, y: -0.09, z: 0}
+    SpotLightPos: {x: 0, y: 5.09, z: 0.85411}
+    SpotLightPrefabPos: {x: 0, y: 6, z: 0.598}
+    ColliderSize: {x: 2.281, y: 2.1782, z: 0.5}
+    ColiderPos: {x: -0.022, y: 1.1983, z: 0}
+  - name: landscape
+    FrameLocalScale: {x: 0.028113537, y: 0.018184625, z: 0.01935784}
+    FrameLocalPos: {x: -0.0373, y: -0.34, z: 0.0365}
+    SpotLightPos: {x: 0, y: 5.09, z: 0.85411}
+    SpotLightPrefabPos: {x: 0, y: 4.5, z: 0.598}
+    ColliderSize: {x: 3.267483, y: 2.348794, z: 0.3574}
+    ColiderPos: {x: 0, y: 1.15, z: 0}
+  - name: potrait
+    FrameLocalScale: {x: 0.01645124, y: 0.005212225, z: 0.028950306}
+    FrameLocalPos: {x: -0.0289, y: 0.66, z: -0.0016}
+    SpotLightPos: {x: 0, y: 5.09, z: 0.85411}
+    SpotLightPrefabPos: {x: 0, y: 8, z: 0.598}
+    ColliderSize: {x: 2.3098, y: 2.82495, z: 0.3574}
+    ColiderPos: {x: 0, y: 1.35, z: 0}
+  - name: 4*3
+    FrameLocalScale: {x: 0.02447757, y: 0.017958673, z: 0.021022025}
+    FrameLocalPos: {x: -0.0289, y: -0.07, z: -0.0016}
+    SpotLightPos: {x: 0, y: 5.09, z: 0.85411}
+    SpotLightPrefabPos: {x: 0, y: 5.5, z: 0.598}
+    ColliderSize: {x: 3.267483, y: 2.348794, z: 0.3574}
+    ColiderPos: {x: 0, y: 1.15, z: 0}
+  ref_JJObjectPooler: {fileID: 7096176282032790923}
 --- !u!1 &2096191079037064545
 GameObject:
   m_ObjectHideFlags: 0
@@ -25304,6 +25393,8 @@ Transform:
   - {fileID: 2974564685196971985}
   - {fileID: 958894688465502486}
   - {fileID: 5007422991832420866}
+  - {fileID: 6452219362073389779}
+  - {fileID: 1961202670570572261}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51379,6 +51470,55 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!1 &9056751944621537343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961202670570572261}
+  - component: {fileID: 7096176282032790923}
+  m_Layer: 0
+  m_Name: JJObjectPooler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961202670570572261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056751944621537343}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5007422991549548461}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7096176282032790923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9056751944621537343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4012512322ab0e945b9100b6a4fc5574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frame: {fileID: 9202033141663485158, guid: 92842c9b531510e499202b90acd8b62f, type: 3}
+  spotLight: {fileID: 5858837961160933806, guid: 7a54894123706624eb7bd6ced385f66e, type: 3}
+  initialPoolSize: 32
+  pooledObjectsforFrame: []
+  pooledObjectsforSpotLight: []
 --- !u!1 &9089117626261304076
 GameObject:
   m_ObjectHideFlags: 0

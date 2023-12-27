@@ -6,13 +6,9 @@ using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
 using System.Diagnostics.Eventing.Reader;
 
-namespace PMY
-{
+namespace PMY {
     public class PMY_VideoAndImage : MonoBehaviour
     {
-        public enum MyDataType { None, PDF, Quiz };
-        public MyDataType myDataType;
-        [Space(5)]
         public int id;
 
         private Texture2D _texture;
@@ -25,10 +21,6 @@ namespace PMY
         public GameObject liveVideoPlayer;
         public GameObject preRecordedPlayer;
 
-        public GameObject pdfPanelLanscape;
-        public GameObject pdfPanelPortrait;
-        public GameObject quizPanelLanscape;
-        public GameObject quizPanelPortrait;
 
         public string videoLink;
         public string imageLink;
@@ -52,10 +44,10 @@ namespace PMY
         public GameObject imgVideoFrame4x3;
 
         public bool isMultipleScreen = false;
+        public bool isCreateFrame = true;
 
         public enum RoomType
         {
-            PMYLobby,
             RoomA_1,
             RoomA_2,
             Gallery
@@ -63,25 +55,13 @@ namespace PMY
         [Space(5)]
         [Header("For Firebase Enum")]
         public RoomType roomType;
-        //[Space(5)]
-        //[Header("For Firebase roomNumber")]
-        //[Range(0, 12)]
-        //public int roomNumber = 1;
+        [Space(5)]
+        [Header("For Firebase roomNumber")]
+        [Range(0, 12)]
+        public int roomNumber = 1;
 
         private void Start()
         {
-            if (myDataType.Equals(MyDataType.PDF))
-            {
-                imgVideo1x1.AddComponent<Button>();
-                imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => Enable_PDF_Panel());
-            }
-            else if (myDataType.Equals(MyDataType.Quiz))
-            {
-                imgVideo1x1.AddComponent<Button>();
-                imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => EnableQuizPanel());
-            }
-            else
-            {
                 imgVideo16x9.AddComponent<Button>();
                 imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
@@ -93,7 +73,6 @@ namespace PMY
 
                 imgVideo4x3.AddComponent<Button>();
                 imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
-            }
         }
 
 
@@ -107,8 +86,50 @@ namespace PMY
                 SetImage();
             else if (dataType == PMY_DataType.Video)
                 SetVideo();
+            else if (dataType == PMY_DataType.PDF)
+                SetPDF();
+            else if (dataType == PMY_DataType.Quiz)
+                SetQuiz();
         }
 
+        void SetPDF()
+        {
+            if (imgVideo16x9)
+                imgVideo16x9.SetActive(false);
+            if (imgVideo9x16)
+                imgVideo9x16.SetActive(false);
+            if (imgVideo1x1)
+                imgVideo1x1.SetActive(false);
+            if (imgVideo4x3)
+                imgVideo4x3.SetActive(false);
+            if (liveVideoPlayer)
+                liveVideoPlayer.SetActive(false);
+            if (preRecordedPlayer)
+                preRecordedPlayer.SetActive(false);
+
+            SetThumbail(imageLink);
+            if (isCreateFrame)
+                CreateFrame();   //create frame
+        }
+        void SetQuiz()
+        {
+            if (imgVideo16x9)
+                imgVideo16x9.SetActive(false);
+            if (imgVideo9x16)
+                imgVideo9x16.SetActive(false);
+            if (imgVideo1x1)
+                imgVideo1x1.SetActive(false);
+            if (imgVideo4x3)
+                imgVideo4x3.SetActive(false);
+            if (liveVideoPlayer)
+                liveVideoPlayer.SetActive(false);
+            if (preRecordedPlayer)
+                preRecordedPlayer.SetActive(false);
+
+            SetThumbail(imageLink);
+            if (isCreateFrame)
+                CreateFrame();   //create frame
+        }
         void SetImage()
         {
             if (imgVideo16x9)
@@ -124,8 +145,14 @@ namespace PMY
             if (preRecordedPlayer)
                 preRecordedPlayer.SetActive(false);
 
+            SetThumbail(imageLink);
+            if (isCreateFrame)
+                CreateFrame();   //create frame
+        }
 
-            StartCoroutine(GetSprite(imageLink, (response) =>
+        void SetThumbail(string _imageLink)
+        {
+            StartCoroutine(GetSprite(_imageLink, (response) =>
             {
                 if (PMY_Nft_Manager.Instance && response != null)
                     PMY_Nft_Manager.Instance.NFTLoadedSprites.Add(response);
@@ -441,6 +468,28 @@ namespace PMY
 
             if (PMY_Nft_Manager.Instance && renderTexture_temp != null)
                 PMY_Nft_Manager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
+
+            if (isCreateFrame)
+                CreateFrame();   //create frame
+        }
+
+        private void CreateFrame()
+        {
+            GameObject frame = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectFrame(_imgVideoRatio);
+            frame.transform.SetParent(this.gameObject.transform);
+            frame.transform.position = transform.position;
+            frame.SetActive(true);
+            frame.transform.localPosition = new Vector3(PMYFrameManager.instance.frameLocalPos.x, PMYFrameManager.instance.frameLocalPos.y, PMYFrameManager.instance.frameLocalPos.z);
+            frame.transform.localEulerAngles = new Vector3(0, -180.0f, 0);
+            frame.transform.localScale = new Vector3(PMYFrameManager.instance.frameLocalScale.x, PMYFrameManager.instance.frameLocalScale.y, PMYFrameManager.instance.frameLocalScale.z);
+
+            //GameObject spotLightObj = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectSpotLight();
+            //spotLightObj.transform.SetParent(this.gameObject.transform);
+            //spotLightObj.transform.position = transform.position;
+            //spotLightObj.SetActive(true);
+            //spotLightObj.transform.localScale = new Vector3(PMYFrameManager.instance.spotLightScale.x, PMYFrameManager.instance.spotLightScale.y, PMYFrameManager.instance.spotLightScale.z);
+            //spotLightObj.transform.localPosition = PMYFrameManager.instance.spotLightPrefabPos;
+            //spotLightObj.transform.localEulerAngles = new Vector3(-22.857f, 180f, 0f);
         }
 
         public void OpenWorldInfo()
@@ -452,27 +501,21 @@ namespace PMY
             if (PMY_Nft_Manager.Instance != null && _videoType != PMY_VideoTypeRes.islive)
             {
                 if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
-                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[0], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[0], PMY_Nft_Manager.Instance.worldInfos[id].Des[0], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType);
+                {
+                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[0], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[0], PMY_Nft_Manager.Instance.worldInfos[id].Des[0], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType,
+                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType, roomNumber);
+                }
                 else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
-                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[1], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[1], PMY_Nft_Manager.Instance.worldInfos[id].Des[1], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType, id, roomType);
+                {
+                    PMY_Nft_Manager.Instance.SetInfo(_imgVideoRatio, PMY_Nft_Manager.Instance.worldInfos[id].Title[1], PMY_Nft_Manager.Instance.worldInfos[id].Aurthor[1], PMY_Nft_Manager.Instance.worldInfos[id].Des[1], PMY_Nft_Manager.Instance.worldInfos[id].url, _texture, PMY_Nft_Manager.Instance.worldInfos[id].Type, PMY_Nft_Manager.Instance.worldInfos[id].VideoLink, PMY_Nft_Manager.Instance.worldInfos[id].videoType,
+                        PMY_Nft_Manager.Instance.worldInfos[id].pdfURL, PMY_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType, roomNumber);
+
+                }
             }
         }
 
-        private void EnableQuizPanel()
-        {
-            if (!ChangeOrientation_waqas._instance.isPotrait)
-                quizPanelLanscape.SetActive(true);
-            else
-                quizPanelPortrait.SetActive(true);
-        }
-        private void Enable_PDF_Panel()
-        {
-            if (!ChangeOrientation_waqas._instance.isPotrait)
-                pdfPanelLanscape.SetActive(true);
-            else
-                pdfPanelPortrait.SetActive(true);
-        }
+        
 
-
+    
     }
 }

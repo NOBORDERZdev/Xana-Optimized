@@ -50,8 +50,24 @@ namespace PMY
 
         private void OnEnable()
         {
-            quizComponentData = JsonUtility.FromJson<QuizComponentData>(quizJson);
-            EnableQuizComponentUI(quizComponentData);
+            //quizComponentData = JsonUtility.FromJson<QuizComponentData>(quizJson);
+            //EnableQuizComponentUI(quizComponentData);
+        }
+        public void SetQuizData(QuizData _quizData)
+        {
+
+            QuizComponentData data = new QuizComponentData();
+            data.question = _quizData.question;
+            data.answer = _quizData.answer;
+            data.correct = _quizData.correct;
+
+            data.rewritingStringList.Add(_quizData.question);
+            for (int i=0; i<_quizData.answer.Count; i++)
+            {
+                data.rewritingStringList.Add(_quizData.answer[i]);
+            }
+            EnableQuizComponentUI(data);
+
         }
 
         void EnableQuizComponentUI(QuizComponentData quizComponentData)
@@ -93,7 +109,7 @@ namespace PMY
 
         private void SetInitialValues()
         {
-            numOfQuestions = quizComponentData.answers.Count;
+            numOfQuestions = 1;// quizComponentData.answer.Count;
 
             questionIndex = 0;
             correct = 0;
@@ -109,7 +125,7 @@ namespace PMY
 
         private void CheckAnswer()
         {
-            if (quizComponentData.answers[questionIndex] == currentAnswer)
+            if (quizComponentData.answer[currentAnswer] == quizComponentData.correct)
                 UpdateQuizData(0);
             else
             {
@@ -183,10 +199,10 @@ namespace PMY
 
         private void WrongAnswerUIAdjustments(Sprite image, string colorString)
         {
-            correctWrongImageObjects[quizComponentData.answers[questionIndex]].SetActive(true);
-            correctWrongImageObjects[quizComponentData.answers[questionIndex]].GetComponent<Image>().sprite = image;
+            correctWrongImageObjects[questionIndex].SetActive(true);
+            correctWrongImageObjects[questionIndex].GetComponent<Image>().sprite = image;
 
-            Outline thisButtonOutine = options[quizComponentData.answers[questionIndex]].GetComponent<Outline>();
+            Outline thisButtonOutine = options[questionIndex].GetComponent<Outline>();
 
             if (ColorUtility.TryParseHtmlString(colorString, out Color color))
             {
@@ -232,6 +248,9 @@ namespace PMY
 
         public void QuizResultPopupClose()
         {
+            PMY_Nft_Manager.Instance.ActionOnExitBtn();
+            if (scoreCanvas.activeInHierarchy)
+                scoreCanvas.SetActive(false);
             CheckScorePercentage();
         }
 
@@ -267,7 +286,7 @@ namespace PMY
                 ResetParams();
                 ShowQuestion();
             }
-            Debug.Log("<color=red>*****_____Quiz End_____*****</color>");
+            
         }
 
         void ResetCredentials()
@@ -285,6 +304,10 @@ namespace PMY
         internal void DisableQuizComponentUI()
         {
             //quizComponentUI.SetActive(false);
+            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            {
+                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            }
             this.gameObject.SetActive(false);
         }
 
@@ -389,6 +412,10 @@ namespace PMY
         [System.Serializable]
         public class QuizComponentData
         {
+            public string question;
+            public List<string> answer;
+            public string correct;
+
             public bool IsActive;
             public bool isOptionSelected;
             public List<TMPro.TMP_InputField> rewritingInputList;
@@ -403,7 +430,7 @@ namespace PMY
                 isOptionSelected = false;
                 rewritingInputList = new List<TMPro.TMP_InputField>();
                 rewritingStringList = new List<string>();
-                answers = new List<int>();
+                answer = new List<string>();
                 charLimit = new List<int>();
                 correctAnswerRate = 100;
 
@@ -414,7 +441,7 @@ namespace PMY
                 isOptionSelected = false;
                 rewritingInputList = new List<TMPro.TMP_InputField>();
                 rewritingStringList = new List<string>();
-                answers = new List<int>();
+                answer = new List<string>();
                 charLimit = new List<int>();
                 correctAnswerRate = 100;
             }
@@ -423,8 +450,8 @@ namespace PMY
                 IsActive = data.IsActive;
                 isOptionSelected = data.isOptionSelected;
                 rewritingInputList = data.rewritingInputList;
-                rewritingStringList = data.rewritingStringList;
-                answers = data.answers;
+                rewritingStringList = data.answer;//rewritingStringList;
+                answer = data.answer;
                 charLimit = data.charLimit;
                 correctAnswerRate = data.correctAnswerRate;
             }

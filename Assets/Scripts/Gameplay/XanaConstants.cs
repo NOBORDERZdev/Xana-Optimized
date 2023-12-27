@@ -132,6 +132,9 @@ public class XanaConstants : MonoBehaviour
     public int pmySchooldDataID;
     public bool pmy_isTesting = false;
 
+    public int pmy_classRoomID_Test = 0;
+    public int pmy_classRoomID_Main = 0;
+
     public string r_EmoteReactionPersistentPath
     {
         get

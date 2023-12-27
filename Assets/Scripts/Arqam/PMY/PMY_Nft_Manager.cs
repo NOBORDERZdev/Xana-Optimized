@@ -10,7 +10,8 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
-using System.Diagnostics;
+using Paroxe.PdfRenderer;
+using Models;
 
 namespace PMY
 {
@@ -19,6 +20,19 @@ namespace PMY
         [SerializeField] bool worldPlayingVideos;
         [NonReorderable]
         public List<RatioRef> ratioReferences;
+
+        [Space(10)]
+        [Header("PDF Data Refrences")]
+        public GameObject pdfPanel_L;
+        public GameObject pdfPanel_P;
+        public PDFViewer pdfViewer_L; 
+        public PDFViewer pdfViewer_P;
+
+        [Space(10)]
+        [Header("Quiz Data Refrences")]
+        public GameObject quizPanel_L;
+        public GameObject quizPanel_P;
+
         [NonReorderable]
         [SerializeField] List<VideoPlayer> VideoPlayers;
         [SerializeField] GameObject LandscapeObj;
@@ -36,9 +50,11 @@ namespace PMY
         public RenderTexture renderTexture_1x1;
         public RenderTexture renderTexture_4x3;
         [SerializeField] int RetryChances = 3;
-        [SerializeField] int JJMusuemId_test;
-        [SerializeField] int JJMusuemId_main;
-        [SerializeField] int JJMusuemId;
+        [SerializeField] int PMY_RoomId_test;
+        [SerializeField] int PMY_RoomId_main;
+        [SerializeField] int PMY_RoomId;
+        public bool PMY_RoomIdFromXanaConstant = false;
+
         public string analyticMuseumID;
         int ratioId;
         int videoRetry = 0;
@@ -52,8 +68,12 @@ namespace PMY
         PMY_DataType _Type;
         string _VideoLink;
         PMY_VideoTypeRes _videoType;
+        public string _pdfURL;
+
+        public QuizData _quiz_data;
 
         public string nftTitle;
+        public string firebaseEventName;
         public int clickedNftInd;
         public List<Texture> NFTLoadedSprites = new List<Texture>();
         public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
@@ -63,8 +83,8 @@ namespace PMY
         public AudioSource videoPlayerSource;
         public MediaPlayer livePlayerSource;
 
-        //public int clRoomId;
-        //public string roomName;
+        public int clRoomId;
+        public string roomName;
         public Action<int> exitClickedAction;
 
         private void Awake()
@@ -101,10 +121,20 @@ namespace PMY
 
         private void Start()
         {
-            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
-                JJMusuemId = JJMusuemId_main;
+            if (APIBaseUrlChange.instance.IsXanaLive)
+            {
+                if(PMY_RoomIdFromXanaConstant)
+                    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Main;
+                else
+                    PMY_RoomId = PMY_RoomId_main;
+            }
             else
-                JJMusuemId = JJMusuemId_test;
+            {
+                if (PMY_RoomIdFromXanaConstant)
+                    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Test;
+                else
+                    PMY_RoomId = PMY_RoomId_test;
+            }
             Int_PMY_Nft_Manager();
         }
 
@@ -114,7 +144,7 @@ namespace PMY
         public async void Int_PMY_Nft_Manager()
         {
             StringBuilder apiUrl = new StringBuilder();
-            apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JJWORLDASSET + JJMusuemId);
+            apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.PMYWorldASSET + PMY_RoomId);
 
             using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()))
             {
@@ -122,7 +152,7 @@ namespace PMY
                 await request.SendWebRequest();
                 if (request.isNetworkError || request.isHttpError)
                 {
-                    UnityEngine.Debug.Log("<color=red>" + request.error + " </color>");
+                    Debug.Log("<color=red>" + request.error + " </color>");
                 }
                 else
                 {
@@ -153,32 +183,32 @@ namespace PMY
                         switch (worldData[j].ratio)
                         {
                             case "1:1":
-                                //if (JJFrameManager.instance)
-                                //    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+                                if (JJFrameManager.instance)
+                                    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                                 worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                                 compersionPrfex = "?width=512&height=512";
                                 break;
                             case "16:9":
-                                //if (JJFrameManager.instance)
-                                //    JJFrameManager.instance.SetTransformForFrameSpotLight(1);
+                                if (JJFrameManager.instance)
+                                    JJFrameManager.instance.SetTransformForFrameSpotLight(1);
                                 worldInfos[i].pmyRatio = PMY_Ratio.SixteenXNineWithDes;
                                 compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
                                 break;
                             case "9:16":
-                                //if (JJFrameManager.instance)
-                                //    JJFrameManager.instance.SetTransformForFrameSpotLight(2);
+                                if (JJFrameManager.instance)
+                                    JJFrameManager.instance.SetTransformForFrameSpotLight(2);
                                 worldInfos[i].pmyRatio = PMY_Ratio.NineXSixteenWithDes;
                                 compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
                                 break;
                             case "4:3":
-                                //if (JJFrameManager.instance)
-                                //    JJFrameManager.instance.SetTransformForFrameSpotLight(3);
+                                if (JJFrameManager.instance)
+                                    JJFrameManager.instance.SetTransformForFrameSpotLight(3);
                                 worldInfos[i].pmyRatio = PMY_Ratio.FourXThreeWithDes;
                                 compersionPrfex = "?width=640&height=480";
                                 break;
                             default:
-                                //if (JJFrameManager.instance)
-                                //    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
+                                if (JJFrameManager.instance)
+                                    JJFrameManager.instance.SetTransformForFrameSpotLight(0);
                                 worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                                 compersionPrfex = "?width=512&height=512";
                                 break;
@@ -229,6 +259,30 @@ namespace PMY
                                 worldInfos[i].url = worldData[j].descriptionHyperlink;
                             }
                         }
+                        else if(worldData[j].media_type == "PDF")
+                        {
+                            worldInfos[i].Type = PMY_DataType.PDF;
+                            worldInfos[i].pdfURL = worldData[j].pdf_url;
+                            worldInfos[i].thumbnail= worldData[j].thumbnail;
+                            NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.PDF, PMY_VideoTypeRes.none);
+                            //isWithDes = true;
+                            //worldInfos[i].Title = worldData[j].title;
+                            //worldInfos[i].Aurthor = worldData[j].authorName;
+                            //worldInfos[i].Des = worldData[j].description;
+                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
+                        }
+                        else if (worldData[j].media_type == "QUIZ")
+                        {
+                            worldInfos[i].Type = PMY_DataType.Quiz;
+                            worldInfos[i].thumbnail = worldData[j].thumbnail;
+                            worldInfos[i].quiz_data = worldData[j].quiz_data;
+                            NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.Quiz, PMY_VideoTypeRes.none);
+                            //isWithDes = true;
+                            //worldInfos[i].Title = worldData[j].title;
+                            //worldInfos[i].Aurthor = worldData[j].authorName;
+                            //worldInfos[i].Des = worldData[j].description;
+                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
+                        }
                         break;
                     }
                     else
@@ -237,7 +291,7 @@ namespace PMY
                         {
                             NftPlaceholderList[i].gameObject.SetActive(false);
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().TurnOffAllImageAndVideo();
-                            UnityEngine.Debug.Log("INDEX is off!");
+                            Debug.Log("INDEX is off!");
                         }
                     }
                 }
@@ -277,7 +331,7 @@ namespace PMY
 
                 if (www.result != UnityWebRequest.Result.Success)
                 {
-                    UnityEngine.Debug.Log("ERror in loading sprite" + www.error);
+                    Debug.Log("ERror in loading sprite" + www.error);
                 }
                 else
                 {
@@ -295,7 +349,7 @@ namespace PMY
         }
 
 
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_1, int roomNum = 1)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -307,133 +361,152 @@ namespace PMY
             _Type = type;
             _VideoLink = videoLink;
             _videoType = videoType;
+            _pdfURL = pdfURL;
+            _quiz_data = quizData;
 
             ratioId = ((int)ratio);
 
-            // Setting Landscape Data
-            ratioReferences[ratioId].l_image.gameObject.SetActive(true);
-            ratioReferences[ratioId].p_image.gameObject.SetActive(true);
-            ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
-            ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
-            ratioReferences[ratioId].l_Title.text = title;
-            ratioReferences[ratioId].l_Aurthur.text = aurthur;
-            ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
-            if (type == PMY_DataType.Image)
+            if (type == PMY_DataType.PDF)
             {
-                ratioReferences[ratioId].l_image.texture = image;
-                ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
+                pdfViewer_L.FileURL= pdfURL;
+                pdfViewer_P.FileURL = pdfURL;
+                Enable_PDF_Panel();
             }
-            else
+            else if (type == PMY_DataType.Quiz)
             {
-                ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-                ratioReferences[ratioId].l_videoPlayer.url = videoLink;
-            }
+                quizPanel_L.GetComponent<PMY_QuizController>().SetQuizData(quizData);
 
-            // Setting Potraite Data
-            ratioReferences[ratioId].p_Title.text = title;
-            ratioReferences[ratioId].p_Aurthur.text = aurthur;
-            ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
-            ratioReferences[ratioId].p_image.texture = image;
-            if (type == PMY_DataType.Image)
-            {
-                ratioReferences[ratioId].p_image.texture = image;
-                ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
+                quizPanel_P.GetComponent<PMY_QuizController>().SetQuizData(quizData);
+                EnableQuizPanel();
             }
             else
             {
-                ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-                ratioReferences[ratioId].p_videoPlayer.url = videoLink;
-            }
-            if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
-            {
-                LandscapeObj.SetActive(true);
-                PotraiteObj.SetActive(false);
-                ratioReferences[ratioId].l_obj.SetActive(true);
-                ratioReferences[ratioId].p_obj.SetActive(false);
-                if (type == PMY_DataType.Video)
+                //renderTexture.Release();
+                // Setting Landscape Data
+                ratioReferences[ratioId].l_image.gameObject.SetActive(true);
+                ratioReferences[ratioId].p_image.gameObject.SetActive(true);
+                ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
+                ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
+                ratioReferences[ratioId].l_Title.text = title;
+                ratioReferences[ratioId].l_Aurthur.text = aurthur;
+                ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                if (type == PMY_DataType.Image)
                 {
-                    ratioReferences[ratioId].l_Loader.SetActive(true);
-                    ratioReferences[ratioId].p_Loader.SetActive(false);
-                    ratioReferences[ratioId].l_videoPlayer.Play();
+                    ratioReferences[ratioId].l_image.texture = image;
+                    ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
+                }
+                else
+                {
+                    ratioReferences[ratioId].l_image.gameObject.SetActive(false);
+                    ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                }
 
-                    if (videoType == PMY_VideoTypeRes.islive)
+                // Setting Potraite Data
+                ratioReferences[ratioId].p_Title.text = title;
+                ratioReferences[ratioId].p_Aurthur.text = aurthur;
+                ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                ratioReferences[ratioId].p_image.texture = image;
+                if (type == PMY_DataType.Image)
+                {
+                    ratioReferences[ratioId].p_image.texture = image;
+                    ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
+                }
+                else
+                {
+                    ratioReferences[ratioId].p_image.gameObject.SetActive(false);
+                    ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                }
+                if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+                {
+                    LandscapeObj.SetActive(true);
+                    PotraiteObj.SetActive(false);
+                    ratioReferences[ratioId].l_obj.SetActive(true);
+                    ratioReferences[ratioId].p_obj.SetActive(false);
+                    if (type == PMY_DataType.Video)
                     {
-                        ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
-                        ratioReferences[ratioId].l_videoPlayer.enabled = false;
-                        ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-                        ratioReferences[ratioId].l_LivePlayer.SetActive(true);
-                        ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                        ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-                    }
-                    else if (videoType == PMY_VideoTypeRes.prerecorded)
-                    {
-                        ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                        ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
-                        ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-                        ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                        ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                        ratioReferences[ratioId].l_videoPlayer.playOnAwake = true;
-                        ratioReferences[ratioId].l_videoPlayer.enabled = true;
-                    }
-                    else if (videoType == PMY_VideoTypeRes.aws)
-                    {
-                        if (ratioReferences[ratioId].l_PrerecordedPlayer)
-                            ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-
-                        if (ratioReferences[ratioId].l_LivePlayer)
-                            ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-
-                        ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                        ratioReferences[ratioId].l_videoPlayer.enabled = true;
-                        ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                        ratioReferences[ratioId].l_Loader.SetActive(true);
+                        ratioReferences[ratioId].p_Loader.SetActive(false);
                         ratioReferences[ratioId].l_videoPlayer.Play();
 
+                        if (videoType == PMY_VideoTypeRes.islive)
+                        {
+                            ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            ratioReferences[ratioId].l_videoPlayer.enabled = false;
+                            ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+                            ratioReferences[ratioId].l_LivePlayer.SetActive(true);
+                            ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                            ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                        }
+                        else if (videoType == PMY_VideoTypeRes.prerecorded)
+                        {
+                            ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
+                            ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                            ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                            ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                            ratioReferences[ratioId].l_videoPlayer.playOnAwake = true;
+                            ratioReferences[ratioId].l_videoPlayer.enabled = true;
+                        }
+                        else if (videoType == PMY_VideoTypeRes.aws)
+                        {
+                            if (ratioReferences[ratioId].l_PrerecordedPlayer)
+                                ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+
+                            if (ratioReferences[ratioId].l_LivePlayer)
+                                ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+
+                            ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            ratioReferences[ratioId].l_videoPlayer.enabled = true;
+                            ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                            ratioReferences[ratioId].l_videoPlayer.Play();
+
+                        }
                     }
                 }
-            }
-            else // for Potraite
-            {
-                LandscapeObj.SetActive(false);
-                PotraiteObj.SetActive(true);
-                ratioReferences[ratioId].l_obj.SetActive(false);
-                ratioReferences[ratioId].p_obj.SetActive(true);
-                if (type == PMY_DataType.Video)
+                else // for Potraite
                 {
-                    ratioReferences[ratioId].l_Loader.SetActive(false);
-                    ratioReferences[ratioId].p_Loader.SetActive(true);
-                    ratioReferences[ratioId].p_videoPlayer.Play();
-
-                    if (videoType == PMY_VideoTypeRes.islive)
+                    LandscapeObj.SetActive(false);
+                    PotraiteObj.SetActive(true);
+                    ratioReferences[ratioId].l_obj.SetActive(false);
+                    ratioReferences[ratioId].p_obj.SetActive(true);
+                    if (type == PMY_DataType.Video)
                     {
-                        ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
-                        ratioReferences[ratioId].p_videoPlayer.enabled = false;
-                        ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                        ratioReferences[ratioId].p_LivePlayer.SetActive(true);
-                        ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                        ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-                    }
-                    else if (videoType == PMY_VideoTypeRes.prerecorded)
-                    {
-                        ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                        ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
-                        ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                        ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                        ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                        ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
-                        ratioReferences[ratioId].p_videoPlayer.enabled = true;
-                    }
-                    else if (videoType == PMY_VideoTypeRes.aws)
-                    {
-                        ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                        ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                        ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                        ratioReferences[ratioId].p_videoPlayer.enabled = true;
-                        ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                        ratioReferences[ratioId].l_Loader.SetActive(false);
+                        ratioReferences[ratioId].p_Loader.SetActive(true);
                         ratioReferences[ratioId].p_videoPlayer.Play();
 
-                    }
-                }
+                        if (videoType == PMY_VideoTypeRes.islive)
+                        {
+                            ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            ratioReferences[ratioId].p_videoPlayer.enabled = false;
+                            ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
+                            ratioReferences[ratioId].p_LivePlayer.SetActive(true);
+                            ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                            ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                        }
+                        else if (videoType == PMY_VideoTypeRes.prerecorded)
+                        {
+                            ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
+                            ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                            ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                            ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
+                            ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                        }
+                        else if (videoType == PMY_VideoTypeRes.aws)
+                        {
+                            ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
+                            ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                            ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                            ratioReferences[ratioId].p_videoPlayer.Play();
 
+                        }
+                    }
+
+                }
             }
             if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
             {
@@ -441,11 +514,13 @@ namespace PMY
             }
 
             #region For firebase analytics
-            SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
+            if (roomNum != 0)
+                SendCallAnalytics(type, title, nftId, roomType, roomNum);         // firebase event calling in this method
             clickedNftInd = nftId;
+            clRoomId = roomNum;
+            roomName = roomType.ToString();
             #endregion
         }
-
         public void SetInfoForXanaLobby(PMY_Ratio ratio, string title, string aurthur, string des, Texture2D image, PMY_DataType type)
         {
             nftTitle = title;
@@ -506,30 +581,68 @@ namespace PMY
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
             }
         }
-        public void SendCallAnalytics(int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
+        public void SendCallAnalytics(PMY_DataType type, string title, int id = -1, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.RoomA_2, int roomNum = 1)
         {
+            string worldName = XanaConstants.xanaConstants.EnviornmentName;
+
             // For firebase event
-            string eventName = "";
-            switch (roomType){
-                case PMY_VideoAndImage.RoomType.PMYLobby:
-                    eventName = FirebaseTrigger.CL_NFT_PMYLobby.ToString() + "_" + (id + 1);
-                    break;
-                case PMY_VideoAndImage.RoomType.RoomA_1:
-                    eventName = FirebaseTrigger.CL_NFT_CRoom1.ToString() + "_" + (id + 1);
-                    break;
-                case PMY_VideoAndImage.RoomType.RoomA_2:
-                    eventName = FirebaseTrigger.CL_NFT_CRoom2.ToString() + "_" + (id + 1);
-                    break;
-                case PMY_VideoAndImage.RoomType.Gallery:
-                    eventName = FirebaseTrigger.CL_NFT_Gallery.ToString() + "_" + (id + 1);
-                    break;
+            if (worldName.Contains("ZONE-X"))
+            {
+                string eventName = "";
+                switch (id)
+                {
+                    case 0:
+                        eventName = FirebaseTrigger.WP_MainLobby_A_ZoneX.ToString();
+                        break;
+
+                    case 1:
+                        eventName = FirebaseTrigger.WP_MainLobby_B_FiveElement.ToString();
+                        break;
+
+                    case 2:
+                        eventName = FirebaseTrigger.WP_MainLobby_C_AtomMuseum.ToString();
+                        break;
+
+                    case 3:
+                        eventName = FirebaseTrigger.WP_MainLobby_D_RentalSpace.ToString();
+                        break;
+                }
+                SendFirebaseEvent(eventName);
             }
-            SendFirebaseEvent(eventName);
+            else if (worldName.Contains("ZONE X Musuem"))
+            {
+                // we don't have this museum yet
+                string eventName = "";
+                eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
+                SendFirebaseEvent(eventName);
+            }
+            else if (worldName.Contains("FIVE ELEMENTS"))
+            {
+                // we don't have this museum yet
+                string eventName = "";
+                eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
+                SendFirebaseEvent(eventName);
+            }
+            else
+            {
+                string eventName = "";
+                if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_1))
+                    eventName = FirebaseTrigger.CL_NFT_AtomRoom.ToString() + roomNum + "_" + (id + 1);
+                else if (roomType.Equals(PMY_VideoAndImage.RoomType.RoomA_2))
+                    eventName = FirebaseTrigger.CL_NFT_AtomRental.ToString() + roomNum + "_" + (id + 1);
+
+                SendFirebaseEvent(eventName);
+            }
+        }
+
+        public void ActionOnExitBtn()
+        {
+            exitClickedAction?.Invoke(clickedNftInd);
         }
 
         public void CloseInfoPop()
         {
-            exitClickedAction?.Invoke(clickedNftInd);
+            ActionOnExitBtn();
             ratioReferences[ratioId].l_obj.SetActive(false);
             ratioReferences[ratioId].p_obj.SetActive(false);
             ratioReferences[ratioId].p_Loader.SetActive(false);
@@ -548,7 +661,7 @@ namespace PMY
             if (videoRetry <= RetryChances)
             {
                 videoRetry++;
-                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType);
+                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType, _pdfURL,_quiz_data);
             }
             else
             {
@@ -562,6 +675,34 @@ namespace PMY
             ratioReferences[ratioId].l_Loader.SetActive(false);
             videoRetry = 0;
         }
+        public async void EnableQuizPanel()
+        {
+            if (!ChangeOrientation_waqas._instance.isPotrait)
+            {
+                quizPanel_L.SetActive(true);
+            }
+            else
+            {
+                quizPanel_P.SetActive(true);
+            }
+        }
+        public void Enable_PDF_Panel()
+        {
+            if (!ChangeOrientation_waqas._instance.isPotrait)
+                pdfPanel_L.SetActive(true);
+            else
+                pdfPanel_L.SetActive(true);
+        }
+
+        public void EnableControlls()
+        {
+            ActionOnExitBtn();
+            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            {
+                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            }
+        }
+
         private void OnDisable()
         {
             if (VideoPlayers.Count > 0)
@@ -572,110 +713,122 @@ namespace PMY
                 }
         }
     }
-}
 
-[Serializable]
-public class PMY_WorldData
-{
-    public string[] Title;
-    public string[] Aurthor;
-    public string[] Des;
-    public string url;
-    public PMY_DataType Type;
-    public Sprite WorldImage;
-    public Texture2D Texture;
-    public string VideoLink;
-    public bool isAWSVideo;
-    public bool isLiveVideo;
-    public bool isPrerecordedVideo;
-    public PMY_Ratio pmyRatio;
-    public PMY_VideoTypeRes videoType;
-}
+    [Serializable]
+    public class PMY_WorldData
+    {
+        public string[] Title;
+        public string[] Aurthor;
+        public string[] Des;
+        public string url;
+        public string pdfURL;
+        public QuizData quiz_data;
+        public string thumbnail;
+        public PMY_DataType Type;
+        public Sprite WorldImage;
+        public Texture2D Texture;
+        public string VideoLink;
+        public bool isAWSVideo;
+        public bool isLiveVideo;
+        public bool isPrerecordedVideo;
+        public PMY_Ratio pmyRatio;
+        public PMY_VideoTypeRes videoType;
+    }
 
-public enum PMY_DataType
-{
-    Image,
-    Video,
-    PFD,
-    Quiz
-}
+    public enum PMY_DataType
+    {
+        Image,
+        Video,
+        PDF,
+        Quiz
+    }
 
-public enum PMY_VideoTypeRes
-{
-    none,
-    islive,
-    prerecorded,
-    aws
-}
+    public enum PMY_VideoTypeRes
+    {
+        none,
+        islive,
+        prerecorded,
+        aws
+    }
 
-public enum PMY_Ratio
-{
-    OneXOneWithDes,
-    SixteenXNineWithDes,
-    NineXSixteenWithDes,
-    FourXThreeWithDes,
+    public enum PMY_Ratio
+    {
+        OneXOneWithDes,
+        SixteenXNineWithDes,
+        NineXSixteenWithDes,
+        FourXThreeWithDes,
 
-    OneXOneWithoutDes,
-    SixteenXNineWithoutDes,
-    NineXSixteenWithoutDes,
-    FourXThreeWithoutDes,
-}
+        OneXOneWithoutDes,
+        SixteenXNineWithoutDes,
+        NineXSixteenWithoutDes,
+        FourXThreeWithoutDes,
+    }
 
-[Serializable]
-public class RatioRef
-{
-    public string name;
+    [Serializable]
+    public class RatioRef
+    {
+        public string name;
 
-    public GameObject l_obj;
-    public TMP_Text l_Title;
-    public TMP_Text l_Aurthur;
-    public TMP_Text l_Description;
-    public RawImage l_image;
-    public VideoPlayer l_videoPlayer;
-    public GameObject l_LivePlayer;
-    public GameObject l_PrerecordedPlayer;
-    public GameObject l_Loader;
+        public GameObject l_obj;
+        public TMP_Text l_Title;
+        public TMP_Text l_Aurthur;
+        public TMP_Text l_Description;
+        public RawImage l_image;
+        public VideoPlayer l_videoPlayer;
+        public GameObject l_LivePlayer;
+        public GameObject l_PrerecordedPlayer;
+        public GameObject l_Loader;
 
-    public GameObject p_obj;
-    public TMP_Text p_Title;
-    public TMP_Text p_Aurthur;
-    public TMP_Text p_Description;
-    public RawImage p_image;
-    public VideoPlayer p_videoPlayer;
-    public GameObject p_LivePlayer;
-    public GameObject p_PrerecordedPlayer;
-    public GameObject p_Loader;
-}
+        public GameObject p_obj;
+        public TMP_Text p_Title;
+        public TMP_Text p_Aurthur;
+        public TMP_Text p_Description;
+        public RawImage p_image;
+        public VideoPlayer p_videoPlayer;
+        public GameObject p_LivePlayer;
+        public GameObject p_PrerecordedPlayer;
+        public GameObject p_Loader;
+    }
 
 
-public class PMY_Json
-{
-    public bool success;
-    public List<PMY_Asset> data;
-    public string msg;
-}
+    public class PMY_Json
+    {
+        public bool success;
+        public List<PMY_Asset> data;
+        public string msg;
+    }
 
-public class PMY_Asset
-{
-    public int id;
-    public int museumId;
-    public int index;
-    public string asset_link;
-    public bool check;
-    public string[] authorName;
-    public string[] description;
-    public string descriptionHyperlink;
-    public string[] title;
-    public string ratio;
-    public string thumbnail;
-    public string media_type;
-    public string env_class;
-    public string user_id;
-    public string event_id;
-    public string category;
-    public bool youtubeUrlCheck;
-    public string youtubeUrl;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public string event_env_class;
+    public class PMY_Asset
+    {
+        public int id;
+        public int worldId;
+        public int index;
+        public string asset_link;
+        public bool check;
+        public string[] authorName;
+        public string[] description;
+        public string descriptionHyperlink;
+        public string[] title;
+        public string ratio;
+        public string thumbnail;
+        public string media_type;
+        public string pdf_url;
+        public QuizData quiz_data;
+        public string user_id;
+        public string event_id;
+        public string category;
+        public bool youtubeUrlCheck;
+        public string youtubeUrl;
+        public DateTime createdAt;
+        public DateTime updatedAt;
+        public string event_env_class;
+    }
+
+
+    public class QuizData
+    {
+        public string question;
+        public List<string> answer;
+        public string correct;
+    }
 }
