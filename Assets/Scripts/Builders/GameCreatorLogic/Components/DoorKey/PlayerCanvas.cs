@@ -10,7 +10,7 @@ public class PlayerCanvas : MonoBehaviour
 
     [SerializeField] GameObject keyImage;
     [SerializeField] GameObject wrongKey;
-    public TextMeshPro keyCounter;
+    public TextMeshProUGUI keyCounter;
 
     [SerializeField] GameObject blindLight;
     [SerializeField] GameObject[] blindAdditionalLights;

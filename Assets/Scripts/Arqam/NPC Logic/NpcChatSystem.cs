@@ -103,7 +103,13 @@ public class NpcChatSystem : MonoBehaviour
 
         tempResponseNum = numOfResponseWantToShow;
         npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated+=InvokeNPCName;
     }
+
+    void InvokeNPCName()
+    {
+       // npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+    }   
 
     private void ShuffleNpcs()
     {
@@ -116,7 +122,7 @@ public class NpcChatSystem : MonoBehaviour
             NPCAttributes value = npcDB[k];
             npcDB[k] = npcDB[count];
             npcDB[count] = value;
-            //Debug.Log("<color=red>User NPC: " + npcDB[count].aiNames + "</color>");
+            ////Debug.Log("<color=red>User NPC: " + npcDB[count].aiNames + "</color>");
         }
     }
     private void ShuffleFreeNpcs()
@@ -130,7 +136,7 @@ public class NpcChatSystem : MonoBehaviour
             NPCAttributes value = npcAttributes[k];
             npcAttributes[k] = npcAttributes[count];
             npcAttributes[count] = value;
-            //Debug.Log("FreeSpeech NPC: " + npcAttributes[count].aiNames);
+            ////Debug.Log("FreeSpeech NPC: " + npcAttributes[count].aiNames);
         }
     }
     private void OnEnable()
@@ -184,7 +190,7 @@ public class NpcChatSystem : MonoBehaviour
         string targetData = "&target_id=";
         string messageData = "&msg=";
         string postUrl = prefix + id + targetData + userId + messageData + msg;
-        Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
+        //Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -204,13 +210,13 @@ public class NpcChatSystem : MonoBehaviour
             if (XanaChatSystem.instance)
             {
                 XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
-                Debug.Log("Communication Response(UserAI): " + responseFeed);
+                //Debug.Log("Communication Response(UserAI): " + responseFeed);
 
                 if (NpcSpawner.npcSpawner)
                     NpcSpawner.npcSpawner.npcModel[counter - 1].GetComponent<NPC.NpcChatBillboard>().ShowNpcMessage(responseFeed);
             }
             else
-                Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
+                //Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
 
             tempResponseNum--;
             if (tempResponseNum > 0)

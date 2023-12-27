@@ -135,14 +135,14 @@ public class JjInfoManager : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("<color=red>" + request.error + " </color>");
+                //Debug.Log("<color=red>" + request.error + " </color>");
             }
             else
             {
-                //Debug.Log("Get UnReadMessagesCount Success!");
+                ////Debug.Log("Get UnReadMessagesCount Success!");
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
-                //Debug.Log("JJ World Req" + data.ToString());
+                ////Debug.Log("JJ World Req" + data.ToString());
                 JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
                 StartCoroutine(InitData(json, NftPlaceholder));
 
@@ -152,7 +152,7 @@ public class JjInfoManager : MonoBehaviour
         //}
         //catch
         //{
-        //    Debug.Log("<color=red>jj APi not call in " + XanaConstants.xanaConstants.EnviornmentName + "</color>");
+        //    //Debug.Log("<color=red>jj APi not call in " + XanaConstants.xanaConstants.EnviornmentName + "</color>");
         //}
         //finally
         //{
@@ -176,10 +176,10 @@ public class JjInfoManager : MonoBehaviour
                 if (i == worldData[j].index - 1)
                 {
                     isNFTUploaded = true;
-                    //Debug.Log("<color=red> INDEX IS : " + i + " </color>");
+                    ////Debug.Log("<color=red> INDEX IS : " + i + " </color>");
                     bool isWithDes = false;
                     string compersionPrfex = "";
-                    //Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
+                    ////Debug.LogError(i + "-----" + nftPlaceHolder + "----"+worldData.Count);
                     switch (worldData[j].ratio)
                     {
                         case "1:1":
@@ -214,7 +214,7 @@ public class JjInfoManager : MonoBehaviour
                             break;
                     }
                     NftPlaceholderList[i].SetActive(true);
-                    //Debug.LogError("-----" + worldData[i].media_type);
+                    ////Debug.LogError("-----" + worldData[i].media_type);
                     if (worldData[j].media_type == "IMAGE")
                     {
 
@@ -306,7 +306,7 @@ public class JjInfoManager : MonoBehaviour
                     {
                         NftPlaceholderList[i].gameObject.SetActive(false);
                         NftPlaceholderList[i].GetComponent<JJVideoAndImage>().TurnOffAllImageAndVideo();
-                        Debug.Log("INDEX is off!");
+                        //Debug.Log("INDEX is off!");
                     }
                 }
             }
@@ -353,7 +353,7 @@ public class JjInfoManager : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("ERror in loading sprite" + www.error);
+                //Debug.Log("ERror in loading sprite" + www.error);
             }
             else
             {
@@ -604,7 +604,7 @@ public class JjInfoManager : MonoBehaviour
         //if (!string.IsNullOrEmpty(firebaseEventName))
         //{
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
-        //    Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
+        //    //Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
         //    return;
         //}
         if (worldName.Contains("ZONE-X"))

@@ -1,0 +1,420 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bfa816e7ba4f2409e3119963dccb59, type: 3}
+  m_Name: LightPPData
+  m_EditorClassIdentifier: 
+  lightData:
+  - uniqueID: 0
+    name: Moon & Stars
+    directionalLightData:
+      directionLightRot: {x: 50, y: 30, z: 0}
+      lightIntensity: 0.65
+      directionLightColor: {r: 0.45882353, g: 0.78431374, b: 0.94509804, a: 0}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -18
+        tint: 16
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: -0.35
+        contrast: 10
+        saturation: 10
+  - uniqueID: 1
+    name: Sunny Day
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.92156863, a: 0}
+      directionLightShadowStrength: 0.55
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 0.6
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 10
+        tint: 8
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.3
+        contrast: 8
+        saturation: 15
+  - uniqueID: 2
+    name: Morning Sky
+    directionalLightData:
+      directionLightRot: {x: 40, y: 90, z: 0}
+      lightIntensity: 0.9
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 0}
+      directionLightShadowStrength: 0.5
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.35
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 10
+        tint: 8
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.3
+        contrast: 8
+        saturation: 15
+  - uniqueID: 3
+    name: Warm Sunrise
+    directionalLightData:
+      directionLightRot: {x: 28, y: 180, z: 0}
+      lightIntensity: 0.85
+      directionLightColor: {r: 1, g: 0.8980392, b: 0.61960787, a: 0}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.35
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 12
+        tint: 8
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.15
+        contrast: 8
+        saturation: 15
+  - uniqueID: 4
+    name: Evening
+    directionalLightData:
+      directionLightRot: {x: 28, y: -90, z: 0}
+      lightIntensity: 0.9
+      directionLightColor: {r: 0.99215686, g: 0.79607844, b: 0.5764706, a: 0}
+      directionLightShadowStrength: 0.5
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.35
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 15
+        tint: 12
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.25
+        contrast: 10
+        saturation: 15
+  - uniqueID: 5
+    name: Dark Night
+    directionalLightData:
+      directionLightRot: {x: 40, y: -30, z: 0}
+      lightIntensity: 0.33
+      directionLightColor: {r: 0.49411765, g: 0.8352941, b: 1, a: 0}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.5
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -20
+        tint: 12
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.12
+        contrast: 5
+        saturation: 15
+  - uniqueID: 6
+    name: Orange Sunset
+    directionalLightData:
+      directionLightRot: {x: 20, y: -180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.54509807, b: 0.3254902, a: 0}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1.35
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -5
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0
+        contrast: -15
+        saturation: 10
+  - uniqueID: 7
+    name: Stars Night
+    directionalLightData:
+      directionLightRot: {x: 50, y: -180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.44705883, g: 0.8039216, b: 1, a: 0}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1.25
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -25
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: -0.2
+        contrast: 0
+        saturation: 15
+  - uniqueID: 8
+    name: Sunset
+    directionalLightData:
+      directionLightRot: {x: 25, y: -180, z: 0}
+      lightIntensity: 0.65
+      directionLightColor: {r: 1, g: 0.9254902, b: 0.80784315, a: 0}
+      directionLightShadowStrength: 0.3
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.25
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 5
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.15
+        contrast: -5
+        saturation: 15
+  - uniqueID: 9
+    name: Cloudy
+    directionalLightData:
+      directionLightRot: {x: 40, y: -180, z: 0}
+      lightIntensity: 0.5
+      directionLightColor: {r: 0.9529412, g: 0.9137255, b: 0.8509804, a: 0}
+      directionLightShadowStrength: 0.2
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -5
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0
+        contrast: -6
+        saturation: 10
+  - uniqueID: 10
+    name: Mountain Range
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 0.7137255, g: 0.8784314, b: 1, a: 0}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.1
+        intensity: 1.35
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 0
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.25
+        contrast: -5
+        saturation: 15
+  - uniqueID: 11
+    name: Bright Sunrise
+    directionalLightData:
+      directionLightRot: {x: 30, y: -180, z: 0}
+      lightIntensity: 1.15
+      directionLightColor: {r: 0.78431374, g: 0.92941177, b: 1, a: 0}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1.25
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -5
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0
+        contrast: -8
+        saturation: 10
+  - uniqueID: 12
+    name: Colorful Sky
+    directionalLightData:
+      directionLightRot: {x: 30, y: -180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.78431374, b: 0.85490197, a: 0}
+      directionLightShadowStrength: 0.35
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1.15
+        intensity: 1.5
+        scatter: 0.7
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -5
+        tint: 12
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.3
+        contrast: 15
+        saturation: 10
+  - uniqueID: 13
+    name: Summer sky
+    directionalLightData:
+      directionLightRot: {x: 40, y: -180, z: 0}
+      lightIntensity: 1
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.88235295, a: 0}
+      directionLightShadowStrength: 0.45
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1.2
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: -5
+        tint: 0
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.25
+        contrast: 4
+        saturation: 10
+  - uniqueID: 14
+    name: Clear Sky
+    directionalLightData:
+      directionLightRot: {x: 50, y: -180, z: 0}
+      lightIntensity: 0.95
+      directionLightColor: {r: 1, g: 0.99215686, b: 0.88235295, a: 0}
+      directionLightShadowStrength: 0.5
+      character_directionLightIntensity: 0
+      lensFlareData:
+        falreData: {fileID: 11400000, guid: b494e9a468844427286e3a234a05b65e, type: 2}
+        flareScale: 0
+        flareIntensity: 0
+    ppData:
+      PPBloomData:
+        isBloomActive: 1
+        threshold: 1
+        intensity: 1.2
+        scatter: 0.35
+      PPWhiteBalData:
+        isWhiteBalActive: 1
+        temperature: 2
+        tint: 15
+      PPColorAdjData:
+        isColorAdjActive: 1
+        exposure: 0.15
+        contrast: -5
+        saturation: 10

@@ -34,7 +34,7 @@ public class TextLocalization : MonoBehaviour
 
     //private void Start()
     //{
-    //    Debug.Log(LocalizeText.text + " start");
+    //    //Debug.Log(LocalizeText.text + " start");
 
     //    if (LocalizeText)
     //    {
@@ -282,7 +282,7 @@ public class TextLocalization : MonoBehaviour
             }
             
         }
-        Debug.LogWarning("Key not found. Please add it to sheet:" + key);
+        //Debug.LogWarning("Key not found. Please add it to sheet:" + key);
         return key; //Normally return key as it is if not found
     }
 }

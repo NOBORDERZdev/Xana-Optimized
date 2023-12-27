@@ -87,8 +87,10 @@ public class ButtonScript : MonoBehaviour
         else
             StoreManager.instance.UpdateStoreSelection(Index);
 
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
         //if (this.gameObject.activeInHierarchy)
-            GetComponentInParent<SubBottons>().ClickBtnFtn(Index);
+        GetComponentInParent<SubBottons>().ClickBtnFtn(Index);
     }
 
     private void ButtonPressed()

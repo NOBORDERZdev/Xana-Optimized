@@ -80,13 +80,16 @@ public class SituationChangerComponent : ItemComponent
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            var hash = new ExitGames.Client.Photon.Hashtable();
-            hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            }
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent))//&& GamificationComponentData.instance.withMultiplayer)
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
             {
                 string situationChangerComponentstr = situationChangerComponent.ToString();
                 DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr);
@@ -96,7 +99,7 @@ public class SituationChangerComponent : ItemComponent
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
                 time = timeDiff;
 
-                if ((time == 0 || time > situationChangerComponentData.Timer) && !situationChangerComponentData.isOff)
+                if (time == 0 || time > situationChangerComponentData.Timer)
                     return;
             }
         }
