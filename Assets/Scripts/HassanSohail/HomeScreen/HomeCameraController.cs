@@ -167,18 +167,10 @@ public class HomeCameraController : MonoBehaviour
     }
     IEnumerator AllignWithCharacter()
     {
-
-        while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
-            yield return new WaitForSeconds(0.5f);
-
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
-
-        Debug.LogError("AllignWithCharacter");
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], BoundsX[1]);
         transform.position = pos;
-
-
     }
 }

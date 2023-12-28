@@ -31499,6 +31499,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1421023f795b5594795f257943ca2922, type: 3}
+--- !u!1 &1120266618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1120266623
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120266618}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1129323767
 GameObject:
   m_ObjectHideFlags: 0
@@ -57211,6 +57228,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 806820111}
     - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
+      propertyPath: Loadinghandler_CanvasRef
+      value: 
+      objectReference: {fileID: 1120266623}
+    - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
       propertyPath: m_WorldPanels.Array.data[15]
       value: 
       objectReference: {fileID: 0}
@@ -71424,7 +71445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &5733907664898954177
 MonoBehaviour:
   m_ObjectHideFlags: 0
