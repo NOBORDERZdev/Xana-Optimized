@@ -73,6 +73,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     string skyboxMatKey = "";
     public void ChangeSkyBox(int skyID)
     {
+        builderMapDownload.reflectionProbe.gameObject.SetActive(false);
         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
@@ -139,8 +140,6 @@ public class SituationChangerSkyboxScript : MonoBehaviour
 
     void DirectionLightColorChange(int skyID)
     {
-        builderMapDownload.reflectionProbe.enabled = true;
-
         LensFlareData lensFlareData = new LensFlareData();
         if (skyID == -1)
         {
@@ -168,8 +167,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.scale = 1;
             sceneLensFlare.intensity = 1;
         }
+        builderMapDownload.reflectionProbe.gameObject.SetActive(true);
         DynamicGI.UpdateEnvironment();
-        builderMapDownload.reflectionProbe.RenderProbe();
-
     }
 }
