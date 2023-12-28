@@ -36,7 +36,7 @@ public class ActorManager : MonoBehaviour
     {
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
-        // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
+       //  Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
         if (flag)
         {
             _cinemaCam.SetActive(true);
@@ -61,9 +61,10 @@ public class ActorManager : MonoBehaviour
     }
     public void IdlePlayerAvatorForPostMenu(bool flag)
     {
+       
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
-        // Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
+         //Debug.LogError(" IdlePlayerAvatorForPostMenu -----> " + flag);
         if (flag)
         {
             _cinemaCam.SetActive(true);

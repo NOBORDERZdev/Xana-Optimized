@@ -1,7 +1,11 @@
 using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.AddressableAssets.Build.Layout.BuildLayout;
+using static UserPostFeature;
+using UnityEngine.Networking;
 
 public class HomeCameraController : MonoBehaviour
 {
@@ -27,6 +31,7 @@ public class HomeCameraController : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.fieldOfView =ZoomBounds[1]-5; // to set zoom on start 
         cam.transform.position = new Vector3(1.9f,3.68f,0);
+        StartCoroutine(AllignWithCharacter());
     }
     
     void Update() {
@@ -159,5 +164,13 @@ public class HomeCameraController : MonoBehaviour
         }
     
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - (offset * speed), ZoomBounds[0], ZoomBounds[1]);
+    }
+    IEnumerator AllignWithCharacter()
+    {
+        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+            yield return new WaitForSeconds(0.5f);
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], BoundsX[1]);
+        transform.position = pos;
     }
 }
