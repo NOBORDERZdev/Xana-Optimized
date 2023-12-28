@@ -8,6 +8,6 @@ public class FollowUser : MonoBehaviour
     public Vector3 Offset;
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targ.position + Offset, 0.03f);
+        transform.position = Vector3.MoveTowards(transform.position, targ.position + Offset, 0.5f);
     }
 }

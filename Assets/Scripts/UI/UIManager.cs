@@ -52,9 +52,9 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-           _postScreen.gameObject.SetActive(flag);
-           HomePage.gameObject.SetActive(!flag);
-           _postCamera.gameObject.SetActive(flag);
+            _postScreen.gameObject.SetActive(flag);
+            HomePage.gameObject.SetActive(!flag);
+            _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
             GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
