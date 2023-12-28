@@ -110,6 +110,8 @@ public class SelfieController : MonoBehaviour
 
     bool allowTouch = true;
 
+    RenderTexture newRenderTexture;
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -411,9 +413,11 @@ public class SelfieController : MonoBehaviour
         if (!ChangeOrientation_waqas._instance.isPotrait)
         {
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
-            m_RenderTexture.width = 960;
-            m_RenderTexture.height = 540;
-            screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
+            //m_RenderTexture.width = 960;
+            //m_RenderTexture.height = 540;
+            newRenderTexture = new RenderTexture(960, 540,0,UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
+            //Graphics.Blit(m_RenderTexture, newRenderTexture);
+            screenShotCameraCapture.targetTexture = newRenderTexture;   // my changes
 
             if (!screenShotCameraCapture.gameObject.activeSelf)
                 screenShotCameraCapture.gameObject.SetActive(true);
@@ -422,14 +426,16 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture.fieldOfView = 60;
             m_IKComponenet.GetComponent<IKMuseum>().m_SelfieStick.transform.GetChild(0)
                 .GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = 60;
-            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = m_RenderTexture;
+            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = newRenderTexture;
         }
         else if (ChangeOrientation_waqas._instance.isPotrait)
         {
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).GetComponent<Camera>();    // my changes 
-            m_RenderTexture.width = 730;
-            m_RenderTexture.height = 1580;
-            screenShotCameraCapture.targetTexture = m_RenderTexture;   // my changes
+            //m_RenderTexture.width = 730;
+            //m_RenderTexture.height = 1580;
+            newRenderTexture = new RenderTexture(730, 1580, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
+            //Graphics.Blit(m_RenderTexture, newRenderTexture);
+            screenShotCameraCapture.targetTexture = newRenderTexture;   // my changes
 
             if (!screenShotCameraCapture.gameObject.activeSelf)
                 screenShotCameraCapture.gameObject.SetActive(true);
@@ -438,7 +444,7 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture.fieldOfView = 90;
             m_IKComponenet.GetComponent<IKMuseum>().m_SelfieStick.transform.GetChild(0)
                 .GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = 90;
-            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = m_RenderTexture;
+            screenShotCameraCapture.transform.GetChild(0).transform.GetComponent<Camera>().targetTexture = newRenderTexture;
         }
     }
 
@@ -545,7 +551,7 @@ public class SelfieController : MonoBehaviour
             }
 
            
-            m_RenderTexture.Release();
+            newRenderTexture.Release();
 
 
             StartCoroutine(SetMuseumRaycasterBoolean());
@@ -564,7 +570,9 @@ public class SelfieController : MonoBehaviour
 
         BuilderEventManager.UIToggle?.Invoke(false);
 
-        m_RenderTexture.Release();
+        screenShotCameraCapture.targetTexture = null;
+        screenShotCameraCapture.transform.GetChild(0).GetComponent<Camera>().targetTexture = null;
+        newRenderTexture.Release();
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }
@@ -626,9 +634,9 @@ public class SelfieController : MonoBehaviour
 
     public void TakeScreenShootAndSaveToGallary()
     {
-        Texture2D l_Texture2d = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGB24, false);  // RGB24
-        RenderTexture.active = m_RenderTexture;
-        l_Texture2d.ReadPixels(new Rect(0, 0, m_RenderTexture.width, m_RenderTexture.height), 0, 0);
+        Texture2D l_Texture2d = new Texture2D(newRenderTexture.width, newRenderTexture.height, TextureFormat.RGB24, false);  // RGB24
+        RenderTexture.active = newRenderTexture;
+        l_Texture2d.ReadPixels(new Rect(0, 0, newRenderTexture.width, newRenderTexture.height), 0, 0);
         l_Texture2d.Apply();
 
         m_CapturedImage.texture = l_Texture2d;
@@ -639,7 +647,7 @@ public class SelfieController : MonoBehaviour
         m_CapturedImage.texture = m_Texture2D;
 
         // optimize the render texture data     // AR changes start
-        m_RenderTexture.Release();
+        newRenderTexture.Release();
         Resources.UnloadUnusedAssets();
         GC.Collect();                           // AR changes end
     }
