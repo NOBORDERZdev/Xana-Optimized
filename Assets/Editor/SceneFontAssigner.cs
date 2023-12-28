@@ -6,7 +6,7 @@ public class SceneFontAssigner : EditorWindow
 {
     private Font selectedFont;
 
-    [MenuItem("Tools/Scene Font Assigner")]
+    [MenuItem("Tools/EditorScipts-AP/Scene Font Assigner")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(SceneFontAssigner));
