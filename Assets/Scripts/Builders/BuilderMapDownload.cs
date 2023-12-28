@@ -455,6 +455,7 @@ public class BuilderMapDownload : MonoBehaviour
     ColorAdjustments colorAdjustments;
     IEnumerator SetSkyPropertiesDelay()
     {
+        reflectionProbe.gameObject.SetActive(false);
         SkyProperties skyProperties = levelData.skyProperties;
         LensFlareData lensFlareData = new LensFlareData();
         Camera.main.clearFlags = CameraClearFlags.Skybox;
@@ -562,13 +563,12 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
-        reflectionProbe.enabled = true;
+        reflectionProbe.gameObject.SetActive(true);
         if (lensFlareData != null)
             SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
         else
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
-        reflectionProbe.RenderProbe();
         DynamicGI.UpdateEnvironment();
     }
 
@@ -647,6 +647,26 @@ public class BuilderMapDownload : MonoBehaviour
         SetObjectHirarchy();
 
         BuilderEventManager.CombineMeshes?.Invoke();
+
+        PlayerSetup();
+
+        //call for Execute all rpcs of this room
+        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
+        BuilderEventManager.BGMStart?.Invoke();
+        //reflectionProbe.enabled = true;
+        if (levelData.skyProperties.skyId != -1)
+        {
+            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+        }
+        UpdateScene();
+    }
+
+    private void PlayerSetup()
+    {
+        if (!GamificationComponentData.instance.buildingDetect)
+            return;
+
         CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
@@ -667,19 +687,7 @@ public class BuilderMapDownload : MonoBehaviour
         playerCharacterController.center = capsuleCollider_34.center;
 
         //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
-
-        //call for Execute all rpcs of this room
-        BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
-        BuilderEventManager.BGMStart?.Invoke();
-        reflectionProbe.enabled = true;
-        if (levelData.skyProperties.skyId != -1)
-        {
-            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
-            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
-        }
-        UpdateScene();
     }
-
 
     public void UpdateScene()
     {
@@ -722,11 +730,11 @@ public class BuilderMapDownload : MonoBehaviour
     {
         //objectTobeInstantiate.AddComponent<PhotonView>();
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
-        Rigidbody rb = null;
-        newObj.TryGetComponent(out rb);
-        if (rb == null)
-            rb = newObj.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
+        //Rigidbody rb = null;
+        //newObj.TryGetComponent(out rb);
+        //if (rb == null)
+        //    rb = newObj.AddComponent<Rigidbody>();
+        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -753,11 +761,11 @@ public class BuilderMapDownload : MonoBehaviour
             }
         }
 
-        meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
         //Add game object into XanaItems List for Hirarchy
-        if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
-            GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
 
 
         if (!_itemData.isVisible)
