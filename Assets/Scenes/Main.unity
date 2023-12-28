@@ -10049,7 +10049,23 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
     - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+    - target: {fileID: 2055942708066156932, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055942708735223964, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055942708735223967, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055942708735223967, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2377629185401262992, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
@@ -32253,6 +32269,23 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2640372959257830306, guid: 90c2079f834402c4aad5c7157190f86b, type: 3}
   m_PrefabInstance: {fileID: 1009227460}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1457454607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4343778718239381665, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+  m_PrefabInstance: {fileID: 218387417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1457454612
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457454607}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1458086204
 GameObject:
   m_ObjectHideFlags: 0
@@ -40809,6 +40842,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4548883102486404803, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324919537242276996, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+      propertyPath: m_IgnoreReversedGraphics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644395317856808521, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644395317856808521, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9095825339188872597, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
       propertyPath: m_Name
       value: New Splash
@@ -46925,6 +46974,10 @@ PrefabInstance:
       propertyPath: SearchWorldScreenHolder
       value: 
       objectReference: {fileID: 806820111}
+    - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
+      propertyPath: Loadinghandler_CanvasRef
+      value: 
+      objectReference: {fileID: 1457454612}
     - target: {fileID: 254756204018997092, guid: 5df3082ed05fe0147bf614391397d1c1, type: 3}
       propertyPath: m_WorldPanels.Array.data[15]
       value: 
