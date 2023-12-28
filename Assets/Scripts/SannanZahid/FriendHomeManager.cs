@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class FriendHomeManager : MonoBehaviour
 {
-    public Transform FriendAvatarPrefab, NameTagFriendAvatarPrefab;
+    public Transform FriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
@@ -38,6 +38,7 @@ public class FriendHomeManager : MonoBehaviour
                     {
                         FriendSpawnData FriendSpawn= new FriendSpawnData();
                         Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
+                        Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
                         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
                         CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
                         CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
@@ -45,6 +46,8 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
                         CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+                        CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble, 
+                            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
                         FriendSpawn.id = friend.id;
                         FriendSpawn.friendObj = CreatedFriend;
                         FriendSpawn.friendNameObj = CreatedNameTag;
@@ -159,4 +162,6 @@ public class FriendSpawnData
    public int id;
    public Transform friendObj;
    public Transform friendNameObj;
+    public Transform friendPostBubbleObj;
+
 }

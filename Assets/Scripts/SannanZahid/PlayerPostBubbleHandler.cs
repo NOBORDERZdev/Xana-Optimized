@@ -7,6 +7,12 @@ public class PlayerPostBubbleHandler : MonoBehaviour
     [SerializeField]
     TMPro.TMP_Text _postText;
     public Transform BubbleObj;
+    public Vector3 Offset;
+    public void InitObj(Transform _bubbleObjF, TMPro.TMP_Text postTextF)
+    {
+        BubbleObj = _bubbleObjF;
+        _postText = postTextF;
+    }
 
     public void ActivatePostFirendBubble(bool flag)
     {
@@ -15,7 +21,13 @@ public class PlayerPostBubbleHandler : MonoBehaviour
     }
     void Update()
     {
-        BubbleObj.LookAt(_cameraTransform);
+        BubbleObj.position = Vector3.MoveTowards(BubbleObj.position, transform.position + Offset, 0.5f);
+       // BubbleObj.rotation = Quaternion.Slerp(BubbleObj.rotation,
+       //     Quaternion.LookRotation(_cameraTransform.position - BubbleObj.position), 
+        //    Time.deltaTime);
+
+
+        //BubbleObj.LookAt(_cameraTransform);
     }
     public void UpdateText(string txt)
     {
