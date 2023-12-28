@@ -1920,7 +1920,7 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.isNetworkError)
                 {
                     validationMessagePopUP.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                     //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                     //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                     errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
@@ -1999,8 +1999,8 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
-                errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
-               // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
                // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
