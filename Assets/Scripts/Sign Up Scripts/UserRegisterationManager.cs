@@ -3179,7 +3179,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
-            errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<Text>());
             //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
