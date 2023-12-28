@@ -41,6 +41,7 @@ namespace PMY
         int numOfQuestions;
         int correct, wrong;
         int currentAnswer;
+        int correctAnswer;
         readonly int inputFieldsPerQuestion = 5; //one question and four options
         bool isOptionSelected = false;
         bool isFirstQuestion = true;
@@ -115,6 +116,15 @@ namespace PMY
             correct = 0;
             wrong = 0;
 
+            for (int i = 0; i < quizComponentData.answer.Count; i++)
+            {
+                if (quizComponentData.answer[i] == quizComponentData.correct)
+                {
+                    correctAnswer = i;
+                    break;
+                }
+            }
+
             nextButtonText = nextButton.GetComponentInChildren<TMP_Text>();
             confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
             nextButtonText.text = confirm;
@@ -125,6 +135,7 @@ namespace PMY
 
         private void CheckAnswer()
         {
+            
             if (quizComponentData.answer[currentAnswer] == quizComponentData.correct)
                 UpdateQuizData(0);
             else
@@ -199,10 +210,10 @@ namespace PMY
 
         private void WrongAnswerUIAdjustments(Sprite image, string colorString)
         {
-            correctWrongImageObjects[questionIndex].SetActive(true);
-            correctWrongImageObjects[questionIndex].GetComponent<Image>().sprite = image;
+            correctWrongImageObjects[correctAnswer].SetActive(true);
+            correctWrongImageObjects[correctAnswer].GetComponent<Image>().sprite = image;
 
-            Outline thisButtonOutine = options[questionIndex].GetComponent<Outline>();
+            Outline thisButtonOutine = options[correctAnswer].GetComponent<Outline>();
 
             if (ColorUtility.TryParseHtmlString(colorString, out Color color))
             {
