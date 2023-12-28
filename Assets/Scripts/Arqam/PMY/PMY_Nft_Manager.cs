@@ -184,31 +184,46 @@ namespace PMY
                             case "1:1":
                                 if (JJFrameManager.instance)
                                     JJFrameManager.instance.SetTransformForFrameSpotLight(0);
-                                worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
+                                if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                                    worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithoutDes;
+                                else
+                                    worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                                 compersionPrfex = "?width=512&height=512";
                                 break;
                             case "16:9":
                                 if (JJFrameManager.instance)
                                     JJFrameManager.instance.SetTransformForFrameSpotLight(1);
-                                worldInfos[i].pmyRatio = PMY_Ratio.SixteenXNineWithDes;
+                                if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                                    worldInfos[i].pmyRatio = PMY_Ratio.SixteenXNineWithoutDes;
+                                else
+                                    worldInfos[i].pmyRatio = PMY_Ratio.SixteenXNineWithDes;
                                 compersionPrfex = "?width=800&height=450";//"?width=500&height=600";
                                 break;
                             case "9:16":
                                 if (JJFrameManager.instance)
                                     JJFrameManager.instance.SetTransformForFrameSpotLight(2);
-                                worldInfos[i].pmyRatio = PMY_Ratio.NineXSixteenWithDes;
+                                if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                                    worldInfos[i].pmyRatio = PMY_Ratio.NineXSixteenWithoutDes;
+                                else
+                                    worldInfos[i].pmyRatio = PMY_Ratio.NineXSixteenWithDes;
                                 compersionPrfex = "?width=450&height=800"; //"?width=700&height=500";
                                 break;
                             case "4:3":
                                 if (JJFrameManager.instance)
                                     JJFrameManager.instance.SetTransformForFrameSpotLight(3);
-                                worldInfos[i].pmyRatio = PMY_Ratio.FourXThreeWithDes;
+                                if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                                    worldInfos[i].pmyRatio = PMY_Ratio.FourXThreeWithoutDes;
+                                else
+                                    worldInfos[i].pmyRatio = PMY_Ratio.FourXThreeWithDes;
                                 compersionPrfex = "?width=640&height=480";
                                 break;
                             default:
                                 if (JJFrameManager.instance)
                                     JJFrameManager.instance.SetTransformForFrameSpotLight(0);
-                                worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
+                                if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
+                                    worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithoutDes;
+                                else
+                                    worldInfos[i].pmyRatio = PMY_Ratio.OneXOneWithDes;
                                 compersionPrfex = "?width=512&height=512";
                                 break;
                         }
@@ -386,9 +401,12 @@ namespace PMY
                 ratioReferences[ratioId].p_image.gameObject.SetActive(true);
                 ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
                 ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
-                ratioReferences[ratioId].l_Title.text = title;
-                ratioReferences[ratioId].l_Aurthur.text = aurthur;
-                ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                if (ratioId < 4)
+                {
+                    ratioReferences[ratioId].l_Title.text = title;
+                    ratioReferences[ratioId].l_Aurthur.text = aurthur;
+                    ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                }
                 if (type == PMY_DataType.Image)
                 {
                     ratioReferences[ratioId].l_image.texture = image;
@@ -401,9 +419,12 @@ namespace PMY
                 }
 
                 // Setting Potraite Data
-                ratioReferences[ratioId].p_Title.text = title;
-                ratioReferences[ratioId].p_Aurthur.text = aurthur;
-                ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                if (ratioId < 4)
+                {
+                    ratioReferences[ratioId].p_Title.text = title;
+                    ratioReferences[ratioId].p_Aurthur.text = aurthur;
+                    ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                }
                 ratioReferences[ratioId].p_image.texture = image;
                 if (type == PMY_DataType.Image)
                 {
