@@ -3892,7 +3892,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   framePrefab: {fileID: 9202033141663485158, guid: 92842c9b531510e499202b90acd8b62f, type: 3}
-  frameLocalPos: {x: 0, y: 0, z: 0}
+  frameLocalPos: {x: 0, y: 0, z: 0.09}
+  frameLocalRot: {x: 0, y: 0, z: 0}
   frameLocalScale: {x: 8, y: 8, z: 8}
   spotLightPos: {x: 0, y: 0, z: 0}
   spotLightScale: {x: 25.94, y: 25.94, z: 25.94}
@@ -14267,9 +14268,6 @@ MonoBehaviour:
   videoRenderObject: {fileID: 0}
   videoPlayerSource: {fileID: 0}
   livePlayerSource: {fileID: 0}
-  OnVideoEnlargeAction:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5007422990968410711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22940,7 +22938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downloadKey: PMY_NFT
-  objectPriority: 2
+  objectPriority: 0
 --- !u!1 &5007422991562040840
 GameObject:
   m_ObjectHideFlags: 0
