@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RemoveMissingScript : MonoBehaviour
 {
-    [MenuItem("Window/Remove Missing Script")]
+    [MenuItem("Tools/EditorScipts-AP/Remove Missing Script")]
     static void RemoveMissingScripts()
     {
         GameObject[] g = Selection.gameObjects;

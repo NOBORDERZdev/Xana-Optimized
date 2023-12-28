@@ -501,8 +501,10 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < searchUserRoot.data.rows.Count; j++)
             {
-                GameObject searchUserObj = Instantiate(mutalFrndPrefab, FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
-                searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                if(!searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId)){
+                    GameObject searchUserObj = Instantiate(mutalFrndPrefab, FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
+                    searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
+                }
             }
         }
     }
@@ -548,7 +550,7 @@ public class APIController : MonoBehaviour
         {
             for (int i = 0; i < APIManager.Instance.adFrndFollowing.data.rows.Count; i++)
             {
-                if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy)
+                if (APIManager.Instance.userId == APIManager.Instance.adFrndFollowing.data.rows[i].followedBy && !APIManager.Instance.adFrndFollowing.data.rows[i].userId.Equals(APIManager.Instance.userId))
                 {
                     GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
                     followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i], false);

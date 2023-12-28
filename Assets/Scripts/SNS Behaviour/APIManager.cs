@@ -1639,7 +1639,7 @@ public class APIManager : MonoBehaviour
                     FeedUIController.Instance.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
-                Debug.Log("~~~~~~ Hot Friends Data" + data);
+                Debug.Log("~~~~~~ Recommended Friends Data" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 APIController.Instance.ShowRecommendedFriends(searchUserRoot);
                 //APIController.Instance.FeedGetAllSearchUser();

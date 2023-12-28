@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
+     public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
 
     public Transform _postScreen,_postCamera;
@@ -116,6 +117,7 @@ public class UIManager : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Loadinghandler_CanvasRef.alpha = 1.0f;
         ShowFooter(!_state);
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }

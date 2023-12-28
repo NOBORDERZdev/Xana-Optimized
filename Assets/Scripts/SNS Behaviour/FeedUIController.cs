@@ -202,7 +202,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFrndNoSearchFound;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
-
+    [SerializeField] public GameObject AddFreindContainer;
     private void Awake()
     {
         if (Instance == null)
@@ -366,12 +366,22 @@ public class FeedUIController : MonoBehaviour
         AddFriendPanel.SetActive(flag);    
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
+        AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=0;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);
     }
 
-    public void OnClickAddFriendSearchBtn(){ 
+    public void OnClickAddFriendSearchBtn(){
+        
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
+        if (AddFriendSerachBar.activeInHierarchy)
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
+        }
+        else
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=0;
+        }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
@@ -2917,13 +2927,25 @@ public class FeedUIController : MonoBehaviour
     }
     IEnumerator IEnumCheckFollowingCount(){
         print("~~~~~~~~CheckFollowingCount");
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
         yield return new WaitForSeconds(1);
         foreach(Transform child in AddFrndFollowingContainer.transform)
         {
             if(child.gameObject.activeInHierarchy)
             {
-               yield return null;
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+              yield break;
             }
+        }
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(false);
         }
         AddFrndNoFollowing.SetActive(true);
     }
