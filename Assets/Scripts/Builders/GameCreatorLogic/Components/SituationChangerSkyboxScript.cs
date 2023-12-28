@@ -167,8 +167,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.scale = 1;
             sceneLensFlare.intensity = 1;
         }
-        DynamicGI.UpdateEnvironment();
         builderMapDownload.reflectionProbe.gameObject.SetActive(true);
-
+        DynamicGI.UpdateEnvironment();
     }
 }
