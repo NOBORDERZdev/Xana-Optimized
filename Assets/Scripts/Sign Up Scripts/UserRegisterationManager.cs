@@ -2953,7 +2953,9 @@ public class UserRegisterationManager : MonoBehaviour
                     Email = localEmail;
                     SignUpWithPhoneBool = false;
                 }
+                
             }
+           
         }
         else
         {
@@ -3008,6 +3010,7 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             }
         }
+        currentSelectedNxtButton.interactable = true;
     }
     ///////  ENDEmailSection
 
@@ -3136,6 +3139,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (pass1 == "" || pass2 == "")
         {
+            passwordBool = false;
             validationMessagePopUP.SetActive(true);
             //print("Password Field should not be empty");
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3149,6 +3153,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (pass1.Length < 8 || pass2.Length < 8)
         {
+            passwordBool = false;
             validationMessagePopUP.SetActive(true);
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -3162,14 +3167,17 @@ public class UserRegisterationManager : MonoBehaviour
         char[] specialChArray = specialCh.ToCharArray();
         if (pass1.Any(char.IsDigit) && pass1.Any(char.IsLower) && pass1.Any(char.IsUpper) && !pass1.Any(char.IsWhiteSpace))
         {
+            passwordBool = false;
             foreach (char ch in specialChArray)
             {
                 if (pass1.Contains(ch))
                     allCharactersInStringAreDigits = true;
             }
+            
         }
         if (!allCharactersInStringAreDigits)
         {
+            passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3187,9 +3195,10 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
+            passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-
+            
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
              //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
