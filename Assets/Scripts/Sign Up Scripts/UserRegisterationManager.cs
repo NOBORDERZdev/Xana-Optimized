@@ -844,11 +844,11 @@ public class UserRegisterationManager : MonoBehaviour
         //PhoneInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
         //PhoneInputTextNew.SelectOtherField();
         PhoneFieldNew.Text = "";
-        Color _temp = new Color();
-        validationMessagePopUP.SetActive(true);
+       // Color _temp = new Color();
+       // validationMessagePopUP.SetActive(true);
         // _temp = errorTextEmail.GetComponent<Text>().color;
         //  _temp.a = 0;
-        errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
+       // errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
             //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
