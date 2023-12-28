@@ -67,14 +67,14 @@ public class ScrollActivity : MonoBehaviour
     }
     public void Closer()
     {
-        if (ScrollController.verticalNormalizedPosition < 0.001f)
-        {
-            btnback.SetActive(true);
-        }
-        else
-        {
-            btnback.SetActive(false);
-        }
+        //if (ScrollController.verticalNormalizedPosition < 0.001f)
+        //{
+        //    btnback.SetActive(true);
+        //}
+        //else
+        //{
+        //    btnback.SetActive(false);
+        //}
         normalized = ScrollController.verticalNormalizedPosition;
     }
 
