@@ -177,7 +177,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (searchUserRow != null)
         {
-            if (searchUserRow.is_following_me)
+            if (searchUserRow.am_i_following)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
                 FeedUIController.Instance.ShowLoader(true);//active api loader
@@ -213,6 +213,10 @@ public class FindFriendWithNameItem : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
                 Debug.Log(www.error);
             }
             else
@@ -222,7 +226,10 @@ public class FindFriendWithNameItem : MonoBehaviour
 
                 searchUserRow.is_following_me = true;
                 FollowFollowingSetUp(true);
-
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
                 //refresh Feed API.......
                 APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
 
@@ -251,6 +258,10 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
             }
             else
             {
@@ -258,6 +269,10 @@ public class FindFriendWithNameItem : MonoBehaviour
                Debug.Log("user unfollow success data:" + data);
                 searchUserRow.is_following_me = false;
                 //FollowFollowingSetUp(false);
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
                 if (IsInFollowingTab)
                 {
