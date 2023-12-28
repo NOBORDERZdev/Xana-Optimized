@@ -94,7 +94,8 @@ namespace RFM.Character
         {
             //if (!this.enabled) return;
             StopCoroutine(TimeSurvived());
-            StopCoroutine(AddMoney()); PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
+            StopCoroutine(AddMoney());
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // RFM.Managers.RFMUIManager.Instance.RunnerCaught(PhotonNetwork.LocalPlayer.NickName, Money, timeSurvived);
@@ -106,17 +107,17 @@ namespace RFM.Character
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (!this.enabled) return;
-            if (stream.IsWriting)
-            {
-                stream.SendNext(Money);
-                stream.SendNext(timeSurvived);
-            }
-            else if (stream.IsReading)
-            {
-                this.Money = (int)stream.ReceiveNext();
-                this.timeSurvived = (float)stream.ReceiveNext();
-            }
+            //if (!this.enabled) return;
+            //if (stream.IsWriting)
+            //{
+            //    stream.SendNext(Money);
+            //    stream.SendNext(timeSurvived);
+            //}
+            //else if (stream.IsReading)
+            //{
+            //    this.Money = (int)stream.ReceiveNext();
+            //    this.timeSurvived = (float)stream.ReceiveNext();
+            //}
         }
 
         private void ReceivePhotonEvents(EventData photonEvent)
