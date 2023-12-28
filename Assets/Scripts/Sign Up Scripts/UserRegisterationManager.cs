@@ -1282,6 +1282,8 @@ public class UserRegisterationManager : MonoBehaviour
 
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
+                    Password1New.Text = "";
+                    Password2New.Text = "";
                     //OnSignUpPhoneTabPressed();
                     //  OnSignUpWalletTabPressed();
 
@@ -1428,11 +1430,15 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             OnSignUpPhoneTabPressed();
                             PhoneFieldNew.Text = "";
+                            Password1New.Text = "";
+                            Password2New.Text = "";
                         }
                         else if (SignUpButtonSelected == 2)
                         {
                             OnSignUpEmailTabPressed();
                             EmailFieldNew.Text = "";
+                            Password1New.Text = "";
+                            Password2New.Text = "";
                         }
                         SignUpPanal.SetActive(true);
                     }
