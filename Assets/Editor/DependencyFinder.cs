@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class DependencyFinder : EditorWindow
 {
-    [MenuItem("Tools/Dependency Finder")]
+    [MenuItem("Tools/EditorScipts-AP/Dependency Finder")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(DependencyFinder));
