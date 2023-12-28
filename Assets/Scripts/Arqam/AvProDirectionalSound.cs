@@ -83,7 +83,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         }
         else
         {
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
             if (screenSoundBtnLand is null)
                 screenSoundBtnLand = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
             screenSoundBtnLand.SetActive(true);

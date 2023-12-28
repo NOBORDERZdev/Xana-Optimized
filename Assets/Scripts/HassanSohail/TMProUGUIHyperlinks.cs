@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
 using static GlobalConstants;
 using PMY;
+using static PMY.PMY_VideoAndImage;
 
 /// <summary>
 /// This class handles basic link color behavior, supports also underline (static only)
@@ -14,7 +15,7 @@ using PMY;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public enum EnvType { JJWorld, PMYWorld}
+    public enum EnvType { JJWorld, PMYWorld }
     public EnvType envType;
     [SerializeField]
     private Color32 hoveredColor = new Color32(0x00, 0x59, 0xFF, 0xFF);
@@ -133,7 +134,15 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
                     break;
                 case "PMYRoomA":
                     {
-                        eventName = FirebaseTrigger.URL_CRoom1.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                        switch (PMY_Nft_Manager.Instance.PMY_RoomId)
+                        {
+                            case 8:
+                                eventName = FirebaseTrigger.URL_CRoom1.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
+                            case 9:
+                                eventName = FirebaseTrigger.URL_CRoom2.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                break;
+                        }
                         break;
                     }
             }
