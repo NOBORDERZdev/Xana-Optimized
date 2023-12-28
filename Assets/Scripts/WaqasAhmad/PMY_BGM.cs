@@ -37,12 +37,6 @@ public class PMY_BGM : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        if (soundType.Equals(SoundType.ThreeD))
-            SceneManage.onExitAction += OnSceneExit;
-    }
-
     private void OnDisable()
     {
         if (soundType.Equals(SoundType.ThreeD))
@@ -53,6 +47,13 @@ public class PMY_BGM : MonoBehaviour
 
     private void Start()
     {
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+    }
+
+    private void HookEvent()
+    {
+        if (soundType.Equals(SoundType.ThreeD))
+            SceneManage.onExitAction += OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
     }
