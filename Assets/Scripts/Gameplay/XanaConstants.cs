@@ -104,7 +104,9 @@ public class XanaConstants : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
-
+    public bool isFromPMYLobby = false;
+    //[HideInInspector]
+    public bool isScreenSoundOn = true;
     [HideInInspector]
     public bool needToClearMemory = true;
     // Tutorials
@@ -123,6 +125,15 @@ public class XanaConstants : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
+    // PMY-Class Codes
+    public List<PMYAvailableClassCode> pmy_ClassCode;
+    public string pmy_joinedClassCode;
+    public bool pmy_isClassAvailable = false;
+    public int pmySchooldDataID;
+    public bool pmy_isTesting = false;
+
+    public int pmy_classRoomID_Test = 0;
+    public int pmy_classRoomID_Main = 0;
 
     public string r_EmoteReactionPersistentPath
     {

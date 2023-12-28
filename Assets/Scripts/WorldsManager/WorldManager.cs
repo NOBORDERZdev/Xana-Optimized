@@ -494,6 +494,16 @@ public class WorldManager : MonoBehaviour
                     return;
                 }
             }
+            // Added By WaqasAhmad [PMY ClassRoom Dummy Work]
+            else if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
+            {
+                if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
+                {
+                    XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
+                    return;
+                }
+            }
+
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
@@ -508,6 +518,8 @@ public class WorldManager : MonoBehaviour
         }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
+        else if (WorldItemView.m_EnvName == "PMY ACADEMY")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn_PMY.ToString());
     }
     public async void JoinBuilderWorld()
     {
@@ -669,6 +681,8 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.userLimit = "16";
             }
+            else if(XanaConstants.xanaConstants.JjWorldTeleportSceneName == "PMYRoomA")
+                XanaConstants.xanaConstants.userLimit = "1";
             else
             {
                 if (XanaConstants.xanaConstants.isBuilderScene)

@@ -1,12 +1,16 @@
+using BestHTTP.SocketIO.Events;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class JjWorldChanger : MonoBehaviour
 {
     public string WorldName;
+    public bool isPMYWorld;
+    public int WorldID=0;
     [SerializeField] bool HaveMultipleSpwanPoint;
     [SerializeField] JJMussuemEntry mussuemEntry;
     [Header("Xana Musuem")]
@@ -21,7 +25,10 @@ public class JjWorldChanger : MonoBehaviour
     bool reSetCollider = false;
 
     private GameObject triggerObject;
+    public bool isShowPopup=true;
     public bool isEnteringPopup;
+    public UnityEvent performAction;
+
     private void Start()
     {
         collider = GetComponent<Collider>();
@@ -32,16 +39,46 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            if (WorldName.Contains("CommingSoon"))
+            {
+                SNSNotificationManager.Instance.ShowNotificationMsg("Coming Soon");
+                return;
+            }
+
             CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
-            if (isEnteringPopup)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+            if (isShowPopup)
+            {
+                if (isPMYWorld)
+                {
+                    if (WorldID == 1)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 8;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 8;
+                    }
+                    else if(WorldID == 2)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 9;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 9;
+                    }
+                }
+                if (isEnteringPopup)
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                else
+                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            }
             else
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            {
+                RedirectToWorld();
+            }
         }
 
     }
@@ -52,6 +89,8 @@ public class JjWorldChanger : MonoBehaviour
             collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
+
+                performAction?.Invoke();
                 this.StartCoroutine(swtichScene(WorldName));
             }
             else
@@ -80,9 +119,10 @@ public class JjWorldChanger : MonoBehaviour
         }
 
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
             XanaConstants.xanaConstants.isFromXanaLobby = true;
-        }
+        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+            XanaConstants.xanaConstants.isFromPMYLobby = true;
+
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));

@@ -283,7 +283,8 @@ public class LoadingHandler : MonoBehaviour
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.isBackFromWorld)
+        if ((!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
+            && XanaConstants.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
@@ -518,8 +519,8 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                teleportFeader.gameObject.activeInHierarchy)
+            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld) 
+                || XanaConstants.xanaConstants.isFromPMYLobby) && teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -552,8 +553,8 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy)
+                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld) 
+                    || XanaConstants.xanaConstants.isFromPMYLobby) && teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";

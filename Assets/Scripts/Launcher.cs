@@ -211,6 +211,12 @@ namespace Photon.Pun.Demo.PunBasics
                 string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
                 lobbyName = deepLinkLobbyName;
             }
+            else if (XanaConstants.xanaConstants.pmy_isClassAvailable)
+            {
+                string pmy_className = $"{lobbyN}{XanaConstants.xanaConstants.pmy_joinedClassCode}";
+                Debug.Log("<color=red> PMY -- Joining The Class : "+ pmy_className +"</color>");
+                lobbyName = pmy_className;
+            }
             else
             {
                 lobbyName = lobbyN;
@@ -228,6 +234,10 @@ namespace Photon.Pun.Demo.PunBasics
             if (PhotonNetwork.IsConnected)
             {
                 isConnecting = false;
+
+                //if (lobbyName == "PMYRoomA")
+                //    lobbyName = Guid.NewGuid().ToString();    // Generate unique room name everytime for PMYRoomA only
+
                 print("Join Random Room in: " + lobbyName);
                 PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
             }

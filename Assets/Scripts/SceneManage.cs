@@ -15,8 +15,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
-    public string mainScene= "Main";
+    public string mainScene = "Main";
+    public static Action onExitAction;
     bool exitOnce = true;
+
     private void OnEnable()
     {
         mainScene = "Main";
@@ -46,25 +48,26 @@ public class SceneManage : MonoBehaviourPunCallbacks
             if (SoundManagerSettings.soundManagerSettings != null)
             {
                 if (SoundManagerSettings.soundManagerSettings.bgmSource)
-                SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
                 if (SoundManagerSettings.soundManagerSettings.videoSource)
-                SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
                 if (SoundManagerSettings.soundManagerSettings.effectsSource)
-                SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+                    SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
             }
         }
     }
     public void LoadMain(bool changeOritentationChange)
     {
+        onExitAction?.Invoke();
         disableSoundXanalobby();
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
             exitOnce = false;
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-            {
-                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
-            }
+                StartCoroutine(LobbySceneSwitch("XANA Lobby")); // to Lobby if player enter in world from Xana lobby
+            else if (XanaConstants.xanaConstants.isFromPMYLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+                StartCoroutine(LobbySceneSwitch("PMY ACADEMY")); // to Lobby if player enter in world from Xana lobby
             else
             {
 
@@ -97,8 +100,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
             }
         }
     }
-     private IEnumerator LobbySceneSwitch()
-     {
+    private IEnumerator LobbySceneSwitch(string sceneToLoad)
+    {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -106,7 +109,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(.2f);
         XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
-        XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+
+        //if(XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+        //    XanaConstants.xanaConstants.JjWorldTeleportSceneName = "PMY ACADEMY";
+        //else
+        XanaConstants.xanaConstants.JjWorldTeleportSceneName = sceneToLoad; // "XANA Lobby";
+
         StartCoroutine(LoadMainEnumerator());
     }
     IEnumerator LoadMainEnumerator()
@@ -144,10 +152,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
         print("Hello Scene Manager");
         StartCoroutine(LoadMianScene());
     }
-    IEnumerator LoadMianScene() {
+    IEnumerator LoadMianScene()
+    {
         yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
-        print("mian scne "+mainScene);
+        print("mian scne " + mainScene);
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {

@@ -26,8 +26,8 @@ public class WorldItemPreviewTab : MonoBehaviour
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
-    string ThumbnailDownloadURL="";
-    public Transform LobbyLogoContaionr,XanaAvatarIcon,NoAvatarIcon,AvatarIcon;
+    string ThumbnailDownloadURL = "";
+    public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;
 
     [Header("Tags and Category")]
     public GameObject tagScroller;
@@ -38,8 +38,8 @@ public class WorldItemPreviewTab : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
 
-    public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
-        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh,string[] worldTags)
+    public void Init(Sprite worldImg, string worldName, string worldDescription, string creatorName,
+        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags)
     {
         PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
@@ -48,7 +48,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
         }
         JoinEventBtn.onClick.RemoveAllListeners();
-       
+
         scrollActivity.enabled = false;
         ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
@@ -66,7 +66,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
             StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
         }
-        if(worldTags!=null && worldTags.Length>0)
+        if (worldTags != null && worldTags.Length > 0)
         {
             m_WorldTags = worldTags;
             InstantiateWorldtags();
@@ -95,7 +95,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             XanaAvatarIcon.gameObject.SetActive(false);
             AvatarIcon.gameObject.SetActive(false);
         }
-        else if(!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
+        else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
         {
             NoAvatarIcon.gameObject.SetActive(false);
             XanaAvatarIcon.gameObject.SetActive(true);
@@ -109,7 +109,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
     }
-    public void CallAnalytics(string idOfObject,string entityType)
+    public void CallAnalytics(string idOfObject, string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt);
@@ -127,7 +127,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         UIManager.Instance.HomePage.SetActive(true);
         FadeImg.sprite = WorldIconImg.sprite;
         UpdateWorldPanel();
-        string EnvironmentName = WorldNameTxt.text; 
+        string EnvironmentName = WorldNameTxt.text;
         if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
         {
             EnvironmentName = "DJ Event";
@@ -175,7 +175,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         if (BannerImgSprite.Length > 2)
             BannerImgSprite[2].sprite = FadeImg.sprite;
     }
-    IEnumerator DownloadAndSetImage(string downloadURL,Image imageHolder)
+    IEnumerator DownloadAndSetImage(string downloadURL, Image imageHolder)
     {
         yield return null;
         if (!string.IsNullOrEmpty(downloadURL))
@@ -199,7 +199,7 @@ public class WorldItemPreviewTab : MonoBehaviour
                     }
                 });
             }
-          
+
         }
     }
 
@@ -226,4 +226,57 @@ public class WorldItemPreviewTab : MonoBehaviour
         }
         tagsInstantiated = true;
     }
+
+
+    #region PMY-Items
+    [Header("PMY: ClassRom Items")]
+    public GameObject enterClassCodePanel;
+    public TextMeshProUGUI classCodeInputField;
+    public TextMeshProUGUI wrongCodeText;
+    public void PMY_CodeEnter()
+    {
+        // Check Enter code is Ok or Not
+        if (IsClassCodeValid((classCodeInputField.text)))
+        {
+            // Yes Class Available, Create Room for that Class
+            Debug.Log("<color=green> PMY -- Class Available  </color>");
+            XanaConstants.xanaConstants.pmy_isClassAvailable = true;
+            XanaConstants.xanaConstants.pmy_joinedClassCode = classCodeInputField.text;
+            WorldManager.instance.PlayWorld();
+        }
+        else
+        {
+            Debug.Log("<color=red> PMY -- Class Not Available  </color>");
+            XanaConstants.xanaConstants.pmy_isClassAvailable = false;
+            wrongCodeText.gameObject.SetActive(true);
+            Invoke(nameof(PMY_CloseWrongCode), 2f);
+        }
+    }
+    void PMY_CloseWrongCode()
+    {
+        wrongCodeText.gameObject.SetActive(false);
+    }
+    bool IsClassCodeValid(string classCodeInputField)
+    {
+        if (string.IsNullOrEmpty(classCodeInputField)) return false;
+        classCodeInputField.Replace(" ", "");
+        try 
+        {
+            //return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); 
+            foreach (var item in XanaConstants.xanaConstants.pmy_ClassCode)
+            {
+                if (item.codeText.Contains(classCodeInputField))
+                {
+                    XanaConstants.xanaConstants.pmySchooldDataID = item.id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch { return false; }
+
+    }
+    #endregion
+
 }
