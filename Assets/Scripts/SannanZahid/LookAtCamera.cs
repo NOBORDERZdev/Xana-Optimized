@@ -12,6 +12,9 @@ public class LookAtCamera : MonoBehaviour
     TMPro.TMP_Text _postText;
     [SerializeField]
     UserPostFeature _postHandler;
+    [SerializeField]
+    Transform _playerTransform;
+    public Vector3 Offset;
     private void OnEnable()
     {
         _postHandler.OnUpdatePostText += UpdateText;
@@ -26,7 +29,8 @@ public class LookAtCamera : MonoBehaviour
     }
     void Update()
     {
-        transform.LookAt(_cameraTransform);
+        transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position + Offset, 0.5f);
+        //transform.LookAt(_cameraTransform);
     }
     public void UpdateText(string txt)
     {
