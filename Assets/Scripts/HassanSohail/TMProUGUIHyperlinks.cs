@@ -121,7 +121,7 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
             if (JjInfoManager.Instance.clRoomId != 0)
                 SendFirebaseEvent(eventName);
         }
-        else if (environmentType.Equals(EnvType.PMYWorld))
+        else if (envType.Equals(EnvType.PMYWorld))
         {
             string eventName = XanaConstants.xanaConstants.EnviornmentName;
             switch (eventName)
