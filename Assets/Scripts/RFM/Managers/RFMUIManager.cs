@@ -223,7 +223,7 @@ namespace RFM.Managers
 
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
-                string[] array = { "Hunter" + " [H]", 0.ToString() };
+                string[] array = { "Hunter" + " [H]", npcHunter.rewardMultiplier.ToString() };
                 huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
             }
 
