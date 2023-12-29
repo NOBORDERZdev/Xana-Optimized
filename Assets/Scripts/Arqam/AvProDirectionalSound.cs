@@ -36,6 +36,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateScreenMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
         ScreenSoundOnOff.ScreenSoundStatus -= ToggleScreenSound;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
     }
 
     private void OrientationChanged()
