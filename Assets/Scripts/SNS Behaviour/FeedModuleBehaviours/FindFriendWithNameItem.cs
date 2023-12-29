@@ -364,7 +364,6 @@ public class FindFriendWithNameItem : MonoBehaviour
     /// </summary>
     public void AddBff(){ 
         APIManager.Instance.AddBestFriend(searchUserRow.id,gameObject);
-        Debug.LogError("AddBff");
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().AddFriendToHome();
     }
 
@@ -373,7 +372,6 @@ public class FindFriendWithNameItem : MonoBehaviour
     /// </summary>
     public void RemoveBff(){ 
           APIManager.Instance.RemoveBestFriend(searchUserRow.id,gameObject);
-        Debug.LogError("RemoveBff");
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(searchUserRow.id);
     }
 

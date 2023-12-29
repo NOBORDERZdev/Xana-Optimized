@@ -21,7 +21,7 @@ public class UserAnimationPostFeature : MonoBehaviour
     }
     string PrepareApiURL()
     {
-       return "https://api-test.xana.net/item/app-emojis";
+       return ConstantsGod.API_BASEURL+"/item/app-emojis";
     }
     IEnumerator BuildMoodDialog()
     {
