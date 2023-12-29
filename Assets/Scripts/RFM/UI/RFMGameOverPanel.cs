@@ -15,7 +15,7 @@ public class RFMGameOverPanel : MonoBehaviour
 
     public void RunnersButtonClicked()
     {
-        runnersSelectionImage.color = new Color(1f, 0.212f, 0.827f, 1f);
+        runnersSelectionImage.color = Color.white;
         huntersSelectionImage.color = Color.black;
         runnerLeaderBoard.SetActive(true);
         hunterLeaderBoard.SetActive(false);
@@ -23,7 +23,7 @@ public class RFMGameOverPanel : MonoBehaviour
 
     public void HuntersButtonClicked()
     {
-        huntersSelectionImage.color = new Color(1f, 0.212f, 0.827f, 1f);
+        huntersSelectionImage.color = Color.white;
         runnersSelectionImage.color = Color.black;
         hunterLeaderBoard.SetActive(true);
         runnerLeaderBoard.SetActive(false);
