@@ -208,7 +208,7 @@ namespace RFM.Managers
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
-            var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss");
+            var timeSurvivedInMS = TimeSpan.FromMilliseconds(timeSurvived * 1000).ToString(@"mm\:ss\:ms");
 
             string[] array = { nickName, timeSurvivedInMS };
             runnersScores.Add(array, money);
@@ -258,7 +258,7 @@ namespace RFM.Managers
                             timeSurvived = (float)_timeSurvived;
                         }
 
-                        var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss");
+                        var timeSurvivedInMS = TimeSpan.FromMilliseconds(timeSurvived * 1000).ToString(@"mm\:ss\:ms");
                         string[] array = { player.NickName, timeSurvivedInMS };
                         runnersScores.Add(array, money);
                     }
