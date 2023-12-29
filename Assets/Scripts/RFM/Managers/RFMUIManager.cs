@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using RFM.Character;
 using UnityEngine.SocialPlatforms.Impl;
 using Photon.Realtime;
+using System;
 
 namespace RFM.Managers
 {
@@ -51,7 +52,11 @@ namespace RFM.Managers
             _mainCanvas = GameObject.FindGameObjectWithTag(Globals.CANVAS_TAG);
             XanaConstants.xanaConstants.minimap = 0;
             ReferrencesForDynamicMuseum.instance.minimap.SetActive(false); // TODO temporary fix
+        }
 
+        private void Start()
+        {
+            showMoney.transform.parent.gameObject.SetActive(true);
             showMoney.text = "000";
 
             runnersScores = new Dictionary<string[], int>();
@@ -176,6 +181,7 @@ namespace RFM.Managers
             if (!PhotonNetwork.IsMasterClient) return;
 
             GetComponent<PhotonView>().RPC(nameof(RestartRFM), RpcTarget.AllBuffered);
+            restartButton.SetActive(false);
             
         }
 
@@ -184,7 +190,7 @@ namespace RFM.Managers
         [PunRPC]
         private void RestartRFM()
         {
-            Awake();
+            Start();
             // Destroy all children of leaderboardEntryContainer
             foreach (Transform child in runnersLeaderboardEntryContainer)
             {
@@ -202,7 +208,9 @@ namespace RFM.Managers
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
-            string[] array = { nickName, timeSurvived.ToString() };
+            var timeSurvivedInMS = TimeSpan.FromMilliseconds(timeSurvived * 1000).ToString(@"mm\:ss\:ms");
+
+            string[] array = { nickName, timeSurvivedInMS };
             runnersScores.Add(array, money);
         }
 
@@ -218,7 +226,7 @@ namespace RFM.Managers
 
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
-                string[] array = { "Hunter" + " [H]", 0.ToString() };
+                string[] array = { "Hunter" + " [H]", npcHunter.rewardMultiplier.ToString() };
                 huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
             }
 
@@ -250,7 +258,8 @@ namespace RFM.Managers
                             timeSurvived = (float)_timeSurvived;
                         }
 
-                        string[] array = { player.NickName, timeSurvived.ToString() };
+                        var timeSurvivedInMS = TimeSpan.FromMilliseconds(timeSurvived * 1000).ToString(@"mm\:ss\:ms");
+                        string[] array = { player.NickName, timeSurvivedInMS };
                         runnersScores.Add(array, money);
                     }
                 }
