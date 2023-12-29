@@ -17,7 +17,7 @@ public class FeedCommentItemController : MonoBehaviour
 
     public Sprite defaultSP;
 
-
+    public TextMeshProUGUI commentLikeCountText;
     private void Awake()
     {
         defaultSP = profileImage.sprite;

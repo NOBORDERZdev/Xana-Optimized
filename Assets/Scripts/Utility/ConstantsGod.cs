@@ -153,6 +153,7 @@ public class ConstantsGod
     public static string r_url_DeleteComment = "/feeds/feed-comment-delete";
 
     public static string r_url_FeedLikeDisLike = "/feeds/like-dislike-post";
+    public static string r_url_CommentLikeDisLike = "/feeds/like-on-comment";
 
     public static string r_url_SearchUser = "/users/search-user";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";

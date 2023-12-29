@@ -1425,7 +1425,56 @@ public class APIManager : MonoBehaviour
             }
         }
     }
+    //this api is used to Like or DisLike Comment.......
+    public void RequestLikeOrDisLikeComment(string commentId, string feedId, Button likeButton)
+    {
+        // Debug.Log("RequestLikeOrDisLikeFeed feedId:" + feedId);
+        likeButton.interactable = false;//like button interactable false untill response.......
 
+        if (IERequestLikeOrDisLikeCommentCo != null)
+        {
+            StopCoroutine(IERequestLikeOrDisLikeCommentCo);
+        }
+        IERequestLikeOrDisLikeFeedCo = StartCoroutine(IERequestLikeOrDisLikeComment(commentId,feedId, likeButton));
+    }
+    Coroutine IERequestLikeOrDisLikeCommentCo;
+    public IEnumerator IERequestLikeOrDisLikeComment(string commentId, string feedId, Button likeButton)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("commentId", commentId);
+        form.AddField("feedId", feedId);
+        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentLikeDisLike), form))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            likeButton.interactable = true;//like button interactable true.......
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                //Debug.Log("data" + form);
+            }
+            else
+            {
+                //Debug.Log("Feed Like or DisLike success!");
+                string data = www.downloadHandler.text;
+                // Debug.Log("LikeOrDisLikeFeed data:" + data);
+                CommentLikeDisLikeRoot commentLikeDisLikeRoot = JsonConvert.DeserializeObject<CommentLikeDisLikeRoot>(data);
+
+                //if (feedLikeDisLikeRoot.data == null)
+                if (commentLikeDisLikeRoot.msg.Equals("Comment like successfully"))
+                {
+                    //FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(false, commentLikeDisLikeRoot.data.likeCount);
+                }
+                else
+                {
+                    //FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(true, commentLikeDisLikeRoot.data.likeCount);
+                }
+            }
+        }
+    }
     //this api is used to delete avatar.......
     public void DeleteAvatarDataFromServer(string token, string UserId)
     {
@@ -3065,6 +3114,22 @@ public class FeedLikeDisLikeRoot
 {
     public bool success;
     public FeedLikeDisLikeData data;
+    public string msg;
+}
+//----------------------------------------------------
+
+/// <summary>
+/// Comment Like or DisLike Class.......
+/// </summary>
+/// 
+public class CommentLikeDisLikeData
+{
+    public int likeCount;
+}
+public class CommentLikeDisLikeRoot
+{
+    public bool success;
+    public CommentLikeDisLikeData data;
     public string msg;
 }
 //----------------------------------------------------
