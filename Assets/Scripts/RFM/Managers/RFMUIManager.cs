@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using RFM.Character;
 using UnityEngine.SocialPlatforms.Impl;
 using Photon.Realtime;
+using System;
 
 namespace RFM.Managers
 {
@@ -207,7 +208,9 @@ namespace RFM.Managers
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
-            string[] array = { nickName, timeSurvived.ToString() };
+            var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss");
+
+            string[] array = { nickName, timeSurvivedInMS };
             runnersScores.Add(array, money);
         }
 
@@ -255,7 +258,8 @@ namespace RFM.Managers
                             timeSurvived = (float)_timeSurvived;
                         }
 
-                        string[] array = { player.NickName, timeSurvived.ToString() };
+                        var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss");
+                        string[] array = { player.NickName, timeSurvivedInMS };
                         runnersScores.Add(array, money);
                     }
                 }
