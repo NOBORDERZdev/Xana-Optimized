@@ -685,10 +685,10 @@ RectTransform:
   m_Father: {fileID: 5167078963820621409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.09369387, y: 0.19309546}
-  m_AnchorMax: {x: 0.904515, y: 0.25602302}
+  m_AnchorMin: {x: 0.09319121, y: 0.11890458}
+  m_AnchorMax: {x: 0.904555, y: 0.18137924}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -0.000019073486}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5288105763010136722
 CanvasRenderer:
@@ -776,18 +776,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: 
         m_MethodName: SetActive
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SplashVideoDownloader, Assembly-CSharp
-        m_MethodName: NewuserSplashVideoDownload
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1048,8 +1036,8 @@ RectTransform:
   m_Father: {fileID: 5288105764144757279}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.0030682753, y: 0.0000018171784}
-  m_AnchorMax: {x: 1.003071, y: 0.99999934}
+  m_AnchorMin: {x: 0.0030682753, y: 0.018105265}
+  m_AnchorMax: {x: 1.003071, y: 1.0181028}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1083,7 +1071,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b4b42b128b9685a4db8072add04b3964, type: 3}
-    m_FontSize: 40
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -1131,10 +1119,10 @@ RectTransform:
   m_Father: {fileID: 5167078963820621409}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.09369364, y: 0.11989853}
-  m_AnchorMax: {x: 0.9045148, y: 0.18018714}
+  m_AnchorMin: {x: 0.09319121, y: 0.1943948}
+  m_AnchorMax: {x: 0.904555, y: 0.25478697}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.000011444092, y: 0.000009536743}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5288105764144757282
 CanvasRenderer:
@@ -1290,8 +1278,8 @@ RectTransform:
   m_Father: {fileID: 5288105763010136719}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: -0.010201694, y: 0.0014902742}
-  m_AnchorMax: {x: 1.0102009, y: 1.0218965}
+  m_AnchorMin: {x: -0.008396156, y: -0.00017640676}
+  m_AnchorMax: {x: 1.0120064, y: 1.0202298}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1325,7 +1313,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b4b42b128b9685a4db8072add04b3964, type: 3}
-    m_FontSize: 41
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1495,13 +1483,14 @@ GameObject:
   - component: {fileID: 5288105764421432348}
   - component: {fileID: 5288105764421432350}
   - component: {fileID: 5288105764421432349}
+  - component: {fileID: 736828110869619065}
   m_Layer: 5
   m_Name: LoginWelcome-Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5288105764421432348
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1556,7 +1545,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 52611879d27475c47a515c9a3c9ff6cb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a75ef34261b02ca4c8975a3b5935ca91, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1566,6 +1555,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &736828110869619065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5288105764421432347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94608f882c9c28a4d9c743d0abc029ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackScreen: {fileID: 0}
 --- !u!1 &5288105765023114026
 GameObject:
   m_ObjectHideFlags: 0

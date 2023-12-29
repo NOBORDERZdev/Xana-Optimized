@@ -44,7 +44,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject LogoutfromOtherDevicePanel;
     public GameObject BlackScreen;
     public GameObject validationMessagePopUP;
-    bool passwordBool=false;
+    bool passwordBool = false;
     bool emailBool = false;
     //Waheed Changes
     public GameObject setAvatarGiftPanal;
@@ -59,7 +59,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField EmailFieldNew;
     //   public MobileInputField UsernameTextNew;
     public AdvancedInputField UsernameFieldAdvance;
-  //  public AdvancedInputField Username2FieldAdvance;
+    //  public AdvancedInputField Username2FieldAdvance;
     public Text CountryCodeText;
     // public MobileInputField PhoneInputTextNew;      
     public AdvancedInputField PhoneFieldNew;
@@ -84,7 +84,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField LoginEmailOrPhone;
     public AdvancedInputField LoginPassword;
 
-    [Space(5)] 
+    [Space(5)]
     [Header("ForgetPassword-InputFields")]
     // public MobileInputField EmailOrPhone_ForgetPasswrod;
     public AdvancedInputField EmailOrPhone_Forget_NewField;
@@ -158,7 +158,7 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject phoneTabSelected;
     public GameObject emailTabSelected;
     public GameObject WalletTabSelected;
-   
+
 
 
     [Tooltip("Pass Animator Component attached to the slider")]
@@ -172,12 +172,15 @@ public class UserRegisterationManager : MonoBehaviour
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
     public userRoleScript userRoleObj;
-     /// <Web 3.0 and Web 2.0>
+    /// <Web 3.0 and Web 2.0>
     public bool XanaliaBool;
     public Web3APIforWeb2 _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
     /// 
     public int btnClickedNo = 0;
+    public void ShowCommingsoonPopup() {
+        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+    }
 
     #region WelcomeScreen
     public GameObject welcomeScreen;
@@ -844,11 +847,11 @@ public class UserRegisterationManager : MonoBehaviour
         //PhoneInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
         //PhoneInputTextNew.SelectOtherField();
         PhoneFieldNew.Text = "";
-        Color _temp = new Color();
-        validationMessagePopUP.SetActive(true);
+       // Color _temp = new Color();
+       // validationMessagePopUP.SetActive(true);
         // _temp = errorTextEmail.GetComponent<Text>().color;
         //  _temp.a = 0;
-        errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
+       // errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
             //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
@@ -1920,7 +1923,7 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.isNetworkError)
                 {
                     validationMessagePopUP.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                     //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                     //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                     errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
@@ -1999,8 +2002,8 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
-                errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
-               // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
                // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
@@ -3179,7 +3182,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
-            errorTextPassword.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<Text>());
             //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
