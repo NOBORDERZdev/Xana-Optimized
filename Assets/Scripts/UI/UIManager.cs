@@ -18,15 +18,15 @@ public class UIManager : MonoBehaviour
     [Space(5)]
     [Header("New World Layout References")]
     public Transform SearchHomeHolder;
-    public Transform SearchWorldHolder, 
+    public Transform SearchWorldHolder,
         SearchWorldScreenHolder,
         AvatarWindowHolder,
-        HomeWorldTabsHolder, 
-        WorldWorldTabsHolder, 
+        HomeWorldTabsHolder,
+        WorldWorldTabsHolder,
         WorldScrollerHolder,
         LobbyTabHolder,
         AdvanceSearchInputField;
-   
+
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     }
     public void IsWorldClicked()
     {
-        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
@@ -56,9 +56,9 @@ public class UIManager : MonoBehaviour
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-               
+
             }
-           
+
         }
         else
         {
@@ -67,26 +67,27 @@ public class UIManager : MonoBehaviour
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
     }
-   
+
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
         SavaCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
-         yield return new WaitForSeconds(_time);
+        yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
-        Loadinghandler_CanvasRef.alpha = 1.0f;
+        if (Loadinghandler_CanvasRef != null)
+            Loadinghandler_CanvasRef.alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
-   
-  
+
+
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
-        switch(Screen)
+        switch (Screen)
         {
             case 0:
                 {

@@ -6505,6 +6505,10 @@ PrefabInstance:
       propertyPath: micOffButtonGameplay
       value: 
       objectReference: {fileID: 429271889}
+    - target: {fileID: 5942558483825590715, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
+      propertyPath: screenSoundBtn
+      value: 
+      objectReference: {fileID: 1825731436}
     - target: {fileID: 6418695311878694922, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
       propertyPath: micOnButtonGameplay
       value: 
@@ -16500,6 +16504,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789831778}
   m_CullTransparentMesh: 1
+--- !u!1 &1825731436 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7629328893215982052, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
+  m_PrefabInstance: {fileID: 631382438}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1834870216
 GameObject:
   m_ObjectHideFlags: 0
@@ -21623,7 +21632,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641495, y: -0.0008924867, z: 0.000009499795, w: 0.999943}
+  m_LocalRotation: {x: 0.010641493, y: -0.00089248497, z: 0.000009499775, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -31065,6 +31074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a1a2ee27a77f47891313872c01942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenSoundBtn: {fileID: 1143523363}
   btns:
   - normal: {fileID: 21300000, guid: ef49ae18889b7e04dbac2d8f9425c179, type: 3}
     pressed: {fileID: 21300000, guid: ef49ae18889b7e04dbac2d8f9425c179, type: 3}
@@ -31102,6 +31112,7 @@ MonoBehaviour:
   voiceChatOffBtn2: {fileID: 1619158270}
   voiceChatSettingBtn: {fileID: 7342087503991009454}
   screenSoundToggle: {fileID: 1143523363}
+  ref_ScreenSoundOnOff: {fileID: 0}
 --- !u!224 &4341188589260864274
 RectTransform:
   m_ObjectHideFlags: 0

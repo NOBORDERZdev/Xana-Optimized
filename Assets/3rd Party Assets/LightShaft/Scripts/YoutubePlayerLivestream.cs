@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using PMY;
 using RenderHeads.Media.AVProVideo;
 using System;
 using System.Collections;
@@ -13,7 +14,8 @@ using YoutubeLight;
 
 public class YoutubePlayerLivestream : MonoBehaviour
 {
-
+    public enum EnvType { JJWorld, PMY }
+    public EnvType envType;
     public string _livestreamUrl;
 
     //AVPRO
@@ -190,10 +192,13 @@ public class YoutubePlayerLivestream : MonoBehaviour
             }
         }
 
-        if(string.IsNullOrEmpty(player_response))
+        if (string.IsNullOrEmpty(player_response))
         {
             Debug.Log("<color=red> Player Json is Null .</color>");
-            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            if (envType.Equals(EnvType.JJWorld))
+                JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            else if (envType.Equals(EnvType.PMY))
+                PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
         {
@@ -212,7 +217,10 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 else if (json["streamingData"]["hlsManifestUrl"] == null)
                 {
                     Debug.Log("<color=red> Key Not Found .</color>");
-                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
+                    if (envType.Equals(EnvType.JJWorld))
+                        JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+                    else if (envType.Equals(EnvType.PMY))
+                        PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
                 }
                 else
                 {
