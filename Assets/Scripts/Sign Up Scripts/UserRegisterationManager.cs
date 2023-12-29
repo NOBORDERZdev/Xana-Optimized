@@ -3543,6 +3543,14 @@ public class UserRegisterationManager : MonoBehaviour
             L_LoginEmail = L_LoginEmail.ToLower();
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(L_LoginEmail, "", L_loginPassword, uniqueID()));
         }
+        else if (!L_LoginEmail.Contains("+") && L_LoginEmail.Any(char.IsLetter))
+        {
+            validationMessagePopUP.SetActive(true);
+            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<Text>());
+            _loginBtnObject.SetActive(false);
+            return;
+        }
         else
         {
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass("", L_LoginEmail, L_loginPassword));
