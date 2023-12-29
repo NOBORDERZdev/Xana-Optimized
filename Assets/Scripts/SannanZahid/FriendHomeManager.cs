@@ -18,7 +18,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     string PrepareApiURL()
     {
-        return "https://api-test.xana.net/social/get-close-friends/"+ XanaConstants.xanaConstants.userId;
+        return ConstantsGod.API_BASEURL+"/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
     }
     IEnumerator BuildMoodDialog()
     {
