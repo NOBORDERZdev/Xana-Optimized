@@ -24,6 +24,8 @@ public class YoutubeStreamController : MonoBehaviour
     private string PrevURL;
     private bool IsOldURL = true;
     public static Action playPrercordedVideo;
+    public static Action<GameObject> activePlayer;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -137,6 +139,8 @@ public class YoutubeStreamController : MonoBehaviour
         {
             LiveStreamPlayer.SetActive(false);
             NormalPlayer.SetActive(true);
+            activePlayer?.Invoke(NormalPlayer);
+
             YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
 
             LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
@@ -177,7 +181,7 @@ public class YoutubeStreamController : MonoBehaviour
             Debug.Log("Hardik changes check");
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.SetActive(false);
-
+            activePlayer?.Invoke(LiveStreamPlayer);
 
 
             YoutubePlayerLivestream player = LiveStreamPlayer.GetComponent<YoutubePlayerLivestream>();

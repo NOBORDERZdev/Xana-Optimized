@@ -20,6 +20,8 @@ public class ButtonsPressController : MonoBehaviour
 {
     public static ButtonsPressController Instance;
 
+    public GameObject screenSoundBtn;
+    [Space(5)]
     [SerializeField] public List<Btn> btns;
 
     public bool Settings_pressed = false;

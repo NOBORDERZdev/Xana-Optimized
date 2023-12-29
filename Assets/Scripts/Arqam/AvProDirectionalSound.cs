@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using PMY;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
@@ -10,8 +11,6 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     [Tooltip("Enable/Disable Screen sound toggle in screen panel")]
     public bool isShowScreenSoundOption = true;
     [Space(5)]
-    public MediaPlayer mediaPlayer;
-    [Space(5)]
     public float maxDistance = 10f; // Max distance for full volume
     public float minDistance = 2f; // Min distance for minimum volume
     [Space(5)]
@@ -21,42 +20,44 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private Transform playerCam; // Reference to your player object or camera
     private WaitForSeconds updateDelay;
     private Coroutine volumeCoroutine;
-    private GameObject screenSoundBtnPort, screenSoundBtnLand;
     private bool isScreenSoundPlaying = true;
+    private MediaPlayer activePlayer;
+
 
     private void OnEnable()
     {
-        ChangeOrientation_waqas.switchOrientation += OrientationChanged;
-        SceneManage.onExitAction += OnSceneExit;
-
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+        ChangeOrientation_waqas.switchOrientation += OrientationChanged;
+        YoutubeStreamController.activePlayer += GetActivePlayer;
     }
 
     private void OnDisable()
     {
         ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
-        SceneManage.onExitAction -= OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateScreenMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
+        YoutubeStreamController.activePlayer -= GetActivePlayer;
+        ScreenSoundOnOff.ScreenSoundStatus -= ToggleScreenSound;
     }
 
     private void OrientationChanged()
     {
-        ShowScreenSoundBtnInSettingPanel(); // StartCoroutine(ShowScreenSoundBtnInSettingPanel());
+        StartCoroutine(ShowScreenSoundBtnInSettingPanel());
     }
 
     private void Start()
     {
-
-        if (!XanaConstants.xanaConstants.isScreenSoundOn)
-            mediaPlayer.AudioMuted = false;
+        updateDelay = new WaitForSeconds(updateInterval);
 
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+    }
 
-        if (isShowScreenSoundOption)
-            ShowScreenSoundBtnInSettingPanel(); // StartCoroutine(ShowScreenSoundBtnInSettingPanel());
+    private void GetActivePlayer(GameObject mediaPlayer)
+    {
+        activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
+        if (!XanaConstants.xanaConstants.isScreenSoundOn)
+            activePlayer.AudioMuted = false;
 
-        updateDelay = new WaitForSeconds(updateInterval);
         volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
 
@@ -64,30 +65,17 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     {
         PMY_Nft_Manager.Instance.exitClickedAction += UpdateScreenMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
+        ScreenSoundOnOff.ScreenSoundStatus += ToggleScreenSound;
+
+        UnityEngine.Debug.Log("Adjust Volume");
+        if (isShowScreenSoundOption)
+            StartCoroutine(ShowScreenSoundBtnInSettingPanel());
     }
 
-    private void ShowScreenSoundBtnInSettingPanel()
+    IEnumerator ShowScreenSoundBtnInSettingPanel()
     {
-        //yield return updateDelay;
-        // set the interface reference to SoundOnOff script
-        ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
-                screenSoundToggle.GetComponent<ScreenSoundOnOff>().SetScreenSoundControl = this;
-        //UnityEngine.Debug.LogError("Errorrrr::" + ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().
-        //        screenSoundToggle.GetComponent<ScreenSoundOnOff>().gameObject.name);
-
-        if (ChangeOrientation_waqas._instance.isPotrait)
-        {
-            if (screenSoundBtnPort is null)
-                screenSoundBtnPort = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
-            screenSoundBtnPort.SetActive(true);
-        }
-        else
-        {
-            //Handheld.Vibrate();
-            if (screenSoundBtnLand is null)
-                screenSoundBtnLand = ButtonsPressController.Instance.gameObject.GetComponent<XanaFeaturesHandler>().screenSoundToggle;
-            screenSoundBtnLand.SetActive(true);
-        }
+        yield return updateDelay;
+        ButtonsPressController.Instance.screenSoundBtn.SetActive(true);
     }
 
     IEnumerator AdjustScreenVolume()
@@ -106,21 +94,14 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
             //Debug.Log("<color=red> Volume: " + mappedVolume + "</color>");
 
             // Set the video volume using the third-party package's method
-            mediaPlayer.AudioVolume = mappedVolume;
-
+            activePlayer.AudioVolume = mappedVolume;
             yield return updateDelay;
         }
     }
 
-    private void OnSceneExit()
-    {
-        screenSoundBtnPort?.SetActive(false);
-        screenSoundBtnLand?.SetActive(false);
-    }
-
     public void ToggleScreenSound(bool isSoundOn)
     {
-        mediaPlayer.AudioMuted = isSoundOn;
+        activePlayer.AudioMuted = isSoundOn;
         XanaConstants.xanaConstants.isScreenSoundOn = !isSoundOn;
         if (isSoundOn)
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
@@ -131,13 +112,13 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private void OnVideoEnlargeAction()
     {
         isScreenSoundPlaying = false;
-        mediaPlayer.AudioMuted = true;
+        activePlayer.AudioMuted = true;
     }
 
     private void UpdateScreenMusicStatus(int nftNum)
     {
         if (isScreenSoundPlaying) return;
-        mediaPlayer.AudioMuted = false;
+        activePlayer.AudioMuted = false;
         isScreenSoundPlaying = true;
     }
 
