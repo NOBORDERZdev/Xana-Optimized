@@ -21,14 +21,13 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private WaitForSeconds updateDelay;
     private Coroutine volumeCoroutine;
     private bool isScreenSoundPlaying = true;
-    private MediaPlayer activePlayer;
+    public MediaPlayer activePlayer;
 
 
     private void OnEnable()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
         ChangeOrientation_waqas.switchOrientation += OrientationChanged;
-        YoutubeStreamController.activePlayer += GetActivePlayer;
     }
 
     private void OnDisable()
@@ -36,7 +35,6 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateScreenMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
-        YoutubeStreamController.activePlayer -= GetActivePlayer;
         ScreenSoundOnOff.ScreenSoundStatus -= ToggleScreenSound;
     }
 
@@ -50,11 +48,12 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         updateDelay = new WaitForSeconds(updateInterval);
 
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        GetActivePlayer();
     }
 
-    private void GetActivePlayer(GameObject mediaPlayer)
+    private void GetActivePlayer()
     {
-        activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
+        //activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
             activePlayer.AudioMuted = false;
 
