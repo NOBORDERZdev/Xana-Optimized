@@ -7,23 +7,19 @@ using UnityEngine;
 
 public class SoundChanger : MonoBehaviour
 {
-    private void Awake()
-    {
-      //  UFE.config.selectedStage.position = new FPLibrary.FPVector(0, -1.7f, 0);
-        //UFE.config.selectedStage._rightBoundary = 20;
-        //UFE.config.selectedStage._leftBoundary = 20;
-    }
+    public GameObject WinnerAvatar;
+ 
     // Start is called before the first frame update
     void Start()
     {
         FightingGameManager.instance.PlayCrowdSound();
-        print("On Disable changing sound to crowd cheering sound");
+        print("On enable changing sound to crowd cheering sound");
     }
 
     private void OnDisable()
     {
         FightingGameManager.instance.PlayMenuMusic();
-        print("On Disable changing sound to menu sound");
+        print("On disable changing sound to menu sound");
     }
 
 }

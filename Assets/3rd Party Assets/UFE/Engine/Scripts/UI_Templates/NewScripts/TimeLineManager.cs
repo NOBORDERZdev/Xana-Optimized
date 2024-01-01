@@ -40,6 +40,7 @@ public class TimeLineManager : MonoBehaviour
         // Assign the timeline asset to the Playable Director
         playableDirector.playableAsset = outroCutScene;
         playableDirector.Play();
+        FightingGameManager.instance.FindPlayersAndManageWin();
     }
 
     public void OutroCutSceneEnded()

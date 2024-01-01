@@ -467,12 +467,28 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'Bip01 L
+      Thigh' : position error = 11895.766602 mm\n\t'Bip01 L Calf' : position error
+      = 40123.128906 mm\n\t'Bip01 L Foot' : position error = 41705.312500 mm\n\t'Bip01
+      L Toe0' : position error = 18999.265625 mm\n\t'Bip01 R Thigh' : position error
+      = 11895.766602 mm\n\t'Bip01 R Calf' : position error = 40123.121094 mm\n\t'Bip01
+      R Foot' : position error = 41705.312500 mm\n\t'Bip01 R Toe0' : position error
+      = 18999.269531 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
       to improve retargeting quality.\n\t'Bip01 Spine' has translation animation
-      that will be discarded.\n"
+      that will be discarded.\n\t'Bip01 Spine1' has translation animation that will
+      be discarded.\n\t'Bip01 Neck' has translation animation that will be discarded.\n\t'Bip01
+      zJaw' has translation animation that will be discarded.\n\t'Bip01 L Clavicle'
+      has translation animation that will be discarded.\n\t'Bip01 L Hand' has translation
+      animation that will be discarded.\n\t'Bip01 R Clavicle' has translation animation
+      that will be discarded.\n\t'Bip01 R Hand' has translation animation that will
+      be discarded.\n\t'Bip01 L Calf' has translation animation that will be discarded.\n\t'Bip01
+      L Foot' has translation animation that will be discarded.\n\t'Bip01 R Calf'
+      has translation animation that will be discarded.\n\t'Bip01 R Foot' has translation
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -877,7 +893,7 @@ ModelImporter:
       loopTime: 1
       loopBlend: 1
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1

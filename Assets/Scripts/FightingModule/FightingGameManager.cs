@@ -15,7 +15,6 @@ public class FightingGameManager : MonoBehaviour
     public UFE3D.CharacterInfo P2SelectedChar;
     public PlayerDataClass player1Data = new PlayerDataClass();
     public PlayerDataClass player2Data = new PlayerDataClass();
-
     public string myName = ""; //Attizaz
     public string opponentName = "";
 
@@ -29,6 +28,8 @@ public class FightingGameManager : MonoBehaviour
     public Button OpenButton;
     [HideInInspector]public int id1;
     [HideInInspector] public int id2;
+
+    public GameObject player1, player2,winnerAvatar;
     private void Awake()
     {
         if (instance == null)
@@ -122,6 +123,31 @@ public class FightingGameManager : MonoBehaviour
             mainAudioSource.clip = crowdSound;
             mainAudioSource.Play();
         }
+    }
+
+    //public bool testonly = false;
+    //private void Update()
+    //{
+    //    if (testonly) {
+    //        testonly = false;
+    //        FindPlayersAndManageWin();
+    //    }
+    //}
+
+    public void FindPlayersAndManageWin() {
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
+        
+        
+        SoundChanger soundChanger = FindObjectOfType<SoundChanger>();
+        winnerAvatar = soundChanger.WinnerAvatar;
+        
+        
+        player1.SetActive(false);
+        player2.SetActive(false);
+
+        
+        winnerAvatar.SetActive(true);
     }
 
     #endregion

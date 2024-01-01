@@ -2114,8 +2114,8 @@ public class UFE : MonoBehaviour, UFEInterface
 				{
 					//SceneManager.UnloadSceneAsync(UFE.config.selectedStage.stagePath);
 					SceneManager.UnloadSceneAsync("Fighting BreakingDown Arena");
-					SceneManager.SetActiveScene(mainScene);
-				}
+                    SceneManager.SetActiveScene(mainScene);
+                }
 
 				GameObject.Destroy(gameEngine);
 				gameEngine = null;
@@ -3660,8 +3660,9 @@ public class UFE : MonoBehaviour, UFEInterface
         {
             stageScene = SceneManager.GetSceneByName(UFE.config.selectedStage.stagePath);
         }
-		stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
-		SceneManager.SetActiveScene(stageScene);
+
+        stageScene = SceneManager.GetSceneByName("Fighting BreakingDown Arena");
+        SceneManager.SetActiveScene(stageScene);
     }
 
     public static ControlsScript SpawnCharacter(UFE3D.CharacterInfo characterInfo, int player, int mirror, FPVector location, bool isAssist, MoveInfo enterMove = null, MoveInfo exitMove = null, int altCostume = -1) {
@@ -3860,7 +3861,8 @@ public class UFE : MonoBehaviour, UFEInterface
 
 #if !UFE_LITE && !UFE_BASIC
     public static void FindAndSpawnAssist(ControlsScript controlsScript, int player) {
-        List<MoveSetData> loadedMoveSets = new List<MoveSetData>();
+	
+		List<MoveSetData> loadedMoveSets = new List<MoveSetData>();
         foreach (MoveSetData moveSetData in controlsScript.myInfo.moves)
         {
             loadedMoveSets.Add(moveSetData);
@@ -3874,6 +3876,60 @@ public class UFE : MonoBehaviour, UFEInterface
         {
             foreach (MoveInfo move in moveSet.attackMoves)
             {
+				print("<color=green>Uncomment the below region code for stats changes</color>");
+                #region StatManageMent
+                ///////// Attizaz
+                //Player 1 stats change
+    //            if (player == 1)
+				//{
+				//	switch (move.moveName)
+				//	{
+				//		case "Heavy Punch":
+				//		//	float aa = 20; // Get API or Sheet Damage info and pass it to ChangesStats Func
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Light Punch":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Power Hit":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Heavy Kick":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Standing Light Kick":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		default:
+				//			break;
+				//	}
+				//}
+				//else if (player == 2)
+				//{
+				////Player 2 stats change
+				//	switch (move.moveName)
+				//	{
+				//		case "Heavy Punch":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Light Punch":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Power Hit":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Heavy Kick":
+				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+				//			break;
+				//		case "Standing Light Kick":
+				//			ChangeStats(move, 900f);//instead of 300f put value taken from sheet
+				//			break;
+				//		default:
+				//			break;
+				//	}
+				//}
+                ////////////
+                #endregion
                 foreach (CharacterAssist charAssist in move.characterAssist)
                 {
                     if (charAssist.characterInfo != null)
@@ -3886,7 +3942,6 @@ public class UFE : MonoBehaviour, UFEInterface
                         cScript.opControlsScript = controlsScript.opControlsScript;
 						cScript.opInfo = controlsScript.opInfo;
 						cScript.SetActive(false);
-
                         if (UFE.config.debugOptions.preloadedObjects) Debug.Log(move.moveName + " - "+ charAssist.characterInfo.characterName + " Assist Preloaded");
                     }
                 }
@@ -3894,6 +3949,11 @@ public class UFE : MonoBehaviour, UFEInterface
         }
     }
 
+	static void ChangeStats(MoveInfo move, float powerValue) {
+	 move.hits[0]._damageOnHit = powerValue;
+		print("Changed");
+
+	}
     public static ControlsScript FindSpawnedAssist(ControlsScript owner, UFE3D.CharacterInfo characterInfo) {
         foreach (ControlsScript csAssist in owner.assists)
         {

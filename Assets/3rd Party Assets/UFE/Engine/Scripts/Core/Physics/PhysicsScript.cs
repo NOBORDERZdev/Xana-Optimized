@@ -36,10 +36,23 @@ public class PhysicsScript : MonoBehaviour {
         { if (controlScript.target != null) controlScript.target.worldTransform = value; else controlScript.opControlsScript.worldTransform = value; }
     }
 
+        float extraMoveSpeed = 1f; //Attizaz
     public void Start()
     {
 		appliedGravity = controlScript.myInfo.physics._weight * UFE.config._gravity;
-	}
+        #region Change_Movement_Speed_Here
+        //Attizaz
+        //if (this.name=="Player1") {
+        //    //  extraMoveSpeed = 3f; // Get API or Sheet Damage info and pass it to ChangesStats Func
+        //    print("Player1 : "+ UFE.p1ControlsScript);
+        //}
+        //if (this.name == "Player2") {
+        //    //     extraMoveSpeed = 0.5f; // Get API or Sheet Damage info and pass it to ChangesStats Func
+        //    print("Player2 : "+ UFE.p2ControlsScript);
+        //}
+        print("<color=green> Change move speed here by setting up extraMoveSpeed var</color>");
+        #endregion
+    }
 
     /// <summary>
     /// (2D Fighter/ 3D Fighter) Makes the character move forward or backwards.
@@ -58,16 +71,16 @@ public class PhysicsScript : MonoBehaviour {
         moveDirection = axisValue;
 
         angularDirection = transform.rotation.eulerAngles.y;
-
+       
         if (direction == 1)
         {
 			controlScript.currentSubState = SubStates.MovingForward;
-            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveForwardSpeed * axisValue;
+            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveForwardSpeed*extraMoveSpeed * axisValue;
 		}
         else
         {
 			controlScript.currentSubState = SubStates.MovingBack;
-            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveBackSpeed * axisValue;
+            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveBackSpeed * extraMoveSpeed * axisValue;
         }
     }
 

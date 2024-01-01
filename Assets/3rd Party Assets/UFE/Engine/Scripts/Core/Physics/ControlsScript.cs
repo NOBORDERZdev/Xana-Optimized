@@ -3855,7 +3855,7 @@ public class ControlsScript : MonoBehaviour {
 		if (UFE.GetTimer() <= 0 && UFE.config.roundOptions.hasTimer) return true;
 
 		currentLifePoints -= damage;
-		if (currentLifePoints < 0) currentLifePoints = 0;
+     	if (currentLifePoints < 0) currentLifePoints = 0;
 		UFE.FireLifePoints(currentLifePoints, opControlsScript);
 
         if ((UFE.gameMode == GameMode.TrainingRoom || UFE.gameMode == GameMode.ChallengeMode)
