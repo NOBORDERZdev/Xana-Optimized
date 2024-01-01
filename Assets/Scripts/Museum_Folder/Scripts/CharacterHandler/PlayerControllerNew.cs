@@ -164,7 +164,16 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-
+        if (XanaConstants.xanaConstants.isBuilderScene)
+        {
+            CinemachineCollider cinemachineCollider = LoadFromFile.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+            if (cinemachineCollider != null)
+            {
+                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                // Remove the layer from the collide against mask
+                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+            }
+        }
 
 
     }
@@ -1249,7 +1258,8 @@ public class PlayerControllerNew : MonoBehaviour
         innerJoystick.GetComponent<JoyStickIssue>().ResetJoyStick();
         innerJoystick_Portrait.GetComponent<JoyStickIssue>().ResetJoyStick();
 
-        characterController.Move(Vector3.zero);
+        if (!isNinjaMotion)
+            characterController.Move(Vector3.zero);
         //JumpNotAllowed();
         //StopCoroutine(nameof(Jump));
         //StopCoroutine(nameof(JumpEnd));
@@ -1320,7 +1330,7 @@ public class PlayerControllerNew : MonoBehaviour
             canDoubleJump = true;
             animator.SetBool("canDoubleJump", canDoubleJump);
             Invoke(nameof(StopDoubleJump), 0.2f);
-            Debug.Log("Double jump testing ");
+            //Debug.Log("Double jump testing ");
             gravityVector.y = JumpVelocity * 2;
         }
     }
@@ -1338,7 +1348,7 @@ public class PlayerControllerNew : MonoBehaviour
     ///Ninja Move
     //////////////////////////////////////////
     ///
-    [SerializeField] private GameObject _shurikenPrefab, swordModel;
+    [SerializeField] private GameObject swordModel;
     [SerializeField] private Transform _ballSpawn;
     [SerializeField] private Transform swordHook, swordhandHook;
 
@@ -1348,6 +1358,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
+        animator.SetFloat("Blend", 0.0f);
 
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("NinjaJump", _IsGrounded);
@@ -1437,7 +1448,7 @@ public class PlayerControllerNew : MonoBehaviour
             else// player is walking
             {
 
-                //PlayerIsWalking?.Invoke();
+                PlayerIsWalking?.Invoke();
 
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
@@ -1496,7 +1507,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            //PlayerIsIdle?.Invoke();
+            PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
@@ -1506,7 +1517,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
         }
-        animator.SetBool("standJump", false);
+        if (animator.GetBool("standJump"))
+            animator.SetBool("standJump", false);
     }
 
     void AnimationBehaviourNinjaMode()
@@ -1625,7 +1637,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         isMovementAllowed = false;
         yield return new WaitForSeconds(0.6f);
-        GameObject spawned = PhotonNetwork.Instantiate(_shurikenPrefab.name, _ballSpawn.position, Quaternion.Euler(90, 90, 0));
+        GameObject spawned = PhotonNetwork.Instantiate("ShurikenPrefab", _ballSpawn.position, Quaternion.Euler(90, 90, 0));
         spawned.GetComponent<Shuriken>().photonView.RPC("AddForce", target: RpcTarget.All, ((transform.forward * 3000f) * 0.25f));
 
         animator.SetBool("NinjaThrow", false);
@@ -1655,7 +1667,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (swordModel == null && time > 0)
         {
-            swordModel = PhotonNetwork.Instantiate(GamificationComponentData.instance.katanaPrefab.name, Vector3.zero, new Quaternion(0, 0, 0, 0));
+            swordModel = PhotonNetwork.Instantiate("Katana", Vector3.zero, new Quaternion(0, 0, 0, 0));
             swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
 
@@ -1755,6 +1767,8 @@ public class PlayerControllerNew : MonoBehaviour
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
                     BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
+                    if (animator.GetBool("standJump"))
+                        animator.SetBool("standJump", false);
                 }
                 else
                 {
@@ -1832,7 +1846,7 @@ public class PlayerControllerNew : MonoBehaviour
         Debug.Log("Throw Action Co");
         //if (isThrowReady)
         //{
-        GameObject spawned = PhotonNetwork.Instantiate(GamificationComponentData.instance.ThrowBall.name, handBall.transform.position, handBall.transform.rotation);
+        GameObject spawned = PhotonNetwork.Instantiate("Ball", handBall.transform.position, handBall.transform.rotation);
         spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
         //}
         //isThrowReady = false;
@@ -1889,7 +1903,6 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Ninja_Throw(bool state, int index = 0)
     {
-        _shurikenPrefab = GamificationComponentData.instance.shurikenPrefab;
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
         swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
         _ballSpawn = swordhandHook;

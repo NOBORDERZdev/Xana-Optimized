@@ -3,7 +3,6 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 using System;
-using ExitGames.Client.Photon.StructWrapping;
 
 public class SituationChangerComponent : ItemComponent
 {
@@ -71,6 +70,7 @@ public class SituationChangerComponent : ItemComponent
     private void OnCollisionExit(Collision collision)
     {
         IsAgainTouchable = true;
+        playerObject = null;
     }
 
     #region BehaviourControl
@@ -80,23 +80,26 @@ public class SituationChangerComponent : ItemComponent
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            var hash = new ExitGames.Client.Photon.Hashtable();
-            hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
-            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+            }
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent))
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
             {
                 string situationChangerComponentstr = situationChangerComponent.ToString();
-                DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr).ToUniversalTime(); ;
+                DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr);
                 DateTime currentDateTime = DateTime.UtcNow;
-                TimeSpan diff = dateTimeRPC - currentDateTime;
 
+                TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
                 time = timeDiff;
 
-                if ((time == 0 || time > situationChangerComponentData.Timer) && !situationChangerComponentData.isOff)
+                if (time == 0 || time > situationChangerComponentData.Timer)
                     return;
             }
         }
@@ -117,20 +120,22 @@ public class SituationChangerComponent : ItemComponent
         //if (situationCo == null && time > 0)
         //    situationCo = StartCoroutine(nameof(SituationChange));
 
+        //Debug.LogError(situationChangerComponentData.Timer);
         TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
 
     }
     private void StopComponent()
     {
+        //playerObject = null;
         TimeStats._intensityChangerStop?.Invoke();
     }
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 

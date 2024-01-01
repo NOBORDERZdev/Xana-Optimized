@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas;
+    public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
     public bool IsSplashActive = true;
     public Transform SecondSliderScrollView;
@@ -75,6 +76,7 @@ public class UIManager : MonoBehaviour
          yield return new WaitForSeconds(_time);
         _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Loadinghandler_CanvasRef.alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();

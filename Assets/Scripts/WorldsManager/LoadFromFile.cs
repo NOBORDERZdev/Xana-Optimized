@@ -152,7 +152,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             if (CheckVoid())
             {
-                Debug.Log("Resetting Position");
+                //Debug.Log("Resetting Position");
                 ResetPlayerPosition();
             }
             yield return new WaitForSeconds(1f);
@@ -163,7 +163,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void LoadFile()
     {
         mainPlayer.SetActive(false);
-        //Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
+        ////Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
         //if (!setLightOnce)
         //{
         //    LoadLightSettings(FeedEventPrefab.m_EnvName);
@@ -199,7 +199,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (YoutubeStreamPlayer == null)
         {
-            Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
+            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
             if (WorldItemView.m_EnvName.Contains("DJ Event"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
@@ -328,12 +328,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             }
             else
             {
-                Debug.LogWarning("No Environment Light Properties Found");
+                //Debug.LogWarning("No Environment Light Properties Found");
             }
         }
         else
         {
-            Debug.LogWarning("No Environment Name Found");
+            //Debug.LogWarning("No Environment Name Found");
         }
     }
 
@@ -396,7 +396,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-            CheckAgain:
+        CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -528,16 +528,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //}
             //catch (System.Exception e)
             //{
-            //    Debug.Log("<color = red>Exception here..............</color>");
+            //    //Debug.Log("<color = red>Exception here..............</color>");
             //}
         }
         // Yes Join APi Call Here
-        //Debug.Log("Waqas : Room Joined.");
-        Debug.Log("<color=green> Analytics -- Joined </color>");
+        ////Debug.Log("Waqas : Room Joined.");
+        //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
         // Join Room Activate Chat
-        //Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             string worldId = 0.ToString();
@@ -577,7 +577,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
-        Debug.Log("<color=red> NPC Chat Object Loaded </color>");
+        //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
     [SerializeField] int autoSwitchTime;
@@ -599,7 +599,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -669,7 +669,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
-        End:
+    End:
         //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
@@ -681,7 +681,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //}
             //catch (System.Exception e)
             //{
-            //    Debug.Log("<color = red> Exception here..............</color>");
+            //    //Debug.Log("<color = red> Exception here..............</color>");
             //}
         }
 
@@ -721,8 +721,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
 
         // Yes Join APi Call Here
-        //Debug.Log("Waqas : Room Joined.");
-        Debug.Log("<color=green> Analytics -- Joined </color>");
+        ////Debug.Log("Waqas : Room Joined.");
+        //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
@@ -816,15 +816,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
-            {
-                mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
-            }
-            else
-            {
-                mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
-            }
+            //RaycastHit hit;
+            //if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
+            //{
+            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+            //}
+            //else
+            //{
+            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
+            //}
+            //Player respawn at spawn point after jump down from world
+            mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
+
         }
         else
         {
@@ -851,7 +854,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        Debug.Log("Instantiating Photon Complete");
+        //Debug.Log("Instantiating Photon Complete");
 
         ResetPlayerPosition();
     }
@@ -988,7 +991,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
@@ -1021,7 +1024,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (BuilderAssetDownloader.isPostLoading)
         {
-            Debug.LogError("here resetting player .... ");
+            //Debug.LogError("here resetting player .... ");
             if (BuilderData.spawnPoint.Count == 1)
             {
                 spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
@@ -1038,11 +1041,40 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 }
             }
 
-            mainController.transform.localPosition = spawnPoint;
+            mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
         }
     }
 
+    Vector3 AvoidAvatarMergeInBuilderScene()
+    {
+        Vector3 spawnPoint = this.spawnPoint;
+        spawnPoint.y += 2;
 
+        RaycastHit hit;
+    CheckAgain:
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
+        {
+            if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
+            {
+                PhotonView pv = hit.collider.GetComponent<PhotonView>();
+                if (pv == null || !pv.IsMine)
+                {
+                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                    goto CheckAgain;
+                }
+            } //else if()
+
+            else if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
+            {
+                spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-2, 2), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-2, 2));
+                goto CheckAgain;
+            }
+            spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
+            this.spawnPoint = spawnPoint;
+        }
+        return spawnPoint;
+    }
 
     public void SetAddressableSceneActive()
     {
@@ -1052,7 +1084,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        //Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
+        ////Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (XanaConstants.xanaConstants.isBuilderScene)

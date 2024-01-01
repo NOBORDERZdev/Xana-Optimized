@@ -81,7 +81,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField LoginEmailOrPhone;
     public AdvancedInputField LoginPassword;
 
-    [Space(5)]
+    [Space(5)] 
     [Header("ForgetPassword-InputFields")]
     // public MobileInputField EmailOrPhone_ForgetPasswrod;
     public AdvancedInputField EmailOrPhone_Forget_NewField;
@@ -168,7 +168,7 @@ public class UserRegisterationManager : MonoBehaviour
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
     public userRoleScript userRoleObj;
-    /// <Web 3.0 and Web 2.0>
+     /// <Web 3.0 and Web 2.0>
     public bool XanaliaBool;
     public Web3APIforWeb2 _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
@@ -227,16 +227,16 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void ShowWelcomeClosed()
     {
-        //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
+        ////print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
         if (PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             if (PlayerPrefs.GetInt("iSignup") == 1)
             {
-                //  print("dklfjghjksdghdjklghdjklfghjdfhjk ");
+                //  //print("dklfjghjksdghdjklghdjklfghjdfhjk ");
                 PlayerPrefs.SetInt("presetPanel", 1);
                 ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
                 StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
-                //Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
+                //////Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
             }
         }
         else
@@ -244,11 +244,11 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("GuestUser", 1);
             welcomeScreen.SetActive(false);
             shownWelcome = false;
-            print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
+            //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
-
+                
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                 StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
@@ -268,27 +268,26 @@ public class UserRegisterationManager : MonoBehaviour
 
     }
 
-    public void NewWalletSignUp()
+    public void NewWalletSignUp() 
     {
         _IsWalletSignUp = true;
     }
 
-    public void WalletLoginCheck()
+    public void WalletLoginCheck() 
     {
         _IsWalletSignUp = false;
         LoginPanal.SetActive(false);
     }
 
-    public void NextScreenAfterWalletConnected()
+    public void NextScreenAfterWalletConnected() 
     {
         if (_IsWalletSignUp)
         {
             setAvatarGiftPanal.SetActive(true);
         }
-        else
-        {
+        else {
             setAvatarGiftPanal.SetActive(false);
-
+            
         }
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
@@ -297,7 +296,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);
             PlayerPrefs.SetInt("shownWelcome",1);
         }
-
+        
     }
 
     public void iwanto_signUp()
@@ -331,7 +330,7 @@ public class UserRegisterationManager : MonoBehaviour
     private void Awake()
     {
         int x = ReturnNftRole("Free");
-        print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
+        //print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
         checkbool_preser_start = true;
         _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
         /*
@@ -362,9 +361,9 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
 
+   
 
-
-    public void CloseLoginScreen()
+    public void CloseLoginScreen() 
     {
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
@@ -382,7 +381,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         // yield return new WaitForSeconds(.01f);
         //  SceneManager.UnloadSceneAsync("UserRegistration");
-        //print("Unload");
+        ////print("Unload");
         SceneManager.LoadScene("MoralisScene", LoadSceneMode.Additive);
         //MoralismainObj.SetActive(true);
     }
@@ -397,20 +396,20 @@ public class UserRegisterationManager : MonoBehaviour
         Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
     }
 
-    public void BacktoAvatarSelectionPanel()
+    public void BacktoAvatarSelectionPanel() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
-    public void LoginScreenClicked(int btn)
+    public void LoginScreenClicked(int btn) 
     {
         btnClickedNo = btn;
     }
 
-    public void BackFromLoginScreen()
+    public void BackFromLoginScreen() 
     {
-        if (btnClickedNo == 0)
+        if (btnClickedNo == 0) 
         {
             welcomeScreen.SetActive(true);
         }
@@ -434,139 +433,136 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-    public void MoveButtonBacktoPreviousPos()
+    public void MoveButtonBacktoPreviousPos() 
     {
         FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
     }
 
     private async void eventcalled(string _userType)
     {
-        print("Event Called here");
-        print("User type is " + _userType);
-
+        //print("Event Called here");
+        //print("User type is " + _userType);
+  
         if (_userType == "Web3")
         {
-
-            if (CryptouserData.instance.CryptoLogin)
-            {
-                GetOwnedNFTsFromAPI();
+            
+           if (CryptouserData.instance.CryptoLogin)
+             {
+                 GetOwnedNFTsFromAPI(); 
                 ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
                 LoginWithMoralisSDK();
-                print("Wallet logged in here ");
-                /*
-               if (CryptouserData.instance.AlphaPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("alpha-pass");
-               }
-               if (CryptouserData.instance.UltramanPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("premium");
-               }
-               if (CryptouserData.instance.AstroboyPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("premium");
-               }
-               */
+                 //print("Wallet logged in here ");  
+                 /*
+                if (CryptouserData.instance.AlphaPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("alpha-pass");
+                }
+                if (CryptouserData.instance.UltramanPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("premium");
+                }
+                if (CryptouserData.instance.AstroboyPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("premium");
+                }
+                */
 
                 //if (userRoleObj.userNftRoleSlist.Count == 0)
                 //{
-                userRoleObj.userNftRoleSlist.Add("free");
+                 userRoleObj.userNftRoleSlist.Add("free");  
                 // if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
                 //{
-                //     print("nft's are greater then zero");
+                //     //print("nft's are greater then zero");
                 //    await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-                //    print("wait nft complete");
+                //    //print("wait nft complete");
                 // }
-                StartCoroutine(WalletLoggedInAccessGroup());
-            }
+                 StartCoroutine(WalletLoggedInAccessGroup());
+             }    
         }
         else if (_userType == "Web2")
         {
-            // StartCoroutine(waitForWalletNFTFetching());
-            if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+             // StartCoroutine(waitForWalletNFTFetching());
+             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
-                print("call getting list here");
+                //print("call getting list here");
 
                 await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-
-                print("wait nft complete 22");
+                 
+                //print("wait nft complete 22");
 
                 // CheckNFTFetched();
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
-                {
-                    print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
-                    // Currently No Need For Attributes
+                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
+                {   
+                     //print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
+                     // Currently No Need For Attributes
                     //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
-                    //print("index is " + LocalIndex);
+                    ////print("index is " + LocalIndex);
                     //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
-                    if (PlayerPrefs.HasKey("Equiped"))
+                     if (PlayerPrefs.HasKey("Equiped"))
                     {
                         XanaConstants.xanaConstants.isNFTEquiped = true;
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                        int l = _web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindIndex(o => o.nftId == PlayerPrefs.GetInt("nftID"));
-                        XanaConstants.xanaConstants.NFTUrl = _web3APIforWeb2._OwnedNFTDataObj.NFTsURL[l];
-                    }
+                    }   
                 }
                 else
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-                }
+                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                     LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
+                 }
             }
-            else
+             else
             {
                 LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-            }
+             }
             // savingLoadingNFTsData.SavetoFile();
         }
         else
         {
-            Debug.Log("not Logged in");
+            ////Debug.Log("not Logged in");
+        }  
+         /*
+        if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
+        {
+            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+           // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
+          
+            switch (VerifySignatureReadObj.data.user.userNftRole)
+            {
+                case "alpha-pass":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                        break;
+                    }
+                case "premium":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+                        break;
+                    }
+                case "dj-event":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("djevent");
+                        break;
+                    }
+                case "free":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+
+                        break;
+                    }
+            }
+         //   
+
+            //print("you have access of Premium Feature");
         }
-        /*
-       if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
-       {
-           PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-          // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
-
-           switch (VerifySignatureReadObj.data.user.userNftRole)
-           {
-               case "alpha-pass":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-                       break;
-                   }
-               case "premium":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
-                       break;
-                   }
-               case "dj-event":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("djevent");
-                       break;
-                   }
-               case "free":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-
-                       break;
-                   }
-           }
-        //   
-
-           print("you have access of Premium Feature");
-       }
-       */
+        */
     }
-    public void GetOwnedNFTsFromAPI()
+    void GetOwnedNFTsFromAPI()
     {
-        Debug.LogError("GetOwnedNFTsFromAPI public id: " + PlayerPrefs.GetString("publicID"));
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
-    }
+     }  
 
     public void LoginWithMoralisSDK(bool auto = false)
     {
@@ -591,7 +587,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             StartCoroutine(WaitForDeepLink());
         }
-        // SubmitSetDeviceToken();
+         // SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
@@ -632,7 +628,7 @@ public class UserRegisterationManager : MonoBehaviour
         Resources.UnloadUnusedAssets();
         //Caching.ClearCache();
         //GC.Collect();
-        //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
+      //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
         UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
         //   StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
@@ -648,11 +644,11 @@ public class UserRegisterationManager : MonoBehaviour
         UIManager.Instance.SignUpScreen = SignUpPanal;
         CountryCodeText.text = "+81";
         mobile_number = false;
-        print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
+        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
-            print("Alraeady Logged In");
+            //print("Alraeady Logged In");
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
             LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
             StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
@@ -660,7 +656,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            print("wallet Logged In " + PlayerPrefs.GetInt("WalletLogin"));
+            //print("wallet Logged In " + PlayerPrefs.GetInt("WalletLogin"));
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetInt("FristPresetSet", 1);
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
@@ -695,14 +691,13 @@ public class UserRegisterationManager : MonoBehaviour
         //   StartCoroutine(LoginUserPresetOnly());
     }
 
-    void CheckCameraMan()
-    {
+    void CheckCameraMan() {
         MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
         LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
         if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
         {
             XanaConstants.xanaConstants.isCameraMan = true;
-
+            
         }
         else
         {
@@ -716,8 +711,8 @@ public class UserRegisterationManager : MonoBehaviour
         if (loadData)
         {
             GetOwnedNFTsFromAPI();
-            yield return new WaitForSeconds(.1f);
-        }
+             yield return new WaitForSeconds(.1f);  
+        } 
         yield return new WaitForSeconds(.8f);
         if (userRoleObj.userNftRoleSlist.Count > 0)
         {
@@ -733,7 +728,7 @@ public class UserRegisterationManager : MonoBehaviour
                     ConstantsGod.UserPriorityRole = s;
                 }
                 userNftRole = s.ToLower();
-                print("Hey role is " + userNftRole);
+                //print("Hey role is " + userNftRole);
 
                 switch (userNftRole)
                 {
@@ -772,12 +767,12 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            print("you have no Premium Access ");
+            //print("you have no Premium Access ");
             PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         }
-        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-    }
-
+         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+     }
+ 
     #region Sign Up Animations
 
     public void OnSignUpEmailTabPressed()
@@ -790,7 +785,7 @@ public class UserRegisterationManager : MonoBehaviour
         numberScreen.SetActive(false);
         WalletScreen.SetActive(false);
 
-        Debug.Log("Fix");
+        ////Debug.Log("Fix");
 
         //lol
         EmailFieldNew.Text = "";
@@ -832,11 +827,11 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void OnSignUpPhoneTabPressed()
     {
-        //Debug.Log("before if");
+        //////Debug.Log("before if");
         PhoneFieldNew.Text = "";
         if (numberScreen.activeInHierarchy)
             return;
-        //Debug.Log("after if");
+        //////Debug.Log("after if");
         emailScreen.SetActive(false);
         numberScreen.SetActive(true);
         WalletScreen.SetActive(false);
@@ -888,7 +883,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     private IEnumerator Animate(RectTransform targetPos)
     {
-        print("Animate here");
+        //print("Animate here");
         //tabSelectorAnimator.GetComponent<Image>().rectTransform.position = targetPos.position;  
 
         LoggedInAsGuest = true;
@@ -907,7 +902,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         while (t < .5f)
         {
-            //  print(" t Animate here");
+            //  //print(" t Animate here");
             tabSelectorAnimator.GetComponent<Image>().rectTransform.position = Vector3.Lerp(tabSelectorAnimator.GetComponent<Image>().rectTransform.position, targetPos.position, t * 3);
             t += Time.deltaTime;
             yield return null;
@@ -940,7 +935,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     //}
 
-    public void SignUpMethodSelected(int btn)
+    public void SignUpMethodSelected(int btn) 
     {
         SignUpButtonSelected = btn;
     }
@@ -948,7 +943,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void BackFtn(int Openbackint)
     {
-        print(SignUpButtonSelected);
+        //print(SignUpButtonSelected);
         if (ForgetPasswordBool)
         {
             OpenUIPanal(14);
@@ -982,11 +977,11 @@ public class UserRegisterationManager : MonoBehaviour
             //        EmailFieldNew.Text = "";
             //    }
             //    SignUpPanal.SetActive(true);
-        }
-
-        //OpenUIPanal(Openbackint);
-        image_to_Change[0].sprite = OTPbox_highlighter;
-        image_to_Change[3].sprite = oldOTP_Box;
+            }
+            
+            //OpenUIPanal(Openbackint);
+            image_to_Change[0].sprite = OTPbox_highlighter;
+            image_to_Change[3].sprite = oldOTP_Box;
     }
 
     public void GoToRegistrationScreen(int R_Integer)
@@ -1026,7 +1021,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
             if (i < charArr.Length)//1 2 3 4
             {
-                //Debug.Log("VALUE OF Char" + charArr.Length);
+                //////Debug.Log("VALUE OF Char" + charArr.Length);
                 myOtpTxt[i] = charArr[i].ToString();
                 text_to_show[i].text = myOtpTxt[i].ToString();
                 if (i < 3)
@@ -1034,16 +1029,16 @@ public class UserRegisterationManager : MonoBehaviour
                     image_to_Change[i + 1].sprite = OTPbox_highlighter;
                     image_to_Change[i].sprite = oldOTP_Box;
                 }
-
+                
             }
             else
             {
                 myOtpTxt[i] = "";
-                Debug.Log("VALUE OF OTP" + myOtpTxt[i]);
+                ////Debug.Log("VALUE OF OTP" + myOtpTxt[i]);
                 text_to_show[i].text = myOtpTxt[i].ToString();
-                //Debug.Log("VALUE OF I" + i);
-                //Debug.Log("VALUE OF Char" + charArr.Length);
-                //Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
+                //////Debug.Log("VALUE OF I" + i);
+                //////Debug.Log("VALUE OF Char" + charArr.Length);
+                //////Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
                 if (charArr.Length < 4) //1 2 3 
                 {
                     if (charArr.Length != 3)
@@ -1055,7 +1050,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
 
-
+        
     }
 
     public void BackButtonPressedhere()
@@ -1258,7 +1253,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-                        Debug.Log("show welcome");
+                        ////Debug.Log("show welcome");
                         PlayerPrefs.SetInt("shownWelcome", 1);
 
                         //ShowWelcomeClosed();
@@ -1266,7 +1261,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("show welcome else");
+                        ////Debug.Log("show welcome else");
                         LoggedIn = true;
                         //GameManager.Instance.SignInSignUpCompleted();
                     }
@@ -1358,12 +1353,11 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
-
+                        
                         //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         EntertheWorld_Panal.SetActive(true);
                     }
-                    else
-                    {
+                    else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
                             RegistrationCompletePanal.SetActive(true);
@@ -1371,7 +1365,7 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (shownWelcome)
                             ShowWelcomeClosed();
-                    }
+                     }
                     break;
                 }
             case 17:
@@ -1394,7 +1388,7 @@ public class UserRegisterationManager : MonoBehaviour
                     else
                     {
                         FirstPanal.SetActive(true);
-                        // welcomeScreen.SetActive(true);
+                       // welcomeScreen.SetActive(true);
                         //SignUpPanal.SetActive(false);
                     }
                     break;
@@ -1416,7 +1410,7 @@ public class UserRegisterationManager : MonoBehaviour
                     break;
                 }
 
-            case 20:
+            case 20: 
                 {
                     if (!WalletScreen.activeInHierarchy)
                     {
@@ -1452,7 +1446,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void SignUpCompletedPresetApplied()
     {
-        print("Waiting ... preset Applying");
+        //print("Waiting ... preset Applying");
         StartCoroutine(WaitPresetApplied());
     }
     IEnumerator WaitPresetApplied()
@@ -1464,7 +1458,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 PlayerPrefs.SetInt("RegistrationOnce", 1);
 
-                print(PlayerPrefs.GetInt("Sign Up flow completed and Event called from here"));
+                //print(PlayerPrefs.GetInt("Sign Up flow completed and Event called from here"));
                 DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
             }
         }
@@ -1472,7 +1466,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitSetDeviceToken()
     {
-        //  print("submit Set device ID here");
+        //  //print("submit Set device ID here");
         string l_DeivceID = uniqueID();
         // string l_DeivceID = PlayerPrefs.GetString("AppID2");
         MyClassForSettingDeviceToken myObject = new MyClassForSettingDeviceToken();
@@ -1483,34 +1477,34 @@ public class UserRegisterationManager : MonoBehaviour
     }
     IEnumerator HitSetDeviceTokenAPI(string url, string Jsondata, string LocalGetDeviceID)
     {
-        // print("Body " + Jsondata);
+        // //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        print(ConstantsGod.AUTH_TOKEN);
+        //print(ConstantsGod.AUTH_TOKEN);
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         request.SendWebRequest();
         while (!request.isDone)
         {
             yield return null;
         }
-        //  print(request.GetRequestHeader("Authorization"));
-        //  print(request.isDone);
-        Debug.Log(request.downloadHandler.text);
+        //  //print(request.GetRequestHeader("Authorization"));
+        //  //print(request.isDone);
+        ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
                     PlayerPrefs.SetString("DeviceToken", LocalGetDeviceID);
-                    //    print("device ID here is " + LocalGetDeviceID);
-                    //  print("Set Device Token succesfully");  
+                    //    //print("device ID here is " + LocalGetDeviceID);
+                    //  //print("Set Device Token succesfully");  
                 }
             }
         }
@@ -1518,7 +1512,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.Log("Network error in set device token");
+               ////Debug.Log("Network error in set device token");
             }
             else
             {
@@ -1527,7 +1521,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        Debug.Log("Success false in  in set device token");
+                       ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1559,7 +1553,7 @@ public class UserRegisterationManager : MonoBehaviour
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
     {
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(true);
-        print("Body of Logout " + Jsondata);
+        //print("Body of Logout " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -1567,9 +1561,9 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.Log("<color=red>" + request.downloadHandler.text + "</color>");
-        //  print(request.GetRequestHeader("Authorization"));
-        //  print(request.isDone);
+        ////Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
+        //  //print(request.GetRequestHeader("Authorization"));
+        //  //print(request.isDone);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -1597,7 +1591,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   print("Hey success false " + myObject1.msg);
+                        //   //print("Hey success false " + myObject1.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
@@ -1620,12 +1614,12 @@ public class UserRegisterationManager : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
-            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         }
-
+ 
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
-        userRoleObj.userNftRoleSlist.Clear();
+         userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         XanaConstants.xanaConstants.userId = null;
 
@@ -1655,12 +1649,12 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("shownWelcome", 1);
-        PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
+        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
 
         //[Waqas] Reset Guest Username After Delete All
-        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, tempName1);
-        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, tempName2);
-        PlayerPrefs.SetString("publicID", "");
+        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME,tempName1);
+        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME,tempName2);
+        PlayerPrefs.SetString("publicID","");
 
 
 
@@ -1743,8 +1737,8 @@ public class UserRegisterationManager : MonoBehaviour
     // Submit GetUser Details        
     public void SubmitGetUserDetails()
     {
-        //  print("Submit GetUser Details");
-        Debug.Log("token value user details===" + ConstantsGod.AUTH_TOKEN);
+        //  //print("Submit GetUser Details");
+        ////Debug.Log("token value user details===" + ConstantsGod.AUTH_TOKEN);
         StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
     }
 
@@ -1758,7 +1752,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        Debug.Log("<color = red>" + request.downloadHandler.text + "</color>");
+        ////Debug.Log("<color = red>" + request.downloadHandler.text + "</color>");
         DeleteApiRes myObject1 = new DeleteApiRes();
         myObject1 = JsonUtility.FromJson<DeleteApiRes>(request.downloadHandler.text);
 
@@ -1820,7 +1814,7 @@ public class UserRegisterationManager : MonoBehaviour
         public string msg;
         public ClassforUserDetails CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<ClassforUserDetails>(jsonString);
         }
     }
@@ -1843,7 +1837,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static JsondataOfUserDetails CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<JsondataOfUserDetails>(jsonString);
         }
     }
@@ -1862,7 +1856,7 @@ public class UserRegisterationManager : MonoBehaviour
         public string updatedAt;
         public static JsondataOfUserDetails CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<JsondataOfUserDetails>(jsonString);
         }
     }
@@ -1875,11 +1869,11 @@ public class UserRegisterationManager : MonoBehaviour
             yield return request.SendWebRequest();
             // if (request.isNetworkError)
             //{
-            //    Debug.Log("Error: " + request.error);
+            //    ////Debug.Log("Error: " + request.error);
             //}
             //else
             //{
-            //    Debug.Log("Received: " + request.downloadHandler.text);
+            //    ////Debug.Log("Received: " + request.downloadHandler.text);
             //}
 
             ClassforUserDetails myObject1 = new ClassforUserDetails();
@@ -1888,13 +1882,13 @@ public class UserRegisterationManager : MonoBehaviour
                 myObject1 = myObject1.CreateFromJSON(request.downloadHandler.text);
                 if (request.error == null)
                 {
-                    Debug.Log(request.downloadHandler.text);
-                    //    print(myObject1.data.userProfile.country);
-                    //   print(myObject1.data.email);
+                    ////Debug.Log(request.downloadHandler.text);
+                    //    //print(myObject1.data.userProfile.country);
+                    //   //print(myObject1.data.email);
 
                     if (myObject1.success == "true")
                     {
-                        //   print("Success of user details");
+                        //   //print("Success of user details");
                     }
                 }
             }
@@ -1913,7 +1907,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (myObject1.success == "false")
                         {
-                            //      print("Hey success false " + myObject1.msg);
+                            //      //print("Hey success false " + myObject1.msg);
                             errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                             //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                             errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
@@ -1928,7 +1922,7 @@ public class UserRegisterationManager : MonoBehaviour
     //Start Submit UpdateUserAvatar
     public void SubmitUpdateUserAvatar()
     {
-        //  print("Submit UpdateUserAvatar");
+        //  //print("Submit UpdateUserAvatar");
         MyClassForUpdatingUserAvatar myObject = new MyClassForUpdatingUserAvatar();
         string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedUserAvatar("updated avatar")); ;
         StartCoroutine(HitUpdateAvatarAPI(ConstantsGod.API_BASEURL + ConstantsGod.UpdateAvatarAPI, bodyJson));
@@ -1948,7 +1942,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator HitUpdateAvatarAPI(string url, string Jsondata)
     {
-        // print("Body " + Jsondata);
+        // //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -1956,20 +1950,20 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        //  print(request.GetRequestHeader("Authorization"));
-        ///   print(request.isDone);
-        //  Debug.Log(request.downloadHandler.text);
+        //  //print(request.GetRequestHeader("Authorization"));
+        ///   //print(request.isDone);
+        //  ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                //  Debug.Log(request.downloadHandler.text);
+                //  ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    //    print("Avatar Updated Success");
+                    //    //print("Avatar Updated Success");
                 }
             }
         }
@@ -1990,7 +1984,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //     print("Hey success false " + myObject1.msg);
+                        //     //print("Hey success false " + myObject1.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
@@ -2011,7 +2005,7 @@ public class UserRegisterationManager : MonoBehaviour
         string ForgetPassword_EmlOrPhone = EmailOrPhone_Forget_NewField.Text;
         if (ForgetPassword_EmlOrPhone == "")
         {
-            //  print("Email Or Password should not be empty");
+            //  //print("Email Or Password should not be empty");
             errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
             //  if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
@@ -2042,7 +2036,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public IEnumerator HitForgetPasswordAPI(string url, string Jsondata, string localEmail_oR_PhoneNumber, GameObject _loader)
     {
-        //  print(Jsondata);
+        //  //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2055,7 +2049,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.error == null)
             {
-                //   Debug.Log(request.downloadHandler.text);
+                //   ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
@@ -2119,9 +2113,9 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitResetPassword()
     {
-        print("Submit Reset Password");
+        //print("Submit Reset Password");
 
-        // print("Submit Password");
+        // //print("Submit Password");
 
         // InputTextShiftCodeChangePass2
         //     string NewPassword = Password1_ForgetPasswrod.Text.Trim();
@@ -2188,19 +2182,19 @@ public class UserRegisterationManager : MonoBehaviour
             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextResetPasswordAPI.GetComponent<Text>());
 
             StartCoroutine(WaitUntilAnimationFinished(errorTextResetPasswordAPI.GetComponent<Animator>()));
-            //   print("Password not matched");
+            //   //print("Password not matched");
             return;
         }
         MyClassOfPostingReset myObject = new MyClassOfPostingReset();
         string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(NewPassword));
         NewPasswordForgetApi = NewPassword;
         StartCoroutine(HitResetAPI(ConstantsGod.API_BASEURL + ConstantsGod.ForgetPasswordResetAPI, bodyJson));
-        //   print(bodyJson);
+        //   //print(bodyJson);
     }
 
     IEnumerator HitResetAPI(string url, string Jsondata)
     {
-        //   print("Body " + Jsondata);
+        //   //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2208,15 +2202,15 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ForgetPasswordTokenAfterVerifyling);
         yield return request.SendWebRequest();
-        // print(request.GetRequestHeader("Authorization"));
-        //  Debug.Log(request.downloadHandler.text);
+        // //print(request.GetRequestHeader("Authorization"));
+        //  ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
@@ -2231,7 +2225,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        //   print("Registration With Name Completed ");
+                        //   //print("Registration With Name Completed ");
                         OpenUIPanal(16);
                         GameManager.Instance.SignInSignUpCompleted();
                         usernamePanal.SetActive(false);
@@ -2266,7 +2260,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //  print("Hey success false " + myObject1.msg);
+                        //  //print("Hey success false " + myObject1.msg);
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
@@ -2331,7 +2325,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static ClassWithTokenofResetPassword CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<ClassWithTokenofResetPassword>(jsonString);
         }
     }
@@ -2359,7 +2353,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitDeleteAccount()
     {
-        //  print("Submit Delete Account");
+        //  //print("Submit Delete Account");
     }
 
     // DifferentAPI,s END
@@ -2376,7 +2370,7 @@ public class UserRegisterationManager : MonoBehaviour
         //string Biolocal = BioField.Text.Trim();
         //if (genderlocal == "" || joblocal == "" || Countrylocal == "" || Biolocal == "")
         //{
-        //    //  print("None fields should be empty");
+        //    //  //print("None fields should be empty");
         //    return;
         //}
         //else
@@ -2409,7 +2403,7 @@ public class UserRegisterationManager : MonoBehaviour
     /*
     IEnumerator HitUpdateProfileAPI(string url, string Jsondata)
     {
-        //  print("Body " + Jsondata);
+        //  //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2417,19 +2411,19 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
         yield return request.SendWebRequest();
-        //   print(request.GetRequestHeader("Authorization"));
-        //   print(request.isDone);
-        Debug.Log(request.downloadHandler.text);
+        //   //print(request.GetRequestHeader("Authorization"));
+        //   //print(request.isDone);
+        ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                //  Debug.Log(request.downloadHandler.text);
+                //  ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    //    print("Update Profile Successfully");
+                    //    //print("Update Profile Successfully");
                 }
             }
         }
@@ -2450,7 +2444,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   print("Hey success false " + myObject1.msg);
+                        //   //print("Hey success false " + myObject1.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
@@ -2467,7 +2461,7 @@ public class UserRegisterationManager : MonoBehaviour
     /// <SignUpWithPhoneNumber>
     public void SubmitPhoneNumber()
     {
-        print(PhoneFieldNew.Text);
+        //print(PhoneFieldNew.Text);
         // if (PhoneInputTextNew.Text == "")
         if (PhoneFieldNew.Text == "")
         {
@@ -2544,7 +2538,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     currentSelectedNxtButton.interactable = false;
                 }
-                //    print(url);
+                //    //print(url);
                 MyClassOfPhoneNumber myObject = new MyClassOfPhoneNumber();
                 string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(phonenumberText));
                 StartCoroutine(HitPhoneAPI(url, bodyJson, phonenumberText, NxtButtonObj));
@@ -2561,36 +2555,36 @@ public class UserRegisterationManager : MonoBehaviour
     /// <ChangePassword>
     public void SubmitChangePassword()
     {
-        ////  print("Submit Password");
+        ////  //print("Submit Password");
         //string oldPassword = OldPasswordField.Text.Trim();
         //string NewPassword = ChangePassword1.Text.Trim();
         //string ReNewPassword = ChangePassword2.Text.Trim();
 
         //if (oldPassword == "")
         //{
-        //    //  print("Old password should not be empty");
+        //    //  //print("Old password should not be empty");
         //    return;
         //}
         //else if (NewPassword == "" || ReNewPassword == "")
         //{
-        //    //    print("New Password should not be empty");
+        //    //    //print("New Password should not be empty");
         //    return;
         //}
 
         //if (NewPassword != ReNewPassword)
         //{
-        //    //  print("Password not matched");
+        //    //  //print("Password not matched");
         //    return;
         //}
         //MyClassForChangePassword myObject = new MyClassForChangePassword();
         //string bodyJson = JsonUtility.ToJson(myObject.GetChangePassworddata(oldPassword, NewPassword));
         //StartCoroutine(HitChangePasswordAPI(ConstantsGod.API_BASEURL + ConstantsGod.ChangePasswordAPI, bodyJson));
-        //print(bodyJson);
+        ////print(bodyJson);
     }
 
     IEnumerator HitChangePasswordAPI(string url, string Jsondata)
     {
-        //  print("Body " + Jsondata);
+        //  //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2598,20 +2592,20 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
         yield return request.SendWebRequest();
-        //   print(request.GetRequestHeader("Authorization"));
-        //  print(request.isDone);
-        Debug.Log(request.downloadHandler.text);
+        //   //print(request.GetRequestHeader("Authorization"));
+        //  //print(request.isDone);
+        ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                //     Debug.Log(request.downloadHandler.text);
+                //     ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    print("Change Password Successfully");
+                    //print("Change Password Successfully");
                 }
             }
         }
@@ -2632,7 +2626,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //         print("Hey success false " + myObject1.msg);
+                        //         //print("Hey success false " + myObject1.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         //errorHandler.ShowErrorMessage(ErrorType.Wrong_Password, errorTextPassword.GetComponent<Text>());
@@ -2648,17 +2642,17 @@ public class UserRegisterationManager : MonoBehaviour
     // Send OTP to Phone Number
     IEnumerator HitPhoneAPI(string url, string Jsondata, string LPhoneNumber, GameObject _loader = null)
     {
-        //print(Jsondata);
+        ////print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
-        print(request.downloadHandler.text);
+        //print(request.downloadHandler.text);
         if (request.downloadHandler.text.Contains("Enter Valid Number"))
         {
-            Debug.Log("working");
+            ////Debug.Log("working");
             mobile_number = true;
         }
         else if (request.downloadHandler.text.Contains("User Already Exists With This Number"))
@@ -2675,7 +2669,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (_loader != null)
                     _loader.SetActive(false);
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
@@ -2722,12 +2716,12 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (request.error != null)
                 {
-                    //  print("Message Return: " + myObject1.data);
+                    //  //print("Message Return: " + myObject1.data);
                     //myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   print("Hey success false " + myObject1.msg);
+                        //   //print("Hey success false " + myObject1.msg);
 
                         errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
 
@@ -2797,7 +2791,7 @@ public class UserRegisterationManager : MonoBehaviour
     // SignUpwithEmail
     public void SubmitEmail()
     {
-        //  print(EmailInputTextNew.Text);
+        //  //print(EmailInputTextNew.Text);
         //  if (EmailInputTextNew.Text == "")
         if (EmailFieldNew.Text == "")
         {
@@ -2820,7 +2814,7 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-            //  print("Email validity is " + IsValidEmail(EmailInputTextNew.Text));
+            //  //print("Email validity is " + IsValidEmail(EmailInputTextNew.Text));
             //  EmailInputTextNew.Text = EmailInputTextNew.Text.Trim();
             EmailFieldNew.Text = EmailFieldNew.Text.Trim();
             // if (IsValidEmail(EmailInputTextNew.Text))
@@ -2901,7 +2895,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public IEnumerator HitEmailAPIWithNewTechnique(string url, string Jsondata, string localEmail, GameObject _loader = null)
     {
-        //    print(Jsondata);
+        //    //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2920,7 +2914,7 @@ public class UserRegisterationManager : MonoBehaviour
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
@@ -2957,7 +2951,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextEmail.GetComponent<Text>().text = request.error.ToUpper();
                 // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<Text>());
-                print("getting text from here");
+                //print("getting text from here");
                 StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             }
             else
@@ -2966,7 +2960,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
 
-                    print(request.downloadHandler.text);
+                    //print(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
                         //if (request.downloadHandler.text.Contains(" must be a valid email"))
@@ -3023,7 +3017,7 @@ public class UserRegisterationManager : MonoBehaviour
         // {
         //     OTP += pinNew[i].Text;  
         // }  
-        //  print("OTP entered by user is " + OTP);
+        //  //print("OTP entered by user is " + OTP);
         if (OTP == "" || OTP.Length < 4)
         {
             errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3044,9 +3038,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             string url = ConstantsGod.API_BASEURL + ConstantsGod.ForgetPasswordOTPAPI;
             MyClassOfPostingForgetPasswordOTP myobjectOfPhone = new MyClassOfPostingForgetPasswordOTP();
-            //   print("Forget Password OTP Section " + OTP);
+            //   //print("Forget Password OTP Section " + OTP);
             string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(ForgetPasswordEmlOrPhnContainer, OTP));
-            //  print("Json is  " + bodyJson);
+            //  //print("Json is  " + bodyJson);
             StartCoroutine(HitOTPAPI(url, bodyJson));
         }
         else
@@ -3057,10 +3051,10 @@ public class UserRegisterationManager : MonoBehaviour
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyPhoneOTPAPI;
                 // int numberOTP = int.Parse(OTP);
                 MyClassOfPostingPhoneOTP myobjectOfPhone = new MyClassOfPostingPhoneOTP();
-                //   print("Phone OTP sending Section an Phone number is  " + LocalPhoneNumber);
-                //   print("Phone OTP  " + OTP);
+                //   //print("Phone OTP sending Section an Phone number is  " + LocalPhoneNumber);
+                //   //print("Phone OTP  " + OTP);
                 string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, OTP));
-                //   print("Json is  " + bodyJson);
+                //   //print("Json is  " + bodyJson);
                 StartCoroutine(HitOTPAPI(url, bodyJson));
             }
             // Email OTP sending Section
@@ -3095,7 +3089,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static MyClassOfRegisterWithNumber CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<MyClassOfRegisterWithNumber>(jsonString);
         }
     }
@@ -3116,7 +3110,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static MyClassOfRegisterWithEmail CreateFromJSON(string jsonString)
         {
-            //  print("Person " + jsonString);
+            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<MyClassOfRegisterWithEmail>(jsonString);
         }
     }
@@ -3124,17 +3118,17 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitPassword()
     {
-        print("submit password here");
+        //print("submit password here");
         //  string pass1 = Password1InputTextShiftCode.GetText();
         string pass1 = Password1New.Text;
         //  string pass2 = Password2ConfirmInputTextShiftCode.GetText();
         string pass2 = Password2New.Text;
-        print(pass1);
-        print(pass2);
+        //print(pass1);
+        //print(pass2);
 
         if (pass1 == "" || pass2 == "")
         {
-            print("Password Field should not be empty");
+            //print("Password Field should not be empty");
             errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
@@ -3199,16 +3193,16 @@ public class UserRegisterationManager : MonoBehaviour
             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
 
             StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-            //   print("Password not matched");
+            //   //print("Password not matched");
         }
     }
 
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
-        print(Jsondata);
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-        var request = new UnityWebRequest(url, "POST");
+        //print(Jsondata);
+         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
+         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
+         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -3217,12 +3211,12 @@ public class UserRegisterationManager : MonoBehaviour
 
         ClassWithToken myObject = new ClassWithToken();
         myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        print(myObject.data.token);
+        //print(myObject.data.token);
         if (!request.isHttpError && !request.isNetworkError)
         {
             if (request.error == null)
             {
-                //    Debug.Log(request.downloadHandler.text);
+                //    ////Debug.Log(request.downloadHandler.text);
                 //if (myObject.success == "true")
                 if (myObject.success)
                 {
@@ -3245,10 +3239,10 @@ public class UserRegisterationManager : MonoBehaviour
 
 
 
-                    print("Token before " + myObject.data.token);
+                    //print("Token before " + myObject.data.token);
                     // PlayerPrefs.SetString("LoginToken", myObject.data.token);
                     ConstantsGod.AUTH_TOKEN = myObject.data.token;
-                    print("in new Registartion technique" + ConstantsGod.AUTH_TOKEN);
+                    //print("in new Registartion technique" + ConstantsGod.AUTH_TOKEN);
                     var parts = myObject.data.token.Split('.');
                     if (parts.Length > 2)
                     {
@@ -3260,15 +3254,15 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         var bytes = System.Convert.FromBase64String(decode);
                         var userInfo = System.Text.ASCIIEncoding.ASCII.GetString(bytes);
-                        print(userInfo);
+                        //print(userInfo);
                         LoginClass L_LoginObject = new LoginClass();
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver();
                         PlayerPrefs.SetInt("FristPresetSet", 1);
-                        print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
-                        print("Welcome " + PlayerPrefs.GetString("UserName"));
+                        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
+                        //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         XanaConstants.xanaConstants.userId = L_LoginObject.id;
                     }
                     PlayerPrefs.Save();
@@ -3276,8 +3270,8 @@ public class UserRegisterationManager : MonoBehaviour
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                    //   print("token is " + PlayerPrefs.GetString("LoginToken"));
-                    //     print("User Registered succesfully from password");
+                    //   //print("token is " + PlayerPrefs.GetString("LoginToken"));
+                    //     //print("User Registered succesfully from password");
                 }
             }
         }
@@ -3306,7 +3300,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject.success == "false")
                     if (!myObject.success)
                     {
-                        //    print("Hey success false " + myObject.msg);
+                        //    //print("Hey success false " + myObject.msg);
                         errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
@@ -3327,9 +3321,9 @@ public class UserRegisterationManager : MonoBehaviour
 
     // End Register User with password
 
-    public void LoadingFadeOutScreen()
+    public void LoadingFadeOutScreen() 
     {
-
+        
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
@@ -3349,21 +3343,21 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(false);
     }
 
-
+    
 
 
     public void EnterUserName()
     {
-
-        //print(PlayerPrefs.GetInt("shownWelcome")); // 0
-        //print(PlayerPrefs.GetInt("iSignup")); // 1
-        //print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
+        
+        ////print(PlayerPrefs.GetInt("shownWelcome")); // 0
+        ////print(PlayerPrefs.GetInt("iSignup")); // 1
+        ////print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
 
         if (Localusername == "")// || Localusername.Contains(" "))
         {
-            //  print("Username Field should not be empty");
+            //  //print("Username Field should not be empty");
             errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
@@ -3411,7 +3405,7 @@ public class UserRegisterationManager : MonoBehaviour
         // if(PlayerPrefs.GetInt("IsProcessComplete")==0)
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
-            print("--- Return using namepanel" + Localusername);
+            //print("--- Return using namepanel" + Localusername);
 
             DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
@@ -3429,23 +3423,23 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             return;
         }
-        //   print(PlayerPrefs.GetInt("shownWelcome"));
-        //  print(PlayerPrefs.GetInt("iSignup"));
-        //  print(PlayerPrefs.GetInt("IsProcessComplete"));
+        //   //print(PlayerPrefs.GetInt("shownWelcome"));
+        //  //print(PlayerPrefs.GetInt("iSignup"));
+        //  //print(PlayerPrefs.GetInt("IsProcessComplete"));
         PlayerPrefs.SetInt("IsProcessComplete", 1);  // 
-        //   print("Test passed");
-        print("calling after user registration");
+        //   //print("Test passed");
+        //print("calling after user registration");
 
 
 
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
-        //  print(bodyJson);
+        //  //print(bodyJson);
         // StartCoroutine(HitNameAPIWithNewTechnique(NameAPIURL, bodyJsonOfName, Localusername));
-        Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
+        ////Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            Debug.Log("User Already loged in set name api call.......");
+           ////Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3456,7 +3450,7 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithNumber myobjectOfPhone = new MyClassOfRegisterWithNumber();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
-                Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+                ////Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
                 //StoreManager.instance.OnSaveBtnClicked();
 
@@ -3473,20 +3467,20 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-
+   
 
     public void SubmitLoginCredentials()
     {
         savePasswordList.instance.DisableOnLoginButton();
-        // print("Someone is calling me");
+        // //print("Someone is calling me");
         //   string L_LoginEmail = LoginEmailNew.Text;
         string L_LoginEmail = LoginEmailOrPhone.Text;
-        print("L_LoginEmail " + L_LoginEmail);
+        //print("L_LoginEmail " + L_LoginEmail);
         //   string L_loginPassword = LoginPasswordShiftCode.GetText();
         string L_loginPassword = LoginPassword.Text;
         if (L_LoginEmail == "" || L_loginPassword == "")
         {
-            //  print("Email Or Password should not be empty");
+            //  //print("Email Or Password should not be empty");
             errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
@@ -3534,8 +3528,8 @@ public class UserRegisterationManager : MonoBehaviour
         {
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass("", L_LoginEmail, L_loginPassword));
         }
-        //print("Start Json " + bodyJson);
-        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));
+        ////print("Start Json " + bodyJson);
+        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));    
     }
 
 
@@ -3546,7 +3540,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (PlayerPrefs.GetString("AppID2") == "")
         {
-            print("Give unique key");
+            //print("Give unique key");
             //  DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             // int currentEpochTime = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
             int z1 = UnityEngine.Random.Range(0, 1000);
@@ -3571,25 +3565,25 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void LogOutFromOtherDevice()
     {
-        print("LogoutFromOtherDevice");
+        //print("LogoutFromOtherDevice");
         StartCoroutine(HitLogOutFromOtherDevice(ConstantsGod.API_BASEURL + ConstantsGod.LogoutFromotherDeviceAPI, PlayerPrefs.GetString("LogoutFromDeviceJSON")));
     }
 
 
     public IEnumerator HitLogOutFromOtherDevice(string URL, string _json)
     {
-        print("URL of login is " + URL);
-        print(_json);
+        //print("URL of login is " + URL);
+        //print(_json);
         var request = new UnityWebRequest(URL, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(_json);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
-        print("json data is " + request.downloadHandler.text);
+        //print("json data is " + request.downloadHandler.text);
         MyClassNewApi obj_LogOut = new MyClassNewApi();
         obj_LogOut = obj_LogOut.Load(request.downloadHandler.text);
-        print(obj_LogOut.msg + " | success: of Logout from other device " + obj_LogOut.success);
+        //print(obj_LogOut.msg + " | success: of Logout from other device " + obj_LogOut.success);
 
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -3597,7 +3591,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (obj_LogOut.success)
                 {
-                    Debug.Log("Success true in logout from other device  " + obj_LogOut.msg);
+                    ////Debug.Log("Success true in logout from other device  " + obj_LogOut.msg);
                     LogoutfromOtherDevicePanel.SetActive(false);
                     StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("JSONdataforlogin"), null, false));
                     //  PlayerPrefs.SetString("JSONdataforlogin", Jsondata);
@@ -3609,7 +3603,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.Log("Network error in logout from other device");
+               ////Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3617,7 +3611,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                        Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
+                       ////Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
@@ -3663,24 +3657,24 @@ public class UserRegisterationManager : MonoBehaviour
             var operation = www.SendWebRequest();
             while (!operation.isDone)
             {
-                //  Debug.Log(www.downloadProgress);
+                //  ////Debug.Log(www.downloadProgress);
                 yield return null;
             }
-            print(www.downloadHandler.text);
+            //print(www.downloadHandler.text);
             if (www.isHttpError || www.isNetworkError)
             {
 
-                // Debug.Log("Network Error");
+                // ////Debug.Log("Network Error");
                 errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                 errorTextEmail.GetComponent<Text>().text = www.error.ToUpper();
-                //  Debug.Log("WWW Error: " + www.error);  
+                //  ////Debug.Log("WWW Error: " + www.error);  
             }
             else
             {
                 if (operation.isDone)
                 {
-                    Debug.Log(www.downloadHandler.text);
+                    ////Debug.Log(www.downloadHandler.text);
                     MyClassNewApi myObject = new MyClassNewApi();
                     myObject = CheckResponceJsonNewApi(www.downloadHandler.text);
 
@@ -3695,7 +3689,7 @@ public class UserRegisterationManager : MonoBehaviour
                         errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                         StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                         errorTextEmail.GetComponent<Text>().text = myObject.msg.ToUpper();
-                        //    print("Error Occured " + myObject.msg);
+                        //    //print("Error Occured " + myObject.msg);
                     }
                 }
             }
@@ -3705,19 +3699,19 @@ public class UserRegisterationManager : MonoBehaviour
     MyClassNewApi myObjectForOPT;
     IEnumerator HitOTPAPI(string url, string Jsondata)
     {
-        // print(Jsondata);
+        // //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
-        // print("Json returned = " + request.downloadHandler.text);
+        // //print("Json returned = " + request.downloadHandler.text);
         if (ForgetPasswordBool)
         {
             myObjectofOTPForResetPassword = new ClassWithTokenofResetPassword();
             myObjectofOTPForResetPassword = ClassWithTokenofResetPassword.CreateFromJSON(request.downloadHandler.text);
-            print(myObjectofOTPForResetPassword.data.tempToken);
+            //print(myObjectofOTPForResetPassword.data.tempToken);
 
         }
         else
@@ -3824,7 +3818,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
     {
-        print("Body " + Jsondata);
+        //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -3833,20 +3827,20 @@ public class UserRegisterationManager : MonoBehaviour
         //request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         yield return request.SendWebRequest();
-        //  print(request.GetRequestHeader("Authorization"));
-        //  print(request.isDone);
-        Debug.Log(request.downloadHandler.text);
+        //  //print(request.GetRequestHeader("Authorization"));
+        //  //print(request.isDone);
+        ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    Debug.Log(myObject1.msg);
+                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3858,13 +3852,13 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         SubmitSetDeviceToken();
-                        //  print("Registration With Name Completed ");
+                        //  //print("Registration With Name Completed ");
                         LoggedInAsGuest = false;
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
                         ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
-                        Debug.Log("IS LOGGED VALUE CHANGED");
+                        ////Debug.Log("IS LOGGED VALUE CHANGED");
 
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
@@ -3899,7 +3893,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   print("Hey success false " + myObject1.msg);
+                        //   //print("Hey success false " + myObject1.msg);
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
@@ -3923,7 +3917,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator HitNameAPIWithXanaliyaUser(string url, string Jsondata, string localUsername)//rik
     {
-        Debug.Log("HitNameAPIWithXanaliyaUser Url:" + url + "   :BodyJson:" + Jsondata + "  :userName:" + localUsername);
+        ////Debug.Log("HitNameAPIWithXanaliyaUser Url:" + url + "   :BodyJson:" + Jsondata + "  :userName:" + localUsername);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -3933,17 +3927,17 @@ public class UserRegisterationManager : MonoBehaviour
 
         yield return request.SendWebRequest();
 
-        Debug.Log("Data:" + request.downloadHandler.text);
+        ////Debug.Log("Data:" + request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
+                ////Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    Debug.Log(myObject1.msg);
+                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
                         errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3994,10 +3988,10 @@ public class UserRegisterationManager : MonoBehaviour
             var operation = www.SendWebRequest();
             while (!operation.isDone)
             {
-                //  Debug.Log(www.downloadProgress);
+                //  ////Debug.Log(www.downloadProgress);
                 yield return null;
             }
-            //  print("json data is " + www.downloadHandler.text);
+            //  //print("json data is " + www.downloadHandler.text);
             ClassWithToken myObject1 = new ClassWithToken();
             myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
             if (!www.isHttpError && !www.isNetworkError)
@@ -4011,10 +4005,10 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             DynamicEventManager.deepLink?.Invoke("Guest login");
                         }
-                        Debug.Log("GuestToken=====");
+                        ////Debug.Log("GuestToken=====");
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            print("these are premium users");
+                            //print("these are premium users");
                             PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
@@ -4054,8 +4048,8 @@ public class UserRegisterationManager : MonoBehaviour
     [System.Obsolete]
     IEnumerator LoginUserWithNewT(string url, string Jsondata, GameObject _loader = null, bool AutoLoginBool = false)
     {
-        print("URL of login is " + url);
-        print(Jsondata);
+        ////print("URL of login is " + url);
+        ////print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -4066,7 +4060,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-        print("json data is " + request.downloadHandler.text);
+        ////print("json data is " + request.downloadHandler.text);
         ClassWithToken myObject1 = new ClassWithToken();
         myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
 
@@ -4080,22 +4074,22 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.error == null)
             {
-                Debug.Log(request.downloadHandler.text);
+                ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
                     PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                     if (_loader != null)
                         _loader.SetActive(false);
-                    print("Token is " + myObject1.data.token);
+                    ////print("Token is " + myObject1.data.token);
 
-                    print("Xanalia token is " + myObject1.data.xanaliaToken);
+                    ////print("Xanalia token is " + myObject1.data.xanaliaToken);
                     XanaliaUserTokenId = myObject1.data.xanaliaToken;
                     PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
                     PlayerPrefs.SetInt("shownWelcome", 1);
                     PlayerPrefs.SetInt("firstTime", 1);
 
                     XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
-
+                    
                     if (!AutoLoginBool)
                     {
                         // savePasswordList.instance.saveData(LoginEmailNew.Text.Trim(), LoginPasswordShiftCode.GetText().Trim());
@@ -4105,7 +4099,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("WalletLogin", 0);
                     //PlayerPrefs.SetString("LoginToken", myObject1.data.token);
                     ConstantsGod.AUTH_TOKEN = myObject1.data.token;
-                    print("My NEw Value in Token is " + ConstantsGod.AUTH_TOKEN);
+                    //print("My NEw Value in Token is " + ConstantsGod.AUTH_TOKEN);
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                     DynamicEventManager.deepLink?.Invoke("Login user here");
 
@@ -4156,7 +4150,7 @@ public class UserRegisterationManager : MonoBehaviour
                         NFTCreateJsonMain = NFTCreateJsonMain.AssignNFTList(100, xanaliaNetworkType, "mycollection", 1);
 
                         var jsonObj = JsonUtility.ToJson(NFTCreateJsonMain);
-                        print("Json is  : " + jsonObj);
+                        //print("Json is  : " + jsonObj);
 
                         StartCoroutine(XanaliaUserToken(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.userMy_Collection_Xanalia, jsonObj));
                         StartCoroutine(XanaliaNonCryptoNFTRole(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.getUserProfile_Xanalia));
@@ -4165,10 +4159,10 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        print("ID of user is " + myObject1.data.user.id);
+                        //print("ID of user is " + myObject1.data.user.id);
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
+                            //print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
                             PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
@@ -4177,11 +4171,11 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                     }
 
-                    print("Wallet Address of Web 2.0 user is " + myObject1.data.user.walletAddress);
+                    //print("Wallet Address of Web 2.0 user is " + myObject1.data.user.walletAddress);
 
                     if (!string.IsNullOrEmpty(myObject1.data.user.walletAddress) && PlayerPrefs.HasKey("Equiped"))
                         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                    // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
+                   // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
 
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
@@ -4201,18 +4195,18 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         var bytes = System.Convert.FromBase64String(decode);
                         var userInfo = System.Text.ASCIIEncoding.ASCII.GetString(bytes);
-                        print(userInfo);
+                        //print(userInfo);
                         LoginClass L_LoginObject = new LoginClass();
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
 
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
-                        print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
+                        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         //PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetString("PlayerName", myObject1.data.user.name);
                         PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
-                        print("Welcome " + PlayerPrefs.GetString("UserName"));
+                        //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         usernamePanal.SetActive(false);
                         usernamePanal.SetActive(false);
                         CheckCameraMan();
@@ -4274,7 +4268,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
-                        print("Hey success false " + myObject1.msg);
+                        //print("Hey success false " + myObject1.msg);
                         if (myObject1.msg.Contains("You are already logged in another device"))
                         {
                             if (AutoLoginBool)
@@ -4290,7 +4284,7 @@ public class UserRegisterationManager : MonoBehaviour
                                 myObject = myObject.CreateFromJSON(Jsondata);
                                 MyClassOfLogoutDevice logoutObj = new MyClassOfLogoutDevice();
                                 string bodyJson2 = JsonUtility.ToJson(logoutObj.GetdataFromClass(myObject.email, myObject.phoneNumber, myObject.password));
-                                print("bodyJson2 " + bodyJson2);
+                                //print("bodyJson2 " + bodyJson2);
                                 //  string bodyJson1 = JsonUtility.ToJson(myObject.GetdataFromClass("", "", "", uniqueID()));
                                 PlayerPrefs.SetString("LogoutFromDeviceJSON", bodyJson2);
                             }
@@ -4334,11 +4328,11 @@ public class UserRegisterationManager : MonoBehaviour
         }
         //}
 
-        //   print(myObject1.msg + " | success: " + myObject1.success);
+        //   //print(myObject1.msg + " | success: " + myObject1.success);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
             StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        }
+        } 
     }
 
 
@@ -4386,9 +4380,9 @@ public class UserRegisterationManager : MonoBehaviour
     [System.Obsolete]
     IEnumerator XanaliaUserToken(string url, string Jsondata)
     {
-        print(Jsondata);
-        print(url);
-        print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
+        //print(Jsondata);
+        //print(url);
+        //print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -4401,7 +4395,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-        print("List of MainNet NFT's is   = " + request.downloadHandler.text);
+        //print("List of MainNet NFT's is   = " + request.downloadHandler.text);
 
 
         nftlist = request.downloadHandler.text;
@@ -4410,15 +4404,15 @@ public class UserRegisterationManager : MonoBehaviour
     [System.Obsolete]
     IEnumerator XanaliaNonCryptoNFTRole(string url)
     {
-        //  print(Jsondata);
-        print(url);
-        print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
+        //  //print(Jsondata);
+        //print(url);
+        //print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
         var request = new UnityWebRequest(url, "GET");
         //   byte[] bodyRaw = Encoding.UTF8.GetBytes("");
         //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
+       ////Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4427,7 +4421,7 @@ public class UserRegisterationManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("nft response :- " + url + request.downloadHandler.text);
+       ////Debug.Log("nft response :- " + url + request.downloadHandler.text);
 
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
@@ -4436,17 +4430,17 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.error == null)
             {
-                Debug.Log("!!!!!!!" + request.downloadHandler.text);
+                ////Debug.Log("!!!!!!!" + request.downloadHandler.text);
                 if (myObject.success && myObject.data.userNftRoleArr != null)
                 {
-                    // print("NFTrole For non Crypto user is " + myObject.data.userNftRole[1]);
+                    // //print("NFTrole For non Crypto user is " + myObject.data.userNftRole[1]);
 
                     int x = (int)NftRolePriority.guest;
                     string userNftRole = "free";
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                        Debug.Log("---- " + s + "----" + ReturnNftRole(s));
+                       ////Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4498,7 +4492,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                Debug.Log("<color = red> Network error in set device token </color>");
+                ////Debug.Log("<color = red> Network error in set device token </color>");
             }
             else
             {
@@ -4507,7 +4501,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                        Debug.Log("Success false in  in set device token");
+                       ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -4549,18 +4543,18 @@ public class UserRegisterationManager : MonoBehaviour
         // request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         // request.SetRequestHeader("Content-Type", "application/json");
         // yield return request.SendWebRequest();
-        //// print("json data is " + request.downloadHandler.text);
+        //// //print("json data is " + request.downloadHandler.text);
         // ClassWithToken myObject1 = new ClassWithToken();
         // myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
         // if (!request.isHttpError && !request.isNetworkError)
         // {
         //     if (request.error == null)
         //     {
-        //         Debug.Log(request.downloadHandler.text);
+        //         ////Debug.Log(request.downloadHandler.text);
         //         if (myObject1.success)
         //         {
 
-        //             print("Token is --- " + myObject1.data.token);
+        //             //print("Token is --- " + myObject1.data.token);
 
         //            PlayerPrefs.SetString("LoginToken_Preset", myObject1.data.token);
         //            ServerSIdeCharacterHandling.Instance.getPresetDataFromServer();
@@ -4569,8 +4563,8 @@ public class UserRegisterationManager : MonoBehaviour
         // }
         // else
         // {
-        //    Debug.Log("NetWOrkerror DO Somethin");
-        ////     print(myObject1.msg + " | success: " + myObject1.success);
+        //    ////Debug.Log("NetWOrkerror DO Somethin");
+        ////     //print(myObject1.msg + " | success: " + myObject1.success);
         // }
         yield return null;
 
@@ -4588,7 +4582,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
-        // OpenUIPanal(7);
+       // OpenUIPanal(7);
         SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         getdatafromserver();
@@ -4641,7 +4635,7 @@ public class UserRegisterationManager : MonoBehaviour
         public MyClassNewApi Load(string savedData)
         {
             myObject = new MyClassNewApi();
-            print("savedData " + savedData);
+            //print("savedData " + savedData);
 
             myObject = JsonUtility.FromJson<MyClassNewApi>(savedData);
             return myObject;
@@ -4658,7 +4652,7 @@ public class UserRegisterationManager : MonoBehaviour
     //    public OtpPhoneData Load(string savedData)
     //    {
     //        myObject = new OtpPhoneData();
-    //        print("savedData " + savedData);
+    //        //print("savedData " + savedData);
     //        myObject.data = new OtpData();
     //        myObject = JsonUtility.FromJson<OtpPhoneData>(savedData);
     //        return myObject;
@@ -4681,7 +4675,7 @@ public class UserRegisterationManager : MonoBehaviour
         public string message;
         public MyClassNewApiForStatusCode Load(string jsonString)
         {
-            print("savedData " + jsonString);
+            //print("savedData " + jsonString);
             return JsonUtility.FromJson<MyClassNewApiForStatusCode>(jsonString);
             //myObject = JsonUtility.FromJson<MyClassNewApi>(savedData);
             //return myObject;
@@ -4720,7 +4714,7 @@ public class UserRegisterationManager : MonoBehaviour
         public bool isAdmin;
         public static JustToken CreateFromJSON(string jsonString)
         {
-            print("Person " + jsonString);
+            //print("Person " + jsonString);
             return JsonUtility.FromJson<JustToken>(jsonString);
         }
     }
@@ -4838,7 +4832,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         LoginClass myObject = new LoginClass();
         myObject = myObject.Load(Localdata);
-        print("user name in class" + (myObject.id));
+        //print("user name in class" + (myObject.id));
         return myObject;
     }
 
@@ -4853,7 +4847,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         MyClassNewApi myObject = new MyClassNewApi();
         myObject = myObject.Load(Localdata);
-        print("myObject " + myObject.data);
+        //print("myObject " + myObject.data);
         return myObject;
     }
 
@@ -4861,7 +4855,7 @@ public class UserRegisterationManager : MonoBehaviour
     //{
     //    OtpPhoneData myObject = new OtpPhoneData();
     //    myObject = myObject.Load(Localdata);
-    //    print("myObject " + myObject.data.status);
+    //    //print("myObject " + myObject.data.status);
     //    return myObject;
     //}
 

@@ -17,13 +17,12 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     public BuildingDetect buildingDetect;
     public Volume postProcessVol;
     public RuntimeAnimatorController cameraBlurEffect;
-    public GameObject specialItemParticleEffect;
+    internal GameObject specialItemParticleEffect;
     public Material hologramMaterial;
     public Shader superMarioShader;
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    public GameObject[] FootSteps;
     internal PlayerControllerNew playerControllerNew;
     internal AvatarController avatarController;
     internal CharcterBodyParts charcterBodyParts;
@@ -31,11 +30,8 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     public Vector3 spawnPointPosition;
     public GameObject raycast;
-    public GameObject katanaPrefab;
-    public GameObject shurikenPrefab;
     public GameObject throwAimPrefab;
     public Material lineMaterial;
-    public Ball ThrowBall;
     public GameObject handBall;
 
     public GameObject helpParentReference;
@@ -69,10 +65,13 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
     internal List<XanaItem> multiplayerComponentsxanaItems = new List<XanaItem>();
+    internal List<GameObject> multiplayerComponentsObject = new List<GameObject>();
+    public List<string> multiplayerComponentsName = new List<string>();
 
     //AI Generated Skybox
     public Material aiSkyMaterial;
     public VolumeProfile aiPPVolumeProfile;
+    public LensFlareDataSRP lensFlareDataSRP;
     internal bool isSkyLoaded;
 
     //Gamification components with multipler
@@ -82,8 +81,8 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     //Font
     public TMPro.TMP_FontAsset orbitronFont;
-    public TMPro.TMP_FontAsset hiraginoFont;
-    public TMPro.TMP_FontAsset arialFont;
+    internal TMPro.TMP_FontAsset hiraginoFont;
+    //public TMPro.TMP_FontAsset arialFont;
 
     //Name canvas
     internal Canvas nameCanvas;
@@ -186,6 +185,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     }
     #endregion
 
+    #region WarpComponent location update
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -242,7 +242,9 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         if (portalSystemEndPoint != null)
             portalSystemEndPoint.portalEndLocation = location;
     }
+    #endregion
 
+    #region Components for multiplayer
     //All components for multiplayer
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -350,6 +352,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         hash.Add("gamificationMultiplayerComponentDatas", json);
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
+    #endregion
 
     #region Photon Events
     public void OnPlayerEnteredRoom(Player newPlayer)

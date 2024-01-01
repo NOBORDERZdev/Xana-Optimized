@@ -102,7 +102,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         else
             GamificationComponentData.instance.Ninja_Throw_InitPosX = NinjaMotionUIButtonPanel.transform.localPosition;
 
-        defaultFont = GamificationComponentData.instance.arialFont;
+        //defaultFont = GamificationComponentData.instance.arialFont;
 
     }
 
@@ -297,6 +297,22 @@ public class GamificationComponentUIManager : MonoBehaviour
                 StopCoroutine(TimeCoroutine);
             TimeCoroutine = StartCoroutine(nameof(IETimeLimit), time);
         }
+        if (time > 0)
+            BuilderEventManager.OnTimerLimitEnd += OnTimerLimitEnd;
+
+    }
+
+    public void OnTimerLimitEnd()
+    {
+        if (TimeCoroutine != null)
+            StopCoroutine(TimeCoroutine);
+        StartCoroutine(OnDisableTimeLimitUI());
+    }
+
+    public IEnumerator OnDisableTimeLimitUI()
+    {
+        yield return new WaitForSeconds(5f);
+        DisableTimeLimitUI();
     }
 
     public IEnumerator IETimeLimit(float time)
@@ -317,6 +333,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         TimeLimitText.text = "";
         if (TimeCoroutine != null)
             StopCoroutine(TimeCoroutine);
+        StopCoroutine(OnDisableTimeLimitUI());
+        BuilderEventManager.OnTimerLimitEnd -= OnTimerLimitEnd;
     }
 
     public Coroutine TimerCountdownCoroutine;
@@ -378,6 +396,8 @@ public class GamificationComponentUIManager : MonoBehaviour
                 StopCoroutine(ElapsedTimerCoroutine);
                 ElapsedTimerCoroutine = StartCoroutine(IEElapsedTimer(time, isRunning));
             }
+            BuilderEventManager.elapsedEndTime += ElapsedEndTime;
+
         }
         else
         {
@@ -387,6 +407,19 @@ public class GamificationComponentUIManager : MonoBehaviour
             StartCoroutine(IEElapsedTimer(time, false));
             //DisableElapseTimeCounDownUI();
         }
+    }
+
+    public void ElapsedEndTime()
+    {
+        if (ElapsedTimerCoroutine != null)
+            StopCoroutine(ElapsedTimerCoroutine);
+        StartCoroutine(OnDisableDisableElapseTimeUI());
+    }
+
+    public IEnumerator OnDisableDisableElapseTimeUI()
+    {
+        yield return new WaitForSeconds(5f);
+        DisableElapseTimeCounDownUI();
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
@@ -407,6 +440,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         ElapseTimerText.text = "00:00";
         if (ElapsedTimerCoroutine != null)
             StopCoroutine(ElapsedTimerCoroutine);
+        StopCoroutine(OnDisableDisableElapseTimeUI());
+        BuilderEventManager.elapsedEndTime -= ElapsedEndTime;
     }
 
     Coroutine EnableDisplayMessageCoroutine;

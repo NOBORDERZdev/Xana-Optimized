@@ -55,8 +55,8 @@ public class CheckInternet : MonoBehaviour
 
             if (once == true) { 
                 {
-                  
-                    UserRegisterationManager.instance.OpenUIPanal(1);
+                    if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+                        UserRegisterationManager.instance.OpenUIPanal(1);
                     UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
                 }
                 once=false;
