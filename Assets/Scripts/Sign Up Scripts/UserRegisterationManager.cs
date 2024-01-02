@@ -1368,12 +1368,10 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
-                        
+                        LoadingFadeOutScreen();
                         //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         //EntertheWorld_Panal.SetActive(true);
-                        Invoke("LoadingFadeOutScreen ", 0.2f);
-                        
-                    }
+                      }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
