@@ -282,6 +282,7 @@ public class UserRegisterationManager : MonoBehaviour
     public void WalletLoginCheck() 
     {
         _IsWalletSignUp = false;
+       
         LoginPanal.SetActive(false);
     }
 
@@ -289,10 +290,10 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (_IsWalletSignUp)
         {
-            setAvatarGiftPanal.SetActive(true);
+           // setAvatarGiftPanal.SetActive(true);
         }
         else {
-            setAvatarGiftPanal.SetActive(false);
+           // setAvatarGiftPanal.SetActive(false);
             
         }
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
