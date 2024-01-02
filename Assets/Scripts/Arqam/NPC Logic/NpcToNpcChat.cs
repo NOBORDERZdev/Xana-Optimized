@@ -114,10 +114,11 @@ public class NpcToNpcChat : MonoBehaviour
         string prefix = ip + "api/v2/text_from_userid_en_35?id=";
         string url = prefix + id;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + url + "</color>");
-
+        Debug.LogError("Npc to Npc Sending request ");
         UnityWebRequest request = UnityWebRequest.Get(url);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
+        Debug.LogError("Npc to Npc Res " + request.downloadHandler.text);
         if (request.result == UnityWebRequest.Result.Success)
         {
             responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
@@ -163,10 +164,11 @@ public class NpcToNpcChat : MonoBehaviour
         string messageData = "&msg=";
         string postUrl = prefix + id + targetData + npcAttributes[npcThatStartConversation].aiIds + messageData + msg;
         Debug.Log("<color=red> Communication URL(NpcToNpc): " + postUrl + "</color>");
-
+        Debug.LogError("Npc to Npc Sending request Get Reply");
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
+        Debug.LogError("Npc to Npc Res  Get Reply :- " + request.downloadHandler.text);
         if (request.result == UnityWebRequest.Result.Success)
         {
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);

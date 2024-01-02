@@ -49,12 +49,14 @@ public class NpcFreeSpeech : MonoBehaviour
         string prefix = ip + "api/v2/text_from_userid_en_35?id=";
         string url = prefix + id;
         Debug.Log("<color=red> Communication URL(FreeAI): " + url + "</color>");
-
+        Debug.LogError("Npc to Free Speech Sending request ");
         UnityWebRequest request = UnityWebRequest.Get(url);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
+        Debug.LogError("Npc to Free Speech Res " + request.downloadHandler.text);
         if (request.result == UnityWebRequest.Result.Success)
         {
+            
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             string responseFeed = "";

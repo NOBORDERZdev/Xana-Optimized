@@ -191,10 +191,11 @@ public class NpcChatSystem : MonoBehaviour
         string messageData = "&msg=";
         string postUrl = prefix + id + targetData + userId + messageData + msg;
         //Debug.Log("<color=red> Communication URL(UserAI): " + postUrl + "</color>");
-
+        Debug.LogError("Npc to User Sending request ");
         UnityWebRequest request = UnityWebRequest.Get(postUrl);
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
+        Debug.LogError("Npc to User Res " + request.downloadHandler.text);
         if (request.result == UnityWebRequest.Result.Success)
         {
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
