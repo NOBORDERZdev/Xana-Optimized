@@ -748,7 +748,9 @@ public class DefaultBattleGUI : BattleGUI
         //if (this.player1GUI.name != null)	this.player1GUI.name.text = string.Empty;
         //if (this.player2GUI.name != null)	this.player2GUI.name.text = string.Empty;
         //if (this.timer != null)				this.timer.text = string.Empty;
-
+        Debug.Log("Winner: " + winner.name);
+        Debug.Log("loser: " + loser.name);
+        FightingGameManager.instance.winnerClothJson = winner.GetComponentInChildren<AvatarController>().clothJson;
         TimeLineManager.instance.StartOutroCutScene();
     }
 
@@ -1093,12 +1095,13 @@ public class DefaultBattleGUI : BattleGUI
     }
 
     //Attizaz
-	// For preventing final panel and player wins text conflict
-	[SerializeField]float resetWinTextTime = 5f;
-	IEnumerator SetupTextToNone() {
-		yield return new WaitForSeconds(resetWinTextTime);
-		mainAlert.text.text = "";
-	}
+    // For preventing final panel and player wins text conflict
+    [SerializeField] float resetWinTextTime = 5f;
+    IEnumerator SetupTextToNone()
+    {
+        yield return new WaitForSeconds(resetWinTextTime);
+        mainAlert.text.text = "";
+    }
 
     protected override void OnTimer(FPLibrary.Fix64 time)
     {

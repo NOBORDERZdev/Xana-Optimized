@@ -20,6 +20,7 @@ public class AvatarController : MonoBehaviour
     public bool staticPlayer;
     public bool isLoadStaticClothFromJson;
     public string staticClothJson;
+    public string clothJson;
     public SkinnedMeshRenderer head;
     public SkinnedMeshRenderer Body;
     //[HideInInspector]
@@ -255,6 +256,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+            clothJson = staticClothJson;
             if (_CharacterData.myItemObj.Count > 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -490,6 +492,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
             //_CharData = _CharacterData;
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {

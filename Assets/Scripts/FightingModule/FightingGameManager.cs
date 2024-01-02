@@ -15,6 +15,7 @@ public class FightingGameManager : MonoBehaviour
     public UFE3D.CharacterInfo P2SelectedChar;
     public PlayerDataClass player1Data = new PlayerDataClass();
     public PlayerDataClass player2Data = new PlayerDataClass();
+    public string winnerClothJson;
     public string myName = ""; //Attizaz
     public string opponentName = "";
 
@@ -141,7 +142,8 @@ public class FightingGameManager : MonoBehaviour
         
         SoundChanger soundChanger = FindObjectOfType<SoundChanger>();
         winnerAvatar = soundChanger.WinnerAvatar;
-        
+
+        winnerAvatar.GetComponent<AvatarController>().staticClothJson = winnerClothJson;
         
         player1.SetActive(false);
         player2.SetActive(false);
