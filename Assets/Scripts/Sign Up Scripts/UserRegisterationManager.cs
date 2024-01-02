@@ -1370,12 +1370,14 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         
                         //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                        EntertheWorld_Panal.SetActive(true);
+                        //EntertheWorld_Panal.SetActive(true);
+                        Invoke("LoadingFadeOutScreen ", 0.2f);
+                        
                     }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
-                            RegistrationCompletePanal.SetActive(true);
+                           // RegistrationCompletePanal.SetActive(true);
                             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         }
                         if (shownWelcome)
@@ -3426,7 +3428,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             usernamePanal.SetActive(false);
-            EntertheWorld_Panal.SetActive(true);
+           // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
 
             //  StoreManager.instance.OnSaveBtnClicked();
