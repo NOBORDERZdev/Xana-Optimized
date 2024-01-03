@@ -203,6 +203,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFrndNoSearchFound;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
     [SerializeField] public GameObject AddFreindContainer;
+    [SerializeField] public GameObject ExtraPrefab;
     private void Awake()
     {
         if (Instance == null)
