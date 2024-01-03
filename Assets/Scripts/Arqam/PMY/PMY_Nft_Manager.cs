@@ -43,8 +43,6 @@ namespace PMY
 
         [NonReorderable]
         public List<GameObject> NftPlaceholder;
-        [NonReorderable]
-        public List<GameObject> NftPlaceholder2;
         public static PMY_Nft_Manager Instance { get; private set; }
 
         public RenderTexture renderTexture_16x9;
@@ -88,7 +86,6 @@ namespace PMY
         public Action OnVideoEnlargeAction;
         public Action<int> exitClickedAction;
 
-        public bool IsPMYLobby=false;
 
         private void Awake()
         {
@@ -138,23 +135,16 @@ namespace PMY
                 else
                     PMY_RoomId = PMY_RoomId_test;
             }
-            if (IsPMYLobby)
-            {
-                Int_PMY_Nft_Manager(1, NftPlaceholder);
-            }
-            else
-            {
-                Int_PMY_Nft_Manager(PMY_RoomId, NftPlaceholder);
-            }
+                Int_PMY_Nft_Manager();
         }
 
         /// <summary>
         /// It will clear the worldInfos list and Set infos
         /// </summary>
-        public async void Int_PMY_Nft_Manager(int para, List<GameObject> _placeHolder)
+        public async void Int_PMY_Nft_Manager()
         {
             StringBuilder apiUrl = new StringBuilder();
-            apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.PMYWorldASSET + para);
+            apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.PMYWorldASSET + PMY_RoomId);
 
             using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()))
             {
@@ -169,13 +159,8 @@ namespace PMY
                     StringBuilder data = new StringBuilder();
                     data.Append(request.downloadHandler.text);
                     PMY_Json json = JsonConvert.DeserializeObject<PMY_Json>(data.ToString());
-                    StartCoroutine(InitData(json, _placeHolder));
+                    StartCoroutine(InitData(json, NftPlaceholder));
                 }
-            }
-            if (IsPMYLobby)
-            {
-                IsPMYLobby = false;
-                Int_PMY_Nft_Manager(5, NftPlaceholder2);
             }
         }
 

@@ -3903,6 +3903,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8111151272706508399
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15286,6 +15287,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7870237328330758281}
+        m_TargetAssemblyTypeName: PMY.PMY_Nft_Manager_Extension, Assembly-CSharp
+        m_MethodName: EnableControlls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &556023441026134676
 GameObject:
   m_ObjectHideFlags: 0
@@ -17900,6 +17913,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7384760824589345153
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22651,6 +22665,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8651658319729386456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23160,6 +23175,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &5318765652902317757
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27484,6 +27500,7 @@ GameObject:
   - component: {fileID: 1114801666220175040}
   - component: {fileID: 1114801666220175041}
   - component: {fileID: 1114801666220175070}
+  - component: {fileID: 7870237328330758281}
   m_Layer: 5
   m_Name: NftInfoDynamicCanvas
   m_TagString: Untagged
@@ -27785,8 +27802,6 @@ MonoBehaviour:
     videoType: 0
   NftPlaceholder:
   - {fileID: 3045743465055227148}
-  NftPlaceholder2:
-  - {fileID: 6437533022827428487}
   renderTexture_16x9: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   renderTexture_9x16: {fileID: 8400000, guid: 607e7a72a0692fc44a57a4ee5f17d846, type: 2}
   renderTexture_1x1: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
@@ -27806,7 +27821,6 @@ MonoBehaviour:
   videoRenderObject: {fileID: 0}
   videoPlayerSource: {fileID: 0}
   livePlayerSource: {fileID: 0}
-  IsPMYLobby: 1
 --- !u!114 &1114801666220175070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27838,6 +27852,237 @@ MonoBehaviour:
   LandscapeObj: {fileID: 3045743463826249212}
   PotraiteObj: {fileID: 3045743463456111538}
   renderTexture: {fileID: 8400000, guid: 881d1b001fb5b1249a1bea368ce7d469, type: 2}
+--- !u!114 &7870237328330758281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114801666220175068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5aafca6e2110b4d914523990fbab4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldPlayingVideos: 1
+  ratioReferences:
+  - name: 1:1 WithDes
+    l_obj: {fileID: 3045743464252360599}
+    l_Title: {fileID: 3045743463771216200}
+    l_Aurthur: {fileID: 3045743463668677961}
+    l_Description: {fileID: 3045743463732579047}
+    l_image: {fileID: 3045743463480375212}
+    l_videoPlayer: {fileID: 1114801666028887197}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577885085318347}
+    p_Title: {fileID: 8379577886827807913}
+    p_Aurthur: {fileID: 8379577886580299182}
+    p_Description: {fileID: 8379577885596434414}
+    p_image: {fileID: 8379577886103640603}
+    p_videoPlayer: {fileID: 1114801665905981891}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 16:9 WithDes
+    l_obj: {fileID: 3045743464890162893}
+    l_Title: {fileID: 8379577884976733234}
+    l_Aurthur: {fileID: 8379577885190042370}
+    l_Description: {fileID: 8379577886633390247}
+    l_image: {fileID: 8379577886564574984}
+    l_videoPlayer: {fileID: 1114801665674235048}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577885721151275}
+    p_Title: {fileID: 8379577886822522049}
+    p_Aurthur: {fileID: 8379577885584091542}
+    p_Description: {fileID: 8379577885671475571}
+    p_image: {fileID: 8379577885695562278}
+    p_videoPlayer: {fileID: 1114801665285478788}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 9:16 WithDes
+    l_obj: {fileID: 3045743464184528483}
+    l_Title: {fileID: 8379577886206498791}
+    l_Aurthur: {fileID: 8379577886418546303}
+    l_Description: {fileID: 8379577885867365574}
+    l_image: {fileID: 8379577886729985970}
+    l_videoPlayer: {fileID: 1114801664577051359}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577886547741354}
+    p_Title: {fileID: 8379577885361502033}
+    p_Aurthur: {fileID: 8379577885204327471}
+    p_Description: {fileID: 8379577885806549471}
+    p_image: {fileID: 8379577886863960906}
+    p_videoPlayer: {fileID: 1114801664237020977}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 4:4 WithDes
+    l_obj: {fileID: 3045743464806244386}
+    l_Title: {fileID: 8379577886802436971}
+    l_Aurthur: {fileID: 8379577887001814846}
+    l_Description: {fileID: 8379577884986831891}
+    l_image: {fileID: 8379577885344696094}
+    l_videoPlayer: {fileID: 1114801665386077946}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577885003201840}
+    p_Title: {fileID: 8379577886797563935}
+    p_Aurthur: {fileID: 8379577886673339201}
+    p_Description: {fileID: 8379577886165614170}
+    p_image: {fileID: 8379577886452916012}
+    p_videoPlayer: {fileID: 1114801665990122220}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 1:1 WithoutDes
+    l_obj: {fileID: 8379577885748602467}
+    l_Title: {fileID: 0}
+    l_Aurthur: {fileID: 0}
+    l_Description: {fileID: 0}
+    l_image: {fileID: 8379577885317967246}
+    l_videoPlayer: {fileID: 1114801665838249260}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577886142231021}
+    p_Title: {fileID: 0}
+    p_Aurthur: {fileID: 0}
+    p_Description: {fileID: 0}
+    p_image: {fileID: 8379577886458219881}
+    p_videoPlayer: {fileID: 1114801665984078194}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 16:9 WithoutDes
+    l_obj: {fileID: 8379577884989181250}
+    l_Title: {fileID: 0}
+    l_Aurthur: {fileID: 0}
+    l_Description: {fileID: 0}
+    l_image: {fileID: 8379577886423276779}
+    l_videoPlayer: {fileID: 1114801665698132003}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577885631819143}
+    p_Title: {fileID: 0}
+    p_Aurthur: {fileID: 0}
+    p_Description: {fileID: 0}
+    p_image: {fileID: 8379577885644472104}
+    p_videoPlayer: {fileID: 1114801665551882136}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 9:16 WithoutDes
+    l_obj: {fileID: 8379577886540564032}
+    l_Title: {fileID: 0}
+    l_Aurthur: {fileID: 0}
+    l_Description: {fileID: 0}
+    l_image: {fileID: 8379577885794685119}
+    l_videoPlayer: {fileID: 1114801665705940689}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577885202322422}
+    p_Title: {fileID: 0}
+    p_Aurthur: {fileID: 0}
+    p_Description: {fileID: 0}
+    p_image: {fileID: 8379577886247216211}
+    p_videoPlayer: {fileID: 1114801665921644016}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  - name: 4:4 WithoutDes
+    l_obj: {fileID: 8379577886948024287}
+    l_Title: {fileID: 0}
+    l_Aurthur: {fileID: 0}
+    l_Description: {fileID: 0}
+    l_image: {fileID: 8379577885847090546}
+    l_videoPlayer: {fileID: 1114801665410428080}
+    l_LivePlayer: {fileID: 0}
+    l_PrerecordedPlayer: {fileID: 0}
+    l_Loader: {fileID: 3045743465493526779}
+    p_obj: {fileID: 8379577884959303013}
+    p_Title: {fileID: 0}
+    p_Aurthur: {fileID: 0}
+    p_Description: {fileID: 0}
+    p_image: {fileID: 8379577885342137218}
+    p_videoPlayer: {fileID: 1114801665657426502}
+    p_LivePlayer: {fileID: 0}
+    p_PrerecordedPlayer: {fileID: 0}
+    p_Loader: {fileID: 3045743464127374060}
+  pdfPanel_L: {fileID: 7800660573990682392}
+  pdfPanel_P: {fileID: 8972801970996766519}
+  pdfViewer_L: {fileID: 7800660572825998929}
+  pdfViewer_P: {fileID: 556023441032493758}
+  quizPanel_L: {fileID: 8535815336955705133}
+  quizPanel_P: {fileID: 8217591674060554486}
+  VideoPlayers:
+  - {fileID: 1114801666028887197}
+  - {fileID: 1114801665674235048}
+  - {fileID: 1114801664577051359}
+  - {fileID: 1114801665386077946}
+  - {fileID: 1114801665838249260}
+  - {fileID: 1114801665698132003}
+  - {fileID: 1114801665705940689}
+  - {fileID: 1114801665410428080}
+  - {fileID: 1114801665905981891}
+  - {fileID: 1114801665285478788}
+  - {fileID: 1114801664237020977}
+  - {fileID: 1114801665990122220}
+  - {fileID: 1114801665984078194}
+  - {fileID: 1114801665551882136}
+  - {fileID: 1114801665921644016}
+  - {fileID: 1114801665657426502}
+  LandscapeObj: {fileID: 3045743463826249212}
+  PotraiteObj: {fileID: 3045743463456111538}
+  worldInfos:
+  - Title:
+    - 
+    Aurthor:
+    - 
+    Des:
+    - 
+    url: 
+    pdfURL: 
+    thumbnail: 
+    Type: 0
+    WorldImage: {fileID: 0}
+    Texture: {fileID: 0}
+    VideoLink: 
+    isAWSVideo: 0
+    isLiveVideo: 0
+    isPrerecordedVideo: 0
+    pmyRatio: 0
+    videoType: 0
+  NftPlaceholder:
+  - {fileID: 6437533022827428487}
+  renderTexture_16x9: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  renderTexture_9x16: {fileID: 8400000, guid: 607e7a72a0692fc44a57a4ee5f17d846, type: 2}
+  renderTexture_1x1: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
+  renderTexture_4x3: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
+  RetryChances: 3
+  PMY_RoomId_test: 5
+  PMY_RoomId_main: 5
+  PMY_RoomId: 5
+  PMY_RoomIdFromXanaConstant: 0
+  analyticMuseumID: 
+  _pdfURL: 
+  nftTitle: 
+  firebaseEventName: 
+  clickedNftInd: 0
+  NFTLoadedSprites: []
+  NFTLoadedVideos: []
+  videoRenderObject: {fileID: 0}
+  videoPlayerSource: {fileID: 0}
+  livePlayerSource: {fileID: 0}
 --- !u!1 &1128300301683236287
 GameObject:
   m_ObjectHideFlags: 0
@@ -28181,6 +28426,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8608524735363268641
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29910,6 +30156,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &173815295327225251
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32566,6 +32813,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7156158369731681044
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32973,6 +33221,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1114801666220175041}
+        m_TargetAssemblyTypeName: PMY.PMY_Nft_Manager, Assembly-CSharp
+        m_MethodName: EnableControlls
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -33697,6 +33957,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &9175398394206718124
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35147,6 +35408,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &1068993179391067121
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35863,6 +36125,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7816091576720082026
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36919,6 +37182,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &3045743463457156194
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39391,6 +39655,7 @@ GameObject:
   - component: {fileID: 3045743464747623791}
   - component: {fileID: 3045743464747623776}
   - component: {fileID: 3045743464747623777}
+  - component: {fileID: 3114443663204862388}
   m_Layer: 23
   m_Name: '16 : 9'
   m_TagString: Untagged
@@ -39473,9 +39738,9 @@ VideoPlayer:
   m_AspectRatio: 5
   m_DataSource: 1
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 0
+  m_AudioOutputMode: 1
   m_TargetAudioSources:
-  - {fileID: 0}
+  - {fileID: 3114443663204862388}
   m_DirectAudioVolumes:
   - 1
   m_Url: 
@@ -39488,6 +39753,102 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!82 &3114443663204862388
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045743464747623779}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3045743464784485045
 GameObject:
   m_ObjectHideFlags: 0
@@ -39911,6 +40272,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &3045743464826614871
 AudioSource:
   m_ObjectHideFlags: 0
@@ -41030,6 +41392,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &2270883354387492326
 AudioSource:
   m_ObjectHideFlags: 0
@@ -41485,6 +41848,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8070805428351643369
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42555,6 +42919,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8315891523162053101
 AudioSource:
   m_ObjectHideFlags: 0
@@ -44475,6 +44840,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &604725785226627440
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45174,7 +45540,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4007045488429107435}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.0038, y: -0.0494, z: 0}
+  m_LocalPosition: {x: -0.0038, y: 0, z: 0}
   m_LocalScale: {x: 3.9010637, y: 3.7845323, z: 0.35477}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45188,7 +45554,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4007045488429107435}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2960942167249866480, guid: 5f176e98bf29c1a4a8dfa7465a01fad4, type: 3}
 --- !u!23 &6174572125908088780
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -45244,7 +45610,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2960942167249866480, guid: 5f176e98bf29c1a4a8dfa7465a01fad4, type: 3}
 --- !u!114 &5731052683793559015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45485,6 +45851,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 180, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 1
 --- !u!82 &2537811944466616012
 AudioSource:
   m_ObjectHideFlags: 0
@@ -47860,6 +48227,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &1927573477906426748
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49964,6 +50332,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8022292802387764642
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50574,6 +50943,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &3497661262119592661
 AudioSource:
   m_ObjectHideFlags: 0
@@ -51646,6 +52016,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &2354323151442425180
 AudioSource:
   m_ObjectHideFlags: 0
@@ -53853,6 +54224,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7476320779131882068
 AudioSource:
   m_ObjectHideFlags: 0
@@ -54417,6 +54789,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &4881426351616898909
 AudioSource:
   m_ObjectHideFlags: 0
@@ -54926,6 +55299,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &5516443385087491951
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58126,6 +58500,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7463874376276420976
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58794,6 +59169,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &1798684626699220836
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59249,6 +59625,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &719613273598343592
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59830,7 +60207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1772497425755825148}
-  - component: {fileID: 8066873134225848475}
+  - component: {fileID: 6997170018023531312}
   m_Layer: 23
   m_Name: 1
   m_TagString: Untagged
@@ -59856,7 +60233,7 @@ Transform:
   m_Father: {fileID: 8335481244593767661}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8066873134225848475
+--- !u!114 &6997170018023531312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59865,7 +60242,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6437533022827428487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
+  m_Script: {fileID: 11500000, guid: e36775ac99b7a704f9d326fd668a0de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
@@ -60235,6 +60612,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &1897451641053010499
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61561,6 +61939,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &4725580865271976139
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62016,6 +62395,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &7816112391622913705
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62471,6 +62851,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &4538175125687603673
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62643,7 +63024,7 @@ MonoBehaviour:
   customPlaylist: 0
   autoPlayNextVideo: 0
   youtubeUrls: []
-  videoFormat: 0
+  videoFormat: 1
   autoPlayOnEnable: 0
   playUsingInternalDevicePlayer: 0
   loadYoutubeUrlsOnly: 0
@@ -66452,6 +66833,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &2229702052177283965
 AudioSource:
   m_ObjectHideFlags: 0
@@ -67270,6 +67652,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &3866240146045507495
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68043,6 +68426,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &4199692878136209366
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68903,6 +69287,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &2220926743917023967
 AudioSource:
   m_ObjectHideFlags: 0
@@ -78006,6 +78391,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &219815927068532260
 AudioSource:
   m_ObjectHideFlags: 0
@@ -79725,6 +80111,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8862885930658607482
 AudioSource:
   m_ObjectHideFlags: 0
@@ -80487,6 +80874,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &3330858870871429577
 AudioSource:
   m_ObjectHideFlags: 0
@@ -83000,6 +83388,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577885305322829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -84426,6 +84815,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577885345697336
 AudioSource:
   m_ObjectHideFlags: 0
@@ -89169,6 +89559,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577885862345622
 AudioSource:
   m_ObjectHideFlags: 0
@@ -89813,6 +90204,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577885874938525
 AudioSource:
   m_ObjectHideFlags: 0
@@ -90567,6 +90959,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886072978620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -91473,6 +91866,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886142413436
 AudioSource:
   m_ObjectHideFlags: 0
@@ -91877,6 +92271,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886147319624
 AudioSource:
   m_ObjectHideFlags: 0
@@ -93398,6 +93793,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886256771293
 AudioSource:
   m_ObjectHideFlags: 0
@@ -93957,6 +94353,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886314706111
 AudioSource:
   m_ObjectHideFlags: 0
@@ -95375,6 +95772,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886462779322
 AudioSource:
   m_ObjectHideFlags: 0
@@ -96201,6 +96599,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886544349354
 AudioSource:
   m_ObjectHideFlags: 0
@@ -97480,6 +97879,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886618793110
 AudioSource:
   m_ObjectHideFlags: 0
@@ -100429,6 +100829,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886868968905
 AudioSource:
   m_ObjectHideFlags: 0
@@ -101026,6 +101427,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886969229480
 AudioSource:
   m_ObjectHideFlags: 0
@@ -101430,6 +101832,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &8379577886983010075
 AudioSource:
   m_ObjectHideFlags: 0
@@ -104987,6 +105390,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7870237328330758281}
+        m_TargetAssemblyTypeName: PMY.PMY_Nft_Manager_Extension, Assembly-CSharp
+        m_MethodName: EnableControlls
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -110416,6 +110831,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &4749943067889458806
 AudioSource:
   m_ObjectHideFlags: 0
@@ -111881,6 +112297,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &1152312747566455933
 AudioSource:
   m_ObjectHideFlags: 0
@@ -112456,6 +112873,7 @@ MonoBehaviour:
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  isExtensionUse: 0
 --- !u!82 &6341511475501163635
 AudioSource:
   m_ObjectHideFlags: 0
@@ -113402,6 +113820,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1114801666220175041}
+        m_TargetAssemblyTypeName: PMY.PMY_Nft_Manager, Assembly-CSharp
+        m_MethodName: EnableControlls
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
