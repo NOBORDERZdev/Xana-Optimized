@@ -461,25 +461,25 @@ namespace PMY
                 //    }
                 //}
                 //else if (_imgVideoRatio == PMY_Ratio.FourXThreeWithDes || _imgVideoRatio == PMY_Ratio.FourXThreeWithoutDes)
-                {
-                    if (imgVideo4x3)
-                    {
-                        if (imgVideoFrame4x3)
-                        {
-                            EnableImageVideoFrame(imgVideoFrame4x3);
-                        }
-                        imgVideo4x3.SetActive(true);
-                        imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
-                        //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_4x3);
-                        renderTexture_temp = renderTexture;
-                        imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                        imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
-                        imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                        imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
-                        imgVideo4x3.GetComponent<VideoPlayer>().Play();
-                    }
-                }
+                //{
+                //    if (imgVideo4x3)
+                //    {
+                //        if (imgVideoFrame4x3)
+                //        {
+                //            EnableImageVideoFrame(imgVideoFrame4x3);
+                //        }
+                //        imgVideo4x3.SetActive(true);
+                //        imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
+                //        //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
+                //        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_4x3);
+                //        renderTexture_temp = renderTexture;
+                //        imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                //        imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
+                //        imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                //        imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
+                //        imgVideo4x3.GetComponent<VideoPlayer>().Play();
+                //    }
+                //}
             }
 
             if (PMY_Nft_Manager.Instance && renderTexture_temp != null)

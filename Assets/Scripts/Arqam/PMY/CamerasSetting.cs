@@ -44,7 +44,7 @@ public class CamerasSetting : MonoBehaviour
         ArrowManager.Instance.selfieShootCamL.farClipPlane = 600;
         ArrowManager.Instance.selfieShootCamP.farClipPlane = 600;
 
-        AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().firstPersonCameraObj
+        AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().FreeFloatCamCharacterController
             .GetComponent<Camera>().farClipPlane = 600;
     }
 
