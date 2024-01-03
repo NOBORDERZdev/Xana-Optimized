@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public sealed class CharacterControls : MonoBehaviour
@@ -23,13 +24,17 @@ public sealed class CharacterControls : MonoBehaviour
 
     IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.5f);
-        AddListners();
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForSeconds(0.5f);
+            AddListners();
+        }
     }
 
     private void OnDestroy()
     {
-        RemoveListners();
+        if (GetComponent<PhotonView>().IsMine)
+            RemoveListners();
     }
 
 
@@ -41,9 +46,10 @@ public sealed class CharacterControls : MonoBehaviour
     }
     private void RemoveListners()
     {
-        RestoreOldValues();
         if (routine != null)
             StopCoroutine(routine);
+        RestoreOldValues();
+
     }
 
     private void StoreCurretValues()
