@@ -985,6 +985,7 @@ public class APIManager : MonoBehaviour
                         commentRow.feedId = bean.data.commentPost.feedId;
                         commentRow.comment = bean.data.commentPost.comment;
                         commentRow.createdBy = bean.data.commentPost.createdBy;
+                        commentRow.likes= bean.data.commentPost.likes;
                         commentRow.createdAt = bean.data.commentPost.createdAt;
                         commentRow.updatedAt = bean.data.commentPost.updatedAt;
                         commentRow.user = bean.data.commentPost.user;
@@ -3403,6 +3404,7 @@ public class CommentRow
     public int feedId;
     public string comment;
     public int createdBy;
+    public int likes;
     public DateTime createdAt;
     public DateTime updatedAt;
     public CommentUser user;
@@ -3430,6 +3432,7 @@ public class CommentPost
     public int feedId;
     public string comment;
     public int createdBy;
+    public int likes;
     public DateTime createdAt;
     public DateTime updatedAt;
     public CommentUser user;

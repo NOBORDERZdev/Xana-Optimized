@@ -103,6 +103,7 @@ public class FeedCommentItemController : MonoBehaviour
         descriptionText.text = APIManager.DecodedString(commentRow.comment);
         //timeText.text = commentRow.updatedAt.ToString();
         timeText.text = FeedUIController.Instance.GetConvertedTimeString(commentRow.updatedAt);
+        commentLikeCountText.text = commentRow.likes.ToString();
         //timeText.text = FeedUIController.Instance.GetConvertedTimeStringSpecifyKind(commentRow.updatedAt);
     }
 
