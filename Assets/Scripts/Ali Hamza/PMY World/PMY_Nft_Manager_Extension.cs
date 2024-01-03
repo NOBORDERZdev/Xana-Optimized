@@ -98,13 +98,13 @@ namespace PMY
                 Instance = this;
             }
 
-            if (SoundManager.Instance)
-            {
-                SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-                SoundManager.Instance.livePlayerSource = livePlayerSource;
-                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
-            }
+            //if (SoundManager.Instance)
+            //{
+            //    SoundManager.Instance.videoPlayerSource = videoPlayerSource;
+            //    SoundManager.Instance.livePlayerSource = livePlayerSource;
+            //    SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
+            //    SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            //}
         }
 
         private void OnEnable()

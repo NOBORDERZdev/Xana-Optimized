@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
+using JetBrains.Annotations;
 
 public class ArrowManager : MonoBehaviourPunCallbacks
 {
@@ -49,6 +50,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     Coroutine chatco = null;
 
     public PhotonVoiceView VoiceView;
+    [Space(5)]
+    public Cinemachine.CinemachineVirtualCamera slfieVirtualCam;   // selfie virtual camera
+    public Camera selfieCam;           // selfie camera
+    public Camera selfieShootCamL;     // selfie shoot camera landscape
+    public Camera selfieShootCamP;     // selfie shoot camera portrait
 
     //Gautam added for changing the position of the name canvas for avatar changer
     internal Canvas nameCanvas;

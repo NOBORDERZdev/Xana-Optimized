@@ -272,6 +272,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetBgmVolume(float Vol)
     {
+        Debug.Log("Set BGM Volume");
         if (!liveVideoSource)
         {
             liveVideoSource = SoundManager.Instance.livePlayerSource;
