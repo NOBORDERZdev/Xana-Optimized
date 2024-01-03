@@ -202,6 +202,14 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 UIManager.Instance.Canvas.SetActive(true);
+
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha= 1;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
             }
         }
     }
@@ -239,6 +247,14 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance.HomeWorldScreen.SetActive(true);
                 UIManager.Instance.HomePage.SetActive(false);
                 UIManager.Instance.SwitchToScreen(0);
+                if (FeedUIController.Instance)
+                {
+                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
+               
+
              }
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
@@ -506,6 +522,13 @@ public class BottomTabManager : MonoBehaviour
             //    }
             //}
             UIManager.Instance.HomeWorldScreen.SetActive(false);
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha= 0;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             if (UIManager.Instance.Canvas.activeSelf)
             {
                 // UIManager.Instance.Canvas.SetActive(false);
@@ -556,6 +579,12 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=false;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
                 UIManager.Instance.Canvas.SetActive(false);
+
+                UIManager.Instance.HomeWorldScreen.SetActive(false);
+            
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
