@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
+public class AvProDirectionalSound : MonoBehaviour
 {
     [Tooltip("Enable/Disable Screen sound toggle in screen panel")]
     public bool isShowScreenSoundOption = true;
@@ -22,6 +22,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private Coroutine volumeCoroutine;
     private bool isScreenSoundPlaying = true;
     public MediaPlayer activePlayer;
+    public AudioSource[] sources;
 
     private void OnEnable()
     {
@@ -48,24 +49,29 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         updateDelay = new WaitForSeconds(updateInterval);
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
 
-        if (Application.isEditor || Application.platform == RuntimePlatform.Android)
-            minDistance = -400f;
-        else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            minDistance = -120f;
-
         GetActivePlayer();
     }
 
     private void GetActivePlayer()
     {
-        //activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
+
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            foreach (AudioSource source in sources)
+                source.volume = 1f;
+        }
+
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
         {
             if(activePlayer)
-            activePlayer.AudioMuted = false;
+            activePlayer.AudioMuted = true;
+            foreach (AudioSource source in sources)
+                source.mute = true;
         }
 
-        volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+
+        if (activePlayer.gameObject.activeSelf)
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
 
     private void HookEvent()
@@ -89,6 +95,11 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     {
         while (true)
         {
+            if (!activePlayer.gameObject.activeSelf)
+            {
+                StopCoroutine(volumeCoroutine);
+                yield return null;
+            }
             // Calculate the distance between player/camera and video source
             float distance = Vector3.Distance(playerCam.position, transform.position);
 
@@ -106,27 +117,37 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
         }
     }
 
-    public void ToggleScreenSound(bool isSoundOn)
+    private void ToggleScreenSound(bool isSoundOn)
     {
         activePlayer.AudioMuted = isSoundOn;
         XanaConstants.xanaConstants.isScreenSoundOn = !isSoundOn;
-        if (isSoundOn)
-            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
-        else if (volumeCoroutine != null)
-            StopCoroutine(volumeCoroutine);
+
+        foreach (AudioSource source in sources)
+            source.mute = isSoundOn;
+
+        if (activePlayer.gameObject.activeSelf) {
+            if (isSoundOn)
+                volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+            else if (volumeCoroutine != null)
+                StopCoroutine(volumeCoroutine);
+        }
     }
 
     private void OnVideoEnlargeAction()
     {
         isScreenSoundPlaying = false;
         activePlayer.AudioMuted = true;
+        foreach (AudioSource source in sources)
+            source.mute = true;
     }
 
-    private void UpdateScreenMusicStatus(int nftNum)
+    private void UpdateScreenMusicStatus(int nftNum)   // when user click on exit button of nft
     {
         if (isScreenSoundPlaying) return;
         activePlayer.AudioMuted = false;
         isScreenSoundPlaying = true;
+        foreach (AudioSource source in sources)
+            source.mute = false;
     }
 
 }
