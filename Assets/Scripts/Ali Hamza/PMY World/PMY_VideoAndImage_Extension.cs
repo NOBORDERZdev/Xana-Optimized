@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
-using System.Diagnostics.Eventing.Reader;
+//using System.Diagnostics.Eventing.Reader;
 
 namespace PMY
 {
