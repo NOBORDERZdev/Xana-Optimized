@@ -34,7 +34,10 @@ public class PMY_BGM : MonoBehaviour
             SoundManager.Instance.MusicSource.loop = true;
             SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 30f);
             SoundManager.Instance.MusicSource.spatialBlend = 1;
-            SoundManager.Instance.MusicSource.minDistance = 20;
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+                SoundManager.Instance.MusicSource.minDistance = 30;
+            else
+                SoundManager.Instance.MusicSource.minDistance = 20;
         }
     }
 
@@ -82,7 +85,7 @@ public class PMY_BGM : MonoBehaviour
     private void OnVideoEnlargeAction()
     {
         isMusicPlaying = false;
-        SoundManager.Instance.MusicSource.mute = true; 
+        SoundManager.Instance.MusicSource.mute = true;
     }
 
     private void UpdateMusicStatus(int nftNum)

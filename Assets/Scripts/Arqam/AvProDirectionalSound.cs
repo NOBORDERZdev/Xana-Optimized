@@ -58,7 +58,10 @@ public class AvProDirectionalSound : MonoBehaviour
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
             foreach (AudioSource source in sources)
+            {
                 source.volume = 1f;
+                source.minDistance = 40;
+            }
         }
 
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
