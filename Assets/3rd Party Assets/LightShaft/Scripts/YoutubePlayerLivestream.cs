@@ -26,6 +26,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
     public Vector3 rotateScreenValue;
 
     public GameObject videoPlayerParent;
+
+    public bool isExtensionUse = false;
     void Start()
     {
         if (!rotateScreen)
@@ -198,7 +200,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
             if (envType.Equals(EnvType.JJWorld))
                 JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
             else if (envType.Equals(EnvType.PMY))
-                PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            {
+                if(isExtensionUse)
+                    PMY_Nft_Manager_Extension.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+                else
+                    PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            }
         }
         else
         {
@@ -220,7 +227,12 @@ public class YoutubePlayerLivestream : MonoBehaviour
                     if (envType.Equals(EnvType.JJWorld))
                         JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
                     else if (envType.Equals(EnvType.PMY))
-                        PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+                    {
+                        if(isExtensionUse)
+                            PMY_Nft_Manager_Extension.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+                        else
+                            PMY_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+                    }
                 }
                 else
                 {
