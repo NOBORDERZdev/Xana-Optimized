@@ -35,7 +35,7 @@ public class PMY_BGM : MonoBehaviour
             SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 30f);
             SoundManager.Instance.MusicSource.spatialBlend = 1;
             if (Application.platform == RuntimePlatform.IPhonePlayer)
-                SoundManager.Instance.MusicSource.minDistance = 30;
+                SoundManager.Instance.MusicSource.minDistance = 40;
             else
                 SoundManager.Instance.MusicSource.minDistance = 20;
         }
