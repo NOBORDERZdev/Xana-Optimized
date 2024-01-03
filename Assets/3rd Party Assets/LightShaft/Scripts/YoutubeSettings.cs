@@ -573,8 +573,8 @@ namespace LightShaft.Scripts
                 }
 
                 //Check if fullscreen Mode is active at start.
-                if (videoPlayer.renderMode == VideoRenderMode.CameraFarPlane ||
-                    videoPlayer.renderMode == VideoRenderMode.CameraNearPlane)
+                if (videoPlayer!=null && (videoPlayer.renderMode == VideoRenderMode.CameraFarPlane ||
+                    videoPlayer.renderMode == VideoRenderMode.CameraNearPlane))
                     fullscreenModeEnabled = true;
                 else fullscreenModeEnabled = false;
 
