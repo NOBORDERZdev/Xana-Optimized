@@ -263,9 +263,10 @@ namespace PMY
                                 }
                                 else if (!string.IsNullOrEmpty(worldData[j].asset_link))
                                 {
+                                    worldInfos[i].thumbnail = worldData[j].thumbnail;
                                     worldInfos[i].VideoLink = worldData[j].asset_link;
                                     worldInfos[i].videoType = PMY_VideoTypeRes.aws;
-                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(null, worldData[j].asset_link + compersionPrfex, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.aws);
+                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, worldData[j].asset_link + compersionPrfex, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.aws);
                                 }
                                 isWithDes = true;
                                 worldInfos[i].Title = worldData[j].title;
