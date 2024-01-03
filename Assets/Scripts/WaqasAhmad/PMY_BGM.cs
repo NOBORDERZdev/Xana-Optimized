@@ -14,7 +14,8 @@ public class PMY_BGM : MonoBehaviour
     private bool isLoopable = false;
     private float currentSpatialBlend = 0;
     private float currentMinDistance = 0;
-    public bool isMusicPlaying = true;
+    public float actualVolume;
+    private bool isMusicPlaying = true;
 
     private void Awake()
     {
@@ -39,8 +40,7 @@ public class PMY_BGM : MonoBehaviour
 
     private void OnDisable()
     {
-        if (soundType.Equals(SoundType.ThreeD))
-            SceneManage.onExitAction -= OnSceneExit;
+        SceneManage.onExitAction -= OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
     }
@@ -48,22 +48,35 @@ public class PMY_BGM : MonoBehaviour
     private void Start()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
+        UpdateMusicVolume();
+    }
+
+    private void UpdateMusicVolume()
+    {
+        actualVolume = SoundManager.Instance.MusicSource.volume;
+        if (Application.isEditor || Application.platform == RuntimePlatform.Android)
+            SoundManager.Instance.MusicSource.volume = 0.5f;
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            SoundManager.Instance.MusicSource.volume = 1.0f;
     }
 
     private void HookEvent()
     {
-        if (soundType.Equals(SoundType.ThreeD))
-            SceneManage.onExitAction += OnSceneExit;
+        SceneManage.onExitAction += OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
     }
 
     private void OnSceneExit()
     {
-        // Reset Parameters of Music Source
-        SoundManager.Instance.MusicSource.loop = isLoopable;
-        SoundManager.Instance.MusicSource.spatialBlend = currentSpatialBlend;
-        SoundManager.Instance.MusicSource.minDistance = currentMinDistance;
+        if (soundType.Equals(SoundType.ThreeD))
+        {
+            // Reset Parameters of Music Source
+            SoundManager.Instance.MusicSource.loop = isLoopable;
+            SoundManager.Instance.MusicSource.spatialBlend = currentSpatialBlend;
+            SoundManager.Instance.MusicSource.minDistance = currentMinDistance;
+        }
+        SoundManager.Instance.MusicSource.volume = actualVolume;
     }
 
     private void OnVideoEnlargeAction()

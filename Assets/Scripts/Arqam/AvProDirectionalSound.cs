@@ -47,8 +47,13 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private void Start()
     {
         updateDelay = new WaitForSeconds(updateInterval);
-
         playerCam = GameObject.FindGameObjectWithTag("MainCamera").transform;
+
+        if (Application.isEditor || Application.platform == RuntimePlatform.Android)
+            minDistance = -400f;
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            minDistance = -120f;
+
         GetActivePlayer();
     }
 
