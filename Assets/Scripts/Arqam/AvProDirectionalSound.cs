@@ -22,7 +22,7 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private Coroutine volumeCoroutine;
     private bool isScreenSoundPlaying = true;
     public MediaPlayer activePlayer;
-
+    public GameObject videoPlayer;
 
     private void OnEnable()
     {
@@ -56,7 +56,12 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     {
         //activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
+        {
+            if(activePlayer)
             activePlayer.AudioMuted = false;
+            if (videoPlayer)
+                videoPlayer.GetComponent<YoutubeSimplified>().videoPlayer.GetComponent<AudioSource>().mute = false;
+        }
 
         volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
@@ -95,6 +100,8 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
 
             // Set the video volume using the third-party package's method
             activePlayer.AudioVolume = mappedVolume;
+            if(videoPlayer)
+                videoPlayer.GetComponent<YoutubeSimplified>().videoPlayer.GetComponent<AudioSource>().volume = mappedVolume;
             yield return updateDelay;
         }
     }
@@ -102,6 +109,8 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     public void ToggleScreenSound(bool isSoundOn)
     {
         activePlayer.AudioMuted = isSoundOn;
+        if (videoPlayer)
+            videoPlayer.GetComponent<YoutubeSimplified>().videoPlayer.GetComponent<AudioSource>().mute = isSoundOn;
         XanaConstants.xanaConstants.isScreenSoundOn = !isSoundOn;
         if (isSoundOn)
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
@@ -113,12 +122,16 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     {
         isScreenSoundPlaying = false;
         activePlayer.AudioMuted = true;
+        if (videoPlayer)
+            videoPlayer.GetComponent<YoutubeSimplified>().videoPlayer.GetComponent<AudioSource>().mute=true;
     }
 
     private void UpdateScreenMusicStatus(int nftNum)
     {
         if (isScreenSoundPlaying) return;
         activePlayer.AudioMuted = false;
+        if (videoPlayer)
+            videoPlayer.GetComponent<YoutubeSimplified>().videoPlayer.GetComponent<AudioSource>().mute=false;
         isScreenSoundPlaying = true;
     }
 
