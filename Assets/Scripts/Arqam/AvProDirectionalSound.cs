@@ -23,7 +23,6 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     private bool isScreenSoundPlaying = true;
     public MediaPlayer activePlayer;
 
-
     private void OnEnable()
     {
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated += HookEvent;
@@ -61,7 +60,10 @@ public class AvProDirectionalSound : MonoBehaviour, IScreenSoundControl
     {
         //activePlayer = mediaPlayer.GetComponent<MediaPlayer>();
         if (!XanaConstants.xanaConstants.isScreenSoundOn)
+        {
+            if(activePlayer)
             activePlayer.AudioMuted = false;
+        }
 
         volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
