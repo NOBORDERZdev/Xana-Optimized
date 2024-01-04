@@ -33,12 +33,18 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if (!rotateScreen)
             return;
         //GetLivestreamUrl(_livestreamUrl);
+        if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
+        {
+            mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);
+            return;
+        }
 #if UNITY_ANDROID
         if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         else
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
+        
     }
 
 
