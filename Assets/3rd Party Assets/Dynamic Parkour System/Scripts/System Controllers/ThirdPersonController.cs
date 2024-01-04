@@ -150,6 +150,11 @@ namespace Climbing
                 {
                     ToggleRun();
                 }
+                else if (characterInput.run && characterInput.movement.magnitude < 0.001f)
+                {
+                    //characterInput.run = false;
+                    CanvasButtonsHandler.inst.OnSpiritButtonDown();
+                }
                 else if (!characterInput.run)
                 {
                     ToggleWalk();
