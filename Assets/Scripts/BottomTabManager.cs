@@ -57,7 +57,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+           // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             //PostButton.transform.GetComponent<Button>().interactable = false;
             //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
@@ -68,23 +68,27 @@ public class BottomTabManager : MonoBehaviour
 
         for (int i = 0; i < allButtonIcon.Count; i++)
         {
-            if (i == index)
+            if (i== 2 || i==3)
             {
-                allButtonIcon[i].sprite = allButtonSelected[i];
-                GameManager.Instance.defaultSelection = index;
-                if (i == 2)
-                {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = ActiveButtonColor;
-                }
+                break;
             }
-            else
-            {
-                allButtonIcon[i].sprite = allButtonUnSelected[i];
-                if (i == 2)
+                if (i == index)
                 {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+                    allButtonIcon[i].sprite = allButtonSelected[i];
+                    GameManager.Instance.defaultSelection = index;
+                    if (i == 2)
+                    {
+                        allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = ActiveButtonColor;
+                    }
                 }
-            }
+                else
+                {
+                    allButtonIcon[i].sprite = allButtonUnSelected[i];
+                    if (i == 2)
+                    {
+                        allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+                    }
+                }
         }
         PostButton.transform.GetComponent<Button>().interactable = true;
 
@@ -97,11 +101,14 @@ public class BottomTabManager : MonoBehaviour
         //}
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
+            /// Disabling old Screens
+            //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            //allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
+            //allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
+            //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
+            /// Disabling
+            /// 
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
-            allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
             //PostButton.transform.GetComponent<Button>().interactable = false;
 
@@ -110,13 +117,19 @@ public class BottomTabManager : MonoBehaviour
         }
         else
         {
-            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
-            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
+            /// Disabling old Screens
+            //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
+            //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
+            /// Disabling
+            /// 
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
            // PostButton.transform.GetComponent<Button>().interactable = true;
 
-            allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
-            allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
+            /// Disabling old Screens
+            //allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
+            //allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
+            /// Disabling
+            /// 
             allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
             // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
@@ -135,7 +148,7 @@ public class BottomTabManager : MonoBehaviour
                 allButtonIcon[i].color = new Color(intractableFalseColor.r, intractableFalseColor.g, intractableFalseColor.b, 0.5f);
                 if (i == 2)
                 {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = DisableButtonColor /*Color.gray*/;
                 }
                 AllTitleText[i].color = intractableFalseColor;
 
@@ -143,13 +156,17 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                allButtonIcon[i].color = ActiveButtonColor;
-                if (i == 2)
-                {
-                    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+                if(i==2 || i==3){
+                    break;
                 }
+                allButtonIcon[i].color = ActiveButtonColor;
+                //if (i == 2)
+                //{
+                //    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
+                //}
                 AllTitleText[i].color = unSellectedColor;
                 allButtonIcon[i].transform.parent.GetComponent<Button>().interactable = true;
+                
             }
         }
 
@@ -185,8 +202,19 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 UIManager.Instance.Canvas.SetActive(true);
+
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha= 1;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    }
+                }
             }
-        }
     }
     public void OnClickHomeButtonIdleAvatar()
     {
@@ -222,6 +250,14 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance.HomeWorldScreen.SetActive(true);
                 UIManager.Instance.HomePage.SetActive(false);
                 UIManager.Instance.SwitchToScreen(0);
+                if (FeedUIController.Instance)
+                {
+                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                }
+               
+
              }
             WorldManager.instance.ChangeWorld(APIURL.Hot);
             WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
@@ -489,6 +525,13 @@ public class BottomTabManager : MonoBehaviour
             //    }
             //}
             UIManager.Instance.HomeWorldScreen.SetActive(false);
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha= 0;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             if (UIManager.Instance.Canvas.activeSelf)
             {
                 // UIManager.Instance.Canvas.SetActive(false);
@@ -539,6 +582,12 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=false;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
                 UIManager.Instance.Canvas.SetActive(false);
+
+                UIManager.Instance.HomeWorldScreen.SetActive(false);
+            
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }

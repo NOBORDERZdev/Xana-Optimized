@@ -333,22 +333,20 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
             }
         }
     }
-
+    MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
     internal void SetMultiplayerComponentData(MultiplayerComponentData multiplayerComponentData)
     {
-        //Debug.LogError(JsonUtility.ToJson(multiplayerComponentData));
         var hash = new ExitGames.Client.Photon.Hashtable();
 
-        MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
-
         // Multiplayer component data list
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
+        if (multiplayerComponentdatas.multiplayerComponents.Count == 0 && PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
         {
             multiplayerComponentdatas = JsonUtility.FromJson<MultiplayerComponentDatas>(multiplayerComponentdatasObj.ToString());
         }
 
         multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
+        //Debug.LogError(json);
         hash.Add("gamificationMultiplayerComponentDatas", json);
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }

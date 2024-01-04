@@ -213,7 +213,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
     {
         //ther is no Stop because in this case the player have no colliders they are invisible
         //BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
-        DeactivateAvatarInivisibility();
+        if (GamificationComponentData.instance.activeComponent != null)
+            DeactivateAvatarInivisibility();
     }
 
     public override void StopBehaviour()
@@ -221,7 +222,6 @@ public class BlindfoldedDisplayComponent : ItemComponent
         if (!isPlaying)
             return;
         isPlaying = false;
-        StopComponent();
         StopComponent();
     }
 
