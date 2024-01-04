@@ -377,11 +377,11 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=35;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=110;
         }
         else
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=-46;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=32;
         }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
