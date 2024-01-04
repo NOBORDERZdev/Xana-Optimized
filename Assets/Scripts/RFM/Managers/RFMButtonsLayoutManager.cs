@@ -9,7 +9,7 @@ public class RFMButtonsLayoutManager : MonoBehaviour
 
     public GameObject currentSelectedObject;
 
-    public GameObject joyStick, runButton, jumpButton, slideButton;
+    public RectTransform joyStick, runButton, jumpButton, slideButton;
 
     public Slider sizeSlider;
 
@@ -31,6 +31,7 @@ public class RFMButtonsLayoutManager : MonoBehaviour
     {
         sizeSlider.onValueChanged.AddListener(ResizeUI);
         RFM.EventsManager.onToggleSetLayoutPanel += ActivatePanel;
+
     }
     private void OnDisable()
     {
@@ -40,43 +41,45 @@ public class RFMButtonsLayoutManager : MonoBehaviour
 
     public void ActivatePanel() 
     {
-        transform.GetChild(0).gameObject.SetActive(true);  
+        transform.GetChild(0).gameObject.SetActive(true);
+        sizeSlider.value = 0;
+        LoadLayout();
     }
 
     public void SaveLayout()
     {
-        PlayerPrefs.SetFloat("joyX", joyStick.transform.localPosition.x);
-        PlayerPrefs.SetFloat("joyY", joyStick.transform.localPosition.y);
+        PlayerPrefs.SetFloat("joyX", joyStick.anchoredPosition.x);
+        PlayerPrefs.SetFloat("joyY", joyStick.anchoredPosition.y);
         PlayerPrefs.SetFloat("joyScaleX", joyStick.transform.localScale.x);
         PlayerPrefs.SetFloat("joyScaleY", joyStick.transform.localScale.y);
 
-        PlayerPrefs.SetFloat("runX", runButton.transform.localPosition.x);
-        PlayerPrefs.SetFloat("runY", runButton.transform.localPosition.y);
+        PlayerPrefs.SetFloat("runX", runButton.anchoredPosition.x);
+        PlayerPrefs.SetFloat("runY", runButton.anchoredPosition.y);
         PlayerPrefs.SetFloat("runScaleX", runButton.transform.localScale.x);
         PlayerPrefs.SetFloat("runScaleY", runButton.transform.localScale.y);
 
-        PlayerPrefs.SetFloat("jumpX", jumpButton.transform.localPosition.x);
-        PlayerPrefs.SetFloat("jumpY", jumpButton.transform.localPosition.y);
+        PlayerPrefs.SetFloat("jumpX", jumpButton.anchoredPosition.x);
+        PlayerPrefs.SetFloat("jumpY", jumpButton.anchoredPosition.y);
         PlayerPrefs.SetFloat("jumpScaleX", jumpButton.transform.localScale.x);
         PlayerPrefs.SetFloat("jumpScaleY", jumpButton.transform.localScale.y);
 
-        PlayerPrefs.SetFloat("slideX", slideButton.transform.localPosition.x);
-        PlayerPrefs.SetFloat("slideY", slideButton.transform.localPosition.y);
+        PlayerPrefs.SetFloat("slideX", slideButton.anchoredPosition.x);
+        PlayerPrefs.SetFloat("slideY", slideButton.anchoredPosition.y);
         PlayerPrefs.SetFloat("slideScaleX", slideButton.transform.localScale.x);
         PlayerPrefs.SetFloat("slideScaleY", slideButton.transform.localScale.y);
 
 
 
-        CanvasButtonsHandler.inst.joyStickRFM.transform.localPosition = new Vector3(joyStick.transform.localPosition.x, joyStick.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.joyStickRMF.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.joyStickRFM.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.slideBtn.transform.localPosition = new Vector3(slideButton.transform.localPosition.x, slideButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.slideButtonRMF.anchoredPosition = new Vector3(slideButton.anchoredPosition.x, slideButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.slideBtn.transform.localScale = new Vector3(slideButton.transform.localScale.x, slideButton.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.runBtn.transform.localPosition = new Vector3(runButton.transform.localPosition.x, runButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.runButtonRMF.anchoredPosition = new Vector3(runButton.anchoredPosition.x, runButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.runBtn.transform.localScale = new Vector3(runButton.transform.localScale.x, runButton.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.jumpBtnRFM.transform.localPosition = new Vector3(jumpButton.transform.localPosition.x, jumpButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.jumpButtonRMF.anchoredPosition = new Vector3(jumpButton.anchoredPosition.x, jumpButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.jumpBtnRFM.transform.localScale = new Vector3(jumpButton.transform.localScale.x, jumpButton.transform.localScale.y, 0);
 
         PlayerPrefs.Save();
@@ -86,34 +89,36 @@ public class RFMButtonsLayoutManager : MonoBehaviour
     public void LoadLayout()
     {
 
-        joyStick.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("joyX", -333), PlayerPrefs.GetFloat("joyY", -270), 0);
+        joyStick.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 74.99997f), PlayerPrefs.GetFloat("joyY", 36), 0);
         joyStick.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
 
-        runButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("runX", 356f), PlayerPrefs.GetFloat("runY", -162.5f), 0);
+        runButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("runX", -52.5f), PlayerPrefs.GetFloat("runY", 143.29f), 0);
         runButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("runScaleX", 1), PlayerPrefs.GetFloat("runScaleY", 1), 0);
 
-        jumpButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("jumpX", 317), PlayerPrefs.GetFloat("jumpY", -233), 0);
+        jumpButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("jumpX", -91), PlayerPrefs.GetFloat("jumpY", 73), 0);
         jumpButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("jumpScaleX", 1), PlayerPrefs.GetFloat("jumpScaleY", 1), 0);
 
-        slideButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("slideX", 274f), PlayerPrefs.GetFloat("slideY", -162.5f), 0);
+        slideButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("slideX", -133.73f), PlayerPrefs.GetFloat("slideY", 143.29f), 0);
         slideButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("slideScaleX", 1), PlayerPrefs.GetFloat("slideScaleY", 1), 0);
 
-        CanvasButtonsHandler.inst.joyStickRFM.transform.localPosition = new Vector3(joyStick.transform.localPosition.x, joyStick.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.joyStickRMF.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.joyStickRFM.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.slideBtn.transform.localPosition = new Vector3(slideButton.transform.localPosition.x, slideButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.slideButtonRMF.anchoredPosition = new Vector3(slideButton.anchoredPosition.x, slideButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.slideBtn.transform.localScale = new Vector3(slideButton.transform.localScale.x, slideButton.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.runBtn.transform.localPosition = new Vector3(runButton.transform.localPosition.x, runButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.runButtonRMF.anchoredPosition = new Vector3(runButton.anchoredPosition.x, runButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.runBtn.transform.localScale = new Vector3(runButton.transform.localScale.x, runButton.transform.localScale.y, 0);
 
-        CanvasButtonsHandler.inst.jumpBtnRFM.transform.localPosition = new Vector3(jumpButton.transform.localPosition.x, jumpButton.transform.localPosition.y, 0);
+        CanvasButtonsHandler.inst.jumpButtonRMF.anchoredPosition = new Vector3(jumpButton.anchoredPosition.x, jumpButton.anchoredPosition.y, 0);
         CanvasButtonsHandler.inst.jumpBtnRFM.transform.localScale = new Vector3(jumpButton.transform.localScale.x, jumpButton.transform.localScale.y, 0);
+
 
     }
 
     public void ResetLayout()
     {
+        
         PlayerPrefs.DeleteKey("joyX");
         PlayerPrefs.DeleteKey("joyScaleX");
         PlayerPrefs.DeleteKey("joyY");
@@ -131,17 +136,18 @@ public class RFMButtonsLayoutManager : MonoBehaviour
         PlayerPrefs.DeleteKey("slideY");
         PlayerPrefs.DeleteKey("slideScaleY");
         PlayerPrefs.Save();
+        
 
-        joyStick.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("joyX", -333), PlayerPrefs.GetFloat("joyY", -270), 0);
+        joyStick.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 74.99997f), PlayerPrefs.GetFloat("joyY", 36), 0);
         joyStick.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
 
-        runButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("runX", 356f), PlayerPrefs.GetFloat("runY", -162.5f), 0);
+        runButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("runX", -52.5f), PlayerPrefs.GetFloat("runY", 143.29f), 0);
         runButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("runScaleX", 1), PlayerPrefs.GetFloat("runScaleY", 1), 0);
 
-        jumpButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("jumpX", 317), PlayerPrefs.GetFloat("jumpY", -233), 0);
+        jumpButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("jumpX", -91), PlayerPrefs.GetFloat("jumpY", 73), 0);
         jumpButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("jumpScaleX", 1), PlayerPrefs.GetFloat("jumpScaleY", 1), 0);
 
-        slideButton.transform.localPosition = new Vector3(PlayerPrefs.GetFloat("slideX", 274f), PlayerPrefs.GetFloat("slideY", -162.5f), 0);
+        slideButton.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("slideX", -133.73f), PlayerPrefs.GetFloat("slideY", 143.29f), 0);
         slideButton.transform.localScale = new Vector3(PlayerPrefs.GetFloat("slideScaleX", 1), PlayerPrefs.GetFloat("slideScaleY", 1), 0);
 
     }
