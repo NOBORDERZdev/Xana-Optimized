@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
-using RenderHeads.Media.AVProVideo;
-using System.Diagnostics.Eventing.Reader;
+using UnityEngine.Events;
 
 namespace PMY
 {
@@ -57,6 +56,8 @@ namespace PMY
         [Space(5)]
         [Header("For Firebase Enum")]
         public RoomType roomType;
+        [Space(5)]
+        public UnityEvent nftStartAction;
 
         private void Start()
         {
@@ -73,7 +74,7 @@ namespace PMY
             imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
             if (PMY_Nft_Manager.Instance.PMY_RoomIdFromXanaConstant)
-                StartCoroutine(UpdateRoomType());
+                StartCoroutine(UpdateRoomType()); 
         }
 
         IEnumerator UpdateRoomType()
@@ -325,6 +326,7 @@ namespace PMY
                     }
                 }
                 www.Dispose();
+                nftStartAction.Invoke();
             }
         }
 

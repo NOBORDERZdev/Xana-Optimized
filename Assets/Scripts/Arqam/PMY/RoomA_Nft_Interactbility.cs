@@ -12,21 +12,18 @@ public class RoomA_Nft_Interactbility : MonoBehaviour
     [Space(5)]
     public Button[] btns;
 
- 
-
-    IEnumerator Start()
-    {
-        yield return new WaitForSeconds(0.5f);
-        btns = GetComponentsInChildren<Button>();
-        foreach (Button btn in btns)
-            btn.interactable = false;
-    }
 
     private void OnEnable()
     {
         PMY_Nft_Manager.Instance.exitClickedAction += NftExitBtnClicked;
     }
 
+    public void OffBtnInteractibility()
+    {
+        btns = GetComponentsInChildren<Button>();
+        foreach (Button btn in btns)
+            btn.interactable = false;
+    }
 
     private void OnDisable()
     {
