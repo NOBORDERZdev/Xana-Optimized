@@ -26,7 +26,7 @@ public class CamerasSetting : MonoBehaviour
         if (mainCamData != null)
             mainCamData.renderPostProcessing = true;
         else
-            Debug.LogWarning("<color=red>UniversalAdditionalCameraData component not found.</color>");
+            Debug.Log("<color=red>UniversalAdditionalCameraData component not found.</color>");
 
         //SetCamerasSetting();
     }
@@ -39,13 +39,28 @@ public class CamerasSetting : MonoBehaviour
         if (selfieCamData != null)
             selfieCamData.renderPostProcessing = true;
         else
-            Debug.LogWarning("<color=red>UniversalAdditionalCameraData component not found.</color>");
+            Debug.Log("<color=red>UniversalAdditionalCameraData component not found.</color>");
 
         ArrowManager.Instance.selfieShootCamL.farClipPlane = 600;
         ArrowManager.Instance.selfieShootCamP.farClipPlane = 600;
 
-        AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().FreeFloatCamCharacterController
-            .GetComponent<Camera>().farClipPlane = 600;
+        Camera freeFloatCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
+            FreeFloatCamCharacterController.GetComponent<Camera>();
+        freeFloatCam.farClipPlane = 600;
+        UniversalAdditionalCameraData freeFloatCamData = freeFloatCam.GetComponent<UniversalAdditionalCameraData>();
+        if (freeFloatCamData != null)
+            freeFloatCamData.renderPostProcessing = true;
+        else
+            Debug.Log("<color=red>UniversalAdditionalCameraData component not found.</color>");
+        
+        Camera firstPersonCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
+            firstPersonCameraObj.GetComponent<Camera>();
+        firstPersonCam.farClipPlane = 600;
+        UniversalAdditionalCameraData firstPersonCamData = firstPersonCam.GetComponent<UniversalAdditionalCameraData>();
+        if (firstPersonCamData != null)
+            firstPersonCamData.renderPostProcessing = true;
+        else
+            Debug.Log("<color=red>UniversalAdditionalCameraData component not found.</color>");
     }
 
 }
