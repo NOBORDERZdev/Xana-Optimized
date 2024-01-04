@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -14,9 +12,15 @@ public class LoadingHandler : MonoBehaviour
     [Header("Loading UI Elements")]
     public GameObject loadingPanel;
 
+    [SerializeField] private GameObject loadingPanelHelpScreen;
+    [SerializeField] private GameObject xanaLoadingPanel;
+    [SerializeField] private GameObject rfmLoadingPanel;
+
     public Image loadingSlider;
+    [SerializeField] private Image rfmLoadingSlider;
     public Text loadingText;
     public TextMeshProUGUI loadingPercentageText;
+    [SerializeField] private TextMeshProUGUI rfmLoadingPercentageText;
 
     public Image JJLoadingSlider;
     public TextMeshProUGUI JJLoadingPercentageText;
@@ -25,6 +29,8 @@ public class LoadingHandler : MonoBehaviour
     public Image loadingBgImage;
     public Image loadingBgImageAlter;
     public Sprite[] loadingSprites;
+
+    [SerializeField] private Sprite rfmLoadingScreenSprite;
 
     public float fadeTimer;
     bool isFirstTime = true;
@@ -99,22 +105,28 @@ public class LoadingHandler : MonoBehaviour
     {
         sliderFinalValue = Random.Range(80f, 95f);
         sliderCompleteValue = Random.Range(96f, 99f);
+
         StartCoroutine(StartBGChange());
     }
 
     IEnumerator StartBGChange()
     {
-        loadingBgImage.sprite = loadingSprites[currentBgIndex];
-
-        loadingBgImage.DOFade(1, 0);
-        loadingBgImageAlter.DOFade(0, 0);
+        if (WorldItemView.m_EnvName != "RFMDummy") 
+        { 
+            loadingBgImage.sprite = loadingSprites[currentBgIndex];
+            loadingBgImage.DOFade(1, 0);
+            loadingBgImageAlter.DOFade(0, 0);
+        }
 
         yield return new WaitForSeconds(2.0f + fadeTimer);
 
-        loadingBgImageAlter.sprite = loadingSprites[aheadBgIndex];
-
-        loadingBgImage.DOFade(0, fadeTimer);
-        loadingBgImageAlter.DOFade(1, fadeTimer);
+        if (WorldItemView.m_EnvName != "RFMDummy")
+        {
+            loadingBgImageAlter.sprite = loadingSprites[aheadBgIndex];
+            loadingBgImage.DOFade(0, fadeTimer);
+            loadingBgImageAlter.DOFade(1, fadeTimer);
+        }
+        
 
         yield return new WaitForSeconds(fadeTimer * 2);
 
@@ -146,12 +158,15 @@ public class LoadingHandler : MonoBehaviour
         if (doLerp)
         {
             loadingSlider.DOFillAmount(value, 0.15f);
+            rfmLoadingSlider.DOFillAmount(value, 0.15f);
         }
         else
         {
             loadingSlider.fillAmount = value;
+            rfmLoadingSlider.fillAmount = value;
         }
         loadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
+        rfmLoadingPercentageText.text = ((int)(value * 100f)).ToString() + "%";
 
     }
     public void UpdateLoadingSliderForJJ(float value, float fillSpeed, bool doLerp = false)
@@ -172,6 +187,21 @@ public class LoadingHandler : MonoBehaviour
 
     public void ShowLoading()
     {
+        if (WorldItemView.m_EnvName == "RFMDummy")
+        {
+            loadingBgImage.sprite = rfmLoadingScreenSprite;
+            loadingBgImageAlter.sprite = rfmLoadingScreenSprite;
+            loadingPanelHelpScreen.SetActive(false);
+            xanaLoadingPanel.SetActive(false);
+            rfmLoadingPanel.SetActive(true);
+        }
+        else
+        {
+            loadingPanelHelpScreen.SetActive(true);
+            rfmLoadingPanel.SetActive(false);
+            xanaLoadingPanel.SetActive(true);
+        }
+
         //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + " ~~~~~~~  Activated Loading ~~~~~~~ ");
         if (teleportFeader.gameObject.activeInHierarchy) // XanaConstants.xanaConstants.JjWorldSceneChange
         {
@@ -261,7 +291,9 @@ public class LoadingHandler : MonoBehaviour
         isLoadingComplete = false;
         timer = 0;
         loadingSlider.fillAmount = 0f;
+        rfmLoadingSlider.fillAmount = 0f;
         loadingPercentageText.text = "0%".ToString();
+        rfmLoadingPercentageText.text = "0%".ToString();
         JJLoadingSlider.fillAmount = 0f;
         JJLoadingPercentageText.text = "0%".ToString();
     }
@@ -524,7 +556,9 @@ public class LoadingHandler : MonoBehaviour
             else
             {
                 loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                rfmLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                rfmLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
             }
 
 
@@ -560,7 +594,9 @@ public class LoadingHandler : MonoBehaviour
                 else
                 {
                     loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                    rfmLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                    rfmLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
                     //yield return new WaitForSeconds(1f);
                     //HideLoading(ScreenOrientation.Portrait);
                 }

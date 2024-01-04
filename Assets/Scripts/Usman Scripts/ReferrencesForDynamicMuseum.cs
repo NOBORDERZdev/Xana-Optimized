@@ -13,6 +13,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
     public GameObject[] disableObjects;
     public GameObject[] potraitHiddenBtnObjects , potraitdissableBtnObjects;
     public GameObject[] hiddenBtnObjects , disableBtnObjects;
+    [SerializeField] private GameObject[] nonRFMUIElements;
     public static ReferrencesForDynamicMuseum instance;
     public Camera randerCamera;
     public List<GameObject> disableObjectsInMuseums;
@@ -223,6 +224,8 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         {
             go.SetActive(false);
         }
+
+        ToggleRFMUIElements(false);
     }
     public void hiddenButtonEnable()
     {
@@ -248,12 +251,20 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         //To enable disable Buttons
         foreach (GameObject go in disableBtnObjects)
         {
-           
-                go.SetActive(true);
-           
+            go.SetActive(true);
         }
 
+        ToggleRFMUIElements(false);
     }
+
+    public void ToggleRFMUIElements(bool b)
+    {
+        foreach (var element in nonRFMUIElements)
+        {
+            element.SetActive(b);
+        }
+    }
+
     public void potraithiddenButtonDisable()
     {
         //To Hide potrait Buttons
