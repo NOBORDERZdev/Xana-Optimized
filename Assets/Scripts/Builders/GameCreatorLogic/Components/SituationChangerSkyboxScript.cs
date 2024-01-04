@@ -74,7 +74,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     public void ChangeSkyBox(int skyID)
     {
         builderMapDownload.reflectionProbe.gameObject.SetActive(false);
-        builderMapDownload.reflectionProbe.enabled = false;
+        builderMapDownload.reflectionProbe.enabled = true;
         indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
