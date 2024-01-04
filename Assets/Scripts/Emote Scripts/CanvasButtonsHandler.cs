@@ -47,6 +47,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     public GameObject runBtn;
     public GameObject jumpBtnRFM;
     public GameObject joyStickRFM;
+    public RectTransform joyStickRMF, runButtonRMF, jumpButtonRMF, slideButtonRMF;
     public Button setControlsLayoutBtnRFM;
     public JoyStickIssue joystickIssuesReference;
 
