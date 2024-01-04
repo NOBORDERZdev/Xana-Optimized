@@ -36,7 +36,8 @@ public class ChangeOrientation_waqas : MonoBehaviour
 
     void CheckOrienataionWhenComeFromLobby()
     {
-        if (XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.orientationchanged)
+        if ((XanaConstants.xanaConstants.isFromXanaLobby || XanaConstants.xanaConstants.isFromPMYLobby) 
+            && XanaConstants.xanaConstants.orientationchanged)
         {
             MyOrientationChangeCode(DeviceOrientation.Portrait);
         }

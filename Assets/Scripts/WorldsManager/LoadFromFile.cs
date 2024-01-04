@@ -969,7 +969,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //{
             //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
             //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            if (!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
                 //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);

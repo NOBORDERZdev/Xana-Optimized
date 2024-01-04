@@ -39,6 +39,8 @@ public class PMY_BGM : MonoBehaviour
             else
                 SoundManager.Instance.MusicSource.minDistance = 20;
         }
+        else if(Application.platform == RuntimePlatform.IPhonePlayer)
+            SoundManager.Instance.MusicSource.outputAudioMixerGroup = null;
     }
 
     private void OnDisable()
