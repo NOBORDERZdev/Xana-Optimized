@@ -10,7 +10,7 @@ namespace RFM.Character
     public class NPCRunner : Runner
     {
         public float timeSurvived;
-        
+
         [SerializeField] private Animator animator;
         [SerializeField] private string velocityNameX, velocityNameY;
 
@@ -28,7 +28,7 @@ namespace RFM.Character
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
-        
+
         private void OnEnable()
         {
             EventsManager.onTakePositionTimeStart += TakePositionTimeStarted;
@@ -37,7 +37,7 @@ namespace RFM.Character
 
             PhotonNetwork.NetworkingClient.EventReceived += ReceivePhotonEvents;
         }
-        
+
         private void OnDisable()
         {
             EventsManager.onTakePositionTimeStart -= TakePositionTimeStarted;
@@ -58,7 +58,7 @@ namespace RFM.Character
 
                 GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
             }
-                
+
             //nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             _maxSpeed = _navMeshAgent.speed;
         }
@@ -72,7 +72,7 @@ namespace RFM.Character
 
         private void TakePositionTimeStarted()
         {
-            if (PhotonNetwork.IsMasterClient) // Only master controls the movement 
+            //if (PhotonNetwork.IsMasterClient) // Only master controls the movement 
             {
                 InvokeRepeating(nameof(EscapeFromHunters), 1, 0.2f);
             }
@@ -108,12 +108,12 @@ namespace RFM.Character
             }
         }
 
-        private void UpdateHuntersTransformList() 
+        private void UpdateHuntersTransformList()
         {
             var hunterObjects = new List<GameObject>(
                 GameObject.FindGameObjectsWithTag(Globals.HUNTER_NPC_TAG));
             huntersTransforms.Clear();
-            foreach (GameObject hunterObj in hunterObjects) 
+            foreach (GameObject hunterObj in hunterObjects)
             {
                 huntersTransforms.Add(hunterObj.transform);
             }
@@ -137,57 +137,61 @@ namespace RFM.Character
 
         private void EscapeFromHunters()
         {
-            UpdateHuntersTransformList();
-
-            foreach (var t in huntersTransforms)
+            if (PhotonNetwork.IsMasterClient)
             {
-                float distance = Vector3.Distance(this.transform.position, t.position);
-                if (distance < _minDistance)
+                Debug.LogError("EscapeFromHunters");
+                UpdateHuntersTransformList();
+
+                foreach (var t in huntersTransforms)
                 {
-                    _minDistance = distance;
-                    _closestHunterTransform = t;
+                    float distance = Vector3.Distance(this.transform.position, t.position);
+                    if (distance < _minDistance)
+                    {
+                        _minDistance = distance;
+                        _closestHunterTransform = t;
+                    }
                 }
-            }
 
-            if (huntersTransforms.Count > 0 && _minDistance < minDistanceToStartRunning &&
-                _closestHunterTransform != null)
-            {
-                Vector3 dirToSelf = transform.position - _closestHunterTransform.position;
-                Vector3 newPost = transform.position + dirToSelf;
-                _navMeshAgent.SetDestination(newPost);
-            }
-
-            else // When no hunters are close, move randomly
-            {
-                Vector3 newPost = transform.position + transform.forward +
-                                  new Vector3(Random.Range(-1.0f, 1.0f), 0, 0);
-
-
-                NavMeshPath path = new NavMeshPath();
-
-                if (_navMeshAgent.CalculatePath(newPost, path))
+                if (huntersTransforms.Count > 0 && _minDistance < minDistanceToStartRunning &&
+                    _closestHunterTransform != null)
                 {
+                    Vector3 dirToSelf = transform.position - _closestHunterTransform.position;
+                    Vector3 newPost = transform.position + dirToSelf;
                     _navMeshAgent.SetDestination(newPost);
                 }
-                else
+
+                else // When no hunters are close, move randomly
                 {
-                    newPost = transform.position + Random.insideUnitSphere * 1;
-                    _navMeshAgent.SetDestination(newPost);
+                    Vector3 newPost = transform.position + transform.forward +
+                                      new Vector3(Random.Range(-1.0f, 1.0f), 0, 0);
+
+
+                    NavMeshPath path = new NavMeshPath();
+
+                    if (_navMeshAgent.CalculatePath(newPost, path))
+                    {
+                        _navMeshAgent.SetDestination(newPost);
+                    }
+                    else
+                    {
+                        newPost = transform.position + Random.insideUnitSphere * 1;
+                        _navMeshAgent.SetDestination(newPost);
+                    }
                 }
             }
         }
-        
+
         public void AIRunnerCaught()
         {
             StopCoroutine(AddMoney());
             CancelInvoke(nameof(EscapeFromHunters));
             StopCoroutine(TimeSurvived());
-            
+
             RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
 
             PhotonNetwork.Destroy(this.gameObject);
         }
-        
+
         private void GameOver()
         {
             // Clear up all remaining NPCRunners are GameOver.
