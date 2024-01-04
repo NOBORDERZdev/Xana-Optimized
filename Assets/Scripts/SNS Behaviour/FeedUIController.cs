@@ -377,7 +377,7 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=110;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=108;
         }
         else
         {
