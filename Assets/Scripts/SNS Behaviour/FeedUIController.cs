@@ -203,6 +203,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFrndNoSearchFound;
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
     [SerializeField] public GameObject AddFreindContainer;
+    [SerializeField] public GameObject ExtraPrefab;
     private void Awake()
     {
         if (Instance == null)
@@ -376,11 +377,11 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=77;
         }
         else
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=0;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=23;
         }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);

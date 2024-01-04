@@ -53,12 +53,11 @@ public class CheckInternet : MonoBehaviour
         {
             Debug.Log(once + "Error.Not going on");
 
-            if (once == true )
-            {
+            if (once == true) { 
                 {
-                  
-                   // UserRegisterationManager.instance.OpenUIPanal(1);
-                   // UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
+                    if (PlayerPrefs.HasKey("TermsConditionAgreement"))
+                        UserRegisterationManager.instance.OpenUIPanal(1);
+                    UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
                 }
                 once=false;
             }

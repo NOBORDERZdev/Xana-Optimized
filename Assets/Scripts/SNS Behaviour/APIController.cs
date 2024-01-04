@@ -443,6 +443,10 @@ public class APIController : MonoBehaviour
                         searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j],true);
                     }
                 }
+                if (APIManager.Instance.searchUserRoot.data.rows.Count> 10 )
+                {
+                    GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.findFriendContainer);
+                }
             }
             else
             {
@@ -468,6 +472,10 @@ public class APIController : MonoBehaviour
                     searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
                 }
             }
+            if (searchUserRoot.data.rows.Count > 10 )
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.hotFriendContainer.transform);
+            }
         }
     }
 
@@ -488,6 +496,10 @@ public class APIController : MonoBehaviour
                     searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j]);
                 }
             }
+            if (searchUserRoot.data.rows.Count > 10 )
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.AddFrndRecommendedContainer.transform);
+            }
         }
     }
 
@@ -505,6 +517,10 @@ public class APIController : MonoBehaviour
                     GameObject searchUserObj = Instantiate(mutalFrndPrefab, FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
                     searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(searchUserRoot.data.rows[j]);
                 }
+            }
+            if (searchUserRoot.data.rows.Count > 10 )
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.AddFrndMutalFrndContainer.transform);
             }
         }
     }
@@ -573,6 +589,10 @@ public class APIController : MonoBehaviour
                     //});
                     //#endif
                 }
+            }
+            if (APIManager.Instance.adFrndFollowing.data.rows.Count> 10 )
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.adFrndFollowingListContainer);
             }
         }
         else
