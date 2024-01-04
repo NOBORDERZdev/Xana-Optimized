@@ -18,16 +18,16 @@ public class RFMCharacter : MonoBehaviour
     {
         RFM.EventsManager.onTakePositionTimeStart += OnTakePositionStart;
         RFM.EventsManager.onGameStart += GameStart;
-        if (photonView.IsMine)
-            RFM.EventsManager.OnShowRearViewMirror(true);
+        //if (photonView.IsMine)
+            //RFM.EventsManager.OnShowRearViewMirror(true);
     }
 
     private void OnDisable()
     {
         RFM.EventsManager.onTakePositionTimeStart -= OnTakePositionStart;
         RFM.EventsManager.onGameStart -= GameStart;
-        if (photonView.IsMine)
-            RFM.EventsManager.OnShowRearViewMirror(false);
+        //if (photonView.IsMine)
+            //RFM.EventsManager.OnShowRearViewMirror(false);
     }
 
     void Start()

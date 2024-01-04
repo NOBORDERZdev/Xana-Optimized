@@ -399,7 +399,7 @@ namespace RFM.Managers
                       i),
                     playersSpawnArea.rotation);
                 runnerNPCList.Add(runnerNPC.GetComponent<NPCRunner>());
-                runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCRunner.cs
+                runnerNPC.GetComponent<NavMeshAgent>().speed = Random.Range(3, 3.6f); // TODO: Set speed in NPCRunner.cs
                 yield return new WaitForSeconds(delay);
             }
 
@@ -412,7 +412,7 @@ namespace RFM.Managers
                         Random.Range(-1.0f, 1.0f)),
                     huntersSpawnArea.rotation);
                 hunterNPCList.Add(hunterNPC.GetComponent<NPCHunter>());
-                hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(2f, 3.4f); // TODO: Set speed in NPCHunter.cs
+                hunterNPC.GetComponent<NavMeshAgent>().speed = Random.Range(3, 3.6f); // TODO: Set speed in NPCHunter.cs
                 yield return new WaitForSeconds(delay);
             }
         }
