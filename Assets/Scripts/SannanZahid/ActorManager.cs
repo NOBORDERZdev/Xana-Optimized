@@ -29,14 +29,12 @@ public class ActorManager : MonoBehaviour
     public void SetMood(string mood)
     {
         ActorBehaviour actor = actorBehaviour.Find(x => x.Name == mood);
-        //Debug.LogError("Actor Behaviour === " + actor.Name);
         GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actor);
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
-       //  Debug.LogError(" IdlePlayerAvatorForMenu -----> " + flag);
         if (flag)
         {
             _cinemaCam.SetActive(true);
@@ -47,7 +45,6 @@ public class ActorManager : MonoBehaviour
             _previousRot = GameManager.Instance.mainCharacter.transform.eulerAngles;
             GameManager.Instance.mainCharacter.transform.position = _menuViewPoint.position;
             GameManager.Instance.mainCharacter.transform.eulerAngles = _menuViewPoint.eulerAngles;
-           // Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
         }
         else
         {
@@ -64,7 +61,6 @@ public class ActorManager : MonoBehaviour
        
         GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
-         //Debug.LogError(" IdlePlayerAvatorForPostMenu -----> " + flag);
         if (flag)
         {
             _cinemaCam.SetActive(true);
@@ -75,7 +71,6 @@ public class ActorManager : MonoBehaviour
             _previousRot = GameManager.Instance.mainCharacter.transform.eulerAngles;
             GameManager.Instance.mainCharacter.transform.position = _postViewPoint.position;
             GameManager.Instance.mainCharacter.transform.eulerAngles = _postViewPoint.eulerAngles;
-            // Debug.LogError(" Space Player on Menu Point -----> " + _menuViewPoint.position);
         }
         else
         {

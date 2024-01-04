@@ -174,6 +174,7 @@ public class SNSSettingController : MonoBehaviour
             {
                 SimultaneousConnectionButton();
             }
+            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
             //SimultaneousConnectionButton();
         }
     }
