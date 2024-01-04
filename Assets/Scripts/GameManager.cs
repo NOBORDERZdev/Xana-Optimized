@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System;
 using Newtonsoft.Json;
+using AdvancedInputFieldPlugin;
 
 public class GameManager : MonoBehaviour
 {
@@ -160,6 +161,7 @@ public class GameManager : MonoBehaviour
         {
             if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
             {
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.classCodeInputField.Text = "";
                 XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
                 return;
             }

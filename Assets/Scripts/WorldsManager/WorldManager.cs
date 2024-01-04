@@ -7,7 +7,8 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
-
+using TMPro;
+using AdvancedInputFieldPlugin;
 
 public class WorldManager : MonoBehaviour
 {
@@ -499,6 +500,7 @@ public class WorldManager : MonoBehaviour
             {
                 if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
                 {
+                    XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.classCodeInputField.Text= "";
                     XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
                     return;
                 }

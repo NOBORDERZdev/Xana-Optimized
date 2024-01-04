@@ -623,7 +623,7 @@ namespace PMY
             if (!ChangeOrientation_waqas._instance.isPotrait)
                 pdfPanel_L.SetActive(true);
             else
-                pdfPanel_L.SetActive(true);
+                pdfPanel_P.SetActive(true);
         }
 
         public void EnableControlls()

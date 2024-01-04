@@ -1,3 +1,4 @@
+using AdvancedInputFieldPlugin;
 using SuperStar.Helpers;
 using System.Collections;
 using TMPro;
@@ -231,17 +232,18 @@ public class WorldItemPreviewTab : MonoBehaviour
     #region PMY-Items
     [Header("PMY: ClassRom Items")]
     public GameObject enterClassCodePanel;
-    public TextMeshProUGUI classCodeInputField;
+    public AdvancedInputField classCodeInputField;
+    public TextMeshProUGUI classCodeInputField_text;
     public TextMeshProUGUI wrongCodeText;
     public void PMY_CodeEnter()
     {
         // Check Enter code is Ok or Not
-        if (IsClassCodeValid((classCodeInputField.text)))
+        if (IsClassCodeValid((classCodeInputField_text.text)))
         {
             // Yes Class Available, Create Room for that Class
             Debug.Log("<color=green> PMY -- Class Available  </color>");
             XanaConstants.xanaConstants.pmy_isClassAvailable = true;
-            XanaConstants.xanaConstants.pmy_joinedClassCode = classCodeInputField.text;
+            XanaConstants.xanaConstants.pmy_joinedClassCode = classCodeInputField_text.text;
             WorldManager.instance.PlayWorld();
         }
         else
@@ -260,12 +262,13 @@ public class WorldItemPreviewTab : MonoBehaviour
     {
         if (string.IsNullOrEmpty(classCodeInputField)) return false;
         classCodeInputField.Replace(" ", "");
+        if (classCodeInputField.Length < 5) return false;
         try 
         {
             //return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); 
             foreach (var item in XanaConstants.xanaConstants.pmy_ClassCode)
             {
-                if (item.codeText.Contains(classCodeInputField))
+                if (item.codeText.Equals(classCodeInputField))
                 {
                     XanaConstants.xanaConstants.pmySchooldDataID = item.id;
                     return true;

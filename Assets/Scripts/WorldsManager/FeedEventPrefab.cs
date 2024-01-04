@@ -115,13 +115,14 @@ public class FeedEventPrefab : MonoBehaviour
     {
         if (string.IsNullOrEmpty(classCodeInputField)) return false;
         classCodeInputField.Replace(" ", "");
+        if(classCodeInputField.Length < 5) return false;
 
         try 
         {
             //return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); 
             foreach (var item in XanaConstants.xanaConstants.pmy_ClassCode)
             {
-                if (item.codeText.Contains(classCodeInputField))
+                if(item.codeText.Equals(classCodeInputField))
                 {
                     XanaConstants.xanaConstants.pmySchooldDataID = item.id;
                     return true;
