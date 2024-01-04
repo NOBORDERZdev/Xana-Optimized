@@ -181,10 +181,10 @@ public class XanaChatSystem : MonoBehaviour
     }
     void CheckIfDeviceHasNotch()
     {
-        if (!ChangeOrientation_waqas._instance.isPotrait)
-        {
-            outline.offsetMin = new Vector2((Screen.safeArea.xMin / (float)(Screen.width / 800f)), outline.offsetMin.y);
-        }
+        //if (!ChangeOrientation_waqas._instance.isPotrait)
+        //{
+        //    outline.offsetMin = new Vector2((Screen.safeArea.xMin / (float)(Screen.width / 800f)), outline.offsetMin.y);
+        //}
     }
 
     void CheckPlayerPrefItems()
