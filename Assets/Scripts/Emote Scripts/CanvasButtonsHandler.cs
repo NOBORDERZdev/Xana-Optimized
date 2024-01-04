@@ -1,11 +1,8 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
-using UnityEngine.InputSystem.OnScreen;
 using Climbing;
 using System;
 using RFM;
