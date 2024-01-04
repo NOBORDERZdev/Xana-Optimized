@@ -360,7 +360,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         //if (XanaConstants.xanaConstants.isFromXanaLobby)
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
-        if (!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
+        if (!XanaConstants.xanaConstants.isFromXanaLobby)
         {
             // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
@@ -449,26 +449,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
-            else if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
-            {
-                if (XanaConstants.xanaConstants.isFromPMYLobby)  // Set spawn pos when ReEnter into PMY lobby
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
-
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
-                //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
-                StartCoroutine(setPlayerCamAngle(0.38f, 0.2275f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("PMYRoomA"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                StartCoroutine(setPlayerCamAngle(-1.6f, 0.5f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("PMYGallery"))
-            {
-                //mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                StartCoroutine(setPlayerCamAngle(1.74f, 0.5f));
-            }
             //else
             //{
             //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
@@ -519,12 +499,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaConstants.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
-
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
             XanaConstants.xanaConstants.isFromXanaLobby = false;
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
-            XanaConstants.xanaConstants.isFromPMYLobby = false;
-
+        }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
         yield return new WaitForSeconds(.5f);
@@ -592,7 +570,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
     void ActivateNpcChat()
@@ -969,7 +947,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //{
             //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
             //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
+            if (!XanaConstants.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
                 //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);

@@ -215,7 +215,7 @@ public class BuildingDetect : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
-        AppearanceChange.transform.localPosition = Vector3.up*(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
+        AppearanceChange.transform.localPosition = Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
@@ -311,6 +311,10 @@ public class BuildingDetect : MonoBehaviour
                 this.GetComponent<Animator>().avatar = tempAnimator;
                 PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
+                Delayed.Function(() =>
+                {
+                    _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+                }, 0.5f);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
 
@@ -436,6 +440,7 @@ public class BuildingDetect : MonoBehaviour
 
     public void StopSpecialItemComponent()
     {
+        StoppingCoroutine();
         //_remainingText.gameObject.SetActive(false);
         if (_playerControllerNew.specialItem)
         {
