@@ -75,8 +75,8 @@ namespace RFM.Character
         {
             base.OnGameStarted();
 
-            if (PhotonNetwork.IsMasterClient)// Only the master client controls the hunter.
-                                             // Other clients just sync the movement
+            //if (PhotonNetwork.IsMasterClient)// Only the master client controls the hunter.
+            // Other clients just sync the movement
             {
                 GetAllRunners();
                 InvokeRepeating(nameof(SearchForTarget), 1, 1);
@@ -99,60 +99,64 @@ namespace RFM.Character
 
         private void SearchForTarget()
         {
-            if (Globals.gameState != Globals.GameState.Gameplay) return;
-
-            // if any of the object in _players list is missing, remove it from the list.
-            for (int i = 0; i < _allRunners.Count; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                if (_allRunners[i] == null || !_allRunners[i].gameObject.activeInHierarchy)
+                Debug.LogError("Hunter SearchForTarget");
+                if (Globals.gameState != Globals.GameState.Gameplay) return;
+
+                // if any of the object in _players list is missing, remove it from the list.
+                for (int i = 0; i < _allRunners.Count; i++)
                 {
-                    _allRunners.RemoveAt(i);
-                }
-            }
-
-            if (_allRunners == null || _allRunners.Count == 0)
-            {
-                GetAllRunners();
-            }
-
-            if (_allRunners.Count > 0) // if any runner is found
-            {
-                var closestRunner = _allRunners[0];
-                foreach (var runner in _allRunners) // get the closest runner
-                {
-                    if (runner == null) continue;
-
-                    if (Vector3.Distance(transform.position, runner.transform.position) <
-                                           Vector3.Distance(transform.position, closestRunner.transform.position))
+                    if (_allRunners[i] == null || !_allRunners[i].gameObject.activeInHierarchy)
                     {
-                        closestRunner = runner;
+                        _allRunners.RemoveAt(i);
                     }
                 }
 
-                // if the closestRunner is not the current target, set it as target and set _hasTarget to true.
-                // otherwise, set a random target and set _hasTarget to true.
-                if (_target != closestRunner.transform)
+                if (_allRunners == null || _allRunners.Count == 0)
                 {
-                    _target = closestRunner.transform;
-                    _hasTarget = true;
+                    GetAllRunners();
                 }
-                else
-                {
-                    //_target = _allRunners[Random.Range(0, _allRunners.Count)].transform;
-                    //_hasTarget = true;
-                    //Debug.LogError("Random target locked");
-                }
-            }
-            else // if no runner is found
-            {
-                _hasTarget = false;
-                _navMeshAgent.isStopped = true;
-            }
 
-            if (_target == null) // sometimes, the target is null even though _hasTarget is true
-                                 // such as when the target is caught by another hunter
-            {
-                _hasTarget = false;
+                if (_allRunners.Count > 0) // if any runner is found
+                {
+                    var closestRunner = _allRunners[0];
+                    foreach (var runner in _allRunners) // get the closest runner
+                    {
+                        if (runner == null) continue;
+
+                        if (Vector3.Distance(transform.position, runner.transform.position) <
+                                               Vector3.Distance(transform.position, closestRunner.transform.position))
+                        {
+                            closestRunner = runner;
+                        }
+                    }
+
+                    // if the closestRunner is not the current target, set it as target and set _hasTarget to true.
+                    // otherwise, set a random target and set _hasTarget to true.
+                    if (_target != closestRunner.transform)
+                    {
+                        _target = closestRunner.transform;
+                        _hasTarget = true;
+                    }
+                    else
+                    {
+                        //_target = _allRunners[Random.Range(0, _allRunners.Count)].transform;
+                        //_hasTarget = true;
+                        //Debug.LogError("Random target locked");
+                    }
+                }
+                else // if no runner is found
+                {
+                    _hasTarget = false;
+                    _navMeshAgent.isStopped = true;
+                }
+
+                if (_target == null) // sometimes, the target is null even though _hasTarget is true
+                                     // such as when the target is caught by another hunter
+                {
+                    _hasTarget = false;
+                }
             }
         }
 
@@ -175,9 +179,9 @@ namespace RFM.Character
         private void SyncMovement()
         {
             if (Globals.gameState != Globals.GameState.Gameplay)
-                //||
-                //!_hasTarget ||
-                //_target == null)
+            //||
+            //!_hasTarget ||
+            //_target == null)
             {
                 _navMeshAgent.isStopped = true;
                 return;
@@ -303,7 +307,7 @@ namespace RFM.Character
 
                     return;
                 }
-                
+
             }
 
             //else if (other.CompareTag(Globals.PLAYER_TAG))
