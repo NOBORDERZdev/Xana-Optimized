@@ -207,11 +207,14 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    }
+                }
             }
-        }
     }
     public void OnClickHomeButtonIdleAvatar()
     {
