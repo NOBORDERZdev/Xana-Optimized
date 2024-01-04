@@ -20,6 +20,7 @@ public class AddForceComponent : ItemComponent
     {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.isKinematic = true;
+        rigidBody.useGravity = true;
         this.addForceComponentData = addForceComponentData;
         isActivated = addForceComponentData.isActive;
 
