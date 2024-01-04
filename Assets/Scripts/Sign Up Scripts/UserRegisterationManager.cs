@@ -282,6 +282,7 @@ public class UserRegisterationManager : MonoBehaviour
     public void WalletLoginCheck() 
     {
         _IsWalletSignUp = false;
+       
         LoginPanal.SetActive(false);
     }
 
@@ -289,10 +290,10 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (_IsWalletSignUp)
         {
-            setAvatarGiftPanal.SetActive(true);
+           // setAvatarGiftPanal.SetActive(true);
         }
         else {
-            setAvatarGiftPanal.SetActive(false);
+           // setAvatarGiftPanal.SetActive(false);
             
         }
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
@@ -1368,14 +1369,14 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
-                        
+                        LoadingFadeOutScreen();
                         //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                        EntertheWorld_Panal.SetActive(true);
-                    }
+                        //EntertheWorld_Panal.SetActive(true);
+                      }
                     else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
-                            RegistrationCompletePanal.SetActive(true);
+                           // RegistrationCompletePanal.SetActive(true);
                             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         }
                         if (shownWelcome)
@@ -1601,6 +1602,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
                 errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
@@ -1617,6 +1619,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         //   //print("Hey success false " + myObject1.msg);
                         validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
@@ -1923,6 +1926,7 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.isNetworkError)
                 {
                     validationMessagePopUP.SetActive(true);
+                    errorTextPassword.SetActive(true);
                     errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                     //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                     //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
@@ -1936,6 +1940,7 @@ public class UserRegisterationManager : MonoBehaviour
                         if (myObject1.success == "false")
                         {
                             validationMessagePopUP.SetActive(true);
+                            errorTextPassword.SetActive(true);
                             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                             //      //print("Hey success false " + myObject1.msg);
                             //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -2002,6 +2007,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
                 errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
@@ -2017,6 +2023,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         //     //print("Hey success false " + myObject1.msg);
                         errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -2655,6 +2662,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
                 errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
@@ -2670,6 +2678,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //         //print("Hey success false " + myObject1.msg);
                         //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -2844,6 +2853,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (EmailFieldNew.Text == "")
         {
             validationMessagePopUP.SetActive(true);
+            errorTextEmail.SetActive(true);
             errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<Text>());
@@ -2888,6 +2898,7 @@ public class UserRegisterationManager : MonoBehaviour
             else
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
                 errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<Text>());
@@ -2973,6 +2984,7 @@ public class UserRegisterationManager : MonoBehaviour
                     _loader.SetActive(false);
                 }
                 validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
                 errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
 
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
@@ -2997,6 +3009,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
+                        errorTextEmail.SetActive(true);
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextEmail.GetComponent<Text>());
                         errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         if (_loader != null)
@@ -3144,6 +3157,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
             //print("Password Field should not be empty");
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -3158,6 +3172,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextPassword.GetComponent<Text>());
@@ -3182,6 +3197,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<Text>());
@@ -3200,6 +3216,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
             errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3292,6 +3309,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
                 errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
@@ -3305,6 +3323,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject.success)
                     {
                         validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         //    //print("Hey success false " + myObject.msg);
                         errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //   errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
@@ -3426,7 +3445,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             usernamePanal.SetActive(false);
-            EntertheWorld_Panal.SetActive(true);
+           // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
 
             //  StoreManager.instance.OnSaveBtnClicked();
@@ -3691,6 +3710,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (www.isHttpError || www.isNetworkError)
             {
                 validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
                 // ////Debug.Log("Network Error");
                 errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
@@ -3714,6 +3734,7 @@ public class UserRegisterationManager : MonoBehaviour
                     else
                     {
                         validationMessagePopUP.SetActive(true);
+                        errorTextEmail.SetActive(true);
                         errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                         errorTextEmail.GetComponent<Text>().text = myObject.msg.ToUpper();
