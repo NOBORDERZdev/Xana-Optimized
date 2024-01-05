@@ -97,14 +97,6 @@ namespace PMY
             {
                 Instance = this;
             }
-
-            //if (SoundManager.Instance)
-            //{
-            //    SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-            //    SoundManager.Instance.livePlayerSource = livePlayerSource;
-            //    SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-            //    SoundManagerSettings.soundManagerSettings.setNewSliderValues();
-            //}
         }
 
         private void OnEnable()
@@ -281,11 +273,6 @@ namespace PMY
                             worldInfos[i].pdfURL = worldData[j].pdf_url;
                             worldInfos[i].thumbnail= worldData[j].thumbnail;
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.PDF, PMY_VideoTypeRes.none);
-                            //isWithDes = true;
-                            //worldInfos[i].Title = worldData[j].title;
-                            //worldInfos[i].Aurthor = worldData[j].authorName;
-                            //worldInfos[i].Des = worldData[j].description;
-                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
                         }
                         else if (worldData[j].media_type == "QUIZ")
                         {
@@ -293,11 +280,6 @@ namespace PMY
                             worldInfos[i].thumbnail = worldData[j].thumbnail;
                             worldInfos[i].quiz_data = worldData[j].quiz_data;
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.Quiz, PMY_VideoTypeRes.none);
-                            //isWithDes = true;
-                            //worldInfos[i].Title = worldData[j].title;
-                            //worldInfos[i].Aurthor = worldData[j].authorName;
-                            //worldInfos[i].Des = worldData[j].description;
-                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
                         }
                         break;
                     }
@@ -397,7 +379,6 @@ namespace PMY
             }
             else
             {
-                //renderTexture.Release();
                 // Setting Landscape Data
                 ratioReferences[ratioId].l_image.gameObject.SetActive(true);
                 ratioReferences[ratioId].p_image.gameObject.SetActive(true);

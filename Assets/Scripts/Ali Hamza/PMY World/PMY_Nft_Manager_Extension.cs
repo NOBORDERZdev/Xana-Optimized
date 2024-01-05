@@ -97,14 +97,6 @@ namespace PMY
             {
                 Instance = this;
             }
-
-            //if (SoundManager.Instance)
-            //{
-            //    SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-            //    SoundManager.Instance.livePlayerSource = livePlayerSource;
-            //    SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-            //    SoundManagerSettings.soundManagerSettings.setNewSliderValues();
-            //}
         }
 
         private void OnEnable()
@@ -280,11 +272,6 @@ namespace PMY
                             worldInfos[i].pdfURL = worldData[j].pdf_url;
                             worldInfos[i].thumbnail= worldData[j].thumbnail;
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.PDF, PMY_VideoTypeRes.none);
-                            //isWithDes = true;
-                            //worldInfos[i].Title = worldData[j].title;
-                            //worldInfos[i].Aurthor = worldData[j].authorName;
-                            //worldInfos[i].Des = worldData[j].description;
-                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
                         }
                         else if (worldData[j].media_type == "QUIZ")
                         {
@@ -292,11 +279,6 @@ namespace PMY
                             worldInfos[i].thumbnail = worldData[j].thumbnail;
                             worldInfos[i].quiz_data = worldData[j].quiz_data;
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.Quiz, PMY_VideoTypeRes.none);
-                            //isWithDes = true;
-                            //worldInfos[i].Title = worldData[j].title;
-                            //worldInfos[i].Aurthor = worldData[j].authorName;
-                            //worldInfos[i].Des = worldData[j].description;
-                            //worldInfos[i].url = worldData[j].descriptionHyperlink;
                         }
                         break;
                     }
@@ -396,7 +378,6 @@ namespace PMY
             }
             else
             {
-                //renderTexture.Release();
                 // Setting Landscape Data
                 ratioReferences[ratioId].l_image.gameObject.SetActive(true);
                 ratioReferences[ratioId].p_image.gameObject.SetActive(true);
@@ -644,122 +625,4 @@ namespace PMY
                 }
         }
     }
-
-    //[Serializable]
-    //public class PMY_WorldData
-    //{
-    //    public string[] Title;
-    //    public string[] Aurthor;
-    //    public string[] Des;
-    //    public string url;
-    //    public string pdfURL;
-    //    public QuizData quiz_data;
-    //    public string thumbnail;
-    //    public PMY_DataType Type;
-    //    public Sprite WorldImage;
-    //    public Texture2D Texture;
-    //    public string VideoLink;
-    //    public bool isAWSVideo;
-    //    public bool isLiveVideo;
-    //    public bool isPrerecordedVideo;
-    //    public PMY_Ratio pmyRatio;
-    //    public PMY_VideoTypeRes videoType;
-    //}
-
-    //public enum PMY_DataType
-    //{
-    //    Image,
-    //    Video,
-    //    PDF,
-    //    Quiz
-    //}
-
-    //public enum PMY_VideoTypeRes
-    //{
-    //    none,
-    //    islive,
-    //    prerecorded,
-    //    aws
-    //}
-
-    //public enum PMY_Ratio
-    //{
-    //    OneXOneWithDes,
-    //    SixteenXNineWithDes,
-    //    NineXSixteenWithDes,
-    //    FourXThreeWithDes,
-
-    //    OneXOneWithoutDes,
-    //    SixteenXNineWithoutDes,
-    //    NineXSixteenWithoutDes,
-    //    FourXThreeWithoutDes,
-    //}
-
-    //[Serializable]
-    //public class RatioRef
-    //{
-    //    public string name;
-
-    //    public GameObject l_obj;
-    //    public TMP_Text l_Title;
-    //    public TMP_Text l_Aurthur;
-    //    public TMP_Text l_Description;
-    //    public RawImage l_image;
-    //    public VideoPlayer l_videoPlayer;
-    //    public GameObject l_LivePlayer;
-    //    public GameObject l_PrerecordedPlayer;
-    //    public GameObject l_Loader;
-
-    //    public GameObject p_obj;
-    //    public TMP_Text p_Title;
-    //    public TMP_Text p_Aurthur;
-    //    public TMP_Text p_Description;
-    //    public RawImage p_image;
-    //    public VideoPlayer p_videoPlayer;
-    //    public GameObject p_LivePlayer;
-    //    public GameObject p_PrerecordedPlayer;
-    //    public GameObject p_Loader;
-    //}
-
-
-    //public class PMY_Json
-    //{
-    //    public bool success;
-    //    public List<PMY_Asset> data;
-    //    public string msg;
-    //}
-
-    //public class PMY_Asset
-    //{
-    //    public int id;
-    //    public int worldId;
-    //    public int index;
-    //    public string asset_link;
-    //    public bool check;
-    //    public string[] authorName;
-    //    public string[] description;
-    //    public string descriptionHyperlink;
-    //    public string[] title;
-    //    public string ratio;
-    //    public string thumbnail;
-    //    public string media_type;
-    //    public string pdf_url;
-    //    public QuizData quiz_data;
-    //    public string user_id;
-    //    public string event_id;
-    //    public string category;
-    //    public bool youtubeUrlCheck;
-    //    public string youtubeUrl;
-    //    public DateTime createdAt;
-    //    public DateTime updatedAt;
-    //    public string event_env_class;
-    //}
-
-
-    //public class QuizData
-    //{
-    //    public string question;
-    //    public List<string> answer;
-    //    public string correct;
-    //}
 }

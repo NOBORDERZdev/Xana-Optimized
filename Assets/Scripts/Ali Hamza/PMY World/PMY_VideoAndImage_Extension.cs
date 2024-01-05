@@ -316,11 +316,6 @@ namespace PMY
                     {
                         Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
                         _texture = loadedTexture;
-                        //var rect = new Rect(1, 1, 1, 1);
-                        //thunbNailImage = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        //Texture2D tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                        //Sprite sprite = /*Sprite.Create(tempTex, rect, new Vector2(0.5f, 0.5f))*/ Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        //print("Texture is " + sprite);
                         callback(_texture);
                     }
                 }
@@ -352,15 +347,10 @@ namespace PMY
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-                //SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-                //SoundManagerSettings.soundManagerSettings.setNewSliderValues();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
                 RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_16x9);
-                //SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-                //SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-                //SoundManagerSettings.soundManagerSettings.setNewSliderValues();
                 PMY_Nft_Manager_Extension.Instance.videoRenderObject = imgVideo16x9;
                 renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
@@ -409,7 +399,6 @@ namespace PMY
                         }
                         imgVideo16x9.SetActive(true);
                         imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
-                        //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_16x9);
                         renderTexture_temp = renderTexture;
                         imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
@@ -429,7 +418,6 @@ namespace PMY
                         }
                         imgVideo9x16.SetActive(true);
                         imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
-                        //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_9x16);
                         renderTexture_temp = renderTexture;
                         imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
@@ -449,7 +437,6 @@ namespace PMY
                         }
                         imgVideo1x1.SetActive(true);
                         imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
-                        //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_1x1);
                         renderTexture_temp = renderTexture;
                         imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
@@ -469,7 +456,6 @@ namespace PMY
                         }
                         imgVideo4x3.SetActive(true);
                         imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
-                        //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_4x3);
                         renderTexture_temp = renderTexture;
                         imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
@@ -498,13 +484,6 @@ namespace PMY
             frame.transform.localEulerAngles = PMYFrameManager.instance.frameLocalRot;
             frame.transform.localScale = new Vector3(PMYFrameManager.instance.frameLocalScale.x, PMYFrameManager.instance.frameLocalScale.y, PMYFrameManager.instance.frameLocalScale.z);
 
-            //GameObject spotLightObj = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectSpotLight();
-            //spotLightObj.transform.SetParent(this.gameObject.transform);
-            //spotLightObj.transform.position = transform.position;
-            //spotLightObj.SetActive(true);
-            //spotLightObj.transform.localScale = new Vector3(PMYFrameManager.instance.spotLightScale.x, PMYFrameManager.instance.spotLightScale.y, PMYFrameManager.instance.spotLightScale.z);
-            //spotLightObj.transform.localPosition = PMYFrameManager.instance.spotLightPrefabPos;
-            //spotLightObj.transform.localEulerAngles = new Vector3(-22.857f, 180f, 0f);
         }
 
         public void OpenWorldInfo()

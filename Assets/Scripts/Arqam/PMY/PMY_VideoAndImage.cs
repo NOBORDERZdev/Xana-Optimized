@@ -317,11 +317,6 @@ namespace PMY
                     {
                         Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
                         _texture = loadedTexture;
-                        //var rect = new Rect(1, 1, 1, 1);
-                        //thunbNailImage = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        //Texture2D tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                        //Sprite sprite = /*Sprite.Create(tempTex, rect, new Vector2(0.5f, 0.5f))*/ Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        //print("Texture is " + sprite);
                         callback(_texture);
                     }
                 }
@@ -354,15 +349,10 @@ namespace PMY
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-                //SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-                //SoundManagerSettings.soundManagerSettings.setNewSliderValues();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
                 RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
-                //SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-                //SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-                //SoundManagerSettings.soundManagerSettings.setNewSliderValues();
                 PMY_Nft_Manager.Instance.videoRenderObject = imgVideo16x9;
                 renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
@@ -402,86 +392,6 @@ namespace PMY
             else if (_videoType == PMY_VideoTypeRes.aws)
             {
                 SetThumbail(imageLink);
-                //if (_imgVideoRatio == PMY_Ratio.SixteenXNineWithDes || _imgVideoRatio == PMY_Ratio.SixteenXNineWithoutDes)
-                //{
-                //    if (imgVideo16x9)
-                //    {
-                //        if (imgVideoFrame16x9)
-                //        {
-                //            EnableImageVideoFrame(imgVideoFrame16x9);
-                //        }
-                //        imgVideo16x9.SetActive(true);
-                //        imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
-                //        //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                //        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
-                //        renderTexture_temp = renderTexture;
-                //        imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                //        imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
-                //        imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                //        imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
-                //        imgVideo16x9.GetComponent<VideoPlayer>().Play();
-                //    }
-                //}
-                //else if (_imgVideoRatio == PMY_Ratio.NineXSixteenWithDes || _imgVideoRatio == PMY_Ratio.NineXSixteenWithoutDes)
-                //{
-                //    if (imgVideo9x16)
-                //    {
-                //        if (imgVideoFrame9x16)
-                //        {
-                //            EnableImageVideoFrame(imgVideoFrame9x16);
-                //        }
-                //        imgVideo9x16.SetActive(true);
-                //        imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
-                //        //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                //        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_9x16);
-                //        renderTexture_temp = renderTexture;
-                //        imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                //        imgVideo9x16.GetComponent<RawImage>().texture = renderTexture;
-                //        imgVideo9x16.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                //        imgVideo9x16.GetComponent<VideoPlayer>().url = videoLink;
-                //        imgVideo9x16.GetComponent<VideoPlayer>().Play();
-                //    }
-                //}
-                //else if (_imgVideoRatio == PMY_Ratio.OneXOneWithDes || _imgVideoRatio == PMY_Ratio.OneXOneWithoutDes)
-                //{
-                //    if (imgVideo1x1)
-                //    {
-                //        if (imgVideoFrame1x1)
-                //        {
-                //            EnableImageVideoFrame(imgVideoFrame1x1);
-                //        }
-                //        imgVideo1x1.SetActive(true);
-                //        imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
-                //        //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                //        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_1x1);
-                //        renderTexture_temp = renderTexture;
-                //        imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                //        imgVideo1x1.GetComponent<RawImage>().texture = renderTexture;
-                //        imgVideo1x1.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                //        imgVideo1x1.GetComponent<VideoPlayer>().url = videoLink;
-                //        imgVideo1x1.GetComponent<VideoPlayer>().Play();
-                //    }
-                //}
-                //else if (_imgVideoRatio == PMY_Ratio.FourXThreeWithDes || _imgVideoRatio == PMY_Ratio.FourXThreeWithoutDes)
-                //{
-                //    if (imgVideo4x3)
-                //    {
-                //        if (imgVideoFrame4x3)
-                //        {
-                //            EnableImageVideoFrame(imgVideoFrame4x3);
-                //        }
-                //        imgVideo4x3.SetActive(true);
-                //        imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
-                //        //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                //        RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_4x3);
-                //        renderTexture_temp = renderTexture;
-                //        imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                //        imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
-                //        imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                //        imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
-                //        imgVideo4x3.GetComponent<VideoPlayer>().Play();
-                //    }
-                //}
             }
 
             if (PMY_Nft_Manager.Instance && renderTexture_temp != null)
@@ -501,13 +411,6 @@ namespace PMY
             frame.transform.localEulerAngles = PMYFrameManager.instance.frameLocalRot;
             frame.transform.localScale = new Vector3(PMYFrameManager.instance.frameLocalScale.x, PMYFrameManager.instance.frameLocalScale.y, PMYFrameManager.instance.frameLocalScale.z);
 
-            //GameObject spotLightObj = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectSpotLight();
-            //spotLightObj.transform.SetParent(this.gameObject.transform);
-            //spotLightObj.transform.position = transform.position;
-            //spotLightObj.SetActive(true);
-            //spotLightObj.transform.localScale = new Vector3(PMYFrameManager.instance.spotLightScale.x, PMYFrameManager.instance.spotLightScale.y, PMYFrameManager.instance.spotLightScale.z);
-            //spotLightObj.transform.localPosition = PMYFrameManager.instance.spotLightPrefabPos;
-            //spotLightObj.transform.localEulerAngles = new Vector3(-22.857f, 180f, 0f);
         }
 
         public void OpenWorldInfo()
@@ -531,9 +434,5 @@ namespace PMY
                 }
             }
         }
-
-
-
-
     }
 }
