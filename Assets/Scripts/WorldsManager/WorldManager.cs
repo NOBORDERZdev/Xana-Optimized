@@ -339,15 +339,33 @@ public class WorldManager : MonoBehaviour
             {
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-                    string IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                    if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                    string IThumbnailDownloadURL = "";
+                    // Modify Path for Thumbnail
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
                     {
-                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                        _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                        }
+                        else
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        }
                     }
                     else
                     {
-                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                        }
+                        else
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        }
                     }
                 }
             }
@@ -722,6 +740,8 @@ public class RowList
     public string user_limit;
     public string thumbnail;
     public string banner;
+    public string thumbnail_new;
+    public string banner_new;
     public string description;
     public string creator;
     public string createdAt;
