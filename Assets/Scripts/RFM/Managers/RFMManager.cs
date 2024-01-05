@@ -208,7 +208,8 @@ namespace RFM.Managers
             {
                 player.CustomProperties.Clear();
             }
-            huntersCage.GetComponent<Animator>().Play("RFMCloseDoor");
+            //huntersCage.GetComponent<Animator>().Play("RFMCloseDoor");
+            huntersCage.GetComponent<Animator>().Play("Cage Door Close");
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
 
@@ -248,7 +249,8 @@ namespace RFM.Managers
             statusBG.SetActive(true);
             statusMMFPlayer.PlayFeedbacks();
 
-            huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up");
+            //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up"); // ?? There is no such animation
+            huntersCage.GetComponent<Animator>().Play("Cage Door Close");
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -338,7 +340,8 @@ namespace RFM.Managers
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
                     StartGameplay,
-                    countDownText);
+                    countDownText, false,
+                    AfterEachSecondCountdownTimer);
 
                 var hunterPosition = huntersSpawnArea.position;
                 var randomHunterPos = new Vector3(
@@ -450,7 +453,8 @@ namespace RFM.Managers
 
                 if (time < 4)
                 {
-                    huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+                    //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
+                    huntersCage.GetComponent<Animator>().Play("Cage Door Open");
                     rfmCameraManager.SwtichCamera(1);
                 }
                 if (time < 1)
