@@ -341,26 +341,41 @@ public class WorldManager : MonoBehaviour
                 {
                     string IThumbnailDownloadURL = "";
                     // Modify Path for Thumbnail
-                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
-                    {
-                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
-                        {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
-                        }
-                        else
-                        {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
-                        }
-                    }
-                    else
+                    //if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
+                    //{
+                    //    IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new;
+
+                    //    IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                    //    // Test-net
+                    //    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                    //    // Main-net
+                    //    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+
+
+                    //    //if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                    //    //{
+                    //    //    _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                    //    //    _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 320 + "&height=" + 180;
+                    //    //}
+                    //    //else
+                    //    //{
+                    //    //    _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                    //    //}
+                    //}
+                    //else
                     {
                         IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        // Test-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                        // Main-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+
+
+
                         if (!_event.EnvironmentName.Contains("XANA Lobby"))
                         {
                             _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 320 + "&height=" + 180;
                         }
                         else
                         {
