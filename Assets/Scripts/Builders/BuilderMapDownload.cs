@@ -456,6 +456,7 @@ public class BuilderMapDownload : MonoBehaviour
     IEnumerator SetSkyPropertiesDelay()
     {
         reflectionProbe.gameObject.SetActive(false);
+        reflectionProbe.enabled = true;
         SkyProperties skyProperties = levelData.skyProperties;
         LensFlareData lensFlareData = new LensFlareData();
         Camera.main.clearFlags = CameraClearFlags.Skybox;
