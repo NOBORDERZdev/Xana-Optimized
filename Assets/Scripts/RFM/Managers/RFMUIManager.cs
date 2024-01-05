@@ -226,7 +226,7 @@ namespace RFM.Managers
 
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
-                string[] array = { "Hunter" + " [H]", npcHunter.rewardMultiplier.ToString() };
+                string[] array = { npcHunter.nickName, npcHunter.rewardMultiplier.ToString() };
                 huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
             }
 
@@ -242,7 +242,7 @@ namespace RFM.Managers
                             rewardMultiplier = (int)_rewardMultiplier;
                         }
 
-                        string[] array = { player.NickName + " [H]", 0.ToString() };
+                        string[] array = { player.NickName, rewardMultiplier.ToString() };
                         huntersScores.Add(array, rewardMultiplier * 100); // TODO : change 100 to the participation amount
                     }
                     else // player was a runner
