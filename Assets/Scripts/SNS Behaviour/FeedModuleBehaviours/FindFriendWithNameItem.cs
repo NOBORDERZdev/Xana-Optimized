@@ -209,7 +209,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);//false api loader
+           // FeedUIController.Instance.ShowLoader(false);//false api loader
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -253,7 +253,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
             yield return www.SendWebRequest();
             print("www" + www.downloadHandler);
-            FeedUIController.Instance.ShowLoader(false);//false api loader
+            //FeedUIController.Instance.ShowLoader(false);//false api loader
 
             if (www.isNetworkError || www.isHttpError)
             {
