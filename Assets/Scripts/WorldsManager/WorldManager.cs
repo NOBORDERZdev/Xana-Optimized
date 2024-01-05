@@ -105,7 +105,8 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (!dataIsFatched)
         {
-            Debug.LogError("Clear Fetch");
+            //Debug.LogError("Clear Fetch");
+            yield return null;
             NotProcessRequest = true;
         }
         CheckWorldTabAndReset(tab);

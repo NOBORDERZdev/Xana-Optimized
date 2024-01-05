@@ -22,6 +22,7 @@ public class PMY_BGM : MonoBehaviour
         // Set Referece for Slider to control controller
         SoundManager.Instance.MusicSource.clip = bgmAudioSource;
         SoundManager.Instance.MusicSource.Play();
+        SoundManager.Instance.MusicSource.loop = true;
 
         // Get Current Parameters of Music Source
         if (soundType.Equals(SoundType.ThreeD))
@@ -31,7 +32,6 @@ public class PMY_BGM : MonoBehaviour
             currentMinDistance = SoundManager.Instance.MusicSource.minDistance;
 
             //Update Music Source Parameters
-            SoundManager.Instance.MusicSource.loop = true;
             SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 30f);
             SoundManager.Instance.MusicSource.spatialBlend = 1;
             if (Application.platform == RuntimePlatform.IPhonePlayer)
