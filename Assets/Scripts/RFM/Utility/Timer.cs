@@ -11,12 +11,12 @@ namespace RFM
     /// <remarks>Muneeb</remarks>
     public class Timer : MonoBehaviour
     {
-    	#region Fields
-    	
+        #region Fields
+
         private float _totalSeconds = 0;
         private float _elapsedSeconds = 0;
         private float _elapsedSeconds2 = 0;
-        
+
         private bool _running = false;
         private bool _finished = false;
 
@@ -24,16 +24,18 @@ namespace RFM
         private Action<float> _onTickCallback;
         private TMPro.TextMeshProUGUI TimeText;
         private bool showTimeInMMSS;
+        public bool paused;
+        public DateTime curTime;
 
         #endregion
-    	
-    	#region Properties
-        
+
+        #region Properties
+
         // public float ElapsedTime => _elapsedSeconds;
         // public float TotalTime => _totalSeconds;
-        
+
         #endregion
-    
+
         #region Methods
 
 
@@ -45,37 +47,37 @@ namespace RFM
         /// <param name="onFinishedCallback">called when timer is finished</param>
         /// <param name="timeText">Text that shows remaining time</param>
         /// <param name="onOneSecondCallback">Called after each second</param>
-        public static void SetDurationAndRun(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
+        public static void SetDurationAndRun(float value, Action onFinishedCallback = null,
+            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
-	        var timerObj = new GameObject("timerObj");
-	        var timer = timerObj.AddComponent<RFM.Timer>();
+            var timerObj = new GameObject("timerObj");
+            var timer = timerObj.AddComponent<RFM.Timer>();
 
-	        timer._totalSeconds = value;
-	        
-	        timer._onFinishedCallback = null; // clear the callback in case it was used previously
-	        timer._onTickCallback = null;
-	        if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
-	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
+            timer._totalSeconds = value;
 
-	        timer.TimeText = null;
+            timer._onFinishedCallback = null; // clear the callback in case it was used previously
+            timer._onTickCallback = null;
+            if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
+            if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
+
+            timer.TimeText = null;
             if (timeText)
             {
                 timer.TimeText = timeText;
                 timer.showTimeInMMSS = showTimeInMMSS;
             }
 
-	        timer._finished = false;
-	        timer.Run();
+            timer._finished = false;
+            timer.Run();
         }
 
 
         private void Update()
         {
-	        if (!_running) return;
-	        
-	        _elapsedSeconds += Time.deltaTime;
-	        _elapsedSeconds2 += Time.deltaTime;
+            if (!_running) return;
+
+            _elapsedSeconds += Time.deltaTime;
+            _elapsedSeconds2 += Time.deltaTime;
 
             if (TimeText != null)
             {
@@ -97,50 +99,50 @@ namespace RFM
 
                 //TimeText.text = formattedTime;
             }
-	        
+
 
             if (_elapsedSeconds2 > 1)
-	        {
-		        _elapsedSeconds2 = 0;
-		        _onTickCallback?.Invoke(_totalSeconds - _elapsedSeconds);
-	        }
-            
+            {
+                _elapsedSeconds2 = 0;
+                _onTickCallback?.Invoke(_totalSeconds - _elapsedSeconds);
+            }
+
             if (_elapsedSeconds >= _totalSeconds)
             {
-	            _finished = true;
-	            _running = false;
-	            _onFinishedCallback?.Invoke();
-	            Destroy(gameObject);
+                _finished = true;
+                _running = false;
+                _onFinishedCallback?.Invoke();
+                Destroy(gameObject);
             }
         }
-        
-        
+
+
         private void Run()
-        {	
-    		// only run with valid duration
-    		if (_totalSeconds > 0)
-            {
-	            _running = true;
-                _elapsedSeconds = 0;
-    		}
-    	}
-
-        public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null, 
-	        TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
-	        // SetDurationAndRun(value, onFinishedCallback, timeText);
-	        
-	        var timerObj = new GameObject("timerObj");
-	        var timer = timerObj.AddComponent<RFM.Timer>();
+            // only run with valid duration
+            if (_totalSeconds > 0)
+            {
+                _running = true;
+                _elapsedSeconds = 0;
+            }
+        }
 
-	        timer._totalSeconds = value;
-	        
-	        timer._onFinishedCallback = null; // clear the callback in case it was used previously
-	        timer._onTickCallback = null;
-	        if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
-	        if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
+        public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null,
+            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
+        {
+            // SetDurationAndRun(value, onFinishedCallback, timeText);
 
-	        timer.TimeText = null;
+            var timerObj = new GameObject("timerObj");
+            var timer = timerObj.AddComponent<RFM.Timer>();
+
+            timer._totalSeconds = value;
+
+            timer._onFinishedCallback = null; // clear the callback in case it was used previously
+            timer._onTickCallback = null;
+            if (onFinishedCallback != null) timer._onFinishedCallback = onFinishedCallback;
+            if (onOneSecondCallback != null) timer._onTickCallback = onOneSecondCallback;
+
+            timer.TimeText = null;
             if (timeText)
             {
                 timer.TimeText = timeText;
@@ -148,9 +150,9 @@ namespace RFM
             }
 
             timer._finished = false;
-	        timer.Run();
-	        
-	        yield return new WaitUntil(() => timer._finished);
+            timer.Run();
+
+            yield return new WaitUntil(() => timer._finished);
         }
 
         public static void StopAllTimers()
@@ -162,6 +164,29 @@ namespace RFM
             }
         }
 
+        private void OnApplicationPause(bool pause)
+        {
+            if (pause)
+            {
+                paused = true;
+                curTime = DateTime.Now;
+            }
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if (focus)
+            {
+                if (paused)
+                {
+                    TimeSpan diff = curTime - DateTime.Now;
+                    float sec = MathF.Abs((float)diff.TotalSeconds);
+                    _elapsedSeconds += sec;
+
+                    paused = false;
+                }
+            }
+        }
         #endregion
     }
 }
