@@ -38,7 +38,6 @@ public class LookAtCamera : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position + Offset, Time.deltaTime);
-        //transform.LookAt(_cameraTransform);
     }
     public void UpdateText(string txt)
     {
