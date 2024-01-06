@@ -167,7 +167,7 @@ public class UserRegisterationManager : MonoBehaviour
     public bool SavingBool;
     [HideInInspector]
     private Button currentSelectedNxtButton;
-    public bool LoggedInAsGuest;
+    public bool LoggedInAsGuest=false;
     public GameObject Name_Screen_Preset_Panel;
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
