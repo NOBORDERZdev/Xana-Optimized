@@ -15,12 +15,20 @@ public class LookAtCamera : MonoBehaviour
     [SerializeField]
     Transform _playerTransform;
     public Vector3 Offset;
+    bool SnapToPosition = false;
+    Vector3 LastDisablePosition = default;
     private void OnEnable()
     {
+        if(SnapToPosition)
+            transform.position = LastDisablePosition;
+
+        SnapToPosition = false;
         _postHandler.OnUpdatePostText += UpdateText;
     }
     private void OnDisable()
     {
+        LastDisablePosition = transform.position;
+        SnapToPosition = true;
         _postHandler.OnUpdatePostText -= UpdateText;
     }
     void Start()
@@ -29,8 +37,7 @@ public class LookAtCamera : MonoBehaviour
     }
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position + Offset, 0.5f);
-        //transform.LookAt(_cameraTransform);
+        transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position + Offset, Time.deltaTime);
     }
     public void UpdateText(string txt)
     {
