@@ -167,7 +167,7 @@ public class UserRegisterationManager : MonoBehaviour
     public bool SavingBool;
     [HideInInspector]
     private Button currentSelectedNxtButton;
-    public bool LoggedInAsGuest;
+    public bool LoggedInAsGuest=false;
     public GameObject Name_Screen_Preset_Panel;
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
@@ -196,7 +196,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
     public GameObject EntertheWorld_Panal;
-    public GameObject NewSignUp_Panal;
+    public GameObject NewSignUp_Panal, LoginScreenNew;
     public GameObject LogoImage,LogoImage2,LogoImage3;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
@@ -225,8 +225,6 @@ public class UserRegisterationManager : MonoBehaviour
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
                 welcomeScreen.SetActive(true);
-               // shownWelcome = true;
-                //PlayerPrefs.SetInt("shownWelcome", 1);
             }
         }
         
@@ -290,7 +288,10 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (_IsWalletSignUp)
         {
-           // setAvatarGiftPanal.SetActive(true);
+            if (PlayerPrefs.GetInt("iSignup")==0) {
+                iwanto_signUp();
+            }
+           
         }
         else {
            // setAvatarGiftPanal.SetActive(false);
@@ -418,7 +419,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (btnClickedNo == 0) 
         {
-            welcomeScreen.SetActive(true);
+            LoginScreenNew.SetActive(true);
         }
 
         if (btnClickedNo == 1)
@@ -674,7 +675,7 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-            LoggedInAsGuest = true;
+           // LoggedInAsGuest = true;
             //if (DefaultEnteriesforManican.instance)
             //{
             //    DefaultEnteriesforManican.instance.ResetForPresets();
@@ -894,7 +895,7 @@ public class UserRegisterationManager : MonoBehaviour
         //print("Animate here");
         //tabSelectorAnimator.GetComponent<Image>().rectTransform.position = targetPos.position;  
 
-        LoggedInAsGuest = true;
+       // LoggedInAsGuest = true;
         if (GameManager.Instance.mainCharacter)
         {
             GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
