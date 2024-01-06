@@ -105,6 +105,7 @@ public class WorldManager : MonoBehaviour
         while (!dataIsFatched)
         {
             Debug.LogError("Clear Fetch");
+            yield return null;
             NotProcessRequest = true;
         }
         CheckWorldTabAndReset(tab);
@@ -340,29 +341,29 @@ public class WorldManager : MonoBehaviour
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
                     string IThumbnailDownloadURL = "";
-                    // Modify Path for Thumbnail
-                    //if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
-                    //{
-                    //    IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new;
+                    //Modify Path for Thumbnail
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
+                    {
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new;
 
-                    //    IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                    //    // Test-net
-                    //    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
-                    //    // Main-net
-                    //    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        // Test-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                        // Main-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
 
 
-                    //    //if (!_event.EnvironmentName.Contains("XANA Lobby"))
-                    //    //{
-                    //    //    _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                    //    //    _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 320 + "&height=" + 180;
-                    //    //}
-                    //    //else
-                    //    //{
-                    //    //    _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
-                    //    //}
-                    //}
-                    //else
+                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                        }
+                        else
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        }
+                    }
+                    else
                     {
                         IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
                         // Test-net
@@ -375,7 +376,7 @@ public class WorldManager : MonoBehaviour
                         if (!_event.EnvironmentName.Contains("XANA Lobby"))
                         {
                             _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 320 + "&height=" + 180;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
                         }
                         else
                         {
