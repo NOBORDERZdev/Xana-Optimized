@@ -105,7 +105,7 @@ public class WorldManager : MonoBehaviour
         while (!dataIsFatched)
         {
             Debug.LogError("Clear Fetch");
-            NotProcessRequest = true;
+            //NotProcessRequest = true;
         }
         CheckWorldTabAndReset(tab);
     }
