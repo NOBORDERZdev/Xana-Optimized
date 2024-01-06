@@ -12,9 +12,6 @@ public class FollowUser : MonoBehaviour
     int tempDistance, PreviousDistance;
     float tempper;
 
-
-
-
     /// <summary>
   /* public  float FixedYOffset1 = 0.9f;
     public float FixedYOffset2 = 0.89f;
@@ -39,7 +36,6 @@ public class FollowUser : MonoBehaviour
         else
             MultipleDistance = -1f;
 
-        // FixedYOffset = FixedYOffset + (MultipleDistance * (Vector3.Distance(MainCamera.position, targ.position) / divisableDistance))
         tempper = Vector3.Distance(MainCamera.position, targ.position) / divisableDistance;
         if (tempper > 0.055f)
         {
@@ -77,8 +73,6 @@ public class FollowUser : MonoBehaviour
         {
             FixedYOffset = 1.35f;//9
         }
-        // Debug.LogError("MainCamera.position: (X) " + (Multiple * (MainCamera.position.x - targ.position.x) / divisable));
-        Debug.LogError("MainCamera.position: (Y) " +Vector3.Distance(MainCamera.position, targ.position) / divisableDistance);
         Offset = new Vector3(
                             Multiple * (MainCamera.position.x - targ.position.x) / divisable,
                             FixedYOffset + (MultipleDistance * (Vector3.Distance(MainCamera.position, targ.position) / divisableDistance)), 
