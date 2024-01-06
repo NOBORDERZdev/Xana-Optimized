@@ -4297,7 +4297,8 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (UIManager.Instance != null)//rik
                         {
-                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                           // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                           UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                         }
                         //if (EventList.instance.ListContent.transform.childCount == 0)
                         //{
