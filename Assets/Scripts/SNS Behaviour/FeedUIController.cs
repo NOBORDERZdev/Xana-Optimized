@@ -367,7 +367,7 @@ public class FeedUIController : MonoBehaviour
         AddFriendPanel.SetActive(flag);    
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=-40;
+        AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=29;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);
     }
@@ -377,11 +377,11 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=-40;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=105;
         }
         else
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top= -115;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top= 29;
         }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
@@ -2868,11 +2868,13 @@ public class FeedUIController : MonoBehaviour
         }
         foreach (Image line in FrndsPanelBtnLines)
         {
-            line.color = Color.white;
+            line.color =new Vector4(1,1,1,0);
+            
         }
 
         FrndsPanelBtns[index].color= selectedColor;
         FrndsPanelBtnLines[index].color= selectedColor;
+        FrndsPanelBtnLines[index].color = new Color(selectedColor.r,selectedColor.g,selectedColor.b,1);
     }
 
     public void OnClickHotFrnd()
