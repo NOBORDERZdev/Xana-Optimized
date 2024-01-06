@@ -16,7 +16,7 @@ public class UserPostFeature : MonoBehaviour
     public UpdatePostText OnUpdatePostText;
     public void ActivatePostButtbleHome(bool flag)
     {
-        if(_postBubbleFlag)  Bubble.gameObject.SetActive(flag);
+        if(_postBubbleFlag)  Bubble.parent.gameObject.SetActive(flag);
     }
     public void SendPost()
     {

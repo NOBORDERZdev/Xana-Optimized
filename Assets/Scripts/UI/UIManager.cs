@@ -87,17 +87,14 @@ public class UIManager : MonoBehaviour
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-               
             }
          }
         else
         {
-
             StartCoroutine(IsSplashEnable(false, 0f));
             StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
         }
     }
-   
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
         SavaCharacterProperties.NeedToShowSplash = 2;
@@ -121,8 +118,6 @@ public class UIManager : MonoBehaviour
         ShowFooter(!_state);
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
-   
-  
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {
@@ -160,7 +155,6 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
-
                     AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     SearchHomeHolder.gameObject.SetActive(false);

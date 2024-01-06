@@ -602,8 +602,8 @@ public class BottomTabManager : MonoBehaviour
             // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().GameManager.Instance.defaultSelection = 4;
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-        GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
+       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+      //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
         // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         UIManager.Instance.HomeWorldScreen.SetActive(false);
     }
