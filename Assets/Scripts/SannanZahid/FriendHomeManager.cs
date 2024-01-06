@@ -114,6 +114,7 @@ public class FriendHomeManager : MonoBehaviour
             SpawnFriendsObj.Remove(_friendtoRemove);
             Destroy(_friendtoRemove.friendNameObj.gameObject);
             Destroy(_friendtoRemove.friendObj.gameObject);
+            Destroy(_friendtoRemove.friendPostBubbleObj.gameObject);
         }
     }
     public void AddFriendToHome()
