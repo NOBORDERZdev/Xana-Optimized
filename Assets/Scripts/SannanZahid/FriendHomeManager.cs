@@ -51,6 +51,7 @@ public class FriendHomeManager : MonoBehaviour
                         FriendSpawn.id = friend.id;
                         FriendSpawn.friendObj = CreatedFriend;
                         FriendSpawn.friendNameObj = CreatedNameTag;
+                        FriendSpawn.friendPostBubbleObj = CreatedFriendPostBubble;
                         SpawnFriendsObj.Add(FriendSpawn);
                         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
                             friend.id, 
@@ -93,6 +94,7 @@ public class FriendHomeManager : MonoBehaviour
         {
             SpawnFriendsObjref.friendNameObj.gameObject.SetActive(flag);
             SpawnFriendsObjref.friendObj.gameObject.SetActive(flag);
+            SpawnFriendsObjref.friendPostBubbleObj.gameObject.SetActive(flag);
         }
     }
     FriendSpawnData _friendtoRemove;
