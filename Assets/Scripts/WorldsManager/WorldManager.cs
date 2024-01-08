@@ -684,8 +684,8 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.userLimit = "16";
             }
-            else if(XanaConstants.xanaConstants.JjWorldTeleportSceneName == "PMYRoomA")
-                XanaConstants.xanaConstants.userLimit = "1";
+            //else if(XanaConstants.xanaConstants.JjWorldTeleportSceneName == "PMYRoomA")
+            //    XanaConstants.xanaConstants.userLimit = "1";
             else
             {
                 if (XanaConstants.xanaConstants.isBuilderScene)
