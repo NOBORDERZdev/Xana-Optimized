@@ -180,7 +180,7 @@ MonoBehaviour:
   _gravity:
     _serializedValue: 1803886208
   detect3D_Hits: 1
-  lockZAxis: 0
+  lockZAxis: 1
   runInBackground: 1
   useFixedUpdateInputs: 0
   sortCharacterOnHit: 0
@@ -257,13 +257,13 @@ MonoBehaviour:
   characterRotationOptions:
     alwaysFaceOpponent: 1
     autoMirror: 1
-    rotateWhileJumping: 1
+    rotateWhileJumping: 0
     rotateOnMoveOnly: 0
-    allowAirBorneSideSwitch: 1
+    allowAirBorneSideSwitch: 0
     fixRotationWhenStunned: 1
     fixRotationWhenBlocking: 1
     fixRotationOnHit: 1
-    allowCornerStealing: 1
+    allowCornerStealing: 0
     smoothRotation: 1
     _rotationSpeed:
       _serializedValue: 128849018880
@@ -380,12 +380,12 @@ MonoBehaviour:
     maxCombo: 99
     _knockBackMinForce:
       _serializedValue: 42949672960
-    neverCornerPush: 0
+    neverCornerPush: 1
     fixJuggleWeight: 1
     _juggleWeight:
       _serializedValue: 1288490188800
   blockOptions:
-    blockType: 1
+    blockType: 5
     allowAirBlock: 0
     ignoreAppliedForceBlock: 0
     allowMoveCancel: 0
@@ -799,7 +799,7 @@ MonoBehaviour:
   player1_Inputs:
   - inputType: 1
     inputButtonName: P1KeyboardVertical
-    engineRelatedButton: 2
+    engineRelatedButton: 3
     joystickAxisName: P1JoystickHorizontalInverted
     cInputPositiveKeyName: P1Right
     cInputPositiveDefaultKey: D
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   player2_Inputs:
   - inputType: 1
     inputButtonName: P2KeyboardVertical
-    engineRelatedButton: 3
+    engineRelatedButton: 2
     joystickAxisName: P2JoystickHorizontalInverted
     cInputPositiveKeyName: P2Right
     cInputPositiveDefaultKey: RightArrow
@@ -1024,7 +1024,7 @@ MonoBehaviour:
     inputViewerIcon6: {fileID: 2800000, guid: 90523496d8897124e989ad256f109d27, type: 3}
   - inputType: 0
     inputButtonName: P2KeyboardHorizontal
-    engineRelatedButton: 1
+    engineRelatedButton: 0
     joystickAxisName: P2JoystickVertical
     cInputPositiveKeyName: P2Up
     cInputPositiveDefaultKey: UpArrow

@@ -3288,8 +3288,8 @@ public class ControlsScript : MonoBehaviour {
                     Debug.LogError("(" + myInfo.characterName + ") Standing High Hit [Knockdown] animation not found! Make sure you have it set on Character -> Basic Moves -> Hit Reactions");
 				currentHitAnimation = myMoveSetScript.basicMoves.getHitHighKnockdown.name;
 				currentHitInfo = myMoveSetScript.basicMoves.getHitHighKnockdown;
-
-				isKnockDown = true;
+               // currentState = PossibleStates.Down;
+                isKnockDown = true;
 			}else if (hit.hitType == HitType.MidKnockdown){
 				if (myMoveSetScript.basicMoves.getHitMidKnockdown.animMap[0].clip == null)
                     Debug.LogError("(" + myInfo.characterName + ") Standing Mid Hit [Knockdown] animation not found! Make sure you have it set on Character -> Basic Moves -> Hit Reactions");
@@ -3671,6 +3671,7 @@ public class ControlsScript : MonoBehaviour {
                     applyKnockdownForces(UFE.config.knockDownOptions.high, attacker);
                     myPhysicsScript.overrideAirAnimation = true;
                     airRecoveryType = AirRecoveryType.DontRecover;
+                   // currentState = PossibleStates.Down;
                     if (!hit.customStunValues) stunTime =
                         UFE.config.knockDownOptions.high._knockedOutTime + UFE.config.knockDownOptions.high._standUpTime;
 
@@ -3678,6 +3679,7 @@ public class ControlsScript : MonoBehaviour {
                     applyKnockdownForces(UFE.config.knockDownOptions.highLow, attacker);
                     myPhysicsScript.overrideAirAnimation = true;
                     airRecoveryType = AirRecoveryType.DontRecover;
+                  //  currentState = PossibleStates.Down;
                     if (!hit.customStunValues) stunTime =
                         UFE.config.knockDownOptions.highLow._knockedOutTime + UFE.config.knockDownOptions.highLow._standUpTime;
 
@@ -3685,6 +3687,7 @@ public class ControlsScript : MonoBehaviour {
                     applyKnockdownForces(UFE.config.knockDownOptions.sweep, attacker);
                     myPhysicsScript.overrideAirAnimation = true;
                     airRecoveryType = AirRecoveryType.DontRecover;
+                   // currentState = PossibleStates.Down;
                     if (!hit.customStunValues) stunTime =
                         UFE.config.knockDownOptions.sweep._knockedOutTime + UFE.config.knockDownOptions.sweep._standUpTime;
 

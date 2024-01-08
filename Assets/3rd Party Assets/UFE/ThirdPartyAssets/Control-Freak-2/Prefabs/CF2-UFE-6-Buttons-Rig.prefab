@@ -6958,7 +6958,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d79715c7956275145ba53a3d0d50d5e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a99981018ad9251408ee063c7711ea12, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -6984,7 +6984,7 @@ MonoBehaviour:
   sourceControl: {fileID: 9074138326159256702}
   spriteNeutral:
     enabled: 1
-    sprite: {fileID: 21300000, guid: d79715c7956275145ba53a3d0d50d5e0, type: 3}
+    sprite: {fileID: 21300000, guid: a99981018ad9251408ee063c7711ea12, type: 3}
     color: {r: 1, g: 1, b: 1, a: 1}
     scale: 1
     rotation: 0
@@ -7295,7 +7295,7 @@ MonoBehaviour:
   pressBinding:
     enabled: 1
     axisList:
-    - axisName: P1KeyboardVertical
+    - axisName: Jump
       axisPositiveSide: 1
     keyList: 
   toggleOnlyBinding:
@@ -7525,7 +7525,7 @@ MonoBehaviour:
   touchSmoothing: 0.1
   originSmoothTime: 0.5
   targetDynamicRegion: {fileID: 0}
-  toggle: 0
+  toggle: 1
   toggleOnAction: 0
   toggleOffAction: 1
   toggleOffWhenHiding: 0
@@ -7534,14 +7534,16 @@ MonoBehaviour:
   linkToggleToRigSwitch: 0
   toggleRigSwitchName: 
   pressBinding:
-    enabled: 1
+    enabled: 0
     axisList:
-    - axisName: P1KeyboardVertical
+    - axisName: Crouch
       axisPositiveSide: 0
     keyList: 
   toggleOnlyBinding:
-    enabled: 0
-    axisList: []
+    enabled: 1
+    axisList:
+    - axisName: Crouch
+      axisPositiveSide: 1
     keyList: 
   emulateTouchPressure: 1
   touchPressureBinding:
@@ -7932,7 +7934,7 @@ MonoBehaviour:
   pressBinding:
     enabled: 1
     axisList:
-    - axisName: Jump
+    - axisName: P1Button3
       axisPositiveSide: 1
     keyList: 
   toggleOnlyBinding:
@@ -8374,7 +8376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2772681921445574367
 RectTransform:
   m_ObjectHideFlags: 0

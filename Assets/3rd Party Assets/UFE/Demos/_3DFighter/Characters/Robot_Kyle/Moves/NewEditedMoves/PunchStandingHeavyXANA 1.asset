@@ -4365,14 +4365,14 @@ MonoBehaviour:
           _serializedValue: 0
         z:
           _serializedValue: 0
-    clip: {fileID: 1827226128182048838, guid: 01b398d2f8cea854f927444fb2bf6476, type: 3}
+    clip: {fileID: 7400000, guid: ee0bd1fb10dc36e44941e335cd0e5ad7, type: 3}
     customHitBoxDefinition: {fileID: 0}
     length:
-      _serializedValue: 2505397504
+      _serializedValue: 1431655808
     bakeSpeed: 1
     hitBoxDefinitionType: 0
   _animationSpeed:
-    _serializedValue: 4294967296
+    _serializedValue: 2576980480
   wrapMode: 0
   characterPrefab: {fileID: 1272366937168992, guid: fd64814b02364cc4c93cfc8c9717e635,
     type: 3}
@@ -4396,10 +4396,10 @@ MonoBehaviour:
   speedKeyFrameToggle: 0
   fixedSpeed: 1
   animSpeedKeyFrame: []
-  totalFrames: 35
-  startUpFrames: 8
+  totalFrames: 33
+  startUpFrames: 15
   activeFrames: 6
-  recoveryFrames: 21
+  recoveryFrames: 12
   applyRootMotion: 0
   lockXMotion: 0
   lockYMotion: 0
@@ -4407,11 +4407,11 @@ MonoBehaviour:
   forceGrounded: 0
   rootMotionNode: 0
   overrideBlendingIn: 1
-  overrideBlendingOut: 0
+  overrideBlendingOut: 1
   _blendingIn:
     _serializedValue: 0
   _blendingOut:
-    _serializedValue: 0
+    _serializedValue: 858993472
   defaultInputs:
     chargeMove: 0
     _chargeTiming:
@@ -4581,8 +4581,8 @@ MonoBehaviour:
   stanceChanges: []
   cameraMovements: []
   hits:
-  - activeFramesBegin: 8
-    activeFramesEnds: 13
+  - activeFramesBegin: 15
+    activeFramesEnds: 20
     hitConfirmType: 0
     throwMove: {fileID: 0}
     techMove: {fileID: 0}
@@ -4800,73 +4800,17 @@ MonoBehaviour:
     overrideEventsToggle: 0
     hitConditionsToggle: 0
     pullInToggle: 0
-    hurtBoxesToggle: 1
+    hurtBoxesToggle: 0
     wallBounceToggle: 0
     groundBounceToggle: 0
     hurtBoxes:
-    - bodyPart: 8
-      followXBounds: 0
-      followYBounds: 0
-      hitBoxDefinitionIndex: 0
-      _offSet:
-        x:
-          _serializedValue: 0
-        y:
-          _serializedValue: 0
-        z:
-          _serializedValue: 0
-      _radius:
-        _serializedValue: 429496736
-      _rect:
-        _x:
-          _serializedValue: 0
-        _y:
-          _serializedValue: 0
-        topRight:
-          x:
-            _serializedValue: 17179869184
-          y:
-            _serializedValue: 0
-          z:
-            _serializedValue: 0
-        topLeft:
-          x:
-            _serializedValue: 0
-          y:
-            _serializedValue: 0
-          z:
-            _serializedValue: 0
-        bottomRight:
-          x:
-            _serializedValue: 17179869184
-          y:
-            _serializedValue: 17179869184
-          z:
-            _serializedValue: 0
-        bottomLeft:
-          x:
-            _serializedValue: 0
-          y:
-            _serializedValue: 17179869184
-          z:
-            _serializedValue: 0
-        width:
-          _serializedValue: 17179869184
-        height:
-          _serializedValue: 17179869184
-        xMax:
-          _serializedValue: 17179869184
-        yMax:
-          _serializedValue: 17179869184
-      shape: 0
-      type: 0
     - bodyPart: 6
       followXBounds: 0
       followYBounds: 0
       hitBoxDefinitionIndex: 0
       _offSet:
         x:
-          _serializedValue: 0
+          _serializedValue: 5068061184
         y:
           _serializedValue: 0
         z:
@@ -4928,7 +4872,7 @@ MonoBehaviour:
         z:
           _serializedValue: 0
       _radius:
-        _serializedValue: 429496736
+        _serializedValue: 2147483648
       _rect:
         _x:
           _serializedValue: 0
@@ -5053,11 +4997,11 @@ MonoBehaviour:
         _serializedValue: 0
     position:
       x:
-        _serializedValue: 877721344
+        _serializedValue: 3890646528
       y:
-        _serializedValue: 16430185472
+        _serializedValue: 17477120000
       z:
-        _serializedValue: -858319296
+        _serializedValue: -1142706176
   lockOnTargets: []
   switchCharacterOptions: []
   invincibleBodyParts: []
