@@ -24,18 +24,23 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(1f);
-            if (PlayerPrefs.GetInt("shownWelcome") == 1 && PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
+            if ( PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
             {
                 break;
             }
         }
+        Debug.LogError("SetName");
         yield return new WaitForSeconds(1f);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
+        Debug.LogError("SetName 1");
+
             _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         }
         else
         {
+        Debug.LogError("SetName 2");
+
             StartCoroutine(IERequestGetUserDetails());
         }
     }
