@@ -28,7 +28,7 @@ public class SilderColorPicker : MonoBehaviour
     {
 
         //bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        bodyParts = CharcterBodyParts.instance;
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
         saveBtn = StoreManager.instance.saveButton.GetComponent<Button>();
 
         //Int();

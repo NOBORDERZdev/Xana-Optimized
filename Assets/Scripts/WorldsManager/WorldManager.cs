@@ -114,7 +114,7 @@ public class WorldManager : MonoBehaviour
     public void ChangeWorldTab(APIURL tab)
     {
         aPIURLGlobal = tab;
-        GetBuilderWorlds(tab, (a) => { });
+        GetBuilderWorlds(tab, (a) => { }, false);
     }
     public void SetaPIURLGlobal(APIURL chnager)
     {
@@ -136,7 +136,7 @@ public class WorldManager : MonoBehaviour
             SearchPageSize = 40;
             SearchTagPageSize = 40;
             SearchKey = searchKey;
-            GetBuilderWorlds(aPIURLGlobal, (a) => { });
+            GetBuilderWorlds(aPIURLGlobal, (a) => { } , true);
         }
         else
         {
@@ -185,7 +185,7 @@ public class WorldManager : MonoBehaviour
             loadOnce = true;
             dataIsFatched = false;
             LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
-            GetBuilderWorlds(aPIURLGlobal, (a) => { });
+            GetBuilderWorlds(aPIURLGlobal, (a) => { }, false);
         }
     }
     public int SearchPageNumb = 1;
@@ -252,10 +252,14 @@ public class WorldManager : MonoBehaviour
     }
     bool NotProcessRequest = false;
     int CallBackCheck = 0;
-    public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
+    public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack, bool _searchActive)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
+        if (_searchActive)
+        {
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
+        }
         //if (UIManager.Instance.IsSplashActive)
         //{
         //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -277,7 +281,7 @@ public class WorldManager : MonoBehaviour
                 //    return;
                 //}
                 CallBackCheck = 0;
-                InstantiateWorlds(aPIURL.ToString());
+                InstantiateWorlds(aPIURL.ToString(), isSucess);
                 dataIsFatched = true;
                 UpdatePageNumber(aPIURL);
                 if (_WorldInfo.data.count > 0)
@@ -294,7 +298,7 @@ public class WorldManager : MonoBehaviour
                     CallBackCheck = 0;
                     return;
                 }
-                GetBuilderWorlds(aPIURLGlobal, (a) => { });
+                GetBuilderWorlds(aPIURLGlobal, (a) => { }, false);
                 CallBack(false);
             }
         }));
@@ -326,7 +330,7 @@ public class WorldManager : MonoBehaviour
     public string worldstr;
     bool isLobbyActive = false;
     public WorldItemManager WorldItemManager;
-    void InstantiateWorlds(string _apiURL)
+    void InstantiateWorlds(string _apiURL, bool APIResponse)
     {
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {

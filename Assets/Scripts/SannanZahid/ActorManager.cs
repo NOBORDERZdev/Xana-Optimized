@@ -10,7 +10,7 @@ public class ActorManager : MonoBehaviour
     [SerializeField] GameObject _worldObj;
     [SerializeField] GameObject _storeCam;
     [SerializeField] GameObject _worldCam;
-    [SerializeField] GameObject _cinemaCam;
+    [SerializeField] public GameObject _cinemaCam;
     [SerializeField] Transform _menuViewPoint, _postViewPoint;
     Vector3 _previousPos, _previousRot;
     private void Awake()

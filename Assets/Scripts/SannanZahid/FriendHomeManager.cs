@@ -45,7 +45,14 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
-                        CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+                        if (friend.userOccupiedAssets.Count>0 && friend.userOccupiedAssets[0].json != null)
+                        {
+                            CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+                        }
+                        else
+                        {
+                             CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
+                        }
                         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble, 
                             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
                         FriendSpawn.id = friend.id;
