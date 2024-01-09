@@ -32,6 +32,9 @@ namespace NPC
 
         void Update()
         {
+            if (!Photon.Pun.PhotonNetwork.IsMasterClient)
+                return;
+
             if (isMoving)
             {
                 if (!agent.pathPending)

@@ -570,13 +570,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        //ActivateNpcChat();
+        ActivateNpcChat();
     }
 
     void ActivateNpcChat()
     {
-        GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
-        Instantiate(npcChatSystem);
+        if(PhotonNetwork.IsMasterClient) 
+        {
+            Debug.LogError("is master client");
+            PhotonNetwork.InstantiateRoomObject("NpcChatSystem", Vector3.zero, Quaternion.identity);
+        }        
+        //GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
+        //Instantiate(npcChatSystem);
         //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
@@ -1128,5 +1133,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
     }
 
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        Debug.LogError("OnMasterClientSwitched called");
+    }
 
 }

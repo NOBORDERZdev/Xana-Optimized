@@ -18,6 +18,7 @@ public class XanaWorldDownloader : MonoBehaviour
     public static bool dataSorted;
     public static bool isSpawnDownloaded;
     public static bool isDefaultPriorityObjectDownloaded;
+    public static bool isPostPriorityObjectDownloaded;
     public static bool isfailedObjectsDownloaded;
 
     public Transform assetParent;
@@ -225,12 +226,16 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
+        StartCoroutine(DownloadObjects(postLoadObjects, false));
+        while (!isPostPriorityObjectDownloaded)
+        {
+            await Task.Yield();
+        }
         StartCoroutine(DownloadFailedItem());
         while (!isfailedObjectsDownloaded)
         {
             await Task.Yield();
         }
-        StartCoroutine(DownloadObjects(postLoadObjects, false));
         //StartCoroutine(CheckLongIntervalSorting());
         //StartCoroutine(CheckShortIntervalSorting());
 
@@ -338,6 +343,8 @@ public class XanaWorldDownloader : MonoBehaviour
         isfailedObjectsDownloaded = true;
         if (totalAssetCount == downloadedTillNow)
         {
+            yield return new WaitForSeconds(2f);
+            Debug.LogError("All Objects Downloaded");
             BuilderEventManager.AfterWorldOffcialWorldsInatantiated?.Invoke();
         }
     }
@@ -371,6 +378,8 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         if (preLodaingObjects)
             isSpawnDownloaded = true;
+
+        isPostPriorityObjectDownloaded = true;
     }
 
     void EnableDownloadingText()

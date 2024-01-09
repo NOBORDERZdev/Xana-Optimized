@@ -23,16 +23,16 @@ public class NpcChatSystem : MonoBehaviour
     public List<NPCAttributes> npcAttributes;
     //[HideInInspector]
     public List<NPCAttributes> npcDB;
-    public static Action<NpcChatSystem> npcNameAction;
+    public static Action<NpcChatSystem> spawnNPC;
 
     private int id = 0;
     private string msg = "Hello";
-    private int numOfResponseWantToShow = 5;
+    private int numOfResponseWantToShow = 1;
     private int enNamePeriority = 3;
     private int jpNamePeriority = 2;
     private int totalFreeSpeechNpc = 5;
     private int counter = 0;
-    private int tempResponseNum = 0;
+    private int tempResponseNum = 1;
     private const int userId = 0;
     private Queue<string> playerMessages = new Queue<string>();
 
@@ -98,18 +98,25 @@ public class NpcChatSystem : MonoBehaviour
 
         ShuffleNpcs();     // shuffle selected user chat npc 
         ShuffleFreeNpcs(); // shuffle free speech selected user chat npc 
-        numOfResponseWantToShow = enNamePeriority + jpNamePeriority;
+        //numOfResponseWantToShow = enNamePeriority + jpNamePeriority;
         // my changes end
 
         tempResponseNum = numOfResponseWantToShow;
-        npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
-        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated+=InvokeNPCName;
+        
+        
     }
 
     void InvokeNPCName()
     {
-       // npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
-    }   
+        StartCoroutine(Delay());
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        if (Photon.Pun.PhotonNetwork.IsMasterClient)
+            spawnNPC?.Invoke(this);      // update npc model name according to npc chat name
+    }
 
     private void ShuffleNpcs()
     {
@@ -143,12 +150,14 @@ public class NpcChatSystem : MonoBehaviour
     {
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert += PlayerSendMsg;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += InvokeNPCName;
     }
 
     private void OnDisable()
     {
         if (XanaChatSystem.instance)
             XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= InvokeNPCName;
     }
 
 
@@ -218,9 +227,10 @@ public class NpcChatSystem : MonoBehaviour
             else
                 //Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
 
-            tempResponseNum--;
+                tempResponseNum--;
             if (tempResponseNum > 0)
             {
+                Debug.LogError("here calling api again --- " + tempResponseNum);
                 if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
                     StartCoroutine(SetApiData());
                 else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
@@ -228,6 +238,7 @@ public class NpcChatSystem : MonoBehaviour
             }
             else
             {
+                Debug.LogError("resetting counter");
                 counter = 0;
                 tempResponseNum = numOfResponseWantToShow;
                 ShuffleNpcs();

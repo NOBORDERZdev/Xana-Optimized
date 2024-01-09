@@ -13,7 +13,8 @@ namespace NPC
 
         void Start()
         {
-            StartCoroutine(ApplyReact());
+            if (Photon.Pun.PhotonNetwork.IsMasterClient)
+                StartCoroutine(ApplyReact());
         }
 
         public IEnumerator ApplyReact()
