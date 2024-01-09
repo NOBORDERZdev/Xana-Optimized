@@ -78,6 +78,7 @@ public class LoadingHandler : MonoBehaviour
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
 
+    public GameObject SearchLoadingCanvas;
     private void Awake()
     {
         if (Instance == null)
@@ -90,12 +91,12 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-
-#if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
-#else
-                Debug.unityLogger.filterLogType = LogType.Error;
-#endif
+        //#if UNITY_EDITOR
+        //        Debug.unityLogger.logEnabled = true;
+        //#else
+        //                Debug.unityLogger.filterLogType = LogType.Error;
+        //#endif
     }
 
     private void Start()
