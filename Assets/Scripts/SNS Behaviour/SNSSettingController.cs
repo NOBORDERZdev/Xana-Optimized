@@ -174,6 +174,7 @@ public class SNSSettingController : MonoBehaviour
             {
                 SimultaneousConnectionButton();
             }
+            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
             //SimultaneousConnectionButton();
         }
     }
@@ -181,6 +182,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to logout success.......
     public void LogoutSuccess()
     {
+        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
         Debug.Log("logout success calling from SNSSetting");
         if (FeedUIController.Instance != null)
         {
@@ -214,6 +216,10 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
+            if (UIManager.Instance!=null)
+            {
+                UIManager.Instance._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+            }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer !=null)
             {

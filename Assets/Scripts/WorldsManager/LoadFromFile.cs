@@ -593,7 +593,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        //ActivateNpcChat();
+        ActivateNpcChat();
     }
 
     void ActivateNpcChat()
