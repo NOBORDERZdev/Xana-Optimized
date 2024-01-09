@@ -176,6 +176,11 @@ public class SNSSettingController : MonoBehaviour
             }
             UserRegisterationManager.instance.welcomeScreen.SetActive(true);
             //SimultaneousConnectionButton();
+            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+            PlayerPrefs.SetInt("shownWelcome", 0);
+            PlayerPrefs.SetString("UserNameAndPassword", "");
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+
         }
     }
 
