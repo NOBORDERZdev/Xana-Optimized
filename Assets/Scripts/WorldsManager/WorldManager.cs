@@ -25,7 +25,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberEventWorld = 1;
     private int pageNumberSearchWorld = 1;
     private int pageNumberTestWorld = 1;
-    private int pageCount = 200;
+    private int pageCount = 50;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
@@ -104,7 +104,8 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (!dataIsFatched)
         {
-            Debug.LogError("Clear Fetch");
+            //Debug.LogError("Clear Fetch");
+            yield return null;
             NotProcessRequest = true;
         }
         CheckWorldTabAndReset(tab);
@@ -339,15 +340,48 @@ public class WorldManager : MonoBehaviour
             {
                 if (_WorldInfo.data.rows[i].entityType != null)
                 {
-                    string IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
-                    if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                    string IThumbnailDownloadURL = "";
+                    //Modify Path for Thumbnail
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].banner_new))
                     {
-                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                        _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 512 + "&height=" + 512;
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new;
+
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        // Test-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                        // Main-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+
+
+                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                        }
+                        else
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        }
                     }
                     else
                     {
-                        _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        IThumbnailDownloadURL = _WorldInfo.data.rows[i].thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                        // Test-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                        // Main-net
+                        IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+
+
+
+                        if (!_event.EnvironmentName.Contains("XANA Lobby"))
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
+                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                        }
+                        else
+                        {
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                        }
                     }
                 }
             }
@@ -363,6 +397,13 @@ public class WorldManager : MonoBehaviour
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
+
+            if (_WorldInfo.data.rows[i].creatorDetails != null)
+            {
+                _event.Creator_Name = _WorldInfo.data.rows[i].creatorDetails.userName;
+                _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
+                _event.CreatorAvatarURL = _WorldInfo.data.rows[i].creatorDetails.avatar;
+            }
 
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
@@ -381,7 +422,7 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                if(EventPrefabLobby.activeInHierarchy)
+               // if(EventPrefabLobby.activeInHierarchy)
                     EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
@@ -398,13 +439,14 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        WorldItemManager.DisplayWorlds(_apiURL);
+        if(WorldItemManager.gameObject.activeInHierarchy)
+            WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        if (!UIManager.Instance.IsSplashActive)
-        {
-            Invoke(nameof(ShowTutorial), 1f);
-        }
+        //if (!UIManager.Instance.IsSplashActive)
+        //{
+        //    Invoke(nameof(ShowTutorial), 1f);
+        //}
        
     }
 
@@ -714,6 +756,8 @@ public class RowList
     public string user_limit;
     public string thumbnail;
     public string banner;
+    public string thumbnail_new;
+    public string banner_new;
     public string description;
     public string creator;
     public string createdAt;
@@ -723,6 +767,7 @@ public class RowList
     public string createdBy;
     public string[] tags;
     public UserInfo user;
+    public WorldCreatorDetail creatorDetails;
 }
 [System.Serializable]
 public class UserInfo
@@ -732,6 +777,16 @@ public class UserInfo
     public string email;
     public string avatar;
 }
+
+
+[Serializable]
+public class WorldCreatorDetail
+{
+    public string userName;
+    public string avatar;
+    public string description;
+}
+
 public enum APIURL
 {
     Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld, SearchWorldByTag

@@ -60,7 +60,6 @@ public class CheckInternet : MonoBehaviour
                     UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
                 }
                 once=false;
-               
             }
             //UserRegisterationManager.instance.OpenUIPanal(1);
             //UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
