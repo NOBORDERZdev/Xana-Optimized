@@ -267,6 +267,11 @@ namespace DynamicScrollRect
         {
             if (!CanAddNewItemIntoTail())
             {
+                //Debug.LogError("Can't add new item into tail");
+                if (WorldManager.instance.dataIsFatched)
+                {
+                    WorldManager.instance.WorldPageLoading();
+                }
                 return;
             }
             int itemIndex = _activatedItems[_activatedItems.Count - 1].Index + 1;
@@ -278,7 +283,8 @@ namespace DynamicScrollRect
             if(itemIndex >= (int)(TotalItems *.75) && TotalItems > previousItems)
             {
                 previousItems = TotalItems;
-                if(WorldManager.instance.dataIsFatched)
+                Debug.LogError("Fetch data again");
+                if (WorldManager.instance.dataIsFatched)
                 {
                     WorldManager.instance.WorldPageLoading();
                 }
