@@ -21,7 +21,7 @@ public class NpcBehaviourSelector : MonoBehaviour
 
     private Coroutine emoteCoroutine;
     private bool isNewlySpwaned = true;
-    private int maxNpcBehaviourAction = 6;
+    [SerializeField] int maxNpcBehaviourAction = 6;
 
     private void Start()
     {

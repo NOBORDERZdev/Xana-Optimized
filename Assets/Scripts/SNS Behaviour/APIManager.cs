@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using static ServerSIdeCharacterHandling;
 
 public class APIManager : MonoBehaviour
 {
@@ -34,7 +35,8 @@ public class APIManager : MonoBehaviour
     private int commnetFeedPagesize = 50;
     private bool scrollToTop;
     public bool isCommentDataLoaded = false;
-
+    private int BFCount = 0;
+    private int maxBfCount=20;
 
     private void Awake()
     {
@@ -646,6 +648,60 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    public void SetAdFrndFollowing(){ 
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+        StartCoroutine(IEAdFrndAllFollowing(1,500));
+    }
+
+    public AllFollowingRoot adFrndFollowing;
+    public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
+    {
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing  + userId + "/" + pageNum + "/" + pageSize;
+        print("uri"+uri);
+        using (UnityWebRequest www = UnityWebRequest.Get(uri))
+        {
+            print("Authorization"+ userAuthorizeToken);
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("GetAllFollowing Data" + data);
+                adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                APIController.Instance.SpwanAdFrndFollowing();
+                GetBestFriend();
+
+                //switch (getFollowingFor)
+                //{
+                //    case "Message":
+                //        APIController.Instance.GetAllFollowingUser(pageNum);
+                //        break;
+                //    default:
+                //        break;
+                //}
+                // Debug.Log(root.data.count);
+            }
+        }
+    }
+
     //this api is used to get all followers.......
     public void RequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
     {
@@ -866,7 +922,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetAllFollowingFromProfile(string user_Id, int pageNum, int pageSize)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdFrndGetAllAolowing /*+ "/"*/ + user_Id + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -888,6 +944,39 @@ public class APIManager : MonoBehaviour
             }
         }
     }
+
+
+    //public void AdFrndFollowingFetch(){ 
+    //   foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
+    //   {
+    //        Destroy(item.gameObject);
+    //   }
+       
+    //}
+
+    // public IEnumerator IEAdFrndFollowingUser(string user_Id, int pageNum, int pageSize)
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + "/" + user_Id + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        //FeedUIController.Instance.ShowLoader(false);
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
+    //            AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+    //            FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Feed Comment.......
@@ -1450,10 +1539,20 @@ public class APIManager : MonoBehaviour
     public IEnumerator IERequestGetSearchUser(string name)
     {
         WWWForm form = new WWWForm();
-
-        form.AddField("name", name);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser), form))
+        if (!name.All(char.IsDigit)) // is seraching with name
+        {
+          form.AddField("name", name);
+          form.AddField("userId",0);
+        }
+        else // is searching with number
+        {
+            form.AddField("name", "");
+            form.AddField("userId",name);
+        }
+       
+       
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/50";
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -1472,6 +1571,257 @@ public class APIManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Friends
+
+    public void SetHotFriend()
+    {
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+        StartCoroutine(IERequestHotFirends());
+    }
+
+    IEnumerator IERequestHotFirends(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Hot Friends Data" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.ShowHotFirend(searchUserRoot);
+                //APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+
+
+    public void SetRecommendedFriend()
+    {
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+        StartCoroutine(IERequestRecommendedFirends());
+    }
+
+     IEnumerator IERequestRecommendedFirends(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RecommendedUser + "1/50";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Recommended Friends Data" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.ShowRecommendedFriends(searchUserRoot);
+                //APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+
+
+     public void SetMutalFrndList(){
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+        StartCoroutine(IERequestSetMutalFrndList());
+     }
+
+     IEnumerator IERequestSetMutalFrndList(){ 
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_MutalFrnd +APIManager.Instance.userId+ "/1/100";
+        using (UnityWebRequest www= UnityWebRequest.Get(uri)){
+             www.SetRequestHeader("Authorization", userAuthorizeToken);
+             yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ MutalFrnd Data" + data);
+                SearchUserRoot mutalFrnd = JsonUtility.FromJson<SearchUserRoot>(data);
+                FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(false);
+                if (mutalFrnd.data.count>0)
+                {
+                    APIController.Instance.ShowMutalFrnds(mutalFrnd);
+                }
+                else{ // to Show no mutal Frnd
+                     FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(true);   
+                }
+            }
+        }
+    }
+
+    public void GetBestFriend(){
+        StartCoroutine(IEGetBestFriends());
+    }
+
+    IEnumerator IEGetBestFriends()
+    {
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetBestFrnd + APIManager.Instance.userId;
+        using (UnityWebRequest www= UnityWebRequest.Get(uri))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Get Best Friends list : " + data);
+                CloseFrndRoot CloseFrnds = JsonUtility.FromJson<CloseFrndRoot>(data);
+                BFCount = CloseFrnds.data.count;
+            }
+        }
+    }
+
+    public void AddBestFriend(int userId, GameObject FrndBtn)
+    {
+        if (BFCount<maxBfCount)
+        {
+          StartCoroutine(IEAddBestFriend(userId, FrndBtn));
+        }
+        else
+        {
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=0;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=false;
+            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
+            FeedUIController.Instance.BestFriendFull.SetActive(true);
+            //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
+        }
+    }
+    IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn){ 
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+       string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
+        using (UnityWebRequest www= UnityWebRequest.Post(uri,"POST"))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                string data = www.downloadHandler.text;
+                Debug.Log("~~~~~~ Add Best Friend : " + data);
+                AdCloseFrndRoot AdCloseFrnds = JsonUtility.FromJson<AdCloseFrndRoot>(data);
+                if (AdCloseFrnds.success)
+                {
+                    //BFCount++;
+                    GetBestFriend();
+                    if (FrndBtn.GetComponent<FollowingItemController>())
+                    {
+                        FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
+                    }
+                    else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
+                    {
+                         FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(true);
+                    }
+                    
+                }
+            }
+        }
+    }
+
+    public void RemoveBestFriend(int userId, GameObject FrndBtn)
+    {
+        if (FeedUIController.Instance != null)
+        {
+            FeedUIController.Instance.ShowLoader(true);
+        }
+        StartCoroutine(IERemoveBestFriend(userId, FrndBtn));
+    }
+    IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn){ 
+       string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveBestFrnd + userId.ToString();
+        //WWWForm form = new WWWForm();
+        //form.AddField("friendId", userId.ToString());
+        using (UnityWebRequest www= UnityWebRequest.Delete(uri))
+        {
+              www.SetRequestHeader("Authorization", userAuthorizeToken);
+              yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                Debug.Log(www.error);
+            }
+            else
+            {
+                //if (BFCount<0)
+                //{
+                //   BFCount--;
+                //}
+                if (FeedUIController.Instance != null)
+                {
+                    FeedUIController.Instance.ShowLoader(false);
+                }
+                GetBestFriend();
+                if (FrndBtn.GetComponent<FollowingItemController>())
+                {
+                    FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
+                }
+                else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
+                {
+                        FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(false);
+                }
+            }
+        }
+    }
+
     #endregion
 
     #region UserAPI.......... 
@@ -2378,12 +2728,14 @@ public class APIManager : MonoBehaviour
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
+    public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
 
     [Space]
     [Header("Profile Follower Following")]
     public AllFollowersRoot profileAllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot profileAllFollowingRoot = new AllFollowingRoot();
-
+    public AllFollowingRoot AdFrndFollowingRoot = new AllFollowingRoot();
+    
     [Space]
     [Header("Current Feed Comment List Response")]
     [SerializeField]
@@ -2832,6 +3184,7 @@ public class AllFollowing
     public string name;
     public string email;
     public string avatar;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -2865,6 +3218,60 @@ public class AllFollowingRoot
     public AllFollowingData data;
     public string msg;
 }
+
+[System.Serializable]
+public class CloseFrndRoot
+{
+    public bool success;
+    public CloseFrndData data;
+    public string msg;
+}
+
+[System.Serializable]
+public class CloseFrndData
+{
+    public int count;
+    public List<CloseFrndRow> rows;
+    public string msg;
+}
+
+
+[System.Serializable]
+public class CloseFrndRow
+{
+    public int id;
+    public string name;
+    public string thumbnail;
+    public Row json;
+}
+
+[System.Serializable]
+public class AdCloseFrndRoot
+{
+    public bool success;
+    public AdCloseFrndRow data;
+    public string msg;
+}
+
+//[System.Serializable]
+//public class AdCloseFrndData
+//{
+//    public int count;
+//    public List<AdCloseFrndRow> rows;
+//}
+
+
+[System.Serializable]
+public class AdCloseFrndRow
+{
+    public int id;
+    public int userId;
+    public int friendId;
+    public DateTime updatedAt;
+    public DateTime createdAt;
+}
+
+
 //---------------------------------------------------
 
 /// <summary>
@@ -3004,11 +3411,13 @@ public class SearchUserRow
     public int id;
     public string name;
     public string avatar;
-    public AllUserWithFeedUserProfile userProfile;
-    public int followerCount;
     public int followingCount;
     public int feedCount;
-    public bool isFollowing;
+    public int followerCount;
+    public bool is_following_me;
+    public bool am_i_following;
+    public bool is_my_close_friend;
+    public AllUserWithFeedUserProfile userProfile;
 }
 
 [System.Serializable]

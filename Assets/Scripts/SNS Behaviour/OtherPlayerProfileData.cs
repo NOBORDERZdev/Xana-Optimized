@@ -597,7 +597,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         if (currentFindFriendWithNameItemScript != null)
         {
-            currentFindFriendWithNameItemScript.searchUserRow.isFollowing = isFollow;
+            currentFindFriendWithNameItemScript.searchUserRow.is_following_me = isFollow;
             currentFindFriendWithNameItemScript.FollowFollowingSetUp(isFollow);
         }
         //followText.GetComponent<TextLocalization>().LocalizeTextText();
