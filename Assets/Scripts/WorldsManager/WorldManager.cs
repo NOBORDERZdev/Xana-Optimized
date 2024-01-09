@@ -25,7 +25,7 @@ public class WorldManager : MonoBehaviour
     private int pageNumberEventWorld = 1;
     private int pageNumberSearchWorld = 1;
     private int pageNumberTestWorld = 1;
-    private int pageCount = 50;
+    private int pageCount = 30;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
@@ -92,10 +92,11 @@ public class WorldManager : MonoBehaviour
         {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
-        else {
+        else
+        {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         }
-      
+
         WorldItemManager.DisplayWorlds("Temp");
         StartCoroutine(WorldCall(tab));
     }
@@ -183,6 +184,7 @@ public class WorldManager : MonoBehaviour
         {
             loadOnce = true;
             dataIsFatched = false;
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
@@ -254,26 +256,26 @@ public class WorldManager : MonoBehaviour
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
-        if (UIManager.Instance.IsSplashActive)
-        {
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        }
-        else
-        {
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
-        }
+        //if (UIManager.Instance.IsSplashActive)
+        //{
+        //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        //}
+        //else
+        //{
+        //    LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+        //}
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
             if (isSucess)
             {
-                if (NotProcessRequest)
-                {
-                    Debug.LogError("Reset Clear Fetch");
-                    dataIsFatched = true;
-                    NotProcessRequest = false;
-                    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-                    return;
-                }
+                //if (NotProcessRequest)
+                //{
+                //    Debug.LogError("Reset Clear Fetch");
+                //    dataIsFatched = true;
+                //    NotProcessRequest = false;
+                //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                //    return;
+                //}
                 CallBackCheck = 0;
                 InstantiateWorlds(aPIURL.ToString());
                 dataIsFatched = true;
@@ -422,8 +424,8 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-               // if(EventPrefabLobby.activeInHierarchy)
-                    EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
+                // if(EventPrefabLobby.activeInHierarchy)
+                EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
             {
@@ -439,7 +441,7 @@ public class WorldManager : MonoBehaviour
                 AllWorldTabReference.LobbyInactiveCallBack();
             }
         }
-        if(WorldItemManager.gameObject.activeInHierarchy)
+        if (WorldItemManager.gameObject.activeInHierarchy)
             WorldItemManager.DisplayWorlds(_apiURL);
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -447,10 +449,11 @@ public class WorldManager : MonoBehaviour
         //{
         //    Invoke(nameof(ShowTutorial), 1f);
         //}
-       
+
     }
 
-    public void ShowTutorial(){ 
+    public void ShowTutorial()
+    {
         TutorialsManager.instance.ShowTutorials();
     }
 
