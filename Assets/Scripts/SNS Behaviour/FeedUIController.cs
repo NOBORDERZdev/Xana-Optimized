@@ -367,7 +367,7 @@ public class FeedUIController : MonoBehaviour
         AddFriendPanel.SetActive(flag);    
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=29;
+        AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);
     }
@@ -381,7 +381,7 @@ public class FeedUIController : MonoBehaviour
         }
         else
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top= 29;
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top= 50;
         }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
