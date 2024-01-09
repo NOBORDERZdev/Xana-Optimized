@@ -293,7 +293,10 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
-
+    public void SetProfileButton(){
+        allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+        allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
+    }
     public void OnClickAvatarButton()
     {
         if (GameManager.Instance.defaultSelection != 0)
