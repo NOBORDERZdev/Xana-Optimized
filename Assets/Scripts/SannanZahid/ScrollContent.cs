@@ -121,9 +121,14 @@ namespace DynamicScrollRect
                 {
                     if (itemCount == count)
                     {
+                        if (count == 0)
+                        {
+                            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+                            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                        }
                         return;
                     }
-                    ActivateItem(itemCount);
+                    ActivateItem(itemCount, count);
                     itemCount++;
                 }
             }
@@ -132,7 +137,7 @@ namespace DynamicScrollRect
         {
             return new Vector2Int(_fixedItemCount, 9);
         }
-        private WorldItemView ActivateItem(int itemIndex)
+        private WorldItemView ActivateItem(int itemIndex, int _loopcount=0)
         {
             Vector2 gridPos = GetGridPosition(itemIndex);
             Vector2 anchoredPos = GetAnchoredPosition(gridPos);
@@ -149,7 +154,7 @@ namespace DynamicScrollRect
             scrollItem.gameObject.SetActive(true);
             scrollItem.gameObject.name = $"{gridPos.x}_{gridPos.y}";
             scrollItem.RectTransform.anchoredPosition = anchoredPos;
-            scrollItem.InitItem(itemIndex, gridPos, Worlds[itemIndex]);
+            scrollItem.InitItem(itemIndex, gridPos, Worlds[itemIndex],_loopcount);
             bool insertHead = (_activatedItems.Count == 0 ||
                                (_activatedItems.Count > 0 && _activatedItems[0].Index > itemIndex));
 

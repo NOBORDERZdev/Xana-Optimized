@@ -22,9 +22,9 @@ public class WorldItemView : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
+    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount=0)
     {
-        if(PreviewLogo)
+        if (PreviewLogo)
             PreviewLogo.gameObject.SetActive(true);
        Index = index;
        GridIndex = gridPos;
@@ -42,7 +42,7 @@ public class WorldItemView : MonoBehaviour
        m_PressedIndex = detail.PressedIndex;
        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
         worldTags = detail.WorldTags;
-       Init();
+        Init(index, _loopcount);
     }
 
     public static string m_EnvName;
@@ -99,7 +99,7 @@ public class WorldItemView : MonoBehaviour
         }
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     }
-    public void Init()
+    public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
         StartCoroutine(DownloadPrefabSprite());
@@ -107,9 +107,9 @@ public class WorldItemView : MonoBehaviour
             this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
-        LoadImagesFromRemote();
+        LoadImagesFromRemote(worlditemcount, _loopcount);
     }
-    void LoadImagesFromRemote()
+    void LoadImagesFromRemote(int worlditemcount=0, int _loopcount=0)
     {
         if (m_EnvironmentName.Contains("XANA Lobby"))
         {
@@ -120,7 +120,7 @@ public class WorldItemView : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
-            StartCoroutine(DownloadAndLoadFeed());
+            StartCoroutine(DownloadAndLoadFeed(worlditemcount, _loopcount));
         }
     }
     void UpdateUserCount()
@@ -220,10 +220,10 @@ public class WorldItemView : MonoBehaviour
         else
             return 406; // Xana Lobby Id Testnet
     }
-    public IEnumerator DownloadAndLoadFeed()
+    public IEnumerator DownloadAndLoadFeed(int worlditemcount, int _loopcount)
     {
         yield return null;
-       if(AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
+        if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
             if (PreviewLogo)
@@ -242,6 +242,11 @@ public class WorldItemView : MonoBehaviour
 
                 }
             });
+        }
+        if (worlditemcount >= 26 || worlditemcount == _loopcount - 1)
+        {
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
     }
     void GetEventType(string entityType)
