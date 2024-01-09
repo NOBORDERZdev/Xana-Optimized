@@ -137,7 +137,6 @@ public class WorldManager : MonoBehaviour
             SearchTagPageSize = 40;
             SearchKey = searchKey;
             GetBuilderWorlds(aPIURLGlobal, (a) => { } , true);
-            print("Getting call from here: ");
         }
         else
         {
