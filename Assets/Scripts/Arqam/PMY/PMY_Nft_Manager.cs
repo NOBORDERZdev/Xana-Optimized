@@ -605,6 +605,8 @@ namespace PMY
                 pdfPanel_L.SetActive(true);
             else
                 pdfPanel_P.SetActive(true);
+
+            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
         }
 
         public void EnableControlls()
@@ -614,6 +616,8 @@ namespace PMY
             {
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
+
+            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
         }
 
         private void OnDisable()

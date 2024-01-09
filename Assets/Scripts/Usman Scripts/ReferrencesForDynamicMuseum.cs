@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ReferrencesForDynamicMuseum : MonoBehaviour
 {
+    public GameObject eventSystemObj;
     public GameObject[] overlayPanels;
     public GameObject workingCanvas, PlayerParent, MainPlayerParent;
     public GameObject[] disableObjects;
