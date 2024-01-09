@@ -144,7 +144,7 @@ namespace Climbing
                 velocity.Normalize();
             }
 
-            if (velocity.magnitude > 0.3f)
+            if (velocity.magnitude > 0.6f)
             {
                 //Applies Input Movement to the RigidBody
                 smoothSpeed = Mathf.Lerp(smoothSpeed, curSpeed, Time.fixedDeltaTime * 2);
@@ -296,7 +296,7 @@ namespace Climbing
                     break;
                 case MovementState.Running:
                     curSpeed = RunSpeed;
-                    smoothSpeed = curSpeed;
+                    //smoothSpeed = curSpeed;
                     break;
             }
         }
