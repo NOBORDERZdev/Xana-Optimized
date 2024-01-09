@@ -41,17 +41,17 @@ public class NFTFromServer : MonoBehaviour
 
         if (APIBaseUrlChange.instance.IsXanaLive)
         {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/12/";
+            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
         }
         else
         {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/14/";
+            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
         }
 
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             eventid = XanaEventDetails.eventDetails.id.ToString();
-            MussuemLink = dynamicEventFeedApi+eventid;
+            MussuemLink = dynamicEventFeedApi + XanaEventDetails.eventDetails.museumId + "/" + XanaEventDetails.eventDetails.id;
             Debug.Log("Event Lunching");
             Debug.Log("MussuemLink"+ MussuemLink);
         }
