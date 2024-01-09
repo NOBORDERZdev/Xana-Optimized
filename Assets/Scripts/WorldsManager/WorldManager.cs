@@ -256,6 +256,10 @@ public class WorldManager : MonoBehaviour
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
+        if (_searchActive)
+        {
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
+        }
         //if (UIManager.Instance.IsSplashActive)
         //{
         //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
