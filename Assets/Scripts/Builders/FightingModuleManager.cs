@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class FightingModuleManager : MonoBehaviour
 {
+    public bool isUserHaveAlphaPass;
     public bool isEnvLoaded;
     public string addressableSceneName;
     public string environmentLabel;
