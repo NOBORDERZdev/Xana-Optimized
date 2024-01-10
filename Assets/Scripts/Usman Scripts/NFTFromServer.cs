@@ -27,7 +27,7 @@ public class NFTFromServer : MonoBehaviour
     public int testnetMussuemId;
     public int mainnetMussuemId;
     private string dynamicMusuemApi = "/item/get-museum-all-assets/";
-    private string dynamicEventFeedApi = "";
+    private string dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
     public string eventid;
     string MussuemLink;
     //public List<Datum> TestList;
@@ -37,16 +37,6 @@ public class NFTFromServer : MonoBehaviour
         {
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
-
-
-        if (APIBaseUrlChange.instance.IsXanaLive)
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
-        }
-        else
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
-        }
 
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
