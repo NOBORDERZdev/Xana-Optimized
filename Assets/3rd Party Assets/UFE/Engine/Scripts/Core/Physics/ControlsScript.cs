@@ -779,7 +779,7 @@ public class ControlsScript : MonoBehaviour {
         // Set target in case its a 3D fighter
         FPVector target;
         if (!myPhysicsScript.IsMoving() || IsAxisRested(currentInputs))
-            target = opControlsScript.worldTransform.position + opControlsScript.worldTransform.forward * -1;
+       target = opControlsScript.worldTransform.position + opControlsScript.worldTransform.forward * -1;
         else
             target = worldTransform.position + worldTransform.forward * -1;
 
@@ -1374,7 +1374,6 @@ public class ControlsScript : MonoBehaviour {
             currentState = PossibleStates.Crouch;
 
             if (blockStunned) return;
-
             if (!isBlocking)
             {
                 if (!isCrouching)
@@ -1401,9 +1400,10 @@ public class ControlsScript : MonoBehaviour {
             {
                 myMoveSetScript.PlayBasicMove(myMoveSetScript.basicMoves.blockingCrouchingPose, false);
             }
-
-            // Standing Up from couching
-            if (currentMove == null
+            if (isBlocking) {
+            }
+                // Standing Up from couching
+                if (currentMove == null
                 && currentSubState != SubStates.Blocking
                 && !myMoveSetScript.IsAnimationPlaying("crouching_2")
                 && !myMoveSetScript.IsAnimationPlaying("blockingCrouchingPose")
@@ -2829,7 +2829,7 @@ public class ControlsScript : MonoBehaviour {
 		if (!UFE.config.blockOptions.allowAirParry && !myPhysicsScript.IsGrounded()) return false;
 		return true;
 	}
-	
+    bool myCheck=false; // Attizaz, check for crouch block situation
 	public void CheckBlocking(bool flag){
 		if (myPhysicsScript.freeze) return;
 		if (myPhysicsScript.isTakingOff) return;
@@ -2843,7 +2843,8 @@ public class ControlsScript : MonoBehaviour {
 					if (myMoveSetScript.basicMoves.blockingCrouchingPose.animMap[0].clip == null)
 						Debug.LogError("Blocking Crouching Pose animation not found! Make sure you have it set on Character -> Basic Moves -> Blocking Crouching Pose");
 					myMoveSetScript.PlayBasicMove(myMoveSetScript.basicMoves.blockingCrouchingPose, false);
-					isBlocking = true;
+                    myCheck = true;
+                    isBlocking = true;
 				}else if (currentState == PossibleStates.Stand) {
 					if (myMoveSetScript.basicMoves.blockingHighPose.animMap[0].clip == null)
 						Debug.LogError("Blocking High Pose animation not found! Make sure you have it set on Character -> Basic Moves -> Blocking High Pose");
@@ -2858,7 +2859,14 @@ public class ControlsScript : MonoBehaviour {
 			}
 		}else if (!blockStunned){
 			isBlocking = false;
-		}
+            if (currentState == PossibleStates.Crouch && myCheck)
+            {
+                myCheck = false;
+                if (myMoveSetScript.basicMoves.blockingCrouchingPose.animMap[0].clip == null)
+                    Debug.LogError("Blocking Crouching Pose animation not found! Make sure you have it set on Character -> Basic Moves -> Blocking Crouching Pose");
+                myMoveSetScript.PlayBasicMove(myMoveSetScript.basicMoves.crouching, false);
+            }
+        }
 	}
 	
 	private void HighlightOn(GameObject target, bool flag){
