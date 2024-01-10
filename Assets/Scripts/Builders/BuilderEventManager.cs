@@ -8,7 +8,7 @@ public static class BuilderEventManager
 {
     public static Action<int, string> OnBuilderDataFetch;
 
-    public static Action<APIURL, Action<bool>> OnBuilderWorldLoad;
+    public static Action<APIURL, Action<bool>, bool> OnBuilderWorldLoad;
     public static Action<APIURL, bool> OnWorldTabChange;
 
     public static Action ApplySkyoxSettings;

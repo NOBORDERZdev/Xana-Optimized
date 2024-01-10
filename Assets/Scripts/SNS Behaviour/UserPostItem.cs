@@ -73,7 +73,7 @@ public class UserPostItem : MonoBehaviour
         }
 
         lastUpdateCallTime += Time.deltaTime;
-        if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
+        if (lastUpdateCallTime > 0.3f )//call every 0.4 sec
         {
             Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
             Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);

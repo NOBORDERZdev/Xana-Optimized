@@ -78,6 +78,7 @@ public class LoadingHandler : MonoBehaviour
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
 
+    public GameObject SearchLoadingCanvas;
     private void Awake()
     {
         if (Instance == null)
@@ -90,11 +91,11 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-
+      //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
-                Debug.unityLogger.filterLogType = LogType.Error;
+                        Debug.unityLogger.filterLogType = LogType.Error;
 #endif
     }
 
@@ -283,8 +284,7 @@ public class LoadingHandler : MonoBehaviour
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if ((!XanaConstants.xanaConstants.isFromXanaLobby || !XanaConstants.xanaConstants.isFromPMYLobby)
-            && XanaConstants.xanaConstants.isBackFromWorld)
+        if (!XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
@@ -519,8 +519,8 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld) 
-                || XanaConstants.xanaConstants.isFromPMYLobby) && teleportFeader.gameObject.activeInHierarchy)
+            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -553,8 +553,8 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld) 
-                    || XanaConstants.xanaConstants.isFromPMYLobby) && teleportFeader.gameObject.activeInHierarchy)
+                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                    teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";

@@ -193,6 +193,7 @@ public class BottomTabManager : MonoBehaviour
                 FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
             }
           //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+           GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
             if (UIManager.Instance != null)
             {
                 CheckLoginOrNotForFooterButton();
@@ -227,6 +228,7 @@ public class BottomTabManager : MonoBehaviour
         Debug.Log("Home button onclick");
         if (GameManager.Instance.defaultSelection != 1)
         {
+            GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
             GameManager.Instance.defaultSelection=1;
           //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
@@ -291,7 +293,10 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
-
+    public void SetProfileButton(){
+        allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+        allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
+    }
     public void OnClickAvatarButton()
     {
         if (GameManager.Instance.defaultSelection != 0)
@@ -331,6 +336,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (GameManager.Instance.defaultSelection != 1)
         {
+            GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
@@ -373,7 +379,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (GameManager.Instance.defaultSelection != 5)
         {
-           
+            GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
             //OnSelectedClick(5);
             GameManager.Instance.defaultSelection = 5;
             GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
@@ -414,6 +420,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (GameManager.Instance.defaultSelection != 3)
         {
+            GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             // LoaderShow(true);
             OnSelectedClick(3);
@@ -480,6 +487,7 @@ public class BottomTabManager : MonoBehaviour
              UserRegisterationManager.instance.OpenUIPanal(17);
             return;
         }
+          GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
         if (GameManager.Instance.defaultSelection != 5){ 
             GameManager.Instance.defaultSelection =5;
             GlobalVeriableClass.callingScreen = "Feed";
@@ -553,7 +561,7 @@ public class BottomTabManager : MonoBehaviour
             //---->>>Sannan OnSelectedClick(4);
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
-
+            GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
             // LoaderShow(true);
             //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             if (FindObjectOfType<AdditiveScenesManager>() != null)
