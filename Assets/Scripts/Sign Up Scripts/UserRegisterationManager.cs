@@ -377,6 +377,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             //if () 
             welcomeScreen.SetActive(true);
+            LoginScreenNew.SetActive(false);
 
         }
         else
@@ -419,6 +420,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (btnClickedNo == 0) 
         {
+            welcomeScreen.SetActive(false);
             LoginScreenNew.SetActive(true);
         }
 
