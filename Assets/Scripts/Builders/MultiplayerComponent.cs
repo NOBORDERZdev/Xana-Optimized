@@ -80,8 +80,8 @@ public class MultiplayerComponent : MonoBehaviourPun
             transform.SetParent(BMD.builderAssetsParent);
             XanaItem xanaItem = gameObject.AddComponent<XanaItem>();
             xanaItem.itemData = itemData;
-            if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
-                GamificationComponentData.instance.xanaItems.Add(xanaItem);
+            //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+            //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
             if (PhotonNetwork.IsMasterClient || (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle))
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
