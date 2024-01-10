@@ -6,6 +6,10 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using Newtonsoft.Json;
+using System;
+using UnityEngine.Networking;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -210,4 +214,92 @@ public class GameManager : MonoBehaviour
     {
         mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(newName);
     }
+
+    IEnumerator GetClassCodeFromServer()
+    {
+        //string api = "https://api-test.xana.net/classCode/get-all-class-codes/1/20";
+
+        yield return new WaitForSeconds(10f);
+        string token = ConstantsGod.AUTH_TOKEN;
+
+        string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
+        Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
+
+        UnityWebRequest www;
+        www = UnityWebRequest.Get(api);
+
+
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
+            string jsonString = www.downloadHandler.text;
+            //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
+            ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
+
+
+            if (rootObject.success)
+                CheckResponse(rootObject.data.rows);
+        }
+        else
+            Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
+
+        www.Dispose();
+    }
+
+
+    private void CheckResponse(List<ClassCode> response)
+    {
+        // Clear Old Data
+        // Stop Duplicate Data
+        XanaConstants.xanaConstants.pmy_ClassCode.Clear();
+        XanaConstants.xanaConstants.pmy_ClassCode = new List<PMYAvailableClassCode>(response.Count);
+
+        // Add New Data
+        for (int i = 0; i < response.Count; i++)
+        {
+            XanaConstants.xanaConstants.pmy_ClassCode.Add(new PMYAvailableClassCode());
+            XanaConstants.xanaConstants.pmy_ClassCode[i].id = (response[i].id);
+            XanaConstants.xanaConstants.pmy_ClassCode[i].codeText = (response[i].codeText);
+        }
+    }
 }
+
+
+public class ClassAPIResponse
+{
+    public bool success;
+    public DataContain data;
+    //public string msg;
+}
+public class DataContain
+{
+    public int count;
+    public List<ClassCode> rows;
+}
+public class ClassCode
+{
+    public int id;
+    public string loginId;
+    public string subject;
+    public string codeText;
+    public bool isActive;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+}
+
+[System.Serializable]
+public class PMYAvailableClassCode
+{
+    public int id;
+    public string codeText;
+}
+

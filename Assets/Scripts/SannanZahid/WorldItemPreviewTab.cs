@@ -1,3 +1,4 @@
+using AdvancedInputFieldPlugin;
 using SuperStar.Helpers;
 using System.Collections;
 using TMPro;
@@ -253,4 +254,58 @@ public class WorldItemPreviewTab : MonoBehaviour
             print("Horayyy you have Access");
         }
     }
+
+
+    #region PMY-Items
+    [Header("PMY: ClassRom Items")]
+    public GameObject enterClassCodePanel;
+    public AdvancedInputField classCodeInputField;
+    public TextMeshProUGUI classCodeInputField_text;
+    public TextMeshProUGUI wrongCodeText;
+    public void PMY_CodeEnter()
+    {
+        // Check Enter code is Ok or Not
+        if (IsClassCodeValid((classCodeInputField_text.text)))
+        {
+            // Yes Class Available, Create Room for that Class
+            Debug.Log("<color=green> PMY -- Class Available  </color>");
+            XanaConstants.xanaConstants.pmy_isClassAvailable = true;
+            XanaConstants.xanaConstants.pmy_joinedClassCode = classCodeInputField_text.text;
+            WorldManager.instance.PlayWorld();
+        }
+        else
+        {
+            Debug.Log("<color=red> PMY -- Class Not Available  </color>");
+            XanaConstants.xanaConstants.pmy_isClassAvailable = false;
+            wrongCodeText.gameObject.SetActive(true);
+            Invoke(nameof(PMY_CloseWrongCode), 2f);
+        }
+    }
+    void PMY_CloseWrongCode()
+    {
+        wrongCodeText.gameObject.SetActive(false);
+    }
+    bool IsClassCodeValid(string classCodeInputField)
+    {
+        if (string.IsNullOrEmpty(classCodeInputField)) return false;
+        classCodeInputField.Replace(" ", "");
+        if (classCodeInputField.Length < 5) return false;
+        try
+        {
+            //return XanaConstants.xanaConstants.pmy_ClassCode.Contains(classCodeInputField); 
+            foreach (var item in XanaConstants.xanaConstants.pmy_ClassCode)
+            {
+                if (item.codeText.Equals(classCodeInputField))
+                {
+                    XanaConstants.xanaConstants.pmySchooldDataID = item.id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        catch { return false; }
+
+    }
+    #endregion
 }
