@@ -288,28 +288,21 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (_IsWalletSignUp)
         {
-            if (PlayerPrefs.GetInt("iSignup")==0) {
-                iwanto_signUp();
-            }
-           
+                 iwanto_signUp();
         }
-        else {
-           // setAvatarGiftPanal.SetActive(false);
-            
-        }
-        if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
-        {
-            PlayerPrefs.SetInt("CloseLoginScreen", 1);
-            PlayerPrefs.SetInt("iSignup", 1);
-            PlayerPrefs.SetInt("IsProcessComplete", 1);
-            PlayerPrefs.SetInt("shownWelcome",1);
-        }
-        
     }
 
     public void iwanto_signUp()
     {
         PlayerPrefs.SetInt("iSignup", 1);
+       
+        if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
+        {
+            PlayerPrefs.SetInt("CloseLoginScreen", 1);
+            PlayerPrefs.SetInt("iSignup", 1);
+            PlayerPrefs.SetInt("IsProcessComplete", 1);
+            PlayerPrefs.SetInt("shownWelcome", 1);
+        }
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
