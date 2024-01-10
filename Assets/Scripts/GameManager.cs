@@ -53,7 +53,9 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
+        StartCoroutine(GetClassCodeFromServer());
     }
+
     public string GetStringFolderPath()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
@@ -119,7 +121,17 @@ public class GameManager : MonoBehaviour
     public void NotNowOfSignManager()
     {
       UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-       
+
+        if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY" && !XanaConstants.xanaConstants.pmy_isTesting)
+        {
+            if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
+            {
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.classCodeInputField.Text = "";
+                XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.SetActive(true);
+                return;
+            }
+        }
+
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);

@@ -6,7 +6,6 @@ using System;
 public class ScreenSoundOnOff : MonoBehaviour
 {
     public GameObject onBtn, OffBtn;
-    //private IScreenSoundControl screenSoundControl;
     public static Action<bool> ScreenSoundStatus;
 
     private void OnEnable()
@@ -23,14 +22,8 @@ public class ScreenSoundOnOff : MonoBehaviour
         }
     }
 
-    //public IScreenSoundControl SetScreenSoundControl
-    //{
-    //   set { screenSoundControl = value; } // set interface reference here this is call by AvProDirectionalSound script
-    //}
-
     public void OnBtnClicked()
     {
-        //screenSoundControl.ToggleScreenSound(true);
         ScreenSoundStatus?.Invoke(true);
         OffBtn.SetActive(true);
         onBtn.SetActive(false);
@@ -38,7 +31,6 @@ public class ScreenSoundOnOff : MonoBehaviour
 
     public void OffBtnClicked()
     {
-        //screenSoundControl.ToggleScreenSound(false);
         ScreenSoundStatus?.Invoke(false);
         OffBtn.SetActive(false);
         onBtn.SetActive(true);

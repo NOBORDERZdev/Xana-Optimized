@@ -541,7 +541,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             // Added By WaqasAhmad [PMY ClassRoom Dummy Work]
-            else if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY")
+            else if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY" && !XanaConstants.xanaConstants.pmy_isTesting)
             {
                 if (XanaConstants.xanaConstants.buttonClicked != null && !XanaConstants.xanaConstants.buttonClicked.GetComponent<WorldItemView>().worldItemPreview.enterClassCodePanel.activeInHierarchy)
                 {
