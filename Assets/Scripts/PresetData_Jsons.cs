@@ -72,14 +72,14 @@ public class PresetData_Jsons : MonoBehaviour
    public void ChangecharacterOnCLickFromserver()
     {
         callScripts();
-        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
-        //{
-            if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
-            {
-                JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
+        if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
+        {
+            //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
+            //{
+               // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
                 StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            }
-        //}
+            //}
+        }
         XanaConstants.xanaConstants.registerFirstTime = true;
         if (GameManager.Instance.isStoreAssetDownloading)
             return;
@@ -118,13 +118,16 @@ public class PresetData_Jsons : MonoBehaviour
 
             GameManager.Instance.isStoreAssetDownloading = true;
             StoreManager.instance.UndoSelection();
-            if (!IsStartUp_Canvas)
+           // if (!IsStartUp_Canvas)
                 XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
-            if (XanaConstants.xanaConstants._lastClickedBtn)
+            if (XanaConstants.xanaConstants._lastClickedBtn && !IsStartUp_Canvas)
             {
                 if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<PresetData_Jsons>())
                     XanaConstants.xanaConstants._lastClickedBtn.transform.GetChild(0).gameObject.SetActive(false);
             }
+            
+               
+            XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants.PresetValueString = gameObject.name;
             PlayerPrefs.SetInt("presetPanel", 1);

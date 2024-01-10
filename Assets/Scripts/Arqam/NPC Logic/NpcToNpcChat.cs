@@ -68,8 +68,7 @@ public class NpcToNpcChat : MonoBehaviour
 
     void Start()
     {
-        //if (Photon.Pun.PhotonNetwork.IsMasterClient)
-           // StartCoroutine(FetchResponseFromWeb());
+        //StartCoroutine(FetchResponseFromWeb());
     }
 
     IEnumerator FetchResponseFromWeb()
@@ -148,7 +147,7 @@ public class NpcToNpcChat : MonoBehaviour
         string ip = "";
 
         // same API as NPC to User api
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+        if (!APIBaseUrlChange.instance.IsXanaLive)          
         {
             ip = "http://182.70.242.10:8034/";
             id = npcDB[npcCounter].aiIds;

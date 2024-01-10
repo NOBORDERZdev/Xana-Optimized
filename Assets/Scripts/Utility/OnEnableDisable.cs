@@ -29,10 +29,9 @@ public class OnEnableDisable : MonoBehaviour
     public void ClosePopUp()
     {
         OnDisabled.Invoke();
-
+        UIManager.Instance.ShowFooter(true);
         StartCoroutine(WaitForPopup());
     }
-
     IEnumerator WaitForPopup()
     {
         yield return new WaitForSeconds(0.34f);

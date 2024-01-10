@@ -206,9 +206,8 @@ namespace DynamicScrollRect
         private void UpdateItems(Vector2 delta)
         {
             bool positiveDelta = delta.y > 0;
-           
-            if (positiveDelta &&
-                -_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y)
+           //Debug.LogError("positiveDelta: " + positiveDelta+":---------:"+ (-_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y));
+            if (-_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y)
             {
                 _Content.AddIntoTail();
             }

@@ -1,4 +1,3 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,53 +12,49 @@ public class NpcSpawner : MonoBehaviour
     public List<GameObject> npcModel;
 
     [SerializeField] private int aiStrength = 5;
-
+    
     private GameObject aiPrefabs;
 
 
     private void Awake()
     {
-        if (npcSpawner is null)
-            npcSpawner = this;
-        else if (npcSpawner != null && npcSpawner != this)
-            Destroy(this.gameObject);
+        //if (npcSpawner is null)
+        //    npcSpawner = this;
+        //else if(npcSpawner != null && npcSpawner != this)
+        //    Destroy(this.gameObject);
     }
     private void OnEnable()
     {
-        Debug.LogError("Spawner Instantiated");
-        if (PhotonNetwork.IsMasterClient)
-            NpcChatSystem.spawnNPC += InstantiateNPC;
+        //NpcChatSystem.npcNameAction += UpdateNpcName;
     }
     private void OnDisable()
     {
-        if (PhotonNetwork.IsMasterClient)
-            NpcChatSystem.spawnNPC -= InstantiateNPC;
+        //NpcChatSystem.npcNameAction -= UpdateNpcName;
     }
 
     void Start()
     {
-        StartCoroutine(ReactScreen.Instance.getAllReactions());
-    }
-
-    private void InstantiateNPC(NpcChatSystem npcChatSystem)
-    {
-
-        npcModel = new List<GameObject>();
+        //npcModel = new List<GameObject>();
 
         //aiPrefabs = Resources.Load("NPC") as GameObject;
-        if (PhotonNetwork.IsMasterClient)
+        //for (int i = 0; i < aiStrength; i++)
+        //{
+        //    GameObject npc = Instantiate(aiPrefabs);
+        //    Vector3 temp = RandomNavMeshPoint();
+        //    npc.transform.position = temp;
+        //    npc.transform.rotation = Quaternion.identity;
+            
+        //    npcCounter++;
+        //    npcModel.Add(npc);
+        //}
+        //StartCoroutine(ReactScreen.Instance.getAllReactions());
+    }
+
+    private void UpdateNpcName(NpcChatSystem npcChatSystem)
+    {
+        for (int i = 0; i < npcModel.Count; i++)
         {
-            for (int i = 0; i < aiStrength; i++)
-            {
-                Debug.LogError("Spawning NPC");
-                GameObject npc = PhotonNetwork.InstantiateRoomObject("NPC", Vector3.zero, Quaternion.identity);
-                Vector3 temp = RandomNavMeshPoint();
-                npc.transform.position = temp;
-                npc.transform.rotation = Quaternion.identity;
-                npc.GetComponent<NpcBehaviourSelector>().SetAiName(npcChatSystem.npcDB[i].aiNames);
-                npcCounter++;
-                npcModel.Add(npc);
-            }
+            npcModel[i].GetComponent<NpcBehaviourSelector>().SetAiName(npcChatSystem.npcDB[i].aiNames);
         }
     }
 

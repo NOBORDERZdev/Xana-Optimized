@@ -23,16 +23,16 @@ public class NpcChatSystem : MonoBehaviour
     public List<NPCAttributes> npcAttributes;
     //[HideInInspector]
     public List<NPCAttributes> npcDB;
-    public static Action<NpcChatSystem> spawnNPC;
+    public static Action<NpcChatSystem> npcNameAction;
 
     private int id = 0;
     private string msg = "Hello";
-    private int numOfResponseWantToShow = 1;
+    private int numOfResponseWantToShow = 5;
     private int enNamePeriority = 3;
     private int jpNamePeriority = 2;
     private int totalFreeSpeechNpc = 5;
     private int counter = 0;
-    private int tempResponseNum = 1;
+    private int tempResponseNum = 0;
     private const int userId = 0;
     private Queue<string> playerMessages = new Queue<string>();
 
@@ -62,61 +62,54 @@ public class NpcChatSystem : MonoBehaviour
 
     private void Awake()
     {
-        npcDB = new List<NPCAttributes>();
-        // my changes
-        List<NPCAttributes> japaneseNames = npcAttributes.FindAll(npc => npc.nameType == NameType.JapaneseName);
-        List<NPCAttributes> englishNames = npcAttributes.FindAll(npc => npc.nameType == NameType.EnglishName);
-        // select english name npc for chat
-        for (int i = 0; i < enNamePeriority; i++)
-        {
-            int rand = UnityEngine.Random.Range(0, englishNames.Count);
-            npcDB.Add(englishNames[rand]);      // Set npc for chat
-            englishNames.RemoveAt(rand);
-        }
-        // select japanese name npc for chat
-        for (int i = 0; i < jpNamePeriority; i++)
-        {
-            int rand = UnityEngine.Random.Range(0, japaneseNames.Count);
-            npcDB.Add(japaneseNames[rand]);      // Set npc for chat
-            japaneseNames.RemoveAt(rand);
-        }
-        // rest of them select for npc free speech
-        npcAttributes.Clear();
-        int temp = 0;
-        for (int i = 0; i < enNamePeriority + jpNamePeriority; i++)
-        {
-            if (i < enNamePeriority)
-                npcAttributes.Add(englishNames[i]);
-            else
-            {
-                npcAttributes.Add(japaneseNames[temp]);
-                temp++;
-            }
-        }
-        englishNames.Clear();
-        japaneseNames.Clear();
+        //npcDB = new List<NPCAttributes>();
+        //// my changes
+        //List<NPCAttributes> japaneseNames = npcAttributes.FindAll(npc => npc.nameType == NameType.JapaneseName);
+        //List<NPCAttributes> englishNames = npcAttributes.FindAll(npc => npc.nameType == NameType.EnglishName);
+        //// select english name npc for chat
+        //for (int i = 0; i < enNamePeriority; i++)
+        //{
+        //    int rand = UnityEngine.Random.Range(0, englishNames.Count);
+        //    npcDB.Add(englishNames[rand]);      // Set npc for chat
+        //    englishNames.RemoveAt(rand);
+        //}
+        //// select japanese name npc for chat
+        //for (int i = 0; i < jpNamePeriority; i++)
+        //{
+        //    int rand = UnityEngine.Random.Range(0, japaneseNames.Count);
+        //    npcDB.Add(japaneseNames[rand]);      // Set npc for chat
+        //    japaneseNames.RemoveAt(rand);
+        //}
+        //// rest of them select for npc free speech
+        //npcAttributes.Clear();
+        //int temp = 0;
+        //for (int i = 0; i < enNamePeriority + jpNamePeriority; i++)
+        //{
+        //    if (i < enNamePeriority)
+        //        npcAttributes.Add(englishNames[i]);
+        //    else
+        //    {
+        //        npcAttributes.Add(japaneseNames[temp]);
+        //        temp++;
+        //    }
+        //}
+        //englishNames.Clear();
+        //japaneseNames.Clear();
 
-        ShuffleNpcs();     // shuffle selected user chat npc 
-        ShuffleFreeNpcs(); // shuffle free speech selected user chat npc 
+        //ShuffleNpcs();     // shuffle selected user chat npc 
+        //ShuffleFreeNpcs(); // shuffle free speech selected user chat npc 
         //numOfResponseWantToShow = enNamePeriority + jpNamePeriority;
-        // my changes end
+        //// my changes end
 
-        tempResponseNum = numOfResponseWantToShow;
-        
-        
+        //tempResponseNum = numOfResponseWantToShow;
+        //npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+        //BuilderEventManager.AfterWorldOffcialWorldsInatantiated+=InvokeNPCName;
     }
 
     void InvokeNPCName()
     {
-        StartCoroutine(Delay());
-    }
-
-    IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(1f);
-        if (Photon.Pun.PhotonNetwork.IsMasterClient)
-            spawnNPC?.Invoke(this);      // update npc model name according to npc chat name
-    }
+       // npcNameAction?.Invoke(this);      // update npc model name according to npc chat name
+    }   
 
     private void ShuffleNpcs()
     {
@@ -148,16 +141,14 @@ public class NpcChatSystem : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (XanaChatSystem.instance)
-            XanaChatSystem.instance.npcAlert += PlayerSendMsg;
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += InvokeNPCName;
+        //if (XanaChatSystem.instance)
+            //XanaChatSystem.instance.npcAlert += PlayerSendMsg;
     }
 
     private void OnDisable()
     {
-        if (XanaChatSystem.instance)
-            XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= InvokeNPCName;
+        //if (XanaChatSystem.instance)
+            //XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
 
 
@@ -227,10 +218,9 @@ public class NpcChatSystem : MonoBehaviour
             else
                 //Debug.LogError("Communication API Error(UserAI): " + gameObject.name + request.error);
 
-                tempResponseNum--;
+            tempResponseNum--;
             if (tempResponseNum > 0)
             {
-                Debug.LogError("here calling api again --- " + tempResponseNum);
                 if (responseChecker.Equals(ResponseChecker.CallAfterIterationEnd))
                     StartCoroutine(SetApiData());
                 else if (responseChecker.Equals(ResponseChecker.InstantlyCall))
@@ -238,7 +228,6 @@ public class NpcChatSystem : MonoBehaviour
             }
             else
             {
-                Debug.LogError("resetting counter");
                 counter = 0;
                 tempResponseNum = numOfResponseWantToShow;
                 ShuffleNpcs();

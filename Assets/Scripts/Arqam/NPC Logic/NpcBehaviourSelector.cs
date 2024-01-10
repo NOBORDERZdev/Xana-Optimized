@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using NPC;
-using Photon.Pun;
-using Photon.Realtime;
-using Unity.VisualScripting;
 
-public class NpcBehaviourSelector : MonoBehaviourPunCallbacks
+public class NpcBehaviourSelector : MonoBehaviour
 {
     [SerializeField] NpcMovementController movementController;
     [SerializeField] NpcJump npcJump;
@@ -24,24 +21,9 @@ public class NpcBehaviourSelector : MonoBehaviourPunCallbacks
 
     private Coroutine emoteCoroutine;
     private bool isNewlySpwaned = true;
-    private int maxNpcBehaviourAction = 6;
-    private System.Action<int> MasterclientChanged;
-    private void OnEnable()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(PerformAction());
-            this.GetComponent<PhotonView>().RPC("SetNameRPC", RpcTarget.AllBuffered, this.GetComponent<PhotonView>().ViewID, nameTxt.text);
-        }
-        MasterclientChanged += OnMasterChange;
-    }
+    [SerializeField] int maxNpcBehaviourAction = 6;
 
-    private void OnDisable()
-    {
-        MasterclientChanged -= OnMasterChange;
-    }
-
-    void OnMasterChange(int viewID)
+    private void Start()
     {
         StartCoroutine(PerformAction());
     }
@@ -114,39 +96,4 @@ public class NpcBehaviourSelector : MonoBehaviourPunCallbacks
         nameTxt.text = name;
     }
 
-    [Photon.Pun.PunRPC]
-    void SetNameRPC(int viewID, string name)
-    {
-        Debug.LogError("Set name rpc called :- " + viewID + "- - - " + name);
-
-        if (this.GetComponent<PhotonView>().ViewID == viewID)
-            nameTxt.text = name;
-    }
-
-    public void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        //base.OnMasterClientSwitched(newMasterClient);
-        Debug.LogError("OnMasterClientSwitched called");
-       // MasterclientChanged?.Invoke(newMasterClient.ActorNumber);
-    }
 }

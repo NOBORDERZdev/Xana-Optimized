@@ -24,8 +24,7 @@ public class NpcFreeSpeech : MonoBehaviour
 
     private void Start()
     {
-        //if (Photon.Pun.PhotonNetwork.IsMasterClient)
-            //StartCoroutine(SetApiData());
+        //StartCoroutine(SetApiData());
     }
 
     IEnumerator SetApiData()
@@ -35,7 +34,7 @@ public class NpcFreeSpeech : MonoBehaviour
         string ip = "";
         int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
-
+  
         if (!APIBaseUrlChange.instance.IsXanaLive)
         {
             ip = "http://182.70.242.10:8034/";
