@@ -626,14 +626,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
             playerRB.isKinematic = true;
+            playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
             player.AddComponent<KeyValues>();
             GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             //player.GetComponent<CapsuleCollider>().isTrigger = false;
             //player.GetComponent<CapsuleCollider>().enabled = false;
+            TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
 
+            if (GamificationComponentData.instance.raycast == null)
+                GamificationComponentData.instance.raycast = new GameObject("Raycasst");
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
             GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.683f;
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
@@ -660,6 +664,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             environmentCameraRender.farClipPlane = 1000;
             freeCam.farClipPlane = 1000;
             BuilderEventManager.ApplySkyoxSettings?.Invoke();
+            //Rejoin world after internet connection stable
+            if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
+            {
+                SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
+            }
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {

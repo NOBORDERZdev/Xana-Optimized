@@ -225,6 +225,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 Debug.Log("follow user success data:" + data);
 
                 searchUserRow.is_following_me = true;
+                searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
                 if (FeedUIController.Instance != null)
                 {
@@ -268,6 +269,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 string data = www.downloadHandler.text;
                Debug.Log("user unfollow success data:" + data);
                 searchUserRow.is_following_me = false;
+                searchUserRow.am_i_following = false;
                 //FollowFollowingSetUp(false);
                 if (FeedUIController.Instance != null)
                 {

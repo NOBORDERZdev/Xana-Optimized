@@ -570,6 +570,8 @@ public class BuilderMapDownload : MonoBehaviour
         else
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
+        directionalLight.gameObject.SetActive(true);
+        RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -663,7 +665,7 @@ public class BuilderMapDownload : MonoBehaviour
         UpdateScene();
     }
 
-    private void PlayerSetup()
+    internal void PlayerSetup()
     {
         if (!GamificationComponentData.instance.buildingDetect)
             return;
@@ -676,7 +678,6 @@ public class BuilderMapDownload : MonoBehaviour
         mainPlayerCharacterController.height = 1f;
         mainPlayerCharacterController.radius = 0.15f;
         mainPlayerCharacterController.stepOffset = 1f;
-
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
 
@@ -686,7 +687,7 @@ public class BuilderMapDownload : MonoBehaviour
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
         playerCharacterController.height = capsuleCollider_34.height;
         playerCharacterController.center = capsuleCollider_34.center;
-
+        GamificationComponentData.instance.isBuilderWorldPlayerSetup = true;
         //GamificationComponentData.instance.playerControllerNew.transform.localPosition += Vector3.up;
     }
 
@@ -758,8 +759,8 @@ public class BuilderMapDownload : MonoBehaviour
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
                 multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-                return;
             }
+            return;
         }
 
         //meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
