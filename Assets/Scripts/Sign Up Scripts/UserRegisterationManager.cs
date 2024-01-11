@@ -1673,7 +1673,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
-        PlayerPrefs.SetInt("shownWelcome", 1);
+        //PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
 
         //[Waqas] Reset Guest Username After Delete All
