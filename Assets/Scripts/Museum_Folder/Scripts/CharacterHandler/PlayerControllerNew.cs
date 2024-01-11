@@ -1876,6 +1876,7 @@ public class PlayerControllerNew : MonoBehaviour
         StartCoroutine(ThrowEnd());
         isThrow = false;
         isThrowModeActive = false;
+        isBallThrow = false;
         BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
     }
 
