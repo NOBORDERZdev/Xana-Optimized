@@ -3339,7 +3339,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             foreach (Transform child in Swipe_menu.instance.contentParent)
             {
-                Destroy(child.gameObject);
+              //  Destroy(child.gameObject);
             }
         }
         BlackScreen.SetActive(true);
