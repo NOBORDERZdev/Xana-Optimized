@@ -39,7 +39,7 @@ public class PMY_BGM : MonoBehaviour
             else
                 SoundManager.Instance.MusicSource.minDistance = 20;
         }
-        else if(Application.platform == RuntimePlatform.IPhonePlayer)
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
             SoundManager.Instance.MusicSource.outputAudioMixerGroup = null;
     }
 
@@ -48,6 +48,7 @@ public class PMY_BGM : MonoBehaviour
         SceneManage.onExitAction -= OnSceneExit;
         PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
     }
 
     private void Start()
@@ -59,10 +60,14 @@ public class PMY_BGM : MonoBehaviour
     private void UpdateMusicVolume()
     {
         actualVolume = SoundManager.Instance.MusicSource.volume;
-        if (Application.isEditor || Application.platform == RuntimePlatform.Android)
-            SoundManager.Instance.MusicSource.volume = 0.5f;
-        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        if (Application.platform == RuntimePlatform.Android)
+            SoundManagerSettings.soundManagerSettings.SetBgmVolume(0.5f);
+        //SoundManager.Instance.MusicSource.volume = 0.5f;
+        else if (Application.isEditor || Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            SoundManagerSettings.soundManagerSettings.SetBgmVolume(1f);
             SoundManager.Instance.MusicSource.volume = 1.0f;
+        }
     }
 
     private void HookEvent()

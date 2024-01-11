@@ -55,13 +55,13 @@ public class AvProDirectionalSound : MonoBehaviour
     private void GetActivePlayer()
     {
 
-        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        if (Application.isEditor || Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            minDistance = 0;                          // lound the live video volume for ios
+            minDistance = 50;                          // lound the live video volume for ios
             foreach (AudioSource source in sources)
             {
                 source.volume = 1f;
-                source.minDistance = 40;
+                source.minDistance = 20;
             }
         }
 
@@ -84,7 +84,6 @@ public class AvProDirectionalSound : MonoBehaviour
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
         ScreenSoundOnOff.ScreenSoundStatus += ToggleScreenSound;
 
-        UnityEngine.Debug.Log("Adjust Volume");
         if (isShowScreenSoundOption)
             StartCoroutine(ShowScreenSoundBtnInSettingPanel());
     }
@@ -112,8 +111,6 @@ public class AvProDirectionalSound : MonoBehaviour
 
             // Map the distance to the volume level (adjust this mapping based on your needs)
             float mappedVolume = 1f - Mathf.InverseLerp(minDistance, maxDistance, distance);
-            //Debug.Log("<color=red> Distance: " + distance + "</color>");  
-            //Debug.Log("<color=red> Volume: " + mappedVolume + "</color>");
 
             // Set the video volume using the third-party package's method
             activePlayer.AudioVolume = mappedVolume;
