@@ -1742,7 +1742,7 @@ public class PlayerControllerNew : MonoBehaviour
     Vector3 tempRotation, tempPostion;
     public float timeToStartAimLineRenderer, timeToStopAimLineRenderer;
     private Coroutine throwStart, throwEnd, throwAction;
-    bool isThrowReady = false;
+    bool isThrowReady = false, isBallThrow = false;
     public Vector3 curveOffset;
     internal bool isThrowPose = true;
 
@@ -1753,8 +1753,6 @@ public class PlayerControllerNew : MonoBehaviour
             yield return new WaitForSeconds(0f);
             if (!isNinjaMotion && _IsGrounded)
             {
-
-
                 if (isThrow && isThrowReady)
                 {
                     tempRotation = ActiveCamera.transform.eulerAngles;
@@ -1775,7 +1773,8 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = false;
                     trajectoryController.colliderAim.SetActive(false);
                     handBall.SetActive(false);
-                    BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
+                    if (!isBallThrow)
+                        BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
                 }
 
                 //Debug.Log("Throw Mode Active");
@@ -1838,28 +1837,20 @@ public class PlayerControllerNew : MonoBehaviour
     }
     IEnumerator ThrowAction()
     {
-        //throwLineRenderer.enabled = false;
-        //handBall.SetActive(false);
-        //trajectoryController.colliderAim.SetActive(false);
+        isBallThrow = true;
         animator.SetBool("throw", false);
         animator.SetBool("throwing", true);
-        Debug.Log("Throw Action Co");
-        //if (isThrowReady)
-        //{
         GameObject spawned = PhotonNetwork.Instantiate("Ball", handBall.transform.position, handBall.transform.rotation);
         spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
-        //}
-        //isThrowReady = false;
         yield return new WaitForSeconds(1f);
         animator.SetBool("throw", true);
         animator.SetBool("throwing", false);
         yield return new WaitForSeconds(0.7f);
-        //handBall.SetActive(true);
-        //trajectoryController.colliderAim.SetActive(true);
         isThrowReady = true;
-        StopCoroutine(throwAction);
+        isBallThrow = false;
         throwAction = null;
     }
+
     public IEnumerator ThrowEnd()
     {
         Debug.Log("Throw End Co");
