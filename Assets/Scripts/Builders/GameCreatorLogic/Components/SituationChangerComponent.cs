@@ -48,7 +48,19 @@ public class SituationChangerComponent : ItemComponent
             IsAgainTouchable = false;
 
             if (GamificationComponentData.instance.withMultiplayer)
+            {
+                if (!situationChangerComponentData.isOff)
+                {
+                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+                    utccounterValue.CounterValue = defaultTimer;
+                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+                    var hash = new ExitGames.Client.Photon.Hashtable();
+                    hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                }
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            }
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
@@ -76,31 +88,30 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        Start();
         float timeDiff = 0;
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                var hash = new ExitGames.Client.Photon.Hashtable();
-                hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
-                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-            }
         }
         else
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
             {
-                string situationChangerComponentstr = situationChangerComponent.ToString();
-                DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr);
+                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(situationChangerComponent.ToString());
+                DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
                 DateTime currentDateTime = DateTime.UtcNow;
-
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                time = timeDiff;
 
-                if (time == 0 || time > situationChangerComponentData.Timer)
+                BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+                    utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
+                else
                     return;
+                time = utccounterValue.CounterValue;
             }
         }
 

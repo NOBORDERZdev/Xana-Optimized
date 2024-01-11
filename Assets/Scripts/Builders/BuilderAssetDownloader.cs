@@ -390,8 +390,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
                 multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-                return;
             }
+            return;
         }
 
         //if (!newObj.name.Contains("pfBLD1210015_XANA"))
