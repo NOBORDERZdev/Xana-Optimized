@@ -50,9 +50,11 @@ namespace RFM.Managers
         {
             Debug.LogError("RFM OnJoinedRoom() after reconnecting");
 
-            await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("RFMDummy");
+            var sceneName = RFM.Globals.DevMode ? "RFMDev" : "RFMDummy";
 
-            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("RFMDummy", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            await UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(sceneName);
+
+            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(sceneName, UnityEngine.SceneManagement.LoadSceneMode.Additive);
             
             LoadingHandler.Instance.HideLoading();
             

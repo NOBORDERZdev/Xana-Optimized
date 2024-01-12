@@ -387,7 +387,7 @@ namespace Metaverse
 
 
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
-                    if (!FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+                    if (!/*FeedEventPrefab.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
                     {
                         currentDummyPlayer.transform.parent = spawnPoint.transform;
                     }
@@ -543,7 +543,7 @@ namespace Metaverse
                 currentDummyPlayer.tag = "PhotonLocalPlayer";
                 Debug.Log("nick name 2 ==" + PhotonNetwork.NickName);
                 currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
-                if (!FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+                if (!/*FeedEventPrefab.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
                 {
                     currentDummyPlayer.transform.parent = spawnPoint.transform;
                 }

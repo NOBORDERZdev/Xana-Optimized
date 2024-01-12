@@ -508,6 +508,15 @@ public class WorldManager : MonoBehaviour
         }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
+
+        if (WorldItemView.m_EnvName.Contains("RFM"))
+        {
+            RFM.Globals.IsRFMWorld = true;
+        }
+        else
+        {
+            RFM.Globals.IsRFMWorld = false;
+        }
     }
     public async void JoinBuilderWorld()
     {
