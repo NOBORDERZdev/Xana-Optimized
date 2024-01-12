@@ -226,8 +226,19 @@ namespace RFM.Managers
 
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
-                string[] array = { npcHunter.nickName, npcHunter.rewardMultiplier.ToString() };
-                huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
+                //string[] array = { npcHunter.nickName, npcHunter.rewardMultiplier.ToString() };
+                //huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
+
+
+                int rewardMultiplier = 0;
+                if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(npcHunter.nickName + "rewardMultiplier", 
+                    out object _rewardMultiplier))
+                {
+                    rewardMultiplier = (int)_rewardMultiplier;
+                }
+
+                string[] array = { npcHunter.nickName, rewardMultiplier.ToString() };
+                huntersScores.Add(array, rewardMultiplier * 100); // TODO : change 100 to the participation amount
             }
 
             foreach (var player in PhotonNetwork.PlayerList)

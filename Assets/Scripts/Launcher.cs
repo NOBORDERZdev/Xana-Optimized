@@ -285,7 +285,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             // TODO create new room
-            if (XanaConstants.xanaConstants.EnviornmentName == "RFMDummy") // TODO improve
+            if (/*XanaConstants.xanaConstants.EnviornmentName == "RFMDummy"*/RFM.Globals.IsRFMWorld) // TODO improve
             {
                 Debug.Log("Launcher Could not join RFM room. Creating new room.");
                 

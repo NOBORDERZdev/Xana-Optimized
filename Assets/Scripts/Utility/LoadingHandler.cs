@@ -111,7 +111,7 @@ public class LoadingHandler : MonoBehaviour
 
     IEnumerator StartBGChange()
     {
-        if (WorldItemView.m_EnvName != "RFMDummy") 
+        if (/*WorldItemView.m_EnvName != "RFMDummy"*/!RFM.Globals.IsRFMWorld) 
         { 
             loadingBgImage.sprite = loadingSprites[currentBgIndex];
             loadingBgImage.DOFade(1, 0);
@@ -120,7 +120,7 @@ public class LoadingHandler : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f + fadeTimer);
 
-        if (WorldItemView.m_EnvName != "RFMDummy")
+        if (/*WorldItemView.m_EnvName != "RFMDummy"*/!RFM.Globals.IsRFMWorld)
         {
             loadingBgImageAlter.sprite = loadingSprites[aheadBgIndex];
             loadingBgImage.DOFade(0, fadeTimer);
@@ -187,7 +187,7 @@ public class LoadingHandler : MonoBehaviour
 
     public void ShowLoading()
     {
-        if (WorldItemView.m_EnvName == "RFMDummy")
+        if (/*WorldItemView.m_EnvName == "RFMDummy"*/RFM.Globals.IsRFMWorld)
         {
             loadingBgImage.sprite = rfmLoadingScreenSprite;
             loadingBgImageAlter.sprite = rfmLoadingScreenSprite;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -23,6 +22,8 @@ namespace RFM.Character
         public List<Transform> huntersTransforms = new();
 
         private Vector3 _targetPosition;
+
+        private int viewIDOfHunterThatCaughtThisRunner = -999;
 
         private void Awake()
         {
@@ -83,29 +84,32 @@ namespace RFM.Character
         {
             base.OnGameStarted();
 
-            StartCoroutine(AddMoney());
-            StartCoroutine(TimeSurvived());
+            //StartCoroutine(AddMoney());
+            InvokeRepeating(nameof(AddMoney), RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
+                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+            //StartCoroutine(TimeSurvived());
         }
 
-        IEnumerator TimeSurvived()
-        {
-            timeSurvived = 0;
-            while (true)
-            {
-                timeSurvived += 1;
-                yield return new WaitForSecondsRealtime(1);
-            }
+        //IEnumerator TimeSurvived()
+        //{
+        //    timeSurvived = 0;
+        //    while (true)
+        //    {
+        //        timeSurvived += 1;
+        //        yield return new WaitForSecondsRealtime(1);
+        //    }
 
-        }
+        //}
 
-        private IEnumerator AddMoney()
+        private /*IEnumerator*/ void AddMoney()
         {
-            while (true)
-            {
-                yield return new WaitForSecondsRealtime(
-                    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
-                money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
-            }
+            //while (true)
+            //{
+            //yield return new WaitForSecondsRealtime(
+            //    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+            money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
+            timeSurvived += RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval;
+            //}
         }
 
         private void UpdateHuntersTransformList()
@@ -139,7 +143,6 @@ namespace RFM.Character
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                Debug.LogError("EscapeFromHunters");
                 UpdateHuntersTransformList();
 
                 foreach (var t in huntersTransforms)
@@ -183,9 +186,10 @@ namespace RFM.Character
 
         public void AIRunnerCaught()
         {
-            StopCoroutine(AddMoney());
+            //StopCoroutine(AddMoney());
+            CancelInvoke(nameof(AddMoney));
             CancelInvoke(nameof(EscapeFromHunters));
-            StopCoroutine(TimeSurvived());
+            //StopCoroutine(TimeSurvived());
 
             RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
 
@@ -206,9 +210,10 @@ namespace RFM.Character
             // Called on all non-master clients when the runner is caught.
             if (!PhotonNetwork.IsMasterClient)
             {
-                StopCoroutine(AddMoney());
+                CancelInvoke(nameof(AddMoney));
+                //StopCoroutine(AddMoney());
                 CancelInvoke(nameof(EscapeFromHunters));
-                StopCoroutine(TimeSurvived());
+                //StopCoroutine(TimeSurvived());
 
                 RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
             }
@@ -242,10 +247,50 @@ namespace RFM.Character
                 case PhotonEventCodes.PlayerRunnerCaught: // Event is only sent to the master client
                     {
                         int viewId = (int)((object[])photonEvent.CustomData)[0];
+                        int hunterViewID = (int)((object[])photonEvent.CustomData)[1];
 
                         if (viewId == GetComponent<PhotonView>().ViewID)
                         {
-                            AIRunnerCaught(); // When caught by PlayerHunter
+                            if (viewIDOfHunterThatCaughtThisRunner == -999) // if this runner has not been caught yet
+                            {
+                                viewIDOfHunterThatCaughtThisRunner = hunterViewID;
+
+                                var hunterPV = PhotonView.Find(hunterViewID);
+                                if (hunterPV != null)
+                                {
+                                    if (hunterPV.TryGetComponent(out PlayerHunter _))
+                                    {
+                                        var oldValue = 0;
+                                        if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                                        {
+                                            oldValue = (int)hunterPV.Owner.CustomProperties["rewardMultiplier"];
+                                        }
+                                        else
+                                        {
+                                            hunterPV.Owner.SetCustomProperties(
+                                                new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", 0 } });
+                                        }
+
+                                        hunterPV.Owner.SetCustomProperties(
+                                            new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue + 1 } }, // to be set
+                                            new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue } } // expected value
+                                            );
+
+                                        //if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                                        //{
+                                        //    hunterPV.Owner.CustomProperties["rewardMultiplier"] =
+                                        //        (int)hunterPV.Owner.CustomProperties["rewardMultiplier"] + 1;
+                                        //}
+                                        //else
+                                        //{
+                                        //    hunterPV.Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                                        //    { { "rewardMultiplier", 1 } });
+                                        //}
+                                    }
+                                }
+
+                                AIRunnerCaught(); // When caught by PlayerHunter
+                            }
                         }
                         break;
                     }
