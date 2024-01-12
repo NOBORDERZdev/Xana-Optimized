@@ -38,13 +38,12 @@ public class FriendPostSocket : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        Debug.LogError("POST -- Connection Error");
+        Debug.Log("<color=blue> Post -- Connection Error  </color>");
     }
     void OnConnected(ConnectResponse resp)
     {
         socketId = resp.sid;
-        Debug.LogError("POST -- Connected");
-
+        Debug.Log("<color=blue> Post -- Connected  </color>");
         EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
 
         // Bind Events to listen
@@ -92,7 +91,7 @@ public class FriendPostSocket : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        Debug.LogError(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
+        Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
@@ -101,7 +100,6 @@ public class FriendPostSocket : MonoBehaviour
         form.AddField("socketId", socketId);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {
-            Debug.LogError("Token ----> " + ConstantsGod.AUTH_TOKEN);
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
             while (!www.isDone)
@@ -112,11 +110,11 @@ public class FriendPostSocket : MonoBehaviour
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 //Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
-                Debug.LogError("Error PostSocket ID update  --->  " + www.downloadHandler.text);
+                Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
             }
             else
             {
-                Debug.LogError("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
+                Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
         }
