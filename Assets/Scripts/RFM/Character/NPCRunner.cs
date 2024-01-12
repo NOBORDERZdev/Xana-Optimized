@@ -56,11 +56,9 @@ namespace RFM.Character
                 Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
 
                 // Send an RPC to only this PhotonView on all clients to set the nickname.
-
                 GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
             }
 
-            //nickName = $"Player{GetComponent<PhotonView>().ViewID}";
             _maxSpeed = _navMeshAgent.speed;
         }
 
@@ -84,32 +82,14 @@ namespace RFM.Character
         {
             base.OnGameStarted();
 
-            //StartCoroutine(AddMoney());
             InvokeRepeating(nameof(AddMoney), RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
                 RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
-            //StartCoroutine(TimeSurvived());
         }
 
-        //IEnumerator TimeSurvived()
-        //{
-        //    timeSurvived = 0;
-        //    while (true)
-        //    {
-        //        timeSurvived += 1;
-        //        yield return new WaitForSecondsRealtime(1);
-        //    }
-
-        //}
-
-        private /*IEnumerator*/ void AddMoney()
+        private void AddMoney()
         {
-            //while (true)
-            //{
-            //yield return new WaitForSecondsRealtime(
-            //    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
             money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
             timeSurvived += RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval;
-            //}
         }
 
         private void UpdateHuntersTransformList()
@@ -186,10 +166,8 @@ namespace RFM.Character
 
         public void AIRunnerCaught()
         {
-            //StopCoroutine(AddMoney());
             CancelInvoke(nameof(AddMoney));
             CancelInvoke(nameof(EscapeFromHunters));
-            //StopCoroutine(TimeSurvived());
 
             RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
 
@@ -211,9 +189,7 @@ namespace RFM.Character
             if (!PhotonNetwork.IsMasterClient)
             {
                 CancelInvoke(nameof(AddMoney));
-                //StopCoroutine(AddMoney());
                 CancelInvoke(nameof(EscapeFromHunters));
-                //StopCoroutine(TimeSurvived());
 
                 RFM.Managers.RFMUIManager.Instance.RunnerCaught(nickName, money, timeSurvived);
             }
@@ -275,17 +251,6 @@ namespace RFM.Character
                                             new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue + 1 } }, // to be set
                                             new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue } } // expected value
                                             );
-
-                                        //if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
-                                        //{
-                                        //    hunterPV.Owner.CustomProperties["rewardMultiplier"] =
-                                        //        (int)hunterPV.Owner.CustomProperties["rewardMultiplier"] + 1;
-                                        //}
-                                        //else
-                                        //{
-                                        //    hunterPV.Owner.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
-                                        //    { { "rewardMultiplier", 1 } });
-                                        //}
                                     }
                                 }
 

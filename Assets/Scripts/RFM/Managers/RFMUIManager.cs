@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using RFM.Character;
-using UnityEngine.SocialPlatforms.Impl;
-using Photon.Realtime;
 using System;
 
 namespace RFM.Managers
@@ -186,7 +184,6 @@ namespace RFM.Managers
         }
 
         // Enable the restart button 
-
         [PunRPC]
         private void RestartRFM()
         {
@@ -201,7 +198,6 @@ namespace RFM.Managers
             {
                 Destroy(child.gameObject);
             }
-            //gameOverPanel.gameObject.SetActive(false);
 
             RFM.Managers.RFMManager.Instance.RestartRFM();
         }
@@ -217,19 +213,8 @@ namespace RFM.Managers
 
         private void OnShowScores()
         {
-            //foreach (var runner in FindObjectsOfType<RFM.Character.NPCRunner>())
-            //{
-            //    // add name, time survived, money of each runner to the scores dictionary
-            //    string[] array = { runner.nickName, runner.timeSurvived.ToString() };
-            //    scores.Add(array, runner.money);
-            //}
-
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
-                //string[] array = { npcHunter.nickName, npcHunter.rewardMultiplier.ToString() };
-                //huntersScores.Add(array, npcHunter.rewardMultiplier * 100); // TODO : change 100 to the participation amount
-
-
                 int rewardMultiplier = 0;
                 if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(npcHunter.nickName + "rewardMultiplier", 
                     out object _rewardMultiplier))
