@@ -12,9 +12,18 @@ public class FriendHomeManager : MonoBehaviour
     BestFriendData _friendsDataFetched;
 
     public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
+
+    private void OnDisable()
+    {
+        FriendPostSocket.instance.updateFriendPostDelegate -= UpdateFriendPost;
+    }
+
+
+
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
+        FriendPostSocket.instance.updateFriendPostDelegate += UpdateFriendPost;
     }
     string PrepareApiURL()
     {
@@ -138,6 +147,26 @@ public class FriendHomeManager : MonoBehaviour
     {
         StartCoroutine(BuildMoodDialog());
     }
+
+
+    private void UpdateFriendPost(ReceivedFriendPostData data)
+    {
+        if (!string.IsNullOrEmpty(data.text_post))
+        {
+            foreach (var frds in SpawnFriendsObj)
+            {
+                if(frds.id == int.Parse(data.creatorId))
+                {
+                    frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
+                }
+            }
+        }
+        
+        if (!string.IsNullOrEmpty(data.text_mood))
+        {
+            // Update Animation Here
+        }
+    }
 }
 
 [Serializable]
@@ -177,6 +206,7 @@ public class tempclassfordatafeed
     public DateTime updatedAt;
 
 }
+[Serializable]
 public class FriendSpawnData
 {
    public int id;
