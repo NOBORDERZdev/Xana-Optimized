@@ -117,7 +117,7 @@ public class APIManager : MonoBehaviour
     Coroutine followingTabCo;
     IEnumerator WaitToCallFollowingTabAPI(string callingFrom)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(.5f);
         RequestGetFeedsByFollowingUser(1, 10, callingFrom);
     }
     public void LoadJson()
@@ -168,7 +168,12 @@ public class APIManager : MonoBehaviour
                 LoaderController.Instance.isLoaderGetApiResponce = false;
             }
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             if (LoaderController.Instance != null)//main feed top loader stop
             {
@@ -222,7 +227,12 @@ public class APIManager : MonoBehaviour
                 LoaderController.Instance.isLoaderGetApiResponce = false;
             }
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
 
             if (LoaderController.Instance != null)//main feed top loader stop
             {
@@ -499,7 +509,11 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -1873,8 +1887,9 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
-
+            www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
             if (www.isNetworkError || www.isHttpError)
             {
                Debug.Log("IERequestGetUserDetails error:" + www.error);
@@ -1919,6 +1934,7 @@ public class APIManager : MonoBehaviour
 
                 PlayerPrefs.SetString("PlayerName", myProfileDataRoot.data.name);
             }
+            www.Dispose();
         }
     }
 

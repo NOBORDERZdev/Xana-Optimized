@@ -65,6 +65,7 @@ public class Actor : MonoBehaviour
     }
     IEnumerator StartActorBehaviour()
     {
+        CheckedInLoop:
         yield return new WaitForSeconds(Time.deltaTime);
         switch(StateMoveBehaviour)
         {
@@ -118,7 +119,7 @@ public class Actor : MonoBehaviour
                 }
                 break;
         }
-       StartCoroutine(StartActorBehaviour());
+        goto CheckedInLoop;
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
