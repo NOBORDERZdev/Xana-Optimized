@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static StoreManager;
@@ -12,6 +11,13 @@ namespace RFM.Character
     public class NPCHunter : Hunter
     {
         // TODO : Assign a new target if the current target is caught by another hunter
+
+        // DevMode specific
+
+        //[SerializeField] private TMPro.TextMeshProUGUI nameText;
+        //[SerializeField] private TMPro.TextMeshProUGUI caughtRunners;
+
+        // DevMode specific
 
         //[SerializeField] private Transform cameraPosition;
         [SerializeField] private GameObject killVFX;
@@ -75,8 +81,10 @@ namespace RFM.Character
         {
             base.OnGameStarted();
 
-            //if (PhotonNetwork.IsMasterClient)// Only the master client controls the hunter.
+            //if (PhotonNetwork.IsMasterClient) // Only the master client controls the hunter.
             // Other clients just sync the movement
+
+            // Muneeb: Why is the above check commented out?
             {
                 GetAllRunners();
                 InvokeRepeating(nameof(SearchForTarget), 1, 1);
@@ -101,13 +109,12 @@ namespace RFM.Character
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                Debug.LogError("Hunter SearchForTarget");
                 if (Globals.gameState != Globals.GameState.Gameplay) return;
 
                 // if any of the object in _players list is missing, remove it from the list.
                 for (int i = 0; i < _allRunners.Count; i++)
                 {
-                    if (_allRunners[i] == null || !_allRunners[i].gameObject.activeInHierarchy)
+                    if (_allRunners[i] == null || !_allRunners[i].activeInHierarchy)
                     {
                         _allRunners.RemoveAt(i);
                     }
@@ -170,7 +177,6 @@ namespace RFM.Character
                 return;
             }
 
-            // Bot movement logic goes here. For example:
             _targetPosition = _target.position;
             _navMeshAgent.SetDestination(_targetPosition);
             _navMeshAgent.isStopped = false;
@@ -196,6 +202,21 @@ namespace RFM.Character
 
         private void Update()
         {
+            // DevMode specific
+            //nameText.text = nickName;
+            ////caughtRunners.text = rewardMultiplier.ToString();
+            //if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(nickName + "rewardMultiplier",
+            //        out object _rewardMultiplier))
+            //{
+            //    caughtRunners.text = ((int)_rewardMultiplier).ToString();
+            //}
+            //else
+            //{
+            //    caughtRunners.text = "0";
+            //}
+            // DevMode specific
+
+
             // Draw a line from the hunter to the target
             if (_hasTarget && _target != null)
             {
@@ -241,8 +262,6 @@ namespace RFM.Character
                     killVFX.SetActive(true);
 
 
-                    // _inRangePlayer.GetComponent<PlayerRunner>()?.PlayerRunnerCaught(/*this*//*CameraTarget*/);
-
                     var runnerViewId = _inRangePlayer.GetComponent<PhotonView>().ViewID;
                     var myViewId = GetComponent<PhotonView>().ViewID;
 
@@ -253,8 +272,9 @@ namespace RFM.Character
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
 
-                    rewardMultiplier++;
-                    _inRangePlayer.gameObject.SetActive(false);
+                    _inRangePlayer.GetComponent<Collider>().enabled = false;
+                    //rewardMultiplier++;
+                    //_inRangePlayer.SetActive(false);
 
                 }
             }
@@ -264,7 +284,6 @@ namespace RFM.Character
         {
             foreach (var col in Physics.OverlapSphere(transform.position, catchRadius))
             {
-                //if (col.CompareTag(Globals.PLAYER_TAG))
                 var playerRunner = col.GetComponent<PlayerRunner>();
                 if (playerRunner != null && playerRunner.enabled)
                 {
@@ -302,8 +321,40 @@ namespace RFM.Character
                     _hasTarget = false;
                     killVFX.SetActive(true);
                     other.transform.parent.GetComponent<NPCRunner>().AIRunnerCaught();
+                    other.GetComponentInChildren<Collider>().enabled = false;
 
-                    rewardMultiplier++;
+                    //rewardMultiplier++;
+
+                    if (TryGetComponent(out PhotonView _))
+                    {
+                        var oldValue = 0;
+                        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(nickName + "rewardMultiplier"))
+                        {
+                            oldValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[nickName + "rewardMultiplier"];
+                        }
+                        else
+                        {
+                            PhotonNetwork.CurrentRoom.SetCustomProperties(
+                                new ExitGames.Client.Photon.Hashtable { { nickName + "rewardMultiplier", 0 } });
+                        }
+
+                        PhotonNetwork.CurrentRoom.SetCustomProperties(
+                            new ExitGames.Client.Photon.Hashtable { { nickName + "rewardMultiplier", oldValue + 1 } }, // to be set
+                            new ExitGames.Client.Photon.Hashtable { { nickName + "rewardMultiplier", oldValue } } // expected value
+                            );
+
+                        //if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(nickName + "rewardMultiplier"))
+                        //{
+                        //    PhotonNetwork.CurrentRoom.CustomProperties[nickName + "rewardMultiplier"] =
+                        //        (int)PhotonNetwork.CurrentRoom.CustomProperties[nickName + "rewardMultiplier"] + 1;
+
+                        //}
+                        //else
+                        //{
+                        //    PhotonNetwork.CurrentRoom.SetCustomProperties(new ExitGames.Client.Photon.Hashtable
+                        //{ { nickName + "rewardMultiplier", 1 } });
+                        //}
+                    }
 
                     return;
                 }
@@ -339,7 +390,7 @@ namespace RFM.Character
                         SendOptions.SendReliable);
 
                     other.GetComponent<Collider>().enabled = false;
-                    rewardMultiplier++;
+                    // rewardMultiplier++;
                 }
             }
         }
@@ -354,15 +405,13 @@ namespace RFM.Character
         {
             if (stream.IsWriting)
             {
-                // Master client sends data
                 stream.SendNext(_navMeshAgent.destination);
-                stream.SendNext(rewardMultiplier);
+                //stream.SendNext(rewardMultiplier);
             }
             else
             {
-                // Other clients receive data
                 _targetPosition = (Vector3)stream.ReceiveNext();
-                rewardMultiplier = (int)stream.ReceiveNext();
+                //rewardMultiplier = (int)stream.ReceiveNext();
 
                 // Check for discrepancies and lag compensation
                 if (Vector3.Distance(_navMeshAgent.destination, _targetPosition) > 1.0f)
