@@ -648,7 +648,7 @@ public class BottomTabManager : MonoBehaviour
 
     void ClearUnloadAssetData()
     {
-        Resources.UnloadUnusedAssets();
+        //Resources.UnloadUnusedAssets();
     }
 
     public void createBackFromSns(){ 
