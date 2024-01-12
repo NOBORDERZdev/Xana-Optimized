@@ -453,7 +453,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        if (WorldItemView.m_EnvName.Contains("RFMDummy"))
+        if (/*WorldItemView.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
         {
             spawnPoint += new Vector3(Random.Range(-2, 2), spawnPoint.y, Random.Range(-2, 2));
             
@@ -631,14 +631,14 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        if (FeedEventPrefab.m_EnvName.Contains("RFMDummy"))
+        if (/*FeedEventPrefab.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
         {
             player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
             RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj.
             
             PlayerCamera.gameObject.SetActive(false);
             environmentCameraRender.gameObject.SetActive(false);
-            Debug.LogError("entered in RFMDummy Scene");
+            Debug.LogError("entered in RFM Scene");
         }
         else
         {
@@ -989,7 +989,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 yield return new WaitForSeconds(1f);
             }
 
-            if (environmentLabel == "RFMDummy")
+            if (/*environmentLabel == "RFMDummy" || environmentLabel == "RFMDev"*/RFM.Globals.IsRFMWorld)
             {
                 AsyncOperation asc = SceneManager.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive);
 

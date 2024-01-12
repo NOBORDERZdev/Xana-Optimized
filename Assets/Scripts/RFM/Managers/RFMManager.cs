@@ -10,6 +10,7 @@ using RFM.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -69,7 +70,7 @@ namespace RFM.Managers
 
         private void Awake()
         {
-            RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
+            //RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
             EventsManager.OnHideCanvasElements();
             //StartCoroutine(CheckandFixLights());
@@ -203,6 +204,7 @@ namespace RFM.Managers
 
         public void RestartRFM()
         {
+            PhotonNetwork.CurrentRoom.CustomProperties.Clear();
             // clear all custom properties of all players
             foreach (var player in PhotonNetwork.PlayerList)
             {

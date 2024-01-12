@@ -13,7 +13,7 @@ namespace RFM.UI
         private void OnEnable()
         {
             // if this is RFM world, we need to show a pink color for the specified images, otherwise we need to show a blue color
-            if (WorldItemView.m_EnvName.Contains("RFMDummy"))
+            if (/*WorldItemView.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
             {
                 foreach (var image in images)
                 {
