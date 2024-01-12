@@ -41,6 +41,7 @@ public class LookAtCamera : MonoBehaviour
     }
     public void UpdateText(string txt)
     {
+        if(txt != "")
         _postText.text = txt;
     }
 }
