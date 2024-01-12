@@ -49,7 +49,11 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
             if (www.isNetworkError || www.isHttpError)
             {
                 StartCoroutine(IERequestGetUserDetails());
