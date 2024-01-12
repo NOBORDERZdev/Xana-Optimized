@@ -162,7 +162,7 @@ public class StoreManager : MonoBehaviour
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
     public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
-    public GameObject backbutton_preset;
+   // public GameObject backbutton_preset;
     public Transform contentList;
 
     public GameObject faceTapButton;
@@ -413,7 +413,7 @@ public class StoreManager : MonoBehaviour
         //{
         //    LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         //}
-        backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
+       // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
     }
     void BackTrackPreset()
     {
@@ -1325,9 +1325,12 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
+       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+      //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
+        UIManager.Instance.ShowFooter(true);
         if (saveStoreBtnButton.interactable == true)
             ReturnHomePopUp.SetActive(true);
         else
@@ -1337,6 +1340,8 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
+      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);

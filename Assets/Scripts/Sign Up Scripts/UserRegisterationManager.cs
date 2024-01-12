@@ -43,7 +43,9 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject ForgetEnterPasswordPanal;
     public GameObject LogoutfromOtherDevicePanel;
     public GameObject BlackScreen;
-
+    public GameObject validationMessagePopUP;
+    bool passwordBool = false;
+    bool emailBool = false;
     //Waheed Changes
     public GameObject setAvatarGiftPanal;
 
@@ -57,6 +59,7 @@ public class UserRegisterationManager : MonoBehaviour
     public AdvancedInputField EmailFieldNew;
     //   public MobileInputField UsernameTextNew;
     public AdvancedInputField UsernameFieldAdvance;
+    //  public AdvancedInputField Username2FieldAdvance;
     public Text CountryCodeText;
     // public MobileInputField PhoneInputTextNew;      
     public AdvancedInputField PhoneFieldNew;
@@ -157,13 +160,14 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject WalletTabSelected;
 
 
+
     [Tooltip("Pass Animator Component attached to the slider")]
     public Animator tabSelectorAnimator;
 
     public bool SavingBool;
     [HideInInspector]
     private Button currentSelectedNxtButton;
-    public bool LoggedInAsGuest;
+    public bool LoggedInAsGuest=false;
     public GameObject Name_Screen_Preset_Panel;
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
@@ -174,6 +178,9 @@ public class UserRegisterationManager : MonoBehaviour
     /// </Web 3.0 and Web 2.0>
     /// 
     public int btnClickedNo = 0;
+    public void ShowCommingsoonPopup() {
+        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+    }
 
     #region WelcomeScreen
     public GameObject welcomeScreen;
@@ -189,8 +196,9 @@ public class UserRegisterationManager : MonoBehaviour
 
 
     public GameObject EntertheWorld_Panal;
-    public GameObject NewSignUp_Panal;
-    public GameObject LogoImage;
+    public GameObject NewSignUp_Panal, LoginScreenNew;
+    public GameObject LogoImage,LogoImage2,LogoImage3;
+    public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
     String _LoadingTitle = "";
@@ -216,14 +224,10 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                if (PlayerPrefs.GetInt("GuestUser") == 0)
-                {
-                    welcomeScreen.SetActive(true);
-                    shownWelcome = true;
-                    //PlayerPrefs.SetInt("shownWelcome", 1);
-                }
+                welcomeScreen.SetActive(true);
             }
         }
+        
     }
     public void ShowWelcomeClosed()
     {
@@ -241,14 +245,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("GuestUser", 1);
+
             welcomeScreen.SetActive(false);
             shownWelcome = false;
             //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
                 //PlayerPrefs.SetInt("shownWelcome", 1);
-
+                
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                 StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             }
@@ -268,28 +272,30 @@ public class UserRegisterationManager : MonoBehaviour
 
     }
 
-    public void NewWalletSignUp()
+    public void NewWalletSignUp() 
     {
         _IsWalletSignUp = true;
     }
 
-    public void WalletLoginCheck()
+    public void WalletLoginCheck() 
     {
         _IsWalletSignUp = false;
+       
         LoginPanal.SetActive(false);
     }
 
-    public void NextScreenAfterWalletConnected()
+    public void NextScreenAfterWalletConnected() 
     {
         if (_IsWalletSignUp)
         {
-            setAvatarGiftPanal.SetActive(true);
+                 iwanto_signUp();
         }
-        else
-        {
-            setAvatarGiftPanal.SetActive(false);
+    }
 
-        }
+    public void iwanto_signUp()
+    {
+        PlayerPrefs.SetInt("iSignup", 1);
+       
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
             PlayerPrefs.SetInt("CloseLoginScreen", 1);
@@ -297,12 +303,6 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);
             PlayerPrefs.SetInt("shownWelcome", 1);
         }
-
-    }
-
-    public void iwanto_signUp()
-    {
-        PlayerPrefs.SetInt("iSignup", 1);
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
@@ -358,18 +358,19 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
 
-        //  CloseLoginScreen();
+      //  CloseLoginScreen();
     }
 
 
+   
 
-
-    public void CloseLoginScreen()
+    public void CloseLoginScreen() 
     {
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
             //if () 
             welcomeScreen.SetActive(true);
+            LoginScreenNew.SetActive(false);
 
         }
         else
@@ -397,32 +398,30 @@ public class UserRegisterationManager : MonoBehaviour
         Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
     }
 
-    public void BacktoAvatarSelectionPanel()
+    public void BacktoAvatarSelectionPanel() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
     }
 
-    public void LoginScreenClicked(int btn)
+    public void LoginScreenClicked(int btn) 
     {
         btnClickedNo = btn;
     }
 
-    public void BackFromLoginScreen()
+    public void BackFromLoginScreen() 
     {
-        if (btnClickedNo == 0)
+        if (btnClickedNo == 0) 
         {
-            welcomeScreen.SetActive(true);
+            welcomeScreen.SetActive(false);
+            LoginScreenNew.SetActive(true);
         }
-        else if (btnClickedNo == 1)
+
+        if (btnClickedNo == 1)
         {
             NewSignUp_Panal.SetActive(true);
         }
-        else if (btnClickedNo == 2)
-        {
-            FirstPanal.SetActive(true);
-        }
-        MoveButtonBacktoPreviousPos();
+       // MoveButtonBacktoPreviousPos();
         LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPanal.SetActive(false);
@@ -434,136 +433,136 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-    public void MoveButtonBacktoPreviousPos()
-    {
-        FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
-    }
+    //public void MoveButtonBacktoPreviousPos() 
+    //{
+    //    FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
+    //}
 
     private async void eventcalled(string _userType)
     {
         //print("Event Called here");
         //print("User type is " + _userType);
-
+  
         if (_userType == "Web3")
         {
-
-            if (CryptouserData.instance.CryptoLogin)
-            {
-                GetOwnedNFTsFromAPI();
+            
+           if (CryptouserData.instance.CryptoLogin)
+             {
+                 GetOwnedNFTsFromAPI(); 
                 ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
                 LoginWithMoralisSDK();
-                //print("Wallet logged in here ");  
-                /*
-               if (CryptouserData.instance.AlphaPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("alpha-pass");
-               }
-               if (CryptouserData.instance.UltramanPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("premium");
-               }
-               if (CryptouserData.instance.AstroboyPass)
-               {
-                   userRoleObj.userNftRoleSlist.Add("premium");
-               }
-               */
+                 //print("Wallet logged in here ");  
+                 /*
+                if (CryptouserData.instance.AlphaPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("alpha-pass");
+                }
+                if (CryptouserData.instance.UltramanPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("premium");
+                }
+                if (CryptouserData.instance.AstroboyPass)
+                {
+                    userRoleObj.userNftRoleSlist.Add("premium");
+                }
+                */
 
                 //if (userRoleObj.userNftRoleSlist.Count == 0)
                 //{
-                userRoleObj.userNftRoleSlist.Add("free");
+                 userRoleObj.userNftRoleSlist.Add("free");  
                 // if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
                 //{
                 //     //print("nft's are greater then zero");
                 //    await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
                 //    //print("wait nft complete");
                 // }
-                StartCoroutine(WalletLoggedInAccessGroup());
-            }
+                 StartCoroutine(WalletLoggedInAccessGroup());
+             }    
         }
         else if (_userType == "Web2")
         {
-            // StartCoroutine(waitForWalletNFTFetching());
-            if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+             // StartCoroutine(waitForWalletNFTFetching());
+             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 //print("call getting list here");
 
                 await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-
+                 
                 //print("wait nft complete 22");
 
                 // CheckNFTFetched();
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
-                {
-                    //print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
-                    // Currently No Need For Attributes
+                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
+                {   
+                     //print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
+                     // Currently No Need For Attributes
                     //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
                     ////print("index is " + LocalIndex);
                     //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
-                    if (PlayerPrefs.HasKey("Equiped"))
+                     if (PlayerPrefs.HasKey("Equiped"))
                     {
                         XanaConstants.xanaConstants.isNFTEquiped = true;
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    }
+                    }   
                 }
                 else
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-                }
+                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                     LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
+                 }
             }
-            else
+             else
             {
                 LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-            }
+             }
             // savingLoadingNFTsData.SavetoFile();
         }
         else
         {
             ////Debug.Log("not Logged in");
+        }  
+         /*
+        if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
+        {
+            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+           // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
+          
+            switch (VerifySignatureReadObj.data.user.userNftRole)
+            {
+                case "alpha-pass":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                        break;
+                    }
+                case "premium":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+                        break;
+                    }
+                case "dj-event":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("djevent");
+                        break;
+                    }
+                case "free":
+                    {
+                        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+
+                        break;
+                    }
+            }
+         //   
+
+            //print("you have access of Premium Feature");
         }
-        /*
-       if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
-       {
-           PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-          // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
-
-           switch (VerifySignatureReadObj.data.user.userNftRole)
-           {
-               case "alpha-pass":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-                       break;
-                   }
-               case "premium":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
-                       break;
-                   }
-               case "dj-event":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("djevent");
-                       break;
-                   }
-               case "free":
-                   {
-                       PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-
-                       break;
-                   }
-           }
-        //   
-
-           //print("you have access of Premium Feature");
-       }
-       */
+        */
     }
-    public void GetOwnedNFTsFromAPI()
+    void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
-    }
+     }  
 
     public void LoginWithMoralisSDK(bool auto = false)
     {
@@ -588,7 +587,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             StartCoroutine(WaitForDeepLink());
         }
-        // SubmitSetDeviceToken();
+         // SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
@@ -629,7 +628,7 @@ public class UserRegisterationManager : MonoBehaviour
         Resources.UnloadUnusedAssets();
         //Caching.ClearCache();
         //GC.Collect();
-        //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
+      //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
         UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
         //   StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
@@ -671,7 +670,7 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-            LoggedInAsGuest = true;
+           // LoggedInAsGuest = true;
             //if (DefaultEnteriesforManican.instance)
             //{
             //    DefaultEnteriesforManican.instance.ResetForPresets();
@@ -692,14 +691,13 @@ public class UserRegisterationManager : MonoBehaviour
         //   StartCoroutine(LoginUserPresetOnly());
     }
 
-    void CheckCameraMan()
-    {
+    void CheckCameraMan() {
         MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
         LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
         if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
         {
             XanaConstants.xanaConstants.isCameraMan = true;
-
+            
         }
         else
         {
@@ -713,10 +711,9 @@ public class UserRegisterationManager : MonoBehaviour
         if (loadData)
         {
             GetOwnedNFTsFromAPI();
-            yield return new WaitForSeconds(.1f);
-        }
+             yield return new WaitForSeconds(.1f);  
+        } 
         yield return new WaitForSeconds(.8f);
-        Debug.LogError("WalletLoggedInAccessGroup");
         if (userRoleObj.userNftRoleSlist.Count > 0)
         {
             int x = (int)NftRolePriority.guest;
@@ -773,9 +770,9 @@ public class UserRegisterationManager : MonoBehaviour
             //print("you have no Premium Access ");
             PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         }
-        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-    }
-
+         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+     }
+ 
     #region Sign Up Animations
 
     public void OnSignUpEmailTabPressed()
@@ -800,11 +797,14 @@ public class UserRegisterationManager : MonoBehaviour
         //EmailInputTextNew.enabled = true;
         //EmailInputTextNew.SelectOtherField();
 
-        Color _temp = new Color();
-        _temp = errorTextNumber.GetComponent<Text>().color;
-        _temp.a = 0;
+
+       // Color _temp = new Color();
+       // _temp = errorTextNumber.GetComponent<Text>().color;
+       // _temp.a = 0;
         // float r = 0.2f, g = 0.3f, b = 0.7f, a = 0.6f;
-        errorTextNumber.GetComponent<Text>().color = _temp;
+      //  errorTextNumber.GetComponent<Text>().color = _temp;
+
+
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
             //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
@@ -844,10 +844,11 @@ public class UserRegisterationManager : MonoBehaviour
         //PhoneInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
         //PhoneInputTextNew.SelectOtherField();
         PhoneFieldNew.Text = "";
-        Color _temp = new Color();
-        _temp = errorTextEmail.GetComponent<Text>().color;
-        _temp.a = 0;
-        errorTextEmail.GetComponent<Text>().color = _temp;
+       // Color _temp = new Color();
+       // validationMessagePopUP.SetActive(true);
+        // _temp = errorTextEmail.GetComponent<Text>().color;
+        //  _temp.a = 0;
+       // errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
             //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
@@ -889,7 +890,7 @@ public class UserRegisterationManager : MonoBehaviour
         //print("Animate here");
         //tabSelectorAnimator.GetComponent<Image>().rectTransform.position = targetPos.position;  
 
-        LoggedInAsGuest = true;
+       // LoggedInAsGuest = true;
         if (GameManager.Instance.mainCharacter)
         {
             GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
@@ -938,7 +939,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     //}
 
-    public void SignUpMethodSelected(int btn)
+    public void SignUpMethodSelected(int btn) 
     {
         SignUpButtonSelected = btn;
     }
@@ -980,11 +981,11 @@ public class UserRegisterationManager : MonoBehaviour
             //        EmailFieldNew.Text = "";
             //    }
             //    SignUpPanal.SetActive(true);
-        }
-
-        //OpenUIPanal(Openbackint);
-        image_to_Change[0].sprite = OTPbox_highlighter;
-        image_to_Change[3].sprite = oldOTP_Box;
+            }
+            
+            //OpenUIPanal(Openbackint);
+            image_to_Change[0].sprite = OTPbox_highlighter;
+            image_to_Change[3].sprite = oldOTP_Box;
     }
 
     public void GoToRegistrationScreen(int R_Integer)
@@ -1032,7 +1033,7 @@ public class UserRegisterationManager : MonoBehaviour
                     image_to_Change[i + 1].sprite = OTPbox_highlighter;
                     image_to_Change[i].sprite = oldOTP_Box;
                 }
-
+                
             }
             else
             {
@@ -1053,7 +1054,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
 
-
+        
     }
 
     public void BackButtonPressedhere()
@@ -1121,22 +1122,22 @@ public class UserRegisterationManager : MonoBehaviour
         ForgetenterUserNamePanal.SetActive(false);
         ForgetEnterPasswordPanal.SetActive(false);
 
-        if (errorTextEmail.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextEmail.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextPassword.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextNumber.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextNumber.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextName.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextName.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextPIN.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextPIN.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextLogin.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextLogin.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextForgetAPI.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", false);
-        if (errorTextResetPasswordAPI.GetComponent<Animator>().GetBool("playAnim"))
-            errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextEmail.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextEmail.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextPassword.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextPassword.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextNumber.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextNumber.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextName.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextName.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextPIN.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextLogin.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextLogin.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextForgetAPI.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", false);
+        //if (errorTextResetPasswordAPI.GetComponent<Animator>().GetBool("playAnim"))
+        //    errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", false);
 
         switch (ActivePanalCounter)
         {
@@ -1210,9 +1211,15 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 4:
                 {
-                    PasswordPanal.SetActive(true);
-                    Password1New.Text = "";
-                    Password2New.Text = "";
+                    Invoke("blackscrreefalse", 0.2f);
+                    // this.gameObject.GetComponent<SplashVideoPlay>().RefrenceDownloafVideo();
+                    // this.gameObject.GetComponent<SplashVideoPlay>().SplashvideoObj.SetActive(false);
+
+                    this.gameObject.GetComponent<SplashVideoPlay>().OnAvatarSelectionPanal();
+
+                    //PasswordPanal.SetActive(true);
+                    //Password1New.Text = "";
+                    //Password2New.Text = "";
                     //  Password1InputTextShiftCode.EmptyPassword();
                     //  Password2ConfirmInputTextShiftCode.EmptyPassword();
                     break;
@@ -1220,7 +1227,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 5:
                 {
                     //usernamePanal.SetActive(true);
-                    setAvatarGiftPanal.SetActive(true);
+                   // setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
                     //StartCoroutine(WaitandActive());
                     //UsernameTextNew.Text = "";
@@ -1275,6 +1282,8 @@ public class UserRegisterationManager : MonoBehaviour
 
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
+                    Password1New.Text = "";
+                    Password2New.Text = "";
                     //OnSignUpPhoneTabPressed();
                     //  OnSignUpWalletTabPressed();
 
@@ -1356,20 +1365,19 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
-
+                        LoadingFadeOutScreen();
                         //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                        EntertheWorld_Panal.SetActive(true);
-                    }
-                    else
-                    {
+                        //EntertheWorld_Panal.SetActive(true);
+                      }
+                    else {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
-                            RegistrationCompletePanal.SetActive(true);
+                           // RegistrationCompletePanal.SetActive(true);
                             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         }
                         if (shownWelcome)
                             ShowWelcomeClosed();
-                    }
+                     }
                     break;
                 }
             case 17:
@@ -1392,7 +1400,7 @@ public class UserRegisterationManager : MonoBehaviour
                     else
                     {
                         FirstPanal.SetActive(true);
-                        // welcomeScreen.SetActive(true);
+                       // welcomeScreen.SetActive(true);
                         //SignUpPanal.SetActive(false);
                     }
                     break;
@@ -1414,7 +1422,7 @@ public class UserRegisterationManager : MonoBehaviour
                     break;
                 }
 
-            case 20:
+            case 20: 
                 {
                     if (!WalletScreen.activeInHierarchy)
                     {
@@ -1422,11 +1430,15 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             OnSignUpPhoneTabPressed();
                             PhoneFieldNew.Text = "";
+                            Password1New.Text = "";
+                            Password2New.Text = "";
                         }
                         else if (SignUpButtonSelected == 2)
                         {
                             OnSignUpEmailTabPressed();
                             EmailFieldNew.Text = "";
+                            Password1New.Text = "";
+                            Password2New.Text = "";
                         }
                         SignUpPanal.SetActive(true);
                     }
@@ -1438,7 +1450,10 @@ public class UserRegisterationManager : MonoBehaviour
     // DifferentAPI,s Call
 
     // Started Device Token 
-
+    public void blackscrreefalse() { 
+    
+    BlackScreen.SetActive(false); 
+    }
     string uniqueID2()
     {
         DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -1516,7 +1531,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                ////Debug.Log("Network error in set device token");
+               ////Debug.Log("Network error in set device token");
             }
             else
             {
@@ -1525,7 +1540,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        ////Debug.Log("Success false in  in set device token");
+                       ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1582,10 +1597,13 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+              //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             }
             else
             {
@@ -1596,10 +1614,13 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         //   //print("Hey success false " + myObject1.msg);
-                        errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
+                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -1618,12 +1639,12 @@ public class UserRegisterationManager : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
-            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         }
-
+ 
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
-        userRoleObj.userNftRoleSlist.Clear();
+         userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         XanaConstants.xanaConstants.userId = null;
 
@@ -1637,7 +1658,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         LoggedInAsGuest = false;
-        PlayerPrefs.SetInt("GuestUser", 0);
+
         yield return new WaitForSeconds(0.1f);
         resetClothstoGuest();
 
@@ -1652,13 +1673,13 @@ public class UserRegisterationManager : MonoBehaviour
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
-        PlayerPrefs.SetInt("shownWelcome", 1);
-        PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
+        //PlayerPrefs.SetInt("shownWelcome", 1);
+        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
 
         //[Waqas] Reset Guest Username After Delete All
-        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, tempName1);
-        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, tempName2);
-        PlayerPrefs.SetString("publicID", "");
+        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME,tempName1);
+        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME,tempName2);
+        PlayerPrefs.SetString("publicID","");
 
 
 
@@ -1900,10 +1921,13 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (request.isNetworkError)
                 {
-                    errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                    validationMessagePopUP.SetActive(true);
+                    errorTextPassword.SetActive(true);
+                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                     //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                     errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                    StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                   // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                 }
                 else
                 {
@@ -1911,11 +1935,14 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (myObject1.success == "false")
                         {
+                            validationMessagePopUP.SetActive(true);
+                            errorTextPassword.SetActive(true);
+                            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                             //      //print("Hey success false " + myObject1.msg);
-                            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                            //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                             //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                             errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
-                            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                         //   StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                         }
                     }
                 }
@@ -1975,10 +2002,13 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             }
             else
             {
@@ -1988,11 +2018,14 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
+                        validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         //     //print("Hey success false " + myObject1.msg);
-                        errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2244,7 +2277,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+               // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
                 //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません";
@@ -2254,7 +2289,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
                 // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             }
             else
             {
@@ -2265,7 +2300,9 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         //  //print("Hey success false " + myObject1.msg);
-                        errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
                         //     errorTextName.GetComponent<Text>().text = "名前が無効です";
@@ -2275,7 +2312,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //     errorTextName.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         // }
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2469,8 +2506,9 @@ public class UserRegisterationManager : MonoBehaviour
         // if (PhoneInputTextNew.Text == "")
         if (PhoneFieldNew.Text == "")
         {
-            errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
-
+            // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
             //     // 5: Phone Number should not be empty
@@ -2483,13 +2521,15 @@ public class UserRegisterationManager : MonoBehaviour
             //
             errorHandler.ShowErrorMessage(ErrorType.Phone_number__empty.ToString(), errorTextNumber.GetComponent<Text>());
 
-            StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
             return;
         }
         // if (PhoneInputTextNew.Text.Length > 10)
         if (PhoneFieldNew.Text.Length > 10)
         {
-            errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+            //  errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
 
             errorHandler.ShowErrorMessage(ErrorType.Enter_Valid_Number.ToString(), errorTextNumber.GetComponent<Text>());
             if (GameManager.currentLanguage == "ja" && CountryCodeText.text == "+81")
@@ -2498,7 +2538,7 @@ public class UserRegisterationManager : MonoBehaviour
                 errorTextNumber.GetComponent<Text>().text = "市外局番を抜いて入力ください（例 080→80、090→90）";
             }
 
-            StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
             return;
         }
 
@@ -2617,10 +2657,13 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+              //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             }
             else
             {
@@ -2630,12 +2673,15 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
+                        validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
+                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //         //print("Hey success false " + myObject1.msg);
-                        errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         //errorHandler.ShowErrorMessage(ErrorType.Wrong_Password, errorTextPassword.GetComponent<Text>());
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2702,8 +2748,10 @@ public class UserRegisterationManager : MonoBehaviour
                     _loader.SetActive(false);
                 }
 
-                errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+                // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
 
+                validationMessagePopUP.SetActive(true);
+                errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
                 //     //6: Cannot Connect to Destination Host
@@ -2714,7 +2762,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextNumber.GetComponent<Text>().text = request.error.ToUpper();
                 // }   
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
             }
             else
             {
@@ -2727,8 +2775,9 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         //   //print("Hey success false " + myObject1.msg);
 
-                        errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
-
+                        // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
                         //     //4: Phone number is already exists
@@ -2761,7 +2810,7 @@ public class UserRegisterationManager : MonoBehaviour
                         }
 
 
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2799,32 +2848,20 @@ public class UserRegisterationManager : MonoBehaviour
         //  if (EmailInputTextNew.Text == "")
         if (EmailFieldNew.Text == "")
         {
-            errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //    
-            //     errorTextEmail.GetComponent<Text>().text = "メールアドレスを入力してください";
-            //  }
-            // else
-            // {
-            //     errorTextEmail.GetComponent<Text>().text = "Email field should not be empty";
-            //  }
-
+            validationMessagePopUP.SetActive(true);
+            errorTextEmail.SetActive(true);
+            errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             return;
         }
         else
-        {
-
-            //  //print("Email validity is " + IsValidEmail(EmailInputTextNew.Text));
-            //  EmailInputTextNew.Text = EmailInputTextNew.Text.Trim();
+        { 
             EmailFieldNew.Text = EmailFieldNew.Text.Trim();
-            // if (IsValidEmail(EmailInputTextNew.Text))
+            
             if (IsValidEmail(EmailFieldNew.Text))
             {
-                //  string email = EmailInputTextNew.Text;
                 string email = EmailFieldNew.Text;
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.SendEmailOTP;
                 email = email.ToLower();
@@ -2856,18 +2893,12 @@ public class UserRegisterationManager : MonoBehaviour
             }
             else
             {
-                errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-
-                // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                // {
-                //     errorTextEmail.GetComponent<Text>().text = "有効なメールアドレスを入力してください";
-                // }
-                // else
-                // {
-                //     errorTextEmail.GetComponent<Text>().text = "Please enter valid email";
-                // }
+                validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
+                errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+             //   StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             }
         }
     }
@@ -2908,7 +2939,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return request.SendWebRequest();
 
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (!request.isHttpError && !request.isNetworkError )
         {
             if (_loader != null)
             {
@@ -2916,7 +2947,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
 
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-            if (request.error == null)
+            if (request.error == null && passwordBool)
             {
                 ////Debug.Log(request.downloadHandler.text);
                 //if (myObject1.success == "true")
@@ -2926,11 +2957,15 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         currentSelectedNxtButton.interactable = true;
                     }
+                    emailBool = true;
                     OpenUIPanal(3);
+                    //emailBool = true;
                     Email = localEmail;
                     SignUpWithPhoneBool = false;
                 }
+                
             }
+           
         }
         else
         {
@@ -2944,7 +2979,9 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     _loader.SetActive(false);
                 }
-                errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
+                errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
 
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
@@ -2956,7 +2993,7 @@ public class UserRegisterationManager : MonoBehaviour
                 // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<Text>());
                 //print("getting text from here");
-                StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             }
             else
             {
@@ -2967,18 +3004,10 @@ public class UserRegisterationManager : MonoBehaviour
                     //print(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
-                        //if (request.downloadHandler.text.Contains(" must be a valid email"))
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email, errorTextEmail.GetComponent<Text>());
-                        //}
-                        //else
-                        //{
-
-                        //    errorHandler.ShowErrorMessage(ErrorType.Same_Email_is_already_registered, errorTextEmail.GetComponent<Text>());
-
-                        //}
+                        validationMessagePopUP.SetActive(true);
+                        errorTextEmail.SetActive(true);
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextEmail.GetComponent<Text>());
-                        errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
+                        errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         if (_loader != null)
                         {
                             if (currentSelectedNxtButton)
@@ -2987,24 +3016,13 @@ public class UserRegisterationManager : MonoBehaviour
                             }
                             _loader.SetActive(false);
                         }
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-
-
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     //3: Email address is already exists
-                        //      errorTextEmail.GetComponent<Text>().text = "同じメールアドレスが登録されています";
-                        // }
-                        // else
-                        // {
-                        //     errorTextEmail.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
 
                     }
                 }
             }
         }
+        currentSelectedNxtButton.interactable = true;
     }
     ///////  ENDEmailSection
 
@@ -3024,8 +3042,9 @@ public class UserRegisterationManager : MonoBehaviour
         //  //print("OTP entered by user is " + OTP);
         if (OTP == "" || OTP.Length < 4)
         {
-            errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-
+          //  errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
             //     errorTextPIN.GetComponent<Text>().text = "認証コードを入力してください";
@@ -3035,7 +3054,7 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextPIN.GetComponent<Text>().text = "OTP fields should not be empty";
             // }
             errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextPIN.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
             return;
         }
         if (ForgetPasswordBool)
@@ -3132,18 +3151,14 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (pass1 == "" || pass2 == "")
         {
+            passwordBool = false;
+            validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
             //print("Password Field should not be empty");
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "パスワードを入力してください";
-            // }
-            // else
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "Password field should not be empty";
-            // }
+            //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextPassword.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
         }
 
@@ -3151,9 +3166,13 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (pass1.Length < 8 || pass2.Length < 8)
         {
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+            passwordBool = false;
+            validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
+            // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextPassword.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
         }
 
@@ -3162,51 +3181,53 @@ public class UserRegisterationManager : MonoBehaviour
         char[] specialChArray = specialCh.ToCharArray();
         if (pass1.Any(char.IsDigit) && pass1.Any(char.IsLower) && pass1.Any(char.IsUpper) && !pass1.Any(char.IsWhiteSpace))
         {
+            passwordBool = false;
             foreach (char ch in specialChArray)
             {
                 if (pass1.Contains(ch))
                     allCharactersInStringAreDigits = true;
             }
+            
         }
         if (!allCharactersInStringAreDigits)
         {
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+            passwordBool = false;
+            validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
         }
 
-        if (pass1 == pass2)
+        if (pass1 == pass2 )
         {
+           
             password = pass1;
-
-            OpenUIPanal(5);
+            passwordBool = true;
+            //  OpenUIPanal(5);
         }
         else
         {
-            errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "パスワードが一致していません";
-            // }
-            // else
-            // {
-            //     errorTextPassword.GetComponent<Text>().text = "Password not matched";
-            // }
+            passwordBool = false;
+            validationMessagePopUP.SetActive(true);
+            errorTextPassword.SetActive(true);
+            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            
+            // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
-
-            StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-            //   //print("Password not matched");
+             //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            //   print("Password not matched");
         }
     }
 
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         //print(Jsondata);
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-        var request = new UnityWebRequest(url, "POST");
+         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
+         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
+         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -3283,19 +3304,12 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-
-                // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                // {
-                //     // 6: Cannot Connect to Destination Host
-                //     errorTextPassword.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                // }
-                // else
-                // {
-                //     errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                // }
+                validationMessagePopUP.SetActive(true);
+                errorTextPassword.SetActive(true);
+                errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             }
             else
             {
@@ -3304,19 +3318,13 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject.success == "false")
                     if (!myObject.success)
                     {
+                        validationMessagePopUP.SetActive(true);
+                        errorTextPassword.SetActive(true);
                         //    //print("Hey success false " + myObject.msg);
-                        errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     errorTextPassword.GetComponent<Text>().text = "ユーザーは既に存在します";
-                        // }
-                        // else
-                        // {
-                        //     errorTextPassword.GetComponent<Text>().text = myObject.msg.ToUpper();
-                        // }
-                        //errorHandler.ShowErrorMessage(ErrorType.User_Already_Exist , errorTextPassword.GetComponent<Text>());
+                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        //   errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -3325,13 +3333,20 @@ public class UserRegisterationManager : MonoBehaviour
 
     // End Register User with password
 
-    public void LoadingFadeOutScreen()
+    public void LoadingFadeOutScreen() 
     {
-
+        if (Swipe_menu.instance.contentParent.childCount > 0)
+        {
+            foreach (Transform child in Swipe_menu.instance.contentParent)
+            {
+                Destroy(child.gameObject);
+            }
+        }
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
         TutorialsManager.instance.ShowTutorials();
+        ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
@@ -3347,22 +3362,31 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(false);
     }
 
-
+    
 
 
     public void EnterUserName()
     {
-
+        
         ////print(PlayerPrefs.GetInt("shownWelcome")); // 0
         ////print(PlayerPrefs.GetInt("iSignup")); // 1
         ////print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
         //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
-
+        //if (Username2FieldAdvance.Text != null)
+        //{
+        //    Localusername = Username2FieldAdvance.Text;
+        //}
+       
+            UserNameSetter.text = UsernameFieldAdvance.Text;
+       
+     
         if (Localusername == "")// || Localusername.Contains(" "))
         {
             //  //print("Username Field should not be empty");
-            errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+            //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
             //     errorTextName.GetComponent<Text>().text = "名前を入力してください";
@@ -3373,12 +3397,14 @@ public class UserRegisterationManager : MonoBehaviour
             //  }
             errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextName.GetComponent<Text>());
 
-            StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
         else if (Localusername.StartsWith(" "))
         {
-            errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+            //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
             //     errorTextName.GetComponent<Text>().text = "名前を入力してください";
@@ -3389,7 +3415,7 @@ public class UserRegisterationManager : MonoBehaviour
             //  }
             errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextName.GetComponent<Text>());
 
-            StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+          //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
 
@@ -3415,7 +3441,7 @@ public class UserRegisterationManager : MonoBehaviour
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             usernamePanal.SetActive(false);
-            EntertheWorld_Panal.SetActive(true);
+           // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
 
             //  StoreManager.instance.OnSaveBtnClicked();
@@ -3443,7 +3469,7 @@ public class UserRegisterationManager : MonoBehaviour
         ////Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            ////Debug.Log("User Already loged in set name api call.......");
+           ////Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3471,7 +3497,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-
+   
 
     public void SubmitLoginCredentials()
     {
@@ -3485,7 +3511,9 @@ public class UserRegisterationManager : MonoBehaviour
         if (L_LoginEmail == "" || L_loginPassword == "")
         {
             //  //print("Email Or Password should not be empty");
-            errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+            // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             // if (Application.systemLanguage == SystemLanguage.Japanese  )
             // {
             //     errorTextLogin.GetComponent<Text>().text = "全ての欄に入力してください";
@@ -3495,14 +3523,16 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextLogin.GetComponent<Text>().text = "Fields should not be empty";
             //  }
             errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextLogin.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
             return;
         }
         else if (L_LoginEmail.Contains(" "))
         {
-            errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+            //  errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+            validationMessagePopUP.SetActive(true);
+            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<Text>());
-            StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
             return;
         }
         string url = ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL;
@@ -3528,12 +3558,20 @@ public class UserRegisterationManager : MonoBehaviour
             L_LoginEmail = L_LoginEmail.ToLower();
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(L_LoginEmail, "", L_loginPassword, uniqueID()));
         }
+        else if (!L_LoginEmail.Contains("+") && L_LoginEmail.Any(char.IsLetter))
+        {
+            validationMessagePopUP.SetActive(true);
+            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<Text>());
+            _loginBtnObject.SetActive(false);
+            return;
+        }
         else
         {
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass("", L_LoginEmail, L_loginPassword));
         }
         ////print("Start Json " + bodyJson);
-        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));
+        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));    
     }
 
 
@@ -3607,7 +3645,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                ////Debug.Log("Network error in logout from other device");
+               ////Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3615,7 +3653,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                        ////Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
+                       ////Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
@@ -3667,10 +3705,11 @@ public class UserRegisterationManager : MonoBehaviour
             //print(www.downloadHandler.text);
             if (www.isHttpError || www.isNetworkError)
             {
-
+                validationMessagePopUP.SetActive(true);
+                errorTextEmail.SetActive(true);
                 // ////Debug.Log("Network Error");
-                errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-                StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                 errorTextEmail.GetComponent<Text>().text = www.error.ToUpper();
                 //  ////Debug.Log("WWW Error: " + www.error);  
             }
@@ -3690,8 +3729,10 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                        validationMessagePopUP.SetActive(true);
+                        errorTextEmail.SetActive(true);
+                        errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
                         errorTextEmail.GetComponent<Text>().text = myObject.msg.ToUpper();
                         //    //print("Error Occured " + myObject.msg);
                     }
@@ -3734,16 +3775,20 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
-                        NewLoadingScreen.SetActive(false);
+
+                     NewLoadingScreen.SetActive(false);
+                  
                     }
                 }
                 else
                 {
                     //if (myObjectForOPT.success == "true")
                     if (myObjectForOPT.success)
-                    {
+                    {   
+                        BlackScreen.SetActive(true);
                         OpenUIPanal(4);
                         NewLoadingScreen.SetActive(false);
+                        SignUpPanal.SetActive(false);
                     }
                 }
 
@@ -3754,7 +3799,9 @@ public class UserRegisterationManager : MonoBehaviour
             if (request.isNetworkError)
             {
 
-                errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
                 //     errorTextPIN.GetComponent<Text>().text = "接続状態が悪く繋がりません";
@@ -3764,7 +3811,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextPIN.GetComponent<Text>().text = request.error.ToUpper();
                 // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPIN.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
             }
             else
             {
@@ -3774,7 +3821,9 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (myObjectofOTPForResetPassword.success == "false")
                         {
-                            errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                            //  errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                            validationMessagePopUP.SetActive(true);
+                            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                             // if (Application.systemLanguage == SystemLanguage.Japanese  )
                             // {
                             //     errorTextPIN.GetComponent<Text>().text = "認証コードが正しくありません";
@@ -3784,7 +3833,7 @@ public class UserRegisterationManager : MonoBehaviour
                             //          errorTextPIN.GetComponent<Text>().text = myObjectofOTPForResetPassword.msg.ToUpper();
                             //   }
                             errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<Text>());
-                            StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
                         }
                     }
                     else
@@ -3792,7 +3841,9 @@ public class UserRegisterationManager : MonoBehaviour
                         //if (myObjectForOPT.success == "false"  )
                         if (!myObjectForOPT.success)
                         {
-                            errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                            // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                            validationMessagePopUP.SetActive(true);
+                            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                             // if (Application.systemLanguage == SystemLanguage.Japanese  )
                             // {
                             //     errorTextPIN.GetComponent<Text>().text = "認証コードが正しくありません";
@@ -3802,7 +3853,7 @@ public class UserRegisterationManager : MonoBehaviour
                             //          errorTextPIN.GetComponent<Text>().text = myObjectForOPT.msg.ToUpper();
                             //  }
                             errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<Text>());
-                            StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                           // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
                         }
 
                     }
@@ -3844,12 +3895,14 @@ public class UserRegisterationManager : MonoBehaviour
                 //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                    ////Debug.Log(myObject1.msg);
+                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
-                        errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                     else
                     {
@@ -3877,7 +3930,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
                 //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません"; 
@@ -3887,7 +3942,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
                 // }  
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             }
             else
             {
@@ -3898,7 +3953,9 @@ public class UserRegisterationManager : MonoBehaviour
                     if (!myObject1.success)
                     {
                         //   //print("Hey success false " + myObject1.msg);
-                        errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         // if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {
                         //     errorTextName.GetComponent<Text>().text = "名前が無効です";
@@ -3909,7 +3966,7 @@ public class UserRegisterationManager : MonoBehaviour
                         // }
                         //errorHandler.ShowErrorMessage(ErrorType.Invalid_Username , errorTextName.GetComponent<Text>());
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                      //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -3941,12 +3998,14 @@ public class UserRegisterationManager : MonoBehaviour
                 ////Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                    ////Debug.Log(myObject1.msg);
+                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
-                        errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                     else
                     {
@@ -3963,9 +4022,11 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             }
             else
             {
@@ -3974,9 +4035,11 @@ public class UserRegisterationManager : MonoBehaviour
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
-                        errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -4093,7 +4156,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("firstTime", 1);
 
                     XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
-
+                    
                     if (!AutoLoginBool)
                     {
                         // savePasswordList.instance.saveData(LoginEmailNew.Text.Trim(), LoginPasswordShiftCode.GetText().Trim());
@@ -4131,7 +4194,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //  public NFTListMainNet AssignNFTList(int _limit, string _loggedIn, string _networkType, string _nftType, int _page, string _status)
 
 
-                    Debug.LogError("XanaliaBool " + XanaliaBool + " LoginTokenxanalia " + PlayerPrefs.GetString("LoginTokenxanalia"));
+
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
                         ConnectServerDataExtraction.NFTListMainNet NFTCreateJsonMain = new ConnectServerDataExtraction.NFTListMainNet();
@@ -4179,7 +4242,7 @@ public class UserRegisterationManager : MonoBehaviour
 
                     if (!string.IsNullOrEmpty(myObject1.data.user.walletAddress) && PlayerPrefs.HasKey("Equiped"))
                         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                    // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
+                   // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
 
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
@@ -4230,7 +4293,8 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (UIManager.Instance != null)//rik
                         {
-                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                           // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                           UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                         }
                         //if (EventList.instance.ListContent.transform.childCount == 0)
                         //{
@@ -4249,8 +4313,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
-
+                // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+                validationMessagePopUP.SetActive(true);
+                errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 // if (Application.systemLanguage == SystemLanguage.Japanese  )
                 // {
                 //     errorTextLogin.GetComponent<Text>().text = "接続状態が悪く繋がりません";
@@ -4260,7 +4325,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextLogin.GetComponent<Text>().text = request.error.ToUpper();
                 // }
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextLogin.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+               // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
                 if (_loader != null)
                     _loader.SetActive(false);
             }
@@ -4271,7 +4336,9 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+                        // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+                        validationMessagePopUP.SetActive(true);
+                        errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //print("Hey success false " + myObject1.msg);
                         if (myObject1.msg.Contains("You are already logged in another device"))
                         {
@@ -4315,7 +4382,7 @@ public class UserRegisterationManager : MonoBehaviour
                         if (_loader != null)
                             _loader.SetActive(false);
 
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+                       // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
                         //  if (Application.systemLanguage == SystemLanguage.Japanese  )
                         // {  
                         //     // 15: User is Not Valid or Registered
@@ -4336,7 +4403,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
             StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        }
+        } 
     }
 
 
@@ -4416,7 +4483,7 @@ public class UserRegisterationManager : MonoBehaviour
         //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        ////Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
+       ////Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4425,11 +4492,10 @@ public class UserRegisterationManager : MonoBehaviour
             yield return null;
         }
 
-        ////Debug.Log("nft response :- " + url + request.downloadHandler.text);
+       ////Debug.Log("nft response :- " + url + request.downloadHandler.text);
 
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
-        Debug.LogError("UserRole: " + request.downloadHandler.text);
 
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -4445,7 +4511,7 @@ public class UserRegisterationManager : MonoBehaviour
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                        ////Debug.Log("---- " + s + "----" + ReturnNftRole(s));
+                       ////Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4459,7 +4525,6 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             case "alpha-pass":
                                 {
-                                    FightingModuleManager.Instance.isUserHaveAlphaPass = true;
                                     PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
                                     break;
                                 }
@@ -4507,7 +4572,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                        ////Debug.Log("Success false in  in set device token");
+                       ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -4588,7 +4653,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
-        // OpenUIPanal(7);
+       // OpenUIPanal(7);
         SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         getdatafromserver();

@@ -129,6 +129,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         if (textPlayerTottleFollower.gameObject.activeInHierarchy)
         {
+            Debug.LogError("RefreshUserData");
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
         }
     }
@@ -597,7 +598,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         if (currentFindFriendWithNameItemScript != null)
         {
-            currentFindFriendWithNameItemScript.searchUserRow.isFollowing = isFollow;
+            currentFindFriendWithNameItemScript.searchUserRow.is_following_me = isFollow;
             currentFindFriendWithNameItemScript.FollowFollowingSetUp(isFollow);
         }
         //followText.GetComponent<TextLocalization>().LocalizeTextText();
@@ -816,7 +817,12 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             if (www.isNetworkError || www.isHttpError)
             {

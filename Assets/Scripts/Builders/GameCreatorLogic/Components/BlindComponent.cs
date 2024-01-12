@@ -49,7 +49,24 @@ public class BlindComponent : ItemComponent
             IsAgainTouchable = false;
 
             if (GamificationComponentData.instance.withMultiplayer)
+            {
+                if (!blindToggle)
+                {
+                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+                    utccounterValue.CounterValue = blindComponentCo == null ? blindComponentData.time : time;
+                    BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+                    if (blindComponentCo != null)
+                    {
+                        StopCoroutine(blindComponentCo);
+                        blindComponentCo = null;
+                    }
+                    var hash = new ExitGames.Client.Photon.Hashtable();
+                    hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                }
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            }
             else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
     }
@@ -61,6 +78,7 @@ public class BlindComponent : ItemComponent
             time--;
             yield return new WaitForSeconds(1f);
         }
+        blindComponentCo = null;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -76,44 +94,52 @@ public class BlindComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (PlayerCanvas.Instance.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
+        Start();
+        if (TimeStats.playerCanvas.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
         {
-            PlayerCanvas.Instance.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
-            PlayerCanvas.Instance.transform.localPosition = Vector3.up * 18.5f;
+            TimeStats.playerCanvas.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
+            TimeStats.playerCanvas.transform.localPosition = Vector3.up * 18.5f;
 
         }
-        PlayerCanvas.Instance.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
+        TimeStats.playerCanvas.cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
 
 
         float timeDiff = 0;
+
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                var hash = new ExitGames.Client.Photon.Hashtable();
-                hash.Add("blindComponent", DateTime.UtcNow.ToString());
-                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-            }
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponent) && !blindToggle)
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponentObj) && !blindToggle)
             {
-                string blindComponentstr = blindComponent.ToString();
-                DateTime dateTimeRPC = Convert.ToDateTime(blindComponentstr); ;
+                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(blindComponentObj.ToString());
+                DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
                 DateTime currentDateTime = DateTime.UtcNow;
                 TimeSpan diff = currentDateTime - dateTimeRPC;
-
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                time = timeDiff;
 
-                if (time == 0 || time > blindComponentData.time)
+                if (blindComponentCo != null)
+                {
+                    StopCoroutine(blindComponentCo);
+                    blindComponentCo = null;
+                }
+
+                BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+                    utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
+                else
                     return;
+                time = utccounterValue.CounterValue;
+                //if (time == 0 || time > blindComponentData.time)
+                //    return;
             }
         }
 
-        if (time == 0 && !blindComponentData.isOff)
+        if (time == 0 && !blindToggle)
         {
             time = blindComponentData.time;
             blindComponentCo = null;
@@ -121,14 +147,12 @@ public class BlindComponent : ItemComponent
 
         if (blindComponentCo == null && time > 0)
             blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
-
         TimeStats._blindComponentStart?.Invoke(blindToggle, _light, _lightsIntensity, time, blindComponentData.radius, this.gameObject, skyBoxID);
 
     }
     private void StopComponent()
     {
         TimeStats._blindComponentStop?.Invoke();
-        playerObject = null;
     }
 
     public override void StopBehaviour()
