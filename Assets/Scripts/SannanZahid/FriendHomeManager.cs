@@ -27,7 +27,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     string PrepareApiURL()
     {
-        return ConstantsGod.API_BASEURL+"/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
+        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
     }
     IEnumerator BuildMoodDialog()
     {
@@ -41,11 +41,11 @@ public class FriendHomeManager : MonoBehaviour
         {
             if (isSucess)
             {
-                foreach(FriendsDetail friend in _friendsDataFetched.data.rows)
+                foreach (FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
-                   if(SpawnFriendsObj.Find(x => x.id == friend.id) == null)
+                    if (SpawnFriendsObj.Find(x => x.id == friend.id) == null)
                     {
-                        FriendSpawnData FriendSpawn= new FriendSpawnData();
+                        FriendSpawnData FriendSpawn = new FriendSpawnData();
                         Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
                         Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
                         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
@@ -54,15 +54,15 @@ public class FriendHomeManager : MonoBehaviour
                         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
                         CreatedFriend.gameObject.SetActive(true);
                         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
-                        if (friend.userOccupiedAssets.Count>0 && friend.userOccupiedAssets[0].json != null)
+                        if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
                         {
                             CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
                         }
                         else
                         {
-                             CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
+                            CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
                         }
-                        CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble, 
+                        CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
                             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
                         FriendSpawn.id = friend.id;
                         FriendSpawn.friendObj = CreatedFriend;
@@ -70,13 +70,13 @@ public class FriendHomeManager : MonoBehaviour
                         FriendSpawn.friendPostBubbleObj = CreatedFriendPostBubble;
                         SpawnFriendsObj.Add(FriendSpawn);
                         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
-                            friend.id, 
-                            CreatedFriend.GetComponent<PlayerPostBubbleHandler>(), 
+                            friend.id,
+                            CreatedFriend.GetComponent<PlayerPostBubbleHandler>(),
                             CreatedFriend.GetComponent<Actor>()
                             );
                     }
                 }
-             
+
             }
             else
             {
@@ -106,7 +106,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     public void EnableFriendsView(bool flag)
     {
-        foreach(FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
+        foreach (FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
         {
             SpawnFriendsObjref.friendNameObj.gameObject.SetActive(flag);
             SpawnFriendsObjref.friendObj.gameObject.SetActive(flag);
@@ -119,13 +119,13 @@ public class FriendHomeManager : MonoBehaviour
         _friendtoRemove = null;
         foreach (FriendSpawnData SpawnFriendsObjref in SpawnFriendsObj)
         {
-                if(SpawnFriendsObjref.id == friendId)
-                {
-                    _friendtoRemove = SpawnFriendsObjref;
-                    break;
-                }
+            if (SpawnFriendsObjref.id == friendId)
+            {
+                _friendtoRemove = SpawnFriendsObjref;
+                break;
+            }
         }
-        if(_friendtoRemove != null)
+        if (_friendtoRemove != null)
         {
             SpawnFriendsObj.Remove(_friendtoRemove);
             Destroy(_friendtoRemove.friendNameObj.gameObject);
@@ -151,21 +151,25 @@ public class FriendHomeManager : MonoBehaviour
 
     private void UpdateFriendPost(ReceivedFriendPostData data)
     {
-        if (!string.IsNullOrEmpty(data.text_post))
+        print("________________________ " + data.creatorId);
+        foreach (var frds in SpawnFriendsObj)
         {
-            foreach (var frds in SpawnFriendsObj)
+            if (frds.id == int.Parse(data.creatorId))
             {
-                if(frds.id == int.Parse(data.creatorId))
+                if (!string.IsNullOrEmpty(data.text_post))
                 {
                     frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
                 }
+
+                if (!string.IsNullOrEmpty(data.text_mood))
+                {
+                    GameManager.Instance.PostManager.GetComponent<UserAnimationPostFeature>().SetMood(data.text_mood, frds.friendObj.GetComponent<Actor>());
+                    // Update Animation Here
+                }
             }
         }
-        
-        if (!string.IsNullOrEmpty(data.text_mood))
-        {
-            // Update Animation Here
-        }
+
+       
     }
 }
 
@@ -209,9 +213,9 @@ public class tempclassfordatafeed
 [Serializable]
 public class FriendSpawnData
 {
-   public int id;
-   public Transform friendObj;
-   public Transform friendNameObj;
+    public int id;
+    public Transform friendObj;
+    public Transform friendNameObj;
     public Transform friendPostBubbleObj;
 
 }
