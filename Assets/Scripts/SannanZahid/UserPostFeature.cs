@@ -86,7 +86,15 @@ public class UserPostFeature : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return new WaitForSecondsRealtime(Time.deltaTime);
-
+          
+            if (www.error != null)
+            {
+                Debug.Log("UnityWebRequest.error:" + www.error);
+            }
+            else 
+            {
+                Debug.Log("Response:" + www.downloadHandler.text);
+            }
             www.Dispose();
         }
     }
