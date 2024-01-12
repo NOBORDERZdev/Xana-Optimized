@@ -445,6 +445,7 @@ public class AvatarController : MonoBehaviour
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
                 if (_CharacterData.myItemObj.Count > 0)
