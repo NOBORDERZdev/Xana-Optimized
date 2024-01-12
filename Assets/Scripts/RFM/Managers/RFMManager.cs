@@ -10,7 +10,6 @@ using RFM.Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
