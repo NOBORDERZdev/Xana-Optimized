@@ -67,6 +67,7 @@ public class AvatarController : MonoBehaviour
         }
         else
         {
+            Debug.LogError("else main");
             if (XanaConstants.xanaConstants.isNFTEquiped)
             {
                 EquipNFT();
@@ -97,22 +98,25 @@ public class AvatarController : MonoBehaviour
         XanaConstants.xanaConstants.isNFTEquiped = true;
         XanaConstants.xanaConstants.isHoldCharacterNFT = true;
 
-        ResetBonesDefault(bodyParts);
-        bodyParts.DefaultBlendShapes(this.gameObject);
+        if (bodyParts != null)
+        {
+            ResetBonesDefault(bodyParts);
+            bodyParts.DefaultBlendShapes(this.gameObject);
 
-        bodyParts.DefaultTexture(false);
-        ResizeClothToBodyFat(this.gameObject, 0);
+            bodyParts.DefaultTexture(false);
+            ResizeClothToBodyFat(this.gameObject, 0);
 
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 0);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 0);
+            bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 0);
+            bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 0);
 
-        //extra blendshape added to character to build muscles on Character
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(54, 100);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+            //extra blendshape added to character to build muscles on Character
+            bodyParts.Head.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(54, 100);
+            bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
 
-        BoxerNFTEventManager.OnNFTequipShaderUpdate?.Invoke();
+            BoxerNFTEventManager.OnNFTequipShaderUpdate?.Invoke();
 
-        IntializeAvatar(canModifyFile);
+            IntializeAvatar(canModifyFile);
+        }
 
         if (EyesBlinking.instance)
         {
