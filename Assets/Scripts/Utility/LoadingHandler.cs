@@ -79,6 +79,7 @@ public class LoadingHandler : MonoBehaviour
     private float sliderCompleteValue = 0f;
 
     public GameObject SearchLoadingCanvas;
+    private CanvasGroup canvasGroup;
     private void Awake()
     {
         if (Instance == null)
@@ -104,6 +105,7 @@ public class LoadingHandler : MonoBehaviour
         sliderFinalValue = Random.Range(80f, 95f);
         sliderCompleteValue = Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     IEnumerator StartBGChange()
@@ -463,6 +465,8 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
+        if(canvasGroup.alpha == 0)
+            canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
         characterLoading.SetActive(false);
