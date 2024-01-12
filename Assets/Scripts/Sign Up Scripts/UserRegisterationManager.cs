@@ -689,6 +689,8 @@ public class UserRegisterationManager : MonoBehaviour
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
         //   StartCoroutine(LoginUserPresetOnly());
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            welcomeScreen.SetActive(true) ;
     }
 
     void CheckCameraMan() {
