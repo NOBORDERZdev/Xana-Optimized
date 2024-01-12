@@ -543,15 +543,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (timer > 0)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.SituationChangerComponent);
-            if (SituationChangerCoroutine == null)
-            {
-                SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
-            }
-            else
-            {
-                StopCoroutine(SituationChangerCoroutine);
-                SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
-            }
+            //if (SituationChangerCoroutine == null)
+            //{
+            //    SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
+            //}
+            //else
+            //{
+            //    StopCoroutine(SituationChangerCoroutine);
+            //    SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
+            //}
+            SituationChangerTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            SituationChangerParentUI.SetActive(true);
         }
         else
         {
@@ -570,7 +572,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             SituationChangerParentUI.SetActive(true);
             yield return new WaitForSeconds(1f);
         }
-        TimeStats._intensityChangerStop?.Invoke();
+        //TimeStats._intensityChangerStop?.Invoke();
         SituationChangerParentUI.SetActive(false);
         SituationChangerTimeText.text = "00:00";
     }
@@ -1307,15 +1309,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (timer > 0)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.BlindComponent);
-            if (BlindComponentCoroutine == null)
-            {
-                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
-            }
-            else
-            {
-                StopCoroutine(BlindComponentCoroutine);
-                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
-            }
+            //if (BlindComponentCoroutine == null)
+            //{
+            //    BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            //}
+            //else
+            //{
+            //    StopCoroutine(BlindComponentCoroutine);
+            //    BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            //}
+            BlindComponentTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            BlindComponentParentUI.SetActive(true);
         }
         else
         {
@@ -1334,7 +1338,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             BlindComponentParentUI.SetActive(true);
             yield return new WaitForSeconds(1f);
         }
-        TimeStats._blindComponentStop?.Invoke();
+        //TimeStats._blindComponentStop?.Invoke();
         BlindComponentParentUI.SetActive(false);
         BlindComponentTimeText.text = "00:00";
     }
@@ -1480,8 +1484,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableAvatarInvisibilityUI();
         if (componentType != Constants.ItemComponentType.ThrowThingsComponent)
             DisableThrowThingUI();
-        if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
-            DisableHyperLinkPopupUI();
+        //if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
+        //    DisableHyperLinkPopupUI();
         if (componentType != Constants.ItemComponentType.BlindComponent)
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)

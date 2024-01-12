@@ -158,6 +158,7 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
+        GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))

@@ -65,6 +65,7 @@ public static class BuilderEventManager
 
     //Situation Changer Component
     public static Action<float> OnSituationChangerTriggerEnter;
+    public static Action DisableSituationLight;
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;

@@ -88,6 +88,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal Canvas nameCanvas;
     public PlayerCanvas playerCanvas;
     internal bool isBuilderWorldPlayerSetup;
+    public RuntimeAnimatorController idleAnimation;
 
     private void Awake()
     {
@@ -290,7 +291,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
     {
-        BuilderEventManager.onComponentActivated?.Invoke(componentType);
+        if (componentType != Constants.ItemComponentType.BlindComponent || componentType != Constants.ItemComponentType.SituationChangerComponent)
+            BuilderEventManager.onComponentActivated?.Invoke(componentType);
     }
 
     internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)

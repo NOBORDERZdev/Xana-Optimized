@@ -3,6 +3,7 @@ using Models;
 using System;
 using Photon.Pun;
 using UnityEngine;
+using Photon.Realtime;
 
 public class BlindComponent : ItemComponent
 {
@@ -18,10 +19,15 @@ public class BlindComponent : ItemComponent
 
     float time;
     string RuntimeItemID = "";
-
+    bool isRunning = false;
     GameObject playerObject;
+    Coroutine dimLightsCoroutine;
+    private void Start()
+    {
+        GetLightsData();
+    }
 
-    void Start()
+    void GetLightsData()
     {
         _light = FindObjectsOfType<Light>();
         _lightsIntensity = new float[_light.Length];
@@ -50,24 +56,19 @@ public class BlindComponent : ItemComponent
 
             if (GamificationComponentData.instance.withMultiplayer)
             {
-                if (!blindToggle)
+                if (!blindToggle && isRunning)
                 {
                     UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
                     utccounterValue.UTCTime = DateTime.UtcNow.ToString();
                     utccounterValue.CounterValue = blindComponentCo == null ? blindComponentData.time : time;
-                    BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
-                    if (blindComponentCo != null)
-                    {
-                        StopCoroutine(blindComponentCo);
-                        blindComponentCo = null;
-                    }
                     var hash = new ExitGames.Client.Photon.Hashtable();
                     hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
                     PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
                 }
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             }
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            else
+                StartComponent();
         }
     }
 
@@ -91,10 +92,79 @@ public class BlindComponent : ItemComponent
         playerObject = null;
     }
 
+    IEnumerator DimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, int _skyBoxID = 20)
+    {
+
+        while (!timeCheck.Equals(0))
+        {
+            timeCheck -= Time.deltaTime;
+            timeCheck = Mathf.Clamp(timeCheck, 0, Mathf.Infinity);
+            BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke((int)timeCheck);
+            yield return null;
+        }
+
+        Stop();
+
+    }
+
+
+
+
+    public void Play()
+    {
+        if (isRunning) return;
+        isRunning = true;
+        if (dimLightsCoroutine != null)
+        {
+            StopCoroutine(dimLightsCoroutine);
+            dimLightsCoroutine = null;
+        }
+
+        dimLightsCoroutine = StartCoroutine(DimLights(blindToggle, _light, _lightsIntensity, blindComponentData.time + 1, blindComponentData.radius, skyBoxID));
+    }
+    public void Stop()
+    {
+        if (dimLightsCoroutine != null)
+        {
+            StopCoroutine(dimLightsCoroutine);
+            dimLightsCoroutine = null;
+        }
+
+        for (int i = 0; i < _light.Length; i++)
+        {
+            _light[i].intensity = _lightsIntensity[i];
+        }
+        BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(GamificationComponentData.instance.previousSkyID);
+        TimeStats.playerCanvas.ToggleBlindLight(false, 300);
+        GamificationComponentData.instance.isBlindToogle = false;
+        isRunning = false;
+
+    }
+
+    private void ToggleStatus(bool _Status, float _Radius, int _skyBoxID)
+    {
+        if (_Status)
+        {
+            SituationChangerSkyboxScript.instance.ChangeSkyBox(_skyBoxID);
+            TimeStats.playerCanvas.ToggleBlindLight(true, _Radius);
+            return;
+        }
+
+        for (int i = 0; i < _light.Length; i++)
+        {
+            _light[i].intensity = _lightsIntensity[i];
+        }
+
+        BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(GamificationComponentData.instance.previousSkyID);
+        TimeStats.playerCanvas.ToggleBlindLight(false, 300);
+    }
+
     #region BehaviourControl
     private void StartComponent()
     {
-        Start();
+        GetLightsData();
         if (TimeStats.playerCanvas.transform.parent != GamificationComponentData.instance.nameCanvas.transform)
         {
             TimeStats.playerCanvas.transform.SetParent(GamificationComponentData.instance.nameCanvas.transform);
@@ -112,7 +182,7 @@ public class BlindComponent : ItemComponent
         }
         else
         {
-            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponentObj) && !blindToggle)
+            if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("blindComponent", out object blindComponentObj) && !blindToggle && GamificationComponentData.instance.withMultiplayer)
             {
                 UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
                 utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(blindComponentObj.ToString());
@@ -120,22 +190,11 @@ public class BlindComponent : ItemComponent
                 DateTime currentDateTime = DateTime.UtcNow;
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-
-                if (blindComponentCo != null)
-                {
-                    StopCoroutine(blindComponentCo);
-                    blindComponentCo = null;
-                }
-
-                BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
-
                 if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
                     utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
                 else
                     return;
                 time = utccounterValue.CounterValue;
-                //if (time == 0 || time > blindComponentData.time)
-                //    return;
             }
         }
 
@@ -145,23 +204,72 @@ public class BlindComponent : ItemComponent
             blindComponentCo = null;
         }
 
-        if (blindComponentCo == null && time > 0)
-            blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
-        TimeStats._blindComponentStart?.Invoke(blindToggle, _light, _lightsIntensity, time, blindComponentData.radius, this.gameObject, skyBoxID);
+        //if (blindComponentCo == null && time > 0)
+        //    blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
+        //TimeStats._blindComponentStart?.Invoke(blindToggle, _light, _lightsIntensity, time, blindComponentData.radius, this.gameObject, skyBoxID);
+
+
+        //New code
+        if (!isRunning)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        }
+
+        if (blindToggle)// when toggle is off then no timer
+        {
+            // set dark mode
+            if (!GamificationComponentData.instance.isBlindToogle)
+            {
+                GamificationComponentData.instance.isBlindToogle = true;
+                ToggleStatus(true, blindComponentData.radius, skyBoxID);
+                return;
+            }
+            else // set light mode
+            {
+                GamificationComponentData.instance.isBlindToogle = false;
+                ToggleStatus(false, blindComponentData.radius, skyBoxID);
+                return;
+            }
+        }
+        else
+        {
+            // set dark mode
+            if (!GamificationComponentData.instance.isBlindToogle)
+            {
+                GamificationComponentData.instance.isBlindToogle = true;
+                ToggleStatus(true, blindComponentData.radius, skyBoxID);
+                Play();
+                return;
+            }
+            else // set light mode
+            {
+                GamificationComponentData.instance.isBlindToogle = false;
+                ToggleStatus(false, blindComponentData.radius, skyBoxID);
+                if (!isRunning) Play();
+                return;
+            }
+        }
 
     }
     private void StopComponent()
     {
-        TimeStats._blindComponentStop?.Invoke();
+        //TimeStats._blindComponentStop?.Invoke();
+        //isRunning = false;
+        Debug.LogError(this.gameObject.name);
+        ToggleStatus(false, blindComponentData.radius, GamificationComponentData.instance.previousSkyID);
+        BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+        isRunning = false;
+        if (dimLightsCoroutine != null)
+        {
+            StopCoroutine(dimLightsCoroutine);
+            dimLightsCoroutine = null;
+        }
     }
 
     public override void StopBehaviour()
     {
-        if (isPlaying)
-        {
-            isPlaying = false;
-            StopComponent();
-        }
+        isPlaying = false;
+        StopComponent();
     }
 
     public override void PlayBehaviour()
