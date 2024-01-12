@@ -177,8 +177,8 @@ public class UserPostFeature : MonoBehaviour
             _postBubbleFlag = false;
             Bubble.gameObject.SetActive(false);
         }
-        else if(_previousTextElement!=null)
-            _previousTextElement.text = RetrievedPostPlayer.data.text_post;
+        //else if(_previousTextElement!=null)
+        //    _previousTextElement.text = RetrievedPostPlayer.data.text_post;
         if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
         {
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood).IdleAnimationFlag;
