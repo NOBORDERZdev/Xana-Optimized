@@ -390,9 +390,9 @@ public class APIController : MonoBehaviour
                     }
                 }
             }
-            Resources.UnloadUnusedAssets();
+            //Resources.UnloadUnusedAssets();
             //Caching.ClearCache();
-            GC.Collect();
+            //GC.Collect();
             APIManager.Instance.OnFeedAPiCalling("PullRefresh");
         }
     }
