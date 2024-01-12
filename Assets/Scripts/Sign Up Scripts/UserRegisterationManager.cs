@@ -559,7 +559,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         */
     }
-    void GetOwnedNFTsFromAPI()
+    public void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
      }  
