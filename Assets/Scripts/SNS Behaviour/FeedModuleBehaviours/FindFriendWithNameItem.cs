@@ -207,7 +207,12 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while(!www.isDone)
+            {
+                   yield return null;
+            }
 
            // FeedUIController.Instance.ShowLoader(false);//false api loader
 
