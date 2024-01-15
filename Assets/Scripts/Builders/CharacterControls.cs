@@ -67,11 +67,12 @@ public sealed class CharacterControls : MonoBehaviour
 
 
 
-
         while (true)
         {
             yield return new WaitForEndOfFrame();
             cc.stepOffset = stepOffset;
+
+            BuilderEventManager.ChangeCameraHeight?.Invoke(true);
             //vtc.height = cameraHeight;
             //playerControler.finalWalkSpeed = walkSpeed;
             //playerControler.walkSpeed = walkSpeed;
@@ -87,6 +88,7 @@ public sealed class CharacterControls : MonoBehaviour
         playerControler.sprintSpeed = old_sprintSpeed;
         playerControler.jumpHeight = old_jumpHeight;
         playerControler.GetComponent<CharacterController>().stepOffset = old_stepOffset;
+        BuilderEventManager.ChangeCameraHeight?.Invoke(false);
         //playerControler.controllerCamera.GetComponent<vThirdPersonCamera>().height = old_cameraHeight;
     }
 }
