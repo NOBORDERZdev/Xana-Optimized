@@ -34,6 +34,9 @@ public class NpcSpawner : MonoBehaviour
 
     void Start()
     {
+        // currently Not creatring any NPC's
+        return;
+
         npcModel = new List<GameObject>();
 
         aiPrefabs = Resources.Load("NPC") as GameObject;

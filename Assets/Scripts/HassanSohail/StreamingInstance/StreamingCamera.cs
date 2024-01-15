@@ -188,7 +188,7 @@ public class StreamingCamera : MonoBehaviour
                    // ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
                     ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
-                    XanaChatSystem.instance.OpenCloseChatDialog();
+                    //XanaChatSystem.instance.OpenCloseChatDialog();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
                     if(!isInfiniteStremaing)
                    LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());

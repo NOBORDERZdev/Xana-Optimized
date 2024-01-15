@@ -118,12 +118,15 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
-                XanaConstants.xanaConstants.needToClearMemory = false;    
-                if (LoadingHandler.Instance)
-                    LoadingHandler.Instance.HideLoading();
-            GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
-            InternetLost = go;
-             }
+                XanaConstants.xanaConstants.needToClearMemory = false;
+                //    if (LoadingHandler.Instance)
+                //        LoadingHandler.Instance.HideLoading();
+
+                //GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
+                //InternetLost = go;
+
+                LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+            }
 
             if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {

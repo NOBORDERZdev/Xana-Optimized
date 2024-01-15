@@ -71,7 +71,9 @@ public class WorldManager : MonoBehaviour
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 3);
+
+        // Increase time so the getResponse of the Login API before calling blow method
+        Invoke(nameof(LoadJjworld), 8);
     }
     public void CheckWorldTabAndReset(APIURL tab)
     {
@@ -161,7 +163,7 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
-            if (AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
+            if (StreamingSockets.Instance.EnableEventStreaming  && AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
             {
                 AutoSwtichIndex++;
             }
