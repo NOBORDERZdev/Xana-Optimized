@@ -255,7 +255,6 @@ public class BlindComponent : ItemComponent
     {
         //TimeStats._blindComponentStop?.Invoke();
         //isRunning = false;
-        Debug.LogError(this.gameObject.name);
         ToggleStatus(false, blindComponentData.radius, GamificationComponentData.instance.previousSkyID);
         BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
         isRunning = false;

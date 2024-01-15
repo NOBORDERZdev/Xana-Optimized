@@ -61,6 +61,7 @@ public class CameraLook : MonoBehaviour
     [SerializeField] GameObject pointObj;
     GameObject camRender;
     float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius;
+
     private void OnEnable()
     {
         controls.Enable();
@@ -154,6 +155,8 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Editor();
                 }
             }
+            if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
+                return;
             if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
             {
                 zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
@@ -328,6 +331,8 @@ public class CameraLook : MonoBehaviour
     {
         if (!CheckCanZoom())
             return;
+        if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
+            return;
         if (m_PressCounter != 0 || isJoystickPressed) return;
         if (Input.touchCount == 2)
         {
@@ -404,6 +409,7 @@ public class CameraLook : MonoBehaviour
         return false;
     }
 
+    //Code for the builder world when triggering Assets Changer (Avatar Changer component)
     void ChangeCameraHeight(bool changeState)
     {
         if (changeState)
@@ -413,6 +419,7 @@ public class CameraLook : MonoBehaviour
             cinemachine.m_Orbits[0].m_Radius = 10;
             cinemachine.m_Orbits[1].m_Radius = 10;
             cinemachine.m_Orbits[2].m_Radius = 5;
+
         }
         else
         {

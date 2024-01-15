@@ -1312,6 +1312,8 @@ public class PlayerControllerNew : MonoBehaviour
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;
         jumpMultiplier = jumpValue;
+        //Store default speed when player update it's speed & jump height
+        GamificationComponentData.instance.buildingDetect.DefaultSpeedStore();
     }
 
     void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)

@@ -89,13 +89,6 @@ public class BuildingDetect : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(2f);
-
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
-
-        defaultJumpHeight = _playerControllerNew.JumpVelocity;
-        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
-        defaultMoveSpeed = _playerControllerNew.movementSpeed;
-
         powerUpCoroutine = playerPowerUp();
 
         SIpowerUpCoroutine = SIPowerUp();
@@ -131,6 +124,14 @@ public class BuildingDetect : MonoBehaviour
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
         nameCanvasDefaultYpos = GamificationComponentData.instance.nameCanvas.transform.localPosition.y;
+    }
+
+    internal void DefaultSpeedStore()
+    {
+        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        defaultJumpHeight = _playerControllerNew.JumpVelocity;
+        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
+        defaultMoveSpeed = _playerControllerNew.movementSpeed;
     }
 
     private void OnEnable()
@@ -370,11 +371,8 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            //GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
             Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
             pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
-            //Quaternion rot = ReferrencesForDynamicMuseum.instance.m_34player.transform.rotation;
-            //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
             _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
             _specialEffects.transform.localEulerAngles = Vector3.up * 180;
@@ -405,14 +403,7 @@ public class BuildingDetect : MonoBehaviour
             _playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
-        //_specialEffects.gameObject.SetActive(false);
-        if (_specialEffects)
-            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
-        ApplyDefaultEffect();
-        _specialEffects = null;
-        _playerControllerNew.specialItem = false;
-        _playerControllerNew.movementSpeed = defaultMoveSpeed;
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
+        StopSpecialItemComponent();
     }
 
     private void ApplySuperMarioEffect()
@@ -438,24 +429,16 @@ public class BuildingDetect : MonoBehaviour
     public void StopSpecialItemComponent()
     {
         StoppingCoroutine();
-        //_remainingText.gameObject.SetActive(false);
-        if (_playerControllerNew.specialItem)
-        {
-            _playerControllerNew.specialItem = false;
-            BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
-        }
+        BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
         if (_specialEffects)
         {
-            //_specialEffects.SetActive(false);
-            //if (_specialEffects.activeInHierarchy)
             PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
             ApplyDefaultEffect();
             _specialEffects = null;
         }
-        canRunCo = false;
-        _playerControllerNew.jumpHeight = defaultJumpHeight;
-        _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+        _playerControllerNew.specialItem = false;
         _playerControllerNew.movementSpeed = defaultMoveSpeed;
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
     }
     #endregion
 

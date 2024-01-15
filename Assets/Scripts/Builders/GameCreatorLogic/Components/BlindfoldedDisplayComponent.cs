@@ -124,7 +124,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     IEnumerator BackToAvatarVisiblityHologram()
     {
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
         BuilderEventManager.ActivateAvatarInivisibility?.Invoke();
         invisibleAvatar = PhotonNetwork.Instantiate("InvisibleAvatar", Vector3.zero, Quaternion.identity);
         yield return new WaitForSeconds(blindfoldedDisplayComponentData.blindfoldSliderValue);
@@ -177,7 +177,6 @@ public class BlindfoldedDisplayComponent : ItemComponent
         }
 
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
-        BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(0);
         if (!notTriggerOther)
         {
             Physics.IgnoreLayerCollision(9, 22, false);
@@ -197,6 +196,8 @@ public class BlindfoldedDisplayComponent : ItemComponent
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
+        if(!gameObject.activeInHierarchy)
+            this.gameObject.SetActive(true);
 
         Physics.IgnoreLayerCollision(9, 22, true);
 
