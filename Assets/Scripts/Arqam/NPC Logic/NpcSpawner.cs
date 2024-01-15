@@ -34,20 +34,22 @@ public class NpcSpawner : MonoBehaviour
 
     void Start()
     {
-        npcModel = new List<GameObject>();
+        // currently Not creatring any NPC's
 
-        aiPrefabs = Resources.Load("NPC") as GameObject;
-        for (int i = 0; i < aiStrength; i++)
-        {
-            GameObject npc = Instantiate(aiPrefabs);
-            Vector3 temp = RandomNavMeshPoint();
-            npc.transform.position = temp;
-            npc.transform.rotation = Quaternion.identity;
+        //npcModel = new List<GameObject>();
+
+        //aiPrefabs = Resources.Load("NPC") as GameObject;
+        //for (int i = 0; i < aiStrength; i++)
+        //{
+        //    GameObject npc = Instantiate(aiPrefabs);
+        //    Vector3 temp = RandomNavMeshPoint();
+        //    npc.transform.position = temp;
+        //    npc.transform.rotation = Quaternion.identity;
             
-            npcCounter++;
-            npcModel.Add(npc);
-        }
-        StartCoroutine(ReactScreen.Instance.getAllReactions());
+        //    npcCounter++;
+        //    npcModel.Add(npc);
+        //}
+        //StartCoroutine(ReactScreen.Instance.getAllReactions());
     }
 
     private void UpdateNpcName(NpcChatSystem npcChatSystem)

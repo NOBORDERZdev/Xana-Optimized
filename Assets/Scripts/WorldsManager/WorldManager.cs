@@ -71,8 +71,31 @@ public class WorldManager : MonoBehaviour
         //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
         BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
         ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 3);
+
+        // Increase time so the getResponse of the Login API before calling blow method
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Invoke(nameof(Check_Internet_Availabilaty), 1);
+        }
+        else
+        {
+            Invoke(nameof(LoadJjworld), 8);
+        }
     }
+
+
+    void Check_Internet_Availabilaty()
+    {
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Invoke(nameof(Check_Internet_Availabilaty), 1);
+        }
+        else
+        {
+            Invoke(nameof(LoadJjworld), 2);
+        }
+    }
+
     public void CheckWorldTabAndReset(APIURL tab)
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
@@ -91,10 +114,11 @@ public class WorldManager : MonoBehaviour
         {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
-        else {
+        else
+        {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
         }
-      
+
         WorldItemManager.DisplayWorlds("Temp");
         StartCoroutine(WorldCall(tab));
     }
@@ -142,11 +166,12 @@ public class WorldManager : MonoBehaviour
             previousSearchKey = SearchKey = searchKey;
         }
     }
- 
 
-    void SetAutoSwtichStreaming(){ 
-         if (XanaConstants.xanaConstants.isCameraMan )
-         {
+
+    void SetAutoSwtichStreaming()
+    {
+        if (XanaConstants.xanaConstants.isCameraMan)
+        {
             StreamingSockets.Instance.ConnectSockets();
             Screen.orientation = ScreenOrientation.LandscapeLeft;
 
@@ -161,7 +186,7 @@ public class WorldManager : MonoBehaviour
             {
                 XanaConstants.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
-            if (AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
+            if (StreamingSockets.Instance.EnableEventStreaming && AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
             {
                 AutoSwtichIndex++;
             }
@@ -170,8 +195,8 @@ public class WorldManager : MonoBehaviour
                 AutoSwtichIndex = 0;
             }
             LoadingHandler.Instance.streamingLoading.UpdateLoadingText(true);
-            XanaConstants.xanaConstants.newStreamEntery=true;
-         }    
+            XanaConstants.xanaConstants.newStreamEntery = true;
+        }
     }
 
     private void OnDestroy()
@@ -383,7 +408,7 @@ public class WorldManager : MonoBehaviour
             if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             {
                 isLobbyActive = true;
-                if(EventPrefabLobby.activeInHierarchy)
+                if (EventPrefabLobby.activeInHierarchy)
                     EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
             }
             else
@@ -407,10 +432,11 @@ public class WorldManager : MonoBehaviour
         {
             Invoke(nameof(ShowTutorial), 1f);
         }
-       
+
     }
 
-    public void ShowTutorial(){ 
+    public void ShowTutorial()
+    {
         TutorialsManager.instance.ShowTutorials();
     }
 
@@ -576,7 +602,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-        CheckAgain:
+    CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
@@ -689,7 +715,7 @@ public class WorldManager : MonoBehaviour
             Launcher.sceneName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
-        
+
     }
 }
 [Serializable]
