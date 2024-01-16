@@ -86,7 +86,15 @@ public class UserPostFeature : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return new WaitForSecondsRealtime(Time.deltaTime);
-
+          
+            if (www.error != null)
+            {
+                Debug.Log("UnityWebRequest.error:" + www.error);
+            }
+            else 
+            {
+                Debug.Log("Response:" + www.downloadHandler.text);
+            }
             www.Dispose();
         }
     }
@@ -169,8 +177,8 @@ public class UserPostFeature : MonoBehaviour
             _postBubbleFlag = false;
             Bubble.gameObject.SetActive(false);
         }
-        else if(_previousTextElement!=null)
-            _previousTextElement.text = RetrievedPostPlayer.data.text_post;
+        //else if(_previousTextElement!=null)
+        //    _previousTextElement.text = RetrievedPostPlayer.data.text_post;
         if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
         {
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood).IdleAnimationFlag;

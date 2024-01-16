@@ -196,7 +196,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
     public GameObject EntertheWorld_Panal;
-    public GameObject NewSignUp_Panal, LoginScreenNew;
+    public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
     public GameObject LogoImage,LogoImage2,LogoImage3;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
@@ -760,6 +760,8 @@ public class UserRegisterationManager : MonoBehaviour
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
         //   StartCoroutine(LoginUserPresetOnly());
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            welcomeScreen.SetActive(true) ;
     }
 
     void CheckCameraMan() {
@@ -1377,6 +1379,15 @@ public class UserRegisterationManager : MonoBehaviour
                         //OnSignUpPhoneTabPressed();
                         //  OnSignUpWalletTabPressed();
                     }
+//=======
+//                    PlayerPrefs.SetInt("iSignup", 1);// going for register user
+//                    SignUpPanal.SetActive(true);
+//                    EmailFieldNew.Text = "";
+//                    Password1New.Text = "";
+//                    Password2New.Text = "";
+//                    //OnSignUpPhoneTabPressed();
+//                    //  OnSignUpWalletTabPressed();
+//>>>>>>> 7cd3cb1d36f826da9f01d840dc518ee6379aaa25
 
                     break;
                 }
@@ -3431,7 +3442,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             foreach (Transform child in Swipe_menu.instance.contentParent)
             {
-                Destroy(child.gameObject);
+              //  Destroy(child.gameObject);
             }
         }
         BlackScreen.SetActive(true);
@@ -3459,7 +3470,13 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void EnterUserName()
     {
-        
+        GameObject NxtButtonObj = EventSystem.current.currentSelectedGameObject;
+        if (NxtButtonObj)
+        {
+            currentSelectedNxtButton = NxtButtonObj.GetComponent<Button>();
+        }
+        currentSelectedNxtButton.interactable = false; 
+        UsernamescreenLoader.SetActive(true);
         ////print(PlayerPrefs.GetInt("shownWelcome")); // 0
         ////print(PlayerPrefs.GetInt("iSignup")); // 1
         ////print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
@@ -3488,8 +3505,9 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextName.GetComponent<Text>().text = "Name Field should not be empty";
             //  }
             errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextName.GetComponent<Text>());
-
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+            currentSelectedNxtButton.interactable = true;
+            UsernamescreenLoader.SetActive(false);
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
         else if (Localusername.StartsWith(" "))
@@ -3506,14 +3524,17 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextName.GetComponent<Text>().text = "Name Field should not be empty";
             //  }
             errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextName.GetComponent<Text>());
-
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+            currentSelectedNxtButton.interactable = true;
+            UsernamescreenLoader.SetActive(false);
+            //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
 
         if (Localusername.EndsWith(" "))
         {
             Localusername = Localusername.TrimEnd(' ');
+            currentSelectedNxtButton.interactable = true;
+            UsernamescreenLoader.SetActive(false);
         }
 
         if (isSetXanaliyaUserName)//rik
@@ -3521,6 +3542,8 @@ public class UserRegisterationManager : MonoBehaviour
             MyClassOfPostingName tempMyObject = new MyClassOfPostingName();
             string bodyJsonOfName1 = JsonUtility.ToJson(tempMyObject.GetNamedata(Localusername));
             StartCoroutine(HitNameAPIWithXanaliyaUser(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName1, Localusername));
+            currentSelectedNxtButton.interactable = true;
+            UsernamescreenLoader.SetActive(false);
             return;
         }
 
@@ -3532,6 +3555,8 @@ public class UserRegisterationManager : MonoBehaviour
             DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
+            currentSelectedNxtButton.interactable = true;
+            UsernamescreenLoader.SetActive(false);
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
@@ -3587,6 +3612,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
             //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
         }
+
     }
 
    
@@ -3994,6 +4020,8 @@ public class UserRegisterationManager : MonoBehaviour
                         validationMessagePopUP.SetActive(true);
                         errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
                         //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                     else
@@ -4011,6 +4039,8 @@ public class UserRegisterationManager : MonoBehaviour
 
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
                         //nb
                         LoggedIn = true;
                         //OpenUIPanal(6);  
@@ -4034,7 +4064,9 @@ public class UserRegisterationManager : MonoBehaviour
                 //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
                 // }  
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-               // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                currentSelectedNxtButton.interactable = true;
+                UsernamescreenLoader.SetActive(false);
+                // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             }
             else
             {
@@ -4058,7 +4090,9 @@ public class UserRegisterationManager : MonoBehaviour
                         // }
                         //errorHandler.ShowErrorMessage(ErrorType.Invalid_Username , errorTextName.GetComponent<Text>());
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
-                      //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
+                        //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -4082,6 +4116,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         ////Debug.Log("Data:" + request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
+        
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
@@ -4097,7 +4132,9 @@ public class UserRegisterationManager : MonoBehaviour
                         validationMessagePopUP.SetActive(true);
                         errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
                     }
                     else
                     {
@@ -4106,6 +4143,8 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("PlayerName", localUsername);
                         usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(true);
                         usernamePanal.SetActive(false);
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
                     }
                 }
             }
@@ -4118,7 +4157,9 @@ public class UserRegisterationManager : MonoBehaviour
                 validationMessagePopUP.SetActive(true);
                 errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-               // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                currentSelectedNxtButton.interactable = true;
+                UsernamescreenLoader.SetActive(false);
+                // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             }
             else
             {
@@ -4131,6 +4172,8 @@ public class UserRegisterationManager : MonoBehaviour
                         validationMessagePopUP.SetActive(true);
                         errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
+                        currentSelectedNxtButton.interactable = true;
+                        UsernamescreenLoader.SetActive(false);
                         //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }

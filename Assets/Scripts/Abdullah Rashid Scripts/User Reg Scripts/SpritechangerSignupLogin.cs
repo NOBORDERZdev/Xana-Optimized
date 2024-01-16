@@ -14,6 +14,10 @@ public class SpritechangerSignupLogin : MonoBehaviour
     public Sprite EyeUnchecked;
     bool isEmail;
 
+    private void OnEnable()
+    {
+        spriteRenderer.sprite = EyeUnchecked;
+    }
 
     void Start()
     {
@@ -24,19 +28,19 @@ public class SpritechangerSignupLogin : MonoBehaviour
        textInputField.OnValueChanged.AddListener(OnValueChanged);
     }
 
-    // Update is called once per frame
     public void OnValueChanged(string newText)
     {
-        isEmail = Regex.IsMatch(newText, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+        isEmail = Regex.IsMatch(newText, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
         // Check if the entered string matches your desired value
-        if (!isEmail)
-        {
-            // Change the sprite
-            spriteRenderer.sprite = EyeUnchecked;  // Replace with your actual sprite
-        }else
+       
+        if (isEmail)
         {
             // Change the sprite
             spriteRenderer.sprite = EyeChecked;  // Replace with your actual sprite
+        }else
+        {
+            // Change the sprite
+            spriteRenderer.sprite = EyeUnchecked; // Replace with your actual sprite
         }
     }
 }
