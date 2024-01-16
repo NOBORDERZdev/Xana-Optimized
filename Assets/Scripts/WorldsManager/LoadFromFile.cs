@@ -667,7 +667,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //Rejoin world after internet connection stable
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
+                ReferrencesForDynamicMuseum.instance.playerControllerNew.StopBuilderComponent();
                 SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
+                BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)

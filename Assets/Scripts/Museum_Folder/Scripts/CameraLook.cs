@@ -60,15 +60,20 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
+    float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius;
+
     private void OnEnable()
     {
         controls.Enable();
         ChangeOrientation_waqas.switchOrientation += SwitchOrientation;
+        BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
         ChangeOrientation_waqas.switchOrientation -= SwitchOrientation;
+        BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
+
     }
     private void Awake()
     {
@@ -92,6 +97,11 @@ public class CameraLook : MonoBehaviour
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;
 
         originalOrbits = new CinemachineFreeLook.Orbit[cinemachine.m_Orbits.Length];
+        midRigHeight = cinemachine.m_Orbits[1].m_Height;
+        topRigHeight = cinemachine.m_Orbits[0].m_Height;
+        midRigRadius = cinemachine.m_Orbits[1].m_Radius;
+        topRigRadius = cinemachine.m_Orbits[0].m_Radius;
+        bottomRigRadius = cinemachine.m_Orbits[2].m_Radius;
         originalOrbits[1].m_Radius = cinemachine.m_Orbits[1].m_Radius;    // get the radius of middle rig
         if (Application.isEditor)
         {
@@ -145,6 +155,8 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Editor();
                 }
             }
+            if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
+                return;
             if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
             {
                 zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
@@ -167,27 +179,29 @@ public class CameraLook : MonoBehaviour
                 ZoomDetection();
             }
         }
-       CameraPlayerMeshCollosionFind();
+        CameraPlayerMeshCollosionFind();
     }
 
     /// <summary>
     /// To check is camera in player mesh
     /// </summary>
-    void CameraPlayerMeshCollosionFind(){
-        if (charcterBody == null || pointObj  == null )
+    void CameraPlayerMeshCollosionFind()
+    {
+        if (charcterBody == null || pointObj == null)
         {
-            if(ReferrencesForDynamicMuseum.instance.m_34player){ 
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
                 charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
-               // pointObj = charcterBody.Body.gameObject;
+                // pointObj = charcterBody.Body.gameObject;
             }
             else
             {
                 return;
             }
         }
-        
+
         float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
-        if (dist< 0.01f)
+        if (dist < 0.01f)
         {
             charcterBody.HidePlayer();
         }
@@ -227,7 +241,7 @@ public class CameraLook : MonoBehaviour
             {
                 Touch t = Input.GetTouch(0);
                 Touch t1 = new Touch();
-                if(Input.touchCount > 1)
+                if (Input.touchCount > 1)
                     t1 = Input.GetTouch(1);
 
                 if (isRotatingScreen)     // screen is already rotation before joystick down
@@ -317,6 +331,8 @@ public class CameraLook : MonoBehaviour
     {
         if (!CheckCanZoom())
             return;
+        if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
+            return;
         if (m_PressCounter != 0 || isJoystickPressed) return;
         if (Input.touchCount == 2)
         {
@@ -391,6 +407,28 @@ public class CameraLook : MonoBehaviour
             }
         }
         return false;
+    }
+
+    //Code for the builder world when triggering Assets Changer (Avatar Changer component)
+    void ChangeCameraHeight(bool changeState)
+    {
+        if (changeState)
+        {
+            cinemachine.m_Orbits[1].m_Height = 5;
+            cinemachine.m_Orbits[0].m_Height = 10;
+            cinemachine.m_Orbits[0].m_Radius = 10;
+            cinemachine.m_Orbits[1].m_Radius = 10;
+            cinemachine.m_Orbits[2].m_Radius = 5;
+
+        }
+        else
+        {
+            cinemachine.m_Orbits[1].m_Radius = midRigRadius;
+            cinemachine.m_Orbits[0].m_Radius = topRigRadius;
+            cinemachine.m_Orbits[2].m_Radius = bottomRigRadius;
+            cinemachine.m_Orbits[1].m_Height = midRigHeight;
+            cinemachine.m_Orbits[0].m_Height = topRigHeight;
+        }
     }
 
 }

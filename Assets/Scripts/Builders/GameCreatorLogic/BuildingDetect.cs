@@ -89,13 +89,6 @@ public class BuildingDetect : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(2f);
-
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
-
-        defaultJumpHeight = _playerControllerNew.JumpVelocity;
-        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
-        defaultMoveSpeed = _playerControllerNew.movementSpeed;
-
         powerUpCoroutine = playerPowerUp();
 
         SIpowerUpCoroutine = SIPowerUp();
@@ -131,6 +124,14 @@ public class BuildingDetect : MonoBehaviour
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
         nameCanvasDefaultYpos = GamificationComponentData.instance.nameCanvas.transform.localPosition.y;
+    }
+
+    internal void DefaultSpeedStore()
+    {
+        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        defaultJumpHeight = _playerControllerNew.JumpVelocity;
+        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
+        defaultMoveSpeed = _playerControllerNew.movementSpeed;
     }
 
     private void OnEnable()
@@ -217,6 +218,8 @@ public class BuildingDetect : MonoBehaviour
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);
         AppearanceChange.transform.localPosition = Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = true;
+        gangsterCharacter.GetComponentInChildren<Animator>().runtimeAnimatorController = GamificationComponentData.instance.idleAnimation;
         CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
         if (cc != null)
         {
@@ -274,18 +277,13 @@ public class BuildingDetect : MonoBehaviour
             cullingMode = this.GetComponent<Animator>().cullingMode;
         }
 
-
-        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
-        yield return new WaitForSecondsRealtime(0.01f);
-        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
-        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
-
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
             gangsterCharacter.SetActive(true);
-
+        yield return new WaitForSecondsRealtime(0.1f);
+        this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
+        this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
+        gangsterCharacter.GetComponentInChildren<Animator>().enabled = false;
         BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(avatarChangeTime);
-
-
         while (avatarChangeTime > avatarTime)
         {
             avatarChangeTime = Mathf.Clamp(avatarChangeTime, 0, Mathf.Infinity);
@@ -373,11 +371,8 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            //GameObject effect = GamificationComponentData.instance.specialItemParticleEffect;
             Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
             pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
-            //Quaternion rot = ReferrencesForDynamicMuseum.instance.m_34player.transform.rotation;
-            //rot.y+= GamificationComponentData.instance.specialItemParticleEffect.transform.rotation.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
             _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
             _specialEffects.transform.localEulerAngles = Vector3.up * 180;
@@ -408,14 +403,7 @@ public class BuildingDetect : MonoBehaviour
             _playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
-        //_specialEffects.gameObject.SetActive(false);
-        if (_specialEffects)
-            PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
-        ApplyDefaultEffect();
-        _specialEffects = null;
-        _playerControllerNew.specialItem = false;
-        _playerControllerNew.movementSpeed = defaultMoveSpeed;
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
+        StopSpecialItemComponent();
     }
 
     private void ApplySuperMarioEffect()
@@ -441,24 +429,16 @@ public class BuildingDetect : MonoBehaviour
     public void StopSpecialItemComponent()
     {
         StoppingCoroutine();
-        //_remainingText.gameObject.SetActive(false);
-        if (_playerControllerNew.specialItem)
-        {
-            _playerControllerNew.specialItem = false;
-            BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
-        }
+        BuilderEventManager.OnSpecialItemComponentCollisionEnter?.Invoke(0);
         if (_specialEffects)
         {
-            //_specialEffects.SetActive(false);
-            //if (_specialEffects.activeInHierarchy)
             PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
             ApplyDefaultEffect();
             _specialEffects = null;
         }
-        canRunCo = false;
-        _playerControllerNew.jumpHeight = defaultJumpHeight;
-        _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+        _playerControllerNew.specialItem = false;
         _playerControllerNew.movementSpeed = defaultMoveSpeed;
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
     }
     #endregion
 

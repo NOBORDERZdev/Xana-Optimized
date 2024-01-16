@@ -65,13 +65,15 @@ public sealed class CharacterControls : MonoBehaviour
         CharacterController cc = playerControler.GetComponent<CharacterController>();
         //vThirdPersonCamera vtc = playerControler.controllerCamera.GetComponent<vThirdPersonCamera>();
 
-
+        GamificationComponentData.instance.ZoomControl = false;
 
 
         while (true)
         {
             yield return new WaitForEndOfFrame();
             cc.stepOffset = stepOffset;
+
+            BuilderEventManager.ChangeCameraHeight?.Invoke(true);
             //vtc.height = cameraHeight;
             //playerControler.finalWalkSpeed = walkSpeed;
             //playerControler.walkSpeed = walkSpeed;
@@ -87,6 +89,8 @@ public sealed class CharacterControls : MonoBehaviour
         playerControler.sprintSpeed = old_sprintSpeed;
         playerControler.jumpHeight = old_jumpHeight;
         playerControler.GetComponent<CharacterController>().stepOffset = old_stepOffset;
+        BuilderEventManager.ChangeCameraHeight?.Invoke(false);
+        GamificationComponentData.instance.ZoomControl = true;
         //playerControler.controllerCamera.GetComponent<vThirdPersonCamera>().height = old_cameraHeight;
     }
 }
