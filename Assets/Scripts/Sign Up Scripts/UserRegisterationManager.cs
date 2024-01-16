@@ -204,6 +204,7 @@ public class UserRegisterationManager : MonoBehaviour
     String _LoadingTitle = "";
     public bool _IsWalletSignUp = false;
     public int SignUpButtonSelected = 0;
+    public GameObject TermsAndConditionsObject;
 
     public void ShowWelcomeScreen()
     {
@@ -330,6 +331,13 @@ public class UserRegisterationManager : MonoBehaviour
     }
     private void Awake()
     {
+        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("token");
+        if (LoginRegister.ChinaUser)
+        {
+           
+            Debug.Log("call hua Awake");
+            TermsAndConditionsObject.SetActive(false);
+        }
         int x = ReturnNftRole("Free");
         //print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
         checkbool_preser_start = true;
@@ -648,11 +656,74 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
-            //print("Alraeady Logged In");
+            print("Alraeady Logged In call registration");
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
             LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
-            LoggedInAsGuest = false;
+
+            if (LoginRegister.ChinaUser)
+            {
+                Debug.Log("China user===");
+                TermsAndConditionsObject.SetActive(false);
+
+                DynamicEventManager.deepLink?.Invoke("Login user here");
+                //SubmitSetDeviceToken();
+                //LoggedInAsGuest = false;
+                //getdatafromserver();
+
+               
+                //if (EventList.instance.ListContent.transform.childCount == 0)
+                //{
+                //    EventList.instance.GetWorldAPISNew();
+                //    StoreManager.instance.GetAllMainCategories();
+                //}
+
+
+                if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                {
+                    //print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
+                    PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                }
+                else
+                {
+                    PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+                }
+                GetOwnedNFTsFromAPI();
+                PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+                SubmitSetDeviceToken();
+                LoggedInAsGuest = false;
+                getdatafromserver();
+
+
+                usernamePanal.SetActive(false);
+                usernamePanal.SetActive(false);
+                //CheckCameraMan();
+                //    m_EquipUI.BackFromArtbone();
+                PlayerPrefs.Save();
+                StoreManager.instance.CheckWhenUserLogin();
+                if (false)
+                {
+                    OpenUIPanal(7);
+
+                    //if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && string.IsNullOrEmpty(myObject1.data.user.name))//rik
+                    //{
+                    //    OpenUIPanal(5);
+                    //    isSetXanaliyaUserName = true;
+                    //    usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
+                    //}
+                }
+                if (UIManager.Instance != null)//rik
+                {
+                    // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+                }
+
+            
+            }
+            else
+            {
+                StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
+            }
+                LoggedInAsGuest = false;
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
@@ -1168,22 +1239,29 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 2:
                 {
-                    //PlayerPrefs.SetInt("iSignup", 1);
-                    //  EmailPanal.SetActive(true);
-                    SignUpPanal.SetActive(true);
-                    if (!WalletScreen.activeInHierarchy)
-                        OnSignUpPhoneTabPressed();
+                    if (LoginRegister.ChinaUser)
+                    {
+                        SceneManager.LoadScene("XanaChinaLogin");
+                    }
                     else
-                        OnSignUpWalletTabPressed();
-                    EmailFieldNew.Text = "";
-                    PhoneFieldNew.Text = "";
-                    //EmailInputTextNew.Text = "";
-                    //EmailInputTextNew.gameObject.GetComponent<InputField>().Select();
-                    //EmailInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    //EmailInputTextNew.enabled = false;
-                    //StartCoroutine(WaitandActive());
-                    //EmailInputTextNew.enabled = true;
-                    //EmailInputTextNew.SelectOtherField();
+                    {
+                        //PlayerPrefs.SetInt("iSignup", 1);
+                        //  EmailPanal.SetActive(true);
+                        SignUpPanal.SetActive(true);
+                        if (!WalletScreen.activeInHierarchy)
+                            OnSignUpPhoneTabPressed();
+                        else
+                            OnSignUpWalletTabPressed();
+                        EmailFieldNew.Text = "";
+                        PhoneFieldNew.Text = "";
+                        //EmailInputTextNew.Text = "";
+                        //EmailInputTextNew.gameObject.GetComponent<InputField>().Select();
+                        //EmailInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
+                        //EmailInputTextNew.enabled = false;
+                        //StartCoroutine(WaitandActive());
+                        //EmailInputTextNew.enabled = true;
+                        //EmailInputTextNew.SelectOtherField();
+                    }
                     break;
                 }
             case 3:
@@ -1240,23 +1318,29 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 6:
                 {
-
-                    LoginPanal.SetActive(true);
-                    /*
-                    LoginEmailNew.Text = "";
-                    LoginEmailNew.gameObject.GetComponent<InputField>().Select();
-                    LoginEmailNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    LoginEmailNew.enabled = false;
-                    StartCoroutine(WaitandActive());
-                    LoginEmailNew.enabled = true;
-                    LoginEmailNew.SelectOtherField();
-                    */
-                    LoginEmailOrPhone.Text = "";
-                    LoginEmailOrPhone.Select();
-                    savePasswordList.instance.DeleteONStart();
-                    //  LoginPasswordShiftCode.EmptyPassword();
-                    LoginPassword.Text = "";
-                    chk_forAccountALreadyLogedin = true;
+                    if (LoginRegister.ChinaUser)
+                    {
+                        SceneManager.LoadScene("XanaChinaLogin");
+                    }
+                    else
+                    {
+                        LoginPanal.SetActive(true);
+                        /*
+                        LoginEmailNew.Text = "";
+                        LoginEmailNew.gameObject.GetComponent<InputField>().Select();
+                        LoginEmailNew.gameObject.GetComponent<InputField>().ActivateInputField();
+                        LoginEmailNew.enabled = false;
+                        StartCoroutine(WaitandActive());
+                        LoginEmailNew.enabled = true;
+                        LoginEmailNew.SelectOtherField();
+                        */
+                        LoginEmailOrPhone.Text = "";
+                        LoginEmailOrPhone.Select();
+                        savePasswordList.instance.DeleteONStart();
+                        //  LoginPasswordShiftCode.EmptyPassword();
+                        LoginPassword.Text = "";
+                        chk_forAccountALreadyLogedin = true;
+                    }
                     break;
                 }
             case 7:
@@ -1279,13 +1363,20 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 8:
                 {
+                    if (LoginRegister.ChinaUser)
+                    {
+                        SceneManager.LoadScene("XanaChinaLogin");
+                    }
+                    else
+                    {
 
-                    PlayerPrefs.SetInt("iSignup", 1);// going for register user
-                    SignUpPanal.SetActive(true);
-                    Password1New.Text = "";
-                    Password2New.Text = "";
-                    //OnSignUpPhoneTabPressed();
-                    //  OnSignUpWalletTabPressed();
+                        PlayerPrefs.SetInt("iSignup", 1);// going for register user
+                        SignUpPanal.SetActive(true);
+                        Password1New.Text = "";
+                        Password2New.Text = "";
+                        //OnSignUpPhoneTabPressed();
+                        //  OnSignUpWalletTabPressed();
+                    }
 
                     break;
                 }
@@ -1705,6 +1796,7 @@ public class UserRegisterationManager : MonoBehaviour
         XanaConstants.xanaConstants.isCameraMan = false;
         XanaConstants.xanaConstants.IsDeemoNFT = false;
         StoreManager.instance.CheckWhenUserLogin();
+        SceneManager.LoadScene("XanaChinaLogin");
     }
 
 
@@ -4144,6 +4236,10 @@ public class UserRegisterationManager : MonoBehaviour
                 ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
+                    if (LoginRegister.ChinaUser)
+                    {
+                        LoadingHandler.Instance.characterLoading.SetActive(false);
+                    }
                     PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                     if (_loader != null)
                         _loader.SetActive(false);
