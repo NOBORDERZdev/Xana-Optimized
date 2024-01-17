@@ -3,6 +3,7 @@ using UnityEngine;
 using Models;
 using Photon.Pun;
 using System;
+using TMPro;
 
 public class SituationChangerComponent : ItemComponent
 {
@@ -14,11 +15,29 @@ public class SituationChangerComponent : ItemComponent
     public float[] _lightsIntensity;
     private bool IsAgainTouchable = true;
     float time, defaultTimer;
-
     GameObject playerObject;
+
+    public float timeCheck = 0f;
+
+    bool running = false;
+    private float againTouchDealy = .5f;
 
     // Start is called before the first frame update
     void Start()
+    {
+        GetLightData();
+    }
+
+    private void OnEnable()
+    {
+        BuilderEventManager.DisableSituationLight += ResetSituation;
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.DisableSituationLight -= ResetSituation;
+    }
+
+    private void GetLightData()
     {
         _light = FindObjectsOfType<Light>();
         _lightsIntensity = new float[_light.Length];
@@ -48,9 +67,21 @@ public class SituationChangerComponent : ItemComponent
             IsAgainTouchable = false;
 
             if (GamificationComponentData.instance.withMultiplayer)
+            {
+                if (!situationChangerComponentData.isOff && !isRuninig)
+                {
+                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+                    utccounterValue.CounterValue = defaultTimer;
+                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+                    var hash = new ExitGames.Client.Photon.Hashtable();
+                    hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                }
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            }
             else
-                GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+                PlayBehaviour();
         }
     }
 
@@ -76,31 +107,34 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        if (!isRuninig)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        }
+        GetLightData();
         float timeDiff = 0;
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                var hash = new ExitGames.Client.Photon.Hashtable();
-                hash.Add("situationChangerComponent", DateTime.UtcNow.ToString());
-                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-            }
         }
         else
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("situationChangerComponent", out object situationChangerComponent) && !situationChangerComponentData.isOff)
             {
-                string situationChangerComponentstr = situationChangerComponent.ToString();
-                DateTime dateTimeRPC = Convert.ToDateTime(situationChangerComponentstr);
+                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                utccounterValue = JsonUtility.FromJson<UTCTimeCounterValue>(situationChangerComponent.ToString());
+                DateTime dateTimeRPC = DateTime.Parse(utccounterValue.UTCTime);
                 DateTime currentDateTime = DateTime.UtcNow;
-
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                time = timeDiff;
 
-                if (time == 0 || time > situationChangerComponentData.Timer)
+                BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
+
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+                    utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
+                else
                     return;
+                time = utccounterValue.CounterValue;
             }
         }
 
@@ -109,34 +143,34 @@ public class SituationChangerComponent : ItemComponent
         //    time = situationChangerComponentData.Timer;
         //    situationCo = null;
         //}
-        if (time != 0)
-        {
-            situationChangerComponentData.Timer = time;
-            time = 0;
-        }
-        else
-            situationChangerComponentData.Timer = defaultTimer;
+        //if (time != 0)
+        //{
+        //    situationChangerComponentData.Timer = time;
+        //    time = 0;
+        //}
+        //else
+        //    situationChangerComponentData.Timer = defaultTimer;
 
         //if (situationCo == null && time > 0)
         //    situationCo = StartCoroutine(nameof(SituationChange));
 
         //Debug.LogError(situationChangerComponentData.Timer);
-        TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
+        //TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
+        timeCheck = situationChangerComponentData.Timer;
+        SituationStarter(this.situationChangerComponentData.isOff, _light, _lightsIntensity, timeCheck, this.gameObject);
 
     }
     private void StopComponent()
     {
-        //playerObject = null;
-        TimeStats._intensityChangerStop?.Invoke();
+        // when time completed then component is removed from the item so we dont put here the code
+        // this will work only with situation changer that is timer
+        StopDimLights();
     }
 
     public override void StopBehaviour()
     {
-        if (isPlaying)
-        {
-            isPlaying = false;
-            StopComponent();
-        }
+        isPlaying = false;
+        StopComponent();
     }
 
     public override void PlayBehaviour()
@@ -164,6 +198,152 @@ public class SituationChangerComponent : ItemComponent
         _componentType = Constants.ItemComponentType.SituationChangerComponent;
     }
 
+    #endregion
+
+    #region Timer
+    private float m_TotalTime;
+
+    public static bool _stopTimer = false, canRun = false;
+
+    private bool isRuninig;
+
+    private bool isShowUI;
+
+
+    IEnumerator coroutine, dimmerCoroutine;
+
+    private TimeSpan m_SecondsInToTimeFormate;
+
+    private const string m_TimeFormat = @"mm\:ss";
+
+    public void SituationStarter(bool _isOff, Light[] _lights, float[] _intensities, float _value, GameObject _obj)
+    {
+        isShowUI = true;
+        if (isRuninig)
+        {
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
+                SetNightMode();
+            else
+                SetDayMode(_lights, _intensities);
+
+            return;
+        }
+
+        dimmerCoroutine = DimLights(_isOff, _lights, _intensities, _value, _obj);
+        isRuninig = true;
+        canRun = true;
+        StartCoroutine(dimmerCoroutine);
+    }
+
+    IEnumerator DimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, GameObject _obj)
+    {
+        if (_isOff)
+        {
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
+                SetNightMode();
+            else
+                SetDayMode(_light, _lightsIntensity);
+            BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+        }
+        else
+        {
+            _stopTimer = true;
+
+            GamificationComponentData.instance.isNight ^= true;
+            if (GamificationComponentData.instance.isNight)
+                SetNightMode();
+            else
+                SetDayMode(_light, _lightsIntensity);
+
+
+            //If we don't want to reset the time for continuous collision them remove "this."
+            while (!this.timeCheck.Equals(0) && canRun)
+            {
+                SetTimer(ref this.timeCheck);
+                yield return null;
+            }
+
+            BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+            GamificationComponentData.instance.isNight = false;
+            isRuninig = false;
+            SetDayMode(_light, _lightsIntensity);
+        }
+    }
+
+    IEnumerator Timer()
+    {
+        canRun = false;
+
+        while (!_stopTimer)
+        {
+            Debug.Log("Elapsed time");
+            m_TotalTime += Time.deltaTime;
+            BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke((int)m_TotalTime);
+
+            yield return null;
+        }
+
+        // m_TimeCounterText_.text = "";
+    }
+
+    public void StopDimLights()
+    {
+        print("Stop Situation");
+        isShowUI = false;
+        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+
+        if (dimmerCoroutine != null)
+        {
+            StopCoroutine(dimmerCoroutine);
+            dimmerCoroutine = null;
+            isRuninig = false;
+            canRun = false;
+            SetDayMode(_light, _lightsIntensity);
+
+        }
+
+    }
+
+    private void SetTimer(ref float timeCheck)
+    {
+        timeCheck -= Time.deltaTime;
+        if (!isShowUI) return;
+        timeCheck = Mathf.Clamp(timeCheck, 0, Mathf.Infinity);
+        TimeSpan sp = TimeSpan.FromSeconds(timeCheck);
+        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke((int)timeCheck);
+    }
+    private void SetNightMode()
+    {
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(20);
+    }
+    private void SetDayMode(Light[] _light, float[] _lightsIntensity)
+    {
+        for (int i = 0; i < _light.Length; i++)
+        {
+            _light[i].intensity = _lightsIntensity[i];
+        }
+
+        SituationChangerSkyboxScript.instance.ChangeSkyBox(GamificationComponentData.instance.previousSkyID);
+        isShowUI = false;
+        BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+
+        // the following lines are used when the timer is reset on day mode, if we don't want the timer to stop then remove the following lines 
+        if (dimmerCoroutine != null)
+        {
+            StopCoroutine(dimmerCoroutine);
+            dimmerCoroutine = null;
+            isRuninig = false;
+            canRun = false;
+        }
+    }
+    private void ResetSituation()
+    {
+        timeCheck = situationChangerComponentData.Timer;
+        SetDayMode(_light, _lightsIntensity);
+        GamificationComponentData.instance.isNight = false;
+    }
     #endregion
 
 }

@@ -9,7 +9,7 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
+public class GamificationComponentData : MonoBehaviourPunCallbacks
 {
     public static GamificationComponentData instance;
 
@@ -86,14 +86,18 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     //Name canvas
     internal Canvas nameCanvas;
-
+    public PlayerCanvas playerCanvas;
+    internal bool isBuilderWorldPlayerSetup;
+    public RuntimeAnimatorController idleAnimation;
+    internal bool ZoomControl;
     private void Awake()
     {
         instance = this;
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         BuilderEventManager.ReSpawnPlayer += PlayerSpawnBlindfoldedDisplay;
         //ChangeOrientation
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
@@ -103,12 +107,16 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
         OrientationChange(false);
         warpComponentList.Clear();
-
         WarpComponentLocationUpdate += UpdateWarpFunctionData;
+
+        //reset ignore layer collision on scene load
+        Physics.IgnoreLayerCollision(9, 22, false);
+        ZoomControl = true;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         BuilderEventManager.ReSpawnPlayer -= PlayerSpawnBlindfoldedDisplay;
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.UIToggle -= UICanvasToggle;
@@ -252,7 +260,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         if (!withMultiplayer)
             return;
         //store rpc data in roomoption
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && (componentType != Constants.ItemComponentType.AudioComponent))
             SetRoomData(RuntimeItemID, componentType);
 
         GetItemFromList(RuntimeItemID, componentType);
@@ -286,7 +294,8 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
     {
-        BuilderEventManager.onComponentActivated?.Invoke(componentType);
+        if (componentType != Constants.ItemComponentType.BlindComponent || componentType != Constants.ItemComponentType.SituationChangerComponent)
+            BuilderEventManager.onComponentActivated?.Invoke(componentType);
     }
 
     internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -353,32 +362,36 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     #endregion
 
     #region Photon Events
-    public void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         //throw new NotImplementedException();
     }
 
-    public void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         //throw new NotImplementedException();
     }
 
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         //throw new NotImplementedException();
     }
 
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         //throw new NotImplementedException();
     }
 
-    public void OnMasterClientSwitched(Player newMasterClient)
+    public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        base.OnMasterClientSwitched(newMasterClient);
+        if (PhotonNetwork.LocalPlayer == newMasterClient)
         {
-            if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
-                xanaItem.SetData(xanaItem.itemData);
+            foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+            {
+                if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+                    xanaItem.SetData(xanaItem.itemData);
+            }
         }
     }
     #endregion
@@ -394,4 +407,11 @@ public class GamificationComponentRPC
 public class GamificationComponentRPCs
 {
     public List<GamificationComponentRPC> rpcList = new List<GamificationComponentRPC>();
+}
+
+[Serializable]
+public class UTCTimeCounterValue
+{
+    public string UTCTime = "";
+    public float CounterValue = 0;
 }

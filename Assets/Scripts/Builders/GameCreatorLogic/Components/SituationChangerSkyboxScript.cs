@@ -75,13 +75,14 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     {
         builderMapDownload.reflectionProbe.gameObject.SetActive(false);
         builderMapDownload.reflectionProbe.enabled = true;
-        indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
 
         if (skyID != -1)
         {
-            bool skyBoxExist = skyBoxesData.skyBoxes.Exists(x => x.skyId == indexx);
+            bool skyBoxExist = skyBoxesData.skyBoxes.Exists(x => x.skyId == skyID);
             if (skyBoxExist)
             {
+
+                indexx = skyBoxesData.skyBoxes.FindIndex(x => x.skyId == skyID);
                 skyboxMatKey = skyBoxesData.skyBoxes[indexx].skyName.Replace(" ", "");
                 AsyncOperationHandle loadSkyBox;
                 bool flag = false;
