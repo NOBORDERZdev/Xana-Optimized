@@ -309,9 +309,12 @@ namespace PMY
 
         public void LoadLiveIfFirstTimeNotLoaded(GameObject obj, string url)
         {
-            worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].VideoLink = url;
-            worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].videoType = PMY_VideoTypeRes.islive;
-            obj.GetComponent<PMY_VideoAndImage_Extension>().InitData(null, url, worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
+            if (obj.GetComponent<PMY_VideoAndImage_Extension>() != null)
+            {
+                worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].VideoLink = url;
+                worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].videoType = PMY_VideoTypeRes.islive;
+                obj.GetComponent<PMY_VideoAndImage_Extension>().InitData(null, url, worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
+            }
         }
 
         IEnumerator GetSprite(string path, int index, System.Action<Sprite, int> callback)
