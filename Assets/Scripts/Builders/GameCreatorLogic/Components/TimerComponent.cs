@@ -52,6 +52,7 @@ public class TimerComponent : ItemComponent
         if (isActivated && timerComponentData.IsStart)
         {
             BuilderEventManager.OnTimerTriggerEnter?.Invoke("", timerComponentData.Timer + 1);
+            CancelInvoke("StopBehaviour");
             BuilderEventManager.OnTimerLimitEnd += OnSubscribe;
         }
     }
@@ -63,13 +64,7 @@ public class TimerComponent : ItemComponent
 
     public void OnSubscribe()
     {
-        StartCoroutine(OnDisableUI());
-    }
-
-    public IEnumerator OnDisableUI()
-    {
-        yield return new WaitForSeconds(5f);
-        StopBehaviour();
+        Invoke("StopBehaviour", 5f);
     }
 
     public override void StopBehaviour()

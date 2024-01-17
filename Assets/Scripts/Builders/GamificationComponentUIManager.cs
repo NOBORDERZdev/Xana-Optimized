@@ -306,13 +306,6 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (TimeCoroutine != null)
             StopCoroutine(TimeCoroutine);
-        StartCoroutine(OnDisableTimeLimitUI());
-    }
-
-    public IEnumerator OnDisableTimeLimitUI()
-    {
-        yield return new WaitForSeconds(5f);
-        DisableTimeLimitUI();
     }
 
     public IEnumerator IETimeLimit(float time)
@@ -333,7 +326,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         TimeLimitText.text = "";
         if (TimeCoroutine != null)
             StopCoroutine(TimeCoroutine);
-        StopCoroutine(OnDisableTimeLimitUI());
         BuilderEventManager.OnTimerLimitEnd -= OnTimerLimitEnd;
     }
 
@@ -413,13 +405,6 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (ElapsedTimerCoroutine != null)
             StopCoroutine(ElapsedTimerCoroutine);
-        StartCoroutine(OnDisableDisableElapseTimeUI());
-    }
-
-    public IEnumerator OnDisableDisableElapseTimeUI()
-    {
-        yield return new WaitForSeconds(5f);
-        DisableElapseTimeCounDownUI();
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
@@ -440,7 +425,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         ElapseTimerText.text = "00:00";
         if (ElapsedTimerCoroutine != null)
             StopCoroutine(ElapsedTimerCoroutine);
-        StopCoroutine(OnDisableDisableElapseTimeUI());
         BuilderEventManager.elapsedEndTime -= ElapsedEndTime;
     }
 
