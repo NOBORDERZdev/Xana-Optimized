@@ -26,6 +26,8 @@ public sealed class CharacterControls : MonoBehaviour
     {
         if (GetComponent<PhotonView>().IsMine)
         {
+            GamificationComponentData.instance.ZoomControl = false;
+            BuilderEventManager.ChangeCameraHeight?.Invoke(true);
             yield return new WaitForSeconds(0.5f);
             AddListners();
         }
@@ -64,16 +66,11 @@ public sealed class CharacterControls : MonoBehaviour
     {
         CharacterController cc = playerControler.GetComponent<CharacterController>();
         //vThirdPersonCamera vtc = playerControler.controllerCamera.GetComponent<vThirdPersonCamera>();
-
-        GamificationComponentData.instance.ZoomControl = false;
-
-
         while (true)
         {
             yield return new WaitForEndOfFrame();
             cc.stepOffset = stepOffset;
 
-            BuilderEventManager.ChangeCameraHeight?.Invoke(true);
             //vtc.height = cameraHeight;
             //playerControler.finalWalkSpeed = walkSpeed;
             //playerControler.walkSpeed = walkSpeed;

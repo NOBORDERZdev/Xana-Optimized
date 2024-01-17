@@ -60,7 +60,7 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
-    float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius;
+    float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius, defaultZoomInLimit, defaultZoomOutLimit;
 
     private void OnEnable()
     {
@@ -102,6 +102,8 @@ public class CameraLook : MonoBehaviour
         midRigRadius = cinemachine.m_Orbits[1].m_Radius;
         topRigRadius = cinemachine.m_Orbits[0].m_Radius;
         bottomRigRadius = cinemachine.m_Orbits[2].m_Radius;
+        defaultZoomInLimit = zoomInLimit;
+        defaultZoomOutLimit = zoomOutLimit;
         originalOrbits[1].m_Radius = cinemachine.m_Orbits[1].m_Radius;    // get the radius of middle rig
         if (Application.isEditor)
         {
@@ -155,8 +157,6 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Editor();
                 }
             }
-            if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
-                return;
             if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
             {
                 zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
@@ -331,8 +331,6 @@ public class CameraLook : MonoBehaviour
     {
         if (!CheckCanZoom())
             return;
-        if (XanaConstants.xanaConstants.isBuilderScene && !GamificationComponentData.instance.ZoomControl)
-            return;
         if (m_PressCounter != 0 || isJoystickPressed) return;
         if (Input.touchCount == 2)
         {
@@ -414,21 +412,36 @@ public class CameraLook : MonoBehaviour
     {
         if (changeState)
         {
-            cinemachine.m_Orbits[1].m_Height = 5;
-            cinemachine.m_Orbits[0].m_Height = 10;
-            cinemachine.m_Orbits[0].m_Radius = 10;
-            cinemachine.m_Orbits[1].m_Radius = 10;
-            cinemachine.m_Orbits[2].m_Radius = 5;
+            //Set zoom in-out value for Asset Changer Avatar
+            zoomInLimit = 15;
+            zoomOutLimit = 100;
 
+            SetOrbitRadius(5, 20, 5);
+            SetOrbitHeight(20, 5, cinemachine.m_Orbits[2].m_Height);
         }
         else
         {
-            cinemachine.m_Orbits[1].m_Radius = midRigRadius;
-            cinemachine.m_Orbits[0].m_Radius = topRigRadius;
-            cinemachine.m_Orbits[2].m_Radius = bottomRigRadius;
-            cinemachine.m_Orbits[1].m_Height = midRigHeight;
-            cinemachine.m_Orbits[0].m_Height = topRigHeight;
+            SetOrbitRadius(topRigRadius, midRigRadius, bottomRigRadius);
+            SetOrbitHeight(topRigHeight, midRigHeight, cinemachine.m_Orbits[2].m_Height);
+
+            //Reset zoom in-out value
+            zoomInLimit = defaultZoomInLimit;
+            zoomOutLimit = defaultZoomOutLimit;
         }
+    }
+
+    void SetOrbitRadius(float radius1, float radius2, float radius3)
+    {
+        cinemachine.m_Orbits[0].m_Radius = radius1;
+        cinemachine.m_Orbits[1].m_Radius = radius2;
+        cinemachine.m_Orbits[2].m_Radius = radius3;
+    }
+
+    void SetOrbitHeight(float height1, float height2, float height3)
+    {
+        cinemachine.m_Orbits[0].m_Height = height1;
+        cinemachine.m_Orbits[1].m_Height = height2;
+        cinemachine.m_Orbits[2].m_Height = height3;
     }
 
 }
