@@ -153,7 +153,8 @@ public class BlindComponent : ItemComponent
 
         for (int i = 0; i < _light.Length; i++)
         {
-            _light[i].intensity = _lightsIntensity[i];
+            if (_light[i] != null)
+                _light[i].intensity = _lightsIntensity[i];
         }
 
         BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
