@@ -23,18 +23,18 @@ namespace RFM.Character
         [SerializeField] private string velocityNameX, velocityNameY;
 
 
-        private NavMeshAgent _navMeshAgent;
-        private List<GameObject> _allRunners;
-        private Transform _target;
-        private Vector3 _targetPosition;
+        public NavMeshAgent _navMeshAgent;
+        public List<GameObject> _allRunners;
+        public Transform _target;
+        public Vector3 _targetPosition;
 
-        private bool _hasTarget = false;
+        public bool _hasTarget = false;
 
         // Catch player in range
         [SerializeField] private float timeToCatchRunner = 5;
         [SerializeField] private float catchRadius = 2;
-        private float _catchTimer;
-        private GameObject _inRangePlayer;
+        public float _catchTimer;
+        public GameObject _inRangePlayer;
 
         private void Awake()
         {
@@ -220,14 +220,14 @@ namespace RFM.Character
             if (PhotonNetwork.IsMasterClient)
             {
                 ControlBotMovement();
+            npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
             }
             else
             {
                 // Synchronize movement for non-master clients
-                SyncMovement();
+                //SyncMovement();
             }
 
-            npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
 
 
             //if (!PhotonNetwork.IsMasterClient) return; // Why is this check commented out?
@@ -338,7 +338,7 @@ namespace RFM.Character
             if (playerRunner != null && playerRunner.enabled)
             {
                 // if the playerRunner is the local player, call the PlayerRunnerCaught() method on the PlayerRunner script
-                if (other.GetComponent<PhotonView>().IsMine)
+                //if (other.GetComponent<PhotonView>().IsMine)
                 {
                     if (PhotonNetwork.IsMasterClient)
                     {
