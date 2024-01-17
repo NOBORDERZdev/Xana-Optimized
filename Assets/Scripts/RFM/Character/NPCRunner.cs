@@ -105,18 +105,21 @@ namespace RFM.Character
 
         private void Update()
         {
-            Vector3 velocity = _navMeshAgent.velocity;
-            Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
-            Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
-            float angle = Vector2.SignedAngle(forward, velocityDir);
-            float xVal = Mathf.Cos((angle - 90 / 180) * Mathf.Deg2Rad);
-            float yVal = Mathf.Cos(angle * Mathf.Deg2Rad);
-            float speed = velocity.magnitude;
+            if (GetComponent<PhotonView>().Owner.IsMasterClient)
+            {
+                Vector3 velocity = _navMeshAgent.velocity;
+                Vector2 velocityDir = new Vector2(velocity.x, velocity.z);
+                Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
+                float angle = Vector2.SignedAngle(forward, velocityDir);
+                float xVal = Mathf.Cos((angle - 90 / 180) * Mathf.Deg2Rad);
+                float yVal = Mathf.Cos(angle * Mathf.Deg2Rad);
+                float speed = velocity.magnitude;
 
-            var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
+                var animVector = new Vector2(xVal, yVal) * speed / _maxSpeed;
 
-            animator.SetFloat(velocityNameX, animVector.x);
-            animator.SetFloat(velocityNameY, animVector.y);
+                animator.SetFloat(velocityNameX, animVector.x);
+                animator.SetFloat(velocityNameY, animVector.y);
+            }
         }
 
         private void EscapeFromHunters()
@@ -209,6 +212,7 @@ namespace RFM.Character
                 money = (int)stream.ReceiveNext();
                 timeSurvived = (float)stream.ReceiveNext();
 
+                return;
                 if (Vector3.Distance(_navMeshAgent.destination, _targetPosition) > 1.0f)
                 {
                     _navMeshAgent.SetDestination(_targetPosition);

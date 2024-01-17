@@ -13,9 +13,9 @@ namespace RFM
     {
         #region Fields
 
-        private float _totalSeconds = 0;
-        private float _elapsedSeconds = 0;
-        private float _elapsedSeconds2 = 0;
+        public float _totalSeconds = 0;
+        public float _elapsedSeconds = 0;
+        public float _elapsedSeconds2 = 0;
 
         private bool _running = false;
         private bool _finished = false;
@@ -23,7 +23,7 @@ namespace RFM
         private Action _onFinishedCallback;
         private Action<float> _onTickCallback;
         private TMPro.TextMeshProUGUI TimeText;
-        private bool showTimeInMMSS;
+        public bool showTimeInMMSS;
         public bool paused;
         public DateTime curTime;
 
@@ -70,12 +70,17 @@ namespace RFM
             timer._finished = false;
             timer.Run();
         }
-
+        public bool change;
+        public float val;
 
         private void Update()
         {
             if (!_running) return;
-
+            if (change)
+            {
+                _elapsedSeconds = val;
+                change = false;
+            }
             _elapsedSeconds += Time.deltaTime;
             _elapsedSeconds2 += Time.deltaTime;
 
@@ -83,7 +88,14 @@ namespace RFM
             {
                 if (showTimeInMMSS)
                 {
-                    TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds).ToString(@"mm\:ss");
+                    if (_elapsedSeconds >= _totalSeconds)
+                    {
+                        TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _totalSeconds).ToString(@"mm\:ss");
+                    }
+                    else
+                    {
+                        TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds).ToString(@"mm\:ss");
+                    }
                 }
                 else
                 {
