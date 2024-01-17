@@ -51,18 +51,13 @@ public class ElapsedTimeComponent : ItemComponent
         if (isActivated && elapsedTimeComponentData.IsStart)
         {
             TimeStats._timeStop?.Invoke(0, () => { TimeStats._timeStart?.Invoke(); });
+            CancelInvoke("StopBehaviour");
             BuilderEventManager.elapsedEndTime += OnSubscribe;
         }
     }
     public void OnSubscribe()
     {
-        StartCoroutine(OnDisableUI());
-    }
-
-    public IEnumerator OnDisableUI()
-    {
-        yield return new WaitForSeconds(5f);
-        StopBehaviour();
+        Invoke("StopBehaviour", 5f);
     }
 
     private void StopComponent()

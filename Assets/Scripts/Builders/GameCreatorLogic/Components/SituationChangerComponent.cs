@@ -300,6 +300,9 @@ public class SituationChangerComponent : ItemComponent
             dimmerCoroutine = null;
             isRuninig = false;
             canRun = false;
+            GamificationComponentData.instance.isNight = false;
+            if(GamificationComponentData.instance.isBlindToogle)
+                GamificationComponentData.instance.isBlindToogle = false;
             SetDayMode(_light, _lightsIntensity);
 
         }
@@ -322,7 +325,8 @@ public class SituationChangerComponent : ItemComponent
     {
         for (int i = 0; i < _light.Length; i++)
         {
-            _light[i].intensity = _lightsIntensity[i];
+            if (_light[i] != null)
+                _light[i].intensity = _lightsIntensity[i];
         }
 
         SituationChangerSkyboxScript.instance.ChangeSkyBox(GamificationComponentData.instance.previousSkyID);
