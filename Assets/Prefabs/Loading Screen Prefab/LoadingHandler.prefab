@@ -3127,7 +3127,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3684941450895787013}
-  - component: {fileID: 3684941450895787010}
   m_Layer: 5
   m_Name: TopRightButtons
   m_TagString: Untagged
@@ -3160,44 +3159,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3684941450895787010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3684941450895787011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 723a1a2ee27a77f47891313872c01942, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btns:
-  - normal: {fileID: 21300000, guid: 1e313a7d40874354ca867694f5b3def4, type: 3}
-    pressed: {fileID: 21300000, guid: 1e313a7d40874354ca867694f5b3def4, type: 3}
-    screens:
-    - {fileID: 0}
-  - normal: {fileID: 21300000, guid: 8c4f2e12c414a7b4b907765777688574, type: 3}
-    pressed: {fileID: 21300000, guid: 8c4f2e12c414a7b4b907765777688574, type: 3}
-    screens:
-    - {fileID: 0}
-  - normal: {fileID: 21300000, guid: 705e8efb7c8a396499e6e128c0c5d62f, type: 3}
-    pressed: {fileID: 21300000, guid: 336f6fce29a2c254985338e5beabb866, type: 3}
-    screens:
-    - {fileID: 0}
-  - normal: {fileID: 21300000, guid: e0280a604886ffc4e88700fb6546beba, type: 3}
-    pressed: {fileID: 21300000, guid: e0280a604886ffc4e88700fb6546beba, type: 3}
-    screens:
-    - {fileID: 0}
-  - normal: {fileID: 21300000, guid: f2d50602e28ee1146a8dcfbfab249c15, type: 3}
-    pressed: {fileID: 21300000, guid: f2d50602e28ee1146a8dcfbfab249c15, type: 3}
-    screens:
-    - {fileID: 0}
-  - normal: {fileID: 21300000, guid: e0280a604886ffc4e88700fb6546beba, type: 3}
-    pressed: {fileID: 21300000, guid: e0280a604886ffc4e88700fb6546beba, type: 3}
-    screens:
-    - {fileID: 0}
-  Settings_pressed: 0
 --- !u!1 &3684941450961831494
 GameObject:
   m_ObjectHideFlags: 0
@@ -12447,6 +12408,21 @@ MonoBehaviour:
   key: 
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 7496875700784262514}
+--- !u!114 &5050851309916446266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496875700784262415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 7496875700784262514}
 --- !u!114 &5467493524542954090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12508,21 +12484,6 @@ MonoBehaviour:
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 7496875700784262514}
 --- !u!114 &8613833569821373833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7496875700784262415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 
-  LocalizeText: {fileID: 0}
-  LocalizeTextTMP: {fileID: 7496875700784262514}
---- !u!114 &5050851309916446266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
