@@ -100,6 +100,7 @@ namespace RFM.Character
 
         private void SearchForTarget()
         {
+            Debug.LogError("_allRunners: " + _allRunners.Count);
             if (PhotonNetwork.IsMasterClient)
             {
                 if (Globals.gameState != Globals.GameState.Gameplay) return;
@@ -220,7 +221,7 @@ namespace RFM.Character
             if (PhotonNetwork.IsMasterClient)
             {
                 ControlBotMovement();
-            npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
+                npcAnim.SetFloat("speed", _navMeshAgent.velocity.magnitude);
             }
             else
             {
@@ -359,8 +360,8 @@ namespace RFM.Character
                         prameters,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
-
                     other.GetComponent<Collider>().enabled = false;
+                    Destroy(playerRunner.gameObject);
                 }
             }
         }
