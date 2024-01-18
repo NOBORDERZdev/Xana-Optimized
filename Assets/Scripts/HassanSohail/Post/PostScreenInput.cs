@@ -56,6 +56,8 @@ public class PostScreenInput : MonoBehaviour
     {
         inputField.Select();
         inputField.ActivateInputField();
+        //inputField.MoveToEndOfLine(shift: true, ctrl: false);
+        inputField.caretPosition = inputField.text.Length;
     }
     //private string FormatInput(string input)
     //{
