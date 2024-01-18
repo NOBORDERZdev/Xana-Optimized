@@ -456,8 +456,8 @@ public class BuilderMapDownload : MonoBehaviour
     ColorAdjustments colorAdjustments;
     IEnumerator SetSkyPropertiesDelay()
     {
-        reflectionProbe.gameObject.SetActive(false);
-        reflectionProbe.enabled = true;
+        //reflectionProbe.gameObject.SetActive(false);
+        //reflectionProbe.enabled = true;
         SkyProperties skyProperties = levelData.skyProperties;
         LensFlareData lensFlareData = new LensFlareData();
         Camera.main.clearFlags = CameraClearFlags.Skybox;
@@ -565,7 +565,7 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
-        reflectionProbe.gameObject.SetActive(true);
+        //reflectionProbe.gameObject.SetActive(true);
         if (lensFlareData != null)
             SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
         else
