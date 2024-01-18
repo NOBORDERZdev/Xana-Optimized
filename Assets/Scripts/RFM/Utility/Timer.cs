@@ -1,6 +1,4 @@
-﻿using Photon.Pun;
-using RFM.Managers;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -50,14 +48,11 @@ namespace RFM
         /// <param name="timeText">Text that shows remaining time</param>
         /// <param name="onOneSecondCallback">Called after each second</param>
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null,
-            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, bool isRPC = false, Action<float> onOneSecondCallback = null)
+            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
             var timerObj = new GameObject("timerObj");
             var timer = timerObj.AddComponent<RFM.Timer>();
-            if (isRPC)
-            {
-                RFMManager.Instance.timer = timer;
-            }
+
             timer._totalSeconds = value;
 
             timer._onFinishedCallback = null; // clear the callback in case it was used previously
