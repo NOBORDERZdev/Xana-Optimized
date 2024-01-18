@@ -53,6 +53,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public double eventRemainingTime;
 
     public SceneManage _uiReferences;
+    public RFMCharacter myRfmCharacter;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -458,6 +459,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             spawnPoint += new Vector3(Random.Range(-2, 2), spawnPoint.y, Random.Range(-2, 2));
             
             player = PhotonNetwork.Instantiate("XANA Player", spawnPoint, Quaternion.identity, 0);
+            myRfmCharacter=player.transform.GetChild(0).GetComponent<RFMCharacter>();
             RFM.Globals.player = player.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
             
             PlayerCamera.gameObject.SetActive(false);
