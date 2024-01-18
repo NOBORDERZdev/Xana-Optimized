@@ -1,17 +1,18 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
-using System.Collections;
 using UnityEngine;
 
 namespace RFM.Character
 {
-    public class PlayerRunner : Runner/*, IPunObservable*/
+    public class PlayerRunner : Runner
     {
         private TMPro.TextMeshProUGUI _showMoney;
         private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
 
         [HideInInspector] public float timeSurvived;
         [HideInInspector] public int Money = 0;
+        private bool gainingMoney = false;
+        private float timeElapsed = 0f;
 
         private int viewIDOfHunterThatCaughtThisRunner = -999;
         
@@ -31,6 +32,23 @@ namespace RFM.Character
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
+        private void Update()
+        {
+            if (!this.enabled) return;
+            if (gainingMoney)
+            {
+                if (timeElapsed >= RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval)
+                {
+                    timeElapsed = 0f;
+                    AddMoney();
+                }
+                else
+                {
+                    timeElapsed += Time.deltaTime;
+                }
+            }
+        }
+
         internal override void OnGameStarted()
         {
             if (!this.enabled) return;
@@ -44,15 +62,18 @@ namespace RFM.Character
             _showMoney.text = "00";
             Money = 0;
             _showMoney.gameObject.SetActive(true);
-            InvokeRepeating(nameof(AddMoney),
-                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
-                RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
+
+            gainingMoney = true;
+            //InvokeRepeating(nameof(AddMoney),
+            //    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval,
+            //    RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval);
         }
 
         private void OnGameOver()
         {
             if (!this.enabled) return;
-            CancelInvoke(nameof(AddMoney));
+            gainingMoney = false;
+            //CancelInvoke(nameof(AddMoney));
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
@@ -71,7 +92,9 @@ namespace RFM.Character
         
         public void PlayerRunnerCaught(int hunterViewID)
         {
-            CancelInvoke(nameof(AddMoney));
+            Debug.LogError("RFM I was caught by " + hunterViewID);
+            gainingMoney = false;
+            //CancelInvoke(nameof(AddMoney));
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
