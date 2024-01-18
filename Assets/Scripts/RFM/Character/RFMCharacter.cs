@@ -39,6 +39,13 @@ public class RFMCharacter : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void TimerRPC(float time)
+    {
+        Debug.Log($"RFM {photonView.Owner.NickName} + TimerRPC: {time}");
+        RFMManager.Instance.timer._elapsedSeconds = time;
+    }
+
     private void OnTakePositionStart()
     {
         isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());

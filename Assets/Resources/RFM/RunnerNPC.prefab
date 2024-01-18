@@ -1887,6 +1887,7 @@ GameObject:
   - component: {fileID: 6519023036355749454}
   - component: {fileID: 8235149719610812909}
   - component: {fileID: 6871966640619135633}
+  - component: {fileID: 3523077553050244771}
   m_Layer: 8
   m_Name: RunnerNPC
   m_TagString: RunnerNPC
@@ -1933,6 +1934,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6871966640619135633}
+  - {fileID: 3523077553050244771}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1994,6 +1996,22 @@ MonoBehaviour:
   velocityNameY: velocityY
   minDistanceToStartRunning: 10
   huntersTransforms: []
+--- !u!114 &3523077553050244771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650430759411851697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &685820000775412649
 GameObject:
   m_ObjectHideFlags: 0
@@ -20366,6 +20384,53 @@ CapsuleCollider:
   m_Height: 1.52
   m_Direction: 1
   m_Center: {x: 0.0044188797, y: 0.76, z: 0}
+--- !u!114 &1681541627201526410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060646414107162878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5857606151377468618}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5857606151377468618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6060646414107162878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: velocityX
+  - Type: 1
+    SynchronizeType: 2
+    Name: velocityY
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!4 &6868109695465972292 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Photon.Pun;
+using RFM.Managers;
+using System;
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -13,9 +15,9 @@ namespace RFM
     {
         #region Fields
 
-        private float _totalSeconds = 0;
-        private float _elapsedSeconds = 0;
-        private float _elapsedSeconds2 = 0;
+        public float _totalSeconds = 0;
+        public float _elapsedSeconds = 0;
+        public float _elapsedSeconds2 = 0;
 
         private bool _running = false;
         private bool _finished = false;
@@ -23,7 +25,7 @@ namespace RFM
         private Action _onFinishedCallback;
         private Action<float> _onTickCallback;
         private TMPro.TextMeshProUGUI TimeText;
-        private bool showTimeInMMSS;
+        public bool showTimeInMMSS;
         public bool paused;
         public DateTime curTime;
 
@@ -48,11 +50,14 @@ namespace RFM
         /// <param name="timeText">Text that shows remaining time</param>
         /// <param name="onOneSecondCallback">Called after each second</param>
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null,
-            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
+            TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, bool isRPC = false, Action<float> onOneSecondCallback = null)
         {
             var timerObj = new GameObject("timerObj");
             var timer = timerObj.AddComponent<RFM.Timer>();
-
+            if (isRPC)
+            {
+                RFMManager.Instance.timer = timer;
+            }
             timer._totalSeconds = value;
 
             timer._onFinishedCallback = null; // clear the callback in case it was used previously
@@ -70,12 +75,17 @@ namespace RFM
             timer._finished = false;
             timer.Run();
         }
-
+        public bool change;
+        public float val;
 
         private void Update()
         {
             if (!_running) return;
-
+            if (change)
+            {
+                _elapsedSeconds = val;
+                change = false;
+            }
             _elapsedSeconds += Time.deltaTime;
             _elapsedSeconds2 += Time.deltaTime;
 
@@ -83,7 +93,14 @@ namespace RFM
             {
                 if (showTimeInMMSS)
                 {
-                    TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds).ToString(@"mm\:ss");
+                    if (_elapsedSeconds >= _totalSeconds)
+                    {
+                        TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _totalSeconds).ToString(@"mm\:ss");
+                    }
+                    else
+                    {
+                        TimeText.text = TimeSpan.FromSeconds(_totalSeconds - _elapsedSeconds).ToString(@"mm\:ss");
+                    }
                 }
                 else
                 {
