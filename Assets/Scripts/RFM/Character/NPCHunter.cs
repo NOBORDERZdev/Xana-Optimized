@@ -361,7 +361,7 @@ namespace RFM.Character
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
                     other.GetComponent<Collider>().enabled = false;
-                    Destroy(playerRunner.gameObject);
+                    //Destroy(playerRunner.gameObject);
                 }
             }
         }
