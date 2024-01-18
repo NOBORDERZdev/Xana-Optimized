@@ -40,14 +40,12 @@ public class PostScreenInput : MonoBehaviour
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
         }
-        print("~~~~~~~~~~ "+ShowText.text.Count()+"~~~~~~~~~~ ");
         if (bubbleImage.rect.width >= maxWidth)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
         if (ShowText.text.Count()<=40)
         {
-            print("!!!! else call~~~~~~~~~~ ");
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
    }
