@@ -75,22 +75,6 @@ namespace RFM.Managers
             //StartCoroutine(CheckandFixLights());
         }
 
-        /*private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    if (PhotonNetwork.PlayerListOthers.Length > 0)
-                    {
-                        PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer.GetNext());
-
-                        PhotonNetwork.SendAllOutgoingCommands();
-                    }
-                }
-            }
-        }*/
-
 
         public override void OnEnable()
         {
@@ -107,7 +91,6 @@ namespace RFM.Managers
             PhotonNetwork.NetworkingClient.EventReceived -= ReceivePhotonEvents;
         }
 
-        public Timer timer;
 
         private IEnumerator Start()
         {
@@ -151,8 +134,6 @@ namespace RFM.Managers
                 {
                     if (PhotonNetwork.PlayerListOthers.Length > 0)
                     {
-                        Debug.LogError("Sent Time");
-                        LoadFromFile.instance.myRfmCharacter.GetComponent<PhotonView>().RPC("TimerRPC", RpcTarget.AllBuffered, timer._elapsedSeconds);
                         PhotonNetwork.SetMasterClient(PhotonNetwork.LocalPlayer.GetNext());
 
                         PhotonNetwork.SendAllOutgoingCommands();
@@ -160,7 +141,6 @@ namespace RFM.Managers
                 }
             }
         }
-
 
         #endregion
 
@@ -181,7 +161,7 @@ namespace RFM.Managers
                 }
             });
 
-           Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>
+            Timer.SetDurationAndRun(CurrentGameConfiguration.MatchMakingTime, () =>
             {
                 if (Globals.gameState == Globals.GameState.InLobby)
                 {
@@ -193,7 +173,7 @@ namespace RFM.Managers
                     //CancelInvoke(nameof(CheckForGameStartCondition));
                 }
 
-            }, gameplayTimeText,true, true);
+            }, gameplayTimeText, true);
 
             //photonView.RPC(nameof(PlayerJoined), RpcTarget.AllBuffered);
             //Debug.Log("RFM PlayerJoined() RPC Requested by " + PhotonNetwork.NickName);
@@ -361,7 +341,7 @@ namespace RFM.Managers
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
                     StartGameplay,
-                    countDownText, false,false,
+                    countDownText, false,
                     AfterEachSecondCountdownTimer);
 
                 var hunterPosition = huntersSpawnArea.position;
@@ -386,7 +366,7 @@ namespace RFM.Managers
 
                 Timer.SetDurationAndRun(CurrentGameConfiguration.TakePositionTime,
                     StartGameplay,
-                    countDownText, false,false,
+                    countDownText, false,
                     AfterEachSecondCountdownTimer);
 
                 var position = playersSpawnArea.position;
@@ -454,7 +434,7 @@ namespace RFM.Managers
             statusMMFPlayer.PlayFeedbacks();
 
             Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver,
-                gameplayTimeText, true, false,AfterEachSecondGameplayTimer);
+                gameplayTimeText, true, AfterEachSecondGameplayTimer);
 
             InvokeRepeating(nameof(CheckForGameOverCondition), 10, 3);
         }
