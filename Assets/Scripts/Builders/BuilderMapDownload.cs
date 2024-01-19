@@ -171,10 +171,6 @@ public class BuilderMapDownload : MonoBehaviour
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
-        yield return StartCoroutine(DownloadAddressableGamificationObject());
-
-        yield return StartCoroutine(GemificationObjectLoadWait(1f));
-
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -205,7 +201,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
     }
 
-    public IEnumerator DownloadAddressableGamificationObject()
+    public IEnumerator DownloadAddressableGamificationObject(Action CallBack)
     {
         GamificationComponentData.instance.multiplayerComponentsObject.Clear();
         if (Application.internetReachability != NetworkReachability.NotReachable)
@@ -243,6 +239,8 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
                 }
             }
+
+            CallBack();
         }
     }
 
@@ -664,6 +662,13 @@ public class BuilderMapDownload : MonoBehaviour
             LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
         UpdateScene();
+
+        StartCoroutine(DownloadAddressableGamificationObject(() => 
+        {
+            StartCoroutine(GemificationObjectLoadWait(1f));
+        }));
+
+        
     }
 
     internal void PlayerSetup()
