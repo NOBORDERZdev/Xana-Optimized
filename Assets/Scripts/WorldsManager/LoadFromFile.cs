@@ -674,6 +674,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 ReferrencesForDynamicMuseum.instance.playerControllerNew.StopBuilderComponent();
                 SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
+                SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
         }
