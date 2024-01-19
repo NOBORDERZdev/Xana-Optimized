@@ -95,9 +95,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         instance = this;
     }
 
-    public override void OnEnable()
+    public new void OnEnable()
     {
-        base.OnEnable();
         BuilderEventManager.ReSpawnPlayer += PlayerSpawnBlindfoldedDisplay;
         //ChangeOrientation
         BuilderEventManager.BuilderSceneOrientationChange += OrientationChange;
