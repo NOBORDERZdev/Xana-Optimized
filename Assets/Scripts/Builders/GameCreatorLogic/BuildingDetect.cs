@@ -319,8 +319,6 @@ public class BuildingDetect : MonoBehaviour
             Vector3 canvasPos = GamificationComponentData.instance.nameCanvas.transform.localPosition;
             canvasPos.y = nameCanvasDefaultYpos;
             GamificationComponentData.instance.nameCanvas.transform.localPosition = canvasPos;
-            if (avatarChangeCoroutine != null)
-                StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;
 
             GamificationComponentData.instance.isAvatarChanger = false;
