@@ -27,7 +27,7 @@ public class TextLocalization : MonoBehaviour
             currentText = LocalizeTextTMP.text;
         }
 
-        // GameManager.currentLanguage = "ja";
+        GameManager.currentLanguage = "ja";
 
         LocalizeTextText();
     }

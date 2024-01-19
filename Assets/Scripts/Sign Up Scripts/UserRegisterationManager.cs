@@ -1374,20 +1374,12 @@ public class UserRegisterationManager : MonoBehaviour
 
                         PlayerPrefs.SetInt("iSignup", 1);// going for register user
                         SignUpPanal.SetActive(true);
+                        EmailFieldNew.Text = "";
                         Password1New.Text = "";
                         Password2New.Text = "";
                         //OnSignUpPhoneTabPressed();
                         //  OnSignUpWalletTabPressed();
                     }
-//=======
-//                    PlayerPrefs.SetInt("iSignup", 1);// going for register user
-//                    SignUpPanal.SetActive(true);
-//                    EmailFieldNew.Text = "";
-//                    Password1New.Text = "";
-//                    Password2New.Text = "";
-//                    //OnSignUpPhoneTabPressed();
-//                    //  OnSignUpWalletTabPressed();
-//>>>>>>> 7cd3cb1d36f826da9f01d840dc518ee6379aaa25
 
                     break;
                 }
