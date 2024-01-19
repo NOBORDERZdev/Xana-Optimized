@@ -360,7 +360,13 @@ namespace RFM.Character
                         prameters,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
-                    other.GetComponent<Collider>().enabled = false;
+                    //other.GetComponent<Collider>().enabled = false;
+                    Collider[] colArray= other.GetComponents<Collider>();
+                    for (int i = 0; i < colArray.Length; i++)
+                    {
+                        colArray[i].enabled = false;
+                    }
+                    other.GetComponent<PlayerRunner>().playerBody.SetActive(false);
                     //Destroy(playerRunner.gameObject);
                 }
             }
