@@ -171,6 +171,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     void EnableNarrationUI(string narrationText, bool isStory, bool closeNarration)
     {
         DisableAllComponentUIObject(Constants.ItemComponentType.NarrationComponent);
+        isStoryWritten = true;
+        Invoke(nameof(NarrationUILinesCount), 0.01f);
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
 
@@ -198,6 +200,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
         }
         //}
+
     }
 
     public void NarrationUILinesCount()
@@ -223,7 +226,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
-        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -232,14 +234,9 @@ public class GamificationComponentUIManager : MonoBehaviour
             storyCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForScrollingOption());
+            //StartCoroutine(WaitForScrollingOption());
         }
         isStoryWritten = false;
-        NarrationUILinesCount();
-    }
-    IEnumerator WaitForScrollingOption()
-    {
-        yield return new WaitForEndOfFrame();
         NarrationUILinesCount();
     }
     IEnumerator WaitDelayStatement()
@@ -1200,6 +1197,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
         string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
+
+        isHyperlinkWritten = true;
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
         hyperLinkCharCount = 0;
@@ -1220,7 +1219,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainHyperLinkCollided = false;
         #endregion
-        isHyperlinkWritten = true;
         while (hyperLinkCharCount < msg.Length && !isAgainHyperLinkCollided)
         {
             hyperLinkPopupText.text += msg[hyperLinkCharCount];
@@ -1230,14 +1228,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             hyperLinkCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForHyperLinkScrollingOption());
         }
         isHyperlinkWritten = false;
-        HyperLinkUILinesCount();
-    }
-    IEnumerator WaitForHyperLinkScrollingOption()
-    {
-        yield return new WaitForEndOfFrame();
         HyperLinkUILinesCount();
     }
 
