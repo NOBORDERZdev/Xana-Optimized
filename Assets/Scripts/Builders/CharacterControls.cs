@@ -26,9 +26,7 @@ public sealed class CharacterControls : MonoBehaviour
     {
         if (GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.ZoomControl = false;
-            BuilderEventManager.ChangeCameraHeight?.Invoke(true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             AddListners();
         }
     }
@@ -43,6 +41,8 @@ public sealed class CharacterControls : MonoBehaviour
     private void AddListners()
     {
         StoreCurretValues();
+        GamificationComponentData.instance.ZoomControl = false;
+        BuilderEventManager.ChangeCameraHeight?.Invoke(true);
         routine = StartCoroutine(OvverideCurrentValues());
 
     }

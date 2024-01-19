@@ -53,6 +53,7 @@ public class SituationChangerComponent : ItemComponent
         isActivated = true;
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
         defaultTimer = this.situationChangerComponentData.Timer;
+        StartCoroutine(SituationChangerSkyboxScript.instance.DownloadSituatioChangerSkyboxes());
     }
 
     Coroutine situationCo;
