@@ -307,7 +307,8 @@ public class BuildingDetect : MonoBehaviour
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
-                PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
+                if (AppearanceChange != null)
+                    PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
                 Delayed.Function(() =>
                 {
