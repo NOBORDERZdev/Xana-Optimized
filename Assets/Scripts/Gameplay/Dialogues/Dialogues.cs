@@ -7,7 +7,10 @@ public class Dialogues : ScriptableObject
 {
     public string DialogueName;
     [TextArea]
+    public string[] chineseDialogues;
+    [TextArea]
     public string[] dialogues;
     [TextArea]
-    public string[] japaneseDialogues;
+    public string[] japaneseDialogues; 
+    
 }
