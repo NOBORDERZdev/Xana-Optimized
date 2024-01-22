@@ -596,7 +596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &590437091831612838
 Transform:
   m_ObjectHideFlags: 0
@@ -604,7 +604,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250644416097083164}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -621,7 +621,7 @@ Transform:
   - {fileID: 6805384256622046310}
   - {fileID: 2012434826027952663}
   m_Father: {fileID: 165819516587834123}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &250644416097083143
 Animator:
@@ -1907,9 +1907,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6868109695465972292}
   - {fileID: 590437091831612838}
   - {fileID: 6669974379091633010}
+  - {fileID: 6868109695465972292}
   - {fileID: 181816480502487387}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   money: 0
   nickName: Player
   timeSurvived: 0
-  animator: {fileID: 698130190334146622}
+  animator: {fileID: 250644416097083143}
   velocityNameX: velocityX
   velocityNameY: velocityY
   minDistanceToStartRunning: 10
@@ -13637,7 +13637,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 165819516587834123}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 27.822, y: 0, z: 0}
 --- !u!1 &6026928735580605890
 GameObject:
@@ -19940,7 +19940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
       propertyPath: m_LocalScale.x
@@ -20207,6 +20207,10 @@ PrefabInstance:
       value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
       propertyPath: m_TagString
       value: RunnerNPC
       objectReference: {fileID: 0}
@@ -20360,11 +20364,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
---- !u!95 &698130190334146622 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
-  m_PrefabInstance: {fileID: 6402663038764647855}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6060646414107162878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e41e5644038f40f45817b318e98e4b5b, type: 3}
