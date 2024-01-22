@@ -1273,6 +1273,10 @@ public class StoreManager : MonoBehaviour
         }
         //PresetData_Jsons.lastSelectedPresetName = null;
         //XanaConstants.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
+
+        GameManager.Instance.mainCharacter.GetComponent<Animator>().SetBool("Customization", false);
+
+
         GreyRibbonImage.SetActive(true);
         WhiteRibbonImage.SetActive(false);
         SaveStoreBtn.GetComponent<Image>().color = Color.white;
