@@ -61,6 +61,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
+    //Bool for BuilderSpawn point available or not
+    bool BuilderSpawnPoint = false;
+
     private void Awake()
     {
         instance = this;
@@ -101,6 +104,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         GameObject _updatedSpawnPoint = new GameObject();
         updatedSpawnpoint = _updatedSpawnPoint.transform;
+        BuilderSpawnPoint = false;
+
     }
 
     void OnEnable()
@@ -667,7 +672,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //Rejoin world after internet connection stable
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
+                ReferrencesForDynamicMuseum.instance.playerControllerNew.StopBuilderComponent();
                 SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
+                SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
+                BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
@@ -889,6 +897,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (BuilderData.spawnPoint.Count == 1)
         {
             tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
+            BuilderSpawnPoint = true;
         }
         else if (BuilderData.spawnPoint.Count > 1)
         {
@@ -896,6 +905,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 if (g.IsActive)
                 {
+                    BuilderSpawnPoint = true;
                     tempSpawnPoint = g.spawnObject.transform;
                     break;
                 }
@@ -1036,6 +1046,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //Debug.LogError("here resetting player .... ");
             if (BuilderData.spawnPoint.Count == 1)
             {
+                BuilderSpawnPoint = true;
                 spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
             }
             else if (BuilderData.spawnPoint.Count > 1)
@@ -1044,6 +1055,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 {
                     if (g.IsActive)
                     {
+                        BuilderSpawnPoint = true;
                         spawnPoint = g.spawnObject.transform.localPosition;
                         break;
                     }
@@ -1057,7 +1069,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     Vector3 AvoidAvatarMergeInBuilderScene()
     {
         Vector3 spawnPoint = this.spawnPoint;
-        spawnPoint.y += 2;
+        spawnPoint.y += BuilderSpawnPoint ? 2 : 1000;
 
         RaycastHit hit;
     CheckAgain:

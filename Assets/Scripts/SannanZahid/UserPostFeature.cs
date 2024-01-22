@@ -16,7 +16,7 @@ public class UserPostFeature : MonoBehaviour
     public UpdatePostText OnUpdatePostText;
     public void ActivatePostButtbleHome(bool flag)
     {
-        if(_postBubbleFlag)  Bubble.parent.gameObject.SetActive(flag);
+        if (_postBubbleFlag) Bubble.parent.gameObject.SetActive(flag);
     }
     public void SendPost()
     {
@@ -86,7 +86,15 @@ public class UserPostFeature : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
                 yield return new WaitForSecondsRealtime(Time.deltaTime);
-
+          
+            if (www.error != null)
+            {
+                Debug.Log("UnityWebRequest.error:" + www.error);
+            }
+            else
+            {
+                Debug.Log("Response:" + www.downloadHandler.text);
+            }
             www.Dispose();
         }
     }
@@ -119,11 +127,13 @@ public class UserPostFeature : MonoBehaviour
                 {
                     if (string.IsNullOrEmpty(RetrievedPostPlayer.data.text_post))
                     {
+                        RetrievedPostPlayer.success = false;
                         _postBubbleFlag = false;
                         Bubble.gameObject.SetActive(false);
                     }
                     else
                     {
+                        RetrievedPostPlayer.success = true;
                         _postBubbleFlag = true;
                         Bubble.gameObject.SetActive(true);
                     }
@@ -142,6 +152,7 @@ public class UserPostFeature : MonoBehaviour
                     textElement.text = RetrievedPostPlayer.data.text_post;
                 if(RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
                 {
+                    RetrievedPostPlayer.success = true;
                     bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood).IdleAnimationFlag;
                     GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostPlayer.data.text_mood, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
                     GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
@@ -154,7 +165,7 @@ public class UserPostFeature : MonoBehaviour
     }
     public void SetLastPostToPlayer()
     {
-        if (RetrievedPostPlayer.data != null)
+        if (!string.IsNullOrEmpty(Bubble.transform.GetComponentInChildren<TMPro.TMP_Text>().text))
         {
             _postBubbleFlag = true;
             Bubble.gameObject.SetActive(true);

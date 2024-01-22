@@ -123,6 +123,25 @@ public class UserAnimationPostFeature : MonoBehaviour
             GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle "+ UnityEngine.Random.Range(1,3), MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
         }
     }
+
+    public void SetMood(string moodName, Actor _animator)
+    {
+       // GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected , MoodSelected, _animator.overrideController);
+
+        NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(moodName);
+
+        _animator.SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == moodName));
+        if (NoOfAnimations == 1)
+        {
+            print("________________________ if ");
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle", moodName, _animator.overrideController);
+        }
+        else
+        {
+            print("________________________ else ");
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle " + UnityEngine.Random.Range(1, 3), moodName, _animator.overrideController);
+        }
+    }
 }
 [System.Serializable]
 public class MoodInfo
