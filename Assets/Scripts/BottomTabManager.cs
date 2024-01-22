@@ -485,7 +485,6 @@ public class BottomTabManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-        CheckLoginOrNotForFooterButton();
        // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {
@@ -517,6 +516,8 @@ public class BottomTabManager : MonoBehaviour
             FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
+            FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
+
             MyProfileDataManager.Instance.MyProfileSceenShow(false);
             //Invoke(nameof(InvokeDisableFeed),1f);
             //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
@@ -569,7 +570,7 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
             // LoaderShow(true);
             //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-            CheckLoginOrNotForFooterButton();
+            
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
@@ -598,7 +599,7 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance.Canvas.SetActive(false);
 
                 UIManager.Instance.HomeWorldScreen.SetActive(false);
-            
+                FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
