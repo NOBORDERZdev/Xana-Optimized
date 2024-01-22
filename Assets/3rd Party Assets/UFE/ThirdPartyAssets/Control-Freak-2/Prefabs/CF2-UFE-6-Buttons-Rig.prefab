@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.0000038146973}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000003814698}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.000030517578, y: 0}
-  m_SizeDelta: {x: 87.2836, y: 87.2836}
+  m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22274252
 CanvasRenderer:
@@ -294,8 +294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 82.7, y: 82.7}
-  m_SizeDelta: {x: 165.1448, y: 165.1448}
+  m_AnchoredPosition: {x: 60.2, y: 60}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22239640
 CanvasRenderer:
@@ -1300,7 +1300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &22403652
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1322,7 +1322,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 150, y: 128}
-  m_SizeDelta: {x: 166, y: 166}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &11481424
 MonoBehaviour:
@@ -1413,7 +1413,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     clampMode: 1
     perAxisDeadzones: 0
-    stickMode: 2
+    stickMode: 1
     originalDirResetMode: 0
     angularMagnet: 0.5
     digitalDetectionMode: 0
@@ -1426,7 +1426,7 @@ MonoBehaviour:
   joyStateBinding:
     enabled: 1
     horzAxisBinding:
-      enabled: 1
+      enabled: 0
       targetList:
       - separateAxes: 0
         singleAxis: Vertical
@@ -1443,53 +1443,58 @@ MonoBehaviour:
         positiveAxisAsPositive: 1
         negativeAxisAsPositive: 1
     vertAxisBinding:
-      enabled: 1
+      enabled: 0
       targetList:
-      - separateAxes: 0
-        singleAxis: Horizontal
-        reverseSingleAxis: 0
-        positiveAxis: 
-        negativeAxis: 
-        positiveAxisAsPositive: 1
-        negativeAxisAsPositive: 1
-      - separateAxes: 0
-        singleAxis: P1KeyboardVertical
-        reverseSingleAxis: 0
-        positiveAxis: 
-        negativeAxis: 
+      - separateAxes: 1
+        singleAxis: Jump
+        reverseSingleAxis: 1
+        positiveAxis: Jump
+        negativeAxis: Crouch
         positiveAxisAsPositive: 1
         negativeAxisAsPositive: 1
     dirBinding:
-      enabled: 0
-      bindDiagonals: 1
+      enabled: 1
+      bindDiagonals: 0
       bindMode: 0
       dirBindingU:
-        enabled: 0
-        axisList: []
+        enabled: 1
+        axisList:
+        - axisName: Jump
+          axisPositiveSide: 1
         keyList: 
       dirBindingUR:
         enabled: 0
         axisList: []
         keyList: 
       dirBindingR:
-        enabled: 0
-        axisList: []
+        enabled: 1
+        axisList:
+        - axisName: Vertical
+          axisPositiveSide: 1
+        - axisName: P1KeyboardHorizontal
+          axisPositiveSide: 1
         keyList: 
       dirBindingDR:
         enabled: 0
         axisList: []
         keyList: 
       dirBindingD:
-        enabled: 0
-        axisList: []
+        enabled: 1
+        axisList:
+        - axisName: Crouch
+          axisPositiveSide: 1
         keyList: 
       dirBindingDL:
         enabled: 0
         axisList: []
         keyList: 
       dirBindingL:
-        enabled: 0
-        axisList: []
+        enabled: 1
+        axisList:
+        - axisName: Vertical
+          axisPositiveSide: 0
+        - axisName: P1KeyboardHorizontal
+          axisPositiveSide: 0
         keyList: 
       dirBindingUL:
         enabled: 0
@@ -4814,7 +4819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -18.200006, y: -17.400013}
   m_SizeDelta: {x: -97.6, y: -99.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22238774
@@ -6802,7 +6807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7616491152455721597
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7217,7 +7222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4472281252458485518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7458,7 +7463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4436825729050699383
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7851,7 +7856,7 @@ GameObject:
   - component: {fileID: 7822436936488653210}
   - component: {fileID: 9074138326159256702}
   m_Layer: 0
-  m_Name: Jump
+  m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8116,7 +8121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1026730229475256390
 RectTransform:
   m_ObjectHideFlags: 0

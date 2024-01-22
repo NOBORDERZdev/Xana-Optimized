@@ -17,9 +17,9 @@ MonoBehaviour:
   debug_ReactionWeight: 1
   advancedOptions:
     timeBetweenDecisions: 0.07
-    timeBetweenActions: 0.061
-    aggressiveness: 0.65
-    ruleCompliance: 0.9
+    timeBetweenActions: 0.076
+    aggressiveness: 0.637
+    ruleCompliance: 1
     comboEfficiency: 1
     movementDuration: 0.3
     buttonSequenceInterval: 1
@@ -44,8 +44,8 @@ MonoBehaviour:
     preferableCombatDistance: 1
     attacksAtPreferableDistance: 5
     autoMove: 1
-    restOnLocation: 1
-    moveFrequency: 3
+    restOnLocation: 0
+    moveFrequency: 4
     autoJump: 1
     jumpBackFrequency: 0
     jumpStraightFrequency: 0
@@ -54,10 +54,10 @@ MonoBehaviour:
     obeyHitType: 1
     standBlockAccuracy: 6
     crouchBlockAccuracy: 6
-    jumpBlockAccuracy: 0
+    jumpBlockAccuracy: 6
     autoAttack: 1
     obeyPreferableDistances: 1
-    attackFrequency: 4
+    attackFrequency: 5
     debugToggle: 0
   aiRules:
   - ruleName: Crouch Block
@@ -90,7 +90,7 @@ MonoBehaviour:
           anyHitConfirmType: 1
         moveFrameData: 0
         moveDamage: 0
-      conditionsToggle: 0
+      conditionsToggle: 1
     reactions:
     - reactionType: 7
       moveClassification:
@@ -110,8 +110,8 @@ MonoBehaviour:
       behavior: 0
       desirability: 5
     debugToggle: 0
-    eventsToggle: 0
-    reactionsToggle: 0
+    eventsToggle: 1
+    reactionsToggle: 1
   - ruleName: Upper Block
     events:
     - enabled: 1
@@ -172,11 +172,11 @@ MonoBehaviour:
       strong: 0.2
       veryStrong: 0.25
     distance:
-      veryClose: 0.04
-      close: 0.048
+      veryClose: 0.045
+      close: 0.0455
       mid: 0.06
       far: 0.065
-      veryFar: 0.07
+      veryFar: 0.069
     desirability:
       theWorstOption: 0
       veryUndesirable: 0.15

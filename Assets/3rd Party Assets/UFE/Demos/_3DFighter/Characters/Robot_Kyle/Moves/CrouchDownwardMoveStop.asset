@@ -3612,35 +3612,7 @@ MonoBehaviour:
     anyHitType: 1
     anyHitConfirmType: 1
   frameLinks: []
-  gauges:
-  - castingFrame: 0
-    targetGauge: 0
-    startDrainingGauge: 0
-    inhibitGainWhileDraining: 0
-    stopDrainingGauge: 0
-    _gaugeDPS:
-      _serializedValue: 0
-    _totalDrain:
-      _serializedValue: 0
-    _gaugeRequired:
-      _serializedValue: 0
-    _gaugeUsage:
-      _serializedValue: 0
-    _gaugeGainOnMiss:
-      _serializedValue: 0
-    _gaugeGainOnHit:
-      _serializedValue: 0
-    _gaugeGainOnBlock:
-      _serializedValue: 0
-    _opGaugeGainOnBlock:
-      _serializedValue: 0
-    _opGaugeGainOnParry:
-      _serializedValue: 0
-    _opGaugeGainOnHit:
-      _serializedValue: 0
-    DCMove: {fileID: 0}
-    DCStance: 0
-    editorToggle: 0
+  gauges: []
   sortOrder: []
   particleEffects: []
   appliedForces: []
@@ -3747,7 +3719,10 @@ MonoBehaviour:
   lockOnTargets: []
   switchCharacterOptions: []
   invincibleBodyParts: []
-  stateOverride: []
+  stateOverride:
+  - castingFrame: 0
+    endFrame: 13
+    state: 0
   armorOptions:
     activeFramesBegin: 0
     activeFramesEnds: 0

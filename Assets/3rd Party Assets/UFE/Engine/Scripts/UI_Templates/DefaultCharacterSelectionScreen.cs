@@ -97,6 +97,9 @@ public class DefaultCharacterSelectionScreen : CharacterSelectionScreen {
 			P1SelectedChar = FightingGameManager.instance.profiles[ProfileSelector._instance.currentProfile];
 
 			int randomprofile2 = UnityEngine.Random.Range(0, FightingGameManager.instance.profiles.Length);
+			if (FightingGameManager.instance.isAITestingMode) {
+				randomprofile2 = FightingGameManager.instance.AIProfileNumber;
+			}
 			P2SelectedChar = FightingGameManager.instance.profiles[randomprofile2];
 		}
 

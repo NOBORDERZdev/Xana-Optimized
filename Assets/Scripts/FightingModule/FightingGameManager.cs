@@ -30,6 +30,8 @@ public class FightingGameManager : MonoBehaviour
     [HideInInspector]public int id1;
     [HideInInspector] public int id2;
 
+    public bool isAITestingMode = false;
+    [Tooltip("If above bool is on then you will be to select AI profile of your choice")] public int AIProfileNumber = 0;
     public GameObject player1, player2,winnerAvatar;
     private void Awake()
     {
