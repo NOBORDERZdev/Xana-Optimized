@@ -87,7 +87,15 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        if (LoginRegister.ChinaUser)
+        {
+            SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        }
+       
     }
 
     public static void ArrangeData()

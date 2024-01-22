@@ -801,16 +801,33 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
-        //{
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
-        //}
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (LoginRegister.ChinaUser)
         {
-            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+            SceneManager.LoadSceneAsync(2, LoadSceneMode.Additive);
+            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //{
+            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+            //}
+            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+                LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+            }
         }
+        else
+        {
+            SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //{
+            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+            //}
+            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            {
+                // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
+                LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+            }
+        }
+       
     }
 
     #endregion
