@@ -123,6 +123,10 @@ public class UserPostFeature : MonoBehaviour
             else
             {
                 RetrievedPostPlayer = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
+                if (RetrievedPostPlayer.data.text_post == "null")
+                {
+                    RetrievedPostPlayer.data.text_post = "";
+                }
                 if (RetrievedPostPlayer.data !=null)
                 {
                     if (string.IsNullOrEmpty(RetrievedPostPlayer.data.text_post))
