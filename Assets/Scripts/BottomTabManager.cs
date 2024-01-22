@@ -108,6 +108,8 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             /// Disabling
             /// 
+            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
             //PostButton.transform.GetComponent<Button>().interactable = false;
@@ -122,7 +124,10 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             /// Disabling
             /// 
+            allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
            // PostButton.transform.GetComponent<Button>().interactable = true;
 
             /// Disabling old Screens
@@ -130,7 +135,6 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             /// Disabling
             /// 
-            allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
             // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
         if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
@@ -481,6 +485,7 @@ public class BottomTabManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
+        CheckLoginOrNotForFooterButton();
        // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {
@@ -564,6 +569,7 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
             // LoaderShow(true);
             //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+            CheckLoginOrNotForFooterButton();
             if (FindObjectOfType<AdditiveScenesManager>() != null)
             {
                 FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
