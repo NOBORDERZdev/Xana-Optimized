@@ -125,7 +125,17 @@ namespace NPC
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, walkRotateSpeed);
         }
-
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "PhotonLocalPlayer")
+            {
+                if (isMoving)
+                {
+                    Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius, maxRadius), -1);
+                    agent.SetDestination(newPos);
+                }
+            }
+        }
 
     }
 }
