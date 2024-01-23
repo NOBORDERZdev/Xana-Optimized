@@ -195,8 +195,10 @@ public class BuilderMapDownload : MonoBehaviour
         {
             foreach (GameObject prefab in GamificationComponentData.instance.multiplayerComponentsObject)
             {
-                if (!pool.ResourceCache.ContainsKey(prefab.name))
-                    pool.ResourceCache.Add(prefab.name, prefab);
+                //If a key already exists in the Pool Resource Cache dictionary, then remove it due to assigning a new game object because it gets null ref when the user exits and re-enters the same world.
+                if (pool.ResourceCache.ContainsKey(prefab.name))
+                    pool.ResourceCache.Remove(prefab.name);
+                pool.ResourceCache.Add(prefab.name, prefab);
             }
         }
     }
@@ -650,6 +652,7 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
+
         GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
         //Set Hierarchy same as builder
         SetObjectHirarchy();
