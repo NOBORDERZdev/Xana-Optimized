@@ -345,7 +345,6 @@ MonoBehaviour:
   - Footprint
   - InvisibleAvatar
   - Katana
-  - MultiplayerComponent
   - AssetsControler
   - ShurikenPrefab
   - SpecialItemParticleFlame
@@ -360,6 +359,7 @@ MonoBehaviour:
   withMultiplayer: 0
   orbitronFont: {fileID: 11400000, guid: 10b30e17fde3c449a94e3fea1bec4fc1, type: 2}
   playerCanvas: {fileID: 5863899272732676176, guid: 230541453524e456793384e55666fbee, type: 3}
+  idleAnimation: {fileID: 9100000, guid: c45d2f8b900c54286b9c93d6a0ad1c6f, type: 2}
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
@@ -391,7 +391,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 1
+  OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 100
@@ -623,17 +623,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 795381228416995604, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4680463021435520345, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7965747545503586478, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
+    - target: {fileID: 773635851, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
       propertyPath: m_Layer
-      value: 28
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7965747545624217528, guid: a7f5cc8640e2a6841bc86c235f27dbfe, type: 3}
       propertyPath: m_Name

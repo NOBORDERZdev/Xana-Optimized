@@ -204,6 +204,8 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
     [SerializeField] public GameObject AddFreindContainer;
     [SerializeField] public GameObject ExtraPrefab;
+    [Header("Feed 2.0")]
+    [SerializeField] GameObject FeedSerachBar;
     private void Awake()
     {
         if (Instance == null)
@@ -386,7 +388,21 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
+    public void OnClickFeedSearchBtn()
+    {
 
+        FeedSerachBar.SetActive(!FeedSerachBar.activeInHierarchy);
+        //if (FeedSerachBar.activeInHierarchy)
+        //{
+        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
+        //}
+        //else
+        //{
+        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        //}
+        //FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
+        //FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
+    }
     /*public IEnumerator WaitToResetAllFeedScreen(bool isFeedScreen)
     {
         yield return new WaitForSeconds(0f);
@@ -666,9 +682,9 @@ public class FeedUIController : MonoBehaviour
     public IEnumerator SetContentOnFollowingItemScreen()
     {
         yield return new WaitForSeconds(0.01f);
-        followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.05f);
-        followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     public void SetUpFeedTabDefaultTop()

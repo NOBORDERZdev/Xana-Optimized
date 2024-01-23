@@ -1312,6 +1312,8 @@ public class PlayerControllerNew : MonoBehaviour
         sprintSpeed += (playerSpeed - 1);
         speedMultiplier = playerSpeed;
         jumpMultiplier = jumpValue;
+        //Store default speed when player update it's speed & jump height
+        GamificationComponentData.instance.buildingDetect.DefaultSpeedStore();
     }
 
     void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)
@@ -1702,7 +1704,7 @@ public class PlayerControllerNew : MonoBehaviour
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
         sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
-
+        isMovementAllowed = true;
     }
     bool attackwithSword, attackwithShuriken, hideoropenSword;
     void AttackwithSword() => attackwithSword = true;

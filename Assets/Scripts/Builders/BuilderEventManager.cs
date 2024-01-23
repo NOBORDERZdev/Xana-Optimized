@@ -65,6 +65,7 @@ public static class BuilderEventManager
 
     //Situation Changer Component
     public static Action<float> OnSituationChangerTriggerEnter;
+    public static Action DisableSituationLight;
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
@@ -101,6 +102,7 @@ public static class BuilderEventManager
     //Avatar change Component
     public static Action<float> OnAvatarChangeComponentTriggerEnter;
     public static Action<bool> StopAvatarChangeComponent;
+    public static Action<bool> ChangeCameraHeight;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float, bool> ChangeNinja_ThrowUIPosition;

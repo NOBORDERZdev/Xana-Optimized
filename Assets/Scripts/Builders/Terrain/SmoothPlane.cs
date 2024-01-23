@@ -24,13 +24,13 @@ public class SmoothPlane : MonoBehaviour
 
     public float meshVerticesLength;
 
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            //SmoothTerrain();
-        }
-    }
+    //void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.Z))
+    //    {
+    //        //SmoothTerrain();
+    //    }
+    //}
 
     private void SmoothTerrain()
     {

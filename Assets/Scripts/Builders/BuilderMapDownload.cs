@@ -158,6 +158,7 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
+        GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
@@ -169,10 +170,6 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
-
-        yield return StartCoroutine(DownloadAddressableGamificationObject());
-
-        yield return StartCoroutine(GemificationObjectLoadWait(1f));
 
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
@@ -455,8 +452,8 @@ public class BuilderMapDownload : MonoBehaviour
     ColorAdjustments colorAdjustments;
     IEnumerator SetSkyPropertiesDelay()
     {
-        reflectionProbe.gameObject.SetActive(false);
-        reflectionProbe.enabled = true;
+        //reflectionProbe.gameObject.SetActive(false);
+        //reflectionProbe.enabled = true;
         SkyProperties skyProperties = levelData.skyProperties;
         LensFlareData lensFlareData = new LensFlareData();
         Camera.main.clearFlags = CameraClearFlags.Skybox;
@@ -564,7 +561,7 @@ public class BuilderMapDownload : MonoBehaviour
             lensFlareData = SituationChangerSkyboxScript.instance.defaultSkyBoxData.directionalLightData.lensFlareData;
         }
 
-        reflectionProbe.gameObject.SetActive(true);
+        //reflectionProbe.gameObject.SetActive(true);
         if (lensFlareData != null)
             SetLensFlareData(lensFlareData.falreData, lensFlareData.flareScale, lensFlareData.flareIntensity);
         else
@@ -641,6 +638,14 @@ public class BuilderMapDownload : MonoBehaviour
 
     void XanaSetItemData()
     {
+        StartCoroutine(XanaSetItemDataCO());
+    }
+
+    IEnumerator XanaSetItemDataCO()
+    {
+        yield return StartCoroutine(DownloadAddressableGamificationObject());
+        yield return StartCoroutine(GemificationObjectLoadWait(1f));
+
         foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             xanaItem.SetData(xanaItem.itemData);
@@ -662,7 +667,6 @@ public class BuilderMapDownload : MonoBehaviour
             LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
             LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
-        UpdateScene();
     }
 
     internal void PlayerSetup()

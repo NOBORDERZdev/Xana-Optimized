@@ -96,32 +96,32 @@ public class BlendShapeController : MonoBehaviour
     }
 
 
-    public bool updateName = false;
-    private void OnValidate()
-    {
-        if (updateName)
-        {
-            updateName = false;
-            foreach (var item in allBlendShapes)
-            {
-                if (!item.boneAvailable)
-                {
-                    item.itemName = allBlendShapes.IndexOf(item)+ "." + item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
-                }
-                else
-                {
-                    for (int i = 0; i < item.boneData.Count; i++)
-                    {
-                        item.boneData[i].boneName = item.boneData[i].workingTransform.ToString().ToUpper();
-                    }
-                }
-                //if (item.blendShapeName.ToString().Contains("Bone"))
-                //    item.itemName = item.blendShapeName.ToString();
-                //else
-                //    item.itemName = item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
-            }
-        }
+    //public bool updateName = false;
+    //private void OnValidate()
+    //{
+    //    if (updateName)
+    //    {
+    //        updateName = false;
+    //        foreach (var item in allBlendShapes)
+    //        {
+    //            if (!item.boneAvailable)
+    //            {
+    //                item.itemName = allBlendShapes.IndexOf(item)+ "." + item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
+    //            }
+    //            else
+    //            {
+    //                for (int i = 0; i < item.boneData.Count; i++)
+    //                {
+    //                    item.boneData[i].boneName = item.boneData[i].workingTransform.ToString().ToUpper();
+    //                }
+    //            }
+    //            //if (item.blendShapeName.ToString().Contains("Bone"))
+    //            //    item.itemName = item.blendShapeName.ToString();
+    //            //else
+    //            //    item.itemName = item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
+    //        }
+    //    }
         
-    }
+    //}
 }
 public enum ObjectProperty { position, rotation, scale }
