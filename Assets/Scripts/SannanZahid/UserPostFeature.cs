@@ -125,8 +125,9 @@ public class UserPostFeature : MonoBehaviour
                 RetrievedPostPlayer = JsonUtility.FromJson<PostInfo>(www.downloadHandler.text);
                 if (RetrievedPostPlayer.data !=null)
                 {
-                    if (string.IsNullOrEmpty(RetrievedPostPlayer.data.text_post))
+                    if (string.IsNullOrEmpty(RetrievedPostPlayer.data.text_post) || RetrievedPostPlayer.data.text_post == "null")
                     {
+                        RetrievedPostPlayer.data.text_post = "";
                         RetrievedPostPlayer.success = false;
                         _postBubbleFlag = false;
                         Bubble.gameObject.SetActive(false);
@@ -143,12 +144,7 @@ public class UserPostFeature : MonoBehaviour
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
-                if (RetrievedPostPlayer.data.text_post == "null")
-                {
-                    _postBubbleFlag = true;
-                    Bubble.gameObject.SetActive(true);
-                }
-                else
+              
                     textElement.text = RetrievedPostPlayer.data.text_post;
                 if(RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
                 {
