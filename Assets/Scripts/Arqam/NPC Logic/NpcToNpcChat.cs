@@ -59,16 +59,16 @@ public class NpcToNpcChat : MonoBehaviour
 
     private void OnEnable()
     {
-        XanaChatSocket.instance.npcSendMsg += NpcReply;
+        //XanaChatSocket.instance.npcSendMsg += NpcReply;
     }
     private void OnDisable()
     {
-        XanaChatSocket.instance.npcSendMsg -= NpcReply;
+        //XanaChatSocket.instance.npcSendMsg -= NpcReply;
     }
 
     void Start()
     {
-        StartCoroutine(FetchResponseFromWeb());
+        //StartCoroutine(FetchResponseFromWeb());
     }
 
     IEnumerator FetchResponseFromWeb()

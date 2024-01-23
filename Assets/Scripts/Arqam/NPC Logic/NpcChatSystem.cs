@@ -141,14 +141,14 @@ public class NpcChatSystem : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (XanaChatSystem.instance)
-            XanaChatSystem.instance.npcAlert += PlayerSendMsg;
+        /*if (XanaChatSystem.instance)
+            XanaChatSystem.instance.npcAlert += PlayerSendMsg;*/
     }
 
     private void OnDisable()
     {
-        if (XanaChatSystem.instance)
-            XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
+        /*if (XanaChatSystem.instance)
+            XanaChatSystem.instance.npcAlert -= PlayerSendMsg;*/
     }
 
 
