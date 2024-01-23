@@ -586,12 +586,12 @@ GameObject:
   - component: {fileID: 250644416097083162}
   - component: {fileID: 6000410676708177321}
   - component: {fileID: 1319727975033657876}
-  - component: {fileID: 7049625692596731796}
   - component: {fileID: 1466823095684265310}
   - component: {fileID: 1720935171738049855}
   - component: {fileID: 7776860532593438711}
   - component: {fileID: 2220737650833103747}
   - component: {fileID: 1263195013670975335}
+  - component: {fileID: 3488958015553972050}
   m_Layer: 22
   m_Name: Character
   m_TagString: RunnerNPC
@@ -896,24 +896,6 @@ CapsuleCollider:
   m_Height: 1.52
   m_Direction: 1
   m_Center: {x: 0.0044188797, y: 0.76, z: 0}
---- !u!114 &7049625692596731796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250644416097083164}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13af1e9dd3a5b4c408398f86c264f029, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attire:
-  - {fileID: 7610796476983698136, guid: b3178190c1c69214fb3e9736dcede1c1, type: 3}
-  - {fileID: 2688683017491641132, guid: 21232ee0871f6744286b170d014cbdd3, type: 3}
-  - {fileID: 3991540177136685275, guid: 166f08f0141ffd84db00780e147d3302, type: 3}
-  - {fileID: 7369239035972844112, guid: a9a459b3c79e5e14488c51ac2c71a7d1, type: 3}
-  sourceGameobject: {fileID: 250644416097083164}
 --- !u!114 &1466823095684265310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,8 +940,101 @@ MonoBehaviour:
   presetValue: 
   masks: []
   IsInit: 0
+  isModulePlayer: 1
+  moduleClothJson: 
+  addressableDownloader: {fileID: 0}
+  _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
+  isVisibleOnCam: 0
+--- !u!114 &1720935171738049855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2403f82b6b8129e4fa0bc1c7db1d6736, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  presetsItem: []
+  presetItemCount: 0
+  MemoryManager: {fileID: 7776860532593438711}
+--- !u!114 &7776860532593438711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed6da3190180c6499aa889aec4be638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  memoryObjects: []
+--- !u!114 &2220737650833103747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: velocityX
+  - Type: 1
+    SynchronizeType: 2
+    Name: velocityY
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
+--- !u!114 &1263195013670975335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 2220737650833103747}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3488958015553972050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250644416097083164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1652af06cacc2524eb3e0d59ead3649b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   isHunter: 0
   isEscapeeNPC: 1
+  clothJson: 
   hunterClothJson: '{   "id": "10591",   "name": "Test",   "thumbnail": "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/input/images/1692590997159-file.png",  
     "myItemObj": [     {       "Slug": "",       "ItemType": "Legs",       "ItemPrefab":
     {         "instanceID": 0       },       "ItemID": 1343,       "ItemName": "hunter_pants",      
@@ -1176,85 +1251,10 @@ MonoBehaviour:
   - '{"id":"117512","name":"Test","thumbnail":"https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/input/images/1694422233463-file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":906,"ItemName":"BoyC15pants","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":942,"ItemName":"GirlC9shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1212,"ItemName":"girlh047","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1081,"ItemName":"ShoseC10","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}],"SavedBones":[{"Name":"iScale_L","Obj":{"instanceID":0},"Pos":{"x":-0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"iScale_R","Obj":{"instanceID":0},"Pos":{"x":0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":9.55204839669932e-8,"y":180.0,"z":180.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_L","Obj":{"instanceID":0},"Pos":{"x":-0.03999999910593033,"y":0.007000000216066837,"z":-0.014000000432133675},"Rotation":{"x":8.26258659362793,"y":333.2754211425781,"z":352.2431335449219},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_R","Obj":{"instanceID":0},"Pos":{"x":0.03999999910593033,"y":0.007000000216066837,"z":-0.014000000432133675},"Rotation":{"x":351.7374267578125,"y":206.7245635986328,"z":172.24313354492188},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"jBone","Obj":{"instanceID":0},"Pos":{"x":-1.3552526853146218e-22,"y":-0.02754758484661579,"z":-3.0531133011755684e-18},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":0.800000011920929,"y":0.800000011920929,"z":1.0}},{"Name":"Xana_3_0_Head","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.0},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"nose","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.05000000074505806,"z":0.15000000596046449},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.800000011920929,"y":1.2000000476837159,"z":1.2000000476837159}},{"Name":"mouth","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.01119999960064888,"z":0.13529999554157258},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.8999999761581421,"y":0.8999999761581421,"z":1.0}},{"Name":"foreHead","Obj":{"instanceID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129299e-16,"z":0.01407201960682869},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"hairAll","Obj":{"instanceID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"head_Ex","Obj":{"instanceID":0},"Pos":{"x":-1.8280114488788969e-7,"y":0.000006591571036551613,"z":-0.000011477729458420072},"Rotation":{"x":1.7739425897598267,"y":353.7777099609375,"z":358.2141418457031},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"Hips_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":-8.171241080076326e-16,"z":2.8421708795129299e-16},"Rotation":{"x":-2.1695232970902835e-27,"y":-1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"LeftArm_Scale","Obj":{"instanceID":0},"Pos":{"x":3.197442173277597e-16,"y":9.237055226068124e-16,"z":7.531752592481248e-15},"Rotation":{"x":-1.5484578815569764e-14,"y":-9.401182990899061e-32,"z":3.4786105249539258e-16},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"LeftForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.2079226634976646e-15,"z":-2.220445916901415e-17},"Rotation":{"x":-1.5485273382586513e-14,"y":-1.5902773592947552e-15,"z":3.500267569228442e-16},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"LeftLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":-7.105427198782324e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":-1.192708045940846e-15,"y":-1.0871036739201567e-17,"z":2.9016932082054697e-16},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"LeftShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.3980815637837489e-16,"y":-1.2789768693110388e-15,"z":-7.216449395365722e-18},"Rotation":{"x":-1.8087851569727026e-14,"y":1.5902773592947552e-15,"z":-8.758949596572802e-16},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"LeftUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-1.4210854397564649e-16,"z":-2.220445916901415e-17},"Rotation":{"x":2.484808373898055e-17,"y":-1.4559424388926343e-19,"z":1.3939321773582278e-17},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"Neck_Scale","Obj":{"instanceID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.0198066587441615e-16,"z":-3.6948220904272497e-15},"Rotation":{"x":-1.5906838292303189e-15,"y":2.843823917672572e-12,"z":-5.405076778890337e-19},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"RightArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.664535100281698e-16,"y":1.4210854397564649e-16,"z":-8.384403909274686e-15},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"RightForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.4868995857482627e-16,"y":1.2079226634976646e-15,"z":4.44089183380283e-17},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"RightLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":1.1380586152642216e-35,"y":-8.541529043768506e-18,"z":7.633991639736769e-17},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"RightShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":2.5757173430149805e-16,"y":-1.4210854397564649e-16,"z":-7.216449395365722e-18},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"RightUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":2.382280061600802e-24,"y":-1.4210854397564649e-16,"z":0.0},"Rotation":{"x":-4.96961674779611e-17,"y":-6.399088762711063e-35,"z":7.377647044417605e-17},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"Spine1_Scale","Obj":{"instanceID":0},"Pos":{"x":6.468552137729187e-23,"y":-1.4210854397564649e-16,"z":-1.776356799695581e-17},"Rotation":{"x":-6.417946966607662e-43,"y":-3.033213347043524e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"Spine2_Scale","Obj":{"instanceID":0},"Pos":{"x":-6.670384409140517e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.100000023841858}},{"Name":"Spine_Scale","Obj":{"instanceID":0},"Pos":{"x":6.8821424440057e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}}],"SkinId":11,"Skin":{"r":0.9529411792755127,"g":0.7843137383460999,"b":0.6666667461395264,"a":1.0},"LipColor":{"r":0.7098039388656616,"g":0.18431372940540315,"b":0.33725491166114809,"a":0.0},"HairColor":{"r":0.6235294342041016,"g":0.529411792755127,"b":0.43921568989753725,"a":1.0},"EyebrowColor":{"r":0.30588236451148989,"g":0.23529411852359773,"b":0.19607843458652497,"a":1.0},"EyeColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"isSkinColorChanged":false,"isLipColorChanged":false,"HairColorPaletteValue":0,"BodyFat":0,"FaceValue":5,"NoseValue":35,"EyeValue":19,"EyesColorValue":0,"EyesColorPaletteValue":0,"EyeBrowValue":1483,"EyeBrowColorPaletteValue":0,"EyeLashesValue":1513,"MakeupValue":0,"LipsValue":53,"LipsColorValue":479,"LipsColorPaletteValue":0,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"PresetValue":"Preset34","eyeTextureName":"Xana_Eye_Default","eyeLashesName":"eyelash_27","makeupName":"nomakeup","SssIntensity":0.0,"SkinGerdientColor":{"r":0.42352941632270815,"g":0.3921568691730499,"b":0.3921568691730499,"a":0.0},"eyebrrowTexture":"eyebrow_1","mustacheTextureName":"","faceTattooTextureName":"","chestTattooTextureName":"","legsTattooTextureName":"","armTattooTextureName":"","eyeLidTextureName":"","FaceBlendsShapes":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,68.24726104736328,68.24726104736328,68.24726104736328,0.0,0.0,38.65522003173828,0.0,0.0,0.0,100.0,56.45193862915039,0.0,0.0,15.0,6.046100616455078,100.0,0.0,0.0,43.95389938354492,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}'
   - '{"id":"117512","name":"Test","thumbnail":"https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/input/images/1694422262100-file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1362,"ItemName":"girl097pant","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1299,"ItemName":"boyc074shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1001,"ItemName":"boyc21hair","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1185,"ItemName":"shoesC056","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}],"SavedBones":[{"Name":"iScale_L","Obj":{"instanceID":0},"Pos":{"x":-0.050164707005023959,"y":0.11605648696422577,"z":0.12319999933242798},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.9271277785301209,"y":0.9271277785301209,"z":0.9271277785301209}},{"Name":"iScale_R","Obj":{"instanceID":0},"Pos":{"x":0.050164707005023959,"y":0.11605648696422577,"z":0.12319999933242798},"Rotation":{"x":9.55204839669932e-8,"y":180.0,"z":180.0},"Scale":{"x":0.9271277785301209,"y":0.9271277785301209,"z":0.9271277785301209}},{"Name":"eLineIn_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.00245699193328619,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-0.00245699193328619,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-0.005775063764303923,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.005775063764303923,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_L","Obj":{"instanceID":0},"Pos":{"x":-0.03999999910593033,"y":0.0032999999821186067,"z":-0.013700000010430813},"Rotation":{"x":8.26258659362793,"y":333.2754211425781,"z":352.2431335449219},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_R","Obj":{"instanceID":0},"Pos":{"x":0.03999999910593033,"y":0.002300000051036477,"z":-0.010203000158071518},"Rotation":{"x":351.7374267578125,"y":206.7245635986328,"z":172.24313354492188},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"jBone","Obj":{"instanceID":0},"Pos":{"x":-1.3552526853146218e-22,"y":-0.02754758484661579,"z":-3.0531133011755684e-18},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":0.800000011920929,"z":1.0}},{"Name":"Xana_3_0_Head","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.0},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"nose","Obj":{"instanceID":0},"Pos":{"x":-2.2897145868228109e-7,"y":0.05122075602412224,"z":0.15086974203586579},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"mouth","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.013086539693176747,"z":0.13533389568328858},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.100000023841858,"y":1.0,"z":1.0}},{"Name":"foreHead","Obj":{"instanceID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129299e-16,"z":0.01407201960682869},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"hairAll","Obj":{"instanceID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"head_Ex","Obj":{"instanceID":0},"Pos":{"x":-1.8280114488788969e-7,"y":0.000006591571036551613,"z":-0.000011477729458420072},"Rotation":{"x":1.7739425897598267,"y":353.7777099609375,"z":358.2141418457031},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"Hips_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":-8.171241080076326e-16,"z":2.8421708795129299e-16},"Rotation":{"x":-2.1695232970902835e-27,"y":-1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftArm_Scale","Obj":{"instanceID":0},"Pos":{"x":3.197442173277597e-16,"y":9.237055226068124e-16,"z":7.531752592481248e-15},"Rotation":{"x":-1.5484578815569764e-14,"y":-9.401182990899061e-32,"z":3.4786105249539258e-16},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.2079226634976646e-15,"z":-2.220445916901415e-17},"Rotation":{"x":-1.5485273382586513e-14,"y":-1.5902773592947552e-15,"z":3.500267569228442e-16},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":-7.105427198782324e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":-1.192708045940846e-15,"y":-1.0871036739201567e-17,"z":2.9016932082054697e-16},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.3980815637837489e-16,"y":-1.2789768693110388e-15,"z":-7.216449395365722e-18},"Rotation":{"x":-1.8087851569727026e-14,"y":1.5902773592947552e-15,"z":-8.758949596572802e-16},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"LeftUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-1.4210854397564649e-16,"z":-2.220445916901415e-17},"Rotation":{"x":2.484808373898055e-17,"y":-1.4559424388926343e-19,"z":1.3939321773582278e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Neck_Scale","Obj":{"instanceID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.0198066587441615e-16,"z":-3.6948220904272497e-15},"Rotation":{"x":-1.5906838292303189e-15,"y":2.843823917672572e-12,"z":-5.405076778890337e-19},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.664535100281698e-16,"y":1.4210854397564649e-16,"z":-8.384403909274686e-15},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.4868995857482627e-16,"y":1.2079226634976646e-15,"z":4.44089183380283e-17},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":1.1380586152642216e-35,"y":-8.541529043768506e-18,"z":7.633991639736769e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":2.5757173430149805e-16,"y":-1.4210854397564649e-16,"z":-7.216449395365722e-18},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"RightUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":2.382280061600802e-24,"y":-1.4210854397564649e-16,"z":0.0},"Rotation":{"x":-4.96961674779611e-17,"y":-6.399088762711063e-35,"z":7.377647044417605e-17},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine1_Scale","Obj":{"instanceID":0},"Pos":{"x":6.468552137729187e-23,"y":-1.4210854397564649e-16,"z":-1.776356799695581e-17},"Rotation":{"x":-6.417946966607662e-43,"y":-3.033213347043524e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine2_Scale","Obj":{"instanceID":0},"Pos":{"x":-6.670384409140517e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}},{"Name":"Spine_Scale","Obj":{"instanceID":0},"Pos":{"x":6.8821424440057e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.0499999523162842,"y":1.0,"z":1.0499999523162842}}],"SkinId":36,"Skin":{"r":0.9215686321258545,"g":0.7647058963775635,"b":0.6078431606292725,"a":1.0},"LipColor":{"r":0.7646999955177307,"g":0.55326908826828,"b":0.5098000168800354,"a":1.0},"HairColor":{"r":0.800000011920929,"g":0.800000011920929,"b":0.800000011920929,"a":1.0},"EyebrowColor":{"r":0.30588236451148989,"g":0.23529411852359773,"b":0.19607843458652497,"a":1.0},"EyeColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"isSkinColorChanged":false,"isLipColorChanged":false,"HairColorPaletteValue":0,"BodyFat":0,"FaceValue":10,"NoseValue":37,"EyeValue":19,"EyesColorValue":456,"EyesColorPaletteValue":0,"EyeBrowValue":0,"EyeBrowColorPaletteValue":0,"EyeLashesValue":1522,"MakeupValue":0,"LipsValue":0,"LipsColorValue":0,"LipsColorPaletteValue":0,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"PresetValue":"Preset24","eyeTextureName":"eye_variation32","eyeLashesName":"eyelash_36","makeupName":"nomakeup","SssIntensity":0.0,"SkinGerdientColor":{"r":0.42352941632270815,"g":0.3921568691730499,"b":0.3921568691730499,"a":0.0},"eyebrrowTexture":"eyebrow_7","mustacheTextureName":"","faceTattooTextureName":"","chestTattooTextureName":"","legsTattooTextureName":"","armTattooTextureName":"","eyeLidTextureName":"","FaceBlendsShapes":[0.0,0.0,0.0,0.0,10.915904998779297,0.0,0.0,0.0,0.0,0.0,0.0,-25.654617309570314,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,30.0,14.140790939331055,0.0,0.0,85.85920715332031,20.360015869140626,0.0,15.0,50.0,0.0,0.0,15.091368675231934,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}'
   - '{"id":"117512","name":"Test","thumbnail":"https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/input/images/1694422296804-file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"instanceID":0},"ItemID":1275,"ItemName":"boyc106pants","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"instanceID":0},"ItemID":1281,"ItemName":"boyc052shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"instanceID":0},"ItemID":1527,"ItemName":"boyh103","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"instanceID":0},"ItemID":1086,"ItemName":"ShoseC14","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Glove","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}},{"Slug":"","ItemType":"Chain","ItemPrefab":{"instanceID":0},"ItemID":0,"ItemName":"","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"instanceID":0}}],"SavedBones":[{"Name":"iScale_L","Obj":{"instanceID":0},"Pos":{"x":-0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"iScale_R","Obj":{"instanceID":0},"Pos":{"x":0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":9.55204839669932e-8,"y":180.0,"z":180.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineIn_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_L","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":-0.039000000804662707},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"eLineOut_R","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.039000000804662707},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_L","Obj":{"instanceID":0},"Pos":{"x":-0.03999999910593033,"y":0.0032999999821186067,"z":-0.013700000010430813},"Rotation":{"x":8.26258659362793,"y":333.2754211425781,"z":352.2431335449219},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"lip_R","Obj":{"instanceID":0},"Pos":{"x":0.03999999910593033,"y":0.002281073946505785,"z":-0.010203620418906212},"Rotation":{"x":351.7374267578125,"y":206.7245635986328,"z":172.24313354492188},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"jBone","Obj":{"instanceID":0},"Pos":{"x":-1.3552526853146218e-22,"y":-0.02754758484661579,"z":-3.0531133011755684e-18},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":0.75,"y":0.8999999761581421,"z":1.0}},{"Name":"Xana_3_0_Head","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.0,"z":0.0},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"nose","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.05000000074505806,"z":0.15000000596046449},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.800000011920929,"y":0.949999988079071,"z":0.800000011920929}},{"Name":"mouth","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":0.013086539693176747,"z":0.13533389568328858},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.8999999761581421,"y":1.2000000476837159,"z":1.0}},{"Name":"foreHead","Obj":{"instanceID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129299e-16,"z":0.01407201960682869},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"hairAll","Obj":{"instanceID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":2.3854177859475866e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"head_Ex","Obj":{"instanceID":0},"Pos":{"x":-1.8280114488788969e-7,"y":0.000006591571036551613,"z":-0.000011477729458420072},"Rotation":{"x":1.7739425897598267,"y":353.7777099609375,"z":358.2141418457031},"Scale":{"x":1.0,"y":1.0,"z":1.0}},{"Name":"Hips_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":-8.171241080076326e-16,"z":2.8421708795129299e-16},"Rotation":{"x":-2.1695232970902835e-27,"y":-1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"LeftArm_Scale","Obj":{"instanceID":0},"Pos":{"x":3.197442173277597e-16,"y":9.237055226068124e-16,"z":7.531752592481248e-15},"Rotation":{"x":-1.5484578815569764e-14,"y":-9.401182990899061e-32,"z":3.4786105249539258e-16},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"LeftForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.2079226634976646e-15,"z":-2.220445916901415e-17},"Rotation":{"x":-1.5485273382586513e-14,"y":-1.5902773592947552e-15,"z":3.500267569228442e-16},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"LeftLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":-7.105427198782324e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":-1.192708045940846e-15,"y":-1.0871036739201567e-17,"z":2.9016932082054697e-16},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"LeftShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.3980815637837489e-16,"y":-1.2789768693110388e-15,"z":-7.216449395365722e-18},"Rotation":{"x":-1.8087851569727026e-14,"y":1.5902773592947552e-15,"z":-8.758949596572802e-16},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"LeftUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":0.0,"y":-1.4210854397564649e-16,"z":-2.220445916901415e-17},"Rotation":{"x":2.484808373898055e-17,"y":-1.4559424388926343e-19,"z":1.3939321773582278e-17},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"Neck_Scale","Obj":{"instanceID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.0198066587441615e-16,"z":-3.6948220904272497e-15},"Rotation":{"x":-1.5906838292303189e-15,"y":2.843823917672572e-12,"z":-5.405076778890337e-19},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"RightArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.664535100281698e-16,"y":1.4210854397564649e-16,"z":-8.384403909274686e-15},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"RightForeArm_Scale","Obj":{"instanceID":0},"Pos":{"x":-2.4868995857482627e-16,"y":1.2079226634976646e-15,"z":4.44089183380283e-17},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"RightLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":3.552713599391162e-17,"y":0.0,"z":1.4210854397564649e-16},"Rotation":{"x":1.1380586152642216e-35,"y":-8.541529043768506e-18,"z":7.633991639736769e-17},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"RightShoulder_Scale","Obj":{"instanceID":0},"Pos":{"x":2.5757173430149805e-16,"y":-1.4210854397564649e-16,"z":-7.216449395365722e-18},"Rotation":{"x":0.0,"y":0.0,"z":0.0},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"RightUpLeg_Scale","Obj":{"instanceID":0},"Pos":{"x":2.382280061600802e-24,"y":-1.4210854397564649e-16,"z":0.0},"Rotation":{"x":-4.96961674779611e-17,"y":-6.399088762711063e-35,"z":7.377647044417605e-17},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"Spine1_Scale","Obj":{"instanceID":0},"Pos":{"x":6.468552137729187e-23,"y":-1.4210854397564649e-16,"z":-1.776356799695581e-17},"Rotation":{"x":-6.417946966607662e-43,"y":-3.033213347043524e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"Spine2_Scale","Obj":{"instanceID":0},"Pos":{"x":-6.670384409140517e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1.0,"z":1.25}},{"Name":"Spine_Scale","Obj":{"instanceID":0},"Pos":{"x":6.8821424440057e-23,"y":0.0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554742e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1.0,"z":1.25}}],"SkinId":6,"Skin":{"r":1.0,"g":0.95686274766922,"b":0.9254902005195618,"a":1.0},"LipColor":{"r":0.8235294222831726,"g":0.6000000238418579,"b":0.5215686559677124,"a":1.0},"HairColor":{"r":0.1725490242242813,"g":0.1725490242242813,"b":0.1725490242242813,"a":1.0},"EyebrowColor":{"r":0.30588236451148989,"g":0.23529411852359773,"b":0.19607843458652497,"a":1.0},"EyeColor":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"isSkinColorChanged":false,"isLipColorChanged":false,"HairColorPaletteValue":0,"BodyFat":0,"FaceValue":13,"NoseValue":40,"EyeValue":16,"EyesColorValue":0,"EyesColorPaletteValue":0,"EyeBrowValue":1477,"EyeBrowColorPaletteValue":0,"EyeLashesValue":1509,"MakeupValue":63,"LipsValue":51,"LipsColorValue":0,"LipsColorPaletteValue":0,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"PresetValue":"Preset25","eyeTextureName":"Xana_Eye_Default","eyeLashesName":"eyelash_23","makeupName":"makeup","SssIntensity":0.0,"SkinGerdientColor":{"r":0.42352941632270815,"g":0.3921568691730499,"b":0.3921568691730499,"a":0.0},"eyebrrowTexture":"eyebrow_7","mustacheTextureName":"","faceTattooTextureName":"","chestTattooTextureName":"","legsTattooTextureName":"","armTattooTextureName":"","eyeLidTextureName":"","FaceBlendsShapes":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,30.0,0.0,0.0,0.0,0.0,0.0,0.0,15.0,50.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}'
+  escappeeClothJSON: 
   escappeeClothIndex: 0
-  addressableDownloader: {fileID: 0}
-  _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
-  isVisibleOnCam: 0
---- !u!114 &1720935171738049855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250644416097083164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2403f82b6b8129e4fa0bc1c7db1d6736, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  presetsItem: []
-  presetItemCount: 0
-  MemoryManager: {fileID: 7776860532593438711}
---- !u!114 &7776860532593438711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250644416097083164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ed6da3190180c6499aa889aec4be638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  memoryObjects: []
---- !u!114 &2220737650833103747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250644416097083164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 1
-    SynchronizeType: 2
-    Name: velocityX
-  - Type: 1
-    SynchronizeType: 2
-    Name: velocityY
-  m_SynchronizeLayers:
-  - SynchronizeType: 2
-    LayerIndex: 0
---- !u!114 &1263195013670975335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250644416097083164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 2220737650833103747}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  photonView: {fileID: 0}
+  avatarController: {fileID: 1466823095684265310}
 --- !u!1 &297846208983046426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,6 +2043,7 @@ MonoBehaviour:
   animator: {fileID: 250644416097083143}
   velocityNameX: velocityX
   velocityNameY: velocityY
+  nickNameText: {fileID: 3955954708907360489}
   minDistanceToStartRunning: 10
   huntersTransforms: []
 --- !u!114 &3523077553050244771
@@ -9995,6 +9996,133 @@ Transform:
   m_Father: {fileID: 7059211283753478948}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5131904553268570578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6019665306592365376}
+  - component: {fileID: 7822996875733875852}
+  - component: {fileID: 7151358463188306381}
+  - component: {fileID: 1286202056467198111}
+  - component: {fileID: 4280667251051628143}
+  - component: {fileID: 657379484260478172}
+  m_Layer: 22
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6019665306592365376
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.06794117, y: 0.067941144, z: 0.06794117}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8581638505300215731}
+  m_Father: {fileID: 5195575164532036330}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.30767658}
+  m_SizeDelta: {x: 33.79094, y: 2.6897812}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &7822996875733875852
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 180
+  m_TargetDisplay: 0
+--- !u!114 &7151358463188306381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &1286202056467198111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!225 &4280667251051628143
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &657379484260478172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131904553268570578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3613ca17821c64a47ac38a3c34dccd5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5144859010816310143
 GameObject:
   m_ObjectHideFlags: 0
@@ -16303,6 +16431,7 @@ Transform:
   - {fileID: 2316329791839387045}
   - {fileID: 6418970778789665116}
   - {fileID: 2826011000787229489}
+  - {fileID: 6019665306592365376}
   m_Father: {fileID: 2328749666632705366}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18466,6 +18595,157 @@ Transform:
   m_Father: {fileID: 6757304514387372848}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8465536157905385334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8581638505300215731}
+  - component: {fileID: 7199645554381396784}
+  - component: {fileID: 3955954708907360489}
+  - component: {fileID: 1303073339802004773}
+  m_Layer: 22
+  m_Name: RunnerNickNameText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8581638505300215731
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465536157905385334}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6019665306592365376}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0, y: 12}
+  m_SizeDelta: {x: 15, y: 3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7199645554381396784
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465536157905385334}
+  m_CullTransparentMesh: 0
+--- !u!114 &3955954708907360489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465536157905385334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 2.5
+  m_fontSizeBase: 2.5
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 1
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: -0.8441535, z: 0, w: -0.5621971}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1303073339802004773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465536157905385334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 3955954708907360489}
 --- !u!1 &8533283763589345573
 GameObject:
   m_ObjectHideFlags: 0
