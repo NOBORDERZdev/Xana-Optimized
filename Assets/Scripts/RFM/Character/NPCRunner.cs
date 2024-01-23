@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,6 +18,7 @@ namespace RFM.Character
         private float _maxSpeed;
         private Transform _closestHunterTransform = null;
         private float _minDistance = 10f;
+        public TextMeshProUGUI nickNameText;
 
         public float minDistanceToStartRunning = 10f;
         public List<Transform> huntersTransforms = new();
@@ -55,6 +57,7 @@ namespace RFM.Character
                 nickName = RFM.Character.StaticData.CharacterNames[
                 Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
 
+                nickNameText.text = nickName.ToString();
                 // Send an RPC to only this PhotonView on all clients to set the nickname.
                 GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
             }
@@ -66,6 +69,7 @@ namespace RFM.Character
         private void SetNickname(string _nickName)
         {
             nickName = _nickName;
+            nickNameText.text = nickName.ToString();
         }
 
 
