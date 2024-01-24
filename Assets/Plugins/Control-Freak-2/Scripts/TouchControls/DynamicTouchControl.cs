@@ -70,7 +70,7 @@ public abstract class DynamicTouchControl : TouchControl
 
 	protected TouchObject		touchObj;	
 
-	private RectTransform		initialRectCopy;
+	public RectTransform		initialRectCopy;
 
 	private Vector3 
 		originPos,
@@ -465,21 +465,67 @@ public abstract class DynamicTouchControl : TouchControl
 
 	private GameObject 
 		initialRectCopyGo;
-	private Vector2 
+	public Vector2 
 		initialAnchorMax,
 		initialAnchorMin,	
 		initialOffsetMin,
 		initialOffsetMax,
 		initialPivot;
-	private Vector3 
+	public Vector3 
 		initialAnchoredPosition3D;
 
 
 	// -----------------
-	private void SetupInitialRectPosition()
+	public void SetupInitialRectPosition()
 		{
 		if (this.initialRectCopy == null)
 			return;
+
+		
+		//Attizaz
+            if (PlayerPrefs.GetInt("ControlsSet") == 1)
+			{
+				switch (this.name)
+				{
+					case "Button-1":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("LPX", -116.40f), PlayerPrefs.GetFloat("LPY", 144.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("LPScaleX", 1), PlayerPrefs.GetFloat("LPScaleY", 1), 0);
+						break;
+
+					case "Button-2":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("HPX", -231.70f), PlayerPrefs.GetFloat("HPY", 144.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("HPScaleX", 1), PlayerPrefs.GetFloat("HPScaleY", 1), 0);
+						break;
+
+					case "Button-4":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("LKX", -231.70f), PlayerPrefs.GetFloat("LKY", 144.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("LKScaleX", 1), PlayerPrefs.GetFloat("LKScaleY", 1), 0);
+						break;
+
+					case "Button-5":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("HKX", -231.70f), PlayerPrefs.GetFloat("HKY", 144.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("HKScaleX", 1), PlayerPrefs.GetFloat("HKScaleY", 1), 0);
+						break;
+
+					case "Button-6":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("SPX", -231.70f), PlayerPrefs.GetFloat("SPY", 144.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("SPScaleX", 1), PlayerPrefs.GetFloat("SPScaleY", 1), 0);
+						break;
+					
+					case "Arcade-8-way-Joystick":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 149f), PlayerPrefs.GetFloat("joyY", 75.90f), 0);
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
+						break;
+					case "Block":
+						this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("BX", -173.20f), PlayerPrefs.GetFloat("BY", 225.40f), 0);//(893.47, 225.80)
+						this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("BScaleX", 1), PlayerPrefs.GetFloat("BScaleY", 1), 0);
+						break;
+					default:
+						print("Not Found");
+						break;
+				}
+			}
+			//////////////////////////////////////////////////////////////////////
 
 		this.initialRectCopy.anchoredPosition3D	= this.initialAnchoredPosition3D;
 		this.initialRectCopy.anchorMin				= this.initialAnchorMin;
@@ -487,6 +533,11 @@ public abstract class DynamicTouchControl : TouchControl
 		this.initialRectCopy.offsetMin				= this.initialOffsetMin;
 		this.initialRectCopy.offsetMax				= this.initialOffsetMax;
 		this.initialRectCopy.pivot						= this.initialPivot;
+
+
+			if (this.name == "Button-6") {
+				print("Yes Button 6 : "+ this.initialAnchoredPosition3D);
+			}
 		}
 
 

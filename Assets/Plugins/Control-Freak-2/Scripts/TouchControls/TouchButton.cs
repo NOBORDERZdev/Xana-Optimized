@@ -326,7 +326,58 @@ public class TouchButton : DynamicTouchControl, IBindingContainer
 		this.ChangeToggleState(false, this.toggleOffWhenHiding);
 
 		}
-		
+
+		public void SetupNewInits(string buttonID) {
+				if (this.initialRectCopy == null)
+					return;
+			if (buttonID == "JOYSTICK")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 149f), PlayerPrefs.GetFloat("joyY", 75.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
+			}
+			if (buttonID == "LP")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("LPX", -116.40f), PlayerPrefs.GetFloat("LPY", 144.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("LPScaleX", 1), PlayerPrefs.GetFloat("LPScaleY", 1), 0);
+			}
+			if (buttonID == "HP")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("HPX", -231.70f), PlayerPrefs.GetFloat("HPY", 144.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("HPScaleX", 1), PlayerPrefs.GetFloat("HPScaleY", 1), 0);
+			}
+			if (buttonID == "LK")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("LKX", -231.70f), PlayerPrefs.GetFloat("LKY", 144.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("LKScaleX", 1), PlayerPrefs.GetFloat("LKScaleY", 1), 0);
+			}
+			if (buttonID == "HK")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("HKX", -231.70f), PlayerPrefs.GetFloat("HKY", 144.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("HKScaleX", 1), PlayerPrefs.GetFloat("HKScaleY", 1), 0);
+			}
+			if (buttonID == "SP")
+			{
+				print("In SP");
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("SPX", -231.70f), PlayerPrefs.GetFloat("SPY", 144.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("SPScaleX", 1), PlayerPrefs.GetFloat("SPScaleY", 1), 0);
+			}
+			if (buttonID == "BLOCK")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("BX", -173.20f), PlayerPrefs.GetFloat("BY", 225.40f), 0);//(893.47, 225.80)
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("BScaleX", 1), PlayerPrefs.GetFloat("BScaleY", 1), 0);
+			}
+
+			this.initialRectCopy.anchoredPosition3D = this.initialAnchoredPosition3D;
+				this.initialRectCopy.anchorMin = this.initialAnchorMin;
+				this.initialRectCopy.anchorMax = this.initialAnchorMax;
+				this.initialRectCopy.offsetMin = this.initialOffsetMin;
+				this.initialRectCopy.offsetMax = this.initialOffsetMax;
+				this.initialRectCopy.pivot = this.initialPivot;
+			StoreDefaultPos();
+			if (buttonID == "SP") {
+				print("Updated Anchor"+ this.initialAnchoredPosition3D);
+			}
+		}
 
 #if UNITY_EDITOR		
 	[ContextMenu("Add Default Animator")]

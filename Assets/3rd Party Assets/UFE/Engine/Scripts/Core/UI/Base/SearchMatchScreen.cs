@@ -237,17 +237,21 @@ namespace UFE3D
         public float duration = 30f;
         private float currentValue = 0f;
         Coroutine increamentCoroutine = null;
+        [SerializeField] Text matchingText;
 
         private IEnumerator IncrementValueOverTime()
         {
             float elapsedTime = 0f;
-
+          //  matchingText.text = "CONNECTING...";
             while (elapsedTime < duration)
             {
                 currentValue = Mathf.Lerp(0f, targetValue, elapsedTime / duration);
                 uiText.text = currentValue.ToString("F0") + "%";
 
                 elapsedTime += Time.deltaTime;
+                //if (currentValue >= 25) {
+                //    matchingText.text = "MATCHING...";
+                //}
 
                 if (currentValue >= secondPanelTime) {
                     firstPanel.SetActive(false);
