@@ -127,12 +127,13 @@ namespace NPC
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "PhotonLocalPlayer")
+            if (collision.gameObject.tag == "NpcBot")
             {
                 if (isMoving)
                 {
                     Vector3 newPos = RandomNavSphere(transform.position, Random.Range(minRadius, maxRadius), -1);
                     agent.SetDestination(newPos);
+                   
                 }
             }
         }
