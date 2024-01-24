@@ -25,10 +25,10 @@ public class LoadingSavingAvatar : MonoBehaviour
         //print("app version====" + Application.version);
         //StartCoroutine(getVersion());
         versionText.text = "Ver." + Application.version;
-        if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
-        {
-            tabBG.SetActive(true);
-        }
+        //if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
+        //{
+        //    tabBG.SetActive(true);
+        //}
     }
 
 
@@ -42,18 +42,25 @@ public class LoadingSavingAvatar : MonoBehaviour
             if (time >= TotalTimer)
             {
                 Once = true;
-              //  CallWelcome();
-                // StartCoroutine(versionCheck());
+                CallWelcome();
+               //StartCoroutine(versionCheck());
 
             }
         }
     }
 
-
+  
     public void CallWelcome()
     {
         if (UserRegisterationManager.instance != null)
+        {
             UserRegisterationManager.instance.ShowWelcomeScreen();
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+
+        }
     }
 
     public IEnumerator getVersion()

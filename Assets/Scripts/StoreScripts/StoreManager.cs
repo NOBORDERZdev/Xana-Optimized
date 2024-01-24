@@ -982,7 +982,10 @@ public class StoreManager : MonoBehaviour
         ArrayofMainCategories = purchaseItemsIDs.ToArray();
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
-
+        if (LoginRegister.ChinaUser)
+        {
+            LoadingHandler.Instance.characterLoading.SetActive(false);
+        }
         GetAllSubCategories();
     }
 

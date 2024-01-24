@@ -85,25 +85,39 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to terms and policy.......
     public void OpenPrivacyPolicyHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (LoginRegister.ChinaUser)
         {
-            Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
+            Application.OpenURL("https://xanalia-online.oss-cn-shanghai.aliyuncs.com/DocFile/XANA%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96.docx");
+        }
+        else
+        {
+            if (XanaConstants.xanaConstants != null)
+            {
+                Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
+            }
         }
     }
 
     //this method is used to Tearms and condition button click.......
     public void OpenTermsAndConditionHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (LoginRegister.ChinaUser)
         {
-            Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
+            Application.OpenURL("https://xanalia-online.oss-cn-shanghai.aliyuncs.com/DocFile/XANA%E7%94%A8%E6%88%B7%E5%8D%8F%E8%AE%AE.docx");
         }
-    }
-    #endregion
+        else
+        {
+            if (XanaConstants.xanaConstants != null)
+            {
+                Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
+            }
+        }
+        }
+        #endregion
 
-    #region My Account Screen.......
-    //this method is used to Personal Information Button Click.......
-    public void OnClickPersonalInformationButton()
+        #region My Account Screen.......
+        //this method is used to Personal Information Button Click.......
+        public void OnClickPersonalInformationButton()
     {
        Debug.Log("Personal information button click");
 

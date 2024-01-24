@@ -98,7 +98,7 @@ public class CustomLocalization : MonoBehaviour
        else
        {
             var json = www.downloadHandler.text;
-
+                   
            if (!json.IsNullOrEmpty())
            {
                // var writer = new StreamWriter(_path, false);

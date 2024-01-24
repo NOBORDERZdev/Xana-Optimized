@@ -204,7 +204,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         {
             yield return null;
         }
-        ////Debug.Log(www.downloadHandler.text);
+       Debug.Log("Response===="+www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
