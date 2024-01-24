@@ -293,8 +293,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
     {
-        if (componentType != Constants.ItemComponentType.BlindComponent || componentType != Constants.ItemComponentType.SituationChangerComponent)
-            BuilderEventManager.onComponentActivated?.Invoke(componentType);
+        if (componentType == Constants.ItemComponentType.BlindComponent || componentType == Constants.ItemComponentType.SituationChangerComponent)
+            return;
+        BuilderEventManager.onComponentActivated?.Invoke(componentType);
     }
 
     internal void SetRoomData(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -358,32 +359,12 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         hash.Add("gamificationMultiplayerComponentDatas", json);
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
-    #endregion
 
-    #region Photon Events
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public void MasterClientSwitched(Player newMasterClient)
     {
-        //throw new NotImplementedException();
-    }
+        if (!withMultiplayer)
+            return;
 
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
-        base.OnMasterClientSwitched(newMasterClient);
         if (PhotonNetwork.LocalPlayer == newMasterClient)
         {
             foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)

@@ -583,7 +583,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             OpenUIPanal(7);
             WalletSceneDisconnected();
+            
             ConnectionEstablished_popUp.SetActive(true);
+
             Invoke(nameof(showPresetPanel), 1f);
             DynamicEventManager.deepLink?.Invoke("Moralis side");
             //  showPresetPanel(); 
@@ -603,6 +605,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (UIManager.Instance != null)//rik
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -4782,6 +4785,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void LoginWithWallet()
     {
+                print("~*~*~*~*~*~*~* WALLET CONNECT SUCESSFULLY ~*~*~*~*~*~*~* ");
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
        // OpenUIPanal(7);
@@ -4794,6 +4798,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (UIManager.Instance != null)//rik
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
 

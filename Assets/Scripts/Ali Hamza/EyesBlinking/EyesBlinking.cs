@@ -27,20 +27,23 @@ public class EyesBlinking : MonoBehaviour
     }
     public void StoreBlendShapeValues()
     {
-        EyeBlendShapeValues.Clear();
-        isBlinking = false;
-        blendHolder.SetBlendShapeWeight(26, 0);
-        blendHolder.SetBlendShapeWeight(32, 0);
-
-        EyeBlendShapeValues.Clear();
-        for (int i = 23; i <= 35; i++)
+        if (blendHolder!= null)
         {
-            EyeBlendShapeValues.Add(blendHolder.GetBlendShapeWeight(i));
-        }
-        isBlinking = true;
-    }
+            EyeBlendShapeValues.Clear();
+            isBlinking = false;
+            blendHolder.SetBlendShapeWeight(26, 0);
+            blendHolder.SetBlendShapeWeight(32, 0);
 
-    public IEnumerator BlinkingStartRoutine()
+            EyeBlendShapeValues.Clear();
+            for (int i = 23; i <= 35; i++)
+            {
+                EyeBlendShapeValues.Add(blendHolder.GetBlendShapeWeight(i));
+                }
+                isBlinking = true;
+            }
+        }
+
+        public IEnumerator BlinkingStartRoutine()
     {
         if (isBlinking && EyeBlendShapeValues.Count != 0)
         {

@@ -498,6 +498,7 @@ public class AvatarBtn : MonoBehaviour
 
             if (CurrentString != "Morphs")
             {
+                PatchForStore.isCustomizationPanelOpen = false;
                 XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
                 XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
 
@@ -511,6 +512,10 @@ public class AvatarBtn : MonoBehaviour
                     if (XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
                         XanaConstants.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
+            }
+            else
+            {
+                PatchForStore.isCustomizationPanelOpen = true;
             }
             //Debug.Log("<color=red>AvatarBtn AssignLastClickedBtnHere</color>");
             XanaConstants.xanaConstants._lastAvatarClickedBtn = this.gameObject;

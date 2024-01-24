@@ -201,7 +201,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
     }
 
-    public IEnumerator DownloadAddressableGamificationObject(Action CallBack)
+    public IEnumerator DownloadAddressableGamificationObject()
     {
         GamificationComponentData.instance.multiplayerComponentsObject.Clear();
         if (Application.internetReachability != NetworkReachability.NotReachable)
@@ -239,8 +239,6 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
                 }
             }
-
-            CallBack();
         }
     }
 
@@ -640,6 +638,14 @@ public class BuilderMapDownload : MonoBehaviour
 
     void XanaSetItemData()
     {
+        StartCoroutine(XanaSetItemDataCO());
+    }
+
+    IEnumerator XanaSetItemDataCO()
+    {
+        yield return StartCoroutine(DownloadAddressableGamificationObject());
+        yield return StartCoroutine(GemificationObjectLoadWait(1f));
+
         foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             xanaItem.SetData(xanaItem.itemData);
@@ -661,14 +667,6 @@ public class BuilderMapDownload : MonoBehaviour
             LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
             LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
-        UpdateScene();
-
-        StartCoroutine(DownloadAddressableGamificationObject(() => 
-        {
-            StartCoroutine(GemificationObjectLoadWait(1f));
-        }));
-
-        
     }
 
     internal void PlayerSetup()

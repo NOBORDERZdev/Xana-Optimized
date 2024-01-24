@@ -167,6 +167,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     public void OnFrontSide()
     {
+        GameManager.Instance.mainCharacter.GetComponent<Animator>().SetBool("Customization", true);
         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
         m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
