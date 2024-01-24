@@ -139,18 +139,19 @@ public class APIController : MonoBehaviour
             //Debug.Log("isDataLoad true");
             StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
         }
-
-        if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-        {
-            if (feedFollowingIdList.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        // OLD FEED UI
+        ////if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+        ////{
+        ////    if (feedFollowingIdList.Count == 0)
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
+        ////    }
+        ////    else
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
+        ////    }
+        ////}
+        // END OLD FEED UI
     }
 
     public IEnumerator SetContentOnFeed()
@@ -324,19 +325,22 @@ public class APIController : MonoBehaviour
             GameObject hotFeedFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
             hotFeedFeedObject.GetComponent<FeedItemController>().HotFeed = APIManager.Instance.hotFeedRoot.data.rows[i];
         }*/
-        if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-        {
-            //Riken
-            //if (feedHotIdList.Count == 0)
-            if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        // OLD FEED UI
+        ////if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+        ////{
+        ////    //Riken
+        ////    //if (feedHotIdList.Count == 0)
+        ////    if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
+        ////    }
+        ////    else
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
+        ////    }
+        ////}
+        // END OLD FEED UI
+
 
         //Debug.Log("isDataLoad true");
         //FeedUIController.Instance.isDataLoad = true;
@@ -541,15 +545,16 @@ public class APIController : MonoBehaviour
                 followerObj.GetComponent<FeedStoryAndCategoryItem>().LoadData(APIManager.Instance.AllFollowerRoot.data.rows[i]);
             }
         }
-
-        if (APIManager.Instance.AllFollowerRoot.data.rows.Count > 0)
-        {
-            FeedUIController.Instance.SetupFollowerAndFeedScreen(true);
-        }
-        else
-        {
-            FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
-        }
+         //Old UI CODE
+        ////if (APIManager.Instance.AllFollowerRoot.data.rows.Count > 0)
+        ////{
+        ////    FeedUIController.Instance.SetupFollowerAndFeedScreen(true);
+        ////}
+        ////else
+        ////{
+        ////    FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
+        ////}
+        //END Old UI CODE
     }
 
     public void AdFrndFollowingFetch(){

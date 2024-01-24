@@ -183,14 +183,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
-                if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {
@@ -243,10 +245,12 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log(www.error);
 
-                if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {

@@ -461,10 +461,12 @@ public class BottomTabManager : MonoBehaviour
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
-                if (FeedUIController.Instance.feedUiScreen.activeSelf)
-                {
-                    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
-                }
+                // OLD FEED UI
+                ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
+                ////{
+                ////    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+                ////}
+                // End Old Feed UI
             }
             UIManager.Instance.HomeWorldScreen.SetActive(false);
             if (UIManager.Instance.Canvas.activeSelf)

@@ -248,28 +248,29 @@ public class FeedUIController : MonoBehaviour
     {
         //Debug.Log("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         //Debug.Log("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
-
-        if (GlobalVeriableClass.callingScreen == "Feed")
-        {
-            StartCoroutine(WaitToSceneLoad());
-        }
-
-        SetupFollowerAndFeedScreen(false);
+        
+        // OLD FEED UI
+        //if (GlobalVeriableClass.callingScreen == "Feed")
+        //{
+        //    StartCoroutine(WaitToSceneLoad());
+        //}
+        ///SetupFollowerAndFeedScreen(false);
+        //END Old UI CODE
     }
 
     IEnumerator WaitToSceneLoad()
     {
         yield return new WaitForSeconds(0);
-
-        SetupLineSelectionPosition();//move Selection Line
-
+        // OLD FEED UI
+        ///SetupLineSelectionPosition();//move Selection Line
+        // END OLD FEED UI
         //APIManager.Instance.RequestGetAllFollowers(1, 10, "FeedStart");//Get All Follower
-
-        for (int i = 0; i < allFeedMessageTextList.Count; i++)
-        {
-            AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
-        }
-
+        // OLD FEED UI
+        //for (int i = 0; i < allFeedMessageTextList.Count; i++)
+        //{
+        //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
+        //}
+        // END Old UI
         //Debug.Log("FeedUIController Start:" + Application.internetReachability);
         //rik for start of the feed scene load data and default api calling....... 
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -317,8 +318,10 @@ public class FeedUIController : MonoBehaviour
 
     public void AllFeedScreenMessageTextActive(bool isActive, int index, string message)
     {
-        allFeedMessageTextList[index].text = message;
-        allFeedMessageTextList[index].gameObject.SetActive(isActive);
+        // OLD FEED UI
+        ////allFeedMessageTextList[index].text = message;
+        ////allFeedMessageTextList[index].gameObject.SetActive(isActive);
+        // END OLD FEED UI
     }
 
     public void OnClickFollowingTabBtnClick()
@@ -346,7 +349,10 @@ public class FeedUIController : MonoBehaviour
         if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
         {
            Debug.Log("Feed Data Load");
-            StartCoroutine(WaitToSceneLoad());
+        
+            // OLD FEED UI
+            ///StartCoroutine(WaitToSceneLoad());
+            // END OLD FEED UI
         }
 
         feedUiScreen.SetActive(isFeedScreen);
@@ -521,6 +527,7 @@ public class FeedUIController : MonoBehaviour
         }
         else
         {
+            //Old UI CODE
             if (!TopPanelMainStoryObj.activeSelf)
             {
                 return;
@@ -611,8 +618,9 @@ public class FeedUIController : MonoBehaviour
     {
         if (feedUiScreen.activeSelf)
         {
-            SetupLineSelectionPosition();//move Selection Line
-
+            // OLD FEED UI
+            /// SetupLineSelectionPosition();//move Selection Line
+            // END OLD FEED UI
             //feedUiSelectionLine.transform.DOMove(new Vector3((feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x), feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
             /*for (int i = 0; i < feedUiTabTitleText.Length; i++)
             {
@@ -629,8 +637,9 @@ public class FeedUIController : MonoBehaviour
             //  if (feedUiHorizontalSnap.CurrentPage != 0)
             // {
             isChangeMainScrollRect = true;
-            feedUiScrollRectFasterEx = allFeedScrollRectFasterEx[feedUiHorizontalSnap.CurrentPage];
-
+            // OLD FEED UI
+            //feedUiScrollRectFasterEx = allFeedScrollRectFasterEx[feedUiHorizontalSnap.CurrentPage];
+           // OLD FEED UI
             StartCoroutine(WaitChangeScrollRectFasterOnMain());
             // }
         }
@@ -708,10 +717,12 @@ public class FeedUIController : MonoBehaviour
                 if (i == index)
                 {
                     allFeedPanel[i].transform.gameObject.SetActive(true);
-                    if (callingIndex == 1)//set default scroll top.......
-                    {
-                        SetUpFeedTabDefaultTop();
-                    }
+                    // OLD FEED UI
+                    ////if (callingIndex == 1)//set default scroll top.......
+                    ////{
+                    ////    SetUpFeedTabDefaultTop();
+                    ////}
+                    //  End OLD FEED UI
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -1878,15 +1889,16 @@ public class FeedUIController : MonoBehaviour
             DestroyImmediate(editDeleteCurrentPostFeedVideoItem.gameObject);
             editDeleteCurrentPostFeedVideoItem = null;
         }
-
-        if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
-        {
-            AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-        }
-        else
-        {
-            AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-        }
+        // OLD FEED UI
+        //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //{
+        //    AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //}
+        //else
+        //{
+        //    AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //}
+        // END OLD FEED UI
 
         if (videoFeedRect.GetComponent<ScrollSnapRect>().startingPage > 0)
         {

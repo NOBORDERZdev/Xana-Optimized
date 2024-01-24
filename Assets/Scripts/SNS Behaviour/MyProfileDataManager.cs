@@ -568,20 +568,20 @@ public class MyProfileDataManager : MonoBehaviour
         currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
         bool IsMyProfileFeed = false;
         FeedUIController.Instance.ShowLoader(false);
-
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            {
-                //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
-
+        // OLD FEED UI
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
+        // END OLD FEED UI
         for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
         {
             Debug.Log("currentPageAllFeedWithUserIdRoot");
@@ -623,14 +623,16 @@ public class MyProfileDataManager : MonoBehaviour
                     userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
                     Debug.Log("userTagPostObject is Instantiate in FeedParent");
                 }
-                if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-                }
-                else
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-                }
+                // OLD FEED UI
+                //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+                //}
+                //else
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+                //}
+                //END  OLD FEED UI
                 if (IsNew)
                 {
                     userTagPostObject.transform.SetAsFirstSibling();
