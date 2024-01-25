@@ -417,7 +417,7 @@ namespace RFM.Managers
         private IEnumerator SpawnNPCs(int numOfHunters, int numOfRunners)
         {
             var delay = (numOfHunters + numOfRunners) / 11; // 10 seconds countdown.
-                                                            // Need to spawn all NPCs beofre last second
+                                                            // Need to spawn all NPCs before last second
 
 
             Debug.Log("SpawnNPCs RFM numOfAIRunners: " + numOfRunners);
@@ -485,7 +485,7 @@ namespace RFM.Managers
             statusBG.SetActive(false);
             statusMMFPlayer.PlayFeedbacks();
 
-            Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, GameplayTimeOver,
+            Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, () => { Globals.gameOverText = "RUNNERS WIN"; GameplayTimeOver(); },
                 gameplayTimeText, true, false, AfterEachSecondGameplayTimer);
 
             InvokeRepeating(nameof(CheckForGameOverCondition), 10, 3);
@@ -540,6 +540,7 @@ namespace RFM.Managers
 
             if (count == 0)
             {
+                Globals.gameOverText = "HUNTERS WIN";
                 Timer.StopAllTimers();
                 GameplayTimeOver();
             }

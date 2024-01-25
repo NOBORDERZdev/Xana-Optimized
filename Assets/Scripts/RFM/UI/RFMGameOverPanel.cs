@@ -8,10 +8,10 @@ public class RFMGameOverPanel : MonoBehaviour
     [SerializeField] private GameObject runnerLeaderBoard;
     [SerializeField] private GameObject hunterLeaderBoard;
 
-    private void OnEnable()
-    {
-        RunnersButtonClicked();
-    }
+    //private void OnEnable()
+    //{
+    //    RunnersButtonClicked();
+    //}
 
     public void RunnersButtonClicked()
     {

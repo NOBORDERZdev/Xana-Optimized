@@ -26,5 +26,7 @@ namespace RFM
         public static bool DevMode = false;
         public static bool TestMode = false;
         public static int xanaStoneFee = 1;
+
+        public static string gameOverText = "GAME OVER";
     }
 }
