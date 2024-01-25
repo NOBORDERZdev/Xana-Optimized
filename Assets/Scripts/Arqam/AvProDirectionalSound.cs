@@ -57,7 +57,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
         if (Application.isEditor || Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            minDistance = 50;                          // lound the live video volume for ios
+            minDistance = -10;                          // lound the live video volume for ios
             foreach (AudioSource source in sources)
             {
                 source.volume = 1f;
