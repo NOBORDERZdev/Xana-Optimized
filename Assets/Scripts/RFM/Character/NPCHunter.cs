@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,7 +28,7 @@ namespace RFM.Character
         public List<GameObject> _allRunners;
         public Transform _target;
         public Vector3 _targetPosition;
-
+        public TextMeshProUGUI nickNameText;
         public bool _hasTarget = false;
 
         // Catch player in range
@@ -61,6 +62,7 @@ namespace RFM.Character
                     Random.Range(0, RFM.Character.StaticData.CharacterNames.Length - 1)];
 
                 // Send an RPC to only this PhotonView on all clients to set the nickname.
+                nickNameText.text = nickName.ToString();
                 GetComponent<PhotonView>().RPC(nameof(SetNickname), RpcTarget.OthersBuffered, nickName);
             }
         }
@@ -69,6 +71,7 @@ namespace RFM.Character
         private void SetNickname(string _nickName)
         {
             nickName = _nickName;
+            nickNameText.text = nickName.ToString();
         }
 
         internal override void OnGameStarted()
@@ -100,7 +103,6 @@ namespace RFM.Character
 
         private void SearchForTarget()
         {
-            Debug.LogError("_allRunners: " + _allRunners.Count);
             if (PhotonNetwork.IsMasterClient)
             {
                 if (Globals.gameState != Globals.GameState.Gameplay) return;
@@ -360,7 +362,13 @@ namespace RFM.Character
                         prameters,
                         new RaiseEventOptions { Receivers = ReceiverGroup.All },
                         SendOptions.SendReliable);
-                    other.GetComponent<Collider>().enabled = false;
+                    //other.GetComponent<Collider>().enabled = false;
+                    Collider[] colArray = other.GetComponents<Collider>();
+                    for (int i = 0; i < colArray.Length; i++)
+                    {
+                        colArray[i].enabled = false;
+                    }
+                    other.GetComponent<PlayerRunner>().playerBody.SetActive(false);
                     //Destroy(playerRunner.gameObject);
                 }
             }

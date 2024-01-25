@@ -9,6 +9,7 @@ namespace RFM.Character
         private TMPro.TextMeshProUGUI _showMoney;
         private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
 
+        public GameObject playerBody;
         [HideInInspector] public float timeSurvived;
         [HideInInspector] public int Money = 0;
         private bool gainingMoney = false;

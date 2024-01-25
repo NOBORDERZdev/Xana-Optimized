@@ -52,6 +52,7 @@ namespace RFM
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null,
             TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, bool isRPC = false, Action<float> onOneSecondCallback = null)
         {
+            Debug.LogError("SetDurationAndRun: " + value + " showTimeInMMSS: " + showTimeInMMSS);
             var timerObj = new GameObject("timerObj");
             var timer = timerObj.AddComponent<RFM.Timer>();
             if (isRPC)
@@ -128,6 +129,7 @@ namespace RFM
             {
                 _finished = true;
                 _running = false;
+                Debug.LogError("_onFinishedCallback called");
                 _onFinishedCallback?.Invoke();
                 Destroy(gameObject);
             }
@@ -147,6 +149,7 @@ namespace RFM
         public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null,
             TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
+            Debug.LogError("SetDurationAndRunEnumerator: " + value + " showTimeInMMSS: " + showTimeInMMSS);
             // SetDurationAndRun(value, onFinishedCallback, timeText);
 
             var timerObj = new GameObject("timerObj");
@@ -199,7 +202,10 @@ namespace RFM
                     TimeSpan diff = curTime - DateTime.Now;
                     float sec = MathF.Abs((float)diff.TotalSeconds);
                     _elapsedSeconds += sec;
-
+                    if (sec >= 5)
+                    {
+                        FindObjectOfType<SceneManage>().LoadMain(false);
+                    }
                     paused = false;
                 }
             }
