@@ -61,6 +61,8 @@ public class CameraLook : MonoBehaviour
     [SerializeField] GameObject pointObj;
     GameObject camRender;
     float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius, defaultZoomInLimit, defaultZoomOutLimit;
+    [HideInInspector]
+    public bool isReturn = false;
 
     private void OnEnable()
     {
@@ -135,6 +137,7 @@ public class CameraLook : MonoBehaviour
 
     private void Update()
     {
+        if (isReturn) return;
 
         _allowRotation = true;
 
