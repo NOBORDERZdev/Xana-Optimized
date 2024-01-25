@@ -10,6 +10,8 @@ namespace RFM.Utility
         public TextMeshProUGUI roomName;
         public TextMeshProUGUI players;
         public TextMeshProUGUI rfmStatus;
+        public TextMeshProUGUI Runners;
+        public TextMeshProUGUI Hunters;
 
         private void Awake()
         {
