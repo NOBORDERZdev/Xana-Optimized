@@ -48,6 +48,24 @@ public class SavaCharacterProperties : MonoBehaviour
             SaveItemList.eyeMorphed = _CharacterData.eyeMorphed;
             SaveItemList.noseMorphed = _CharacterData.noseMorphed;
             SaveItemList.lipMorphed = _CharacterData.lipMorphed;
+            SaveItemList.HairColorPaletteValue = _CharacterData.HairColorPaletteValue;
+            SaveItemList.EyeValue = _CharacterData.EyeValue;
+
+            SaveItemList.PresetValue = _CharacterData.PresetValue;
+            SaveItemList.SkinId = _CharacterData.SkinId;
+            SaveItemList.FaceValue = _CharacterData.FaceValue;
+            SaveItemList.EyeBrowValue = _CharacterData.EyeBrowValue;
+            SaveItemList.EyeBrowColorPaletteValue = _CharacterData.EyeBrowColorPaletteValue;
+            SaveItemList.EyeLashesValue = _CharacterData.EyeLashesValue;
+            SaveItemList.EyeValue = _CharacterData.EyeValue;
+            SaveItemList.EyesColorValue = _CharacterData.EyesColorValue;
+            SaveItemList.EyesColorPaletteValue = _CharacterData.EyesColorPaletteValue;
+            SaveItemList.NoseValue = _CharacterData.NoseValue;
+            SaveItemList.LipsValue = _CharacterData.LipsValue;
+            SaveItemList.LipsColorValue = _CharacterData.LipsColorValue;
+            SaveItemList.LipsColorPaletteValue = _CharacterData.LipsColorPaletteValue;
+            SaveItemList.BodyFat = _CharacterData.BodyFat;
+            SaveItemList.MakeupValue = _CharacterData.MakeupValue;
         }
         AssignCustomSlidersData();
     }

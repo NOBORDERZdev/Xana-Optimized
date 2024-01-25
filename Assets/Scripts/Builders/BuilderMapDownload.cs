@@ -43,6 +43,7 @@ public class BuilderMapDownload : MonoBehaviour
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
+    private AISkyboxItem aiSkyboxItem;
     #endregion
     internal string response;
 
@@ -159,6 +160,16 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
+        if (levelData.skyProperties.skyId != -1)
+        {
+            bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == levelData.skyProperties.skyId);
+            if (!skyBoxExist)
+            {
+                aiSkyboxItem=levelData.skyProperties.aISkyboxItem;
+                StartCoroutine(AISkyTextureDownload());
+            }
+        }
+
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
@@ -195,8 +206,10 @@ public class BuilderMapDownload : MonoBehaviour
         {
             foreach (GameObject prefab in GamificationComponentData.instance.multiplayerComponentsObject)
             {
-                if (!pool.ResourceCache.ContainsKey(prefab.name))
-                    pool.ResourceCache.Add(prefab.name, prefab);
+                //If a key already exists in the Pool Resource Cache dictionary, then remove it due to assigning a new game object because it gets null ref when the user exits and re-enters the any builder world.
+                if (pool.ResourceCache.ContainsKey(prefab.name))
+                    pool.ResourceCache.Remove(prefab.name);
+                pool.ResourceCache.Add(prefab.name, prefab);
             }
         }
     }
@@ -501,27 +514,13 @@ public class BuilderMapDownload : MonoBehaviour
             }
             else
             {
-                AISkyboxItem skyBoxItem = skyProperties.aISkyboxItem;
+                AISkyboxItem skyBoxItem = aiSkyboxItem;
 
                 ////Debug.LogError(JsonUtility.ToJson(skyBoxItem));
                 if (skyBoxItem.texture == null)
                 {
-                    var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
-                    var imagineImageRequest = UnityWebRequest.Get(skyBoxItem.textureURL);
-                    yield return imagineImageRequest.SendWebRequest();
-
-                    if (imagineImageRequest.result != UnityWebRequest.Result.Success)
-                    {
-                        imagineImageRequest.Dispose();
-                    }
-                    else
-                    {
-                        var image = imagineImageRequest.downloadHandler.data;
-                        texture.LoadImage(image);
-                        skyBoxItem.texture = texture;
-                        imagineImageRequest.Dispose();
-                    }
-
+                    //Remove texture downloading code
+                    yield return StartCoroutine(AISkyTextureDownload());
                 }
                 GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
@@ -650,6 +649,7 @@ public class BuilderMapDownload : MonoBehaviour
         {
             xanaItem.SetData(xanaItem.itemData);
         }
+
         GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
         //Set Hierarchy same as builder
         SetObjectHirarchy();
@@ -789,6 +789,25 @@ public class BuilderMapDownload : MonoBehaviour
     #endregion
 
     #region COROUTINE
+
+    IEnumerator AISkyTextureDownload()
+    {
+        var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
+        var imagineImageRequest = UnityWebRequest.Get(aiSkyboxItem.textureURL);
+        yield return imagineImageRequest.SendWebRequest();
+
+        if (imagineImageRequest.result != UnityWebRequest.Result.Success)
+        {
+            imagineImageRequest.Dispose();
+        }
+        else
+        {
+            var image = imagineImageRequest.downloadHandler.data;
+            texture.LoadImage(image);
+            aiSkyboxItem.texture = texture;
+            imagineImageRequest.Dispose();
+        }
+    }
 
     IEnumerator GetTexture(string url, Action<Texture> DownloadedTexture)
     {
