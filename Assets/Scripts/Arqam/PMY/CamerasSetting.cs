@@ -20,19 +20,24 @@ public class CamerasSetting : MonoBehaviour
     
     private void SetCamerasSetting()
     {
-        ArrowManager.Instance.slfieVirtualCam.m_Lens.FarClipPlane = 620;
-        
-        ArrowManager.Instance.selfieShootCamL.farClipPlane = 620;
-        ArrowManager.Instance.selfieShootCamP.farClipPlane = 620;
+        // For TPC camera
+        LoadFromFile.instance.PlayerCamera.m_Lens.FarClipPlane = 630;
 
+        // For selfie camera
+        ArrowManager.Instance.slfieVirtualCam.m_Lens.FarClipPlane = 630;
+        // For selfie shoot cameras
+        ArrowManager.Instance.selfieShootCamL.farClipPlane = 630;
+        ArrowManager.Instance.selfieShootCamP.farClipPlane = 630;
+
+        // For free float camera
         Camera freeFloatCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
             FreeFloatCamCharacterController.GetComponent<Camera>();
-        freeFloatCam.farClipPlane = 620;
+        freeFloatCam.farClipPlane = 630;
         
-        
+        // For first person camera
         Camera firstPersonCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
             firstPersonCameraObj.GetComponent<Camera>();
-        firstPersonCam.farClipPlane = 620;
+        firstPersonCam.farClipPlane = 630;
     }
 
 }
