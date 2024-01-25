@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
 using ExitGames.Client.Photon;
 using MoreMountains.Feedbacks;
 using Photon.Pun;
@@ -23,6 +24,8 @@ namespace RFM.Managers
         #region Serialized Fields
         [SerializeField] public Transform playersSpawnArea;
         [SerializeField] private GameObject huntersCage;
+        [SerializeField] private GameObject huntersCageDoor;
+
         [SerializeField] private FollowNPC npcCameraPrefab;
         [SerializeField] public Transform huntersSpawnArea;
 
@@ -221,7 +224,6 @@ namespace RFM.Managers
 
             StopAllCoroutines();
         }
-
         public void RestartRFM()
         {
             PhotonNetwork.CurrentRoom.CustomProperties.Clear();
@@ -231,7 +233,8 @@ namespace RFM.Managers
                 player.CustomProperties.Clear();
             }
             //huntersCage.GetComponent<Animator>().Play("RFMCloseDoor");
-            huntersCage.GetComponent<Animator>().Play("Cage Door Close");
+            //huntersCage.GetComponent<Animator>().Play("Cage Door Close");
+            huntersCageDoor.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
             _mainCam.SetActive(true);
             _gameCanvas.SetActive(true);
 
@@ -273,7 +276,9 @@ namespace RFM.Managers
             statusMMFPlayer.PlayFeedbacks();
 
             //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Up"); // ?? There is no such animation
-            huntersCage.GetComponent<Animator>().Play("Cage Door Close");
+            //huntersCage.GetComponent<Animator>().Play("Cage Door Close");
+            huntersCageDoor.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+            Debug.LogError("StartRFM Cage Door Close");
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -490,7 +495,8 @@ namespace RFM.Managers
         {
             if (timerTextScaleShaker) timerTextScaleShaker.Play();
         }
-
+        
+        bool doorOpening=false;
         private void AfterEachSecondCountdownTimer(float time)
         {
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
@@ -498,11 +504,16 @@ namespace RFM.Managers
             //camera logic
             if (Globals.gameState == Globals.GameState.TakePosition)
             {
-
                 if (time < 4)
                 {
                     //huntersCage.GetComponent<Animator>().Play("RFM Hunters Cage Door Down");
-                    huntersCage.GetComponent<Animator>().Play("Cage Door Open");
+                    //huntersCage.GetComponent<Animator>().Play("Cage Door Open");
+                    if (!doorOpening)
+                    {
+                        huntersCageDoor.transform.DORotate(new Vector3(140, 0, 0), 6f).OnComplete(delegate { doorOpening = false; });
+                        doorOpening = true;
+                    }
+
                     rfmCameraManager.SwtichCamera(1);
                     Debug.LogError("Switch  to Hunter Camera");
                 }
