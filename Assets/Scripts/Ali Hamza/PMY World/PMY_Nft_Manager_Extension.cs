@@ -309,6 +309,7 @@ namespace PMY
 
         public void LoadLiveIfFirstTimeNotLoaded(GameObject obj, string url)
         {
+            Debug.Log("Player: " + obj.name);
             if (obj.GetComponent<PMY_VideoAndImage_Extension>() != null)
             {
                 worldInfos[obj.GetComponent<PMY_VideoAndImage_Extension>().id].VideoLink = url;
