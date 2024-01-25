@@ -17,6 +17,7 @@ namespace RFM.Managers
         [SerializeField] private GameObject setLayoutPanel;
         [SerializeField] private GameObject rearViewMirror;
         // Leaderboard
+        [SerializeField] private TextMeshProUGUI gameOverText;
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private RectTransform runnersLeaderboardEntryContainer;
         [SerializeField] private RectTransform huntersLeaderboardEntryContainer;
@@ -154,6 +155,8 @@ namespace RFM.Managers
         
         private void OnGameOver()
         {
+            gameOverText.text = Globals.gameOverText;
+
             showMoney.transform.parent.gameObject.SetActive(false);
             //rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
