@@ -60,6 +60,7 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
+    [HideInInspector]
     public bool isReturn = false;
 
     private void OnEnable()
