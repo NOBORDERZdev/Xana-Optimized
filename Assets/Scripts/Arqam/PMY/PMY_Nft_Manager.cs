@@ -607,6 +607,7 @@ namespace PMY
                 pdfPanel_P.SetActive(true);
 
             ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
+            CameraLook.instance.isReturn = true;
         }
 
         public void EnableControlls()
@@ -618,6 +619,7 @@ namespace PMY
             }
 
             ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
+            CameraLook.instance.isReturn = false;
         }
 
         private void OnDisable()

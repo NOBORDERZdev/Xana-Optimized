@@ -60,6 +60,8 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
+    public bool isReturn = false;
+
     private void OnEnable()
     {
         controls.Enable();
@@ -123,6 +125,7 @@ public class CameraLook : MonoBehaviour
 
     private void Update()
     {
+        if(isReturn) return;
 
         _allowRotation = true;
 
