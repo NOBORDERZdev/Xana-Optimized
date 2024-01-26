@@ -502,8 +502,8 @@ namespace RFM.Managers
         {
             if (timerTextScaleShaker) timerTextScaleShaker.Play();
         }
-        
-        bool doorOpening=false;
+
+        bool doorOpening = false;
         private void AfterEachSecondCountdownTimer(float time)
         {
             if (countdownTimerTextScaleShaker) countdownTimerTextScaleShaker.Play();
@@ -569,6 +569,7 @@ namespace RFM.Managers
 
             if (runnersCount == 0)
             {
+                // Debug.LogError("CheckForGameOverCondition runners count: " + runnersCount);
                 if (PhotonNetwork.IsMasterClient)
                 {
                     photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "HUNTERS WIN");
@@ -594,6 +595,7 @@ namespace RFM.Managers
             gameplayTimeText.transform.parent.gameObject.SetActive(false);
 
             EventsManager.CalculateScores();
+            CancelInvoke(nameof(CheckHuntersForSpectating));
             EventsManager.GameOver();
             Globals.gameState = Globals.GameState.GameOver;
             statusTMP.text = "Time's Up!";
@@ -636,24 +638,44 @@ namespace RFM.Managers
                 var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
                 if (hunter != null)
                 {
+                    hunterForSpectating = hunter;
                     _npcCamera.Init(hunter.cameraTarget);
+                    InvokeRepeating(nameof(CheckHuntersForSpectating), 1, 2);
                     return;
                 }
             }
 
             var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
-
             if (randomHunter != null)
             {
+                hunterForSpectating = randomHunter;
                 if (_npcCamera == null)
                 {
                     _npcCamera = Instantiate(npcCameraPrefab);
                 }
                 _npcCamera.Init(randomHunter.cameraTarget);
+                InvokeRepeating(nameof(CheckHuntersForSpectating), 1, 2);
             }
         }
+        public Hunter hunterForSpectating;
+        public void CheckHuntersForSpectating()
+        {
+            Debug.LogError("CheckHuntersForSpectating: " + hunterForSpectating);
+            if (hunterForSpectating == null)
+            {
+                var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
 
-
+                if (randomHunter != null)
+                {
+                    hunterForSpectating = randomHunter;
+                    if (_npcCamera == null)
+                    {
+                        _npcCamera = Instantiate(npcCameraPrefab);
+                    }
+                    _npcCamera.Init(randomHunter.cameraTarget);
+                }
+            }
+        }
 
         private void ReceivePhotonEvents(EventData photonEvent)
         {
