@@ -93,7 +93,6 @@ namespace RFM.Character
         
         public void PlayerRunnerCaught(int hunterViewID)
         {
-            Debug.LogError("RFM I was caught by " + hunterViewID);
             gainingMoney = false;
             //CancelInvoke(nameof(AddMoney));
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
