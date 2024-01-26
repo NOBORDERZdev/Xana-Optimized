@@ -569,18 +569,18 @@ public class MyProfileDataManager : MonoBehaviour
         bool IsMyProfileFeed = false;
         FeedUIController.Instance.ShowLoader(false);
 
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            {
-                //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
 
         for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
         {
