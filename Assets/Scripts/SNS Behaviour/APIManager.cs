@@ -3201,6 +3201,7 @@ public class AllFollowing
     public string email;
     public string avatar;
     public bool is_close_friend;
+    public bool isFollowing;
     public AllUserWithFeedUserProfile userProfile;
 }
 
