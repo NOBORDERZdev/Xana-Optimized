@@ -213,8 +213,11 @@ namespace Photon.Pun.Demo.PunBasics
             }
             else if (XanaConstants.xanaConstants.pmy_isClassAvailable)
             {
+                lobbyN += (lobbyN == "PMYRoomA") ? 
+                    (APIBaseUrlChange.instance.IsXanaLive)? XanaConstants.xanaConstants.pmy_classRoomID_Test : XanaConstants.xanaConstants.pmy_classRoomID_Test
+                    : "";
                 string pmy_className = $"{lobbyN}{XanaConstants.xanaConstants.pmy_joinedClassCode}";
-                Debug.Log("<color=red> PMY -- Joining The Class : "+ pmy_className +"</color>");
+                Debug.Log("<color=red> PMY -- Joining The Class : " + pmy_className + "</color>");
                 lobbyName = pmy_className;
             }
             else
