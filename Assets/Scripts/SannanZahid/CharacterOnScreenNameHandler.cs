@@ -56,7 +56,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                Debug.LogError("SetName 1");
+                //Debug.LogError("SetName 1");
 
                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             }
