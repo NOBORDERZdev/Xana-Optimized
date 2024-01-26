@@ -435,7 +435,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -449,7 +449,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 4279283762021696208}
   m_OnClick:
     m_PersistentCalls:
@@ -471,7 +471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4279283762077263059
 RectTransform:
   m_ObjectHideFlags: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cd7887b404755104f8ca0d283127a24f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 348dbcb314d7811409c0b7ded3415ef4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -786,7 +786,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4279283762468653012}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2790976989560471385}
+        m_TargetAssemblyTypeName: FeedData, Assembly-CSharp
+        m_MethodName: LikeUnlikePost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4279283763068907136
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +1000,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 3
+  m_text: '0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}
   m_sharedMaterial: {fileID: -5506446132504035655, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}
@@ -997,8 +1011,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4284430798
-  m_fontColor: {r: 0.80784315, g: 0.22352941, b: 0.37254903, a: 1}
+    rgba: 4286804059
+  m_fontColor: {r: 0.35686275, g: 0.4392157, b: 0.5137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1124,7 +1138,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8a3a1a8e8df647243b9ba462f27ef741, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1692,6 +1706,7 @@ GameObject:
   - component: {fileID: 9094557258527362677}
   - component: {fileID: 3699731421035778180}
   - component: {fileID: 7235050875931606340}
+  - component: {fileID: -2790976989560471385}
   m_Layer: 5
   m_Name: User Feed Post 2.0
   m_TagString: Untagged
@@ -1844,3 +1859,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &-2790976989560471385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9094557258527362675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe4be2535dd0a747a9aefe88e2a1c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProfileImage: {fileID: 6932375135497783505}
+  DisplayName: {fileID: 8200576392898355185}
+  PostText: {fileID: 3688690511294211596}
+  Date: {fileID: 4279283763068907138}
+  Likes: {fileID: 4650538029476132201}
+  Heart: {fileID: 4279283762468653012}
+  LikedHeart: {fileID: 21300000, guid: cd7887b404755104f8ca0d283127a24f, type: 3}
+  UnLikedHeart: {fileID: 21300000, guid: 348dbcb314d7811409c0b7ded3415ef4, type: 3}
+  LikedColor: {r: 0.80784315, g: 0.22352941, b: 0.37254903, a: 1}
+  UnLikedColor: {r: 0.35686275, g: 0.4392157, b: 0.5137255, a: 1}

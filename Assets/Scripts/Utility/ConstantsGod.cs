@@ -243,4 +243,9 @@ public class ConstantsGod
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
+
+    #region Feed Api's
+    public static string FeedGetAllByUserId = "/item/get-following-text-post/";
+    public static string FeedLikeDislikePost = "/item/like-text-post";
+    #endregion
 }
