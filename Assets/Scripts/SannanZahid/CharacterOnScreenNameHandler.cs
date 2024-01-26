@@ -34,7 +34,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
                     break;
                 }
             }
-            Debug.LogError("SetName");
+           // Debug.LogError("SetName");
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
