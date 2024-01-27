@@ -213,6 +213,7 @@ public class ScrollActivityNFT : MonoBehaviour
 
    void SaveAttributesInFile()
     {
+        Debug.LogError("SaveAttributesInFile: "+ _NFTIndex);
         BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
         nftAttributes.isNFTAquiped = true;
         /*
@@ -261,7 +262,14 @@ public class ScrollActivityNFT : MonoBehaviour
         nftAttributes.Skin = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Skin;
         nftAttributes.Eye_Lense = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_lense;
         nftAttributes.Eyelid = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyelid;
-         string attributesJson = JsonUtility.ToJson(nftAttributes);      
+        nftAttributes.profile = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].profile;
+        nftAttributes.speed = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].speed;
+        nftAttributes.stamina = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].stamina;
+        nftAttributes.punch = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].punch;
+        nftAttributes.kick = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].kick;
+        nftAttributes.defence = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].defence;
+        nftAttributes.special_move = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
+        string attributesJson = JsonUtility.ToJson(nftAttributes);      
         File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

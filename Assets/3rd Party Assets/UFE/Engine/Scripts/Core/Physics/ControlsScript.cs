@@ -111,6 +111,7 @@ public class ControlsScript : MonoBehaviour {
     private HitBoxesScript myHitBoxesScript;
     public SpriteRenderer mySpriteRenderer;
     private ControlsScript _owner;
+    public FightingPlayer fightingPlayer;
 
     public void Init() {
         // Set Input Recording

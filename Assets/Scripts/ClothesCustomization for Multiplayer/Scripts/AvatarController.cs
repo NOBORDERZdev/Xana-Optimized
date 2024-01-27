@@ -894,6 +894,13 @@ public class AvatarController : MonoBehaviour
             _CharacterData1.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
             _CharacterData1.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
             _CharacterData1.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
+            _CharacterData1.punch = _NFTData.punch;
+            _CharacterData1.special_move = _NFTData.special_move;
+            _CharacterData1.kick = _NFTData.kick;
+            _CharacterData1.profile = _NFTData.profile;
+            _CharacterData1.stamina = _NFTData.stamina;
+            _CharacterData1.defence = _NFTData.defence;
+
 
             _CharacterData1.SavedBones = new List<BoneDataContainer>();
             for (int i = 0; i < charcterBodyParts.BonesData.Count; i++)

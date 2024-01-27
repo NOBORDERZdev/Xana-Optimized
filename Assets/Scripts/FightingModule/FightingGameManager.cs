@@ -25,7 +25,8 @@ public class FightingGameManager : MonoBehaviour
 
     public UFE3D.CharacterInfo[] profiles;
 
-
+    public string PlayerClothJson;
+    public string opponentClothJson;
     public Button OpenButton;
     [HideInInspector]public int id1;
     [HideInInspector] public int id2;

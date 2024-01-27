@@ -93,6 +93,8 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
             player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = false;
             yield return new WaitForSeconds(1f);
             player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = true;
+            FightingGameManager.instance.PlayerClothJson = player1.GetComponent<AvatarController>().clothJson;
+            FightingGameManager.instance.opponentClothJson= player2.GetComponent<AvatarController>().clothJson;
             player1RawImage.gameObject.SetActive(true);
             player2RawImage.gameObject.SetActive(true);
 
