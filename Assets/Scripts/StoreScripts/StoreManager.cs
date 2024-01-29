@@ -4809,28 +4809,56 @@ public class StoreManager : MonoBehaviour
     public void UpdateXanaConstants()
     {
         ////Debug.Log("<color=red> Update Xana Constant </color>");
-        XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.characterController.wornHairId.ToString();
-        XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.characterController.hairColorPaletteId.ToString();
-        XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.characterController.wornShirtId.ToString();
-        XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.characterController.wornPantId.ToString();
-        XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.characterController.wornShoesId.ToString();
-        XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.characterController.wornEyewearableId.ToString();
+        //if (SavaCharacterProperties.instance.SaveItemList.SavedBones.Count == 0)
+        //{
+        //    XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.characterController.wornHairId.ToString();
+        //    XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.characterController.hairColorPaletteId.ToString();
+        //    XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.characterController.wornShirtId.ToString();
+        //    XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.characterController.wornPantId.ToString();
+        //    XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.characterController.wornShoesId.ToString();
+        //    XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.characterController.wornEyewearableId.ToString();
 
-        XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.characterController.presetValue;
-        XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.characterController.skinId.ToString();
-        XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.characterController.faceId;
-        XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.characterController.eyeBrowId;
-        XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.characterController.eyeBrowColorPaletteId;
-        XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.characterController.eyeLashesId;
-        XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.characterController.eyesId;
-        XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.characterController.eyesColorId.ToString();
-        XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.characterController.eyesColorPaletteId.ToString();
-        XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.characterController.noseId;
-        XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.characterController.lipsId;
-        XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.characterController.lipsColorId.ToString();
-        XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.characterController.lipsColorPaletteId.ToString();
-        XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.characterController.bodyFat;
-        XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.characterController.makeupId;
+        //    XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.characterController.presetValue;
+        //    XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.characterController.skinId.ToString();
+        //    XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.characterController.faceId;
+        //    XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.characterController.eyeBrowId;
+        //    XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.characterController.eyeBrowColorPaletteId;
+        //    XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.characterController.eyeLashesId;
+        //    XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.characterController.eyesId;
+        //    XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.characterController.eyesColorId.ToString();
+        //    XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.characterController.eyesColorPaletteId.ToString();
+        //    XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.characterController.noseId;
+        //    XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.characterController.lipsId;
+        //    XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.characterController.lipsColorId.ToString();
+        //    XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.characterController.lipsColorPaletteId.ToString();
+        //    XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.characterController.bodyFat;
+        //    XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.characterController.makeupId;
+        //}
+        //else
+        //{
+            XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
+            XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
+            XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
+            XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
+            XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
+            XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.SaveItemList.EyeValue.ToString();
+
+            XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.SaveItemList.PresetValue;
+            XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.SaveItemList.SkinId.ToString();
+            XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.SaveItemList.FaceValue;
+            XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowValue;
+            XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
+            XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.SaveItemList.EyeLashesValue;
+            XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.SaveItemList.EyeValue;
+            XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.SaveItemList.EyesColorValue.ToString();
+            XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
+            XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.SaveItemList.NoseValue;
+            XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.SaveItemList.LipsValue;
+            XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.SaveItemList.LipsColorValue.ToString();
+            XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
+            XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.SaveItemList.BodyFat;
+            XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
+        //}
     }
 }
 public class RequestedData
