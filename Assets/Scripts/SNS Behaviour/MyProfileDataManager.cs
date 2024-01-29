@@ -47,6 +47,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject userPostPart;
     public GameObject bioDetailPart;
     public GameObject bioTxtParent;
+    public GameObject UserTagsParent;
 
     [Space]
     [Header("Player info References")]
@@ -90,6 +91,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject photoPrefab;
     public GameObject photoPrefabInMyPostFeed;
     public GameObject NFTImagePrefab;
+    public GameObject TagPrefab;
 
     [Header("post empty message reference")]
     public GameObject createYourFirstPostMsgObj;
@@ -327,6 +329,8 @@ public class MyProfileDataManager : MonoBehaviour
         totalFollowingText.text = myProfileData.followingCount.ToString();
         totalPostText.text = myProfileData.feedCount.ToString();
 
+        UpdateUserTags();
+
         if (string.IsNullOrEmpty(myProfileData.userProfile.website))
         {
             websiteText.gameObject.SetActive(false);
@@ -414,6 +418,24 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+    public void UpdateUserTags()
+    {
+        if (myProfileData.tags.Length > 0)
+        {
+            UserTagsParent.transform.parent.gameObject.SetActive(true);
+            for (int i = 0; i < myProfileData.tags.Length; i++)
+            {
+                GameObject _tagobject = Instantiate(TagPrefab, UserTagsParent.transform);
+                _tagobject.name = "TagPrefab" + i;
+                _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+            }
+        }
+        else
+        {
+            UserTagsParent.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public string ReplaceNonCharacters(string aString, char replacement)
@@ -569,18 +591,18 @@ public class MyProfileDataManager : MonoBehaviour
         bool IsMyProfileFeed = false;
         FeedUIController.Instance.ShowLoader(false);
 
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            {
-                //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
 
         for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
         {

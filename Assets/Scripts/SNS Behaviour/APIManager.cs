@@ -2802,6 +2802,7 @@ public class GetUserDetailData
     public bool isVerified;
     public bool isRegister;
     public bool isDeleted;
+    public string[] tags;
     public DateTime createdAt;
     public DateTime updatedAt;
     public GetUserDetailProfileData userProfile;
