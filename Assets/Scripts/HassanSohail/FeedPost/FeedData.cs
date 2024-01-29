@@ -21,6 +21,7 @@ public class FeedData : MonoBehaviour
     FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
+    int timeUpdateInterval = 1;
    public void SetFeedPrefab(FeedResponseRow data){ 
         _data = data;
         DisplayName.text = data.user.name;
@@ -28,11 +29,11 @@ public class FeedData : MonoBehaviour
         isEnable= true;
         //Likes.text = data.like_count.ToString();
         UpdateLikeCount(data.like_count);
+        timeUpdateInterval=1;
         if (isEnable)
         {
             Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
         }
-
         if (data.isLikedByUser)
         {
             isLiked = true;
@@ -50,22 +51,38 @@ public class FeedData : MonoBehaviour
         DateTime currentTime = DateTime.Now;
         TimeSpan timeDifference = currentTime - postTime;
         StartCoroutine(ReCallingTimeDifference(postTime));
-        if (timeDifference.TotalMinutes < 1)
-            return "Less than a minute";
+        if (timeDifference.TotalMinutes < 1){
+            timeUpdateInterval =1;
+            return $"{Math.Floor(timeDifference.TotalSeconds)} s";
+        }
         else if (timeDifference.TotalMinutes < 60)
-            return $"{Math.Floor(timeDifference.TotalMinutes)} min";
+        {
+            timeUpdateInterval =60;
+            return $"{Math.Floor(timeDifference.TotalMinutes)} m";
+        }
         else if (timeDifference.TotalHours < 24)
+        {
+            timeUpdateInterval =3600;
             return $"{Math.Floor(timeDifference.TotalHours)} h";
-        else if (timeDifference.TotalDays < 30)
-            return $"{Math.Floor(timeDifference.TotalDays)} day";
+        }
+        else if (timeDifference.TotalDays < 30){
+            timeUpdateInterval =86400;
+            return $"{Math.Floor(timeDifference.TotalDays)} d"; 
+         }
         else if (timeDifference.TotalDays < 365)
-            return $"{Math.Floor(timeDifference.TotalDays / 30)} month";
+        {
+             timeUpdateInterval =86400;
+            return $"{Math.Floor(timeDifference.TotalDays / 30)} m";
+        }
         else
-            return $"{Math.Floor(timeDifference.TotalDays / 365)} year";
+        {
+            timeUpdateInterval =86400;
+            return $"{Math.Floor(timeDifference.TotalDays / 365)} y";
+        }
    }
 
-    IEnumerator ReCallingTimeDifference(DateTime postTime){
-        yield return new WaitForSeconds(60);
+        IEnumerator ReCallingTimeDifference(DateTime postTime){
+        yield return new WaitForSeconds(timeUpdateInterval);
         Date.text = CalculateTimeDifference(postTime).ToString();
     }
     IEnumerator GetProfileImage(string url)
