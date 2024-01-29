@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -25,7 +23,8 @@ public class FeedData : MonoBehaviour
         _data = data;
         DisplayName.text = data.user.name;
         PostText.text = data.text_post;
-        Likes.text = data.like_count.ToString();
+        //Likes.text = data.like_count.ToString();
+        UpdateLikeCount(data.like_count);
         Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
         if (data.isLikedByUser)
         {
@@ -47,6 +46,7 @@ public class FeedData : MonoBehaviour
    }
     IEnumerator GetProfileImage(string url)
     {
+        string newUrl = url+"?width=256&height=256";
         WWW www = new WWW(url);
         yield return www;
         ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
@@ -78,7 +78,8 @@ public class FeedData : MonoBehaviour
             else
             {  
                 LikeResponse likeResponse = JsonUtility.FromJson<LikeResponse>(www.downloadHandler.text);
-                Likes.text =  likeResponse.data.likeCount.ToString();
+                UpdateLikeCount(likeResponse.data.likeCount);
+                //Likes.text =  likeResponse.data.likeCount.ToString();
                 isLiked = !isLiked;
                 UpdateHeart();
             }
@@ -105,6 +106,13 @@ public class FeedData : MonoBehaviour
         UpdateHeart();
     }
 
+    public int GetFeedId(){
+        return _data.id;
+    }
+
+    public void UpdateLikeCount(int count){ 
+        Likes.text = count.ToString();
+    }
 }
 
 [Serializable]

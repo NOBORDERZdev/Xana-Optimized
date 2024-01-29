@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,9 +15,11 @@ public class FeedController : MonoBehaviour
     int feedPageNumber = 1;
     int feedPageSize = 10;
     List<FeedResponseRow> FeedAPIData = new List<FeedResponseRow>();
+    List<FeedData> feedList = new List<FeedData>();
     bool isFeedInitialized = false;
     private void OnEnable()
     {
+        SocketController.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedUIController.Instance;
         if (!isFeedInitialized)
@@ -53,7 +56,11 @@ public class FeedController : MonoBehaviour
                     if (!String.IsNullOrEmpty( item.text_post) && !item.text_post.Equals("null") )
                     {
                         FeedAPIData.Add(item);
-                        Instantiate(feedPostPrefab, feedPostParent).GetComponent<FeedData>().SetFeedPrefab(item);
+                        GameObject temp =  Instantiate(feedPostPrefab);
+                        temp.transform.SetParent(feedPostParent);
+                        temp.transform.localScale = Vector3.one;
+                        temp.GetComponent<FeedData>().SetFeedPrefab(item);
+                        feedList.Add(temp.GetComponent<FeedData>());
                     }
                    
                 }
@@ -69,7 +76,26 @@ public class FeedController : MonoBehaviour
     }
 
 
-   
+    /// <summary>
+    /// To Update Feed Like Count from Socket
+    /// </summary>
+    /// <param name="feedId"></param>
+    /// <param name="isLiked"></param>
+    public void UpdateFeedLike(FeedLikeSocket feedLikeSocket)
+    {
+        foreach (var item in feedList)
+        {
+            if (item.GetFeedId() == feedLikeSocket.textPostId)
+            {
+              item.UpdateLikeCount(feedLikeSocket.likeCount);
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        SocketController.instance.updateFeedLike -= UpdateFeedLike;
+    }
 }
 
 [System.Serializable]

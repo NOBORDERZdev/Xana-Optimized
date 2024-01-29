@@ -9,16 +9,16 @@ using Newtonsoft.Json;
 using SimpleJSON;
 using static RestAPI;
 
-public class FriendPostSocket : MonoBehaviour
+public class SocketController : MonoBehaviour
 {
     public SocketManager Manager;
     string address;
 
     public string socketId;
-    public static FriendPostSocket instance;
+    public static SocketController instance;
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
-
+    public Action<FeedLikeSocket> updateFeedLike;
     private void Awake()
     {
         instance = this;
@@ -27,7 +27,6 @@ public class FriendPostSocket : MonoBehaviour
     void Start()
     {
         Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
-
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
@@ -48,6 +47,9 @@ public class FriendPostSocket : MonoBehaviour
 
         // Bind Events to listen
         Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
+        //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
+        Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
+
     }
     void ReceivePost(string msg)
     {
@@ -63,6 +65,15 @@ public class FriendPostSocket : MonoBehaviour
         Debug.Log("<color=blue> Post -- Mood : </color>" + data.text_mood);
     }
     
+     void FeedLikeUpdate(string msg)
+    {
+       Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
+        FeedLikeSocket socketInput = JsonConvert.DeserializeObject<FeedLikeSocket>(msg);
+       updateFeedLike?.Invoke(socketInput);
+
+    }
+
+
     void EmitUserSocketToApi()
     {
         StartCoroutine(SendSocketIdOfUserForPost());
@@ -142,4 +153,12 @@ public class ReceivedFriendPostData
 
     public string text_post;
     public string text_mood;
+}
+
+
+[Serializable]
+public class FeedLikeSocket
+{
+    public int textPostId;
+    public int likeCount;
 }
