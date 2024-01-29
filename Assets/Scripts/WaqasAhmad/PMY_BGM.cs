@@ -1,7 +1,4 @@
 using PMY;
-using RenderHeads.Media.AVProVideo;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PMY_BGM : MonoBehaviour
@@ -17,8 +14,22 @@ public class PMY_BGM : MonoBehaviour
     public float actualVolume;
     private bool isMusicPlaying = true;
 
-    private void Awake()
+    private void OnEnable()
     {
+        BuilderEventManager.AfterPlayerInstantiated += SetBgm;
+    }
+    private void OnDisable()
+    {
+        SceneManage.onExitAction -= OnSceneExit;
+        PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
+        BuilderEventManager.AfterPlayerInstantiated -= SetBgm;
+    }
+
+    private void SetBgm()
+    {
+        Debug.LogError("SetBgm");
         // Set Referece for Slider to control controller
         SoundManager.Instance.MusicSource.clip = bgmAudioSource;
         SoundManager.Instance.MusicSource.Play();
@@ -35,20 +46,12 @@ public class PMY_BGM : MonoBehaviour
             SoundManager.Instance.MusicSource.gameObject.transform.position = new Vector3(0.2212251f, 0.6412843f, 30f);
             SoundManager.Instance.MusicSource.spatialBlend = 1;
             if (Application.platform == RuntimePlatform.IPhonePlayer)
-                SoundManager.Instance.MusicSource.minDistance = 40;
+               SoundManager.Instance.MusicSource.minDistance = 20;
             else
-                SoundManager.Instance.MusicSource.minDistance = 20;
+                SoundManager.Instance.MusicSource.minDistance = 10;
         }
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
             SoundManager.Instance.MusicSource.outputAudioMixerGroup = null;
-    }
-
-    private void OnDisable()
-    {
-        SceneManage.onExitAction -= OnSceneExit;
-        PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
-        PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
     }
 
     private void Start()
@@ -59,6 +62,7 @@ public class PMY_BGM : MonoBehaviour
 
     private void UpdateMusicVolume()
     {
+        Debug.LogError("Start");
         actualVolume = SoundManager.Instance.MusicSource.volume;
         if (Application.platform == RuntimePlatform.Android)
             SoundManagerSettings.soundManagerSettings.SetBgmVolume(0.5f);
@@ -72,9 +76,9 @@ public class PMY_BGM : MonoBehaviour
 
     private void HookEvent()
     {
-        SceneManage.onExitAction += OnSceneExit;
-        PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;
-        PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction;
+        SceneManage.onExitAction += OnSceneExit;                               // invoke when scene is changed
+        PMY_Nft_Manager.Instance.exitClickedAction += UpdateMusicStatus;       // invoke when nft video is closed
+        PMY_Nft_Manager.Instance.OnVideoEnlargeAction += OnVideoEnlargeAction; // invoke when nft video is enlarged
     }
 
     private void OnSceneExit()
