@@ -27,7 +27,7 @@ public class TextLocalization : MonoBehaviour
             currentText = LocalizeTextTMP.text;
         }
 
-        GameManager.currentLanguage = "ja";
+        GameManager.currentLanguage = "zh";
 
         LocalizeTextText();
     }
@@ -125,6 +125,9 @@ public class TextLocalization : MonoBehaviour
                         case "ja":
                             LocalizeTextTMP.text = find.Japanese;
                             break;
+                        case "zh":
+                            LocalizeTextTMP.text = find.Chinese;
+                            break;
                     }
                 }
                 else
@@ -151,7 +154,10 @@ public class TextLocalization : MonoBehaviour
                     case "ja":
                         LocalizeTextTMP.text = find.Japanese;
                         break;
-                }
+                    case "zh":
+                            LocalizeTextTMP.text = find.Chinese;
+                            break;
+                    }
             }
             else
             {
@@ -198,6 +204,10 @@ public class TextLocalization : MonoBehaviour
                         case "ja":
                             LocalizeText.text = find.Japanese;
                             break;
+                        case "zh":
+                            LocalizeText.text = find.Chinese;
+                            break;
+
                     }
                 }
                 else
@@ -223,6 +233,9 @@ public class TextLocalization : MonoBehaviour
                             break;
                         case "ja":
                             LocalizeText.text = find.Japanese;
+                            break;
+                        case "zh":
+                            LocalizeText.text = find.Chinese;
                             break;
                     }
                 }
@@ -274,6 +287,8 @@ public class TextLocalization : MonoBehaviour
                         return find.English;
                     case "ja":
                         return find.Japanese;
+                    case "zh":
+                        return find.Chinese;
                 }
             }
             else
@@ -282,7 +297,7 @@ public class TextLocalization : MonoBehaviour
             }
             
         }
-        //Debug.LogWarning("Key not found. Please add it to sheet:" + key);
+        Debug.LogWarning("Key not found. Please add it to sheet:" + key);
         return key; //Normally return key as it is if not found
     }
 }

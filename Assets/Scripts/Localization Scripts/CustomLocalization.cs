@@ -52,7 +52,7 @@ public class CustomLocalization : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.isHttpError || www.isNetworkError) 
         {
-            Debug.Log(www.error);
+            Debug.LogError(www.error);
             StopAllCoroutines();
             StartCoroutine(CheckIfSheetUpdated());
             //Awake();
@@ -79,12 +79,12 @@ public class CustomLocalization : MonoBehaviour
     {
      //   yield return new WaitForSeconds(2);   
         
-        print("Getting data");
+       print("Getting data");
        var www = UnityWebRequest.Get(LocalizeURL);
        yield return www.SendWebRequest();
        if (www.isHttpError || www.isNetworkError)
        {
-           Debug.Log(www.error);
+           Debug.LogError(www.error);
            IsReady = false;
            
            Coroutine current = StartCoroutine(GetLocalizationDataFromSheet());
@@ -95,11 +95,13 @@ public class CustomLocalization : MonoBehaviour
 
            prevCoroutine = current;
        }
-       else
-       {
+        else
+        {
             var json = www.downloadHandler.text;
-                   
-           if (!json.IsNullOrEmpty())
+            Debug.Log("File json===="+json);
+            File.WriteAllText((Application.persistentDataPath + "/Languagenew.json"), www.downloadHandler.text);
+
+            if (!json.IsNullOrEmpty())
            {
                // var writer = new StreamWriter(_path, false);
                // writer.Write(json);
@@ -112,7 +114,7 @@ public class CustomLocalization : MonoBehaviour
            }
            else
            {
-               Debug.Log("Json is empty");
+               Debug.LogError("Json is empty");
            }
        }
     }
@@ -146,6 +148,7 @@ public class CustomLocalization : MonoBehaviour
 
     public static string GetLanguage()
     {
+        
 #if UNITY_EDITOR
         string newLanguage = Application.systemLanguage.ToString();
 
@@ -156,6 +159,10 @@ public class CustomLocalization : MonoBehaviour
         else if (newLanguage == "Japanese")
         {
             return "ja";
+        }
+        else if (newLanguage == "Chinese")
+        {
+            return "zh";
         }
 
         else
@@ -169,7 +176,8 @@ public class CustomLocalization : MonoBehaviour
             var localeInst = locale.CallStatic<AndroidJavaObject>("getDefault");
             var name = localeInst.Call<string>("getLanguage");
             return name;
-        }
+            Debug.Log("Systemlang===="+name);
+            }
         catch (System.Exception e)
         {
             return "Error";
@@ -185,6 +193,10 @@ public class CustomLocalization : MonoBehaviour
         else if (newLanguage == "Japanese")
         {
             return "ja";
+        }
+        else if (newLanguage == "Chinese")
+        {
+            return "zh";
         }
 
         else
@@ -209,6 +221,10 @@ public class CustomLocalization : MonoBehaviour
         {
             return "ja";
         }
+        else if (newLanguage == "Chinese")
+        {
+            return "zh";
+        }
 
         else
             return "";
@@ -221,6 +237,7 @@ public class CustomLocalization : MonoBehaviour
             var localeInst = locale.CallStatic<AndroidJavaObject>("getDefault");
             var name = localeInst.Call<string>("getISO3Language");
             return name;
+             Debug.Log("Systemlang===="+name);
         }
         catch (System.Exception e)
         {
@@ -237,6 +254,10 @@ public class CustomLocalization : MonoBehaviour
         else if (newLanguage == "Japanese")
         {
             return "ja";
+        }
+        else if (newLanguage == "Chinese")
+        {
+            return "zh";
         }
 
         else
