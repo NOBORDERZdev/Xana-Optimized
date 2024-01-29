@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -19,13 +20,19 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color UnLikedColor;
     FeedResponseRow _data;
     bool isLiked = false;
+    bool isEnable = false;
    public void SetFeedPrefab(FeedResponseRow data){ 
         _data = data;
         DisplayName.text = data.user.name;
         PostText.text = data.text_post;
+        isEnable= true;
         //Likes.text = data.like_count.ToString();
         UpdateLikeCount(data.like_count);
-        Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+        if (isEnable)
+        {
+            Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+        }
+
         if (data.isLikedByUser)
         {
             isLiked = true;
@@ -38,12 +45,29 @@ public class FeedData : MonoBehaviour
         }
    }
 
-   public double CalculateTimeDifference(DateTime postTime)
+   public string CalculateTimeDifference(DateTime postTime)
    {
         DateTime currentTime = DateTime.Now;
         TimeSpan timeDifference = currentTime - postTime;
-        return timeDifference.Hours;
+        StartCoroutine(ReCallingTimeDifference(postTime));
+        if (timeDifference.TotalMinutes < 1)
+            return "Less than a minute";
+        else if (timeDifference.TotalMinutes < 60)
+            return $"{Math.Floor(timeDifference.TotalMinutes)} min";
+        else if (timeDifference.TotalHours < 24)
+            return $"{Math.Floor(timeDifference.TotalHours)} h";
+        else if (timeDifference.TotalDays < 30)
+            return $"{Math.Floor(timeDifference.TotalDays)} day";
+        else if (timeDifference.TotalDays < 365)
+            return $"{Math.Floor(timeDifference.TotalDays / 30)} month";
+        else
+            return $"{Math.Floor(timeDifference.TotalDays / 365)} year";
    }
+
+    IEnumerator ReCallingTimeDifference(DateTime postTime){
+        yield return new WaitForSeconds(60);
+        Date.text = CalculateTimeDifference(postTime).ToString();
+    }
     IEnumerator GetProfileImage(string url)
     {
         string newUrl = url+"?width=256&height=256";
@@ -113,6 +137,12 @@ public class FeedData : MonoBehaviour
     public void UpdateLikeCount(int count){ 
         Likes.text = count.ToString();
     }
+
+    private void OnDisable()
+    {
+        isEnable = false;
+    }
+
 }
 
 [Serializable]
