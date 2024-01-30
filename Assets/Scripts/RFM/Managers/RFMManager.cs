@@ -75,6 +75,7 @@ namespace RFM.Managers
         {
             //RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
+            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             EventsManager.OnHideCanvasElements();
             //StartCoroutine(CheckandFixLights());
         }
@@ -124,6 +125,7 @@ namespace RFM.Managers
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
+                PhotonNetwork.CurrentRoom.PlayerTtl = 5000;
             }
 
             Globals.gameState = Globals.GameState.InLobby;
