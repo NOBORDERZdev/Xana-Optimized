@@ -945,6 +945,7 @@ public class LoginRegister : MonoBehaviour
             Debug.Log(request.error);
         }
         PhoneCodeResponse bean = Gods.DeserializeJSON<PhoneCodeResponse>(request.downloadHandler.text.ToString().Trim());
+        Debug.Log("Otp Validation==="+ request.downloadHandler.text.ToString().Trim());
         if (bean.code == 0)
         {
             Loader.SetActive(false);
