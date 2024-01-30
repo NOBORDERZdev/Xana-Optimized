@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DG.Tweening;
 using ExitGames.Client.Photon;
@@ -606,7 +607,8 @@ namespace RFM.Managers
                 }
             }
 
-            var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+            List<RFM.Character.Hunter> hunterList= new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+            var randomHunter = hunterList.Find(o=>o.enabled==true);
             if (randomHunter != null)
             {
                 hunterForSpectating = randomHunter;
@@ -624,7 +626,8 @@ namespace RFM.Managers
             Debug.LogError("CheckHuntersForSpectating: " + hunterForSpectating);
             if (hunterForSpectating == null)
             {
-                var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+                List<RFM.Character.Hunter> hunterList = new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+                var randomHunter = hunterList.Find(o => o.enabled == true);
 
                 if (randomHunter != null)
                 {
