@@ -35,7 +35,7 @@ public class WorldManager : MonoBehaviour
     [SerializeField]
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
-
+    public static Action LoadHomeScreenWorlds;
     static int AutoSwtichIndex = 0;
     public APIURL GetCurrentTabSelected()
     {
@@ -69,9 +69,7 @@ public class WorldManager : MonoBehaviour
     }
     void Start()
     {
-        //if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
-        BuilderEventManager.OnBuilderWorldLoad += GetBuilderWorlds;
-        ChangeWorldTab(APIURL.Hot);
+        //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
     }
     public void CheckWorldTabAndReset(APIURL tab)
@@ -102,19 +100,19 @@ public class WorldManager : MonoBehaviour
     }
     IEnumerator WorldCall(APIURL tab)
     {
-        yield return new WaitForSeconds(1f);
-        while (!dataIsFatched)
-        {
-            //Debug.LogError("Clear Fetch");
-            yield return null;
-            NotProcessRequest = true;
-        }
+        //while (!dataIsFatched)
+        //{
+        //    Debug.LogError("Clear Fetch");
+        //    yield return null;
+        //    NotProcessRequest = true;
+        //}
+        yield return new WaitForEndOfFrame();
         CheckWorldTabAndReset(tab);
     }
     public void ChangeWorldTab(APIURL tab)
     {
         aPIURLGlobal = tab;
-        GetBuilderWorlds(tab, (a) => { }, false);
+        GetBuilderWorlds(tab, (a) => { });
     }
     public void SetaPIURLGlobal(APIURL chnager)
     {
@@ -136,7 +134,7 @@ public class WorldManager : MonoBehaviour
             SearchPageSize = 40;
             SearchTagPageSize = 40;
             SearchKey = searchKey;
-            GetBuilderWorlds(aPIURLGlobal, (a) => { } , true);
+            GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
         else
         {
@@ -174,10 +172,6 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        BuilderEventManager.OnBuilderWorldLoad -= GetBuilderWorlds;
-    }
     public void WorldPageLoading()
     {
         if (dataIsFatched)
@@ -185,7 +179,7 @@ public class WorldManager : MonoBehaviour
             loadOnce = true;
             dataIsFatched = false;
             LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
-            GetBuilderWorlds(aPIURLGlobal, (a) => { }, false);
+            GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
     public int SearchPageNumb = 1;
@@ -193,7 +187,7 @@ public class WorldManager : MonoBehaviour
     public int SearchTagPageNumb = 1;
     public int SearchTagPageSize = 15;
     public string SearchKey = default;
-    string PrepareApiURL(APIURL aPIURL)
+    public string PrepareApiURL(APIURL aPIURL,int pageCount=30)
     {
         switch (aPIURL)
         {
@@ -252,14 +246,14 @@ public class WorldManager : MonoBehaviour
     }
     bool NotProcessRequest = false;
     int CallBackCheck = 0;
-    public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack, bool _searchActive)
+    public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
-        if (_searchActive)
-        {
-            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
-        }
+        //if (_searchActive)
+        //{
+        //    LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
+        //}
         //if (UIManager.Instance.IsSplashActive)
         //{
         //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -280,6 +274,7 @@ public class WorldManager : MonoBehaviour
                 //    LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                 //    return;
                 //}
+                Debug.LogError(finalAPIURL.ToString());
                 CallBackCheck = 0;
                 InstantiateWorlds(aPIURL.ToString(), isSucess);
                 dataIsFatched = true;
@@ -298,13 +293,13 @@ public class WorldManager : MonoBehaviour
                     CallBackCheck = 0;
                     return;
                 }
-                GetBuilderWorlds(aPIURLGlobal, (a) => { }, false);
+                GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
             }
         }));
     }
 
-    IEnumerator FetchUserMapFromServer(string apiURL, Action<bool> callback)
+    IEnumerator FetchUserMapFromServer(string apiURL, Action<bool                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           > callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
@@ -319,7 +314,7 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
-                //Debug.LogError(www.downloadHandler.text);
+                Debug.LogError("seacrh "+apiURL+"-----"+www.downloadHandler.text);
                 _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 worldstr = www.downloadHandler.text;
                 callback(true);
@@ -361,12 +356,12 @@ public class WorldManager : MonoBehaviour
 
                         if (!_event.EnvironmentName.Contains("XANA Lobby"))
                         {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                            //_event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
                         }
                         else
                         {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
                         }
                     }
                     else
@@ -381,12 +376,12 @@ public class WorldManager : MonoBehaviour
 
                         if (!_event.EnvironmentName.Contains("XANA Lobby"))
                         {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 256 + "&height=" + 256;
-                            _event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                            //_event.ThumbnailDownloadURLHigh = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
                         }
                         else
                         {
-                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL;
+                            _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
                         }
                     }
                 }
@@ -433,20 +428,22 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError("world Info added"+_apiURL.ToString());
                 WorldItemManager.AddWorld(_apiURL, _event);
             }
-        }
-        if (!isLobbyActive)
-        {
-            if (EventPrefabLobby.gameObject.activeInHierarchy)
+            if (!isLobbyActive)
             {
-                EventPrefabLobby.GetComponent<LobbyWorldViewFlagHandler>().ActivityFlag(false);
-                EventPrefabLobby.SetActive(false);
-                AllWorldTabReference.LobbyInactiveCallBack();
+                if (EventPrefabLobby.gameObject.activeInHierarchy)
+                {
+                    EventPrefabLobby.GetComponent<LobbyWorldViewFlagHandler>().ActivityFlag(false);
+                    EventPrefabLobby.SetActive(false);
+                    AllWorldTabReference.LobbyInactiveCallBack();
+                }
             }
+            if (WorldItemManager.gameObject.activeInHierarchy)
+                WorldItemManager.DisplayWorlds(_apiURL);
         }
-        if (WorldItemManager.gameObject.activeInHierarchy)
-            WorldItemManager.DisplayWorlds(_apiURL);
+        
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         //if (!UIManager.Instance.IsSplashActive)

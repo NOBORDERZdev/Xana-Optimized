@@ -10,10 +10,6 @@ using System;
 public class SceneManage : MonoBehaviourPunCallbacks
 {
     public static bool callRemove;
-    public GameObject AnimHighlight;
-    public GameObject popupPenal;
-    public GameObject spawnCharacterObject;
-    public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
     public string mainScene= "Main";
     bool exitOnce = true;

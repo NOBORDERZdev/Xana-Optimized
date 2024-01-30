@@ -46,10 +46,10 @@ public class WorldItemPreviewTab : MonoBehaviour
     {
         PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
-        if (!ThumbnailDownloadURL.Equals(""))
-        {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
-        }
+        //if (!ThumbnailDownloadURL.Equals(""))
+        //{
+        //    AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
+        //}
         JoinEventBtn.onClick.RemoveAllListeners();
 
         scrollActivity.enabled = false;
@@ -59,16 +59,20 @@ public class WorldItemPreviewTab : MonoBehaviour
         CreatorNameTxt.text = creatorName;
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
-        if (ThumbnailDownloadURLHigh == "")
-        {
-            PreviewLogo.gameObject.SetActive(false);
-            WorldIconImg.sprite = worldImg;
-        }
-        else
-        {
-            ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
-            StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
-        }
+
+        PreviewLogo.gameObject.SetActive(false);
+        WorldIconImg.sprite = worldImg;
+
+        //if (ThumbnailDownloadURLHigh == "")
+        //{
+        //    PreviewLogo.gameObject.SetActive(false);
+        //    WorldIconImg.sprite = worldImg;
+        //}
+        //else
+        //{
+        //    ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
+        //    StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
+        //}
         if (worldTags != null && worldTags.Length > 0)
         {
             m_WorldTags = worldTags;

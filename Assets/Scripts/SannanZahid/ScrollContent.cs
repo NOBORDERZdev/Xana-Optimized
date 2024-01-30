@@ -123,7 +123,7 @@ namespace DynamicScrollRect
                     {
                         if (count == 0)
                         {
-                            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+                            /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
                             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                         }
                         return;

@@ -20,6 +20,7 @@ public class WorldSearchManager : MonoBehaviour
     }
     public void UserInputUpdate(string UserInput)
     {
+        Debug.LogError("last key word"+UserInput);
         WorldManager.instance.SearchWorldCall(UserInput);
     }
     public void ClearInputField()

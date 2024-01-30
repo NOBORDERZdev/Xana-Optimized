@@ -188,6 +188,7 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
+        Debug.LogError("hereererererererer");
         if (/*GameManager.Instance.defaultSelection != 0*/ true)
         {
             GameManager.Instance.defaultSelection=0;
@@ -265,8 +266,9 @@ public class BottomTabManager : MonoBehaviour
                
 
              }
-            WorldManager.instance.ChangeWorld(APIURL.Hot);
-            WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+             WorldManager.LoadHomeScreenWorlds?.Invoke();
+            //WorldManager.instance.ChangeWorld(APIURL.Hot);
+            //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
     }
 

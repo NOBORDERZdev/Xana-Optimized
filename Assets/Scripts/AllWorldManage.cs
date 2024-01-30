@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using AdvancedInputFieldPlugin;
-using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public class AllWorldManage : MonoBehaviour
 {
@@ -29,11 +25,12 @@ public class AllWorldManage : MonoBehaviour
 
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
-        UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);
+        /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
     public void SearchScreenLoad()
     {
         UIManager.Instance.SwitchToScreen(2);
+        FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.ClearWorldScrollWorlds();
     }
 
@@ -56,7 +53,7 @@ public class AllWorldManage : MonoBehaviour
         WorldManager.instance.ChangeWorld(APIURL.Hot);
         if(UIManager.Instance.PreviousScreen==0)
         {
-            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+            /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
         }
     }
 
@@ -137,5 +134,36 @@ public class AllWorldManage : MonoBehaviour
         transform.GetComponent<RectTransform>().offsetMin = new Vector2(
             transform.GetComponent<RectTransform>().offsetMin.x,
             transform.GetComponent<RectTransform>().offsetMin.y + 342);
+    }
+
+
+    public void HotSpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorld(APIURL.Hot);
+    }
+
+    public void HotGamesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorld(APIURL.GameWorld);
+    }
+
+    public void FollowingSpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorld(APIURL.AllWorld);
+    }
+
+    public void MySpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorld(APIURL.MyWorld);
+    }
+
+    public void CategorySpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorld(APIURL.SearchWorldByTag);
     }
 }

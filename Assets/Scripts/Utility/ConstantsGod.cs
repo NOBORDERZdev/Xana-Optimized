@@ -232,6 +232,7 @@ public class ConstantsGod
     public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
     public static string SearchWorldAPI = "/item/search-worlds/";
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
+    public static string USERTAGS = "/users/get-user-tags";
     #endregion
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";

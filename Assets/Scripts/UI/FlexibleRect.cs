@@ -10,32 +10,39 @@ public class FlexibleRect : MonoBehaviour
 
     private RectTransform MyRect;
 
+    public static Action<bool> OnAdjustSize;
+    private float defaultHeight;
     private void Start()
     {
         MyRect = GetComponent<RectTransform>();
+        defaultHeight = MyRect.sizeDelta.y;
+        OnAdjustSize += AdjustSize;
     }
-    
-
-    public void AdjustSize()
+    private void OnDestroy()
     {
-        if (Children.Length > 0 && MyRect)
+        OnAdjustSize -= AdjustSize;
+    }
+
+    public void AdjustSize(bool isSearchPanel)
+    {
+        if (Children.Length > 0 && !isSearchPanel)
         {
             float TotalHeight = 0;
             foreach (RectTransform rectTransform in Children)
             {
-                TotalHeight += rectTransform.rect.height;
+                if (rectTransform.gameObject.activeInHierarchy)
+                {
+                    TotalHeight += rectTransform.rect.height;
+                }
             }
-
-            MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, TotalHeight + Offset);
+            MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
+            MyRect.GetComponentInParent<HomeScreenScrollHandler>().verticalNormalizedPosition = 1;
         }
         else
         {
+            MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, defaultHeight);
+            MyRect.GetComponentInParent<HomeScreenScrollHandler>().verticalNormalizedPosition = 1;
             Debug.LogWarning("No Children Found to scale against or Rect Transform not found");
         }
-    }
-
-    private void OnGUI()
-    {
-        AdjustSize();
     }
 }

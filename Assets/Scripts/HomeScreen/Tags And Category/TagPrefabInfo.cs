@@ -15,6 +15,7 @@ public class TagPrefabInfo : MonoBehaviour
     {
         WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
         WorldSearchManager.SearchWorld?.Invoke(tagName.text);
-        descriptionPanel.SetActive(false);
+        if (descriptionPanel != null)
+            descriptionPanel.SetActive(false);
     }
 }
