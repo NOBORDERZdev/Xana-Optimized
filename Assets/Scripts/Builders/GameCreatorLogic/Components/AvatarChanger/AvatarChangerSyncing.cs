@@ -28,6 +28,8 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     ArrowManager arrowManager;
     GameObject gangsterCharacter;
     bool isInitialise = false;
+    MeshRenderer[] meshRenderers;
+    SkinnedMeshRenderer[] skinnedMeshes;
     [PunRPC]
     void Init(int pvID, int avatarIndex, string RuntimeItemID)
     { }
@@ -39,6 +41,16 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         {
             gameObject.SetActive(false);
             return;
+        }
+        meshRenderers = gameObject.GetComponents<MeshRenderer>();
+        skinnedMeshes = gameObject.GetComponents<SkinnedMeshRenderer>();
+        foreach (var item in meshRenderers)
+        {
+            item.enabled = false;
+        }
+        foreach (var item in skinnedMeshes)
+        {
+            item.enabled = false;
         }
         StartCoroutine(SyncingCoroutine());
     }
@@ -109,6 +121,14 @@ public class AvatarChangerSyncing : MonoBehaviourPun
 
             isInitialise = true;
             CharacterDisable(false);
+            foreach (var item in meshRenderers)
+            {
+                item.enabled = true;
+            }
+            foreach (var item in skinnedMeshes)
+            {
+                item.enabled = true;
+            }
         }
     }
 
