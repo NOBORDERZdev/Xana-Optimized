@@ -1,7 +1,9 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 using RFM.Managers;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class RFMCharacter : MonoBehaviour
@@ -11,6 +13,7 @@ public class RFMCharacter : MonoBehaviour
     //public RFMPlayerClass RFMPlayer;
     public bool isHunter;
     public GameObject rearViewCamera;
+    public bool isMinimized;
     //public static Action gameStartAction;
 
 
@@ -19,7 +22,7 @@ public class RFMCharacter : MonoBehaviour
         RFM.EventsManager.onTakePositionTimeStart += OnTakePositionStart;
         RFM.EventsManager.onGameStart += GameStart;
         //if (photonView.IsMine)
-            //RFM.EventsManager.OnShowRearViewMirror(true);
+        //RFM.EventsManager.OnShowRearViewMirror(true);
     }
 
     private void OnDisable()
@@ -27,7 +30,7 @@ public class RFMCharacter : MonoBehaviour
         RFM.EventsManager.onTakePositionTimeStart -= OnTakePositionStart;
         RFM.EventsManager.onGameStart -= GameStart;
         //if (photonView.IsMine)
-            //RFM.EventsManager.OnShowRearViewMirror(false);
+        //RFM.EventsManager.OnShowRearViewMirror(false);
     }
 
     void Start()
@@ -67,7 +70,7 @@ public class RFMCharacter : MonoBehaviour
 
     public void GameStart()
     {
-        Debug.Log($"RFM {photonView.Owner.NickName} + player is hunter: { photonView.Owner.CustomProperties["isHunter"]}");
+        Debug.Log($"RFM {photonView.Owner.NickName} + player is hunter: {photonView.Owner.CustomProperties["isHunter"]}");
         //isHunter = bool.Parse(photonView.Owner.CustomProperties["isHunter"].ToString());
 
         if (RFMManager.Instance.isPlayerHunter)
@@ -77,6 +80,92 @@ public class RFMCharacter : MonoBehaviour
         else
         {
             voiceView.SpeakerInUse.gameObject.SetActive(!isHunter);
+        }
+    }
+    public Coroutine CheckConditionToCloseConnectionCoroutine;
+    [PunRPC]
+    public void MinimizeRPC(int viewID)
+    {
+        Debug.LogError("MinimizedRPC called: " + viewID + "  " + photonView.ViewID);
+        if (photonView.ViewID == viewID)
+        {
+            Debug.LogError("MinimizedRPC viewid matched" + viewID);
+            isMinimized = true;
+            if (CheckConditionToCloseConnectionCoroutine != null)
+            {
+                StopCoroutine(CheckConditionToCloseConnectionCoroutine);
+            }
+            CheckConditionToCloseConnectionCoroutine = StartCoroutine(CheckConditionToCloseConnection(viewID, 5));
+        }
+    }
+    public IEnumerator CheckConditionToCloseConnection(int PVid, int timeout)
+    {
+        while (timeout > 0)
+        {
+            Debug.LogError("CheckConditionToCloseConnection timeout: " + timeout + photonView.Owner.NickName);
+            yield return new WaitForSeconds(1);
+            timeout--;
+            if (photonView.ViewID == PVid && !isMinimized)
+            {
+                StopCoroutine(CheckConditionToCloseConnectionCoroutine);
+            }
+        }
+        if (photonView.ViewID == PVid && isMinimized)
+        {
+            Player p = photonView.Owner;
+            Destroy(transform.parent.gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("before CheckConditionToCloseConnection CloseConnection: " + p.NickName);
+                PhotonNetwork.CloseConnection(p);
+                Debug.LogError("after CheckConditionToCloseConnection CloseConnection: " + p.NickName);
+            }
+        }
+    }
+
+    [PunRPC]
+    public void MaximizeRPC(int viewID)
+    {
+        Debug.LogError("MinimizedRPC called: " + viewID + "  " + photonView.ViewID);
+        if (photonView.ViewID == viewID)
+        {
+            isMinimized = false;
+            Debug.LogError("MinimizedRPC viewid matched" + viewID);
+            if (CheckConditionToCloseConnectionCoroutine != null)
+            {
+                StopCoroutine(CheckConditionToCloseConnectionCoroutine);
+            }
+        }
+    }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            if (isMinimized)
+            {
+                if (photonView.IsMine)
+                {
+                    isMinimized = false;
+                    /*if (PhotonNetwork.NetworkingClient.LoadBalancingPeer.PeerState != ExitGames.Client.Photon.PeerStateValue.Disconnected)
+                    {
+                        PhotonNetwork.Reconnect();
+                    }*/
+                    photonView.RPC(nameof(MaximizeRPC), RpcTarget.AllBuffered, photonView.ViewID);
+                }
+            }
+        }
+    }
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            isMinimized = pause;
+            if (photonView.IsMine)
+            {
+                photonView.RPC(nameof(MinimizeRPC), RpcTarget.AllBuffered, photonView.ViewID);
+                //PhotonNetwork.Disconnect();
+                PhotonNetwork.SendAllOutgoingCommands();
+            }
         }
     }
 }
