@@ -43,6 +43,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
             transform.localEulerAngles = Vector3.up * 180;
+            transform.localPosition = Vector3.up * 0.824f;
             AvatarController avatarController = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
             playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();

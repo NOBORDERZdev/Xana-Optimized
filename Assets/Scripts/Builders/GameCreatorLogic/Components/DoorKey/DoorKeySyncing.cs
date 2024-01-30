@@ -39,7 +39,7 @@ public class DoorKeySyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             transform.SetParent(playerObj.GetComponent<ArrowManager>().nameCanvas.transform);
             transform.localPosition = Vector3.up * 18.5f;
-            transform.eulerAngles = Vector3.zero;
+            transform.localEulerAngles = Vector3.zero;
             keyImage.SetActive(true);
             StartCoroutine(KeyCounterCO());
         }
@@ -67,6 +67,8 @@ public class DoorKeySyncing : MonoBehaviourPun
         {
             KeyCounter();
             yield return new WaitForSeconds(1f);
+            if (playerObj != null)
+                transform.localRotation = playerObj.GetComponent<ArrowManager>().PhotonUserName.transform.localRotation;
         }
     }
 
