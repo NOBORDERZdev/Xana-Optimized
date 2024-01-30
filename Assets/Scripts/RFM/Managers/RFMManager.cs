@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DG.Tweening;
 using ExitGames.Client.Photon;
@@ -75,6 +76,7 @@ namespace RFM.Managers
         {
             //RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
+            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             EventsManager.OnHideCanvasElements();
             //StartCoroutine(CheckandFixLights());
         }
@@ -124,6 +126,7 @@ namespace RFM.Managers
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.MaxPlayers = (byte)CurrentGameConfiguration.MaxPlayersInRoom;
+                PhotonNetwork.CurrentRoom.PlayerTtl = 5000;
             }
 
             Globals.gameState = Globals.GameState.InLobby;
@@ -609,7 +612,8 @@ namespace RFM.Managers
                 }
             }
 
-            var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+            List<RFM.Character.Hunter> hunterList= new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+            var randomHunter = hunterList.Find(o=>o.enabled==true);
             if (randomHunter != null)
             {
                 hunterForSpectating = randomHunter;
@@ -627,7 +631,8 @@ namespace RFM.Managers
             Debug.LogError("CheckHuntersForSpectating: " + hunterForSpectating);
             if (hunterForSpectating == null)
             {
-                var randomHunter = FindObjectOfType<RFM.Character.Hunter>();
+                List<RFM.Character.Hunter> hunterList = new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+                var randomHunter = hunterList.Find(o => o.enabled == true);
 
                 if (randomHunter != null)
                 {
