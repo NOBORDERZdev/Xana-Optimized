@@ -675,7 +675,7 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-           // LoggedInAsGuest = true;
+           LoggedInAsGuest = true;
             //if (DefaultEnteriesforManican.instance)
             //{
             //    DefaultEnteriesforManican.instance.ResetForPresets();
@@ -1665,7 +1665,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
 
 
-        LoggedInAsGuest = false;
+        LoggedInAsGuest = true;
 
         yield return new WaitForSeconds(0.1f);
         resetClothstoGuest();
