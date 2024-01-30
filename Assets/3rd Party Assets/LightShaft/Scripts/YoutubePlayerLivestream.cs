@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 using YoutubeLight;
+using UnityEngine.Events;
 //AVPRO
 //using RenderHeads.Media.AVProVideo;
 
@@ -28,6 +29,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
     public GameObject videoPlayerParent;
 
     public bool isExtensionUse = false;
+    public UnityEvent onPlayVideoAction;
+
     void Start()
     {
         if (!rotateScreen)
@@ -239,8 +242,11 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 {
                     //WriteLog("kelvin", player_response);
                     string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
-                    Debug.Log(liveUrl);
+                    Debug.Log("Live URL: " + liveUrl);
                     callback.Invoke(liveUrl);
+
+                    if (Application.platform == RuntimePlatform.IPhonePlayer)
+                        onPlayVideoAction.Invoke();
                 }
             }
             else

@@ -351,7 +351,6 @@ namespace PMY
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-                StartCoroutine(EnableDisableAC());
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
@@ -479,18 +478,6 @@ namespace PMY
                 CreateFrame();   //create frame
         }
 
-        IEnumerator EnableDisableAC()
-        {
-            MediaPlayer mPlayer = liveVideoPlayer.GetComponent<MediaPlayer>();
-            mPlayer.enabled = false;
-            AudioSource ac = liveVideoPlayer.GetComponent<AudioSource>();
-            ac.enabled = false;
-            yield return new WaitForSeconds(0.5f);
-            liveVideoPlayer.GetComponent<AudioSource>().enabled = true;
-            mPlayer.enabled = true;
-            ac.enabled = true;
-        }
-
         private void CreateFrame()
         {
             GameObject frame = PMYFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectFrame(_imgVideoRatio);
@@ -524,9 +511,6 @@ namespace PMY
                 }
             }
         }
-
-
-
 
     }
 }

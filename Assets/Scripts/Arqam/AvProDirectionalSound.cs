@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class AvProDirectionalSound : MonoBehaviour
 {
+    public GameObject parent;
     [Tooltip("Enable/Disable Screen sound toggle in screen panel")]
     public bool isShowScreenSoundOption = true;
     [Space(5)]
@@ -150,5 +151,24 @@ public class AvProDirectionalSound : MonoBehaviour
         foreach (AudioSource source in sources)
             source.mute = false;
     }
+
+    public void EnableDisableLiveVideoPlayer()
+    {
+        StartCoroutine(SwitchOnOffPlayer());
+    }
+
+    private IEnumerator SwitchOnOffPlayer()
+    {
+        activePlayer.enabled = false;
+        AudioOutput output = activePlayer.GetComponent<AudioOutput>();
+        output.enabled = false;
+        AudioSource ac = activePlayer.GetComponent<AudioSource>();
+        ac.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        activePlayer.enabled = true;
+        output.enabled = true;
+        ac.enabled = true;
+    }
+
 
 }
