@@ -229,6 +229,12 @@ namespace RFM.Managers
         }
         public void RestartRFM()
         {
+            if (_npcCamera != null)
+            {
+                Destroy(_npcCamera.gameObject);
+            }
+                
+
             PhotonNetwork.CurrentRoom.CustomProperties.Clear();
             // clear all custom properties of all players
             foreach (var player in PhotonNetwork.PlayerList)
@@ -479,7 +485,7 @@ namespace RFM.Managers
         private void StartGameplay()
         {
             EventsManager.StartGame();
-            Debug.LogError("StartGameplay");
+            Debug.LogError("RFM StartGameplay");
             rfmCameraManager.SwitchOffAllCameras();
             Globals.gameState = Globals.GameState.Gameplay;
             gameplayTimeText.transform.parent.gameObject.SetActive(true);
@@ -541,7 +547,6 @@ namespace RFM.Managers
                 }
             }
 
-            Debug.LogError("CheckForGameOverCondition runners count: " + count);
             if (count == 0)
             {
                 Globals.gameOverText = "HUNTERS WIN";
@@ -798,6 +803,34 @@ namespace RFM.Managers
             }
 
             return (numberOfRunners, numberOfHunters, numberOfAIRunners, numberOfAIHunters);
+
+            // roomLimit = 12, numberOfPlayers = 0,  ratioVector = (1, 1) = 0, 0, 6, 6
+            // roomLimit = 12, numberOfPlayers = 1,  ratioVector = (1, 1) = 1, 0, 5, 6
+            // roomLimit = 12, numberOfPlayers = 2,  ratioVector = (1, 1) = 2, 0, 4, 6
+            // roomLimit = 12, numberOfPlayers = 3,  ratioVector = (1, 1) = 3, 0, 3, 6
+            // roomLimit = 12, numberOfPlayers = 4,  ratioVector = (1, 1) = 4, 0, 2, 6
+            // roomLimit = 12, numberOfPlayers = 5,  ratioVector = (1, 1) = 5, 0, 1, 6
+            // roomLimit = 12, numberOfPlayers = 6,  ratioVector = (1, 1) = 6, 0, 0, 6
+            // roomLimit = 12, numberOfPlayers = 7,  ratioVector = (1, 1) = 6, 1, 0, 5
+            // roomLimit = 12, numberOfPlayers = 8,  ratioVector = (1, 1) = 6, 2, 0, 4
+            // roomLimit = 12, numberOfPlayers = 9,  ratioVector = (1, 1) = 6, 3, 0, 3
+            // roomLimit = 12, numberOfPlayers = 10, ratioVector = (1, 1) = 6, 4, 0, 2
+            // roomLimit = 12, numberOfPlayers = 11, ratioVector = (1, 1) = 6, 5, 0, 1
+            // roomLimit = 12, numberOfPlayers = 12, ratioVector = (1, 1) = 6, 6, 0, 0
+
+            // TODO : Fix this
+            // roomLimit = 12, numberOfPlayers = 7, ratioVector = (1, 2) = 4, 3, 0, 5
+            // roomLimit = 12, numberOfPlayers = 7, ratioVector = (2, 1) = 8, -1, 0, 5 // !!
+        }
+
+        public void CalculateRolesUnitTest()
+        {
+            int maxPlayers = 8;
+
+            for (int i = 0; i <= maxPlayers; i++)
+            {
+                Debug.LogError(CalculateRoles(maxPlayers, i, new Vector2(1, 1)));
+            }
         }
 
         #endregion
