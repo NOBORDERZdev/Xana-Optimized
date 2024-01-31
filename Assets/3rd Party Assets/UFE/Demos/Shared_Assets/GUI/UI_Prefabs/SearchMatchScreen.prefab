@@ -104,9 +104,9 @@ MonoBehaviour:
   wrapInput: 1
   pageSize: 20
   searchDelay: 60
-  maxSearchTimes: 5
+  maxSearchTimes: 15
   multiplayerMode: 1
-  secondPanelTime: 50
+  secondPanelTime: 30
   firstPanel: {fileID: 3340698221503904306}
   secondPanel: {fileID: 5408756664529138672}
   isNetworkGame: 1
@@ -440,7 +440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -161.4, y: -210.30005}
+  m_AnchoredPosition: {x: -183.8, y: -210.30005}
   m_SizeDelta: {x: 206.9016, y: 79.9227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8661928682570937312
@@ -484,7 +484,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0%
+  m_Text: 00:00
 --- !u!1 &160339700423155193
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,18 +3536,18 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 495c9e2a934bcc640a8d7427b13cb680, type: 3}
-    m_FontSize: 14
+    m_FontSize: 47
     m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
+    m_BestFit: 0
+    m_MinSize: 4
     m_MaxSize: 63
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MATCHING...
+  m_Text: CONNECTING...
 --- !u!1 &4702743525047885623
 GameObject:
   m_ObjectHideFlags: 0
