@@ -544,7 +544,7 @@ public class APIManager : MonoBehaviour
                 AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
                 if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
                 {
-                    //allFeedWithUserIdRoot.Data.Rows.Clear(); //Riken
+                    allFeedWithUserIdRoot.Data.Rows.Clear(); //Riken
                     for (int i = 0; i < test.Data.Rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);

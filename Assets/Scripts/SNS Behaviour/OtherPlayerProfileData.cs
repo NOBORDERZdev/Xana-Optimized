@@ -32,6 +32,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     [Space]
     [Header("Screen Reference")]
     public GameObject otherUserSettingScreen;
+    public GameObject myPlayerdataObj;
 
     [Space]
     [Header("Other Profile Screen Refresh Object")]
@@ -127,7 +128,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
     public void RefreshUserData()
     {
-        if (textPlayerTottleFollower.gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy)
         {
             Debug.LogError("RefreshUserData");
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
@@ -495,6 +496,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
+        parentHeightResetScript.OnHeightReset(0);
         //Debug.Log("other Profile AllFeedWithUserId:" + isFeedLoaded);
     }
 

@@ -358,7 +358,10 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
-        OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        if (OtherPlayerProfileData.Instance)
+        {
+            OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        }
 
         SNSSettingController.Instance.myAccountScreen.SetActive(false);
         SNSSettingController.Instance.myAccountPersonalInfoScreen.SetActive(false);
@@ -545,14 +548,16 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickCheckOtherPlayerProfile()
     {
-        otherPlayerProfileScreen.SetActive(true);
-
+        //otherPlayerProfileScreen.SetActive(true);
+        //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        MyProfileDataManager.Instance.gameObject.SetActive(false);
+        OtherPlayerProfileData.Instance.gameObject.SetActive(true);
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
             switch (OtherPlayerProfileData.Instance.backKeyManageList[OtherPlayerProfileData.Instance.backKeyManageList.Count - 1])
             {
                 case "FollowerFollowingListScreen":
-                    MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
+                    //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
                     break;

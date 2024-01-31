@@ -220,6 +220,7 @@ public class BottomTabManager : MonoBehaviour
                     }
                 }
             }
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
     }
     public void OnClickHomeButtonIdleAvatar()
     {
@@ -513,7 +514,7 @@ public class BottomTabManager : MonoBehaviour
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
-            FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
+            //FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
             FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
@@ -586,7 +587,12 @@ public class BottomTabManager : MonoBehaviour
                 }
             }
 
-            if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //{
+            //MyProfileDataManager.Instance.ProfileTabButtonClick();
+            //FeedUIController.Instance.ResetAllFeedScreen(false);
+            //}
+            if (MyProfileDataManager.Instance)
             {
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
@@ -605,6 +611,17 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
+            if (OtherPlayerProfileData.Instance)
+            {
+                OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
+            }
+            if (MyProfileDataManager.Instance)
+            {
+                MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
+            }
+            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
+            ProfileUIHandler.instance.SetMainScrolRefs();
         }
     }
 
