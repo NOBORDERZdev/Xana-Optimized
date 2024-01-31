@@ -47,6 +47,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject userPostPart;
     public GameObject bioDetailPart;
     public GameObject bioTxtParent;
+    public GameObject UserTagsParent;
 
     [Space]
     [Header("Player info References")]
@@ -90,6 +91,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject photoPrefab;
     public GameObject photoPrefabInMyPostFeed;
     public GameObject NFTImagePrefab;
+    public GameObject TagPrefab;
 
     [Header("post empty message reference")]
     public GameObject createYourFirstPostMsgObj;
@@ -327,6 +329,8 @@ public class MyProfileDataManager : MonoBehaviour
         totalFollowingText.text = myProfileData.followingCount.ToString();
         totalPostText.text = myProfileData.feedCount.ToString();
 
+        UpdateUserTags();
+
         if (string.IsNullOrEmpty(myProfileData.userProfile.website))
         {
             websiteText.gameObject.SetActive(false);
@@ -414,6 +418,24 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+    public void UpdateUserTags()
+    {
+        if (myProfileData.tags.Length > 0)
+        {
+            UserTagsParent.transform.parent.gameObject.SetActive(true);
+            for (int i = 0; i < myProfileData.tags.Length; i++)
+            {
+                GameObject _tagobject = Instantiate(TagPrefab, UserTagsParent.transform);
+                _tagobject.name = "TagPrefab" + i;
+                _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+            }
+        }
+        else
+        {
+            UserTagsParent.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public string ReplaceNonCharacters(string aString, char replacement)
