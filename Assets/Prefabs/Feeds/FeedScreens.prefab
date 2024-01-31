@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 37.75
+  m_fontSize: 42.65
   m_fontSizeBase: 46.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -719,8 +719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feedUIController: {fileID: 0}
-  feedPostPrefab: {fileID: 9094557258527362675, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
-  feedPostParent: {fileID: 5483430731832824345}
+  feedContentParent: {fileID: 5483430731523499554}
   scrollerController: {fileID: 5773722022894444981}
 --- !u!114 &5773722022894444981
 MonoBehaviour:
@@ -734,6 +733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e41da3612cc04c4ab6f6a732c3887a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedHeight: []
   scroller: {fileID: 7242730802361598966}
   cellViewPrefab: {fileID: 5663341864323682158, guid: 5a252d49faa983141a0784017595f682, type: 3}
   pullDownThreshold: 60
@@ -1816,7 +1816,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.25
+  m_fontSize: 38
   m_fontSizeBase: 46.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1885,6 +1885,7 @@ GameObject:
   - component: {fileID: 5483430731832824346}
   - component: {fileID: 5483430731832824347}
   - component: {fileID: 5483430731832824344}
+  - component: {fileID: 7492866314507843051}
   m_Layer: 5
   m_Name: User Feed Container
   m_TagString: Untagged
@@ -1964,6 +1965,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056ab864adf071148be6a13680e5b5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7492866314507843051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483430731832824350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &5483430731832891417
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,7 +2820,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
+  m_fontSize: 29
   m_fontSizeBase: 50.1
   m_fontWeight: 400
   m_enableAutoSizing: 1

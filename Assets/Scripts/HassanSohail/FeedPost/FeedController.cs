@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class FeedController : MonoBehaviour
 {
     [SerializeField] private FeedUIController feedUIController;
-    [SerializeField] private GameObject feedPostPrefab;
-    [SerializeField] private Transform feedPostParent;
+    //[SerializeField] private GameObject feedPostPrefab;
+    [SerializeField] private Transform feedContentParent;
     int feedPageNumber = 1;
-    int feedPageSize = 10;
+    int feedPageSize = 1000;
     List<FeedResponseRow> FeedAPIData = new List<FeedResponseRow>();
     List<FeedData> feedList = new List<FeedData>();
     bool isFeedInitialized = false;
@@ -69,8 +70,8 @@ public class FeedController : MonoBehaviour
                     }
                    
                 }
-                scrollerController.scroller.ReloadData();
-               // feedUIController.IntFeedScroller(feedResponseData);
+                Invoke(nameof(InovkeScrollReload), 2f);
+                // feedUIController.IntFeedScroller(feedResponseData);
             }
 
         }
@@ -82,6 +83,11 @@ public class FeedController : MonoBehaviour
     }
 
 
+    void InovkeScrollReload()
+    {
+        gameObject.GetComponent<ScrollRect>().content.SetParent(feedContentParent);
+        scrollerController.scroller.ReloadData();
+    }
     /// <summary>
     /// To Update Feed Like Count from Socket
     /// </summary>
@@ -101,6 +107,7 @@ public class FeedController : MonoBehaviour
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+
     }
 }
 

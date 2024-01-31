@@ -4,6 +4,9 @@ using System.Collections;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
 {
@@ -12,7 +15,7 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
     /// this, so it separates the data from the layout using MVC principles.
     /// </summary>
     public SmallList<FeedResponseRow> _data;
-
+    public List<FeedHeightData> feedHeight;
     /// <summary>
     /// Whether the scroller is being dragged
     /// </summary>
@@ -59,14 +62,10 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
     /// In this example, we are calling our initializations in the delegate's Start function,
     /// but it could have been done later, perhaps in the Update function.
     /// </summary>
-    void Start()
-    {
-    }
-
-
+ 
     public void IntFeedScroller(){
-            // set the application frame rate.
-        // this improves smoothness on some devices
+       // set the application frame rate.
+       // this improves smoothness on some devices
        // Application.targetFrameRate = 60;
 
         // tell the scroller that this script will be its delegate
@@ -75,11 +74,10 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
         // tell our controller to monitor the scroller's scrolled event.
         scroller.scrollerScrolled = ScrollerScrolled;
         _data = new SmallList<FeedResponseRow>();
+        feedHeight = new List<FeedHeightData>();
         // load in a large set of data
         //LoadLargeData();
      }
-
-        
 
     /// <summary>
     /// Populates the data with a lot of records
@@ -120,8 +118,15 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
     {
         // in this example, even numbered cells are 30 pixels tall, odd numbered cells are 100 pixels tall
         //return (dataIndex % 2 == 0 ? 30f : 100f);
-          return gameObject.transform.GetChild(0).GetComponent<RectTransform>().rect.height ;
-
+        if (dataIndex<feedHeight.Count)
+        {
+             return feedHeight[dataIndex].height ;
+        }
+        else
+        {
+            return 256f;
+        }
+       
     }
 
     /// <summary>
@@ -142,10 +147,11 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
         // set the name of the game object to the cell's data index.
         // this is optional, but it helps up debug the objects in 
         // the scene hierarchy.
-        cellView.name = "Cell " + dataIndex.ToString();
+        cellView.name = "Feed " + dataIndex.ToString();
 
         // in this example, we just pass the data to our cell's view which will update its UI
         //cellView.SetData(_data[dataIndex]);
+        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScrollerController>());
         cellView.GetComponent<FeedData>().SetFeedPrefab(_data[dataIndex]);
         // return the cell to the scroller
         return cellView;
@@ -220,5 +226,24 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
             releaseToRefreshText.gameObject.SetActive(false);
         }
     }
+
+    public void AddInHeightList(int feedId, float height){
+        if (!feedHeight.Any(item => item.feedId == feedId))
+        {
+            feedHeight.Add( new FeedHeightData(feedId,height));
+        }
+    }
 }
 
+[Serializable] 
+public class FeedHeightData
+{
+    public int feedId;
+    public float height;
+
+    public FeedHeightData(int feedId, float height)
+    {
+        this.feedId = feedId;
+        this.height = height;
+    }
+}

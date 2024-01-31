@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class FeedData : MonoBehaviour
 {
+   [SerializeField] Sprite defaultProfileImage;
    [SerializeField] Image ProfileImage;
    [SerializeField] TMP_Text DisplayName;
    [SerializeField] TMP_Text PostText;
@@ -22,6 +23,7 @@ public class FeedData : MonoBehaviour
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
+    FeedScrollerController scrollerController;
     public void SetFeedPrefab(FeedResponseRow data){ 
         _data = data;
         DisplayName.text = data.user.name;
@@ -44,8 +46,14 @@ public class FeedData : MonoBehaviour
         {
             StartCoroutine(GetProfileImage(data.user.avatar));
         }
-   }
-
+        Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
+      
+    }
+   
+    void HieghtListUpdateWithDelay(){ 
+       scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+      // scrollerController.scroller.ReloadData();
+     }
     public string CalculateTimeDifference(DateTime postTime)
    {
         DateTime currentTime = DateTime.Now;
@@ -155,8 +163,21 @@ public class FeedData : MonoBehaviour
         Likes.text = count.ToString();
     }
 
+    public void SetFeedUiController(FeedScrollerController controller){ 
+        scrollerController = controller;    
+    }
+
     private void OnDisable()
     {
+        ProfileImage.sprite= defaultProfileImage;
+        DisplayName.text = "";
+        PostText.text = "";
+        Date.text = "";
+        Likes.text = "";
+        Likes.color = UnLikedColor;
+        Heart.sprite = UnLikedHeart;
+        timeUpdateInterval =1;
+        isLiked = false;
         isEnable = false;
     }
 
