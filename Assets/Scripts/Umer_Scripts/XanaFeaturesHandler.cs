@@ -18,7 +18,6 @@ public class XanaFeaturesHandler : MonoBehaviour
     public Image voiceChatOffBtn1;
     public Image voiceChatOffBtn2;
     public GameObject voiceChatSettingBtn;
-    public GameObject screenSoundToggle;
     #endregion
 
     #region Unity Functions
