@@ -44,16 +44,16 @@ public class AllWorldManage : MonoBehaviour
     {
         WorldManager.instance.ClearWorldScrollWorlds();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
-        ScrollEnableDisable(0);
+        //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        //ScrollEnableDisable(0);
     }
-    public void XanaWorldLoad()
+    /*public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
+        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         if(UIManager.Instance.PreviousScreen==0)
         {
-            /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
+            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
         }
     }
 
@@ -108,7 +108,7 @@ public class AllWorldManage : MonoBehaviour
         }
         ScrollEnableDisable(5);
         WorldManager.instance.ChangeWorld(APIURL.TestWorld);
-    }
+    }*/
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
     {
@@ -140,25 +140,25 @@ public class AllWorldManage : MonoBehaviour
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
+        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
     }
 
     public void HotGamesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.GameWorld);
+        WorldManager.instance.ChangeWorld(APIURL.HotGames);
     }
 
     public void FollowingSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.AllWorld);
+        WorldManager.instance.ChangeWorld(APIURL.FolloingSpace);
     }
 
     public void MySpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.MyWorld);
+        WorldManager.instance.ChangeWorld(APIURL.MySpace);
     }
 
     public void CategorySpacesLoadMore()

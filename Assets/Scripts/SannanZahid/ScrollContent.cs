@@ -85,6 +85,7 @@ namespace DynamicScrollRect
                     {
                         if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
                         {
+                            Debug.LogError("here locking");
                             DynamicScrollRect.RestrictFlag = true;
                             DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
                             RestrictState = 1;

@@ -272,7 +272,7 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
-    public void OnClickNewWorldButton()
+    /*public void OnClickNewWorldButton()
     {
         //if (!UIManager.Instance.WorldPage.activeSelf)
         {
@@ -297,7 +297,7 @@ public class BottomTabManager : MonoBehaviour
                 WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
         }
-    }
+    }*/
 
     public void SetProfileButton(){
         allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
@@ -372,11 +372,11 @@ public class BottomTabManager : MonoBehaviour
             }
         }
     }
-    public void OnclickEventButton()
+    /*public void OnclickEventButton()
     {
         Debug.Log("OnclickEventButton");
         PremiumUsersDetails.Instance.OpenComingSoonPopUp();
-    }
+    }*/
 
     //this method is used to create button click.......
     public void OnClickCreateButton()

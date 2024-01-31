@@ -87,7 +87,7 @@ namespace DynamicScrollRect
         {
             if(RestrictFlag)
             {
-                TopScroller.vertical = false;
+                //TopScroller.vertical = false;   // main scroll view is off due to some reason
                 ParentSliderFlag = false;
                 return;
             }

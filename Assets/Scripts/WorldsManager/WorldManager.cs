@@ -18,14 +18,15 @@ public class WorldManager : MonoBehaviour
     [Header("Api Parameter's")]
     private string finalAPIURL;
     private string status = "Publish";
-    private int pageNumberHot = 1;
+    private int hotSpacePN=1, hotGamesPN=1, followingPN=1, mySpacesPN=1;
+    /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
     private int pageNumberGameWorld = 1;
     private int pageNumberEventWorld = 1;
+    private int pageNumberTestWorld = 1;*/
     private int pageNumberSearchWorld = 1;
-    private int pageNumberTestWorld = 1;
-    private int pageCount = 30;
+    private int recordPerPage = 30;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
     public WorldsInfo _WorldInfo;
@@ -76,11 +77,13 @@ public class WorldManager : MonoBehaviour
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
+            Debug.LogError("display world");
             WorldItemManager.DisplayWorlds(tab.ToString());
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
         else
         {
+            Debug.LogError("api hit again");
             ChangeWorldTab(tab);
         }
     }
@@ -187,60 +190,60 @@ public class WorldManager : MonoBehaviour
     public int SearchTagPageNumb = 1;
     public int SearchTagPageSize = 15;
     public string SearchKey = default;
-    public string PrepareApiURL(APIURL aPIURL,int pageCount=30)
+    public string PrepareApiURL(APIURL aPIURL,int recordPerPage=30)
     {
         switch (aPIURL)
         {
-            case APIURL.Hot:
-                return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
-            case APIURL.AllWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.ALLBUILDERWORLDS + status + "/" + pageNumberAllWorld + "/" + pageCount;
-            case APIURL.MyWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + pageNumberMyWorld + "/" + pageCount;
-            case APIURL.GameWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberGameWorld + "/" + pageCount + "/" + status + "/GAME";
-            case APIURL.EventWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
-            case APIURL.TestWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
+            case APIURL.HotSpaces:
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
+            case APIURL.HotGames:
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTGAMES /*+ status + "/" */+ hotGamesPN + "/" + recordPerPage;
+            case APIURL.MySpace:
+                return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + mySpacesPN + "/" + recordPerPage;
+            case APIURL.FolloingSpace:
+                return ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWINGSPACES + followingPN + "/" + recordPerPage; //+ "/" + status + "/GAME";
+            //case APIURL.EventWorld:
+            //    return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
+            //case APIURL.TestWorld:
+            //    return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             case APIURL.SearchWorld:
                 return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
             case APIURL.SearchWorldByTag:
                 return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + SearchKey + "/" + SearchTagPageNumb + "/" + SearchTagPageSize;
             default:
-                return ConstantsGod.API_BASEURL + ConstantsGod.MUSEUMENVBUILDERWORLDSCOMBINED + pageNumberHot + "/" + pageCount;
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
         }
     }
     void UpdatePageNumber(APIURL aPIURL)
     {
         switch (aPIURL)
         {
-            case APIURL.Hot:
-                pageNumberHot += 1;
+            case APIURL.HotSpaces:
+                hotSpacePN += 1;
                 return;
-            case APIURL.AllWorld:
-                pageNumberAllWorld += 1;
+            case APIURL.HotGames:
+                hotGamesPN += 1;
                 return;
-            case APIURL.MyWorld:
-                pageNumberMyWorld += 1;
+            case APIURL.MySpace:
+                mySpacesPN += 1;
                 return;
-            case APIURL.GameWorld:
-                pageNumberGameWorld += 1;
+            case APIURL.FolloingSpace:
+                followingPN += 1;
                 return;
-            case APIURL.EventWorld:
+            /*case APIURL.EventWorld:
                 pageNumberEventWorld += 1;
-                return;
+                return;*/
             case APIURL.SearchWorld:
                 SearchPageNumb += 1;
                 return;
             case APIURL.SearchWorldByTag:
                 SearchTagPageNumb += 1;
                 return;
-            case APIURL.TestWorld:
+            /*case APIURL.TestWorld:
                 pageNumberTestWorld += 1;
-                return;
+                return;*/
             default:
-                pageNumberHot += 1;
+                hotSpacePN += 1;
                 return;
         }
     }
@@ -439,11 +442,12 @@ public class WorldManager : MonoBehaviour
                     EventPrefabLobby.SetActive(false);
                     AllWorldTabReference.LobbyInactiveCallBack();
                 }
-            }
-            if (WorldItemManager.gameObject.activeInHierarchy)
-                WorldItemManager.DisplayWorlds(_apiURL);
+            }  
         }
-        
+        if (WorldItemManager.gameObject.activeInHierarchy)
+        {
+            WorldItemManager.DisplayWorlds(_apiURL);
+        }
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         //if (!UIManager.Instance.IsSplashActive)
@@ -791,10 +795,16 @@ public class WorldCreatorDetail
     public string description;
 }
 
+//public enum APIURL
+//{
+//    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld, SearchWorldByTag
+//}
+
 public enum APIURL
 {
-    Hot, AllWorld, MyWorld, GameWorld, EventWorld, SearchWorld, TestWorld, SearchWorldByTag
+    HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag
 }
+
 public enum WorldType
 {
     None, MUSEUM, ENVIRONMENT, USER_WORLD

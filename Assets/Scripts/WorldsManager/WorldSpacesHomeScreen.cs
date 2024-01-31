@@ -18,6 +18,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public GameObject category2;
     public GameObject category3;
     public GameObject category4;
+    public TMPro.TextMeshProUGUI category1Heading, category2Heading, category3Heading, category4Heading;
     public WorldManager worldManager;
     public static List<string> mostVisitedTagList = new List<string>();
     private void OnEnable()
@@ -36,7 +37,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         HotGamesLoading();
         FollowingSpaceLoading();
         MySpaceLoading();
-
+        GetAllTags();
         GetUsersMostVisitedTags(() => 
         {
             Category1Loading();
@@ -49,7 +50,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void HotSpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.Hot, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotSpaces, 10);
+        Debug.LogError(finalAPIURL);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -68,7 +70,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void HotGamesLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.GameWorld, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotGames, 10);
+        Debug.LogError(finalAPIURL);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -86,7 +89,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void FollowingSpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.AllWorld, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FolloingSpace, 10);
+        Debug.LogError(finalAPIURL);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -104,7 +108,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void MySpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.MyWorld, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.MySpace, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -121,7 +125,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     }
 
 
-    void GetUsersMostVisitedTags(Action CallBack)
+    void GetAllTags()
     {
         string finalAPIURL = ConstantsGod.API_BASEURL + ConstantsGod.USERTAGS;
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
@@ -134,18 +138,36 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     userTagParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
+                StartCoroutine(InstantiateUsersTag(userTagContent, userTagInfo));
+            }
+        }));
+    }
+
+    void GetUsersMostVisitedTags(Action CallBack)
+    {
+        string finalAPIURL = ConstantsGod.API_BASEURL + ConstantsGod.MOSTVISITEDTAG+"1/10";
+        StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
+        {
+            if (isSucess)
+            {
+                Debug.LogError("RESPONSE :- "+response);
+                MostVisitedTag userTagInfo = JsonUtility.FromJson<MostVisitedTag>(response);
+                if (userTagInfo.data.Count == 0)
+                {
+                    userTagParent.SetActive(false);
+                    FlexibleRect.OnAdjustSize?.Invoke(false);
+                }
                 else
                 {
-                    for (int i = 0; i < userTagInfo.data.rows.Count; i++)
+                    for (int i = 0; i < userTagInfo.data.Count; i++)
                     {   
                         if (mostVisitedTagList.Count < 5)
-                            mostVisitedTagList.Add(userTagInfo.data.rows[i].tagName);
+                            mostVisitedTagList.Add(userTagInfo.data[i].tagName);
                         else
                             break;
                     }
                     CallBack();
                 }
-                StartCoroutine(InstantiateUsersTag(userTagContent, userTagInfo));
             }
         }));
     }
@@ -153,6 +175,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void Category1Loading()
     {
         WorldManager.instance.SearchKey = mostVisitedTagList[0];
+        category1Heading.text = mostVisitedTagList[0];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -172,6 +195,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void Category2Loading()
     {
         WorldManager.instance.SearchKey = mostVisitedTagList[1];
+        category2Heading.text = mostVisitedTagList[1];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -191,6 +215,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void Category3Loading()
     {
         WorldManager.instance.SearchKey = mostVisitedTagList[2];
+        category3Heading.text = mostVisitedTagList[2];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -210,6 +235,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void Category4Loading()
     {
         WorldManager.instance.SearchKey = mostVisitedTagList[3];
+        category4Heading.text = mostVisitedTagList[3];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -311,6 +337,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
                 _event.CreatorName = _WorldInfo.data.rows[i].user.name;
+                _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
                 _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
                 _event.UserLimit = "15";
             }
@@ -352,10 +379,12 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
+                Debug.LogError(apiURL+"-------"+www.downloadHandler.text);
                 callback(false, null);
             }
             else
             {
+                Debug.LogError(apiURL + "-----"+ www.downloadHandler.text);
                 //_WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 //worldstr = www.downloadHandler.text;
                 callback(true, www.downloadHandler.text);
@@ -384,6 +413,20 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         public bool success;
         public Data data;
         public string msg;
+    }
+
+    [Serializable]
+    public class MostVisitedTag
+    {
+        public bool success;
+        public List<TagData> data;
+        public string msg;
+    }
+    [Serializable]
+    public class TagData
+    {
+        public string tagName;
+        public int tagVisits;
     }
 }
 

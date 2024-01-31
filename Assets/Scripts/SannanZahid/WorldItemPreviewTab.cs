@@ -1,14 +1,16 @@
 using SuperStar.Helpers;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class WorldItemPreviewTab : MonoBehaviour
 {
     public TextMeshProUGUI WorldNameTxt;
     public TextMeshProUGUI WorldDescriptionTxt;
-    public Text CreatorNameTxt;
+    public TextMeshProUGUI CreatorNameTxt;
     public Text CreatedAtTxt;
     public Text UpdatedAtTxt;
     public Text VisitCountTxt;
@@ -19,6 +21,9 @@ public class WorldItemPreviewTab : MonoBehaviour
     public ScrollRect ScrollControllerRef;
     public GameObject XanaProfile;
     public Button JoinEventBtn;
+    public GameObject followingWorld;
+    public GameObject followingWorldHighlight;
+    public GameObject followWorldLoader;
     public Image[] BannerImgSprite;
     bool _isBuilderScene = default;
     public static bool m_WorldIsClicked = false;
@@ -255,6 +260,65 @@ public class WorldItemPreviewTab : MonoBehaviour
         else
         {
             print("Horayyy you have Access");
+        }
+        followingWorld.GetComponent<Button>().interactable = false;
+        followWorldLoader.SetActive(true);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD;
+        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) => 
+        {
+            if (isSucess)
+            {
+                followingWorldHighlight.SetActive(true);
+                followingWorld.SetActive(false);
+                followWorldLoader.SetActive(false);
+            }
+            else
+            {
+                followingWorld.GetComponent<Button>().interactable = true;
+                followWorldLoader.SetActive(false);
+            }
+        }));
+    }
+
+    public void HighlightFavoriteBtnClicked()
+    {
+        followingWorldHighlight.GetComponent<Button>().interactable = false;
+        followWorldLoader.SetActive(true);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD;
+        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) =>
+        {
+            if (isSucess)
+            {
+                followingWorld.SetActive(true);
+                followingWorldHighlight.SetActive(false);
+                followWorldLoader.SetActive(false);
+            }
+            else
+            {
+                followingWorldHighlight.GetComponent<Button>().interactable = true;
+                followWorldLoader.SetActive(false);
+            }
+        }));
+    }
+
+    IEnumerator FollowWorldAPI(string APIurl,Action<bool> CallBack)
+    {
+        yield return new WaitForEndOfFrame();
+        using (UnityWebRequest www = UnityWebRequest.Get(APIurl))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
+            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            {
+                CallBack(false);
+            }
+            else
+            {
+                CallBack(true);
+            }
+            www.Dispose();
         }
     }
 }
