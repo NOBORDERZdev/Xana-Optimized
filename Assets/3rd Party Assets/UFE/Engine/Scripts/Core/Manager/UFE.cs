@@ -4555,6 +4555,7 @@ public class UFE : MonoBehaviour, UFEInterface
                 //Player 1 stats change
                 if (player == 1)
                 {
+                    Debug.LogError("Player 1 stats change " + move.name);
                     switch (move.moveName)
                     {
                         case "Heavy Punch":
@@ -4580,6 +4581,7 @@ public class UFE : MonoBehaviour, UFEInterface
                 else if (player == 2)
                 {
                     //Player 2 stats change
+                    Debug.LogError("Player 2 stats change " + move.name);
                     switch (move.moveName)
                     {
                         case "Heavy Punch":
