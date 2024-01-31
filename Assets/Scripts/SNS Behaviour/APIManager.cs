@@ -2014,7 +2014,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("<color = red> UpdateUserProfile data:" + data + "</color>");
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }
@@ -2783,6 +2783,7 @@ public class GetUserDetailProfileData
     public string country;
     public string website;
     public string bio;
+    public string username; // Unique UserName
     public bool isDeleted;
     public DateTime createdAt;
     public DateTime updatedAt;
