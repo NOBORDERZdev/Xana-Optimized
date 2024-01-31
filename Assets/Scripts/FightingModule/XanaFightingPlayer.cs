@@ -45,16 +45,16 @@ public class XanaFightingPlayer : MonoBehaviour
                         controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name.ToUpper();
                     }
                 }
-                SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+                /*SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
                 _CharacterData = _CharacterData.CreateFromJSON(FightingGameManager.instance.PlayerClothJson);
-                controlsScript.fightingPlayer.Profile = _CharacterData.profile;
+                controlsScript.fightingPlayer.profile = _CharacterData.profile;
                 controlsScript.fightingPlayer.speed = _CharacterData.speed;
                 controlsScript.fightingPlayer.stamina = _CharacterData.stamina;
                 controlsScript.fightingPlayer.punch = _CharacterData.punch;
                 controlsScript.fightingPlayer.kick = _CharacterData.kick;
                 controlsScript.fightingPlayer.defence = _CharacterData.defence;
                 controlsScript.fightingPlayer.special_move = _CharacterData.special_move;
-                FightingDataManager.instance.player2 = controlsScript.fightingPlayer;
+                FightingDataManager.Instance.player2 = controlsScript.fightingPlayer;*/
             }
             else
             {

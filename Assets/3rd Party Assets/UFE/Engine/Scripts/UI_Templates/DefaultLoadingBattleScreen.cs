@@ -94,7 +94,30 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
             yield return new WaitForSeconds(1f);
             player1.GetComponent<Animator>().enabled = player2.GetComponent<Animator>().enabled = true;
             FightingGameManager.instance.PlayerClothJson = player1.GetComponent<AvatarController>().clothJson;
-            FightingGameManager.instance.opponentClothJson= player2.GetComponent<AvatarController>().clothJson;
+            FightingGameManager.instance.opponentClothJson = player2.GetComponent<AvatarController>().clothJson;
+
+            SavingCharacterDataClass player1CharacterData = new SavingCharacterDataClass();
+            player1CharacterData = player1CharacterData.CreateFromJSON(FightingGameManager.instance.PlayerClothJson);
+            
+            FightingDataManager.Instance.player1.stamina = player1CharacterData.stamina;
+            FightingDataManager.Instance.player1.speed = player1CharacterData.speed;
+            FightingDataManager.Instance.player1.profile = player1CharacterData.profile;
+            FightingDataManager.Instance.player1.defence = player1CharacterData.defence;
+            FightingDataManager.Instance.player1.special_move = player1CharacterData.special_move;
+            FightingDataManager.Instance.player1.punch = player1CharacterData.punch;
+            FightingDataManager.Instance.player1.kick = player1CharacterData.kick;
+
+            SavingCharacterDataClass player2CharacterData = new SavingCharacterDataClass();
+            player2CharacterData = player2CharacterData.CreateFromJSON(FightingGameManager.instance.opponentClothJson);
+
+            FightingDataManager.Instance.player2.stamina = player2CharacterData.stamina;
+            FightingDataManager.Instance.player2.speed = player2CharacterData.speed;
+            FightingDataManager.Instance.player2.profile = player2CharacterData.profile;
+            FightingDataManager.Instance.player2.defence = player2CharacterData.defence;
+            FightingDataManager.Instance.player2.special_move = player2CharacterData.special_move;
+            FightingDataManager.Instance.player2.punch = player2CharacterData.punch;
+            FightingDataManager.Instance.player2.kick = player2CharacterData.kick;
+
             player1RawImage.gameObject.SetActive(true);
             player2RawImage.gameObject.SetActive(true);
 

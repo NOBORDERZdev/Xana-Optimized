@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 1416200382}
   - component: {fileID: 1416200381}
   - component: {fileID: 1416200383}
+  - component: {fileID: 1416200384}
   m_Layer: 0
   m_Name: FightingGameManager
   m_TagString: Untagged
@@ -350,6 +351,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f4a5d33540429ee45a54b6a90ce1ff43, type: 2}
   - {fileID: 11400000, guid: b21c2dfef94eff0428508cb5bcd428f6, type: 2}
   - {fileID: 11400000, guid: fc17ec2c43cc299428745610c47f6a3a, type: 2}
+  PlayerClothJson: 
+  opponentClothJson: 
   OpenButton: {fileID: 0}
   id1: 0
   id2: 0
@@ -395,6 +398,34 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1416200384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416200380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19471adebd4fed4883c3704cf592abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1:
+    Profile: 
+    speed: 0
+    stamina: 0
+    punch: 0
+    kick: 0
+    defence: 0
+    special_move: 0
+  player2:
+    Profile: 
+    speed: 0
+    stamina: 0
+    punch: 0
+    kick: 0
+    defence: 0
+    special_move: 0
 --- !u!1 &1430589041
 GameObject:
   m_ObjectHideFlags: 0

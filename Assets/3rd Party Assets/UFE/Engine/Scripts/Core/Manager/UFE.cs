@@ -4553,25 +4553,25 @@ public class UFE : MonoBehaviour, UFEInterface
                 #region StatManageMent
                 ///////// Attizaz
                 //Player 1 stats change
-                /*if (player == 1)
+                if (player == 1)
                 {
                     switch (move.moveName)
                     {
                         case "Heavy Punch":
                             //	float aa = 20; // Get API or Sheet Damage info and pass it to ChangesStats Func
-                            ChangeStats(move, controlsScript.fightingPlayer.punch);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player1.punch);//instead of 300f put value taken from sheet
                             break;
                         case "Light Punch":
-                            ChangeStats(move, controlsScript.fightingPlayer.punch / 2);//instead of 300f put value taken from sheet
+                            ChangeStats(move, 20);//instead of 300f put value taken from sheet
                             break;
                         case "Power Hit":
-                            ChangeStats(move, controlsScript.fightingPlayer.special_move);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player1.special_move);//instead of 300f put value taken from sheet
                             break;
                         case "Heavy Kick":
-                            ChangeStats(move, controlsScript.fightingPlayer.kick);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player1.kick);//instead of 300f put value taken from sheet
                             break;
                         case "Standing Light Kick":
-                            ChangeStats(move, controlsScript.fightingPlayer.kick / 2);//instead of 300f put value taken from sheet
+                            ChangeStats(move, 25);//instead of 300f put value taken from sheet
                             break;
                         default:
                             break;
@@ -4583,24 +4583,24 @@ public class UFE : MonoBehaviour, UFEInterface
                     switch (move.moveName)
                     {
                         case "Heavy Punch":
-                            ChangeStats(move, controlsScript.fightingPlayer.punch);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player2.punch);//instead of 300f put value taken from sheet
                             break;
                         case "Light Punch":
-                            ChangeStats(move, controlsScript.fightingPlayer.punch / 2);//instead of 300f put value taken from sheet
+                            ChangeStats(move, 20);//instead of 300f put value taken from sheet
                             break;
                         case "Power Hit":
-                            ChangeStats(move, controlsScript.fightingPlayer.special_move);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player2.special_move);//instead of 300f put value taken from sheet
                             break;
                         case "Heavy Kick":
-                            ChangeStats(move, controlsScript.fightingPlayer.kick);//instead of 300f put value taken from sheet
+                            ChangeStats(move, FightingDataManager.Instance.player2.kick);//instead of 300f put value taken from sheet
                             break;
                         case "Standing Light Kick":
-                            ChangeStats(move, controlsScript.fightingPlayer.kick / 2);//instead of 300f put value taken from sheet
+                            ChangeStats(move, 25);//instead of 300f put value taken from sheet
                             break;
                         default:
                             break;
                     }
-                }*/
+                }
                 ////////////
                 #endregion
                 foreach (CharacterAssist charAssist in move.characterAssist)

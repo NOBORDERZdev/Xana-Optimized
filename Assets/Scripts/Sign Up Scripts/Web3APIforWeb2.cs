@@ -71,7 +71,6 @@ public class Web3APIforWeb2 : MonoBehaviour
         CallOwnedNFTListAPIAsync(callback);
     }
 
-    public TextMeshProUGUI debugText;
     public async Task CallOwnedNFTListAPIAsync(Action callback)
     {
 
@@ -134,7 +133,6 @@ public class Web3APIforWeb2 : MonoBehaviour
         {
             //   NFTlistdata = UserNFTlistClass.Root.CreateFromJSON(request.downloadHandler.text);
             Debug.LogError("NFT DATA from API: " + request.downloadHandler.text);
-            debugText.text= request.downloadHandler.text;
             _OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
 
             /*for (int i = 0; i < NFTlistdata.list.Count; i++)

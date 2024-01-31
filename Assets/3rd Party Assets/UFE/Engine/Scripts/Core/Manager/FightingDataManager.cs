@@ -4,31 +4,26 @@ using UnityEngine;
 
 public class FightingDataManager : MonoBehaviour
 {
-    public FightingPlayer player1=new FightingPlayer();
-    public FightingPlayer player2=new FightingPlayer();
-    public static FightingDataManager instance;
+    public FightingPlayer player1 = new FightingPlayer();
+    public FightingPlayer player2 = new FightingPlayer();
+    public static FightingDataManager Instance;
     private void Awake()
     {
-        if (instance==null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
     }
     void Start()
     {
-        
-    }
 
-    void Update()
-    {
-        
     }
 }
 
 [System.Serializable]
 public class FightingPlayer
 {
-    public string Profile;
+    public string profile;
     public int speed;
     public int stamina;
     public int punch;
