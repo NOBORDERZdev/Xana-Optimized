@@ -430,7 +430,6 @@ namespace RFM.Managers
 
 
             Debug.Log("SpawnNPCs RFM numOfAIRunners: " + numOfRunners);
-            FindObjectOfType<RFMDebugCanvas>().Runners.text = "Runners: " + numOfRunners;
             GameObject hunterNPC, runnerNPC;
             for (int i = 0; i < numOfRunners; i++)
             {
@@ -454,7 +453,6 @@ namespace RFM.Managers
 
 
             Debug.Log("RFM numOfAIHunters: " + numOfHunters);
-            FindObjectOfType<RFMDebugCanvas>().Runners.text = "Hunters: " + numOfHunters;
             for (int i = 0; i < numOfHunters; i++)
             {
                 if (PhotonNetwork.IsMasterClient)
