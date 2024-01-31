@@ -216,7 +216,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.65
+  m_fontSize: 37.75
   m_fontSizeBase: 46.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 5483430731086920378}
   - component: {fileID: 5483430731086920373}
   m_Layer: 5
-  m_Name: FindFriend (1)
+  m_Name: FeedFind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -721,6 +721,7 @@ MonoBehaviour:
   feedUIController: {fileID: 0}
   feedPostPrefab: {fileID: 9094557258527362675, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
   feedPostParent: {fileID: 5483430731832824345}
+  scrollerController: {fileID: 5773722022894444981}
 --- !u!114 &5773722022894444981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scroller: {fileID: 7242730802361598966}
-  cellViewPrefab: {fileID: 3770812555240474990, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
+  cellViewPrefab: {fileID: 5663341864323682158, guid: 5a252d49faa983141a0784017595f682, type: 3}
   pullDownThreshold: 60
   pullDownToRefreshText: {fileID: 3604446670979267661}
   releaseToRefreshText: {fileID: 6101301025514103858}
@@ -1815,7 +1816,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
+  m_fontSize: 33.25
   m_fontSizeBase: 46.4
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2805,7 +2806,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48.3
+  m_fontSize: 26
   m_fontSizeBase: 50.1
   m_fontWeight: 400
   m_enableAutoSizing: 1

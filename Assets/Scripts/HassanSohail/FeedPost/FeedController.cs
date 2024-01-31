@@ -1,3 +1,4 @@
+using EnhancedUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ public class FeedController : MonoBehaviour
     List<FeedResponseRow> FeedAPIData = new List<FeedResponseRow>();
     List<FeedData> feedList = new List<FeedData>();
     bool isFeedInitialized = false;
+    [SerializeField]
+    FeedScrollerController scrollerController;
     private void OnEnable()
     {
         SocketController.instance.updateFeedLike += UpdateFeedLike;
@@ -33,6 +36,7 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
+        scrollerController.IntFeedScroller();
         await GetFeedData(APIManager.Instance.userId);
     }
 
@@ -56,15 +60,17 @@ public class FeedController : MonoBehaviour
                     if (!String.IsNullOrEmpty( item.text_post) && !item.text_post.Equals("null") )
                     {
                         FeedAPIData.Add(item);
-                        GameObject temp =  Instantiate(feedPostPrefab);
-                        temp.transform.SetParent(feedPostParent);
-                        temp.transform.localScale = Vector3.one;
-                        temp.GetComponent<FeedData>().SetFeedPrefab(item);
-                        feedList.Add(temp.GetComponent<FeedData>());
+                        scrollerController._data.Add(item);
+                        //GameObject temp =  Instantiate(feedPostPrefab);
+                        //temp.transform.SetParent(feedPostParent);
+                        //temp.transform.localScale = Vector3.one;
+                        //temp.GetComponent<FeedData>().SetFeedPrefab(item);
+                        //feedList.Add(temp.GetComponent<FeedData>());
                     }
                    
                 }
-                //feedUIController.InitializeFeedPage(feedResponseData);
+                scrollerController.scroller.ReloadData();
+               // feedUIController.IntFeedScroller(feedResponseData);
             }
 
         }
