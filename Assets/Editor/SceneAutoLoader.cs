@@ -21,7 +21,7 @@ static class SceneAutoLoader
 	// [InitializeOnLoad] above makes sure this gets executed.
 	static SceneAutoLoader()
 	{
-		EditorApplication.playModeStateChanged += OnPlayModeChanged;
+		//EditorApplication.playModeStateChanged += OnPlayModeChanged;
 	}
 
 	// Menu items to select the "master" scene and control whether or not to load it.

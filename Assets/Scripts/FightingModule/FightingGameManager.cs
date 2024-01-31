@@ -33,6 +33,7 @@ public class FightingGameManager : MonoBehaviour
     public bool isAITestingMode = false;
     [Tooltip("If above bool is on then you will be to select AI profile of your choice")] public int AIProfileNumber = 0;
     public GameObject player1, player2,winnerAvatar;
+    public OwnedNFTContainer ownedNFTContainer;
     private void Awake()
     {
         if (instance == null)
@@ -52,6 +53,8 @@ public class FightingGameManager : MonoBehaviour
             UFE.SetPlayer2(P2SelectedChar);
             UFE.StartLoadingBattleScreen();
         }
+
+        //ownedNFTContainer.MakeApiCall();
     }
 
 

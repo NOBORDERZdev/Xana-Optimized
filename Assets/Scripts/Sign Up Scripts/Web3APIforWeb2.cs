@@ -43,18 +43,20 @@ public class Web3APIforWeb2 : MonoBehaviour
     public bool TestSpecificCase;
     public string TestSpecificAdrress;
 
+
     [SerializeField]
     private RequestData requestData;
 
     [SerializeField] bool useXanaliaMainnetApiOnTestnet;
+ 
+
+  
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("web3apiforweb2: " + gameObject.name);
-
+        _OwnedNFTDataObj.MakeApiCall();
     }
-
-
 
     public void GetWeb2UserData(string _publicID, Action callback = null)
     {
@@ -175,7 +177,7 @@ public class Web3APIforWeb2 : MonoBehaviour
     }
 
 
-
+    
     public async Task<UnityWebRequest> GettingOwnedNFTS(string url)
     {
 
@@ -286,6 +288,8 @@ public class Web3APIforWeb2 : MonoBehaviour
         print("return " + request.downloadHandler.text);
         return request;
     }
+
+
 
 }
 [Serializable]

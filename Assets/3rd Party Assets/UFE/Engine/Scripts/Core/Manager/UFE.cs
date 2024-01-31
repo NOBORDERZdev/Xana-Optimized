@@ -34,9 +34,11 @@ using FPLibrary;
 using UFENetcode;
 using UFE3D;
 
+
 public class UFE : MonoBehaviour, UFEInterface
 {
 	#region public instance enum
+	
 	public enum MultiplayerMode{
 		Lan,
 		Online,
@@ -46,18 +48,19 @@ public class UFE : MonoBehaviour, UFEInterface
 
 	#region public instance properties
     public GlobalInfo UFE_Config;
-    #endregion
 
-    #region debug propeties
-    public static bool debug = true;
+	#endregion
+
+	#region debug propeties
+	public static bool debug = true;
     public static Text debugger1;
     public static Text debugger2;
 
     public static bool autoSaveAssets;
-    #endregion
+	#endregion
 
-    #region public event definitions
-    public delegate void MeterHandler(float newFloat, ControlsScript player);
+	#region public event definitions
+	public delegate void MeterHandler(float newFloat, ControlsScript player);
 	public static event MeterHandler OnLifePointsChange;
 
 	public delegate void GaugeHandler(int targetGauge, float newValue, ControlsScript character);
@@ -3860,7 +3863,8 @@ public class UFE : MonoBehaviour, UFEInterface
     }
 
 #if !UFE_LITE && !UFE_BASIC
-    public static void FindAndSpawnAssist(ControlsScript controlsScript, int player) {
+
+	public static void FindAndSpawnAssist(ControlsScript controlsScript, int player) {
 	
 		List<MoveSetData> loadedMoveSets = new List<MoveSetData>();
         foreach (MoveSetData moveSetData in controlsScript.myInfo.moves)
@@ -3877,57 +3881,57 @@ public class UFE : MonoBehaviour, UFEInterface
             foreach (MoveInfo move in moveSet.attackMoves)
             {
 				print("<color=green>Uncomment the below region code for stats changes</color>");
-                #region StatManageMent
-                ///////// Attizaz
-                //Player 1 stats change
-    //            if (player == 1)
-				//{
-				//	switch (move.moveName)
-				//	{
-				//		case "Heavy Punch":
-				//		//	float aa = 20; // Get API or Sheet Damage info and pass it to ChangesStats Func
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Light Punch":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Power Hit":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Heavy Kick":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Standing Light Kick":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		default:
-				//			break;
-				//	}
-				//}
-				//else if (player == 2)
-				//{
-				////Player 2 stats change
-				//	switch (move.moveName)
-				//	{
-				//		case "Heavy Punch":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Light Punch":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Power Hit":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Heavy Kick":
-				//			ChangeStats(move, 300f);//instead of 300f put value taken from sheet
-				//			break;
-				//		case "Standing Light Kick":
-				//			ChangeStats(move, 900f);//instead of 300f put value taken from sheet
-				//			break;
-				//		default:
-				//			break;
-				//	}
-				//}
+				#region StatManageMent
+				///////// Attizaz
+				/* Player 1 stats change*/
+				if (player == 1)
+				{
+					switch (move.moveName)
+					{
+						case "Heavy Punch":
+							//	float aa = 20; // Get API or Sheet Damage info and pass it to ChangesStats Func
+							ChangeStats(move, ConnectionManagemenet.punch);//instead of 300f put value taken from sheet
+							break;
+						/*case "Light Punch":
+							ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+							break;*/
+						case "Power Hit": // spacial move
+							ChangeStats(move, ConnectionManagemenet.special_move);//instead of 300f put value taken from sheet
+							break;
+                        case "Heavy Kick":
+                            ChangeStats(move, ConnectionManagemenet.kick);//instead of 300f put value taken from sheet
+                            break;
+                        /*case "Standing Light Kick":
+							ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+							break;*/
+						default:
+							break;
+					}
+				}
+				else if (player == 2)
+				{
+					//Player 2 stats change
+					switch (move.moveName)
+					{
+						case "Heavy Punch":
+							ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+							break;
+						/*case "Light Punch":
+							ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+							break;*/
+						case "Power Hit":
+							ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+							break;
+                        case "Heavy Kick":
+                            ChangeStats(move, 300f);//instead of 300f put value taken from sheet
+                            break;
+                        /*case "Standing Light Kick":
+							ChangeStats(move, 900f);//instead of 300f put value taken from sheet
+							break;*/
+						default:
+							break;
+					}
+				}
                 ////////////
                 #endregion
                 foreach (CharacterAssist charAssist in move.characterAssist)

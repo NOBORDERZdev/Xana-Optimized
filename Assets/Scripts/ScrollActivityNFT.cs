@@ -33,6 +33,7 @@ public class ScrollActivityNFT : MonoBehaviour
     public GameObject EquipPopup;
     public GameObject SidePanel;
     public TMPro.TextMeshProUGUI EquipUIText;
+    public OwnedNFTContainer onwNFTContainer;
     //End
     private void Awake()
     {
@@ -85,13 +86,13 @@ public class ScrollActivityNFT : MonoBehaviour
         {
              Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
             bool _IsInOwnerShip = await task;
-              print("_IsInOwnerShip :: " + _IsInOwnerShip);  
-             if (!_IsInOwnerShip)
+              print("_IsInOwnerShip :: " + _IsInOwnerShip);
+            if (!_IsInOwnerShip)
             {
                 print("Show UI NFT not available");
                 NftDataScript.Instance.NftTransferedPanel.SetActive(true);
                 return;
-            } 
+            }
             else
             {
                 print("NFT is in your OwnerShip Enjoy");
@@ -240,28 +241,46 @@ public class ScrollActivityNFT : MonoBehaviour
          */
         //UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber]
 
-         nftAttributes.id = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
-         nftAttributes.Gloves = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Gloves;
-        nftAttributes.Glasses = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].glasses;
-        nftAttributes.Full_Costumes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Full_Costumes;
-        nftAttributes.Chains = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Chains;
-        nftAttributes.Hairs = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].hairs;
-        nftAttributes.Face_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Face_Tattoo;
-        nftAttributes.Forehead_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Forehead_Tattoo;
-        nftAttributes.Chest_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Chest_Tattoo;
-        nftAttributes.Arm_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Arm_Tattoo;
-        nftAttributes.Legs_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].legs_Tattoo;
-        nftAttributes.Shoes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Shoes;
-        nftAttributes.Mustache = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Mustache;
-        nftAttributes.Pants = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Pants;
-        nftAttributes.Eyebrows = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyebrows;
-        nftAttributes.Lips = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Lips;
-        nftAttributes.Heads = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].head;
-        nftAttributes.Eye_Shapes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_Shapes;
-        nftAttributes.Skin = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Skin;
-        nftAttributes.Eye_Lense = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_lense;
-        nftAttributes.Eyelid = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyelid;
-         string attributesJson = JsonUtility.ToJson(nftAttributes);      
+        // nftAttributes.id = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
+         nftAttributes.id = onwNFTContainer.getDetails.list[_NFTIndex].attribute.id.ToString();
+
+
+
+         nftAttributes.Gloves = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Gloves;
+        nftAttributes.Glasses = onwNFTContainer.getDetails.list[_NFTIndex].attribute.glasses;
+        nftAttributes.Full_Costumes = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Full_Costumes;
+        nftAttributes.Chains = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Chains;
+        nftAttributes.Hairs = onwNFTContainer.getDetails.list[_NFTIndex].attribute.hairs;
+        nftAttributes.Face_Tattoo = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Face_Tattoo;
+        nftAttributes.Forehead_Tattoo = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Forehead_Tattoo;
+        nftAttributes.Chest_Tattoo = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Chest_Tattoo;
+        nftAttributes.Arm_Tattoo = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Arm_Tattoo;
+        nftAttributes.Legs_Tattoo = onwNFTContainer.getDetails.list[_NFTIndex].attribute.legs_Tattoo;
+        nftAttributes.Shoes = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Shoes;
+        nftAttributes.Mustache = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Mustache;
+        nftAttributes.Pants = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Pants;
+        nftAttributes.Eyebrows = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Eyebrows;
+        nftAttributes.Lips = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Lips;
+        nftAttributes.Heads = onwNFTContainer.getDetails.list[_NFTIndex].attribute.head;
+        nftAttributes.Eye_Shapes = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Eye_Shapes;
+        nftAttributes.Skin = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Skin;
+        nftAttributes.Eye_Lense = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Eye_lense;
+        nftAttributes.Eyelid = onwNFTContainer.getDetails.list[_NFTIndex].attribute.Eyelid;
+        nftAttributes.profile = onwNFTContainer.getDetails.list[_NFTIndex].attribute.profile;
+        nftAttributes.speed = onwNFTContainer.getDetails.list[_NFTIndex].attribute.speed;
+        nftAttributes.stamina = onwNFTContainer.getDetails.list[_NFTIndex].attribute.stamina;
+        nftAttributes.punch = onwNFTContainer.getDetails.list[_NFTIndex].attribute.punch;
+        nftAttributes.kick = onwNFTContainer.getDetails.list[_NFTIndex].attribute.kick;
+        nftAttributes.defence = onwNFTContainer.getDetails.list[_NFTIndex].attribute.defence;
+        nftAttributes.special_move = onwNFTContainer.getDetails.list[_NFTIndex].attribute.special_move;
+
+        ConnectionManagemenet.punch = nftAttributes.punch;
+        ConnectionManagemenet.kick = nftAttributes.kick;
+        ConnectionManagemenet.special_move = nftAttributes.special_move;
+
+        string attributesJson = JsonUtility.ToJson(nftAttributes);      
         File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
+
+
     }
 }

@@ -1,8 +1,11 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
+
 //[CreateAssetMenu  (menuName = "OwnedNFTs/Container")]
 [CreateAssetMenu(menuName = "OwnedNFT/NFTContrainer")]
 public class OwnedNFTContainer : ScriptableObject
@@ -16,6 +19,9 @@ public class OwnedNFTContainer : ScriptableObject
     public List<string> CollectionAddress;
     public List<Attribute1> _Attributes;
     public List<int> _NFTIDs;
+
+    public Root getDetails;
+
     public void NewRootInstance()
     {
        // NFTlistdata = new Root();
@@ -100,75 +106,149 @@ public class OwnedNFTContainer : ScriptableObject
         _Attributes.Clear();
     }
 
-}
- 
+   // public Root getDetails;
 
- // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-[Serializable]
-public class Attribute1
-{
-    public int id;
-    public int nftId;
-    public string body;
-    public string clothes;
-    public string earrings;
-    public string eyes;
-    public string glasses;
-    public string facePaint;
-    public string beautyMark;
-    public string hairAccessories;
-    public string hairs;
-    public string plotSize;
-    public string xxCoOrds;
-    public string yyCoOrds;
-    public string rarity;
-    public string size;
-    public string coOrds;
-    public int landNft;
-    public int collection_id;
-    public object xana_builder_info;
-    public string astro_type;
-    public string astro_level;
-    public string background;
-    public string sake_cask;
-    public string weapon;
-    public string flipper;
-    public string white_body;
-    public string white_shoulder;
-    public string white_flipper;
-    public string white_face;
-    public string foot;
-    public string beak;
-    public string belt_back;
-    public string belt_front;
-    public string rope;
-    public string kimono;
-    public string eye_cover;
-    public string eye_brow;
-    public string head;
-    public string armor;
-    public string cape;
-    public string neck;
-    public string rod;
-    public int penpenz_nft;
-    public string Eye_lense;
-    public string Skin;
-    public string Eye_Shapes;
-    public string Lips;
-    public string Eyelid;
-    public string Face_Tattoo;
-    public string Arm_Tattoo;
-    public string legs_Tattoo;
-    public string Forehead_Tattoo;
-    public string Chest_Tattoo;
-    public string Mustache;
-    public string Pants;
-    public string Eyebrows;
-    public string Chains;
-    public string Full_Costumes;
-    public string Gloves;
-    public string Shoes;
+    public async Task GetNFTDataAPI(string apiUrl, string jsonData)
+    {
+
+        using (UnityWebRequest www = new UnityWebRequest(apiUrl, "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            // Send the request
+            await www.SendWebRequest();
+
+            // Check for errors
+            Debug.Log("suyash " + www.downloadHandler.text);
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(www.error);
+                throw new Exception(www.error);
+            }
+            else
+            {
+                // Parse the response and populate your data
+                CreateJsonFromRoot(www.downloadHandler.text);
+                getDetails = JsonConvert.DeserializeObject<Root>(www.downloadHandler.text);
+
+            }
+        }
+    }
+
+    public void DebugResponseJson(string jsonResponse)
+    {
+        Debug.Log("API Response JSON:\n" + jsonResponse);
+    }
+
+    public async void MakeApiCall()
+    {
+       // string apiUrl = "https://prod-backend.xanalia.com/nfts/nft-by-address-user-tcg-v2?address=0xEfd5a35b30AF1a7D0f8cD2488f6C9F5095809dAC&pageIndex=1&pageSize=1000&name=[\"breaking down\",\"HIROKO KOSHINO\",\"deemo\",\"collaboration\"]";
+        string apiUrl = "https://prod-backend.xanalia.com/nfts/nft-by-address-user-tcg-v2";
+        string jsonData = "{\"pageIndex\":1,\"pageSize\":500,\"address\":\"0xEfd5a35b30AF1a7D0f8cD2488f6C9F5095809dAC\",\"name\":[\"breaking down\",\"HIROKO KOSHINO\",\"deemo\",\"collaboration\"]}";
+
+        CallAPIResponse API = new CallAPIResponse();
+       
+        try
+        {
+            await GetNFTDataAPI(apiUrl, jsonData);
+
+            // Now, your NFTlistdata is populated with the API response data
+            // You can use other methods like FillAllListAsyncWaiting() or FillAllListAsync() to access the data.
+
+            // Debug the JSON response
+            DebugResponseJson(NFTlistdata == null ? "No response data" : JsonUtility.ToJson(NFTlistdata));
+            
+
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("API Call failed: " + e.Message);
+        }
+    }
+
+
 }
+
+
+
+
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    [Serializable]
+    public class Attribute1
+    {
+        public int id;
+        public int nftId;
+        public string body;
+        public string clothes;
+        public string earrings;
+        public string eyes;
+        public string glasses;
+        public string facePaint;
+        public string beautyMark;
+        public string hairAccessories;
+        public string hairs;
+        public string plotSize;
+        public string xxCoOrds;
+        public string yyCoOrds;
+        public string rarity;
+        public string size;
+        public string coOrds;
+        public int landNft;
+        public int collection_id;
+        public object xana_builder_info;
+        public string astro_type;
+        public string astro_level;
+        public string background;
+        public string sake_cask;
+        public string weapon;
+        public string flipper;
+        public string white_body;
+        public string white_shoulder;
+        public string white_flipper;
+        public string white_face;
+        public string foot;
+        public string beak;
+        public string belt_back;
+        public string belt_front;
+        public string rope;
+        public string kimono;
+        public string eye_cover;
+        public string eye_brow;
+        public string head;
+        public string armor;
+        public string cape;
+        public string neck;
+        public string rod;
+        public int penpenz_nft;
+        public string Eye_lense;
+        public string Skin;
+        public string Eye_Shapes;
+        public string Lips;
+        public string Eyelid;
+        public string Face_Tattoo;
+        public string Arm_Tattoo;
+        public string legs_Tattoo;
+        public string Forehead_Tattoo;
+        public string Chest_Tattoo;
+        public string Mustache;
+        public string Pants;
+        public string Eyebrows;
+        public string Chains;
+        public string Full_Costumes;
+        public string Gloves;
+        public string Shoes;
+
+        public int stamina;
+        public int speed;
+        public string profile;
+        public int defence;
+        public int special_move;
+        public int punch;
+        public int kick;
+    }
 
 
 
@@ -360,5 +440,15 @@ public class MoralisAPIBaseClass
     {
         return JsonUtility.FromJson<MoralisAPIBaseClass>(jsonString);
     }
+
+   
+
 }
- 
+
+public class CallAPIResponse
+{
+    public int pageIndex;
+    public int pageSize;
+    public string address;
+    public List<string> name;
+}
