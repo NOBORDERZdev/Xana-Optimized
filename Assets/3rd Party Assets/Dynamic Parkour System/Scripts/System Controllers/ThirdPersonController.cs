@@ -25,6 +25,7 @@ using DG;
 using Cinemachine;
 using DG.Tweening;
 using Photon.Pun;
+using RFM.Utility;
 
 namespace Climbing
 {
@@ -139,6 +140,7 @@ namespace Climbing
             isGrounded = OnGround();
 
             if (!transform.parent.gameObject.GetComponent<PhotonView>().IsMine) return;
+            RFMDebugCanvas.Instance.isGrounded.text = "IsGrounded: " + isGrounded.ToString() + "  " + characterDetection.isGroundStay.ToString();
 
             //Get Input if controller and movement are not disabled
             if (!dummy && allowMovement && photonView.IsMine)

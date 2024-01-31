@@ -10,11 +10,15 @@ namespace RFM.Utility
         public TextMeshProUGUI roomName;
         public TextMeshProUGUI players;
         public TextMeshProUGUI rfmStatus;
-        public TextMeshProUGUI Runners;
         public TextMeshProUGUI Hunters;
-
+        public TextMeshProUGUI isGrounded;
+        public static RFMDebugCanvas Instance;
         private void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
             /*if (RFM.Globals.DevMode)
             {
                 gameObject.SetActive(true);
