@@ -276,6 +276,8 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 profileImage.sprite = defultProfileImage;
             }
+
+            if(gameObject.activeSelf)
             StartCoroutine(WaitToRefreshProfileScreen());
         }
     }
@@ -878,8 +880,11 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this method is used to Get Other userRole and pass info.......
     public void RequestGetOtherUserRole(int userId)
     {
-       Debug.Log("RequestGetOtherUserRole userId:" + userId);
-        StartCoroutine(IERequestGetOtherUserRole(userId));
+        if (gameObject.activeSelf)
+        {
+            Debug.Log("RequestGetOtherUserRole userId:" + userId);
+            StartCoroutine(IERequestGetOtherUserRole(userId));
+        }
     }
 
     IEnumerator IERequestGetOtherUserRole(int userId)
@@ -899,13 +904,19 @@ public class OtherPlayerProfileData : MonoBehaviour
                 string data = www.downloadHandler.text;
                Debug.Log("IERequestGetOtherUserRole data:" + data);
                 SingleUserRoleRoot singleUserRoleRoot = JsonConvert.DeserializeObject<SingleUserRoleRoot>(data);
-                if (singleUserRoleRoot.success)
-                {
-                    List<string> tempUserList = new List<string>();
-                    tempUserList = singleUserRoleRoot.data;
-                    string userPriorityRole = UserRegisterationManager.instance.GetOtherUserPriorityRole(tempUserList);
-                    userRolesView.SetUpUserRole(userPriorityRole, tempUserList);//this method is used to set user role.......                    
-                }
+
+                //Receiving Other user roles here and assigning onwards
+                //Commented as not receiving any data from API need to check API response first
+                //as time is short so skipping this for now but this needs to be worked on later :|
+                //Umer Aftab
+
+                //if (singleUserRoleRoot.success)
+                //{
+                //    List<string> tempUserList = new List<string>();
+                //    tempUserList = singleUserRoleRoot.data;
+                //    string userPriorityRole = UserRegisterationManager.instance.GetOtherUserPriorityRole(tempUserList);
+                //    userRolesView.SetUpUserRole(userPriorityRole, tempUserList);//this method is used to set user role.......                    
+                //}
             }
         }
     }
