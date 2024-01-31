@@ -207,6 +207,7 @@ public class AvatarController : MonoBehaviour
         Custom_IntializeAvatar();
 
     }
+    public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     void Custom_IntializeAvatar()
     {
         if (isLoadStaticClothFromJson)
@@ -214,6 +215,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+            _PCharacterData=_CharacterData;
             clothJson = staticClothJson;
             if (_CharacterData.myItemObj.Count > 0)
             {
@@ -395,6 +397,7 @@ public class AvatarController : MonoBehaviour
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            _PCharacterData=_CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
