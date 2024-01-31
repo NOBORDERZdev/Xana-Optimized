@@ -307,7 +307,8 @@ public class BuildingDetect : MonoBehaviour
             if (gangsterCharacter != null)
             {
                 this.GetComponent<Animator>().avatar = tempAnimator;
-                PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
+                if (AppearanceChange != null)
+                    PhotonNetwork.Destroy(AppearanceChange.GetPhotonView());
                 Destroy(gangsterCharacter);
                 Delayed.Function(() =>
                 {
@@ -319,8 +320,6 @@ public class BuildingDetect : MonoBehaviour
             Vector3 canvasPos = GamificationComponentData.instance.nameCanvas.transform.localPosition;
             canvasPos.y = nameCanvasDefaultYpos;
             GamificationComponentData.instance.nameCanvas.transform.localPosition = canvasPos;
-            if (avatarChangeCoroutine != null)
-                StopCoroutine(avatarChangeCoroutine);
             avatarChangeCoroutine = null;
 
             GamificationComponentData.instance.isAvatarChanger = false;

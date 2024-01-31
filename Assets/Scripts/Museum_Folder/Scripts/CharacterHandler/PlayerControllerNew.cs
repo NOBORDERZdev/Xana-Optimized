@@ -469,6 +469,9 @@ public class PlayerControllerNew : MonoBehaviour
                 animator.SetFloat("BlendY", 3f);
             }
             restJoyStick();
+
+            //Reset falling state when m_IsMovementActive = false.
+            animator.SetBool("IsFalling", false);
         }
 
         //if (!SelfieController.Instance.m_IsSelfieFeatureActive)
@@ -1704,7 +1707,7 @@ public class PlayerControllerNew : MonoBehaviour
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
         sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
-
+        isMovementAllowed = true;
     }
     bool attackwithSword, attackwithShuriken, hideoropenSword;
     void AttackwithSword() => attackwithSword = true;

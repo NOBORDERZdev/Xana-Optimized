@@ -22,12 +22,6 @@ public class SituationChangerComponent : ItemComponent
     bool running = false;
     private float againTouchDealy = .5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        GetLightData();
-    }
-
     private void OnEnable()
     {
         BuilderEventManager.DisableSituationLight += ResetSituation;
@@ -53,6 +47,8 @@ public class SituationChangerComponent : ItemComponent
         isActivated = true;
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
         defaultTimer = this.situationChangerComponentData.Timer;
+        GetLightData();
+        StartCoroutine(SituationChangerSkyboxScript.instance.DownloadSituatioChangerSkyboxes());
     }
 
     Coroutine situationCo;
@@ -107,12 +103,13 @@ public class SituationChangerComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        GetLightData();
         if (!isRuninig)
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
         }
-        GetLightData();
         float timeDiff = 0;
+        time = defaultTimer;
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
@@ -156,7 +153,7 @@ public class SituationChangerComponent : ItemComponent
 
         //Debug.LogError(situationChangerComponentData.Timer);
         //TimeStats._intensityChanger?.Invoke(this.situationChangerComponentData.isOff, _light, _lightsIntensity, situationChangerComponentData.Timer, this.gameObject);
-        timeCheck = situationChangerComponentData.Timer;
+        timeCheck = time;
         SituationStarter(this.situationChangerComponentData.isOff, _light, _lightsIntensity, timeCheck, this.gameObject);
 
     }
@@ -294,6 +291,7 @@ public class SituationChangerComponent : ItemComponent
         isShowUI = false;
         BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
 
+        GetLightData();
         if (dimmerCoroutine != null)
         {
             StopCoroutine(dimmerCoroutine);
@@ -301,7 +299,7 @@ public class SituationChangerComponent : ItemComponent
             isRuninig = false;
             canRun = false;
             GamificationComponentData.instance.isNight = false;
-            if(GamificationComponentData.instance.isBlindToogle)
+            if (GamificationComponentData.instance.isBlindToogle)
                 GamificationComponentData.instance.isBlindToogle = false;
             SetDayMode(_light, _lightsIntensity);
 

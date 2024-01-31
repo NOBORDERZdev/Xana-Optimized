@@ -3,7 +3,6 @@ using Models;
 using System;
 using Photon.Pun;
 using UnityEngine;
-using Photon.Realtime;
 
 public class BlindComponent : ItemComponent
 {
@@ -22,10 +21,6 @@ public class BlindComponent : ItemComponent
     bool isRunning = false;
     GameObject playerObject;
     Coroutine dimLightsCoroutine;
-    private void Start()
-    {
-        GetLightsData();
-    }
 
     void GetLightsData()
     {
@@ -42,9 +37,10 @@ public class BlindComponent : ItemComponent
         this.blindComponentData = _blindComponentData;
         blindToggle = _blindComponentData.isOff;
         RuntimeItemID = this.gameObject.GetComponent<XanaItem>().itemData.RuntimeItemID;
+        StartCoroutine(SituationChangerSkyboxScript.instance.DownloadBlindComponentSkyboxes());
+        GetLightsData();
     }
 
-    Coroutine blindComponentCo;
     private void OnCollisionEnter(Collision _other)
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
@@ -56,11 +52,11 @@ public class BlindComponent : ItemComponent
 
             if (GamificationComponentData.instance.withMultiplayer)
             {
-                if (!blindToggle && isRunning)
+                if (!blindToggle && !isRunning)
                 {
                     UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
                     utccounterValue.UTCTime = DateTime.UtcNow.ToString();
-                    utccounterValue.CounterValue = blindComponentCo == null ? blindComponentData.time : time;
+                    utccounterValue.CounterValue = blindComponentData.time + 1;
                     var hash = new ExitGames.Client.Photon.Hashtable();
                     hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
                     PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
@@ -70,16 +66,6 @@ public class BlindComponent : ItemComponent
             else
                 StartComponent();
         }
-    }
-
-    IEnumerator BlindComponentStart()
-    {
-        while (time > 0)
-        {
-            time--;
-            yield return new WaitForSeconds(1f);
-        }
-        blindComponentCo = null;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -94,7 +80,6 @@ public class BlindComponent : ItemComponent
 
     IEnumerator DimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, int _skyBoxID = 20)
     {
-
         while (!timeCheck.Equals(0))
         {
             timeCheck -= Time.deltaTime;
@@ -120,7 +105,7 @@ public class BlindComponent : ItemComponent
             dimLightsCoroutine = null;
         }
 
-        dimLightsCoroutine = StartCoroutine(DimLights(blindToggle, _light, _lightsIntensity, blindComponentData.time + 1, blindComponentData.radius, skyBoxID));
+        dimLightsCoroutine = StartCoroutine(DimLights(blindToggle, _light, _lightsIntensity, time, blindComponentData.radius, skyBoxID));
     }
     public void Stop()
     {
@@ -176,7 +161,7 @@ public class BlindComponent : ItemComponent
 
 
         float timeDiff = 0;
-
+        time = blindComponentData.time + 1;
         if (playerObject != null)
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
@@ -191,7 +176,7 @@ public class BlindComponent : ItemComponent
                 DateTime currentDateTime = DateTime.UtcNow;
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue+1)
                     utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
                 else
                     return;
@@ -199,11 +184,11 @@ public class BlindComponent : ItemComponent
             }
         }
 
-        if (time == 0 && !blindToggle)
-        {
-            time = blindComponentData.time;
-            blindComponentCo = null;
-        }
+        //if (time == 0 && !blindToggle)
+        //{
+        //    time = blindComponentData.time;
+        //    blindComponentCo = null;
+        //}
 
         //if (blindComponentCo == null && time > 0)
         //    blindComponentCo = StartCoroutine(nameof(BlindComponentStart));
@@ -256,6 +241,7 @@ public class BlindComponent : ItemComponent
     {
         //TimeStats._blindComponentStop?.Invoke();
         //isRunning = false;
+        GetLightsData();
         ToggleStatus(false, blindComponentData.radius, GamificationComponentData.instance.previousSkyID);
         BuilderEventManager.OnBlindComponentTriggerEnter?.Invoke(0);
         isRunning = false;

@@ -152,17 +152,20 @@ public class FriendHomeManager : MonoBehaviour
     private void UpdateFriendPost(ReceivedFriendPostData data)
     {
         print("________________________ " + data.creatorId);
+        print("________________________ " + data.text_mood);
         foreach (var frds in SpawnFriendsObj)
         {
             if (frds.id == int.Parse(data.creatorId))
             {
-                if (!string.IsNullOrEmpty(data.text_post))
+                if (!string.IsNullOrEmpty(data.text_post) && !data.text_post.Equals("null"))
                 {
                     frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
+                    frds.friendPostBubbleObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
 
-                if (!string.IsNullOrEmpty(data.text_mood))
+                if (!string.IsNullOrEmpty(data.text_mood) && !data.text_mood.Equals("null"))
                 {
+                    print("________________________ " + data.text_mood);
                     GameManager.Instance.PostManager.GetComponent<UserAnimationPostFeature>().SetMood(data.text_mood, frds.friendObj.GetComponent<Actor>());
                     // Update Animation Here
                 }
