@@ -10,6 +10,7 @@ namespace PMY
 {
     public class PMY_VideoAndImage_Extension : MonoBehaviour
     {
+        public bool isAddBtnComponent = false;
         public int id;
 
         private Texture2D _texture;
@@ -60,17 +61,20 @@ namespace PMY
 
         private void Start()
         {
-            imgVideo16x9.AddComponent<Button>();
-            imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            if (isAddBtnComponent)
+            {
+                imgVideo16x9.AddComponent<Button>();
+                imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-            imgVideo9x16.AddComponent<Button>();
-            imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+                imgVideo9x16.AddComponent<Button>();
+                imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-            imgVideo1x1.AddComponent<Button>();
-            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+                imgVideo1x1.AddComponent<Button>();
+                imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-            imgVideo4x3.AddComponent<Button>();
-            imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+                imgVideo4x3.AddComponent<Button>();
+                imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            }
 
             if (PMY_Nft_Manager_Extension.Instance.PMY_RoomIdFromXanaConstant)
                 StartCoroutine(UpdateRoomType());
@@ -507,9 +511,6 @@ namespace PMY
                 }
             }
         }
-
-
-
 
     }
 }
