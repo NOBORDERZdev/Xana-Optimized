@@ -469,6 +469,9 @@ public class PlayerControllerNew : MonoBehaviour
                 animator.SetFloat("BlendY", 3f);
             }
             restJoyStick();
+
+            //Reset falling state when m_IsMovementActive = false.
+            animator.SetBool("IsFalling", false);
         }
 
         //if (!SelfieController.Instance.m_IsSelfieFeatureActive)
