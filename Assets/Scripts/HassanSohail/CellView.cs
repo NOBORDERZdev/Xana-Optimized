@@ -12,7 +12,7 @@ using EnhancedUI.EnhancedScroller;
         /// <summary>
         /// A reference to the UI Text element to display the cell data
         /// </summary>
-        public Text someTextText;
+       // public Text someTextText;
 
         /// <summary>
         /// This function just takes the Demo data and displays it

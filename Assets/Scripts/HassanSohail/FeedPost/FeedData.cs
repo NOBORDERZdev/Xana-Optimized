@@ -22,7 +22,7 @@ public class FeedData : MonoBehaviour
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
-   public void SetFeedPrefab(FeedResponseRow data){ 
+    public void SetFeedPrefab(FeedResponseRow data){ 
         _data = data;
         DisplayName.text = data.user.name;
         PostText.text = data.text_post;
@@ -46,7 +46,7 @@ public class FeedData : MonoBehaviour
         }
    }
 
-   public string CalculateTimeDifference(DateTime postTime)
+    public string CalculateTimeDifference(DateTime postTime)
    {
         DateTime currentTime = DateTime.Now;
         TimeSpan timeDifference = currentTime - postTime;
@@ -81,7 +81,7 @@ public class FeedData : MonoBehaviour
         }
    }
 
-        IEnumerator ReCallingTimeDifference(DateTime postTime){
+    IEnumerator ReCallingTimeDifference(DateTime postTime){
         yield return new WaitForSeconds(timeUpdateInterval);
         Date.text = CalculateTimeDifference(postTime).ToString();
     }

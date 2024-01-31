@@ -3,6 +3,8 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
+using UnityEngine.UI;
+
 public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
 {
     /// <summary>
@@ -75,7 +77,7 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
         _data = new SmallList<FeedResponseRow>();
         // load in a large set of data
         //LoadLargeData();
-        }
+     }
 
         
 
@@ -117,7 +119,9 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
     public float GetCellViewSize(EnhancedScroller scroller, int dataIndex)
     {
         // in this example, even numbered cells are 30 pixels tall, odd numbered cells are 100 pixels tall
-        return (dataIndex % 2 == 0 ? 30f : 100f);
+        //return (dataIndex % 2 == 0 ? 30f : 100f);
+          return gameObject.transform.GetChild(0).GetComponent<RectTransform>().rect.height ;
+
     }
 
     /// <summary>
