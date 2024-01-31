@@ -15,7 +15,7 @@ namespace UFE3D
         public UFE.MultiplayerMode multiplayerMode;
 
         //Attizaz 
-        public float secondPanelTime = 50;
+        public float secondPanelTime = 30;
         public GameObject firstPanel;
         public GameObject secondPanel;
         #endregion
@@ -238,37 +238,69 @@ namespace UFE3D
         private float currentValue = 0f;
         Coroutine increamentCoroutine = null;
         [SerializeField] Text matchingText;
-
+        Coroutine dotsCoroutine = null;
         private IEnumerator IncrementValueOverTime()
         {
-            float elapsedTime = 0f;
-          //  matchingText.text = "CONNECTING...";
-            while (elapsedTime < duration)
+            float elapsedTime = duration;
+            matchingText.text = "CONNECTING";
+            matchingText.fontSize = 47;
+           dotsCoroutine= StartCoroutine(AnimateDots(matchingText, "CONNECTING"));
+            bool done = false;
+            while (elapsedTime >= 0)
             {
-                currentValue = Mathf.Lerp(0f, targetValue, elapsedTime / duration);
-                uiText.text = currentValue.ToString("F0") + "%";
+               int minutes = Mathf.FloorToInt(elapsedTime / 60);
+                int seconds = Mathf.FloorToInt(elapsedTime % 60);
 
-                elapsedTime += Time.deltaTime;
-                //if (currentValue >= 25) {
-                //    matchingText.text = "MATCHING...";
-                //}
+                uiText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-                if (currentValue >= secondPanelTime) {
+                elapsedTime -= Time.deltaTime;
+                currentValue = duration - elapsedTime; 
+
+                if (!done&&currentValue >= 15)
+                {
+                    done = true;
+                    StopCoroutine(dotsCoroutine);
+                    dotsCoroutine = null;
+                    matchingText.text = "MATCHING";
+                    matchingText.fontSize = 57;
+                    dotsCoroutine = StartCoroutine(AnimateDots(matchingText, "MATCHING"));
+                     elapsedTime = duration;
+                }
+
+                if (currentValue >= secondPanelTime)
+                {
                     firstPanel.SetActive(false);
                     secondPanel.SetActive(true);
                 }
+
                 yield return null;
             }
-
             currentValue = targetValue;
-            uiText.text = currentValue.ToString("F0") + "%";
+            uiText.text = string.Format("{0:00}:{1:00}", 0, 0);
+            StopCoroutine(dotsCoroutine);
+            dotsCoroutine = null;
+            // uiText.text = currentValue.ToString("F0") + "%";
 
             if (currentValue == 100)
             {
                 UFE.DisconnectFromGame();
-                this.StopSearchingMatchGames(); 
+                this.StopSearchingMatchGames();
                 UFE.gameMode = GameMode.VersusMode;
-                UFE.StartPlayerVersusCpu(); //Attizaz
+                UFE.StartPlayerVersusCpu(); // Attizaz
+            }
+        }
+
+        private IEnumerator AnimateDots(Text text, string CurrentText)
+        {
+            int dotCount = 1;
+            while (true)
+            {
+                yield return new WaitForSeconds(0.5f);
+
+                string dots = new string('.', dotCount);
+                text.text = CurrentText + dots;
+
+                dotCount = (dotCount % 3) + 1;
             }
         }
 
