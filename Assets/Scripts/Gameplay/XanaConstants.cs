@@ -9,12 +9,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
-
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
-
+    public bool LoginasGustprofile = false; // for gust profile
     public int mic;
     public int minimap;
     public int userName;

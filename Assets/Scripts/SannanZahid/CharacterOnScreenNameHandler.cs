@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class CharacterOnScreenNameHandler : MonoBehaviour
 {
-    public static CharacterOnScreenNameHandler instance;
+   
     [SerializeField]
     TMPro.TMP_Text _onScreenName;
     
     #region Positioning Mechanics
     private void Start()
     {
-        instance = this;
+       
         StartCoroutine(SetName());
     }
     public void SetNameOfPlayerAgain()
@@ -23,9 +23,14 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     IEnumerator SetName()
     {
-      
-        if (PlayerPrefs.GetInt("WalletConnect") == 0)
+         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
+            _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+           
+        }
+        
+        if (PlayerPrefs.GetInt("WalletConnect") == 0 )
+        {    
             while (true)
             {
                 yield return new WaitForSeconds(1f);
@@ -34,45 +39,33 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
                     break;
                 }
             }
-           // Debug.LogError("SetName");
+           
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-              
-
-                _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+               
             }
             else
             {
-               // Debug.LogError("SetName 2");
-
                 StartCoroutine(IERequestGetUserDetails());
             }
         }
         else
         {
-           
-          
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                //Debug.LogError("SetName 1");
-
                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             }
             else
             {
-               
                 StartCoroutine(IERequestGetUserDetails());
-
             }
         }
 
     }
-
-
-       
-    public IEnumerator IERequestGetUserDetails()
+     public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {
