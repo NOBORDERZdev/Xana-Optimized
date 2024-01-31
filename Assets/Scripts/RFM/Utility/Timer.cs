@@ -52,7 +52,7 @@ namespace RFM
         public static void SetDurationAndRun(float value, Action onFinishedCallback = null,
             TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, bool isRPC = false, Action<float> onOneSecondCallback = null)
         {
-            Debug.LogError("SetDurationAndRun: " + value + " showTimeInMMSS: " + showTimeInMMSS);
+            // Debug.LogError("SetDurationAndRun: " + value + " showTimeInMMSS: " + showTimeInMMSS);
             var timerObj = new GameObject("timerObj");
             var timer = timerObj.AddComponent<RFM.Timer>();
             if (isRPC)

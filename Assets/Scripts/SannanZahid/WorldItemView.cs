@@ -322,6 +322,16 @@ public class WorldItemView : MonoBehaviour
         {
             XanaConstants.xanaConstants.userLimit = userLimit;
         }
+
+        if (m_EnvName.Contains("RFM"))
+        {
+            RFM.Globals.IsRFMWorld = true;
+        }
+        else
+        {
+            RFM.Globals.IsRFMWorld = false;
+        }
+
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
