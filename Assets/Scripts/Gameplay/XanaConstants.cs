@@ -15,6 +15,10 @@ public class XanaConstants : MonoBehaviour
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
 
+    public string NFTUrl;
+    public string clothJson;
+    public string defaultFightingName;
+
     public int mic;
     public int minimap;
     public int userName;

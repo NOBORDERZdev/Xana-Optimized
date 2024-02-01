@@ -241,11 +241,13 @@ public class PresetData_Jsons : MonoBehaviour
     }
   public  void abcd()
     {
+        Debug.LogError("abcd Called");
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
-        print("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  
+        Debug.LogError("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
         ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
         avatarController.IntializeAvatar();
+        Debug.LogError("IntializeAvatar after");
     }  
 }
