@@ -2956,9 +2956,9 @@ public class UFE : MonoBehaviour, UFEInterface
 
         // Load the player settings from disk
         UFE.SetMusic(PlayerPrefs.GetInt(UFE.MusicEnabledKey, 1) > 0);
-        UFE.SetMusicVolume(PlayerPrefs.GetFloat(UFE.MusicVolumeKey, 1f));
+        UFE.SetMusicVolume(PlayerPrefs.GetFloat(UFE.MusicVolumeKey, .5f));
         UFE.SetSoundFX(PlayerPrefs.GetInt(UFE.SoundsEnabledKey, 1) > 0);
-        UFE.SetSoundFXVolume(PlayerPrefs.GetFloat(UFE.SoundsVolumeKey, 1f));
+        UFE.SetSoundFXVolume(PlayerPrefs.GetFloat(UFE.SoundsVolumeKey, .5f));
     }
 
     protected void Start()

@@ -223,7 +223,6 @@ public class ScrollActivityNFT : MonoBehaviour
     void SaveAttributesInFile()
     {
         Debug.LogError("SaveAttributesInFile: " + _NFTIndex);
-        FightingModuleManager.Instance.NFTTokenId = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_NFTIndex].tokenId.ToString();
         BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
         nftAttributes.isNFTAquiped = true;
         /*

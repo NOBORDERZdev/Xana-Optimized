@@ -279,7 +279,29 @@ public class TouchJoystick : DynamicTouchControl
 		}
 #endif
 
-//! \endcond
+		//! \endcond
+		public void SetupNewInits(string buttonID)
+		{
+			if (this.initialRectCopy == null)
+				return;
+			print("Updating Joystick Stats");
+			if (buttonID == "JOYSTICK")
+			{
+				this.GetComponent<RectTransform>().anchoredPosition = new Vector3(PlayerPrefs.GetFloat("joyX", 149f), PlayerPrefs.GetFloat("joyY", 75.90f), 0);
+				this.transform.localScale = new Vector3(PlayerPrefs.GetFloat("joyScaleX", 1), PlayerPrefs.GetFloat("joyScaleY", 1), 0);
+			}
 
+			this.initialRectCopy.anchoredPosition3D = this.initialAnchoredPosition3D;
+			this.initialRectCopy.anchorMin = this.initialAnchorMin;
+			this.initialRectCopy.anchorMax = this.initialAnchorMax;
+			this.initialRectCopy.offsetMin = this.initialOffsetMin;
+			this.initialRectCopy.offsetMax = this.initialOffsetMax;
+			this.initialRectCopy.pivot = this.initialPivot;
+			StoreDefaultPos();
+			//if (buttonID == "SP")
+			//{
+			//	print("Updated Anchor" + this.initialAnchoredPosition3D);
+			//}
+		}
 	}
 }

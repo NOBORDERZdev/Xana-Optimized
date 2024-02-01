@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class BDCanvasButtonsHandler : MonoBehaviour
 {
     public RectTransform joystick, LK, LP, HP, HK, SP, B;
+    public Image[] buttonImgs;
+    public TouchButtonSpriteAnimator[] buttonImgs2;
     public static BDCanvasButtonsHandler inst;
 
     private void Awake()

@@ -526,6 +526,7 @@ public abstract class DynamicTouchControl : TouchControl
 				}
 			}
 			//////////////////////////////////////////////////////////////////////
+			
 
 		this.initialRectCopy.anchoredPosition3D	= this.initialAnchoredPosition3D;
 		this.initialRectCopy.anchorMin				= this.initialAnchorMin;
@@ -533,11 +534,6 @@ public abstract class DynamicTouchControl : TouchControl
 		this.initialRectCopy.offsetMin				= this.initialOffsetMin;
 		this.initialRectCopy.offsetMax				= this.initialOffsetMax;
 		this.initialRectCopy.pivot						= this.initialPivot;
-
-
-			if (this.name == "Button-6") {
-				print("Yes Button 6 : "+ this.initialAnchoredPosition3D);
-			}
 		}
 
 

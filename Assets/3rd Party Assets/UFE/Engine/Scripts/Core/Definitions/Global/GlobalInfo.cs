@@ -69,9 +69,9 @@ namespace UFE3D
         public NetworkOptions networkOptions = new NetworkOptions();
 
         public bool music = true;
-        public float musicVolume = 1f;
+        public float musicVolume = 0.5f;
         public bool soundfx = true;
-        public float soundfxVolume = 1f;
+        public float soundfxVolume = 0.5f;
 
         public Color colorStateOne = Color.red;
         public Color colorIsHit = Color.magenta;

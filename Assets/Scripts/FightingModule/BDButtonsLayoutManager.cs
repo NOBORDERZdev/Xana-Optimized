@@ -1,4 +1,5 @@
 using ControlFreak2;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class BDButtonsLayoutManager : MonoBehaviour
 {
     public Button saveLayoutBtn;
     public Button closePanelBtn;
+    public Button switchToIcons;
+    public Button switchToInitials;
 
     public GameObject currentSelectedObject;
 
@@ -18,7 +21,10 @@ public class BDButtonsLayoutManager : MonoBehaviour
 
 
     public bool destroyMe = true;
-    public GameObject myObj;
+
+    public Sprite[] btnInitials, btnIcons;
+    public Image[] buttonImages;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -29,38 +35,85 @@ public class BDButtonsLayoutManager : MonoBehaviour
         {
             instance = this;
         }
-       // LoadLayout();
-        
     }
 
     private void OnEnable()
     {
         sizeSlider.onValueChanged.AddListener(ResizeUI);
-        //RFM.EventsManager.onToggleSetLayoutPanel += ActivatePanel;
-
+        switchToIcons.onClick.AddListener(() => SwitchIcons(true));
+        switchToInitials.onClick.AddListener(() => SwitchIcons(false));
     }
+
+   
     private void OnDisable()
     {
+        sizeSlider.value = 0;
+        currentSelectedObject = null;
         sizeSlider.onValueChanged.RemoveAllListeners();
-      //  RFM.EventsManager.onToggleSetLayoutPanel -= ActivatePanel;
+        switchToIcons.onClick.RemoveAllListeners();
+        switchToInitials.onClick.RemoveAllListeners();
     }
     private void Start()
     {
         LoadLayout();
+        SelectIcons();
         if (destroyMe)
         {
             destroyMe = false;
-            myObj.SetActive(false);
-            print("Done");
+            gameObject.SetActive(false);
         }
     }
-    public void ActivatePanel() 
-    {
-        transform.GetChild(0).gameObject.SetActive(true);
-        sizeSlider.value = 0;
-        LoadLayout();
+
+
+    public void SelectIcons() {
+
+        if (PlayerPrefs.GetInt("icons") == 0)
+        {
+            SetToInitials();
+        }
+        else
+        {
+            SetToIcons();
+        }
     }
 
+
+    private void SetToIcons()
+    {
+        for (int i = 0; i < buttonImages.Length; i++)
+        {
+            buttonImages[i].sprite = btnIcons[i];
+            BDCanvasButtonsHandler.inst.buttonImgs[i].sprite = btnIcons[i];
+            BDCanvasButtonsHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnIcons[i];
+        }
+    }
+
+
+    private void SetToInitials()
+    {
+        for (int i = 0; i < buttonImages.Length; i++)
+        {
+            buttonImages[i].sprite = btnInitials[i];
+            BDCanvasButtonsHandler.inst.buttonImgs[i].sprite = btnInitials[i];
+            BDCanvasButtonsHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnInitials[i];
+        }
+    }
+
+    public void SwitchIcons(bool _icons) {
+        if (_icons) {
+            SetToIcons();
+            PlayerPrefs.SetInt("icons", 1);
+        }
+        else
+        {
+            SetToInitials();
+            PlayerPrefs.SetInt("icons", 0);
+        }
+    }
+    
+
+    #region Layout Placement & Resizing Related Settings
+    
     public void SaveLayout()
     {
         PlayerPrefs.SetFloat("joyX", joyStick.anchoredPosition.x);
@@ -127,21 +180,27 @@ public class BDButtonsLayoutManager : MonoBehaviour
 
         BDCanvasButtonsHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
-     //   CanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        //   CanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-              //  CanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits("JOYSTICK");
-                BDCanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits("LK");
-                BDCanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits("LP");
-                BDCanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits("HK");
-                BDCanvasButtonsHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits("HP");
-                BDCanvasButtonsHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits("SP");
-                BDCanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits("BLOCK");
+        ApplyNewSettings();
 
         PlayerPrefs.SetInt("ControlsSet", 1);
         PlayerPrefs.Save();
 
     }
-
+    
+    
+    void ApplyNewSettings() {
+        BDCanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchJoystick>().SetupNewInits("JOYSTICK");
+        BDCanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits("LK");
+        BDCanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits("LP");
+        BDCanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits("HK");
+        BDCanvasButtonsHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits("HP");
+        BDCanvasButtonsHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits("SP");
+        BDCanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits("BLOCK");
+    }
+    
+    
     public void LoadLayout()
     {
 
@@ -191,6 +250,7 @@ public class BDButtonsLayoutManager : MonoBehaviour
         BDCanvasButtonsHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
     }
 
+    
     public void ResetLayout()
     {
         
@@ -247,7 +307,10 @@ public class BDButtonsLayoutManager : MonoBehaviour
         B.anchoredPosition = new Vector3(PlayerPrefs.GetFloat("BX", -173.20f), PlayerPrefs.GetFloat("BY", 225.40f), 0);//(893.47, 225.80)
         B.transform.localScale = new Vector3(PlayerPrefs.GetFloat("BScaleX", 1), PlayerPrefs.GetFloat("BScaleY", 1), 0);
 
+        SetToInitials();
+        PlayerPrefs.SetInt("icons", 0);
         PlayerPrefs.SetInt("ControlsSet", 0);
+      //  ApplyNewSettings();
     }
 
 
@@ -258,4 +321,6 @@ public class BDButtonsLayoutManager : MonoBehaviour
             currentSelectedObject.transform.localScale = new Vector3(1f + size, 1f + size, 0);
         }
     }
+    #endregion
+
 }

@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ public class FightingGameManager : MonoBehaviour
     public PlayerDataClass player1Data = new PlayerDataClass();
     public PlayerDataClass player2Data = new PlayerDataClass();
     public string winnerClothJson;
+
     public string myName = ""; //Attizaz
     public string opponentName = "";
 
@@ -27,13 +29,22 @@ public class FightingGameManager : MonoBehaviour
 
     public string PlayerClothJson;
     public string opponentClothJson;
+
+
     public Button OpenButton;
     [HideInInspector]public int id1;
     [HideInInspector] public int id2;
 
-    public bool isAITestingMode = false;
-    [Tooltip("If above bool is on then you will be to select AI profile of your choice")] public int AIProfileNumber = 0;
     public GameObject player1, player2,winnerAvatar;
+
+    public bool isAITestingMode = false;
+    [Tooltip("If above bool is on then you will be to select AI profile of your choice")]public int AIProfileNumber=0;
+
+
+    public GameObject buttonLayoutPanel;
+    public static Action activateLayoutPanel;
+    
+    
     private void Awake()
     {
         if (instance == null)
@@ -42,10 +53,19 @@ public class FightingGameManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        activateLayoutPanel += ActivateButtonsLayoutPanel;
+    }
+
+    private void OnDisable()
+    {
+        activateLayoutPanel -= ActivateButtonsLayoutPanel;
+    }
     private void Start()
     {
-        myName = "Player : " + Random.Range(0, 20).ToString();
-        PhotonNetwork.NickName = myName;
+        /*myName = "Player : " + UnityEngine.Random.Range(0, 20).ToString();
+        PhotonNetwork.NickName = myName;*/
         if (startDirectly)
         {
             print("Starting"); //kush
@@ -55,6 +75,9 @@ public class FightingGameManager : MonoBehaviour
         }
     }
 
+    public void ActivateButtonsLayoutPanel() {
+        buttonLayoutPanel.SetActive(true);
+    }
 
 
     #region Attizaz's code
@@ -145,9 +168,8 @@ public class FightingGameManager : MonoBehaviour
         
         SoundChanger soundChanger = FindObjectOfType<SoundChanger>();
         winnerAvatar = soundChanger.WinnerAvatar;
-
         winnerAvatar.GetComponent<AvatarController>().staticClothJson = winnerClothJson;
-        
+
         player1.SetActive(false);
         player2.SetActive(false);
 
