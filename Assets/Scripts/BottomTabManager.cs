@@ -215,7 +215,7 @@ public class BottomTabManager : MonoBehaviour
                     if (FeedUIController.Instance)
                     {
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
-                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
                 }

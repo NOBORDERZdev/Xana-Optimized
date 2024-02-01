@@ -223,6 +223,10 @@ public class FeedController : MonoBehaviour
         }
     }
 
+
+    public void BackToHome(){
+        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+    }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
