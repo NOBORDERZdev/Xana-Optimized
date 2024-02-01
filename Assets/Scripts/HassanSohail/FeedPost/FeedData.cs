@@ -23,7 +23,7 @@ public class FeedData : MonoBehaviour
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
-    FeedScrollerController scrollerController;
+    FeedScroller scrollerController;
     public void SetFeedPrefab(FeedResponseRow data){ 
         _data = data;
         DisplayName.text = data.user.name;
@@ -52,6 +52,7 @@ public class FeedData : MonoBehaviour
    
     void HieghtListUpdateWithDelay(){ 
        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+       gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
     public string CalculateTimeDifference(DateTime postTime)
@@ -80,7 +81,7 @@ public class FeedData : MonoBehaviour
         else if (timeDifference.TotalDays < 365)
         {
              timeUpdateInterval =86400;
-            return $"{Math.Floor(timeDifference.TotalDays / 30)} m";
+            return $"{Math.Floor(timeDifference.TotalDays / 30)} mo";
         }
         else
         {
@@ -130,6 +131,7 @@ public class FeedData : MonoBehaviour
                 UpdateLikeCount(likeResponse.data.likeCount);
                 //Likes.text =  likeResponse.data.likeCount.ToString();
                 isLiked = !isLiked;
+                scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
             }
         }
@@ -163,7 +165,7 @@ public class FeedData : MonoBehaviour
         Likes.text = count.ToString();
     }
 
-    public void SetFeedUiController(FeedScrollerController controller){ 
+    public void SetFeedUiController(FeedScroller controller){ 
         scrollerController = controller;    
     }
 

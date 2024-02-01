@@ -1,14 +1,12 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using System.Collections;
-using EnhancedUI;
+﻿using EnhancedUI;
 using EnhancedUI.EnhancedScroller;
-using UnityEngine.UI;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
+public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
 {
     /// <summary>
     /// Internal representation of our data. Note that the scroller will never see
@@ -79,19 +77,19 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
         //LoadLargeData();
      }
 
-    /// <summary>
-    /// Populates the data with a lot of records
-    /// </summary>
-    private void LoadLargeData()
-    {
-        // set up some simple data
-        _data = new SmallList<FeedResponseRow>();
-        //for (var i = 0; i < 100; i++)
-        //    _data.Add(new Data() { someText = "Cell Data Index " + i.ToString() });
+    ///// <summary>
+    ///// Populates the data with a lot of records
+    ///// </summary>
+    //private void LoadLargeData()
+    //{
+    //    // set up some simple data
+    //    _data = new SmallList<FeedResponseRow>();
+    //    //for (var i = 0; i < 100; i++)
+    //    //    _data.Add(new Data() { someText = "Cell Data Index " + i.ToString() });
 
-        // tell the scroller to reload now that we have the data
-        scroller.ReloadData();
-    }
+    //    // tell the scroller to reload now that we have the data
+    //    scroller.ReloadData();
+    //}
 
     #region EnhancedScroller Handlers
 
@@ -118,7 +116,7 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
     {
         // in this example, even numbered cells are 30 pixels tall, odd numbered cells are 100 pixels tall
         //return (dataIndex % 2 == 0 ? 30f : 100f);
-        if (dataIndex<feedHeight.Count)
+        if (dataIndex < feedHeight.Count)
         {
              return feedHeight[dataIndex].height ;
         }
@@ -151,7 +149,7 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
 
         // in this example, we just pass the data to our cell's view which will update its UI
         //cellView.SetData(_data[dataIndex]);
-        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScrollerController>());
+        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScroller>());
         cellView.GetComponent<FeedData>().SetFeedPrefab(_data[dataIndex]);
         // return the cell to the scroller
         return cellView;
@@ -231,6 +229,17 @@ public class FeedScrollerController : MonoBehaviour, IEnhancedScrollerDelegate, 
         if (!feedHeight.Any(item => item.feedId == feedId))
         {
             feedHeight.Add( new FeedHeightData(feedId,height));
+        }
+    }
+
+    public void updateLikeCount(int feedId, int likeCount,bool likedBool= false){
+        for (int i = 0; i < _data.Count; i++)
+        {
+            if (_data[i].id == feedId)
+            {
+                _data[i].like_count = likeCount;
+                _data[i].isLikedByUser = likedBool;
+            }
         }
     }
 }

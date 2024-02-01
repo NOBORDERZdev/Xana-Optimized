@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class FeedController : MonoBehaviour
 {
+    [SerializeField] private Transform noFeedsScreen;
     [SerializeField] private FeedUIController feedUIController;
     //[SerializeField] private GameObject feedPostPrefab;
     [SerializeField] private Transform feedContentParent;
@@ -20,7 +21,7 @@ public class FeedController : MonoBehaviour
     List<FeedData> feedList = new List<FeedData>();
     bool isFeedInitialized = false;
     [SerializeField]
-    FeedScrollerController scrollerController;
+    FeedScroller scrollerController;
     private void OnEnable()
     {
         SocketController.instance.updateFeedLike += UpdateFeedLike;
@@ -37,6 +38,7 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
+        FeedUIController.Instance.ShowLoader(true);
         scrollerController.IntFeedScroller();
         await GetFeedData(APIManager.Instance.userId);
     }
@@ -50,12 +52,15 @@ public class FeedController : MonoBehaviour
             if (response.isNetworkError)
             {
                 Debug.Log(response.error);
+                noFeedsScreen.gameObject.SetActive(true);
             }
             else
             {
+                noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                // FeedAPIData.Add(feedResponseData);
                 isFeedInitialized = true;
+                FeedUIController.Instance.ShowLoader(false);
                 foreach (var item in feedResponseData.data.rows)
                 {
                     if (!String.IsNullOrEmpty( item.text_post) && !item.text_post.Equals("null") )
@@ -100,6 +105,7 @@ public class FeedController : MonoBehaviour
             if (item.GetFeedId() == feedLikeSocket.textPostId)
             {
               item.UpdateLikeCount(feedLikeSocket.likeCount);
+              scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
             }
         }
     }

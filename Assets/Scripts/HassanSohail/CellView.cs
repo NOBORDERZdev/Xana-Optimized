@@ -18,10 +18,10 @@ using EnhancedUI.EnhancedScroller;
         /// This function just takes the Demo data and displays it
         /// </summary>
         /// <param name="data"></param>
-        public void SetData(FeedResponseRow data)
-        {
-            // update the UI text with the cell data
-           // someTextText.text = data.someText;
-        }
+        //public void SetData(FeedResponseRow data)
+        //{
+        //    // update the UI text with the cell data
+        //   // someTextText.text = data.someText;
+        //}
     }
 //}
