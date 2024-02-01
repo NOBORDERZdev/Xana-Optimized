@@ -377,7 +377,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            welcomeScreen.SetActive(false);
+            LoginScreenNew.SetActive(false);
         }
     }
 
@@ -1452,6 +1452,11 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         SignUpPanal.SetActive(true);
                     }
+                    break;
+                }
+                case 21:
+                {
+                   LoginScreenNew.SetActive(true);
                     break;
                 }
         }
