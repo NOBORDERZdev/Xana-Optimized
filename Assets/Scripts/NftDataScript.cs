@@ -76,7 +76,14 @@ public class NftDataScript : MonoBehaviour
             if (!UserRegisterationManager.instance.nftlist.Contains("Something went wrong"))
             {
                 Debug.LogError("getLocalStorageNft");
-                //NftLoadingPenal.SetActive(true);
+                if (ContentPanel.transform.childCount <= 0)
+                {
+                    NftLoadingPenal.SetActive(true);
+                }
+                else
+                {
+                    NftLoadingPenal.SetActive(false);
+                }
                 NoNftyet.SetActive(false);
                 NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
                 nftloading.SetActive(true);
