@@ -64,8 +64,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
             exitOnce = false;
             if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
-                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+                StartCoroutine(LobbySceneSwitch("XANA Lobby")); // to Lobby if player enter in world from Xana lobby
             }
+            else if (XanaConstants.xanaConstants.isFromPMYLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
+                StartCoroutine(LobbySceneSwitch("PMY ACADEMY")); // to Lobby if player enter in world from Xana lobby
             else
             {
 
@@ -98,7 +100,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
             }
         }
     }
-    private IEnumerator LobbySceneSwitch()
+    private IEnumerator LobbySceneSwitch(string sceneToLoad)
     {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
@@ -107,7 +109,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(.2f);
         XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
-        XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+        XanaConstants.xanaConstants.JjWorldTeleportSceneName = sceneToLoad;
         StartCoroutine(LoadMainEnumerator());
     }
     IEnumerator LoadMainEnumerator()
