@@ -1599,7 +1599,7 @@ public class APIManager : MonoBehaviour
     }
 
     IEnumerator IERequestHotFirends(){ 
-        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_HotUsers + "1/100";
         using (UnityWebRequest www= UnityWebRequest.Get(uri)){
              www.SetRequestHeader("Authorization", userAuthorizeToken);
              yield return www.SendWebRequest();
@@ -1617,8 +1617,8 @@ public class APIManager : MonoBehaviour
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Hot Friends Data" + data);
-                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.ShowHotFirend(searchUserRoot);
+                hotUsersRoot = JsonUtility.FromJson<HotUsersRoot>(data);
+                APIController.Instance.ShowHotFirend(hotUsersRoot);
                 //APIController.Instance.FeedGetAllSearchUser();
             }
         }
@@ -2742,6 +2742,7 @@ public class APIManager : MonoBehaviour
     public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
 
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
+    public HotUsersRoot hotUsersRoot = new HotUsersRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
     public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
@@ -3433,7 +3434,7 @@ public class SearchUserRow
     public int followerCount;
     public bool is_following_me;
     public bool am_i_following;
-    public bool is_my_close_friend;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -3809,5 +3810,29 @@ public class CommentPostDetail
     public bool success;
     public CommentPostData data;
     public string msg;
+}
+#endregion
+#region Hot Users API Classes //Most Active Users in 24 hours
+[System.Serializable]
+public class HotUsersRoot
+{
+    public bool success;
+    public HotUsersData data;
+    public string msg;
+}
+[System.Serializable]
+public class HotUsersData
+{
+    public int count;
+    public List<HotUsersRow> rows;
+}
+[System.Serializable]
+public class HotUsersRow
+{
+    public int totalActivityCount;
+    public bool is_following_me;
+    public bool am_i_following;
+    public bool is_close_friend;
+    public SearchUserRow user;
 }
 #endregion
