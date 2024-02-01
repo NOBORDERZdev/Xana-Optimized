@@ -1047,8 +1047,8 @@ public class MyProfileDataManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-
-        NftDataScript.Instance.NftLoadingPenal.SetActive(true);    
+        Debug.LogError("NftLoadingPenal OnClickNFTTabButtonMain true");
+        //NftDataScript.Instance.NftLoadingPenal.SetActive(true);    
            NftDataScript.Instance.currentSelection();
         parentHeightResetScript.OnHeightReset(index);
        selectionItemScript1.OnSelectedClick(index);
