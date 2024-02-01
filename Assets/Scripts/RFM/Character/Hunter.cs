@@ -9,6 +9,8 @@ namespace RFM.Character
 
         public string nickName = "Player";
 
+        public int RewardMultiplier;
+
 
         //internal int participationAmount = 100;
         //public int rewardMultiplier = 0;

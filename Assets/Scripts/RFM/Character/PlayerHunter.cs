@@ -2,6 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RFM.Character
 {
@@ -51,7 +52,7 @@ namespace RFM.Character
                 PhotonNetwork.RaiseEvent(PhotonEventCodes.PlayerRunnerCaught,
                     prameters,
                     new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
-                    SendOptions.SendReliable);
+                    SendOptions.SendReliable); 
 
                 other.GetComponent<Collider>().enabled = false; // disable the runner collider on local client to avoid duplicate calls
 
@@ -86,7 +87,13 @@ namespace RFM.Character
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            
-        }
+            if (stream.IsWriting)
+            {
+                stream.SendNext(RewardMultiplier);
+            }
+            else
+            {
+                RewardMultiplier = (int)stream.ReceiveNext();
+            }
     }
 }
