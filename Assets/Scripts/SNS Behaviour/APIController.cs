@@ -465,7 +465,7 @@ public class APIController : MonoBehaviour
         {
             for (int j = 0; j < hotUserRoot.data.rows.Count; j++)
             {
-                if (!hotUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId))
+                if (!hotUserRoot.data.rows[j].user.id.Equals(APIManager.Instance.userId))
                 {
                     GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
                     //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
