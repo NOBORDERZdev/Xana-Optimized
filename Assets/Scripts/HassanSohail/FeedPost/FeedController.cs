@@ -1,9 +1,11 @@
+﻿using AdvancedInputFieldPlugin;
 using EnhancedUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,9 +13,8 @@ using UnityEngine.UI;
 
 public class FeedController : MonoBehaviour
 {
-    [SerializeField] private Transform noFeedsScreen;
     [SerializeField] private FeedUIController feedUIController;
-    //[SerializeField] private GameObject feedPostPrefab;
+    [SerializeField] private GameObject feedPostPrefab;
     [SerializeField] private Transform feedContentParent;
     int feedPageNumber = 1;
     int feedPageSize = 1000;
@@ -22,6 +23,14 @@ public class FeedController : MonoBehaviour
     bool isFeedInitialized = false;
     [SerializeField]
     FeedScroller scrollerController;
+    [SerializeField] private Transform noFeedsScreen;
+    [SerializeField] private Transform noFeedSerach;
+    [SerializeField] private TMP_Text noFeedText;
+    [SerializeField] GameObject SerachPanel;
+    [SerializeField] GameObject SearchContentPanel;
+    [SerializeField] GameObject SerchBarObj;
+    [SerializeField] AdvancedInputField searchInputField;
+
     private void OnEnable()
     {
         SocketController.instance.updateFeedLike += UpdateFeedLike;
@@ -107,6 +116,110 @@ public class FeedController : MonoBehaviour
               item.UpdateLikeCount(feedLikeSocket.likeCount);
               scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
             }
+        }
+    }
+
+    public void OnClickSerachBtn(){
+        if (SerchBarObj.activeInHierarchy) // serach is active 
+        {
+            SerchBarObj.SetActive(false);
+            SerachPanel.SetActive(false);
+            SearchContentPanel.SetActive(false);
+            EmptySearchPanel();
+            searchInputField.Text = "";
+        }
+        else// serach is not active 
+        {
+            SerchBarObj.SetActive(true);
+            SerachPanel.SetActive(true);
+            SearchContentPanel.SetActive(true);
+        }
+    }
+
+    public void SearchFeed(){
+        print("~~~~~");
+        FeedUIController.Instance.ShowLoader(true);
+        EmptySearchPanel();   
+        if (searchInputField.Text.Length > 0)       
+        {
+            StartCoroutine(FeedSearch(searchInputField.Text));
+        }
+        else
+        {
+            feedContentParent.gameObject.SetActive(true);
+            scrollerController.scroller.ReloadData();
+        }
+    }
+
+    IEnumerator FeedSearch(string input)
+    {
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+APIManager.Instance.userId +"/"+ input +"/1/20";
+        UnityWebRequest response = UnityWebRequest.Get(url);
+        yield return response.SendWebRequest();
+        if (response.isNetworkError)
+        {
+            Debug.Log(response.error);
+            noFeedSerach. gameObject.SetActive(true);
+            noFeedsScreen.gameObject.SetActive(false);
+            feedContentParent.gameObject.SetActive(true);
+        }
+        else
+        {
+            noFeedSerach. gameObject.SetActive(false);
+            noFeedsScreen.gameObject.SetActive(false);
+            SearchContentPanel.SetActive(true);
+            SerachPanel.SetActive(true);
+            feedContentParent.gameObject.SetActive(false);
+            print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
+            FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
+            if (feedResponseData.data.rows.Count>0)
+            {
+                foreach (var item in feedResponseData.data.rows)
+                {
+                    if (!String.IsNullOrEmpty( item.text_post) && !item.text_post.Equals("null") )
+                    {
+                        GameObject temp = Instantiate(feedPostPrefab);
+                        temp.transform.SetParent(SearchContentPanel.transform);
+                        temp.transform.localScale = Vector3.one;
+                        temp.GetComponent<FeedData>().SetFeedPrefab(item,false);
+                    }
+                }
+            }
+            else
+            {
+                if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese) // for English 
+                {
+                    noFeedText.text = "We couldn’t find a match for “ "+
+                                       SerchStringToEllipsis( input)
+                                        +"”.\r\nPlease try another search.";
+                }
+                else if(GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)   // for Jp 
+                {
+                     noFeedText.text = SerchStringToEllipsis( input) +"に一致するものが見つかりませんでした。\r\n別の検索を試してください。";
+                                        
+                }
+                noFeedSerach. gameObject.SetActive(true);
+            }
+            FeedUIController.Instance.ShowLoader(false);
+        }
+        response.Dispose();
+    }
+
+
+    string SerchStringToEllipsis(string input)
+    {
+        if (input.Length > 5)
+        {
+            input = input.Substring(0, 5);
+            input = input + "...";
+        }
+        return input;
+    }
+
+    void EmptySearchPanel(){
+        foreach (Transform item in SearchContentPanel.transform)
+        {
+            Destroy(item.gameObject);
         }
     }
 
