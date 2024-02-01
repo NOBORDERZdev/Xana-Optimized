@@ -116,8 +116,8 @@ public class NFTtypeClass : MonoBehaviour
     }
     public void DownloadAndLoadNFT()
     {
-        Debug.LogError("When downloading Index is here " + _indexNumber);
-        Debug.LogError("NFT Object Name: " + gameObject.name);
+        /*Debug.LogError("When downloading Index is here " + _indexNumber);
+        Debug.LogError("NFT Object Name: " + gameObject.name);*/
         AssetCache.Instance.EnqueueOneResAndWait(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber], UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber], (success) =>
         {
             if (success)
