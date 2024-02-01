@@ -117,13 +117,15 @@ public class MyProfileDataManager : MonoBehaviour
     //public TMP_InputField editProfileWebsiteInputfield;
     //public InputField editProfileWebsiteInputfield;
     public AdvancedInputField editProfileWebsiteAdvanceInputfield;
-    public TMP_InputField editProfileBioInputfield;
+    //public TMP_InputField editProfileBioInputfield;
+    public AdvancedInputField editProfileBioInputfield;
     //public InputField editProfileBioInputfield;
     //public TMP_InputField editProfileGenderInputfield;
     public InputField editProfileGenderInputfield;
     public GameObject editProfilemainInfoPart;
     public GameObject websiteErrorObj;
     public GameObject nameErrorMessageObj;
+    public GameObject uniqueNameErrorMessageObj;
     public Button editProfileDoneButton;
     bool isEditProfileNameAlreadyExists;
 
@@ -135,11 +137,14 @@ public class MyProfileDataManager : MonoBehaviour
     public AdvancedInputField bioEditAdvanceInputField;
 
     [Space]
-    [Header("Tags in Profile")]
+    [Header("Tags in Edit Profile")]
     public GameObject tags_row;
     public GameObject tags_row_obj;
     public Transform tags_row_parent;
     public List<string> availableTagsAtServer;
+    public List<string> userSelectedTags;
+    public GameObject dropDownBtn;
+
 
     [Space]
     [Header("For API Pagination")]
@@ -1247,11 +1252,17 @@ public class MyProfileDataManager : MonoBehaviour
             editProfileJobAdvanceInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.job);
             //editProfileWebsiteInputfield.text = myProfileData.userProfile.website;
             editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
-            editProfileBioInputfield.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
+            if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
+                editProfileUniqueNameAdvanceInputfield.Text = "";
+            else
             editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
+
+            // Convert Array into List
+            userSelectedTags = new List<string>(myProfileData.tags);
         }
     }
 
@@ -1262,6 +1273,11 @@ public class MyProfileDataManager : MonoBehaviour
         {
             availableTagsAtServer = new List<string>();
             StartCoroutine(CallAPI_ForTags());
+        }
+        else
+        {
+            // Api Called Already so display tags
+            Highlight_UserSelectedTag();
         }
     }
     IEnumerator CallAPI_ForTags()
@@ -1340,6 +1356,10 @@ public class MyProfileDataManager : MonoBehaviour
 
                 tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
                 tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
+
+                if(userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
+                    tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
+
                 generatedTagCount += 1;
             }
         }
@@ -1359,6 +1379,42 @@ public class MyProfileDataManager : MonoBehaviour
             return 3;
         else
             return 4;
+    }
+
+    void Highlight_UserSelectedTag()
+    {
+        // highlight user selected tags that are available at server when reopen edit profile screen
+        for (int i = 0; i < userSelectedTags.Count; i++)
+        {
+            for (int j = 0; j < tags_row_parent.childCount; j++)
+            {
+                for (int k = 0; k < tags_row_parent.GetChild(j).childCount; k++)
+                {
+                    print("Tags Details : " + i + " -- " + j + " -- " + k);
+                    if (tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().tagName.text == userSelectedTags[i])
+                    {
+                        print("Tag Highlighted : " + userSelectedTags[i]);
+                        tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().Select_UnselectTags();
+                    }
+                }
+            }
+        }   
+
+    }
+
+    public void EnableTagScroller(ScrollRect scrollerObj)
+    {
+        if (dropDownBtn.transform.localScale.y == 1)
+        {
+            dropDownBtn.transform.localScale = new Vector3(1, -1, 1);
+            scrollerObj.enabled = true;
+        }
+        else
+        {
+            dropDownBtn.transform.localScale = Vector3.one;
+            scrollerObj.enabled = false;
+            scrollerObj.content.localPosition = Vector3.zero;
+        }
     }
 
 
@@ -1398,6 +1454,8 @@ public class MyProfileDataManager : MonoBehaviour
     string bio = "";
     string gender = "";
     string username = "";
+    string uniqueUsername = "";
+    string[] tempTags;
 
     public void OnClickEditProfileDoneButton()
     {
@@ -1419,6 +1477,7 @@ public class MyProfileDataManager : MonoBehaviour
             website = myProfileData.userProfile.website;
             bio = APIManager.DecodedString(myProfileData.userProfile.bio);
             gender = myProfileData.userProfile.gender;
+            uniqueUsername = myProfileData.userProfile.username;
         }
 
         EditProfileDoneButtonSetUp(false);//setup edit profile done button.......
@@ -1449,6 +1508,7 @@ public class MyProfileDataManager : MonoBehaviour
         }*/
 
         //if (!string.IsNullOrEmpty(editProfileNameInputfield.text))
+        // Display Name
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text))
         {
             //if (editProfileNameInputfield.text != playerNameText.text)
@@ -1477,8 +1537,38 @@ public class MyProfileDataManager : MonoBehaviour
             ShowEditProfileNameErrorMessage("The name field should not be empty");
             return;
         }
+        
+        // User Unique Name
+        if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
+        {
+            //if (editProfileNameInputfield.text != playerNameText.text)
+            if (editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername && (uniqueUsername != "null" || uniqueUsername != "Null"))
+            {
+                //string tempStr = editProfileNameInputfield.text;
+                string tempStr = editProfileUniqueNameAdvanceInputfield.Text;
+                if (tempStr.StartsWith(" "))
+                {
+                    tempStr = tempStr.TrimStart(' ');
+                }
+                if (tempStr.EndsWith(" "))
+                {
+                    tempStr = tempStr.TrimEnd(' ');
+                }
+                Debug.Log("temp Name Str:" + tempStr);
+                uniqueUsername = tempStr;
+                checkEditInfoUpdated = 1;
+                Debug.LogError("New UniqueUser Name ----> " + uniqueUsername);
+            }
+        }
+        else
+        {
+            Debug.Log("Please enter  username");
+            ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+            return;
+        }
 
         //if (editProfileJobInputfield.text != job)
+        // Job
         if (editProfileJobAdvanceInputfield.Text != job)
         {
             //string tempStr = editProfileJobInputfield.text;
@@ -1568,10 +1658,10 @@ public class MyProfileDataManager : MonoBehaviour
                 website = "";
             }
         }*/
-
-        if (editProfileBioInputfield.text != bio)
+        // Bio
+        if (editProfileBioInputfield.Text != bio)
         {
-            string tempStr = editProfileBioInputfield.text;
+            string tempStr = editProfileBioInputfield.Text;
             if (tempStr.StartsWith(" "))
             {
                 tempStr = tempStr.TrimStart(' ');
@@ -1582,12 +1672,13 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            if (string.IsNullOrEmpty(editProfileBioInputfield.text))
+            if (string.IsNullOrEmpty(editProfileBioInputfield.Text))
             {
                 bio = "";
             }
         }
 
+        // Gander
         if (!string.IsNullOrEmpty(editProfileGenderInputfield.text))
         {
             if (editProfileGenderInputfield.text != gender)
@@ -1596,6 +1687,20 @@ public class MyProfileDataManager : MonoBehaviour
                 checkEditInfoUpdated = 1;
             }
         }
+
+        // Check for Tags   
+        tempTags = userSelectedTags.ToArray();
+        if (new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
+        {
+            Debug.Log("No changes are done in Tags");
+        }
+        else
+        {
+            checkEditInfoUpdated = 1;
+            Debug.Log("Founds Changes");
+        }
+
+
 
         //editProfileScreen.SetActive(false);//Flase edit profile screen
         if (checkEditNameUpdated == 1)
@@ -1611,8 +1716,12 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            Debug.Log("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
+            Debug.Log("User Display Name:" + username + "User Unique Name:" + uniqueUsername + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
 
+            if (string.IsNullOrEmpty(uniqueUsername))
+            {
+                uniqueUsername = "";
+            }
             if (string.IsNullOrEmpty(job))
             {
                 job = "";
@@ -1635,7 +1744,7 @@ public class MyProfileDataManager : MonoBehaviour
                 countryName = "";
             }
 
-            APIManager.Instance.RequestUpdateUserProfile(gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio));
+            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),userSelectedTags.ToArray());
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
@@ -1835,6 +1944,11 @@ public class MyProfileDataManager : MonoBehaviour
         nameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
         EditProfileErrorMessageShow(nameErrorMessageObj);
     }
+    public void ShowEditProfileUniqueNameErrorMessage(string msg)
+    {
+        uniqueNameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
+        EditProfileErrorMessageShow(uniqueNameErrorMessageObj);
+    }
 
     //this coroutine is used check and GetUserDetails or UploadAvatar api call.......
     IEnumerator WaitEditProfileGetUserDetails(bool isProfileUpdate)
@@ -1859,7 +1973,7 @@ public class MyProfileDataManager : MonoBehaviour
         editProfileBioScreen.SetActive(true);
         //bioEditInputField.text = editProfileBioInputfield.text;
 
-        bioEditAdvanceInputField.Text = editProfileBioInputfield.text;
+        bioEditAdvanceInputField.Text = editProfileBioInputfield.Text;
 
         //bioEditInputField.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAndResetNormalInputField();
         //bioEditInputField.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
@@ -1889,7 +2003,7 @@ public class MyProfileDataManager : MonoBehaviour
         //string resultString = Regex.Replace(bioEditInputField.text.ToString(), @"^\s*$[\r\n]*", string.Empty, RegexOptions.Multiline);
         string resultString = Regex.Replace(bioEditAdvanceInputField.Text.ToString(), @"^\s*$[\r\n]*", string.Empty, RegexOptions.Multiline);
 
-        editProfileBioInputfield.text = resultString;
+        editProfileBioInputfield.Text = resultString;
         //editProfileBioInputfield.text = bioEditInputField.text;
         editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
     }

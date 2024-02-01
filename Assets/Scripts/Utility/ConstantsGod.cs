@@ -167,7 +167,8 @@ public class ConstantsGod
     public static string r_url_SetName = "/users/set-name";
     public static string r_url_GetUserDetails = "/users/single-user";
     public static string r_url_UpdateUserAvatar = "/users/update-avatar";
-    public static string r_url_UpdateUserProfile = "/users/update-profile";
+    //public static string r_url_UpdateUserProfile = "/users/update-profile";
+    public static string r_url_UpdateUserProfile = "/users/update-user-profile-details";
     public static string r_url_GetSingleUserProfile = "/follow/get-single-profile";
     public static string r_url_GetSingleUserRole = "/user/get-user-role?xanaId=";
     public static string r_url_DeleteAccount = "/users/delete-account";

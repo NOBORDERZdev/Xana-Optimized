@@ -1985,10 +1985,12 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    // Old API
     public void RequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         StartCoroutine(IERequestUpdateUserProfile(user_gender, user_job, user_country, user_website, user_bio));
     }
+
     public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         WWWForm form = new WWWForm();
@@ -2008,6 +2010,44 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                //Debug.Log("data" + form);
+            }
+            else
+            {
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+                // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
+            }
+        }
+    }
+
+    // New API
+    public void RequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
+    {
+        StartCoroutine(IERequestUpdateUserProfile(unique_Name, user_gender, user_job, user_country, user_website, user_bio, _tags));
+    }
+    public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
+    {
+        WWWForm form = new WWWForm();
+        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
+        form.AddField("gender", user_gender);
+        form.AddField("job", user_job);
+        form.AddField("country", user_country);
+        form.AddField("website", user_website);
+        form.AddField("bio", user_bio);
+        form.AddField("username", unique_Name);
+        form.AddField("tags", unique_Name);
+
+        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.LogError("------   Waqas Edit " + www.error);
                 //Debug.Log("data" + form);
             }
             else
@@ -2805,6 +2845,7 @@ public class GetUserDetailData
     public bool isDeleted;
     public DateTime createdAt;
     public DateTime updatedAt;
+    public string[] tags;
     public GetUserDetailProfileData userProfile;
     public int followerCount;
     public int followingCount;
