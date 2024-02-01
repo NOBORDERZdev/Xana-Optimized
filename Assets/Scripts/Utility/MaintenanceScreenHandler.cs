@@ -14,22 +14,26 @@ public class MaintenanceScreenHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        versionText.text = "Ver." + Application.version;
-        BuildScriptableObject buildScriptableObject =
-       Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
-
-        if (checkOnce)
+        if (!LoginRegister.ChinaUser)
         {
-            checkOnce = false;
-            string platform = "";
+            versionText.text = "Ver." + Application.version;
+            BuildScriptableObject buildScriptableObject =
+           Resources.Load("BuildVersion/BuildVersion") as BuildScriptableObject;
+
+            if (checkOnce)
+            {
+                checkOnce = false;
+                string platform = "";
 #if UNITY_ANDROID
-            platform = "android";
+                platform = "android";
 #endif
 #if UNITY_IOS
             platform = "ios";
 #endif
-            StartCoroutine(CheckForMaintenanceScreen("xana", platform, Application.version + "-" + buildScriptableObject.BuildNumber));
+                StartCoroutine(CheckForMaintenanceScreen("xana", platform, Application.version + "-" + buildScriptableObject.BuildNumber));
+            }
         }
+     
     }
 
     public IEnumerator CheckForMaintenanceScreen(string type, string platform, string version)

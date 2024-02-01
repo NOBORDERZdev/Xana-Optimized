@@ -340,10 +340,13 @@ public class UserRegisterationManager : MonoBehaviour
             Debug.Log("call hua Awake");
             TermsAndConditionsObject.SetActive(false);
         }
-        int x = ReturnNftRole("Free");
-        //print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
-        checkbool_preser_start = true;
-        _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
+       
+            int x = ReturnNftRole("Free");
+            //print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
+            checkbool_preser_start = true;
+            _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
+      
+      
         /*
        EmailPanal.SetActive(true);
         FirstPanal.SetActive(true);
@@ -362,11 +365,11 @@ public class UserRegisterationManager : MonoBehaviour
         {
             SavaCharacterProperties.instance.CreateFileFortheFirstTime();
         }
-        if (!PlayerPrefs.HasKey("iSignup"))
-        {
-            PlayerPrefs.SetInt("iSignup", 0);
-            PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
-        }
+        //if (!PlayerPrefs.HasKey("iSignup"))
+        //{
+        //    PlayerPrefs.SetInt("iSignup", 0);
+        //    PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
+        //}
 
       //  CloseLoginScreen();
     }
@@ -671,11 +674,12 @@ public class UserRegisterationManager : MonoBehaviour
                 TermsAndConditionsObject.SetActive(false);
 
                 DynamicEventManager.deepLink?.Invoke("Login user here");
-                //SubmitSetDeviceToken();
-                //LoggedInAsGuest = false;
-                //getdatafromserver();
+                SubmitSetDeviceToken();
+                LoggedInAsGuest = false;
+                getdatafromserver();
 
-               
+                
+
                 //if (EventList.instance.ListContent.transform.childCount == 0)
                 //{
                 //    EventList.instance.GetWorldAPISNew();
@@ -683,52 +687,56 @@ public class UserRegisterationManager : MonoBehaviour
                 //}
 
 
-                if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
-                {
-                    //print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
-                    PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
-                }
-                else
-                {
-                    PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-                }
+                //if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                //{
+                //    //print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
+                //    PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                //}
+                //else
+                //{
+                //    PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+                //}
                 GetOwnedNFTsFromAPI();
                 PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-                SubmitSetDeviceToken();
-                LoggedInAsGuest = false;
-                getdatafromserver();
+               
 
 
                 usernamePanal.SetActive(false);
                 usernamePanal.SetActive(false);
-                //CheckCameraMan();
+                CheckCameraMan();
                 //    m_EquipUI.BackFromArtbone();
                 PlayerPrefs.Save();
                 StoreManager.instance.CheckWhenUserLogin();
-                if (false)
-                {
-                    OpenUIPanal(7);
-
-                    //if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && string.IsNullOrEmpty(myObject1.data.user.name))//rik
-                    //{
-                    //    OpenUIPanal(5);
-                    //    isSetXanaliyaUserName = true;
-                    //    usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
-                    //}
-                }
+                OpenUIPanal(7);
                 if (UIManager.Instance != null)//rik
                 {
+                    // UIManager.Instance._SplashScreen.SetActive(false);
                     // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                 }
+                //if (false)
+                //{
 
-            
+
+                //    //if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && string.IsNullOrEmpty(myObject1.data.user.name))//rik
+                //    //{
+                //    //    OpenUIPanal(5);
+                //    //    isSetXanaliyaUserName = true;
+                //    //    usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
+                //    //}
+                //}
+
+                if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+                {
+                    StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
+                }
+
             }
             else
             {
                 StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
             }
-                LoggedInAsGuest = false;
+               
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
