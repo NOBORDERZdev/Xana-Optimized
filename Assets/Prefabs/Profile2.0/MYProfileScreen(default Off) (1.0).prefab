@@ -1440,7 +1440,7 @@ MonoBehaviour:
   unSellectedColor: {r: 0.69803923, g: 0.69803923, b: 0.69803923, a: 1}
   getImageFromChild: 1
   CurrentSelection: 0
-  sameSelectionScript: {fileID: 0}
+  sameSelectionScript: {fileID: 1632209997}
   selectionIcon: {fileID: 0}
   unSelectionIcon: {fileID: 0}
   isDefultEnable: 1
@@ -6830,11 +6830,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myProfileTopPartButton: {fileID: 201799889880683824}
   OtherProfileTopPartButton: {fileID: 206378014}
+  UserTagsParent: {fileID: 5732480166542042454}
+  TagPrefab: {fileID: 9156112392926067791, guid: b4d75d32f61ce1c40bcddb30ffdddcdb, type: 3}
+  followerBtn: {fileID: 201799890803583822}
+  followingBtn: {fileID: 201799890502910020}
   myProfileUserPostPartObj: {fileID: 201799889051435436}
   OtherProfileUserPostPartObj: {fileID: 1537363362}
   myProfileImitateTopPartButton: {fileID: 1229295624411844502}
   OtherProfileImitateTopPartButton: {fileID: 262744874}
   mainscrollControllerRef: {fileID: 201799890439338123}
+  mainButtonPanelScriptRef: {fileID: 201799890937228788}
+  otherUserButtonPanelScriptRef: {fileID: 420021321}
+  immitateMainButtonPanelScriptRef: {fileID: 1229295623291113277}
+  immitateOtherUserButtonPanelScriptRef: {fileID: 1632209997}
 --- !u!1 &201799890320765660
 GameObject:
   m_ObjectHideFlags: 0

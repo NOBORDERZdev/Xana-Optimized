@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -8,6 +9,11 @@ public class ProfileUIHandler : MonoBehaviour
     [Header("User Data Tabs Buttons")]
     public GameObject myProfileTopPartButton;
     public GameObject OtherProfileTopPartButton;
+    public GameObject UserTagsParent;
+    public GameObject TagPrefab;
+    public Button followerBtn;
+    public Button followingBtn;
+
 
     [Space]
     [Header("User Post Containers")]
@@ -22,6 +28,10 @@ public class ProfileUIHandler : MonoBehaviour
     [Space]
     [Header("Script References")]
     public MainScrollController mainscrollControllerRef;
+    public SelectionItemScript mainButtonPanelScriptRef;
+    public SelectionItemScript otherUserButtonPanelScriptRef;
+    public SelectionItemScript immitateMainButtonPanelScriptRef;
+    public SelectionItemScript immitateOtherUserButtonPanelScriptRef;
 
     private void Awake()
     {
@@ -29,6 +39,12 @@ public class ProfileUIHandler : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {
+        mainButtonPanelScriptRef.sameSelectionScript = immitateMainButtonPanelScriptRef;
+        otherUserButtonPanelScriptRef.sameSelectionScript = immitateOtherUserButtonPanelScriptRef;
     }
 
     public void SetMainScrolRefs()

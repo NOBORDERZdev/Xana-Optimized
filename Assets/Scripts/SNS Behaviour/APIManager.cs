@@ -2894,6 +2894,7 @@ public class SingleUserProfileData
     public string name;
     public string email;
     public string avatar;
+    public string[] tags;
     public SingleUserProfile userProfile;
     public int followerCount;
     public int followingCount;

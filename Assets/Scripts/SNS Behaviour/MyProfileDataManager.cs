@@ -49,7 +49,6 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject userPostPart;
     public GameObject bioDetailPart;
     public GameObject bioTxtParent;
-    public GameObject UserTagsParent;
 
     [Space]
     [Header("Player info References")]
@@ -93,7 +92,6 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject photoPrefab;
     public GameObject photoPrefabInMyPostFeed;
     public GameObject NFTImagePrefab;
-    public GameObject TagPrefab;
 
     [Header("post empty message reference")]
     public GameObject createYourFirstPostMsgObj;
@@ -317,6 +315,8 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
+        ProfileUIHandler.instance.followerBtn.interactable = true;
+        ProfileUIHandler.instance.followingBtn.interactable = true;
         userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
 
         topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
@@ -427,19 +427,48 @@ public class MyProfileDataManager : MonoBehaviour
 
     public void UpdateUserTags()
     {
-        if (myProfileData.tags.Length > 0)
+        if (myProfileData.tags != null && myProfileData.tags.Length > 0)
         {
-            UserTagsParent.transform.parent.gameObject.SetActive(true);
-            for (int i = 0; i < myProfileData.tags.Length; i++)
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+            if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
             {
-                GameObject _tagobject = Instantiate(TagPrefab, UserTagsParent.transform);
-                _tagobject.name = "TagPrefab" + i;
-                _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                {
+                    if (i >= myProfileData.tags.Length)
+                    {
+                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                    }
+                    ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                }
+            }else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+            {
+                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                        _tagobject.name = "TagPrefab" + i;
+                        _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                        {
+                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            _tagobject.name = "TagPrefab" + i;
+                            _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                        }
+                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
             }
         }
         else
         {
-            UserTagsParent.transform.parent.gameObject.SetActive(false);
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
         }
     }
 
