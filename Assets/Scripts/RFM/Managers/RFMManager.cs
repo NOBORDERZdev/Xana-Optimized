@@ -530,22 +530,41 @@ namespace RFM.Managers
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
             var runners = FindObjectsOfType<RFM.Character.Runner>(false);
-            var count = 0;
+            var runnersCount = 0;
 
             for (int i = 0; i < runners.Length; i++)
             {
                 if (runners[i].enabled)
                 {
-                    count++;
+                    runnersCount++;
                 }
             }
 
-            Debug.LogError("CheckForGameOverCondition runners count: " + count);
-            if (count == 0)
+            Debug.LogError("CheckForGameOverCondition runners count: " + runnersCount);
+            if (runnersCount == 0)
             {
                 Globals.gameOverText = "HUNTERS WIN";
                 Timer.StopAllTimers();
                 GameplayTimeOver();
+            }
+
+            var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
+            var huntersCount = 0;
+
+            for (int i = 0; i < hunters.Length; i++)
+            {
+                if (hunters[i].enabled)
+                {
+                    huntersCount++;
+                }
+            }
+
+            Debug.LogError("CheckForGameOverCondition hunters count: " + huntersCount);
+            if (huntersCount == 0)
+            {
+                Debug.Log($"All hunters have left the game. Triggering winning condition for runners.");
+                Timer timerToSet = UnityEngine.Object.FindObjectOfType<Timer>();
+                timerToSet.FinishGameOnHuntersLeft();
             }
         }
 
