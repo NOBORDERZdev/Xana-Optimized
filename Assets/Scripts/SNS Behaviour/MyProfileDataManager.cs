@@ -577,7 +577,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //Debug.Log("isDataLoad False");
                     APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, (profileFeedAPiCurrentPageIndex + 1), 10, "MyProfile");
                 }
-               // OnScrollNFT();
+                // OnScrollNFT();
             }
         }
     }
@@ -697,7 +697,7 @@ public class MyProfileDataManager : MonoBehaviour
                 }
                 if (pageNumb == 1 && i == 0)
                 {
-                   Debug.Log("Latest Profile pic set as top");
+                    Debug.Log("Latest Profile pic set as top");
                     userTagPostObject.transform.SetAsFirstSibling();
                     //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
                     //{
@@ -713,7 +713,7 @@ public class MyProfileDataManager : MonoBehaviour
                 }
                 else
                 {
-                   Debug.Log("Latest Profile pic set as top   5555");
+                    Debug.Log("Latest Profile pic set as top   5555");
 
 
                     //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
@@ -736,20 +736,20 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
-       Debug.Log("Pagenmub bar");
+        Debug.Log("Pagenmub bar");
         if (pageNumb == 1)
         {
-           Debug.Log("Pagenmub");
+            Debug.Log("Pagenmub");
             Invoke(nameof(RefreshHieght), 1f);
         }
         StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
         if (allMyFeedImageRootDataList.Count >= 2)
         {
-           Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
+            Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
             if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
             {
                 allMyFeedImageRootDataList.RemoveAt(0);
-               Debug.Log("Remove Same ID Post");
+                Debug.Log("Remove Same ID Post");
                 allMyFeedInFeedPageRootDataList.RemoveAt(0);
             }
         }
@@ -1022,7 +1022,7 @@ public class MyProfileDataManager : MonoBehaviour
     public bool NFTDataLoaded;
     public void OnScrollNFT()
     {
-       // StartCoroutine(IEOnScrollNFT());
+        // StartCoroutine(IEOnScrollNFT());
     }
 
     public IEnumerator IEOnScrollNFT()
@@ -1044,7 +1044,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         */
         yield return new WaitForSeconds(2);
-        
+
     }
     //this method is used to NFT Tab button click.......
     public void OnClickNFTTabButtonMain(int index)
@@ -1059,7 +1059,7 @@ public class MyProfileDataManager : MonoBehaviour
         //{
         //    NFTShowingOnneBool = true;
         // }  
-
+        UserRegisterationManager.instance.GetOwnedNFTsFromAPI();
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
@@ -1069,11 +1069,18 @@ public class MyProfileDataManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-
-        NftDataScript.Instance.NftLoadingPenal.SetActive(true);    
-           NftDataScript.Instance.currentSelection();
+        Debug.LogError("NftLoadingPenal OnClickNFTTabButtonMain true");
+        if (NftDataScript.Instance.ContentPanel.transform.childCount <= 0)
+        {
+            NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+        }
+        else
+        {
+            NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+        }
+        NftDataScript.Instance.currentSelection();
         parentHeightResetScript.OnHeightReset(index);
-       selectionItemScript1.OnSelectedClick(index);
+        selectionItemScript1.OnSelectedClick(index);
         //if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
         //{
         //    OnScrollNFT();
@@ -1083,8 +1090,8 @@ public class MyProfileDataManager : MonoBehaviour
             displayNFTinUIAsync();
         }
         StartCoroutine(WaitToNFTTabHeight(index));
-    }  
-      
+    }
+
     public void OnClickNFTTabButtonSub(int index)
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
@@ -1102,15 +1109,15 @@ public class MyProfileDataManager : MonoBehaviour
         NftDataScript.Instance.NoNftyet.SetActive(false);
         NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
         NftDataScript.Instance.nftloading.SetActive(true);
-     //   if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
-      //  {
-         //   OnScrollNFT();
-     //   }
+        //   if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
+        //  {
+        //   OnScrollNFT();
+        //   }
         if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
         {
             displayNFTinUIAsync();
-        }  
-       // StartCoroutine(WaitToNFTTabHeight(index));
+        }
+        // StartCoroutine(WaitToNFTTabHeight(index));
     }
 
     IEnumerator WaitToNFTTabHeight(int index)
@@ -1129,7 +1136,7 @@ public class MyProfileDataManager : MonoBehaviour
         //  print("come to 2222");
         if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count > 0)
         {
-        print("come to async showing NFT in if "+ UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
+            print("come to async showing NFT in if " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
             NftDataScript.Instance.NftLoadingPenal.SetActive(false);
             NftDataScript.Instance.NoNftyet.SetActive(false);
             NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
@@ -1142,7 +1149,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
                     Debug.Log("L_ItemBtnObj");
-                    if ( UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype.Count> i && UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
+                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype.Count > i && UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
                     {
                         L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
                     }
@@ -1152,7 +1159,7 @@ public class MyProfileDataManager : MonoBehaviour
                     L_ItemBtnObj.gameObject.name = "image_NFT " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
                 }
             }
-        }  
+        }
         else
         {
             print("No NFT Found");
@@ -1161,11 +1168,11 @@ public class MyProfileDataManager : MonoBehaviour
             NftDataScript.Instance.NoNftyet.SetActive(true);
             NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
             NftDataScript.Instance.nftloading.SetActive(false);
-        }  
+        }
         // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb++;
-      //  Invoke(nameof(RefreshNFTScrollHeight), 1f);
+        //  Invoke(nameof(RefreshNFTScrollHeight), 1f);
     }
-     public void RefreshNFTScrollHeight()
+    public void RefreshNFTScrollHeight()
     {
         parentHeightResetScript.OnHeightReset(2);
     }
@@ -1359,7 +1366,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     tempStr = tempStr.TrimEnd(' ');
                 }
-               Debug.Log("temp Name Str:" + tempStr);
+                Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
                 Debug.LogError("New User Name ----> " + username);
@@ -1368,7 +1375,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-           Debug.Log("Please enter username");
+            Debug.Log("Please enter username");
             ShowEditProfileNameErrorMessage("The name field should not be empty");
             return;
         }
@@ -1382,7 +1389,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-           Debug.Log("temp Job Str:" + tempStr);
+            Debug.Log("temp Job Str:" + tempStr);
             job = tempStr;
             checkEditInfoUpdated = 1;
         }
@@ -1471,7 +1478,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-           Debug.Log("temp Bio Str:" + tempStr);
+            Debug.Log("temp Bio Str:" + tempStr);
             bio = tempStr;
             checkEditInfoUpdated = 1;
         }
@@ -1506,7 +1513,7 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-           Debug.Log("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
+            Debug.Log("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
 
             if (string.IsNullOrEmpty(job))
             {
@@ -1523,7 +1530,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (string.IsNullOrEmpty(gender))
             {
                 gender = "Male";
-               Debug.Log("Default Gender:" + gender);
+                Debug.Log("Default Gender:" + gender);
             }
             if (string.IsNullOrEmpty(countryName))
             {
@@ -1537,7 +1544,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             if (checkEditNameUpdated == 1 || checkEditInfoUpdated == 1)
             {
-               Debug.Log("EditProfileInfoCheckAndAPICalling Get User Details API Call");
+                Debug.Log("EditProfileInfoCheckAndAPICalling Get User Details API Call");
                 StartCoroutine(WaitEditProfileGetUserDetails(false));
             }
             else
@@ -1562,7 +1569,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         catch (Exception e)
         {
-           Debug.Log("isreachableUri ecception:" + e);
+            Debug.Log("isreachableUri ecception:" + e);
             return false;
         }
         request.Timeout = 2500;
@@ -1604,7 +1611,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 tempStr = tempStr.TrimStart(' ');
             }
-           Debug.Log("temp Web Str:" + tempStr);
+            Debug.Log("temp Web Str:" + tempStr);
             website = tempStr;
             checkEditInfoUpdated = 1;
 
@@ -1654,7 +1661,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("url", url);
-       Debug.Log("Web URL:" + url);
+        Debug.Log("Web URL:" + url);
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_WebsiteValidation), form))
         {
             yield return www.SendWebRequest();
@@ -1665,7 +1672,7 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 Debug.Log(www.error);
                 EditProfileErrorMessageShow(websiteErrorObj);
-               Debug.Log("Invalid WebSite");
+                Debug.Log("Invalid WebSite");
             }
             else
             {
@@ -1679,7 +1686,7 @@ public class MyProfileDataManager : MonoBehaviour
                         Uri myUri = new Uri(website);
                         //website = myUri.Host;
                     }
-                   Debug.Log("final result Web Str:" + website);
+                    Debug.Log("final result Web Str:" + website);
 
                     EditProfileInfoCheckAndAPICalling();
                     Debug.Log("Valid WebSite:");
@@ -1687,7 +1694,7 @@ public class MyProfileDataManager : MonoBehaviour
                 else
                 {
                     EditProfileErrorMessageShow(websiteErrorObj);
-                   Debug.Log("Invalid WebSite");
+                    Debug.Log("Invalid WebSite");
                 }
             }
         }
@@ -1893,13 +1900,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
+                Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
+                Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -2021,13 +2028,13 @@ public class MyProfileDataManager : MonoBehaviour
 
                 //setGroupTempAvatarTexture = texture;
 
-               Debug.Log("OnGroupAvatarTakePicture Camera ImagePath : " + path);
+                Debug.Log("OnGroupAvatarTakePicture Camera ImagePath : " + path);
 
                 //string[] pathArry = path.Split('/');
 
                 //string fileName = pathArry[pathArry.Length - 1];
                 string fileName = Path.GetFileName(path);
-               Debug.Log("Camera filename : " + fileName);
+                Debug.Log("Camera filename : " + fileName);
 
                 string[] fileNameArray = fileName.Split('.');
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
@@ -2035,7 +2042,7 @@ public class MyProfileDataManager : MonoBehaviour
 
                 string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-               Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
+                Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
                 setImageAvatarTempPath = filePath;
                 setImageAvatarTempFilename = fileName;
@@ -2075,7 +2082,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         if (device.Length == 0)
         {
-           Debug.Log("No camera detected");
+            Debug.Log("No camera detected");
             return;
         }
         for (int i = 0; i < device.Length; i++)
@@ -2087,7 +2094,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
         if (webCamTexture == null)
         {
-           Debug.Log("Enable to find back camera");
+            Debug.Log("Enable to find back camera");
             return;
         }
 
@@ -2098,7 +2105,7 @@ public class MyProfileDataManager : MonoBehaviour
         fit.aspectRatio = ratio;
 
         int orient = -webCamTexture.videoRotationAngle;
-       Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
+        Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
         webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
     }
 
@@ -2145,14 +2152,14 @@ public class MyProfileDataManager : MonoBehaviour
         photo.Apply();
 
         string fileName = "CapturePhoto";
-       Debug.Log("Camera filename : " + fileName);
+        Debug.Log("Camera filename : " + fileName);
 
         string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
         fileName = fileName + str + ".png";
 
         string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
 
-       Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName);
+        Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName);
 
         setImageAvatarTempPath = filePath;
         setImageAvatarTempFilename = fileName;
@@ -2318,11 +2325,11 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     byte[] bytes = croppedImage.EncodeToPNG();
                     File.WriteAllBytes(path, bytes);
-                   Debug.Log("File SAVE");
+                    Debug.Log("File SAVE");
                 }
                 catch (Exception e)
                 {
-                   Debug.Log(e);
+                    Debug.Log(e);
                 }
             }
             else
@@ -2440,12 +2447,12 @@ public class MyProfileDataManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-               Debug.Log("IERequestGetUserDetails error:" + www.error);
+                Debug.Log("IERequestGetUserDetails error:" + www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-               Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
+                Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
                 OnlyLoadDataMyProfile();//set data                

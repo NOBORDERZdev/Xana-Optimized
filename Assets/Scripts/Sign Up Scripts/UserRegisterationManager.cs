@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 //using MoralisUnity;
 using System.Threading.Tasks;
 
+
 public class UserRegisterationManager : MonoBehaviour
 {
 
@@ -29,6 +30,7 @@ public class UserRegisterationManager : MonoBehaviour
     [Header("Total-Panal")]
     public GameObject FirstPanal;
     //public GameObject EmailPanal;
+
     public GameObject OTPPanal;
     public GameObject PasswordPanal;
     public GameObject usernamePanal;
@@ -48,7 +50,7 @@ public class UserRegisterationManager : MonoBehaviour
     bool emailBool = false;
     //Waheed Changes
     public GameObject setAvatarGiftPanal;
-
+    
     //hardik changes
     public string nftlist;
     //end
@@ -559,7 +561,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         */
     }
-    void GetOwnedNFTsFromAPI()
+    public void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
      }  
@@ -3295,6 +3297,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         XanaConstants.xanaConstants.userId = L_LoginObject.id;
+                     
                     }
                     PlayerPrefs.Save();
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);
@@ -3484,6 +3487,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
+        
         //  //print(bodyJson);
         // StartCoroutine(HitNameAPIWithNewTechnique(NameAPIURL, bodyJsonOfName, Localusername));
         ////Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
@@ -3631,7 +3635,7 @@ public class UserRegisterationManager : MonoBehaviour
         //print("LogoutFromOtherDevice");
         StartCoroutine(HitLogOutFromOtherDevice(ConstantsGod.API_BASEURL + ConstantsGod.LogoutFromotherDeviceAPI, PlayerPrefs.GetString("LogoutFromDeviceJSON")));
     }
-
+   
 
     public IEnumerator HitLogOutFromOtherDevice(string URL, string _json)
     {
@@ -3944,8 +3948,9 @@ public class UserRegisterationManager : MonoBehaviour
                         usernamePanal.SetActive(false);
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
-                        //nb
                         LoggedIn = true;
+                        CharacterOnScreenNameHandler.instance.SetNameOfPlayerAgain();
+
                         //OpenUIPanal(6);  
                     }
                 }
@@ -4003,7 +4008,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
     public bool isSetXanaliyaUserName = false;
-
+   
 
     IEnumerator HitNameAPIWithXanaliyaUser(string url, string Jsondata, string localUsername)//rik
     {
