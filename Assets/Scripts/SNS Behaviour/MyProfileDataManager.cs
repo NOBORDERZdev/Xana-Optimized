@@ -39,6 +39,8 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject myProfileScreen;
     public GameObject editProfileScreen;
     public GameObject pickImageOptionScreen;
+    public Transform renderTexCamera;
+    public GameObject OtherPlayerdataObj;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -165,6 +167,9 @@ public class MyProfileDataManager : MonoBehaviour
             Instance = this;
         }
         NFTShowingOnneBool = false;
+
+        renderTexCamera.parent = null;
+        renderTexCamera.position = new Vector3(-0.178f, -0.59f, -1.33f);
     }
 
     int tempOPCount = 0;
@@ -323,6 +328,12 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.followerBtn.interactable = true;
+            ProfileUIHandler.instance.followingBtn.interactable = true;
+        }
+
         userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
 
         topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
@@ -339,6 +350,8 @@ public class MyProfileDataManager : MonoBehaviour
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
         totalPostText.text = myProfileData.feedCount.ToString();
+
+        UpdateUserTags();
 
         if (string.IsNullOrEmpty(myProfileData.userProfile.website))
         {
@@ -427,6 +440,53 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+    public void UpdateUserTags()
+    {
+        if (myProfileData.tags != null && myProfileData.tags.Length > 0)
+        {
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+            if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
+            {
+                for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                {
+                    if (i >= myProfileData.tags.Length)
+                    {
+                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                    }
+                    ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                }
+            }else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+            {
+                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                        _tagobject.name = "TagPrefab" + i;
+                        _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                        {
+                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            _tagobject.name = "TagPrefab" + i;
+                            _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                        }
+                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
+            }
+        }
+        else
+        {
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public string ReplaceNonCharacters(string aString, char replacement)
@@ -578,172 +638,176 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to load All my feed and setup.......
     public void AllFeedWithUserId(int pageNumb, Transform Feedparent = null, bool IsNew = false)
     {
-        currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
-        bool IsMyProfileFeed = false;
-        FeedUIController.Instance.ShowLoader(false);
-
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            {
-                //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+            currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
+            bool IsMyProfileFeed = false;
+            FeedUIController.Instance.ShowLoader(false);
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
 
         for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
-        {
-            Debug.Log("currentPageAllFeedWithUserIdRoot");
-            if ((!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent == null)
-               || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent != null))
             {
-                bool isVideo = false;
-
-                Transform parent = allPhotoContainer;
-                if (Feedparent == null)
+                Debug.Log("currentPageAllFeedWithUserIdRoot");
+                if ((!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent == null)
+                   || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent != null))
                 {
-                    parent = allPhotoContainer;
-                    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Image))
+                    bool isVideo = false;
+
+                    Transform parent = allPhotoContainer;
+                    if (Feedparent == null)
                     {
                         parent = allPhotoContainer;
+                        if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Image))
+                        {
+                            parent = allPhotoContainer;
+                        }
+                        else if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+                        {
+                            isVideo = true;
+                            parent = allMovieContainer;
+                        }
+                        IsMyProfileFeed = true;
                     }
-                    else if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+                    else
                     {
-                        isVideo = true;
-                        parent = allMovieContainer;
+                        if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+                        {
+                            isVideo = true;
+                        }
                     }
-                    IsMyProfileFeed = true;
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+                    GameObject userTagPostObject;
+                    if (Feedparent == null)
                     {
-                        isVideo = true;
+                        userTagPostObject = Instantiate(photoPrefab, parent);
+                        Debug.Log("userTagPostObject is Instantiate in parent ");
                     }
-                }
-                GameObject userTagPostObject;
-                if (Feedparent == null)
-                {
-                    userTagPostObject = Instantiate(photoPrefab, parent);
-                    Debug.Log("userTagPostObject is Instantiate in parent ");
-                }
-                else
-                {
-                    userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
-                    Debug.Log("userTagPostObject is Instantiate in FeedParent");
-                }
-                if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-                }
-                else
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-                }
-                if (IsNew)
-                {
-                    userTagPostObject.transform.SetAsFirstSibling();
-                }
-                Debug.Log("userTagPostObject" + userTagPostObject.name);
-                UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
-                userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
-                if (!allMyFeedInFeedPageRootDataList.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i]))
-                {
+                    else
+                    {
+                        userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
+                        Debug.Log("userTagPostObject is Instantiate in FeedParent");
+                    }
+                    if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
+                    {
+                        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+                    }
+                    else
+                    {
+                        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+                    }
                     if (IsNew)
                     {
-                        allMyFeedInFeedPageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        userTagPostObject.transform.SetAsFirstSibling();
+                    }
+                    Debug.Log("userTagPostObject" + userTagPostObject.name);
+                    UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
+                    userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
+                    if (!allMyFeedInFeedPageRootDataList.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i]))
+                    {
+                        if (IsNew)
+                        {
+                            allMyFeedInFeedPageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        else
+                        {
+                            allMyFeedInFeedPageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                    }
+                    FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+                    feedUserData.Id = myProfileData.id;
+                    feedUserData.Name = myProfileData.name;
+                    feedUserData.Email = myProfileData.email;
+                    feedUserData.Avatar = myProfileData.avatar;
+                    userPostItem.feedUserData = feedUserData;
+                    userPostItem.avtarUrl = myProfileData.avatar;
+                    userPostItem.LoadFeed();
+
+                    if (Feedparent == null)
+                    {
+                        loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
                     }
                     else
                     {
-                        allMyFeedInFeedPageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        if (IsNew)
+                        {
+                            loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        }
+                        else
+                        {
+                            loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        }
                     }
-                }
-                FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
-                feedUserData.Id = myProfileData.id;
-                feedUserData.Name = myProfileData.name;
-                feedUserData.Email = myProfileData.email;
-                feedUserData.Avatar = myProfileData.avatar;
-                userPostItem.feedUserData = feedUserData;
-                userPostItem.avtarUrl = myProfileData.avatar;
-                userPostItem.LoadFeed();
-
-                if (Feedparent == null)
-                {
-                    loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
-                }
-                else
-                {
-                    if (IsNew)
+                    if (pageNumb == 1 && i == 0)
                     {
-                        loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        Debug.Log("Latest Profile pic set as top");
+                        userTagPostObject.transform.SetAsFirstSibling();
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
+                        if (!isVideo)//image
+                        {
+                            allMyFeedImageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        else
+                        {
+                            allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        // }
                     }
                     else
                     {
-                        loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        Debug.Log("Latest Profile pic set as top   5555");
+
+
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
+
+
+                        if (!isVideo)//image
+                        {
+                            allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        else
+                        {
+                            allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+
+
+                        // }
                     }
+
                 }
-                if (pageNumb == 1 && i == 0)
-                {
-                    Debug.Log("Latest Profile pic set as top");
-                    userTagPostObject.transform.SetAsFirstSibling();
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
-                    if (!isVideo)//image
-                    {
-                        allMyFeedImageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-                    else
-                    {
-                        allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-                    // }
-                }
-                else
-                {
-                    Debug.Log("Latest Profile pic set as top   5555");
-
-
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
-
-
-                    if (!isVideo)//image
-                    {
-                        allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-                    else
-                    {
-                        allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-
-
-                    // }
-                }
-
             }
-        }
 
-        Debug.Log("Pagenmub bar");
-        if (pageNumb == 1)
-        {
-            Debug.Log("Pagenmub");
-            Invoke(nameof(RefreshHieght), 1f);
-        }
-        StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
-        if (allMyFeedImageRootDataList.Count >= 2)
-        {
-            Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
-            if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
+            Debug.Log("Pagenmub bar");
+            if (pageNumb == 1)
             {
-                allMyFeedImageRootDataList.RemoveAt(0);
-                Debug.Log("Remove Same ID Post");
-                allMyFeedInFeedPageRootDataList.RemoveAt(0);
+                Debug.Log("Pagenmub");
+                Invoke(nameof(RefreshHieght), 1f);
             }
-        }
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
+            }
+
+            if (allMyFeedImageRootDataList.Count >= 2)
+            {
+                Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
+                if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
+                {
+                    allMyFeedImageRootDataList.RemoveAt(0);
+                    Debug.Log("Remove Same ID Post");
+                    allMyFeedInFeedPageRootDataList.RemoveAt(0);
+                }
+            }
     }
 
     public void RefreshHieght()
@@ -1073,9 +1137,13 @@ public class MyProfileDataManager : MonoBehaviour
         {
             displayNFTinUIAsync();
         }
-        StartCoroutine(WaitToNFTTabHeight(index));
-    }
-
+        //StartCoroutine(WaitToNFTTabHeight(index));
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(WaitToNFTTabHeight(index));
+        }
+    }  
+      
     public void OnClickNFTTabButtonSub(int index)
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
@@ -2641,7 +2709,12 @@ public class MyProfileDataManager : MonoBehaviour
     public GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
     public void RequestGetUserDetails()
     {
-        if (totalFollowerText.gameObject.activeInHierarchy)
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (totalFollowerText.gameObject.activeInHierarchy)
+        //{
+        //    StartCoroutine(IERequestGetUserDetails());
+        //}
+        if (gameObject.activeInHierarchy)
         {
             StartCoroutine(IERequestGetUserDetails());
         }

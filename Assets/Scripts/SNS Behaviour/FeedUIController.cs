@@ -317,8 +317,9 @@ public class FeedUIController : MonoBehaviour
 
     public void AllFeedScreenMessageTextActive(bool isActive, int index, string message)
     {
-        allFeedMessageTextList[index].text = message;
-        allFeedMessageTextList[index].gameObject.SetActive(isActive);
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //allFeedMessageTextList[index].text = message;
+        //allFeedMessageTextList[index].gameObject.SetActive(isActive);
     }
 
     public void OnClickFollowingTabBtnClick()
@@ -350,7 +351,7 @@ public class FeedUIController : MonoBehaviour
         }
 
         feedUiScreen.SetActive(isFeedScreen);
-        otherPlayerProfileScreen.SetActive(false);
+        //otherPlayerProfileScreen.SetActive(false);
         giftItemScreens.SetActive(false);
         feedVideoScreen.SetActive(false);
         //findFriendScreen.SetActive(false);
@@ -358,7 +359,10 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
-        OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        if (OtherPlayerProfileData.Instance)
+        {
+            OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        }
 
         SNSSettingController.Instance.myAccountScreen.SetActive(false);
         SNSSettingController.Instance.myAccountPersonalInfoScreen.SetActive(false);
@@ -521,19 +525,20 @@ public class FeedUIController : MonoBehaviour
         }
         else
         {
-            if (!TopPanelMainStoryObj.activeSelf)
-            {
-                return;
-            }
-            TopPanelMainStoryObj.SetActive(false);
+            //Commented in order to make profile 2.0 work after ahsan bhai removed old feedui object from scene ----- UMER
+            //if (!TopPanelMainStoryObj.activeSelf)
+            //{
+            //    return;
+            //}
+            //TopPanelMainStoryObj.SetActive(false);
 
-            TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
+            //TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+            //TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
 
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            }
+            //for (int i = 0; i < allFeedPanel.Length; i++)
+            //{
+            //    allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+            //}
         }
     }
     #endregion
@@ -545,14 +550,21 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickCheckOtherPlayerProfile()
     {
-        otherPlayerProfileScreen.SetActive(true);
+        //otherPlayerProfileScreen.SetActive(true);
+        OtherPlayerProfileData.Instance.gameObject.SetActive(true);
+        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        MyProfileDataManager.Instance.gameObject.SetActive(false);
+
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
             switch (OtherPlayerProfileData.Instance.backKeyManageList[OtherPlayerProfileData.Instance.backKeyManageList.Count - 1])
             {
                 case "FollowerFollowingListScreen":
-                    MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
+                    //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+                    //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
                     break;
@@ -638,45 +650,47 @@ public class FeedUIController : MonoBehaviour
 
     void SetupLineSelectionPosition()
     {
-        float xPos;
-        if (feedUiHorizontalSnap.CurrentPage == 0)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 25f;
-        }
-        else if (feedUiHorizontalSnap.CurrentPage == 1)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 10f;
-        }
-        else if (feedUiHorizontalSnap.CurrentPage == 2)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x + 11f;
-        }
-        else
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x;
-        }
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //float xPos;
+        //if (feedUiHorizontalSnap.CurrentPage == 0)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 25f;
+        //}
+        //else if (feedUiHorizontalSnap.CurrentPage == 1)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 10f;
+        //}
+        //else if (feedUiHorizontalSnap.CurrentPage == 2)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x + 11f;
+        //}
+        //else
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x;
+        //}
 
-        //feedUiSelectionLine.transform.DOMove(new Vector3(xPos, feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
-        feedUiSelectionLine.transform.DOMoveX(xPos, .2f);
+        ////feedUiSelectionLine.transform.DOMove(new Vector3(xPos, feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
+        //feedUiSelectionLine.transform.DOMoveX(xPos, .2f);
 
-        //SetColor Feed Tab Title Text
-        for (int i = 0; i < feedUiTabTitleText.Length; i++)
-        {
-            if (i == feedUiHorizontalSnap.CurrentPage)
-            {
-                feedUiTabTitleText[i].color = selectedColor;
-                feedUiTabTitleText[i].fontStyle = FontStyles.Bold;
-            }
-            else
-            {
-                feedUiTabTitleText[i].color = unSelectedColor;
-                feedUiTabTitleText[i].fontStyle = FontStyles.Normal;
-            }
-            /*if (i == 1)//new cmnt
-            {
-                StartCoroutine(SetContentOnFollowingItemScreen());
-            }*/
-        }
+        ////SetColor Feed Tab Title Text
+        //for (int i = 0; i < feedUiTabTitleText.Length; i++)
+        //{
+        //    if (i == feedUiHorizontalSnap.CurrentPage)
+        //    {
+        //        feedUiTabTitleText[i].color = selectedColor;
+        //        feedUiTabTitleText[i].fontStyle = FontStyles.Bold;
+        //    }
+        //    else
+        //    {
+        //        feedUiTabTitleText[i].color = unSelectedColor;
+        //        feedUiTabTitleText[i].fontStyle = FontStyles.Normal;
+        //    }
+        //    /*if (i == 1)//new cmnt
+        //    {
+        //        StartCoroutine(SetContentOnFollowingItemScreen());
+        //    }*/
+        //}
+        //------UMER
     }
 
     public IEnumerator SetContentOnFollowingItemScreen()

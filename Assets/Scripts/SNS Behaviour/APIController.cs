@@ -140,17 +140,18 @@ public class APIController : MonoBehaviour
             StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
         }
 
-        if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-        {
-            if (feedFollowingIdList.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+        //{
+        //    if (feedFollowingIdList.Count == 0)
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
     }
 
     public IEnumerator SetContentOnFeed()
@@ -324,19 +325,22 @@ public class APIController : MonoBehaviour
             GameObject hotFeedFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
             hotFeedFeedObject.GetComponent<FeedItemController>().HotFeed = APIManager.Instance.hotFeedRoot.data.rows[i];
         }*/
-        if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-        {
-            //Riken
-            //if (feedHotIdList.Count == 0)
-            if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+        //{
+        //    //Riken
+        //    //if (feedHotIdList.Count == 0)
+        //    if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
+        //---UMER
 
         //Debug.Log("isDataLoad true");
         //FeedUIController.Instance.isDataLoad = true;
