@@ -2853,7 +2853,6 @@ public class GetUserDetailData
     public string[] tags;
     public DateTime createdAt;
     public DateTime updatedAt;
-    public string[] tags;
     public GetUserDetailProfileData userProfile;
     public int followerCount;
     public int followingCount;
