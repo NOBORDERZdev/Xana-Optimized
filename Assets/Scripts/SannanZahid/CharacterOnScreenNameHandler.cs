@@ -28,13 +28,13 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
            
         }
-        
+        //LoginasGustprofile
         if (PlayerPrefs.GetInt("WalletConnect") == 0 )
         {    
             while (true)
             {
                 yield return new WaitForSeconds(1f);
-                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
+                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (XanaConstants.xanaConstants != null && !XanaConstants.xanaConstants.LoginasGustprofile))
                 {
                     break;
                 }

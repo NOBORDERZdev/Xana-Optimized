@@ -1214,7 +1214,6 @@ public class UserRegisterationManager : MonoBehaviour
                     // pinNew[0].SelectOtherField();
                     // pinNew[0].gameObject.GetComponent<InputField>().Select();
                     //  pinNew[0].gameObject.GetComponent<InputField>().ActivateInputField();
-                     XanaConstants.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
             case 4:
@@ -1428,7 +1427,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
-                    XanaConstants.xanaConstants.LoginasGustprofile = false;
+                    XanaConstants.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
 
