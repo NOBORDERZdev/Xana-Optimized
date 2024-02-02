@@ -130,6 +130,15 @@ public class SocketController : MonoBehaviour
             www.Dispose();
         }
     }
+
+    private void OnDisable()
+    {
+        if (Manager != null)
+        {
+            Manager.Socket.Off();
+            Manager.Close();
+        }
+    }
 }
 [System.Serializable]
 public class PostFriendData

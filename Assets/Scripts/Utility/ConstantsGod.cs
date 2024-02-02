@@ -167,7 +167,8 @@ public class ConstantsGod
     public static string r_url_SetName = "/users/set-name";
     public static string r_url_GetUserDetails = "/users/single-user";
     public static string r_url_UpdateUserAvatar = "/users/update-avatar";
-    public static string r_url_UpdateUserProfile = "/users/update-profile";
+    //public static string r_url_UpdateUserProfile = "/users/update-profile";
+    public static string r_url_UpdateUserProfile = "/users/update-user-profile-details";
     public static string r_url_GetSingleUserProfile = "/follow/get-single-profile";
     public static string r_url_GetSingleUserRole = "/user/get-user-role?xanaId=";
     public static string r_url_DeleteAccount = "/users/delete-account";
@@ -233,15 +234,19 @@ public class ConstantsGod
     public static string SearchWorldAPI = "/item/search-worlds/";
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     #endregion
+   
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
     #endregion
 
-
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
+
+    public static string availableTags = "/users/get-user-tags";
+}
+
 
     #region Feed Api's
     public static string FeedGetAllByUserId = "/item/get-following-text-post/";
