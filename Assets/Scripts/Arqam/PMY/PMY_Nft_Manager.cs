@@ -137,7 +137,7 @@ namespace PMY
         {
             StringBuilder apiUrl = new StringBuilder();
             apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.PMYWorldASSET + PMY_RoomId);
-
+            Debug.Log("<color=red>PMY_AdminApi: " + apiUrl + "</color>");
             using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()))
             {
                 request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
