@@ -236,7 +236,7 @@ public class ConstantsGod
 
     public static string HOTSPACES = "/world/get-most-visited-hot-spaces/";//pageNumber/pageSize
     public static string HOTGAMES = "/world/get-most-visited-hot-games/";//pageNumber/pageSize
-    public static string FOLLOWINGSPACES = "/world/get-favourite-space-list/";//pageNumber/pageSize
+    public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
 

@@ -45,6 +45,8 @@ public class WorldItemView : MonoBehaviour
         Creator_Name = detail.Creator_Name;
         CreatorAvatarURL = detail.CreatorAvatarURL;
         CreatorDescription = detail.CreatorDescription;
+        worldVisitCount= detail.WorldVisitCount;
+        isFavourite = detail.isFavourite;
         if (creatorNameText)
             creatorNameText.text = creatorName;
         Init(index, _loopcount);
@@ -72,6 +74,8 @@ public class WorldItemView : MonoBehaviour
         Creator_Name = detail.Creator_Name;
         CreatorAvatarURL = detail.CreatorAvatarURL;
         CreatorDescription = detail.CreatorDescription;
+        worldVisitCount = detail.WorldVisitCount;
+        isFavourite = detail.isFavourite;
         Init(0, _loopcount);
     }
 
@@ -111,7 +115,8 @@ public class WorldItemView : MonoBehaviour
     public string Creator_Name;
     public string CreatorAvatarURL;
     public string CreatorDescription;
-
+    public string worldVisitCount;
+    public bool isFavourite;
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
@@ -146,14 +151,14 @@ public class WorldItemView : MonoBehaviour
     }
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
-        if (m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            if (!isBannerLoaded)
-            {
-                if (gameObject.activeInHierarchy)
-                    StartCoroutine(DownloadAndLoadBanner());
-            }
-        }
+        //if (m_EnvironmentName.Contains("XANA Lobby"))
+        //{
+        //    if (!isBannerLoaded)
+        //    {
+        //        if (gameObject.activeInHierarchy)
+        //            StartCoroutine(DownloadAndLoadBanner());
+        //    }
+        //}
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
             if (gameObject.activeInHierarchy)
@@ -319,6 +324,7 @@ public class WorldItemView : MonoBehaviour
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
+        joinedUserCount.text = worldVisitCount+" visits";
         gameObject.GetComponent<Button>().interactable = true;
         isVisible = true;
         //StartCoroutine(DownloadImage());
@@ -347,18 +353,18 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
 
-        if (m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, "", worldTags,
-           entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
-        }
-        else
-        {
+        //if (m_EnvironmentName.Contains("XANA Lobby"))
+        //{
+        //    worldItemPreview.Init(XanaWorldBanner,
+        //   m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, "", worldTags,
+        //   entityType, Creator_Name, CreatorDescription, CreatorAvatarURL,isFavourite);
+        //}
+        //else
+        //{
             worldItemPreview.Init(worldIcon.sprite,
         m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
-        entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
-        }
+        entityType, Creator_Name, CreatorDescription, CreatorAvatarURL,isFavourite,idOfObject);
+        //}
 
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;

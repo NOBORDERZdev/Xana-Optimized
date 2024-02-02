@@ -1,3 +1,5 @@
+using DG.Tweening;
+using Photon.Voice.Unity.Demos;
 using SuperStar.Helpers;
 using System;
 using System.Collections;
@@ -8,6 +10,8 @@ using UnityEngine.UI;
 
 public class WorldItemPreviewTab : MonoBehaviour
 {
+    public string worldId;
+    public GameObject worldDescriptionScrollview;
     public TextMeshProUGUI WorldNameTxt;
     public TextMeshProUGUI WorldDescriptionTxt;
     public TextMeshProUGUI CreatorNameTxt;
@@ -45,10 +49,41 @@ public class WorldItemPreviewTab : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
 
+    public static Action<bool> OndescriptionPanelSizeChange;
+    private void OnEnable()
+    {
+        OndescriptionPanelSizeChange += UpdateDescirptionPanelItem;
+    }
+
+    private void OnDisable()
+    {
+        OndescriptionPanelSizeChange -= UpdateDescirptionPanelItem;
+    }
+
+    void UpdateDescirptionPanelItem(bool isFullOpen)
+    {
+        if(isFullOpen)
+        {
+            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500), 0.1f).SetEase(Ease.Linear);
+            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
+            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
+        }
+        else
+        {
+            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310), 0.1f).SetEase(Ease.Linear);
+            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
+            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
+        }
+    }
+
     public void Init(Sprite worldImg, string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
-        string entityType, string creator_Name, string creator_Description, string creatorAvatar)
+        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
     {
+        worldId = _worldId;
+
         PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
         //if (!ThumbnailDownloadURL.Equals(""))
@@ -131,6 +166,8 @@ public class WorldItemPreviewTab : MonoBehaviour
         {
             creatorPanel.SetActive(false);
         }
+
+        CheckWorldFav(isFavourite);
     }
     public void CallAnalytics(string idOfObject, string entityType)
     {
@@ -250,6 +287,24 @@ public class WorldItemPreviewTab : MonoBehaviour
         tagsInstantiated = true;
     }
 
+
+    void CheckWorldFav(bool isFavourite)
+    {
+        if (isFavourite)
+        {
+            followingWorldHighlight.SetActive(true);
+            followingWorld.SetActive(false);
+        }
+        else
+        {
+            followingWorldHighlight.SetActive(false);
+            followingWorld.SetActive(true);
+        }
+        followingWorld.GetComponent<Button>().interactable = true;
+        followingWorldHighlight.GetComponent<Button>().interactable = true;
+    }
+
+
     public void FavoriteWorldBtnClicked()
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("Favorite Worlds"))
@@ -263,8 +318,8 @@ public class WorldItemPreviewTab : MonoBehaviour
         }
         followingWorld.GetComponent<Button>().interactable = false;
         followWorldLoader.SetActive(true);
-        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD;
-        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) => 
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
+        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) =>
         {
             if (isSucess)
             {
@@ -284,7 +339,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     {
         followingWorldHighlight.GetComponent<Button>().interactable = false;
         followWorldLoader.SetActive(true);
-        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD;
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
         StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) =>
         {
             if (isSucess)
@@ -301,7 +356,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         }));
     }
 
-    IEnumerator FollowWorldAPI(string APIurl,Action<bool> CallBack)
+    IEnumerator FollowWorldAPI(string APIurl, Action<bool> CallBack)
     {
         yield return new WaitForEndOfFrame();
         using (UnityWebRequest www = UnityWebRequest.Get(APIurl))

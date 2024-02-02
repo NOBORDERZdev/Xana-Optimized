@@ -289,7 +289,7 @@ namespace DynamicScrollRect
             if(itemIndex >= (int)(TotalItems *.75) && TotalItems > previousItems)
             {
                 previousItems = TotalItems;
-                Debug.LogError("Fetch data again");
+                //Debug.LogError("Fetch data again");
                 if (WorldManager.instance.dataIsFatched)
                 {
                     WorldManager.instance.WorldPageLoading();

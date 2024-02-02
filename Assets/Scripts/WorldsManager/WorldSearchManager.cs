@@ -20,13 +20,13 @@ public class WorldSearchManager : MonoBehaviour
     }
     public void UserInputUpdate(string UserInput)
     {
-        Debug.LogError("last key word"+UserInput);
         WorldManager.instance.SearchWorldCall(UserInput);
     }
     public void ClearInputField()
     {
         searchWorldInput.Clear();
         WorldManager.instance.AllWorldTabReference.BackToPreviousScreen();
+        FlexibleRect.OnAdjustSize?.Invoke(false);
     }
     public void GetSearchBarStatus()
     {

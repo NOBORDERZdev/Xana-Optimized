@@ -112,7 +112,7 @@ namespace DynamicScrollRect
                     }
                     else
                     {
-                        TopScroller.vertical = false;
+                        //TopScroller.vertical = false;    // main scroll view is off due to some reason
                         ParentSliderFlag = true;
                     }
                 }

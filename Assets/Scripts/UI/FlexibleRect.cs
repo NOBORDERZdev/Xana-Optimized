@@ -2,23 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class FlexibleRect : MonoBehaviour
 {
     public RectTransform[] Children;
     public float Offset;
 
-    private RectTransform MyRect;
+    public RectTransform MyRect;
 
     public static Action<bool> OnAdjustSize;
     private float defaultHeight;
-    private void Start()
+
+    private void OnEnable()
     {
-        MyRect = GetComponent<RectTransform>();
-        defaultHeight = MyRect.sizeDelta.y;
         OnAdjustSize += AdjustSize;
+        defaultHeight = MyRect.sizeDelta.y;
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         OnAdjustSize -= AdjustSize;
     }
@@ -35,8 +36,12 @@ public class FlexibleRect : MonoBehaviour
                     TotalHeight += rectTransform.rect.height;
                 }
             }
-            MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
+            if (TotalHeight > defaultHeight)
+            {
+                MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
+            }
             MyRect.GetComponentInParent<HomeScreenScrollHandler>().verticalNormalizedPosition = 1;
+
         }
         else
         {
