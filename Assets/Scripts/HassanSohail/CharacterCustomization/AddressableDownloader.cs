@@ -133,14 +133,14 @@ public class AddressableDownloader : MonoBehaviour
                         MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                         if (PlayerPrefs.GetInt("presetPanel") != 1)
                         {
-                            if (callFromMultiplayer)
-                            {
-                                applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
-                            }
-                            else
-                            {
-                                applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
-                            }
+                            //if (callFromMultiplayer) // Added by Sohaib to disable cloths
+                            //{
+                            //    applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
+                            //}
+                            //else
+                            //{
+                            //    applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, applyHairColor);
+                            //}
                             if (GameManager.Instance != null)
                                 GameManager.Instance.isStoreAssetDownloading = false;
                             DisableLoadingPanel();
