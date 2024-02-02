@@ -77,8 +77,25 @@ namespace RFM.Managers
             //RFM.Globals.IsRFMWorld = true; // TODO: Do this in main menu
             Instance = this;
             ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+            InvokeRepeating(nameof(OrientationChange), 1, 1);
             EventsManager.OnHideCanvasElements();
             //StartCoroutine(CheckandFixLights());
+        }
+        int checkNum;
+        public void OrientationChange()
+        {
+            checkNum++;
+            if (checkNum < 5)
+            {
+                if (Screen.orientation == ScreenOrientation.Portrait)
+                {
+                    ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+                }
+            }
+            else
+            {
+                CancelInvoke(nameof(OrientationChange));
+            }
         }
 
         /*private void Update()
@@ -233,7 +250,7 @@ namespace RFM.Managers
             {
                 Destroy(_npcCamera.gameObject);
             }
-                
+
 
             PhotonNetwork.CurrentRoom.CustomProperties.Clear();
             // clear all custom properties of all players
@@ -610,8 +627,8 @@ namespace RFM.Managers
                 }
             }
 
-            List<RFM.Character.Hunter> hunterList= new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
-            var randomHunter = hunterList.Find(o=>o.enabled==true);
+            List<RFM.Character.Hunter> hunterList = new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+            var randomHunter = hunterList.Find(o => o.enabled == true);
             if (randomHunter != null)
             {
                 hunterForSpectating = randomHunter;
