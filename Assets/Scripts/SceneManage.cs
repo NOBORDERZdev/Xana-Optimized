@@ -134,10 +134,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
         Launcher.instance.working = ScenesList.MainMenu;
         PhotonNetwork.LeaveRoom(false);
         PhotonNetwork.LeaveLobby();
-        PhotonNetwork.DestroyAll(true);
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
         Debug.Log("Exit: Api Called");
         StartSceneLoading();
+        PhotonNetwork.DestroyAll(true);
     }
 
     public void ReturnToHome(bool changeOritentationChange)
