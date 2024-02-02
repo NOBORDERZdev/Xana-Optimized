@@ -315,8 +315,12 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
-        ProfileUIHandler.instance.followerBtn.interactable = true;
-        ProfileUIHandler.instance.followingBtn.interactable = true;
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.followerBtn.interactable = true;
+            ProfileUIHandler.instance.followingBtn.interactable = true;
+        }
+
         userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
 
         topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
@@ -624,21 +628,21 @@ public class MyProfileDataManager : MonoBehaviour
             currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
             bool IsMyProfileFeed = false;
             FeedUIController.Instance.ShowLoader(false);
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
 
-            //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-            //{
-            //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            //    {
-            //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-            //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            //    }
-            //    else
-            //    {
-            //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            //    }
-            //}
-
-            for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
+        for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
             {
                 Debug.Log("currentPageAllFeedWithUserIdRoot");
                 if ((!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent == null)
@@ -1120,6 +1124,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             displayNFTinUIAsync();
         }
+        //StartCoroutine(WaitToNFTTabHeight(index));
         if (gameObject.activeSelf)
         {
             StartCoroutine(WaitToNFTTabHeight(index));
@@ -2462,6 +2467,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
     public void RequestGetUserDetails()
     {
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
         //if (totalFollowerText.gameObject.activeInHierarchy)
         //{
         //    StartCoroutine(IERequestGetUserDetails());

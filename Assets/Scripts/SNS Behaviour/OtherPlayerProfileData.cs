@@ -183,8 +183,12 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void LoadUserData(bool isFirstTime)
     {
-        ProfileUIHandler.instance.followerBtn.interactable = false;
-        ProfileUIHandler.instance.followingBtn.interactable = false;
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.followerBtn.interactable = false;
+            ProfileUIHandler.instance.followingBtn.interactable = false;
+        }
+
         Debug.Log("Other user profile load data");
         lastUserId = singleUserProfileData.id;
 
@@ -291,6 +295,8 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
             if (singleUserProfileData.tags != null && singleUserProfileData.tags.Length > 0)
             {
+            if (ProfileUIHandler.instance)
+            {
                 ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
                 if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
                 {
@@ -298,9 +304,12 @@ public class OtherPlayerProfileData : MonoBehaviour
                     {
                         if (i >= singleUserProfileData.tags.Length)
                         {
-                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
                         }
-                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                        else
+                        {
+                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                        }
                     }
                 }
                 else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
@@ -324,14 +333,21 @@ public class OtherPlayerProfileData : MonoBehaviour
                                 _tagobject.name = "TagPrefab" + i;
                                 _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            else
+                            {
+                                ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            }
                         }
                     }
                 }
             }
+            }
             else
             {
+            if (ProfileUIHandler.instance)
+            {
                 ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            }
             }
     }
 

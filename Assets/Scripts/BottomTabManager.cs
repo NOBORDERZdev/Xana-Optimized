@@ -509,17 +509,23 @@ public class BottomTabManager : MonoBehaviour
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
             }
-          //  GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+            //below camera line was Commented before but i uncommented it in order to make profile 2.0 work ------- UMER
+            GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+
             FeedUIController.Instance.SetAddFriendScreen(true);
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
+            //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
             //FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
             FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
 
             MyProfileDataManager.Instance.MyProfileSceenShow(false);
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+
             //Invoke(nameof(InvokeDisableFeed),1f);
             //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             //{
@@ -586,7 +592,7 @@ public class BottomTabManager : MonoBehaviour
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
             }
-
+            //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
             //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             //{
             //MyProfileDataManager.Instance.ProfileTabButtonClick();
@@ -596,6 +602,7 @@ public class BottomTabManager : MonoBehaviour
             {
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
+                FeedUIController.Instance.AddFriendPanel.SetActive(false);
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {

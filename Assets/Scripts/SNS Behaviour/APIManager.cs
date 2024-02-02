@@ -544,7 +544,9 @@ public class APIManager : MonoBehaviour
                 AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
                 if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
                 {
-                    allFeedWithUserIdRoot.Data.Rows.Clear(); //Riken
+                    //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
+                    allFeedWithUserIdRoot.Data.Rows.Clear();
+                    
                     for (int i = 0; i < test.Data.Rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
