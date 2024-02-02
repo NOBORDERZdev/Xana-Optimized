@@ -31,6 +31,7 @@ public class FeedController : MonoBehaviour
     [SerializeField] GameObject SearchContentPanel;
     [SerializeField] GameObject SerchBarObj;
     [SerializeField] AdvancedInputField searchInputField;
+    [SerializeField] GameObject FeedLoader;
 
     private void OnEnable()
     {
@@ -52,32 +53,34 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
-        FeedUIController.Instance.ShowLoader(true);
+        //FeedUIController.Instance.ShowLoader(true);
+        FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
         await GetFeedData(APIManager.Instance.userId);
     }
 
     async Task GetFeedData(int userId)
     {
-        string url = ConstantsGod.API_BASEURL +ConstantsGod.FeedGetAllByUserId+userId+"/"+feedPageNumber +"/"+ feedPageSize;
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + feedPageNumber + "/" + feedPageSize;
         UnityWebRequest response = UnityWebRequest.Get(url);
         try
-        {   await response.SendWebRequest();
+        {
+            await response.SendWebRequest();
             if (response.isNetworkError)
             {
                 Debug.Log(response.error);
+                FeedLoader.SetActive(false);
                 noFeedsScreen.gameObject.SetActive(true);
             }
             else
             {
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-               // FeedAPIData.Add(feedResponseData);
+                // FeedAPIData.Add(feedResponseData);
                 isFeedInitialized = true;
-                FeedUIController.Instance.ShowLoader(false);
                 foreach (var item in feedResponseData.data.rows)
                 {
-                    if (!String.IsNullOrEmpty( item.text_post) && !item.text_post.Equals("null") )
+                    if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
                         FeedAPIData.Add(item);
                         scrollerController._data.Add(item);
@@ -87,7 +90,7 @@ public class FeedController : MonoBehaviour
                         //temp.GetComponent<FeedData>().SetFeedPrefab(item);
                         //feedList.Add(temp.GetComponent<FeedData>());
                     }
-                   
+
                 }
                 Invoke(nameof(InovkeScrollReload), 2f);
                 // feedUIController.IntFeedScroller(feedResponseData);
@@ -96,13 +99,15 @@ public class FeedController : MonoBehaviour
         }
         catch (System.Exception ex)
         {
+            FeedLoader.SetActive(false);
             Debug.Log(ex.Message);
         }
         response.Dispose();
-    }
+        }
 
 
     public void PullNewPlayerPost(){ 
+        FeedLoader.SetActive(true);
         GetPlayerNewPosts(APIManager.Instance.userId);
     }
 
@@ -120,7 +125,7 @@ public class FeedController : MonoBehaviour
             {
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-                FeedUIController.Instance.ShowLoader(false);
+                //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
                 foreach (var item in feedResponseData.data.rows)
                 {
@@ -141,6 +146,7 @@ public class FeedController : MonoBehaviour
         {
             Debug.Log(ex.Message);
         }
+       
         response.Dispose();
     }
 
@@ -151,6 +157,7 @@ public class FeedController : MonoBehaviour
              scrollerController._data.Insert(tempData[i],0);
         }
         gameObject.GetComponent<EnhancedScroller>().ReloadData();
+         FeedLoader.SetActive(false);
 
     }
 
@@ -177,7 +184,7 @@ public class FeedController : MonoBehaviour
             {
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-                FeedUIController.Instance.ShowLoader(false);
+                 FeedLoader.SetActive(false);
                 foreach (var item in feedResponseData.data.rows)
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
@@ -200,6 +207,7 @@ public class FeedController : MonoBehaviour
     {
         gameObject.GetComponent<ScrollRect>().content.SetParent(feedContentParent);
         scrollerController.scroller.ReloadData();
+        FeedLoader.SetActive(false);
     }
     /// <summary>
     /// To Update Feed Like Count from Socket
@@ -237,7 +245,8 @@ public class FeedController : MonoBehaviour
 
     public void SearchFeed(){
         print("~~~~~");
-        FeedUIController.Instance.ShowLoader(true);
+        noFeedSerach. gameObject.SetActive(false);
+        FeedLoader.SetActive(true);
         EmptySearchPanel();   
         if (searchInputField.Text.Length > 0)       
         {
@@ -245,6 +254,7 @@ public class FeedController : MonoBehaviour
         }
         else
         {
+            FeedLoader.SetActive(false);
             feedContentParent.gameObject.SetActive(true);
             scrollerController.scroller.ReloadData();
         }
@@ -300,7 +310,7 @@ public class FeedController : MonoBehaviour
                 }
                 noFeedSerach. gameObject.SetActive(true);
             }
-            FeedUIController.Instance.ShowLoader(false);
+             FeedLoader.SetActive(false);
         }
         response.Dispose();
     }
