@@ -222,7 +222,14 @@ public class FeedController : MonoBehaviour
             {
                 //scrollerController._data[i].UpdateLikeCount(feedLikeSocket.likeCount);
                 scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
-                scrollerController.scroller.ReloadData();
+                //scrollerController.scroller.ReloadData();
+                foreach (Transform item in feedContentParent.GetChild(0).transform )
+                {
+                    if (item.GetComponent<FeedData>() && item.GetComponent<FeedData>().GetFeedId() == feedLikeSocket.textPostId)
+                    {
+                         item.GetComponent<FeedData>().UpdateLikeCount(feedLikeSocket.likeCount);
+                    }
+                }
                 break;
             }
         }
