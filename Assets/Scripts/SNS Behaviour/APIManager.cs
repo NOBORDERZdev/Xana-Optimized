@@ -2030,14 +2030,19 @@ public class APIManager : MonoBehaviour
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
     {
         WWWForm form = new WWWForm();
-        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
+        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "   job:" + user_job + "  :bio:" + user_bio);
         form.AddField("gender", user_gender);
         form.AddField("job", user_job);
         form.AddField("country", user_country);
         form.AddField("website", user_website);
         form.AddField("bio", user_bio);
         form.AddField("username", unique_Name);
-        form.AddField("tags", unique_Name);
+        
+        if(_tags != null && _tags.Length > 0)
+        {
+            string json = JsonConvert.SerializeObject(_tags);
+            form.AddField("tags", json);
+        }
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
         {

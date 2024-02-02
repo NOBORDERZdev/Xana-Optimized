@@ -1693,6 +1693,7 @@ public class MyProfileDataManager : MonoBehaviour
         if (new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
         {
             Debug.Log("No changes are done in Tags");
+            tempTags = null;
         }
         else
         {
@@ -1744,7 +1745,7 @@ public class MyProfileDataManager : MonoBehaviour
                 countryName = "";
             }
 
-            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),userSelectedTags.ToArray());
+            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
