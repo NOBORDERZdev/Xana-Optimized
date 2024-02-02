@@ -157,7 +157,7 @@ public class FeedController : MonoBehaviour
              scrollerController._data.Insert(tempData[i],0);
         }
         gameObject.GetComponent<EnhancedScroller>().ReloadData();
-         FeedLoader.SetActive(false);
+        FeedLoader.SetActive(false);
 
     }
 
@@ -216,14 +216,24 @@ public class FeedController : MonoBehaviour
     /// <param name="isLiked"></param>
     public void UpdateFeedLike(FeedLikeSocket feedLikeSocket)
     {
-        foreach (var item in feedList)
+        for (int i = 0; i < scrollerController._data.Count; i++)
         {
-            if (item.GetFeedId() == feedLikeSocket.textPostId)
+            if (scrollerController._data[i].id == feedLikeSocket.textPostId)
             {
-              item.UpdateLikeCount(feedLikeSocket.likeCount);
-              scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
+                //scrollerController._data[i].UpdateLikeCount(feedLikeSocket.likeCount);
+                scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
+                scrollerController.scroller.ReloadData();
+                break;
             }
         }
+        //foreach (var item in scrollerController._data)
+        //{
+        //    if (item.GetFeedId() == feedLikeSocket.textPostId)
+        //    {
+        //      item.UpdateLikeCount(feedLikeSocket.likeCount);
+        //      scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
+        //    }
+        //}
     }
 
     public void OnClickSerachBtn(){

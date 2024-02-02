@@ -240,6 +240,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
             {
                 _data[i].like_count = likeCount;
                 _data[i].isLikedByUser = likedBool;
+                break;
             }
         }
     }
