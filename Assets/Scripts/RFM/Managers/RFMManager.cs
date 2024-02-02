@@ -275,7 +275,10 @@ namespace RFM.Managers
             //RFM.Globals.player.transform.root.gameObject.SetActive(true);
             var newPlayer = PhotonNetwork.Instantiate("XANA Player", spawnPosition, Quaternion.identity, 0);
             RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
+
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
+            CanvasButtonsHandler.inst.RFMResetSprintButton(); // TODO: Call this function in the above function
+
             StartCoroutine(Start());
         }
 
@@ -509,7 +512,14 @@ namespace RFM.Managers
             statusBG.SetActive(false);
             statusMMFPlayer.PlayFeedbacks();
 
-            Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, () => { Globals.gameOverText = "RUNNERS WIN"; GameplayTimeOver(); },
+            Timer.SetDurationAndRun(CurrentGameConfiguration.GameplayTime, () =>
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "RUNNERS WIN");
+                };
+                GameplayTimeOver(); 
+            },
                 gameplayTimeText, true, false, AfterEachSecondGameplayTimer);
 
             InvokeRepeating(nameof(CheckForGameOverCondition), 10, 3);
@@ -550,25 +560,61 @@ namespace RFM.Managers
         private void CheckForGameOverCondition()
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
+            if (!PhotonNetwork.IsMasterClient) return;
+
+
+            var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
+            var huntersCount = 0;
+
+            for (int i = 0; i < hunters.Length; i++)
+            {
+                if (hunters[i].enabled)
+                {
+                    huntersCount++;
+                }
+            }
+
+            if (huntersCount == 0)
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "RUNNERS WIN");
+                }
+
+                Timer.StopAllTimers();
+                GameplayTimeOver();
+            }
 
             var runners = FindObjectsOfType<RFM.Character.Runner>(false);
-            var count = 0;
+            var runnersCount = 0;
 
             for (int i = 0; i < runners.Length; i++)
             {
                 if (runners[i].enabled)
                 {
-                    count++;
+                    runnersCount++;
                 }
             }
 
-            if (count == 0)
+            if (runnersCount == 0)
             {
-                Globals.gameOverText = "HUNTERS WIN";
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "HUNTERS WIN");
+                }
+
                 Timer.StopAllTimers();
                 GameplayTimeOver();
             }
         }
+
+
+        [PunRPC]
+        private void SetWinnerText(string text)
+        {
+            Globals.gameOverText = text;
+        }
+
 
         private async void GameplayTimeOver()
         {
@@ -598,7 +644,7 @@ namespace RFM.Managers
 
         public void PlayerCaught(int hunterViewID = -1)
         {
-            Debug.LogError("RFM I was caught by " + hunterViewID + " Globals.gameState: " + Globals.gameState);
+            //Debug.LogError("RFM I was caught by " + hunterViewID + " Globals.gameState: " + Globals.gameState);
             if (Globals.gameState != Globals.GameState.Gameplay) return;
 
             _mainCam.SetActive(false);
