@@ -275,7 +275,10 @@ namespace RFM.Managers
             //RFM.Globals.player.transform.root.gameObject.SetActive(true);
             var newPlayer = PhotonNetwork.Instantiate("XANA Player", spawnPosition, Quaternion.identity, 0);
             RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
+
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
+            CanvasButtonsHandler.inst.RFMResetSprintButton(); // TODO: Call this function in the above function
+
             StartCoroutine(Start());
         }
 
