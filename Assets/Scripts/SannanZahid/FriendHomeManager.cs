@@ -15,8 +15,8 @@ public class FriendHomeManager : MonoBehaviour
 
     private void OnDisable()
     {
-        if (FriendPostSocket.instance != null)
-            FriendPostSocket.instance.updateFriendPostDelegate -= UpdateFriendPost;
+        if (SocketController.instance != null)
+            SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
     }
 
 
