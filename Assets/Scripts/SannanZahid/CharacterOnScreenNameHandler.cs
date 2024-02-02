@@ -11,6 +11,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     private void Start()
     {
         instance = this;
+        Debug.Log("CharacterOnScreenNameHandler Start");
         StartCoroutine(SetName());
     }
     public void SetNameOfPlayerAgain()
@@ -23,32 +24,36 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     IEnumerator SetName()
     {
-      
-        if (PlayerPrefs.GetInt("WalletConnect") == 0)
+
+        if (!LoginRegister.ChinaUser)
         {
-            while (true)
+            if (PlayerPrefs.GetInt("WalletConnect") == 0)
             {
-                yield return new WaitForSeconds(1f);
-                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
+                while (true)
                 {
-                    break;
+                    yield return new WaitForSeconds(1f);
+                    if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
+                    {
+                        break;
+                    }
+                }
+                // Debug.LogError("SetName");
+                yield return new WaitForSeconds(1f);
+                if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+                {
+
+                    Debug.LogError("SetName 1");
+                    _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+                }
+                else
+                {
+                    Debug.LogError("SetName 2");
+
+                    StartCoroutine(IERequestGetUserDetails());
                 }
             }
-           // Debug.LogError("SetName");
-            yield return new WaitForSeconds(1f);
-            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
-            {
-              
-
-                _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-            }
-            else
-            {
-               // Debug.LogError("SetName 2");
-
-                StartCoroutine(IERequestGetUserDetails());
-            }
         }
+      
         else
         {
            
@@ -56,13 +61,13 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                //Debug.LogError("SetName 1");
+                Debug.Log("SetName 1");
 
                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             }
             else
             {
-               
+                Debug.Log("SetName 4");
                 StartCoroutine(IERequestGetUserDetails());
 
             }
@@ -88,6 +93,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             }
             else
             {
+                Debug.Log("GetUserDetails Response: " + www.downloadHandler.text.ToString());
                 GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
                 UpdateNameText(tempMyProfileDataRoot.data.name);
             }

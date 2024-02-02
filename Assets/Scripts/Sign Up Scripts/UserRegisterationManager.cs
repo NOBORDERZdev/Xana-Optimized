@@ -696,18 +696,20 @@ public class UserRegisterationManager : MonoBehaviour
                 //{
                 //    PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
                 //}
-                GetOwnedNFTsFromAPI();
+              //  GetOwnedNFTsFromAPI();
                 PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
                
 
 
                 usernamePanal.SetActive(false);
                 usernamePanal.SetActive(false);
-                CheckCameraMan();
+                CharacterOnScreenNameHandler.instance.SetNameOfPlayerAgain();
+                //CheckCameraMan();
                 //    m_EquipUI.BackFromArtbone();
                 PlayerPrefs.Save();
-                StoreManager.instance.CheckWhenUserLogin();
+              
                 OpenUIPanal(7);
+                Debug.Log("storemanager 1====" + UIManager.Instance);
                 if (UIManager.Instance != null)//rik
                 {
                     // UIManager.Instance._SplashScreen.SetActive(false);
@@ -725,7 +727,8 @@ public class UserRegisterationManager : MonoBehaviour
                 //    //    usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
                 //    //}
                 //}
-
+                Debug.Log("storemanager===="+StoreManager.instance);
+                StoreManager.instance.CheckWhenUserLogin();
                 if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
                 {
                     StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
@@ -1173,6 +1176,7 @@ public class UserRegisterationManager : MonoBehaviour
             PresetData_Jsons.clickname = null;
 
             //EntertheWorld_Panal.SetActive(true);
+            Debug.Log("storemanager 2====" + StoreManager.instance);
             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             UserRegisterationManager.instance.usernamePanal.SetActive(false);
 
@@ -1187,6 +1191,7 @@ public class UserRegisterationManager : MonoBehaviour
 
             return;
         }
+        Debug.Log("storemanager 4====" + StoreManager.instance);
 
         if (isSetXanaliyaUserName)
         {
@@ -1224,7 +1229,7 @@ public class UserRegisterationManager : MonoBehaviour
         //    errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", false);
         //if (errorTextResetPasswordAPI.GetComponent<Animator>().GetBool("playAnim"))
         //    errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", false);
-
+        Debug.Log("storemanager 5====" + ActivePanalCounter);
         switch (ActivePanalCounter)
         {
             case 1:
