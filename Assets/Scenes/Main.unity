@@ -8142,6 +8142,13 @@ MonoBehaviour:
     armTattooTextureName: 
     eyeLidTextureName: 
     FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
   _sliderindexes: {fileID: 11400000, guid: 007ece8573d836d4b8f5fc3bfe09bf52, type: 2}
   characterController: {fileID: 0}
 --- !u!1 &105533695
@@ -15938,6 +15945,7 @@ MonoBehaviour:
   registerFirstTime: 0
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
+  LoginasGustprofile: 0
   NFTUrl: 
   clothJson: 
   defaultFightingName: TAKESHI
@@ -40438,6 +40446,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 1654741760}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1341452831}
   chatMessageUnReadCountText: {fileID: 360765117}
@@ -48832,6 +48841,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2051747839}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1033625937}
   chatMessageUnReadCountText: {fileID: 346837808}
@@ -50495,6 +50505,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2123470891}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 414214556}
   chatMessageUnReadCountText: {fileID: 1955619320}
@@ -50754,6 +50765,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2132913894}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1565411577}
   chatMessageUnReadCountText: {fileID: 1891834831}
@@ -51261,6 +51273,60 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  _PCharacterData:
+    id: 
+    name: 
+    thumbnail: 
+    myItemObj: []
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
 --- !u!114 &98365739056566246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56606,6 +56672,11 @@ PrefabInstance:
       objectReference: {fileID: 1594758011}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+--- !u!1 &2589320108206545244 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2589320108043099682, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+  m_PrefabInstance: {fileID: 2589320108206545243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &2608392941270528533
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60009,6 +60080,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: postingBtn
+      value: 
+      objectReference: {fileID: 2589320108206545244}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: AllTitleText.Array.data[5]
       value: 
