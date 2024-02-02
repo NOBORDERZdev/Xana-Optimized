@@ -89,7 +89,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4442626566558499240}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -126,9 +126,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1089696960592666553}
         m_TargetAssemblyTypeName: TagPrefabInfo, Assembly-CSharp
-        m_MethodName: ClickOnTag
+        m_MethodName: Select_UnselectTags
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -194,6 +194,7 @@ MonoBehaviour:
   tagNameHighlighter: {fileID: 4442626566632302227}
   hightLighter: {fileID: 0}
   descriptionPanel: {fileID: 0}
+  isSelected: 0
 --- !u!1 &4442626566632302316
 GameObject:
   m_ObjectHideFlags: 0
