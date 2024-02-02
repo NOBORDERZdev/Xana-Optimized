@@ -560,6 +560,8 @@ namespace RFM.Managers
         private void CheckForGameOverCondition()
         {
             if (Globals.gameState != Globals.GameState.Gameplay) return;
+            if (!PhotonNetwork.IsMasterClient) return;
+
 
             var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
             var huntersCount = 0;
@@ -596,7 +598,6 @@ namespace RFM.Managers
 
             if (runnersCount == 0)
             {
-                // Debug.LogError("CheckForGameOverCondition runners count: " + runnersCount);
                 if (PhotonNetwork.IsMasterClient)
                 {
                     photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "HUNTERS WIN");
