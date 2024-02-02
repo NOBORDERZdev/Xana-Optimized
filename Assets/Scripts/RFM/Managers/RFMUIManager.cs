@@ -62,6 +62,7 @@ namespace RFM.Managers
             huntersScores = new Dictionary<string[], int>();
 
             gameOverPanel.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
         }
 
         private void OnEnable()
