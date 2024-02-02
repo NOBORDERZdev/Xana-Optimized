@@ -224,6 +224,7 @@ namespace RFM.Managers
 
         private void OnShowScores()
         {
+            gameOverText.gameObject.SetActive(true);
             gameOverText.text = Globals.gameOverText;
 
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
