@@ -155,8 +155,6 @@ namespace RFM.Managers
         
         private void OnGameOver()
         {
-            gameOverText.text = Globals.gameOverText;
-
             showMoney.transform.parent.gameObject.SetActive(false);
             //rearViewMirror.SetActive(false);
             gameOverPanel.SetActive(true);
@@ -226,6 +224,8 @@ namespace RFM.Managers
 
         private void OnShowScores()
         {
+            gameOverText.text = Globals.gameOverText;
+
             foreach (var npcHunter in FindObjectsOfType<NPCHunter>())
             {
                 int rewardMultiplier = 0;

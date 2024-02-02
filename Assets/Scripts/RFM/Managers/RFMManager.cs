@@ -516,7 +516,7 @@ namespace RFM.Managers
             {
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "RUNNERS WIN");
+                    photonView.RPC(nameof(SetGameOver), RpcTarget.AllBuffered, "RUNNERS WIN");
                 };
                 GameplayTimeOver(); 
             },
@@ -576,13 +576,15 @@ namespace RFM.Managers
 
             if (huntersCount == 0)
             {
-                if (PhotonNetwork.IsMasterClient)
+                //if (PhotonNetwork.IsMasterClient)
                 {
-                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "RUNNERS WIN");
+                    photonView.RPC(nameof(SetGameOver), RpcTarget.AllBuffered, "RUNNERS WIN");
+                    CancelInvoke(nameof(CheckForGameOverCondition));
+                    return;
                 }
 
-                Timer.StopAllTimers();
-                GameplayTimeOver();
+                //Timer.StopAllTimers();
+                //GameplayTimeOver();
             }
 
             var runners = FindObjectsOfType<RFM.Character.Runner>(false);
@@ -598,21 +600,26 @@ namespace RFM.Managers
 
             if (runnersCount == 0)
             {
-                if (PhotonNetwork.IsMasterClient)
+                //if (PhotonNetwork.IsMasterClient)
                 {
-                    photonView.RPC(nameof(SetWinnerText), RpcTarget.AllBuffered, "HUNTERS WIN");
+                    photonView.RPC(nameof(SetGameOver), RpcTarget.AllBuffered, "HUNTERS WIN");
+                    CancelInvoke(nameof(CheckForGameOverCondition));
+                    return;
                 }
 
-                Timer.StopAllTimers();
-                GameplayTimeOver();
+                //Timer.StopAllTimers();
+                //GameplayTimeOver();
             }
         }
 
 
         [PunRPC]
-        private void SetWinnerText(string text)
+        private void SetGameOver(string text)
         {
             Globals.gameOverText = text;
+
+            Timer.StopAllTimers();
+            GameplayTimeOver();
         }
 
 
