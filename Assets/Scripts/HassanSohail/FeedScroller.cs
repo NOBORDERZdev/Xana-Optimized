@@ -14,6 +14,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     /// </summary>
     public SmallList<FeedResponseRow> _data;
     public List<FeedHeightData> feedHeight;
+    FeedController feedController;
     /// <summary>
     /// Whether the scroller is being dragged
     /// </summary>
@@ -211,9 +212,9 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
             //{
             //    _data.Insert(new Data() { someText = "Brand New Data " + i.ToString() + "!!!" }, 0);
             //}
-
+            
         /// GET NEW DATA FROM API
-
+             scroller.GetComponent<FeedController>().GetComponent<FeedController>().PullNewPlayerPost();
             // reload the scroller to show the new data
             scroller.ReloadData();
 
