@@ -62,6 +62,14 @@ public class Actor : MonoBehaviour
         _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
+
+        _PlayerAnimator.SetBool("Action", false);
+        _PlayerAnimator.SetBool("Menu Action", false);
+        //StopAllCoroutines();
+        //_moveFlag = true;
+        StateMoveBehaviour = 1;
+        //StartCoroutine(StartActorBehaviour());
+
     }
     IEnumerator StartActorBehaviour()
     {
@@ -126,6 +134,7 @@ public class Actor : MonoBehaviour
         if(flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;
+            _PlayerAnimator.SetBool("Menu Action", true);
             _moveFlag = false;
             StateMoveBehaviour = 0;
         }

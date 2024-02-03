@@ -46,13 +46,14 @@ public class UserPostFeature : MonoBehaviour
         if(GameManager.Instance.moodManager.PostMood)
         {
             GameManager.Instance.moodManager.PostMood = false;
+            Debug.LogError("---> "+moodToSend+"   --->"+ GameManager.Instance.moodManager.LastMoodSelected);
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
-            GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController ,GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected));
             GameManager.Instance.moodManager.LastMoodSelected = "";
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -150,11 +151,11 @@ public class UserPostFeature : MonoBehaviour
                 {
                     RetrievedPostPlayer.success = true;
                     bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood).IdleAnimationFlag;
-                    GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostPlayer.data.text_mood, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+                    GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostPlayer.data.text_mood, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController,GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
                     GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController,GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
             }
             www.Dispose();
         }
@@ -181,11 +182,11 @@ public class UserPostFeature : MonoBehaviour
         if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
         {
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood).IdleAnimationFlag;
-            GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostPlayer.data.text_mood, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostPlayer.data.text_mood, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController , GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
     }
 
 
@@ -240,16 +241,16 @@ public class UserPostFeature : MonoBehaviour
                     if(tempBehav != null)
                     {
                         bool flagg = tempBehav.IdleAnimationFlag;
-                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostFriend.data.text_mood, flagg, friendActor.overrideController);
+                        GameManager.Instance.moodManager.SetMoodPosted(RetrievedPostFriend.data.text_mood, flagg, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
                         friendActor.SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostFriend.data.text_mood));
                     }
                     else
                     {
-                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController);
+                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
                     }
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController);
+                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
             }
             www.Dispose();
         }
