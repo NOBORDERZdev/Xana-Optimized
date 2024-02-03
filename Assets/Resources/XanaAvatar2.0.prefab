@@ -11528,6 +11528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5214314483208369287}
   - component: {fileID: 4834376472678329894}
+  - component: {fileID: 5136196410711771664}
   - component: {fileID: 4834376472678329915}
   - component: {fileID: 756828810228821166}
   - component: {fileID: 8197348955215640157}
@@ -11606,6 +11607,100 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5136196410711771664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24793d384e3b8a45af4e070b193c96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 6650456456670870277}
+  maleHair:
+  - {fileID: 919132149155446097, guid: 833d734f4e938ca4097843c4174d0c6b, type: 3}
+  - {fileID: 919132149155446097, guid: 246c736e9f777634e91264308ed8df78, type: 3}
+  - {fileID: 919132149155446097, guid: 83da724871c9fb94a8dd2a712c6be9f2, type: 3}
+  - {fileID: 919132149155446097, guid: f384e7dcd1e198a49a7a7fb42ef48ae8, type: 3}
+  - {fileID: 919132149155446097, guid: e816372fb1212a348862f7169065a9e3, type: 3}
+  - {fileID: 919132149155446097, guid: c203f99f76af6f04bbe104f3f43d3987, type: 3}
+  - {fileID: 919132149155446097, guid: a3ebfba4a4fd21543b9a1a8a7261276d, type: 3}
+  - {fileID: 919132149155446097, guid: a5b5a5ebd389bed4392ba52db276b3fe, type: 3}
+  - {fileID: 919132149155446097, guid: 4c0c913b3dd14fe4e8c047f4b88f28cd, type: 3}
+  - {fileID: 919132149155446097, guid: fc30e8f5961844e4daf08a869247b143, type: 3}
+  malePants:
+  - {fileID: 919132149155446097, guid: c86d8d63a61c4b649a34a7b365623de3, type: 3}
+  - {fileID: 919132149155446097, guid: cb37192c1d7e54f4a9e046bbd2d027c0, type: 3}
+  - {fileID: 919132149155446097, guid: 10b9ec8e7cc18d94d86651a1ef80cefd, type: 3}
+  - {fileID: 919132149155446097, guid: 3f63b1e988a528046adda2b07708e734, type: 3}
+  - {fileID: 919132149155446097, guid: dd05655e40915dd40a6c44515330628b, type: 3}
+  - {fileID: 919132149155446097, guid: 18659aba91848b74d97cc71529505c2a, type: 3}
+  - {fileID: 919132149155446097, guid: a33919816f763b34f8513c87a4b7fafd, type: 3}
+  - {fileID: 919132149155446097, guid: d72c644b4e80aaa45af3f56b1bfaa6b2, type: 3}
+  - {fileID: 919132149155446097, guid: 2774d6aef3a9110459c7cb30288e6551, type: 3}
+  - {fileID: 919132149155446097, guid: 420633d707d5b5a4ca2df375fea92e13, type: 3}
+  maleShirts:
+  - {fileID: 919132149155446097, guid: 0e8dedb5101c0a64b83f837a1dcb2dc7, type: 3}
+  - {fileID: 919132149155446097, guid: f03120447a077034b9c9eda6e19a8723, type: 3}
+  - {fileID: 919132149155446097, guid: be157cb1c1e751e4f851d229b506f6a3, type: 3}
+  - {fileID: 919132149155446097, guid: bb3caf0d044866143923fb358b02d563, type: 3}
+  - {fileID: 919132149155446097, guid: 74fd87770ae78d04fab9c727a7d3a368, type: 3}
+  - {fileID: 919132149155446097, guid: b2b8bb8e77ef57a4499370ac4fed50dc, type: 3}
+  - {fileID: 919132149155446097, guid: ee89a236447213d48af3b251ff4fb6b6, type: 3}
+  - {fileID: 919132149155446097, guid: a1bf5b3b923866f4c922caeea1faff9e, type: 3}
+  - {fileID: 919132149155446097, guid: 7bb616a676ad7cc40bb743cc162c8f12, type: 3}
+  - {fileID: 919132149155446097, guid: 32ff7d4096ba76e43b6d25aa567019d4, type: 3}
+  maleShoes:
+  - {fileID: 919132149155446097, guid: 96b4fbe0940e21842afb43423e4d309d, type: 3}
+  - {fileID: 919132149155446097, guid: d3fd1fe68405dcc40b9a27ade894d3a8, type: 3}
+  - {fileID: 919132149155446097, guid: 5d66e31a020129340a15a8b88225ed81, type: 3}
+  - {fileID: 919132149155446097, guid: c4caae78dd903f244a2fc8f59c86df4f, type: 3}
+  - {fileID: 919132149155446097, guid: 8c24f01da231b004e96d5189a363ac54, type: 3}
+  - {fileID: 919132149155446097, guid: 31b5f1b74fc58064faa6320f6a2dc475, type: 3}
+  - {fileID: 919132149155446097, guid: 41898f18a91a0a942a14733720e39480, type: 3}
+  - {fileID: 0}
+  - {fileID: 919132149155446097, guid: bd68e0bf6e4f79847831fe74bb7c2e77, type: 3}
+  - {fileID: 919132149155446097, guid: 15b94259351ea244bb3e47772a78b613, type: 3}
+  femaleHair:
+  - {fileID: 919132149155446097, guid: 58e1350adeaa62441a08c0abb11df3fd, type: 3}
+  - {fileID: 919132149155446097, guid: 955f4a32258c8254d83c6488b657047a, type: 3}
+  - {fileID: 919132149155446097, guid: 78560a1f706ed9045b4bda08bc519aea, type: 3}
+  - {fileID: 919132149155446097, guid: d48daceb02a47434a86e65bfaa92ed50, type: 3}
+  - {fileID: 919132149155446097, guid: 932508fccf5a8514094888b68ff2bf88, type: 3}
+  - {fileID: 919132149155446097, guid: 539673f1705d72d4f93056d7b4d2aa71, type: 3}
+  - {fileID: 919132149155446097, guid: 4cce90cd4c811664082861f0ce3b81a3, type: 3}
+  femalePants:
+  - {fileID: 919132149155446097, guid: d2df3dd232336af499d0776b4a29a367, type: 3}
+  - {fileID: 919132149155446097, guid: 2720fd23d6fa1124d834ca72fb85b016, type: 3}
+  - {fileID: 919132149155446097, guid: 51b2f8d73b9ea574b9ce88431be731b3, type: 3}
+  - {fileID: 919132149155446097, guid: abebc0fd8fc0a6248ae281767a4ee008, type: 3}
+  - {fileID: 919132149155446097, guid: d075ae3e6af986e4eb805823b83945f4, type: 3}
+  - {fileID: 919132149155446097, guid: 31d7b829bb544e84cb6881dcb173a8ea, type: 3}
+  - {fileID: 919132149155446097, guid: 482acf7a45d82ec47aa9487357cad33a, type: 3}
+  femaleShirts:
+  - {fileID: 919132149155446097, guid: 65ac8291774e64441a92e7f559752082, type: 3}
+  - {fileID: 919132149155446097, guid: fc7092b167061b6418f727f8fc19cb2d, type: 3}
+  - {fileID: 919132149155446097, guid: 64663755409d02342ae972cb53983bb8, type: 3}
+  - {fileID: 919132149155446097, guid: e85b8df3889de1a4fa84c4ef0c3915d1, type: 3}
+  - {fileID: 919132149155446097, guid: 77f1316ec9196134c9e78bd837135396, type: 3}
+  - {fileID: 919132149155446097, guid: 35137398b28f2c44daebdaaa0b094b8d, type: 3}
+  - {fileID: 919132149155446097, guid: 8c8269f38e91d4f4a89108c862383104, type: 3}
+  femaleShoes:
+  - {fileID: 919132149155446097, guid: ed16bf746612e304c87746ac1d1ec66d, type: 3}
+  - {fileID: 919132149155446097, guid: 39b8b131c963409438df35a0ee3c4461, type: 3}
+  - {fileID: 919132149155446097, guid: 1622d5b45ab668d4587ea7d5b40e1748, type: 3}
+  - {fileID: 919132149155446097, guid: 227d7ea20316c9a43890c6173768f80f, type: 3}
+  - {fileID: 919132149155446097, guid: f29e428ac0cda174f818eef27f53cadb, type: 3}
+  - {fileID: 919132149155446097, guid: 8338092539b591d408281d6cb423e585, type: 3}
+  - {fileID: 919132149155446097, guid: f342d391d99642e4b9ca7e29590eff12, type: 3}
+  maleFace: {fileID: 8715854053983826737}
+  maleBody: {fileID: 2744427213056699754}
+  femaleFace: {fileID: 8280685368702606424}
+  femaleBody: {fileID: 869577381563767874}
+  characterType: 0
 --- !u!114 &4834376472678329915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21361,6 +21456,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5866666021909216657, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+--- !u!1 &869577381563767874 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2550410412981069290, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 5803524979800458836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2744427213056699754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -676550142019228866, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
@@ -21379,6 +21479,16 @@ Transform:
 --- !u!4 &6269285859797868991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 5803524979800458836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6650456456670870277 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 5803524979800458836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8280685368702606424 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2477160393199835660, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
   m_PrefabInstance: {fileID: 5803524979800458836}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &8376275288063596933 stripped
