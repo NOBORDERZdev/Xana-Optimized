@@ -3,6 +3,7 @@ using Photon.Voice.Unity.Demos;
 using SuperStar.Helpers;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 public class WorldItemPreviewTab : MonoBehaviour
 {
     public string worldId;
+    public GameObject thumbnailPrefabRef;
     public GameObject worldDescriptionScrollview;
     public TextMeshProUGUI WorldNameTxt;
     public TextMeshProUGUI WorldDescriptionTxt;
@@ -78,11 +80,13 @@ public class WorldItemPreviewTab : MonoBehaviour
         }
     }
 
-    public void Init(Sprite worldImg, string worldName, string worldDescription, string creatorName,
+    public void Init(GameObject thumbnailObjRef,Sprite worldImg, string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
         string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
     {
         worldId = _worldId;
+        if (thumbnailObjRef)
+            thumbnailPrefabRef = thumbnailObjRef;
 
         PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
@@ -319,13 +323,16 @@ public class WorldItemPreviewTab : MonoBehaviour
         followingWorld.GetComponent<Button>().interactable = false;
         followWorldLoader.SetActive(true);
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
-        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) =>
+        Debug.LogError(apiUrl);
+        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
         {
             if (isSucess)
             {
                 followingWorldHighlight.SetActive(true);
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
+                if (thumbnailPrefabRef)
+                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
             }
             else
             {
@@ -340,13 +347,18 @@ public class WorldItemPreviewTab : MonoBehaviour
         followingWorldHighlight.GetComponent<Button>().interactable = false;
         followWorldLoader.SetActive(true);
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
-        StartCoroutine(FollowWorldAPI(apiUrl, (isSucess) =>
+        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
         {
             if (isSucess)
             {
                 followingWorld.SetActive(true);
                 followingWorldHighlight.SetActive(false);
                 followWorldLoader.SetActive(false);
+                if (thumbnailPrefabRef)
+                {
+                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
+
+                }
             }
             else
             {
@@ -356,21 +368,29 @@ public class WorldItemPreviewTab : MonoBehaviour
         }));
     }
 
-    IEnumerator FollowWorldAPI(string APIurl, Action<bool> CallBack)
+    IEnumerator FollowWorldAPI(string APIurl,string worldId, Action<bool> CallBack)
     {
         yield return new WaitForEndOfFrame();
-        using (UnityWebRequest www = UnityWebRequest.Get(APIurl))
+        //WWWForm wWWForm = new WWWForm();
+        //wWWForm.AddField("worldId", worldId);
+        Dictionary<string, int> data = new Dictionary<string, int>();
+        data.Add("worldId",int.Parse(worldId));
+        string jsonData = JsonUtility.ToJson(data);
+        using (UnityWebRequest www = UnityWebRequest.Put(APIurl,jsonData))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SetRequestHeader("Content-Type", "application/json");
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
+                Debug.LogError("following world error :- " + www.downloadHandler.text);
                 CallBack(false);
             }
             else
             {
+                Debug.LogError("following world :- "+www.downloadHandler.text);
                 CallBack(true);
             }
             www.Dispose();

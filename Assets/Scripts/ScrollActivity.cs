@@ -37,7 +37,6 @@ public class ScrollActivity : MonoBehaviour
     {
         if (ScrollController.verticalNormalizedPosition > 1f)
         {
-            Debug.LogError("here 0");
             ScrollController.movementType = ScrollRect.MovementType.Unrestricted;
 
             if (Input.touchCount > 0)

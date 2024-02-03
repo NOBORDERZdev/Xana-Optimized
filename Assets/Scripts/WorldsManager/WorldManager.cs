@@ -42,6 +42,7 @@ public class WorldManager : MonoBehaviour
     public int SearchTagPageSize = 15;
     public string SearchKey = default;
     public string previousSearchKey;
+    public string searchResponse;
 
     public string worldstr;
    
@@ -89,13 +90,13 @@ public class WorldManager : MonoBehaviour
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
-            Debug.LogError("display world");
+            //Debug.LogError("display world");
             WorldItemManager.DisplayWorlds(tab);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
         else
         {
-            Debug.LogError("api hit again");
+            //Debug.LogError("api hit again");
             ChangeWorldTab(tab);
         }
     }
@@ -305,6 +306,7 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
+                searchResponse = www.downloadHandler.text;
                 //Debug.LogError(apiURL+"-------"+www.downloadHandler.text);
                 _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 worldstr = www.downloadHandler.text;

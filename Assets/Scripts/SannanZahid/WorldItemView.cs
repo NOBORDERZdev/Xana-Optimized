@@ -361,7 +361,7 @@ public class WorldItemView : MonoBehaviour
         //}
         //else
         //{
-            worldItemPreview.Init(worldIcon.sprite,
+            worldItemPreview.Init(this.gameObject,worldIcon.sprite,
         m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
         entityType, Creator_Name, CreatorDescription, CreatorAvatarURL,isFavourite,idOfObject);
         //}

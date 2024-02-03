@@ -329,10 +329,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                         _event.CreatorName = _WorldInfo.data.rows[i].user.name;
                     else
                         _event.CreatorName = "XANA";
-                    _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
+                    
                 }
             }
-                
+            _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
             spaceContent.transform.GetChild(i).gameObject.SetActive(true);
             spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
         }
@@ -361,7 +361,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             callback(true, apiResponseHolder.GetResponse(apiURL));
             yield break;
         }
-        Debug.LogError("API URL :- " + apiURL);
+       // Debug.LogError("API URL :- " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
