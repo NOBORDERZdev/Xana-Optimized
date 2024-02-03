@@ -387,9 +387,21 @@ public class SavingCharacterDataClass
 
     public float[] FaceBlendsShapes;
 
+    public int stamina;
+    public int speed;
+    public string profile;
+    public int defence;
+    public int special_move;
+    public int punch;
+    public int kick;
+
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);
+    }
+    public SavingCharacterDataClass()
+    {
+
     }
 }
 
@@ -418,6 +430,13 @@ public class BoxerNFTDataClass
     public string Skin;
     public string Eye_Lense;
     public string Eyelid;
+    public int stamina;
+    public int speed;
+    public string profile;
+    public int defence;
+    public int special_move;
+    public int punch;
+    public int kick;
 
     //public float[] FaceBlendsShapes;
 

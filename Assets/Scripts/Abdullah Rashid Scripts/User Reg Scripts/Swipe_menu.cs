@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using UnityEngine.UI.Extensions.Tweens;
 using static ServerSIdeCharacterHandling;
 
@@ -24,12 +25,15 @@ public class Swipe_menu : MonoBehaviour
 
     void Start()
     {
-        
-            foreach (GameObject item in items)
-            {
-                GameObject itemGameObject = Instantiate(item, contentParent);
-            }
-        
+
+        foreach (GameObject item in items)
+        {
+            GameObject itemGameObject = Instantiate(item, contentParent);
+        }
+     }
+    private void OnEnable()
+    {
+        scroll_pos = 0;
     }
 
     private void Update()

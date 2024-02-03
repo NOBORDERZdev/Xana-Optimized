@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
        
         if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
+           // SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
         }
         else
         {

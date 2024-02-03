@@ -238,7 +238,6 @@ public class ConstantsGod
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
-
     #endregion
 
     #region Jj World Api's
@@ -246,5 +245,12 @@ public class ConstantsGod
     #endregion
 
     public static string availableTags = "/users/get-user-tags";
-}
 
+
+
+    #region Feed Api's
+    public static string FeedGetAllByUserId = "/item/get-following-text-post/";
+    public static string FeedLikeDislikePost = "/item/like-text-post";
+    public static string FeedSearch="/item/search-following-text-post";
+    #endregion
+}

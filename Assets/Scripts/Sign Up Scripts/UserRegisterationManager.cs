@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 //using MoralisUnity;
 using System.Threading.Tasks;
 
+
 public class UserRegisterationManager : MonoBehaviour
 {
 
@@ -29,6 +30,7 @@ public class UserRegisterationManager : MonoBehaviour
     [Header("Total-Panal")]
     public GameObject FirstPanal;
     //public GameObject EmailPanal;
+
     public GameObject OTPPanal;
     public GameObject PasswordPanal;
     public GameObject usernamePanal;
@@ -48,7 +50,7 @@ public class UserRegisterationManager : MonoBehaviour
     bool emailBool = false;
     //Waheed Changes
     public GameObject setAvatarGiftPanal;
-
+    
     //hardik changes
     public string nftlist;
     //end
@@ -289,7 +291,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (_IsWalletSignUp)
         {
                  iwanto_signUp();
-        }
+        }   
     }
 
     public void iwanto_signUp()
@@ -375,7 +377,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            welcomeScreen.SetActive(false);
+            LoginScreenNew.SetActive(false);
         }
     }
 
@@ -559,7 +561,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         */
     }
-    void GetOwnedNFTsFromAPI()
+    public void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
      }  
@@ -673,7 +675,7 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-           // LoggedInAsGuest = true;
+           LoggedInAsGuest = true;
             //if (DefaultEnteriesforManican.instance)
             //{
             //    DefaultEnteriesforManican.instance.ResetForPresets();
@@ -1425,6 +1427,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
+                    XanaConstants.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
 
@@ -1448,6 +1451,11 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         SignUpPanal.SetActive(true);
                     }
+                    break;
+                }
+                case 21:
+                {
+                   LoginScreenNew.SetActive(true);
                     break;
                 }
         }
@@ -1653,6 +1661,7 @@ public class UserRegisterationManager : MonoBehaviour
          userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         XanaConstants.xanaConstants.userId = null;
+        XanaConstants.xanaConstants.LoginasGustprofile = false;
 
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
@@ -1663,7 +1672,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
 
 
-        LoggedInAsGuest = false;
+        LoggedInAsGuest = true;
 
         yield return new WaitForSeconds(0.1f);
         resetClothstoGuest();
@@ -3295,6 +3304,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
                         //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         XanaConstants.xanaConstants.userId = L_LoginObject.id;
+                     
                     }
                     PlayerPrefs.Save();
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);
@@ -3439,7 +3449,7 @@ public class UserRegisterationManager : MonoBehaviour
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
         }
-
+        GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(Localusername);
         if (isSetXanaliyaUserName)//rik
         {
             MyClassOfPostingName tempMyObject = new MyClassOfPostingName();
@@ -3484,6 +3494,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
+        
         //  //print(bodyJson);
         // StartCoroutine(HitNameAPIWithNewTechnique(NameAPIURL, bodyJsonOfName, Localusername));
         ////Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
@@ -3514,8 +3525,7 @@ public class UserRegisterationManager : MonoBehaviour
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
             //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        }
-
+        }    
     }
 
    
@@ -3631,7 +3641,7 @@ public class UserRegisterationManager : MonoBehaviour
         //print("LogoutFromOtherDevice");
         StartCoroutine(HitLogOutFromOtherDevice(ConstantsGod.API_BASEURL + ConstantsGod.LogoutFromotherDeviceAPI, PlayerPrefs.GetString("LogoutFromDeviceJSON")));
     }
-
+   
 
     public IEnumerator HitLogOutFromOtherDevice(string URL, string _json)
     {
@@ -3944,10 +3954,9 @@ public class UserRegisterationManager : MonoBehaviour
                         usernamePanal.SetActive(false);
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
-                        //nb
                         LoggedIn = true;
-                        //OpenUIPanal(6);  
                     }
+                    GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(localUsername);
                 }
             }
         }
@@ -4003,7 +4012,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
     public bool isSetXanaliyaUserName = false;
-
+   
 
     IEnumerator HitNameAPIWithXanaliyaUser(string url, string Jsondata, string localUsername)//rik
     {
@@ -4314,6 +4323,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         usernamePanal.SetActive(false);
                         usernamePanal.SetActive(false);
+                        XanaConstants.xanaConstants.LoginasGustprofile = true;
                         CheckCameraMan();
                         //    m_EquipUI.BackFromArtbone();
                         PlayerPrefs.Save();
@@ -4699,6 +4709,7 @@ public class UserRegisterationManager : MonoBehaviour
         usernamePanal.SetActive(false);
         GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
+        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (UIManager.Instance != null)//rik
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
