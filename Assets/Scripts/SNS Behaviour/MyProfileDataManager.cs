@@ -39,7 +39,6 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject myProfileScreen;
     public GameObject editProfileScreen;
     public GameObject pickImageOptionScreen;
-    public Transform renderTexCamera;
     public GameObject OtherPlayerdataObj;
 
     [Space]
@@ -167,9 +166,6 @@ public class MyProfileDataManager : MonoBehaviour
             Instance = this;
         }
         NFTShowingOnneBool = false;
-
-        renderTexCamera.parent = null;
-        renderTexCamera.position = new Vector3(-0.178f, -0.59f, -1.33f);
     }
 
     int tempOPCount = 0;

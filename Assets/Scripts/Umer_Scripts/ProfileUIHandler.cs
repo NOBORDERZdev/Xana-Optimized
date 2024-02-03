@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor.Animations;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followerBtn;
     public Button followingBtn;
 
+    [Space]
+    [Header("User Avatar Preview Objects")]
+    public GameObject AvatarRef;
+    public Transform _renderTexCamera;
+    public AnimatorController _userIdleAnimator;
+    public SavingCharacterDataClass _tempAvatarData;
 
     [Space]
     [Header("User Post Containers")]
@@ -39,12 +46,53 @@ public class ProfileUIHandler : MonoBehaviour
         {
             instance = this;
         }
+        InstantiateUserPreviewAvatar();
+    }
+
+    private void OnEnable()
+    {
+        if (AvatarRef)
+        {
+            AvatarRef.SetActive(true);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (AvatarRef)
+        {
+            AvatarRef.SetActive(false);
+        }
     }
 
     private void Start()
     {
         mainButtonPanelScriptRef.sameSelectionScript = immitateMainButtonPanelScriptRef;
         otherUserButtonPanelScriptRef.sameSelectionScript = immitateOtherUserButtonPanelScriptRef;
+    }
+
+    public void InstantiateUserPreviewAvatar()
+    {
+        _renderTexCamera.parent = null;
+        _renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
+        AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
+        AvatarRef.name = "UserPreviewAvatar";
+        AvatarRef.transform.position = new Vector3(0f, 0f, 0f);
+        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator;
+        Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
+        Destroy(AvatarRef.GetComponent<Actor>());
+        Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
+        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
+        //SetUserAvatarClothing();
+    }
+
+    public void SetUserAvatarClothing(SavingCharacterDataClass _userAvatarData)
+    {
+        if (AvatarRef)
+        {
+            _tempAvatarData = _userAvatarData;
+            AvatarRef.GetComponent<FriendAvatarController>().IntializeAvatar(_userAvatarData);
+        }
     }
 
     public void SetMainScrolRefs()
