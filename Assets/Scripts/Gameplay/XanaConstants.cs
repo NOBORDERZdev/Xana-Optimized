@@ -108,7 +108,12 @@ public class XanaConstants : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
+    [Header("*****PMY Section*****")]
     public bool isFromPMYLobby = false;
+    public bool isBackFromPMY = false;
+    public enum MetaverseType { PMY, XANA }
+    public MetaverseType metaverseType;
+    [Space(5)]
     //[HideInInspector]
     public bool isScreenSoundOn = true;
     [HideInInspector]

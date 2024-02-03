@@ -9,12 +9,12 @@ public class CamerasSetting : MonoBehaviour
 
     private void OnEnable()
     {
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += SetCamerasSetting;
+        BuilderEventManager.AfterPlayerInstantiated += SetCamerasSetting;
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= SetCamerasSetting;
+        BuilderEventManager.AfterPlayerInstantiated -= SetCamerasSetting;
     }
 
     

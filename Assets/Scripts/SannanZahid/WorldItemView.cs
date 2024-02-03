@@ -22,25 +22,25 @@ public class WorldItemView : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount=0)
+    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount = 0)
     {
         if (PreviewLogo)
             PreviewLogo.gameObject.SetActive(true);
-       Index = index;
-       GridIndex = gridPos;
-       idOfObject =  detail.IdOfWorld;
-       m_EnvironmentName = detail.EnvironmentName;
-       m_WorldDescription = detail.WorldDescription;
-       m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-       creatorName = detail.CreatorName;
-       createdAt = detail.CreatedAt;
-       userLimit = detail.UserLimit;
-       userAvatarURL = detail.UserAvatarURL;
-       updatedAt = detail.UpdatedAt;
-       entityType = detail.EntityType;
-       m_BannerLink = detail.BannerLink;
-       m_PressedIndex = detail.PressedIndex;
-       ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        Index = index;
+        GridIndex = gridPos;
+        idOfObject = detail.IdOfWorld;
+        m_EnvironmentName = detail.EnvironmentName;
+        m_WorldDescription = detail.WorldDescription;
+        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+        creatorName = detail.CreatorName;
+        createdAt = detail.CreatedAt;
+        userLimit = detail.UserLimit;
+        userAvatarURL = detail.UserAvatarURL;
+        updatedAt = detail.UpdatedAt;
+        entityType = detail.EntityType;
+        m_BannerLink = detail.BannerLink;
+        m_PressedIndex = detail.PressedIndex;
+        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
         worldTags = detail.WorldTags;
         Creator_Name = detail.Creator_Name;
         CreatorAvatarURL = detail.CreatorAvatarURL;
@@ -89,7 +89,7 @@ public class WorldItemView : MonoBehaviour
     private void OnEnable()
     {
         UpdateUserCount();
-        if(m_ThumbnailDownloadURL != "")
+        if (m_ThumbnailDownloadURL != "")
         {
             LoadImagesFromRemote();
         }
@@ -107,6 +107,19 @@ public class WorldItemView : MonoBehaviour
     }
     public void Init(int worlditemcount, int _loopcount)
     {
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+        {
+            if (m_EnvironmentName == "PMY ACADEMY")
+            {
+                worldItemPreview.classCodeInputField.Text = "";
+                worldItemPreview.enterClassCodePanel.SetActive(true);
+                UIManager.Instance._SplashScreen.SetActive(false);
+                OnClickPrefab();
+            }
+            else
+                return;
+        }
+
         GetEventType(entityType);
         if (gameObject.activeInHierarchy)
             StartCoroutine(DownloadPrefabSprite());
@@ -116,7 +129,7 @@ public class WorldItemView : MonoBehaviour
         UpdateUserCount();
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
-    void LoadImagesFromRemote(int worlditemcount=0, int _loopcount=0)
+    void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
         if (m_EnvironmentName.Contains("XANA Lobby"))
         {
@@ -129,7 +142,7 @@ public class WorldItemView : MonoBehaviour
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
             if (gameObject.activeInHierarchy)
-            StartCoroutine(DownloadAndLoadFeed(worlditemcount, _loopcount));
+                StartCoroutine(DownloadAndLoadFeed(worlditemcount, _loopcount));
         }
     }
     void UpdateUserCount()
@@ -151,7 +164,7 @@ public class WorldItemView : MonoBehaviour
             {
                 modifyEnityType = "USER";
             }
-            if(PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
+            if (PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
                 joinedUserCount.transform.parent.gameObject.SetActive(true);
             else
                 joinedUserCount.transform.parent.gameObject.SetActive(false);
@@ -169,7 +182,7 @@ public class WorldItemView : MonoBehaviour
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
                     if (m_EnvironmentName.Contains("XANA Lobby") && allWorldData.player_count[i].count > 0)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
-                        break;
+                    break;
                 }
                 if (CheckServerForID().ToString() == idOfObject)
                     joinedUserCount.text = "5";
@@ -312,20 +325,20 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
- 
-        if(m_EnvironmentName.Contains("XANA Lobby"))
+
+        if (m_EnvironmentName.Contains("XANA Lobby"))
         {
             worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags,
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, "", worldTags,
            entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
         }
         else
         {
             worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags,
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, ThumbnailDownloadURLHigh, worldTags,
         entityType, Creator_Name, CreatorDescription, CreatorAvatarURL);
         }
-       
+
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
@@ -340,7 +353,7 @@ public class WorldItemView : MonoBehaviour
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
-       else if (m_EnvironmentName == "PMY ACADEMY")
+        else if (m_EnvironmentName == "PMY ACADEMY")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PMY.ToString());
 
         XanaConstants.xanaConstants.MuseumID = idOfObject;

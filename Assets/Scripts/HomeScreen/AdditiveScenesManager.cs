@@ -12,7 +12,8 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     public GameObject SNSMessage;
     public BottomTabManager homeBottomTab;
-    
+    public static System.Action OnAllSceneLoaded;
+
     private void Start()
     {
         if(!XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -61,6 +62,8 @@ public class AdditiveScenesManager : MonoBehaviour
             XanaConstants.xanaConstants.isBackfromSns=false;
         }
         LoadingHandler.Instance.HideLoading();
+
+        OnAllSceneLoaded?.Invoke();
        // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
     }
 }

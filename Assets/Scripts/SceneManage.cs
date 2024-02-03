@@ -18,6 +18,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject EventEndedPanel;
     public string mainScene = "Main";
     bool exitOnce = true;
+
     private void OnEnable()
     {
         mainScene = "Main";
@@ -57,6 +58,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LoadMain(bool changeOritentationChange)
     {
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+        {
+            XanaConstants.xanaConstants.isBackFromPMY = true;
+            if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+            {
+                PlayerPrefs.DeleteKey("IsProcessComplete");
+                PlayerPrefs.DeleteKey("shownWelcome");
+            }
+        }
+
         disableSoundXanalobby();
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
