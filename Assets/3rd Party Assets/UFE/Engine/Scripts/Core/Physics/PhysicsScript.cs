@@ -36,20 +36,22 @@ public class PhysicsScript : MonoBehaviour {
         { if (controlScript.target != null) controlScript.target.worldTransform = value; else controlScript.opControlsScript.worldTransform = value; }
     }
 
-        float extraMoveSpeed = 1f; //Attizaz
     public void Start()
     {
 		appliedGravity = controlScript.myInfo.physics._weight * UFE.config._gravity;
+
         #region Change_Movement_Speed_Here
         //Attizaz
-        //if (this.name=="Player1") {
-        //    //  extraMoveSpeed = 3f; // Get API or Sheet Damage info and pass it to ChangesStats Func
-        //    print("Player1 : "+ UFE.p1ControlsScript);
-        //}
-        //if (this.name == "Player2") {
-        //    //     extraMoveSpeed = 0.5f; // Get API or Sheet Damage info and pass it to ChangesStats Func
-        //    print("Player2 : "+ UFE.p2ControlsScript);
-        //}
+        if (this.name == "Player1")
+        {
+            controlScript.myInfo.physics._moveForwardSpeed = FightingDataManager.Instance.player1.speed / 10f; //Instead of 60 place API speed value
+            controlScript.myInfo.physics._moveBackSpeed = FightingDataManager.Instance.player1.speed / 10f; //Instead of 60 place API speed value
+        }
+        if (this.name == "Player2")
+        {
+            controlScript.myInfo.physics._moveForwardSpeed = FightingDataManager.Instance.player2.speed / 10f; //Instead of 80 place API speed value
+            controlScript.myInfo.physics._moveBackSpeed = FightingDataManager.Instance.player2.speed / 10f;//Instead of 80 place API speed value
+        }
         print("<color=green> Change move speed here by setting up extraMoveSpeed var</color>");
         #endregion
     }
@@ -61,7 +63,7 @@ public class PhysicsScript : MonoBehaviour {
     /// <param name="axisValue">The moving forward/backwards force percentage being applied (-1 to 1).</param>
     public void MoveX(int direction, Fix64 axisValue)
     {
-		if (!IsGrounded()) return;
+       if (!IsGrounded()) return;
 		if (freeze) return;
 		if (isTakingOff) return;
         if (isLanding) return;
@@ -75,12 +77,12 @@ public class PhysicsScript : MonoBehaviour {
         if (direction == 1)
         {
 			controlScript.currentSubState = SubStates.MovingForward;
-            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveForwardSpeed*extraMoveSpeed * axisValue;
+            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveForwardSpeed * axisValue;
 		}
         else
         {
 			controlScript.currentSubState = SubStates.MovingBack;
-            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveBackSpeed * extraMoveSpeed * axisValue;
+            if (!IsJumping()) activeForces.x = controlScript.myInfo.physics._moveBackSpeed * axisValue;
         }
     }
 
