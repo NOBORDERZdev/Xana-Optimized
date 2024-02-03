@@ -87,7 +87,7 @@ namespace RFM.Character
         {
             money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
             timeSurvived += RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval;
-            _showMoney.text = Money.ToString("F0") + "";
+            _showMoney.text = money.ToString("F0") + "";
             _moneyScaleShaker.Play();
         }
 

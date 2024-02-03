@@ -95,5 +95,6 @@ namespace RFM.Character
             {
                 RewardMultiplier = (int)stream.ReceiveNext();
             }
+        }
     }
 }
