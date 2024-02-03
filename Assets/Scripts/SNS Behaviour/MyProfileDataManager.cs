@@ -440,9 +440,12 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     if (i >= myProfileData.tags.Length)
                     {
-                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
                     }
-                    ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    else
+                    {
+                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
                 }
             }else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
             {
@@ -472,7 +475,10 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            if (ProfileUIHandler.instance)
+            {
+                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 

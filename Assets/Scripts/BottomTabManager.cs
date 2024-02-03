@@ -618,7 +618,7 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
+            //GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
             if (OtherPlayerProfileData.Instance)
             {
                 OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
