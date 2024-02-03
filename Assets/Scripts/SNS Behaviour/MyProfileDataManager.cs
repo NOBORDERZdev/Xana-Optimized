@@ -1114,7 +1114,7 @@ public class MyProfileDataManager : MonoBehaviour
         //{
         //    NFTShowingOnneBool = true;
         // }  
-
+        UserRegisterationManager.instance.GetOwnedNFTsFromAPI();
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
@@ -1124,8 +1124,15 @@ public class MyProfileDataManager : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-
-        NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+        Debug.LogError("NftLoadingPenal OnClickNFTTabButtonMain true");
+        if (NftDataScript.Instance.ContentPanel.transform.childCount <= 0)
+        {
+            NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+        }
+        else
+        {
+            NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+        }
         NftDataScript.Instance.currentSelection();
         parentHeightResetScript.OnHeightReset(index);
         selectionItemScript1.OnSelectedClick(index);
