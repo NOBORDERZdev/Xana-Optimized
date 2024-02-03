@@ -24,8 +24,7 @@ public class FeedData : MonoBehaviour
     bool isEnable = false;
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
-    bool isSearchPerfab = false;
-    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true,  bool isSearched = false){ 
+    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){ 
         _data = data;
         DisplayName.text = data.user.name;
         PostText.text = data.text_post;
@@ -50,10 +49,6 @@ public class FeedData : MonoBehaviour
         if (isFeed)
         {
             Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
-        }
-        if (isSearched)
-        {
-            isSearchPerfab = isSearched;
         }
     }
    
