@@ -56,27 +56,30 @@ public class AvatarController : MonoBehaviour
         }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
-        if (!currScene.Contains("Main")) // call for worlds only
+        if (XanaConstants.xanaConstants!=null)
         {
-            Invoke(nameof(Custom_IntializeAvatar), 0.5f);
+            if (!currScene.Contains("Main")) // call for worlds only
+            {
+                Invoke(nameof(Custom_IntializeAvatar), 0.5f);
 
-            if (XanaConstants.xanaConstants.isNFTEquiped)
-            {
-                GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                if (XanaConstants.xanaConstants.isNFTEquiped)
+                {
+                    GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                }
             }
-        }
-        else
-        {
-            Debug.LogError("else main");
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            else
             {
-                EquipNFT();
-            }
-            if (XanaConstants.xanaConstants.isNFTEquiped)
-            {
-                GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-            }
+                //Debug.LogError("else main");
+                if (XanaConstants.xanaConstants.isNFTEquiped)
+                {
+                    EquipNFT();
+                }
+                if (XanaConstants.xanaConstants.isNFTEquiped)
+                {
+                    GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                }
 
+            }
         }
     }
 
