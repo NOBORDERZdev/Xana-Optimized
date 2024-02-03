@@ -24,7 +24,8 @@ public class FeedData : MonoBehaviour
     bool isEnable = false;
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
-    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true){ 
+    bool isSearchPerfab = false;
+    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true,  bool isSearched = false){ 
         _data = data;
         DisplayName.text = data.user.name;
         PostText.text = data.text_post;
@@ -50,7 +51,10 @@ public class FeedData : MonoBehaviour
         {
             Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
         }
-      
+        if (isSearched)
+        {
+            isSearchPerfab = isSearched;
+        }
     }
    
     void HieghtListUpdateWithDelay(){ 
@@ -60,36 +64,42 @@ public class FeedData : MonoBehaviour
      }
     public string CalculateTimeDifference(DateTime postTime)
    {
-        DateTime currentTime = DateTime.Now;
-        TimeSpan timeDifference = currentTime - postTime;
-        StartCoroutine(ReCallingTimeDifference(postTime));
-        if (timeDifference.TotalMinutes < 1){
-            timeUpdateInterval =1;
-            return $"{Math.Floor(timeDifference.TotalSeconds)} s";
-        }
-        else if (timeDifference.TotalMinutes < 60)
+        if (isEnable && gameObject.activeInHierarchy)
         {
-            timeUpdateInterval =60;
-            return $"{Math.Floor(timeDifference.TotalMinutes)} m";
-        }
-        else if (timeDifference.TotalHours < 24)
+            DateTime currentTime = DateTime.Now;
+            TimeSpan timeDifference = currentTime - postTime;
+            StartCoroutine(ReCallingTimeDifference(postTime));
+            if (timeDifference.TotalMinutes < 1){
+                timeUpdateInterval =1;
+                return $"{Math.Floor(timeDifference.TotalSeconds)} s";
+            }
+            else if (timeDifference.TotalMinutes < 60)
+            {
+                timeUpdateInterval =60;
+                return $"{Math.Floor(timeDifference.TotalMinutes)} m";
+            }
+            else if (timeDifference.TotalHours < 24)
+            {
+                timeUpdateInterval =3600;
+                return $"{Math.Floor(timeDifference.TotalHours)} h";
+            }
+            else if (timeDifference.TotalDays < 30){
+                timeUpdateInterval =86400;
+                return $"{Math.Floor(timeDifference.TotalDays)} d"; 
+             }
+            else if (timeDifference.TotalDays < 365)
+            {
+                 timeUpdateInterval =86400;
+                return $"{Math.Floor(timeDifference.TotalDays / 30)} mo";
+            }
+            else
+            {
+                timeUpdateInterval =86400;
+                return $"{Math.Floor(timeDifference.TotalDays / 365)} y";
+            }
+        }else
         {
-            timeUpdateInterval =3600;
-            return $"{Math.Floor(timeDifference.TotalHours)} h";
-        }
-        else if (timeDifference.TotalDays < 30){
-            timeUpdateInterval =86400;
-            return $"{Math.Floor(timeDifference.TotalDays)} d"; 
-         }
-        else if (timeDifference.TotalDays < 365)
-        {
-             timeUpdateInterval =86400;
-            return $"{Math.Floor(timeDifference.TotalDays / 30)} mo";
-        }
-        else
-        {
-            timeUpdateInterval =86400;
-            return $"{Math.Floor(timeDifference.TotalDays / 365)} y";
+            return "";
         }
    }
 
@@ -100,17 +110,18 @@ public class FeedData : MonoBehaviour
     IEnumerator GetProfileImage(string url)
     {
         string newUrl = url+"?width=256&height=256";
-        using (WWW www = new WWW(url)){ 
-        yield return www;
-        if (ProfileImage != null)
+        using (WWW www = new WWW(url))
         {
-            ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+            yield return www;
+            if (ProfileImage != null && www.texture!= null)
+            {
+                ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
             }
             www.Dispose();
         }
      }
 
-        public void LikeUnlikePost()
+    public void LikeUnlikePost()
     {
        StartCoroutine(LikeUnLike());
     }
@@ -189,6 +200,7 @@ public class FeedData : MonoBehaviour
         timeUpdateInterval =1;
         isLiked = false;
         isEnable = false;
+        gameObject.GetComponent<FeedData>().StopAllCoroutines();
     }
 
 }

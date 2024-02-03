@@ -35,6 +35,10 @@ public class FeedController : MonoBehaviour
 
     private void OnEnable()
     {
+        SerachPanel.SetActive(false);
+        feedContentParent.gameObject.SetActive(true);
+        SerchBarObj.SetActive(false);
+        searchInputField.Text = "";
         SocketController.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedUIController.Instance;
@@ -308,6 +312,7 @@ public class FeedController : MonoBehaviour
                         temp.transform.SetParent(SearchContentPanel.transform);
                         temp.transform.localScale = Vector3.one;
                         temp.GetComponent<FeedData>().SetFeedPrefab(item,false);
+                        temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }
             }
