@@ -7527,7 +7527,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 66977591
+    m_Bits: 335413047
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6eac862970e00e74cb69ce6c9fbbf362, type: 2}
   m_TargetDisplay: 0
@@ -11552,6 +11552,7 @@ GameObject:
   - component: {fileID: 1868599478022124912}
   - component: {fileID: 8701127358875654265}
   - component: {fileID: 1340871213267758042}
+  - component: {fileID: 6473207067065190858}
   m_Layer: 22
   m_Name: 34
   m_TagString: PhotonLocalPlayer
@@ -11984,6 +11985,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: Stand
+  - Type: 4
+    SynchronizeType: 0
+    Name: canDoubleJump
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -12452,6 +12456,20 @@ MonoBehaviour:
   QuizCorrectClip: {fileID: 8300000, guid: e6a8f51c7d98a4aba82ff18df5ca28d8, type: 3}
   RandomNumberClip: {fileID: 8300000, guid: c0fc856fbfa46497dacbb8a9a8ce9489, type: 3}
   SpecialItemClip: {fileID: 8300000, guid: 5bc8ef94bc4724f4d8d14d7208e56424, type: 3}
+--- !u!136 &6473207067065190858
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0
@@ -13005,7 +13023,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 16645943
+    m_Bits: 285081399
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

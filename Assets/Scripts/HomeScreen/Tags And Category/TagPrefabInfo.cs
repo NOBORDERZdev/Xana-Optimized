@@ -17,4 +17,30 @@ public class TagPrefabInfo : MonoBehaviour
         WorldSearchManager.SearchWorld?.Invoke(tagName.text);
         descriptionPanel.SetActive(false);
     }
+
+    public bool isSelected = false;
+    public void Select_UnselectTags()
+    {
+        isSelected = !isSelected;   
+        if (isSelected)
+        {
+            GetComponent<UnityEngine.UI.Image>().color = Color.black;
+            tagName.color = Color.white;
+
+            if(!MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
+                MyProfileDataManager.Instance.userSelectedTags.Add(tagName.text);
+        }
+        else
+        {
+            GetComponent<UnityEngine.UI.Image>().color = Color.white;
+            tagName.color = Color.black;
+            
+            if (MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
+                MyProfileDataManager.Instance.userSelectedTags.Remove(tagName.text);
+        }   
+    }
+    private void OnEnable()
+    {
+        isSelected = false;
+    }
 }

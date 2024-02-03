@@ -3,12 +3,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class CharacterOnScreenNameHandler : MonoBehaviour
 {
+   
     [SerializeField]
     TMPro.TMP_Text _onScreenName;
-
+    
     #region Positioning Mechanics
     private void Start()
     {
+       
         StartCoroutine(SetName());
     }
     public void SetNameOfPlayerAgain()
@@ -21,30 +23,48 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     IEnumerator SetName()
     {
-        while(true)
+         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            yield return new WaitForSeconds(1f);
-            if ( PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
-            {
-                break;
-            }
-        }
-        Debug.LogError("SetName");
-        yield return new WaitForSeconds(1f);
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
-        {
-        Debug.LogError("SetName 1");
-
             _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+           
+        }
+        if (PlayerPrefs.GetInt("WalletConnect") == 0 )
+        {    
+            while (true)
+            {
+                yield return new WaitForSeconds(1f);
+                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (XanaConstants.xanaConstants != null && !XanaConstants.xanaConstants.LoginasGustprofile))
+                {
+                    break;
+                }
+            }
+           
+            yield return new WaitForSeconds(1f);
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
+                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+               
+            }
+            else
+            {
+                StartCoroutine(IERequestGetUserDetails());
+            }
         }
         else
         {
-        Debug.LogError("SetName 2");
-
-            StartCoroutine(IERequestGetUserDetails());
+            yield return new WaitForSeconds(1f);
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
+                _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+            }
+            else
+            {
+                StartCoroutine(IERequestGetUserDetails());
+            }
         }
+
     }
-    public IEnumerator IERequestGetUserDetails()
+     public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {
@@ -65,5 +85,8 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             }
         }
     }
+   
+       
+    
     #endregion
-}
+    }

@@ -20,7 +20,7 @@ public class BottomTabManager : MonoBehaviour
     //public int GameManager.Instance.defaultSelection = 0;
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
-
+    public GameObject postingBtn;
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
@@ -47,6 +47,7 @@ public class BottomTabManager : MonoBehaviour
         }
       //---->>>Sannan  OnSelectedClick(GameManager.Instance.defaultSelection);
 
+
         if (UIManager.Instance != null && GameManager.Instance.defaultSelection == 0)
         {
             CheckLoginOrNotForFooterButton();
@@ -57,6 +58,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
+            
            // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             //PostButton.transform.GetComponent<Button>().interactable = false;
@@ -108,10 +110,18 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             /// Disabling
             /// 
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetComponent<Button>().interactable = false;
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
+
+            }
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+           
+
             //PostButton.transform.GetComponent<Button>().interactable = false;
 
 
@@ -123,12 +133,19 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             /// Disabling
-            /// 
+            ///
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetComponent<Button>().interactable = true;
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+
+            }
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
-           // PostButton.transform.GetComponent<Button>().interactable = true;
+           
+            // PostButton.transform.GetComponent<Button>().interactable = true;
 
             /// Disabling old Screens
             //allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
@@ -215,7 +232,7 @@ public class BottomTabManager : MonoBehaviour
                     if (FeedUIController.Instance)
                     {
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
-                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
                 }
@@ -462,10 +479,12 @@ public class BottomTabManager : MonoBehaviour
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
-                if (FeedUIController.Instance.feedUiScreen.activeSelf)
-                {
-                    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
-                }
+                // OLD FEED UI
+                ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
+                ////{
+                ////    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+                ////}
+                // End Old Feed UI
             }
             UIManager.Instance.HomeWorldScreen.SetActive(false);
             if (UIManager.Instance.Canvas.activeSelf)

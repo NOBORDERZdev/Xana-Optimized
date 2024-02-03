@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
        
         if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
+           // SNSNotificationManager.Instance.ShowNotificationMsg("Need To Login");
         }
         else
         {
@@ -117,6 +117,7 @@ public class UIManager : MonoBehaviour
         if(Loadinghandler_CanvasRef != null)
             Loadinghandler_CanvasRef.alpha = 1.0f;
         ShowFooter(!_state);
+        if(UserRegisterationManager.instance)
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
     public int PreviousScreen;
