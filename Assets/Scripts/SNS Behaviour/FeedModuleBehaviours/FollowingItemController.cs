@@ -99,7 +99,8 @@ public class FollowingItemController : MonoBehaviour
         {
             FollowFollowingSetUp(false);
         }
-        UpdateBfBtn(allFollowingRow.following.is_close_friend);
+        UpdateBfBtn(allFollowingRow.following.isFollowing,allFollowingRow.following.is_close_friend);
+        //UpdateBfBtn(allFollowingRow.following.is_close_friend);
     }
 
     public void OnClickUserProfileButton()
@@ -351,6 +352,7 @@ public class FollowingItemController : MonoBehaviour
     /// </summary>
     public void AddBff(){ 
         APIManager.Instance.AddBestFriend(followingRawData.userId,gameObject);
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().AddFriendToHome();
     }
 
     /// <summary>
@@ -358,6 +360,7 @@ public class FollowingItemController : MonoBehaviour
     /// </summary>
     public void RemoveBff(){ 
           APIManager.Instance.RemoveBestFriend(followingRawData.userId,gameObject);
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(followingRawData.userId);
     }
 
     public void UpdateBfBtn(bool isBf){
@@ -377,5 +380,27 @@ public class FollowingItemController : MonoBehaviour
         }
        
     }
+    public void UpdateBfBtn(bool isfollowing,bool isCloseFriend)
+    {
+        if (MakeBfBtn == null || RemoveBfBtn == null)
+        {
+            return;
+        }
+        if (isfollowing && isCloseFriend)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else if(isfollowing && !isCloseFriend)
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
+        }
 
+    }
 }

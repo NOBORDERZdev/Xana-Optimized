@@ -7,6 +7,7 @@ using SuperStar.Helpers;
 using System.IO;
 using System;
 using UnityEngine.Networking;
+using SimpleJSON;
 
 public class FindFriendWithNameItem : MonoBehaviour
 {
@@ -93,11 +94,49 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
         FollowFollowingSetUp(searchUserRow.am_i_following);
-        if (searchUserRow.am_i_following ||searchUserRow.is_following_me )
+        if (searchUserRow.am_i_following || searchUserRow.is_following_me)
         {
-           UpdateBfBtn(searchUserRow.is_my_close_friend);
+            UpdateBfBtn(searchUserRow.am_i_following, searchUserRow.is_following_me, searchUserRow.is_close_friend);
         }
-       
+
+    }
+    public void SetupDataHotUsers(SearchUserRow searchUserRow1, bool amifollowing, bool isfollowingme, bool isclosefriend)
+    {
+        searchUserRow = searchUserRow1;
+
+        userNameText.text = searchUserRow.name;
+        if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
+        {
+            userBioText.text = APIManager.DecodedString(searchUserRow.userProfile.bio);
+        }
+        else
+        {
+            userBioText.text = "";
+        }
+        if (!string.IsNullOrEmpty(searchUserRow.avatar))
+        {
+            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
+            if (isUrlContainsHttpAndHttps)
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(profileImage, searchUserRow.avatar, changeAspectRatio: true);
+                    }
+                });
+            }
+            else
+            {
+                GetImageFromAWS(searchUserRow.avatar, profileImage);
+            }
+        }
+        FollowFollowingSetUp(amifollowing);
+        if (amifollowing || isfollowingme)
+        {
+            UpdateBfBtn(amifollowing, isfollowingme, isclosefriend);
+        }
+
     }
 
     public void OnClickUserProfileButton()
@@ -228,7 +267,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("follow user success data:" + data);
-
+                JSONNode jsonNode = JSON.Parse(data);
+                if (jsonNode["mutualFollowing"].AsBool)
+                {
+                    UpdateBfBtn(false);
+                }
                 searchUserRow.is_following_me = true;
                 searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
@@ -395,7 +438,29 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
        
     }
+    public void UpdateBfBtn(bool amifollowing, bool isfollowingme, bool isCloseFriend)
+    {
+        if (MakeBfBtn == null || RemoveBfBtn == null)
+        {
+            return;
+        }
+        if (amifollowing && isfollowingme && isCloseFriend)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else if (amifollowing && isfollowingme && !isCloseFriend)
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
+        }
 
+    }
     public void OffBffBtns(){ 
         MakeBfBtn.SetActive(false);
         RemoveBfBtn.SetActive(false);
