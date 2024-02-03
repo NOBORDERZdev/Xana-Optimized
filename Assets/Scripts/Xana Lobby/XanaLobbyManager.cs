@@ -134,6 +134,9 @@ public class XanaLobbyManager : MonoBehaviour
         _image = image;
         _Type = type;
         ratioId = ((int)ratio);
+
+        aurthur = aurthur.IsNullOrEmpty() ? "" : aurthur;
+
         XLRatios.instance.renderTexture.Release();
         // Setting Landscape 
         XLRatios.instance.ratioReferences[ratioId].l_image.gameObject.SetActive(true);

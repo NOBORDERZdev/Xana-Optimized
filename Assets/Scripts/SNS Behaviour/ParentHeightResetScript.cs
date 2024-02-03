@@ -102,9 +102,9 @@ public class ParentHeightResetScript : MonoBehaviour
             this.GetComponent<RectTransform>().sizeDelta = new Vector2(targetObjHeight.GetComponent<RectTransform>().rect.width, height);
         }
         else*/
-        {
-            this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().rect.height);
-        }
+        //{
+        this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().rect.height);
+        //}
 
         mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         if (gameObject.activeInHierarchy)

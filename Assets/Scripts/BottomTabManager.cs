@@ -20,7 +20,7 @@ public class BottomTabManager : MonoBehaviour
     //public int GameManager.Instance.defaultSelection = 0;
     public bool WaitToLoadAvatarData = false;
     public CanvasGroup canvasGroup;
-
+    public GameObject postingBtn;
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
@@ -47,6 +47,7 @@ public class BottomTabManager : MonoBehaviour
         }
         //---->>>Sannan  OnSelectedClick(GameManager.Instance.defaultSelection);
 
+
         if (UIManager.Instance != null && GameManager.Instance.defaultSelection == 0)
         {
             CheckLoginOrNotForFooterButton();
@@ -57,7 +58,8 @@ public class BottomTabManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            
+           // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             //PostButton.transform.GetComponent<Button>().interactable = false;
             //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
@@ -108,10 +110,18 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             /// Disabling
             /// 
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetComponent<Button>().interactable = false;
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
+
+            }
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+           
+
             //PostButton.transform.GetComponent<Button>().interactable = false;
 
 
@@ -123,11 +133,18 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             /// Disabling
-            /// 
+            ///
+            if (postingBtn != null)
+            {
+                postingBtn.transform.GetComponent<Button>().interactable = true;
+                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+
+            }
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
+           
             // PostButton.transform.GetComponent<Button>().interactable = true;
 
             /// Disabling old Screens
@@ -212,15 +229,16 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-
-                if (FeedUIController.Instance)
-                {
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    }
                 }
             }
-        }
+        GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
     }
     public void OnClickHomeButtonIdleAvatar()
     {
@@ -465,10 +483,12 @@ public class BottomTabManager : MonoBehaviour
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
-                if (FeedUIController.Instance.feedUiScreen.activeSelf)
-                {
-                    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
-                }
+                // OLD FEED UI
+                ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
+                ////{
+                ////    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+                ////}
+                // End Old Feed UI
             }
             UIManager.Instance.HomeWorldScreen.SetActive(false);
             if (UIManager.Instance.Canvas.activeSelf)
@@ -518,17 +538,23 @@ public class BottomTabManager : MonoBehaviour
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
             }
-            //  GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+            //below camera line was Commented before but i uncommented it in order to make profile 2.0 work ------- UMER
+            GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+
             FeedUIController.Instance.SetAddFriendScreen(true);
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
-            FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
+            //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+            //FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
             FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
 
             MyProfileDataManager.Instance.MyProfileSceenShow(false);
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+
             //Invoke(nameof(InvokeDisableFeed),1f);
             //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             //{
@@ -595,11 +621,17 @@ public class BottomTabManager : MonoBehaviour
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
             }
-
-            if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+            //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //{
+            //MyProfileDataManager.Instance.ProfileTabButtonClick();
+            //FeedUIController.Instance.ResetAllFeedScreen(false);
+            //}
+            if (MyProfileDataManager.Instance)
             {
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
+                FeedUIController.Instance.AddFriendPanel.SetActive(false);
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {
@@ -615,6 +647,17 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
+            if (OtherPlayerProfileData.Instance)
+            {
+                OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
+            }
+            if (MyProfileDataManager.Instance)
+            {
+                MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
+            }
+            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
+            ProfileUIHandler.instance.SetMainScrolRefs();
         }
 
         //home page thumnbail images destroy

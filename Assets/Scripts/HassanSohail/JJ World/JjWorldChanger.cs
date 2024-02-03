@@ -49,15 +49,17 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            collider.enabled = false;
+            //Gautam Commented below code due to shows pop up again and again.
+
+            //collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
                 this.StartCoroutine(swtichScene(WorldName));
             }
-            else
-            {
-                this.StartCoroutine(ResetColider());
-            }
+            //else
+            //{
+            //    this.StartCoroutine(ResetColider());
+            //}
         }
     }
 
