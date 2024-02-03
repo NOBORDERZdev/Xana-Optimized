@@ -55,6 +55,7 @@ public class WorldManager : MonoBehaviour
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
+    public WorldItemPreviewTab worldItemPreviewTabRef;
     public static WorldManager instance;
     public APIURL GetCurrentTabSelected()
     {

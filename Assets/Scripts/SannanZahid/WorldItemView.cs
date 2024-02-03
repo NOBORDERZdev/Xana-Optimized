@@ -142,11 +142,12 @@ public class WorldItemView : MonoBehaviour
     public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
-        if (!m_EnvironmentName.Contains("XANA Lobby"))
-            this.GetComponent<Button>().interactable = false;
+        //if (!m_EnvironmentName.Contains("XANA Lobby"))
+        //    this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         //UpdateUserCount();
         SetWorldName();
+        worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)

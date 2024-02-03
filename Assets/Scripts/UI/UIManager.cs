@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
-    public Transform SecondSliderScrollView;
+    /*public Transform SecondSliderScrollView;*/
 
     [Header("Footer Reference")]
     public GameObject _footerCan;
@@ -140,7 +140,7 @@ public class UIManager : MonoBehaviour
                     //WorldManager.instance.WorldScrollReset();
                     worldHolder.SetActive(true);
                     searchWorldHolder.SetActive(false);
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = false;
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = false;*/
                     break;
                 }
             case 1:
@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(true);
                     //WorldManager.instance.WorldPageStateHandler(true);
                     //WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     break;
                 }
             case 2:
@@ -172,7 +172,7 @@ public class UIManager : MonoBehaviour
                     WorldWorldTabsHolder.gameObject.SetActive(false);
                     //WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                   /* SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     ShowFooter(true);
                     break;
                 }
