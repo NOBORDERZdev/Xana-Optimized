@@ -100,12 +100,17 @@ public class FeedData : MonoBehaviour
     IEnumerator GetProfileImage(string url)
     {
         string newUrl = url+"?width=256&height=256";
-        WWW www = new WWW(url);
+        using (WWW www = new WWW(url)){ 
         yield return www;
-        ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
-    }
+        if (ProfileImage != null)
+        {
+            ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+            }
+            www.Dispose();
+        }
+     }
 
-    public void LikeUnlikePost()
+        public void LikeUnlikePost()
     {
        StartCoroutine(LikeUnLike());
     }
