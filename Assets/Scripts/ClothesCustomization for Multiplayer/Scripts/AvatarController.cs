@@ -847,6 +847,7 @@ public class AvatarController : MonoBehaviour
             _CharacterData1.special_move = _NFTData.special_move;
             _CharacterData1.kick = _NFTData.kick;
             _CharacterData1.profile = _NFTData.profile;
+            _CharacterData1.speed = _NFTData.speed;
             _CharacterData1.stamina = _NFTData.stamina;
             _CharacterData1.defence = _NFTData.defence;
 

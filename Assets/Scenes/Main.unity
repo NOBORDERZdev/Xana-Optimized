@@ -15961,6 +15961,7 @@ MonoBehaviour:
   registerFirstTime: 0
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
+  LoginasGustprofile: 0
   NFTUrl: 
   clothJson: 
   defaultFightingName: TAKESHI
@@ -40739,6 +40740,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 1654741760}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1341452831}
   chatMessageUnReadCountText: {fileID: 360765117}
@@ -49133,6 +49135,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2051747839}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1033625937}
   chatMessageUnReadCountText: {fileID: 346837808}
@@ -50796,6 +50799,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2123470891}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 414214556}
   chatMessageUnReadCountText: {fileID: 1955619320}
@@ -51055,6 +51059,7 @@ MonoBehaviour:
   ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2132913894}
+  postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1565411577}
   chatMessageUnReadCountText: {fileID: 1891834831}
@@ -56961,6 +56966,11 @@ PrefabInstance:
       objectReference: {fileID: 1594758011}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+--- !u!1 &2589320108206545244 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2589320108043099682, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+  m_PrefabInstance: {fileID: 2589320108206545243}
+  m_PrefabAsset: {fileID: 0}
 --- !u!212 &2608392941270528533
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60364,6 +60374,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: postingBtn
+      value: 
+      objectReference: {fileID: 2589320108206545244}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: AllTitleText.Array.data[5]
       value: 

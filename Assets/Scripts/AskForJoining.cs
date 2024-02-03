@@ -62,7 +62,7 @@ public class AskForJoining : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        if (Application.internetReachability != NetworkReachability.NotReachable)
+        if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             LoadMain();
             TurnCameras(true);
