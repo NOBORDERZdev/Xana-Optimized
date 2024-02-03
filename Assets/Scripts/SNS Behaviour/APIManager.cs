@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -2033,32 +2034,51 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(IERequestUpdateUserProfile(unique_Name, user_gender, user_job, user_country, user_website, user_bio, _tags));
     }
+
+
+    class UserProfile
+    {
+        public string bio;
+        public string username;
+        public string[] tags;
+    }
+
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
     {
         WWWForm form = new WWWForm();
         Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "   job:" + user_job + "  :bio:" + user_bio);
-        form.AddField("gender", user_gender);
-        form.AddField("job", user_job);
-        form.AddField("country", user_country);
-        form.AddField("website", user_website);
-        form.AddField("bio", user_bio);
-        form.AddField("username", unique_Name);
-        
-        if(_tags != null && _tags.Length > 0)
-        {
-            string json = JsonConvert.SerializeObject(_tags);
-            form.AddField("tags", json);
-        }
+        //form.AddField("gender", user_gender);
+        //form.AddField("job", user_job);
+        //form.AddField("country", user_country);
+        //form.AddField("website", user_website);
+        //form.AddField("bio", user_bio);
+        //form.AddField("username", unique_Name);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        UserProfile userProfile = new UserProfile
+        {
+            bio = user_bio,
+            username = unique_Name,
+            tags = _tags,
+        };
+
+        string jsonData = JsonUtility.ToJson(userProfile);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile;
+
+        // using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        using (UnityWebRequest www = new UnityWebRequest(apiUrl, "POST"))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
-                Debug.LogError("------   Waqas Edit " + www.error);
+                Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
                 //Debug.Log("data" + form);
             }
             else
