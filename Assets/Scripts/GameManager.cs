@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using Newtonsoft.Json;
 using System;
 using UnityEngine.Networking;
+using System.Text;
 
 public class GameManager : MonoBehaviour
 {
@@ -254,11 +255,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(10f);
         string token = ConstantsGod.AUTH_TOKEN;
 
-        string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
+        StringBuilder api = new StringBuilder();
+        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50);
+        //string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
+       
         Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
 
         UnityWebRequest www;
-        www = UnityWebRequest.Get(api);
+        www = UnityWebRequest.Get(api.ToString());
 
 
         www.SetRequestHeader("Authorization", token);
