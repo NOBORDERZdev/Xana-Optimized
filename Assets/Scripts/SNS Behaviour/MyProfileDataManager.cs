@@ -39,6 +39,8 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject myProfileScreen;
     public GameObject editProfileScreen;
     public GameObject pickImageOptionScreen;
+    public Transform renderTexCamera;
+    public GameObject OtherPlayerdataObj;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -110,19 +112,22 @@ public class MyProfileDataManager : MonoBehaviour
     //public TMP_InputField editProfileNameInputfield;
     //public InputField editProfileNameInputfield;
     public AdvancedInputField editProfileNameAdvanceInputfield;
+    public AdvancedInputField editProfileUniqueNameAdvanceInputfield;
     //public TMP_InputField editProfileJobInputfield;
     //public InputField editProfileJobInputfield;
     public AdvancedInputField editProfileJobAdvanceInputfield;
     //public TMP_InputField editProfileWebsiteInputfield;
     //public InputField editProfileWebsiteInputfield;
     public AdvancedInputField editProfileWebsiteAdvanceInputfield;
-    public TMP_InputField editProfileBioInputfield;
+    //public TMP_InputField editProfileBioInputfield;
+    public AdvancedInputField editProfileBioInputfield;
     //public InputField editProfileBioInputfield;
     //public TMP_InputField editProfileGenderInputfield;
     public InputField editProfileGenderInputfield;
     public GameObject editProfilemainInfoPart;
     public GameObject websiteErrorObj;
     public GameObject nameErrorMessageObj;
+    public GameObject uniqueNameErrorMessageObj;
     public Button editProfileDoneButton;
     bool isEditProfileNameAlreadyExists;
 
@@ -132,6 +137,16 @@ public class MyProfileDataManager : MonoBehaviour
     //public InputField bioEditInputField;
 
     public AdvancedInputField bioEditAdvanceInputField;
+
+    [Space]
+    [Header("Tags in Edit Profile")]
+    public GameObject tags_row;
+    public GameObject tags_row_obj;
+    public Transform tags_row_parent;
+    public List<string> availableTagsAtServer;
+    public List<string> userSelectedTags;
+    public GameObject dropDownBtn;
+
 
     [Space]
     [Header("For API Pagination")]
@@ -152,6 +167,9 @@ public class MyProfileDataManager : MonoBehaviour
             Instance = this;
         }
         NFTShowingOnneBool = false;
+
+        renderTexCamera.parent = null;
+        renderTexCamera.position = new Vector3(-0.178f, -0.59f, -1.33f);
     }
 
     int tempOPCount = 0;
@@ -310,6 +328,12 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.followerBtn.interactable = true;
+            ProfileUIHandler.instance.followingBtn.interactable = true;
+        }
+
         userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
 
         topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
@@ -326,6 +350,8 @@ public class MyProfileDataManager : MonoBehaviour
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
         totalPostText.text = myProfileData.feedCount.ToString();
+
+        UpdateUserTags();
 
         if (string.IsNullOrEmpty(myProfileData.userProfile.website))
         {
@@ -414,6 +440,53 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+    public void UpdateUserTags()
+    {
+        if (myProfileData.tags != null && myProfileData.tags.Length > 0)
+        {
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+            if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
+            {
+                for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                {
+                    if (i >= myProfileData.tags.Length)
+                    {
+                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                    }
+                    ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                }
+            }else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+            {
+                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                        _tagobject.name = "TagPrefab" + i;
+                        _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < myProfileData.tags.Length; i++)
+                    {
+                        if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                        {
+                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            _tagobject.name = "TagPrefab" + i;
+                            _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                        }
+                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
+                }
+            }
+        }
+        else
+        {
+            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public string ReplaceNonCharacters(string aString, char replacement)
@@ -568,27 +641,27 @@ public class MyProfileDataManager : MonoBehaviour
         currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
         bool IsMyProfileFeed = false;
         FeedUIController.Instance.ShowLoader(false);
-
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
-            {
-                //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
-
+        // OLD FEED UI
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //    {
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }
+        //}
+        // END OLD FEED UI
         for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
-        {
-            Debug.Log("currentPageAllFeedWithUserIdRoot");
-            if ((!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent == null)
-               || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent != null))
             {
-                bool isVideo = false;
+                Debug.Log("currentPageAllFeedWithUserIdRoot");
+                if ((!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent == null)
+                   || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id) && Feedparent != null))
+                {
+                    bool isVideo = false;
 
                 Transform parent = allPhotoContainer;
                 if (Feedparent == null)
@@ -658,79 +731,83 @@ public class MyProfileDataManager : MonoBehaviour
                 userPostItem.avtarUrl = myProfileData.avatar;
                 userPostItem.LoadFeed();
 
-                if (Feedparent == null)
-                {
-                    loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
-                }
-                else
-                {
-                    if (IsNew)
+                    if (Feedparent == null)
                     {
-                        loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
                     }
                     else
                     {
-                        loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        if (IsNew)
+                        {
+                            loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        }
+                        else
+                        {
+                            loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                        }
                     }
-                }
-                if (pageNumb == 1 && i == 0)
-                {
-                    Debug.Log("Latest Profile pic set as top");
-                    userTagPostObject.transform.SetAsFirstSibling();
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
-                    if (!isVideo)//image
+                    if (pageNumb == 1 && i == 0)
                     {
-                        allMyFeedImageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        Debug.Log("Latest Profile pic set as top");
+                        userTagPostObject.transform.SetAsFirstSibling();
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
+                        if (!isVideo)//image
+                        {
+                            allMyFeedImageRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        else
+                        {
+                            allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        // }
                     }
                     else
                     {
-                        allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        Debug.Log("Latest Profile pic set as top   5555");
+
+
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
+
+
+                        if (!isVideo)//image
+                        {
+                            allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+                        else
+                        {
+                            allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                        }
+
+
+                        // }
                     }
-                    // }
+
                 }
-                else
-                {
-                    Debug.Log("Latest Profile pic set as top   5555");
-
-
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
-
-
-                    if (!isVideo)//image
-                    {
-                        allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-                    else
-                    {
-                        allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                    }
-
-
-                    // }
-                }
-
             }
-        }
 
-        Debug.Log("Pagenmub bar");
-        if (pageNumb == 1)
-        {
-            Debug.Log("Pagenmub");
-            Invoke(nameof(RefreshHieght), 1f);
-        }
-        StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
-        if (allMyFeedImageRootDataList.Count >= 2)
-        {
-            Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
-            if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
+            Debug.Log("Pagenmub bar");
+            if (pageNumb == 1)
             {
-                allMyFeedImageRootDataList.RemoveAt(0);
-                Debug.Log("Remove Same ID Post");
-                allMyFeedInFeedPageRootDataList.RemoveAt(0);
+                Debug.Log("Pagenmub");
+                Invoke(nameof(RefreshHieght), 1f);
             }
-        }
+            if (gameObject.activeSelf)
+            {
+                StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
+            }
+
+            if (allMyFeedImageRootDataList.Count >= 2)
+            {
+                Debug.Log(allMyFeedImageRootDataList[0].Id + "    " + allMyFeedImageRootDataList[1].Id);
+                if (allMyFeedImageRootDataList[0].Id == allMyFeedImageRootDataList[1].Id)
+                {
+                    allMyFeedImageRootDataList.RemoveAt(0);
+                    Debug.Log("Remove Same ID Post");
+                    allMyFeedInFeedPageRootDataList.RemoveAt(0);
+                }
+            }
     }
 
     public void RefreshHieght()
@@ -1067,9 +1144,13 @@ public class MyProfileDataManager : MonoBehaviour
         {
             displayNFTinUIAsync();
         }
-        StartCoroutine(WaitToNFTTabHeight(index));
-    }
-
+        //StartCoroutine(WaitToNFTTabHeight(index));
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(WaitToNFTTabHeight(index));
+        }
+    }  
+      
     public void OnClickNFTTabButtonSub(int index)
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
@@ -1238,6 +1319,7 @@ public class MyProfileDataManager : MonoBehaviour
         editProfileImage.sprite = profileImage.sprite;
         //editProfileNameInputfield.text = playerNameText.text;
         editProfileNameAdvanceInputfield.Text = playerNameText.text;
+        GetAvailableTagsFromServer();
         if (myProfileData.userProfile != null)
         {
             //editProfileJobInputfield.text = myProfileData.userProfile.job;
@@ -1245,12 +1327,181 @@ public class MyProfileDataManager : MonoBehaviour
             editProfileJobAdvanceInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.job);
             //editProfileWebsiteInputfield.text = myProfileData.userProfile.website;
             editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
-            editProfileBioInputfield.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
+            if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
+                editProfileUniqueNameAdvanceInputfield.Text = "";
+            else
+            editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
+
+            // Convert Array into List
+            userSelectedTags = new List<string>(myProfileData.tags);
         }
     }
+
+    #region Display Tags in Edit Profile Screen
+    void GetAvailableTagsFromServer()
+    {
+        if (availableTagsAtServer == null || availableTagsAtServer.Count == 0)
+        {
+            availableTagsAtServer = new List<string>();
+            StartCoroutine(CallAPI_ForTags());
+        }
+        else
+        {
+            // Api Called Already so display tags
+            Highlight_UserSelectedTag();
+        }
+    }
+    IEnumerator CallAPI_ForTags()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        string token = ConstantsGod.AUTH_TOKEN;
+        WWWForm form = new WWWForm();
+
+        string api = ConstantsGod.API_BASEURL + ConstantsGod.availableTags;
+
+        UnityWebRequest www;
+        www = UnityWebRequest.Get(api);
+        www.SendWebRequest();
+
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            ConvertJsonStringIntoList(www.downloadHandler.text);
+        }
+
+        www.Dispose();
+    }
+    void ConvertJsonStringIntoList(string availableTags)
+    {
+        TagDetails tags = JsonUtility.FromJson<TagDetails>(availableTags);
+        Debug.Log("Available tags :" + tags.data.count);
+
+        // Store All tags in list
+        for (int i = 0; i < tags.data.rows.Length; i++)
+        {
+            availableTagsAtServer.Add(tags.data.rows[i].tagName);
+        }
+
+        availableTagsCount = availableTagsAtServer.Count;
+        DisplayTags();
+    }
+   
+    int generatedTagCount = 0; // generated Tag Counter 
+    int availableTagsCount = 0;
+    
+    void DisplayTags()
+    {
+        // Each row contains 4 tags: Calcluate total rows
+        int totalRows = availableTagsCount / 4;
+        if (availableTagsCount % 4 != 0) totalRows++;
+
+        // Generate Rows
+        for (int i = 0; i < totalRows; i++)
+        {
+            GenerateRow_Tags();
+        }
+
+        // Some Rows has 3 tags so we need to generate more row's according to tags
+        while (availableTagsCount - 1 > generatedTagCount)
+        {
+            GenerateRow_Tags();
+        }
+    }
+    void GenerateRow_Tags()
+    {
+        GameObject tempRow, tempTag;
+        tempRow = Instantiate(tags_row, tags_row_parent);
+
+        // Generate Tags for Each Row
+        int tagPerRow = CalculateTagsPerRow(generatedTagCount);
+        for (int k = 0; k < tagPerRow; k++)
+        {
+            if (availableTagsCount > generatedTagCount)
+            {
+                tempTag = Instantiate(tags_row_obj, tempRow.transform);
+
+                tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
+                tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
+
+                if(userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
+                    tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
+
+                generatedTagCount += 1;
+            }
+        }
+    }
+    int CalculateTagsPerRow(int startInd)
+    {
+        int counter = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (availableTagsAtServer.Count - 1 < startInd + i)
+                break;
+
+            counter += availableTagsAtServer[startInd + i].Length;
+        }
+
+        if (counter > 35) // Each row can has Max 35 characters
+            return 3;
+        else
+            return 4;
+    }
+
+    void Highlight_UserSelectedTag()
+    {
+        // highlight user selected tags that are available at server when reopen edit profile screen
+        for (int i = 0; i < userSelectedTags.Count; i++)
+        {
+            for (int j = 0; j < tags_row_parent.childCount; j++)
+            {
+                for (int k = 0; k < tags_row_parent.GetChild(j).childCount; k++)
+                {
+                    print("Tags Details : " + i + " -- " + j + " -- " + k);
+                    if (tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().tagName.text == userSelectedTags[i])
+                    {
+                        print("Tag Highlighted : " + userSelectedTags[i]);
+                        tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().Select_UnselectTags();
+                    }
+                }
+            }
+        }   
+
+    }
+
+    public void EnableTagScroller(ScrollRect scrollerObj)
+    {
+        if (dropDownBtn.transform.localScale.y == 1)
+        {
+            dropDownBtn.transform.localScale = new Vector3(1, -1, 1);
+            scrollerObj.enabled = true;
+        }
+        else
+        {
+            dropDownBtn.transform.localScale = Vector3.one;
+            scrollerObj.enabled = false;
+            scrollerObj.content.localPosition = Vector3.zero;
+        }
+    }
+
+
+    public string TestingJasonForTags;
+    public void TestCase()
+    {
+        generatedTagCount = 0; // generated TagCounter 
+        availableTagsCount = 0;
+        ConvertJsonStringIntoList(TestingJasonForTags);
+    }
+
+    #endregion
 
     //this method used to Edit profile Back Button click.......
     public void OnClickEditProfileBackButton()
@@ -1278,6 +1529,8 @@ public class MyProfileDataManager : MonoBehaviour
     string bio = "";
     string gender = "";
     string username = "";
+    string uniqueUsername = "";
+    string[] tempTags;
 
     public void OnClickEditProfileDoneButton()
     {
@@ -1299,6 +1552,7 @@ public class MyProfileDataManager : MonoBehaviour
             website = myProfileData.userProfile.website;
             bio = APIManager.DecodedString(myProfileData.userProfile.bio);
             gender = myProfileData.userProfile.gender;
+            uniqueUsername = myProfileData.userProfile.username;
         }
 
         EditProfileDoneButtonSetUp(false);//setup edit profile done button.......
@@ -1329,6 +1583,7 @@ public class MyProfileDataManager : MonoBehaviour
         }*/
 
         //if (!string.IsNullOrEmpty(editProfileNameInputfield.text))
+        // Display Name
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text))
         {
             //if (editProfileNameInputfield.text != playerNameText.text)
@@ -1357,8 +1612,38 @@ public class MyProfileDataManager : MonoBehaviour
             ShowEditProfileNameErrorMessage("The name field should not be empty");
             return;
         }
+        
+        // User Unique Name
+        if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
+        {
+            //if (editProfileNameInputfield.text != playerNameText.text)
+            if (editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername && (uniqueUsername != "null" || uniqueUsername != "Null"))
+            {
+                //string tempStr = editProfileNameInputfield.text;
+                string tempStr = editProfileUniqueNameAdvanceInputfield.Text;
+                if (tempStr.StartsWith(" "))
+                {
+                    tempStr = tempStr.TrimStart(' ');
+                }
+                if (tempStr.EndsWith(" "))
+                {
+                    tempStr = tempStr.TrimEnd(' ');
+                }
+                Debug.Log("temp Name Str:" + tempStr);
+                uniqueUsername = tempStr;
+                checkEditInfoUpdated = 1;
+                Debug.LogError("New UniqueUser Name ----> " + uniqueUsername);
+            }
+        }
+        else
+        {
+            Debug.Log("Please enter  username");
+            ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+            return;
+        }
 
         //if (editProfileJobInputfield.text != job)
+        // Job
         if (editProfileJobAdvanceInputfield.Text != job)
         {
             //string tempStr = editProfileJobInputfield.text;
@@ -1448,10 +1733,10 @@ public class MyProfileDataManager : MonoBehaviour
                 website = "";
             }
         }*/
-
-        if (editProfileBioInputfield.text != bio)
+        // Bio
+        if (editProfileBioInputfield.Text != bio)
         {
-            string tempStr = editProfileBioInputfield.text;
+            string tempStr = editProfileBioInputfield.Text;
             if (tempStr.StartsWith(" "))
             {
                 tempStr = tempStr.TrimStart(' ');
@@ -1462,12 +1747,13 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            if (string.IsNullOrEmpty(editProfileBioInputfield.text))
+            if (string.IsNullOrEmpty(editProfileBioInputfield.Text))
             {
                 bio = "";
             }
         }
 
+        // Gander
         if (!string.IsNullOrEmpty(editProfileGenderInputfield.text))
         {
             if (editProfileGenderInputfield.text != gender)
@@ -1476,6 +1762,21 @@ public class MyProfileDataManager : MonoBehaviour
                 checkEditInfoUpdated = 1;
             }
         }
+
+        // Check for Tags   
+        tempTags = userSelectedTags.ToArray();
+        if (new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
+        {
+            Debug.Log("No changes are done in Tags");
+            tempTags = null;
+        }
+        else
+        {
+            checkEditInfoUpdated = 1;
+            Debug.Log("Founds Changes");
+        }
+
+
 
         //editProfileScreen.SetActive(false);//Flase edit profile screen
         if (checkEditNameUpdated == 1)
@@ -1491,8 +1792,12 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            Debug.Log("User Ingo Name:" + username + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
+            Debug.Log("User Display Name:" + username + "User Unique Name:" + uniqueUsername + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
 
+            if (string.IsNullOrEmpty(uniqueUsername))
+            {
+                uniqueUsername = "";
+            }
             if (string.IsNullOrEmpty(job))
             {
                 job = "";
@@ -1515,7 +1820,7 @@ public class MyProfileDataManager : MonoBehaviour
                 countryName = "";
             }
 
-            APIManager.Instance.RequestUpdateUserProfile(gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio));
+            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
@@ -1715,6 +2020,11 @@ public class MyProfileDataManager : MonoBehaviour
         nameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
         EditProfileErrorMessageShow(nameErrorMessageObj);
     }
+    public void ShowEditProfileUniqueNameErrorMessage(string msg)
+    {
+        uniqueNameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
+        EditProfileErrorMessageShow(uniqueNameErrorMessageObj);
+    }
 
     //this coroutine is used check and GetUserDetails or UploadAvatar api call.......
     IEnumerator WaitEditProfileGetUserDetails(bool isProfileUpdate)
@@ -1739,7 +2049,7 @@ public class MyProfileDataManager : MonoBehaviour
         editProfileBioScreen.SetActive(true);
         //bioEditInputField.text = editProfileBioInputfield.text;
 
-        bioEditAdvanceInputField.Text = editProfileBioInputfield.text;
+        bioEditAdvanceInputField.Text = editProfileBioInputfield.Text;
 
         //bioEditInputField.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAndResetNormalInputField();
         //bioEditInputField.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
@@ -1769,7 +2079,7 @@ public class MyProfileDataManager : MonoBehaviour
         //string resultString = Regex.Replace(bioEditInputField.text.ToString(), @"^\s*$[\r\n]*", string.Empty, RegexOptions.Multiline);
         string resultString = Regex.Replace(bioEditAdvanceInputField.Text.ToString(), @"^\s*$[\r\n]*", string.Empty, RegexOptions.Multiline);
 
-        editProfileBioInputfield.text = resultString;
+        editProfileBioInputfield.Text = resultString;
         //editProfileBioInputfield.text = bioEditInputField.text;
         editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
     }
@@ -2406,7 +2716,12 @@ public class MyProfileDataManager : MonoBehaviour
     public GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
     public void RequestGetUserDetails()
     {
-        if (totalFollowerText.gameObject.activeInHierarchy)
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //if (totalFollowerText.gameObject.activeInHierarchy)
+        //{
+        //    StartCoroutine(IERequestGetUserDetails());
+        //}
+        if (gameObject.activeInHierarchy)
         {
             StartCoroutine(IERequestGetUserDetails());
         }
@@ -2509,4 +2824,12 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
     #endregion
+}
+
+[System.Serializable]
+public class TagDetails
+{
+    public bool success;
+    public data data;
+    public string msg;
 }

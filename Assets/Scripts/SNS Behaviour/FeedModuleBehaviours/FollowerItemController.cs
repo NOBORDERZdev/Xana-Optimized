@@ -85,6 +85,10 @@ public class FollowerItemController : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
+        MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed",false))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);

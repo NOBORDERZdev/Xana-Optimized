@@ -183,14 +183,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
-                if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {
@@ -243,10 +245,12 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log(www.error);
 
-                if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {
@@ -544,7 +548,9 @@ public class APIManager : MonoBehaviour
                 AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
                 if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
                 {
-                    //allFeedWithUserIdRoot.Data.Rows.Clear(); //Riken
+                    //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
+                    allFeedWithUserIdRoot.Data.Rows.Clear();
+                    
                     for (int i = 0; i < test.Data.Rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
@@ -1985,10 +1991,12 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    // Old API
     public void RequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         StartCoroutine(IERequestUpdateUserProfile(user_gender, user_job, user_country, user_website, user_bio));
     }
+
     public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         WWWForm form = new WWWForm();
@@ -2014,7 +2022,50 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("<color = red> UpdateUserProfile data:" + data + "</color>");
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+                // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
+            }
+        }
+    }
+
+    // New API
+    public void RequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
+    {
+        StartCoroutine(IERequestUpdateUserProfile(unique_Name, user_gender, user_job, user_country, user_website, user_bio, _tags));
+    }
+    public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
+    {
+        WWWForm form = new WWWForm();
+        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "   job:" + user_job + "  :bio:" + user_bio);
+        form.AddField("gender", user_gender);
+        form.AddField("job", user_job);
+        form.AddField("country", user_country);
+        form.AddField("website", user_website);
+        form.AddField("bio", user_bio);
+        form.AddField("username", unique_Name);
+        
+        if(_tags != null && _tags.Length > 0)
+        {
+            string json = JsonConvert.SerializeObject(_tags);
+            form.AddField("tags", json);
+        }
+
+        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.LogError("------   Waqas Edit " + www.error);
+                //Debug.Log("data" + form);
+            }
+            else
+            {
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }
@@ -2784,6 +2835,7 @@ public class GetUserDetailProfileData
     public string country;
     public string website;
     public string bio;
+    public string username; // Unique UserName
     public bool isDeleted;
     public DateTime createdAt;
     public DateTime updatedAt;
@@ -2803,6 +2855,7 @@ public class GetUserDetailData
     public bool isVerified;
     public bool isRegister;
     public bool isDeleted;
+    public string[] tags;
     public DateTime createdAt;
     public DateTime updatedAt;
     public GetUserDetailProfileData userProfile;
@@ -2894,6 +2947,7 @@ public class SingleUserProfileData
     public string name;
     public string email;
     public string avatar;
+    public string[] tags;
     public SingleUserProfile userProfile;
     public int followerCount;
     public int followingCount;
