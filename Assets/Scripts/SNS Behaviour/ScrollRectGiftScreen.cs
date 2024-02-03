@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ScrollRectGiftScreen : MonoBehaviour
 {
@@ -237,6 +238,7 @@ public class ScrollRectGiftScreen : MonoBehaviour
     //------------------------------------------------------------------------
     public void LerpToPage(int aPageIndex)
     {
+       
         //if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.MobileScreen))
         //    gridGroup[aPageIndex].cellSize = new Vector2(345, 350);
         //else if (XanaConstants.xanaConstants.screenType.Equals(XanaConstants.ScreenType.TabScreen))
@@ -245,7 +247,7 @@ public class ScrollRectGiftScreen : MonoBehaviour
 
         aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
         //_lerpTo = tabRectTransform[aPageIndex].anchoredPosition;  // _pagePositions[aPageIndex];
-        if(aPageIndex < tabRectTransform.Length)
+        if(aPageIndex> 0 && aPageIndex < tabRectTransform.Length)
             _lerpTo = tabRectTransform[aPageIndex].localPosition;
         //Debug.Log("<color=blue>_lerpTo: " + tabRectTransform[aPageIndex].localPosition + "</color>");
         //Debug.Log("<color=blue>_lerpFrom: " + _container.localPosition + "</color>");

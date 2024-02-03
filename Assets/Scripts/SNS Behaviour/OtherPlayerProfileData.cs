@@ -32,6 +32,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     [Space]
     [Header("Screen Reference")]
     public GameObject otherUserSettingScreen;
+    public GameObject myPlayerdataObj;
 
     [Space]
     [Header("Other Profile Screen Refresh Object")]
@@ -127,7 +128,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
     public void RefreshUserData()
     {
-        if (textPlayerTottleFollower.gameObject.activeInHierarchy)
+        if (gameObject.activeInHierarchy)
         {
             Debug.LogError("RefreshUserData");
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
@@ -182,7 +183,13 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void LoadUserData(bool isFirstTime)
     {
-       Debug.Log("Other user profile load data");
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.followerBtn.interactable = false;
+            ProfileUIHandler.instance.followingBtn.interactable = false;
+        }
+
+        Debug.Log("Other user profile load data");
         lastUserId = singleUserProfileData.id;
 
         lastUserIsFollowFollowing = singleUserProfileData.isFollowing;
@@ -194,6 +201,8 @@ public class OtherPlayerProfileData : MonoBehaviour
         textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
         textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
         textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
+
+        UpdateUserTags();
 
         if (isFirstTime)
         {
@@ -275,8 +284,71 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 profileImage.sprite = defultProfileImage;
             }
+
+
+            if(gameObject.activeSelf)
             StartCoroutine(WaitToRefreshProfileScreen());
         }
+    }
+
+    public void UpdateUserTags()
+    {
+            if (singleUserProfileData.tags != null && singleUserProfileData.tags.Length > 0)
+            {
+            if (ProfileUIHandler.instance)
+            {
+                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
+                {
+                    for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                    {
+                        if (i >= singleUserProfileData.tags.Length)
+                        {
+                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
+                        }
+                        else
+                        {
+                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                        }
+                    }
+                }
+                else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
+                {
+                    if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                    {
+                        for (int i = 0; i < singleUserProfileData.tags.Length; i++)
+                        {
+                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            _tagobject.name = "TagPrefab" + i;
+                            _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < singleUserProfileData.tags.Length; i++)
+                        {
+                            if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                            {
+                                GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                                _tagobject.name = "TagPrefab" + i;
+                                _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            }
+                            else
+                            {
+                                ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            }
+                        }
+                    }
+                }
+            }
+            }
+            else
+            {
+            if (ProfileUIHandler.instance)
+            {
+                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            }
+            }
     }
 
     public void OnClickWebsiteButtonClick()
@@ -495,18 +567,21 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
+        parentHeightResetScript.OnHeightReset(0);
         //Debug.Log("other Profile AllFeedWithUserId:" + isFeedLoaded);
     }
 
     public void OnClickPhotoButton()
     {
         tabScrollRectGiftScreen.LerpToPage(0);
+        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(0);
         //tabScrollRectGiftScreen.SetPage(0);
         parentHeightResetScript.OnHeightReset(0);
     }
     public void OnClickMovieButton()
     {
         tabScrollRectGiftScreen.LerpToPage(1);
+        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(1);
         //tabScrollRectGiftScreen.SetPage(1);
         parentHeightResetScript.OnHeightReset(1);
     }
@@ -876,8 +951,11 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this method is used to Get Other userRole and pass info.......
     public void RequestGetOtherUserRole(int userId)
     {
-       Debug.Log("RequestGetOtherUserRole userId:" + userId);
-        StartCoroutine(IERequestGetOtherUserRole(userId));
+        if (gameObject.activeSelf)
+        {
+            Debug.Log("RequestGetOtherUserRole userId:" + userId);
+            StartCoroutine(IERequestGetOtherUserRole(userId));
+        }
     }
 
     IEnumerator IERequestGetOtherUserRole(int userId)
@@ -897,13 +975,19 @@ public class OtherPlayerProfileData : MonoBehaviour
                 string data = www.downloadHandler.text;
                Debug.Log("IERequestGetOtherUserRole data:" + data);
                 SingleUserRoleRoot singleUserRoleRoot = JsonConvert.DeserializeObject<SingleUserRoleRoot>(data);
-                if (singleUserRoleRoot.success)
-                {
-                    List<string> tempUserList = new List<string>();
-                    tempUserList = singleUserRoleRoot.data;
-                    string userPriorityRole = UserRegisterationManager.instance.GetOtherUserPriorityRole(tempUserList);
-                    userRolesView.SetUpUserRole(userPriorityRole, tempUserList);//this method is used to set user role.......                    
-                }
+
+                //Receiving Other user roles here and assigning onwards
+                //Commented as not receiving any data from API need to check API response first
+                //as time is short so skipping this for now but this needs to be worked on later :|
+                //Umer Aftab
+
+                //if (singleUserRoleRoot.success)
+                //{
+                //    List<string> tempUserList = new List<string>();
+                //    tempUserList = singleUserRoleRoot.data;
+                //    string userPriorityRole = UserRegisterationManager.instance.GetOtherUserPriorityRole(tempUserList);
+                //    userRolesView.SetUpUserRole(userPriorityRole, tempUserList);//this method is used to set user role.......                    
+                //}
             }
         }
     }
