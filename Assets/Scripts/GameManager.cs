@@ -11,35 +11,36 @@ using UnityEngine.Networking;
 using System;
 using Newtonsoft.Json;
 using AdvancedInputFieldPlugin;
+using System.Text;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     [Header("Character")]
- 
+
     public GameObject mainCharacter;
     public GameObject m_ChHead;
     [Header("Character Animator")]
     public Animator m_CharacterAnimator;
 
     RuntimeAnimatorController m_AnimControlller;
-    
+
 
     [Header("Camera's")]
     public Camera m_MainCamera;
-//    public Camera m_UICamera;
+    //    public Camera m_UICamera;
     public Camera m_RenderTextureCamera;
- //   public Camera m_ScreenShotCamera;
+    //   public Camera m_ScreenShotCamera;
 
-    
+
 
     //[Header("Character Customizations")]
     //public CharacterCustomizationUIManager characterCustomizationUIManager;
 
-    
+
 
     [Header("Objects During Flow")]
-   //  public GameObject UIManager;  
+    //  public GameObject UIManager;  
     public GameObject BGPlane;
     public bool WorldBool;
     public bool BottomAvatarButtonBool;
@@ -69,11 +70,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
         StartCoroutine(GetClassCodeFromServer());
-/*#if UNITY_EDITOR
-        //Debug.unityLogger.logEnabled = true;
-#else
-        //Debug.unityLogger.logEnabled=false;
-#endif*/
+        /*#if UNITY_EDITOR
+                //Debug.unityLogger.logEnabled = true;
+        #else
+                //Debug.unityLogger.logEnabled=false;
+        #endif*/
     }
     public string GetStringFolderPath()
     {
@@ -112,8 +113,8 @@ public class GameManager : MonoBehaviour
     }
     public void ComeFromWorld()
     {
-       StartCoroutine( WaitForInstancefromWorld());
-       
+        StartCoroutine(WaitForInstancefromWorld());
+
     }
     public IEnumerator HitReloadUnloadScene()
     {
@@ -121,22 +122,22 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("UserRegistration");
         print("Unload");
         SceneManager.LoadScene("UserRegistration", LoadSceneMode.Additive);
-         yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
         print("wait");
         print("Loaded");
-     }  
+    }
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         Input.multiTouchEnabled = false;
         Application.targetFrameRate = 60;
-       // m_AnimControlller = mainCharacter.GetComponent<Animator>().runtimeAnimatorController;
+        // m_AnimControlller = mainCharacter.GetComponent<Animator>().runtimeAnimatorController;
         OnceGuestBool = false;
         OnceLoginBool = false;
-        
-       // StartCoroutine(WaitForInstance());
+
+        // StartCoroutine(WaitForInstance());
         //ComeFromWorld();
-       
+
     }
     //IEnumerator WaitForInstance()
     //{
@@ -147,15 +148,15 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.05f);
         SaveCharacterProperties = ItemDatabase.instance.GetComponent<SavaCharacterProperties>();
-         if (ItemDatabase.instance != null)
-        ItemDatabase.instance.DownloadFromOtherWorld();
-        
+        if (ItemDatabase.instance != null)
+            ItemDatabase.instance.DownloadFromOtherWorld();
+
     }
 
 
     public void NotNowOfSignManager()
     {
-      UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+        UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
 
         if (XanaConstants.xanaConstants.EnviornmentName == "PMY ACADEMY" && !XanaConstants.xanaConstants.pmy_isTesting)
         {
@@ -167,7 +168,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (UIManager.Instance.HomePage.activeInHierarchy )
+        if (UIManager.Instance.HomePage.activeInHierarchy)
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
         if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
@@ -185,10 +186,10 @@ public class GameManager : MonoBehaviour
     public void AvatarMenuBtnPressed()
     {
         UIManager.Instance.AvaterButtonCustomPushed();
-       // CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+        // CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         //mainCharacter.GetComponent<FaceIK>().ikActive= false;
-       // //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
+        // //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        if (UserRegisterationManager.instance.LoggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
         else
         {
             UserRegisterationManager.instance.checkbool_preser_start = true;
-             PlayerPrefs.SetInt("IsChanged", 0);  
+            PlayerPrefs.SetInt("IsChanged", 0);
             UserRegisterationManager.instance.OpenUIPanal(17);
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
@@ -237,17 +238,17 @@ public class GameManager : MonoBehaviour
             StoreManager.instance.SignUpAndLoginPanel(3);
 
         }
- 
+
     }
     public void BackFromStoreofCharacterCustom()
     {
         UIManager.Instance.HomePage.SetActive(true);
-     
+
         BGPlane.SetActive(false);
     }
 
     public void ChangeCharacterAnimationState(bool l_State)
-    {    
+    {
         m_CharacterAnimator.SetBool("Idle", l_State);
     }
 
@@ -291,7 +292,8 @@ public class GameManager : MonoBehaviour
     //    return LocalizeText;
     //}
 
-    public void ReloadMainScene() {
+    public void ReloadMainScene()
+    {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             SceneManager.LoadSceneAsync("Main");
@@ -302,41 +304,44 @@ public class GameManager : MonoBehaviour
     IEnumerator GetClassCodeFromServer()
     {
         //string api = "https://api-test.xana.net/classCode/get-all-class-codes/1/20";
-       
-            yield return new WaitForSeconds(10f);
-            string token = ConstantsGod.AUTH_TOKEN;
 
-            string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
-            Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
+        yield return new WaitForSeconds(10f);
+        string token = ConstantsGod.AUTH_TOKEN;
 
-            UnityWebRequest www;
-            www = UnityWebRequest.Get(api);
+        StringBuilder api = new StringBuilder();
+        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" + 1 + "/" + 50);
+        //string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
+        
+        Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
 
-
-            www.SetRequestHeader("Authorization", token);
-            www.SendWebRequest();
-
-            while (!www.isDone)
-            {
-                yield return null;
-            }
+        UnityWebRequest www;
+        www = UnityWebRequest.Get(api.ToString());
 
 
-            if (!www.isHttpError && !www.isNetworkError)
-            {
-                Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
-                string jsonString = www.downloadHandler.text;
-                //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
-                ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
-           
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
 
-                if (rootObject.success)
-                    CheckResponse(rootObject.data.rows);
-            }
-            else
-                Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
+        while (!www.isDone)
+        {
+            yield return null;
+        }
 
-            www.Dispose();
+
+        if (!www.isHttpError && !www.isNetworkError)
+        {
+            Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
+            string jsonString = www.downloadHandler.text;
+            //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
+            ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
+
+
+            if (rootObject.success)
+                CheckResponse(rootObject.data.rows);
+        }
+        else
+            Debug.Log("<color=red> ClassCode -- NetWorkissue </color>");
+
+        www.Dispose();
     }
 
 
