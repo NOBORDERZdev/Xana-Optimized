@@ -89,25 +89,25 @@ public class FeedFollowingItemController : MonoBehaviour
         {
             return;
         }*/
-
-        lastUpdateCallTime += Time.deltaTime;
-        if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
-        {
-            Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);
+        // OLD FEED UI
+        ////lastUpdateCallTime += Time.deltaTime;
+        ////if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
+        ////{
+        ////    Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        ////    Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);
             
-            if (mousePosNR.y >= -0.1f && mousePosNR.y <= 1.1f)
-            {
-                isOnScreen = true;
-            }
-            else
-            {
-                isOnScreen = false;
-            }
+        ////    if (mousePosNR.y >= -0.1f && mousePosNR.y <= 1.1f)
+        ////    {
+        ////        isOnScreen = true;
+        ////    }
+        ////    else
+        ////    {
+        ////        isOnScreen = false;
+        ////    }
 
-            lastUpdateCallTime = 0;
-        }
-
+        ////    lastUpdateCallTime = 0;
+        ////}
+        // END OLD FEED UI
         if (isVisible && isOnScreen)//this is check if object is visible on camera then load feed or video one time
         {
             isVisible = false;

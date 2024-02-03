@@ -235,7 +235,15 @@ public class AvatarSelfie : MonoBehaviour
    public class data
     {
         public string file;
+    // New Parameters added for 'TagDetails' Call Response 
+        public string count;
+        public RowDataTags[] rows;
     }
 
 
-
+[Serializable]
+public class RowDataTags
+{
+    public string id;
+    public string tagName;
+}

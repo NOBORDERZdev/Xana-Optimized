@@ -15,7 +15,8 @@ public class FriendHomeManager : MonoBehaviour
 
     private void OnDisable()
     {
-        FriendPostSocket.instance.updateFriendPostDelegate -= UpdateFriendPost;
+        if (SocketController.instance != null)
+            SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
     }
 
 
@@ -23,7 +24,7 @@ public class FriendHomeManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
-        FriendPostSocket.instance.updateFriendPostDelegate += UpdateFriendPost;
+        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
     }
     string PrepareApiURL()
     {

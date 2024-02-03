@@ -305,7 +305,7 @@ public class XanaChatSocket : MonoBehaviour
             DisplayOldChat(www.downloadHandler.text);
         }
         else
-            //Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+            Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
 
         www.Dispose();
     }

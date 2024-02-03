@@ -139,18 +139,19 @@ public class APIController : MonoBehaviour
             //Debug.Log("isDataLoad true");
             StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
         }
-
-        if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-        {
-            if (feedFollowingIdList.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+        // OLD FEED UI
+        ////if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+        ////{
+        ////    if (feedFollowingIdList.Count == 0)
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
+        ////    }
+        ////    else
+        ////    {
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
+        ////    }
+        ////}
+        // END OLD FEED UI
     }
 
     public IEnumerator SetContentOnFeed()
@@ -541,15 +542,16 @@ public class APIController : MonoBehaviour
                 followerObj.GetComponent<FeedStoryAndCategoryItem>().LoadData(APIManager.Instance.AllFollowerRoot.data.rows[i]);
             }
         }
-
-        if (APIManager.Instance.AllFollowerRoot.data.rows.Count > 0)
-        {
-            FeedUIController.Instance.SetupFollowerAndFeedScreen(true);
-        }
-        else
-        {
-            FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
-        }
+         //Old UI CODE
+        ////if (APIManager.Instance.AllFollowerRoot.data.rows.Count > 0)
+        ////{
+        ////    FeedUIController.Instance.SetupFollowerAndFeedScreen(true);
+        ////}
+        ////else
+        ////{
+        ////    FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
+        ////}
+        //END Old UI CODE
     }
 
     public void AdFrndFollowingFetch(){
