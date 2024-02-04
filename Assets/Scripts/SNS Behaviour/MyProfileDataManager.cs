@@ -453,11 +453,15 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     if (i >= myProfileData.tags.Length)
                     {
-                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform);
+                        Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
                     }
-                    ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    else
+                    {
+                        ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                    }
                 }
-            }else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+            }
+            else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
             {
                 if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
                 {
@@ -485,7 +489,10 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            if (ProfileUIHandler.instance)
+            {
+                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -1352,6 +1359,8 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             // Api Called Already so display tags
+            // Update List if user has made some unsave change and reopen edit profile screen
+            userSelectedTags = new List<string>(myProfileData.tags);
             Highlight_UserSelectedTag();
         }
     }
@@ -1430,7 +1439,7 @@ public class MyProfileDataManager : MonoBehaviour
                 tempTag = Instantiate(tags_row_obj, tempRow.transform);
 
                 tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
-                tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
+                //tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
 
                 if(userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
                     tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
@@ -1465,10 +1474,10 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 for (int k = 0; k < tags_row_parent.GetChild(j).childCount; k++)
                 {
-                    print("Tags Details : " + i + " -- " + j + " -- " + k);
+                    //print("Tags Details : " + i + " -- " + j + " -- " + k);
                     if (tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().tagName.text == userSelectedTags[i])
                     {
-                        print("Tag Highlighted : " + userSelectedTags[i]);
+                        //print("Tag Highlighted : " + userSelectedTags[i]);
                         tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().Select_UnselectTags();
                     }
                 }
@@ -1768,7 +1777,7 @@ public class MyProfileDataManager : MonoBehaviour
         if (new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
         {
             Debug.Log("No changes are done in Tags");
-            tempTags = null;
+            //tempTags = null;
         }
         else
         {

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -1605,7 +1606,7 @@ public class APIManager : MonoBehaviour
     }
 
     IEnumerator IERequestHotFirends(){ 
-        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_HotUsers + "1/100";
         using (UnityWebRequest www= UnityWebRequest.Get(uri)){
              www.SetRequestHeader("Authorization", userAuthorizeToken);
              yield return www.SendWebRequest();
@@ -1623,8 +1624,8 @@ public class APIManager : MonoBehaviour
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Hot Friends Data" + data);
-                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.ShowHotFirend(searchUserRoot);
+                hotUsersRoot = JsonUtility.FromJson<HotUsersRoot>(data);
+                APIController.Instance.ShowHotFirend(hotUsersRoot);
                 //APIController.Instance.FeedGetAllSearchUser();
             }
         }
@@ -2033,32 +2034,51 @@ public class APIManager : MonoBehaviour
     {
         StartCoroutine(IERequestUpdateUserProfile(unique_Name, user_gender, user_job, user_country, user_website, user_bio, _tags));
     }
+
+
+    class UserProfile
+    {
+        public string bio;
+        public string username;
+        public string[] tags;
+    }
+
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
     {
         WWWForm form = new WWWForm();
         Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "   job:" + user_job + "  :bio:" + user_bio);
-        form.AddField("gender", user_gender);
-        form.AddField("job", user_job);
-        form.AddField("country", user_country);
-        form.AddField("website", user_website);
-        form.AddField("bio", user_bio);
-        form.AddField("username", unique_Name);
-        
-        if(_tags != null && _tags.Length > 0)
-        {
-            string json = JsonConvert.SerializeObject(_tags);
-            form.AddField("tags", json);
-        }
+        //form.AddField("gender", user_gender);
+        //form.AddField("job", user_job);
+        //form.AddField("country", user_country);
+        //form.AddField("website", user_website);
+        //form.AddField("bio", user_bio);
+        //form.AddField("username", unique_Name);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        UserProfile userProfile = new UserProfile
+        {
+            bio = user_bio,
+            username = unique_Name,
+            tags = _tags,
+        };
+
+        string jsonData = JsonUtility.ToJson(userProfile);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile;
+
+        // using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        using (UnityWebRequest www = new UnityWebRequest(apiUrl, "POST"))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
-                Debug.LogError("------   Waqas Edit " + www.error);
+                Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
                 //Debug.Log("data" + form);
             }
             else
@@ -2793,6 +2813,7 @@ public class APIManager : MonoBehaviour
     public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
 
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
+    public HotUsersRoot hotUsersRoot = new HotUsersRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
     public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
@@ -3255,6 +3276,7 @@ public class AllFollowing
     public string email;
     public string avatar;
     public bool is_close_friend;
+    public bool isFollowing;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -3486,7 +3508,7 @@ public class SearchUserRow
     public int followerCount;
     public bool is_following_me;
     public bool am_i_following;
-    public bool is_my_close_friend;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -3862,5 +3884,29 @@ public class CommentPostDetail
     public bool success;
     public CommentPostData data;
     public string msg;
+}
+#endregion
+#region Hot Users API Classes //Most Active Users in 24 hours
+[System.Serializable]
+public class HotUsersRoot
+{
+    public bool success;
+    public HotUsersData data;
+    public string msg;
+}
+[System.Serializable]
+public class HotUsersData
+{
+    public int count;
+    public List<HotUsersRow> rows;
+}
+[System.Serializable]
+public class HotUsersRow
+{
+    public int totalActivityCount;
+    public bool is_following_me;
+    public bool am_i_following;
+    public bool is_close_friend;
+    public SearchUserRow user;
 }
 #endregion
