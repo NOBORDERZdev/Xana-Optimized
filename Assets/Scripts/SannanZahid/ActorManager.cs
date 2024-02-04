@@ -33,7 +33,7 @@ public class ActorManager : MonoBehaviour
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag,false);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
         if (flag)
         {
@@ -59,7 +59,7 @@ public class ActorManager : MonoBehaviour
     public void IdlePlayerAvatorForPostMenu(bool flag)
     {
        
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag,true);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
         if (flag)
         {

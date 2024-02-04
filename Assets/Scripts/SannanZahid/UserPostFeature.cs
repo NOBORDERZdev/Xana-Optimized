@@ -46,7 +46,7 @@ public class UserPostFeature : MonoBehaviour
         if(GameManager.Instance.moodManager.PostMood)
         {
             GameManager.Instance.moodManager.PostMood = false;
-            Debug.LogError("---> "+moodToSend+"   --->"+ GameManager.Instance.moodManager.LastMoodSelected);
+           // Debug.LogError("---> "+moodToSend+"   --->"+ GameManager.Instance.moodManager.LastMoodSelected);
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
             GameManager.Instance.moodManager.SetMoodPosted(GameManager.Instance.moodManager.LastMoodSelected, flagg, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController ,GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected));
