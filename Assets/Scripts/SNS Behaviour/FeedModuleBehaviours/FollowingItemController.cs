@@ -105,7 +105,11 @@ public class FollowingItemController : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
-
+        MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SetUserAvatarClothing(followingRawData.following.userOccupiedAssets[0].json);
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed", false))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
@@ -138,7 +142,8 @@ public class FollowingItemController : MonoBehaviour
 
         //FeedUIController.Instance.ShowLoader(true);
 
-        OtherPlayerProfileData.Instance.currentFollowingItemScript = this;//assign current following item script for other player profile
+       OtherPlayerProfileData.Instance.currentFollowingItemScript = this;
+        //OtherPlayerProfileData.Instance.currentFollowingItemScript = this;//assign current following item script for other player profile
 
         OtherPlayerProfileData.Instance.FeedRawData = feedRawData;
         //OtherPlayerProfileData.Instance.OnSetUserUi(followingRawData.isFollowing);
@@ -171,7 +176,7 @@ public class FollowingItemController : MonoBehaviour
             singleUserProfileData.userProfile.website = followingRawData.following.userProfile.website;
             singleUserProfileData.userProfile.bio = followingRawData.following.userProfile.bio;
         }
-        
+
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
     }
 

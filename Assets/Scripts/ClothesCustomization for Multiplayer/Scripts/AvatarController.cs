@@ -1295,34 +1295,74 @@ public class AvatarController : MonoBehaviour
                 wornShirt = item;
                 wornShirtId = itemId;
                 wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornShirt = item;
+                    GetComponent<FriendAvatarController>().wornShirtId = itemId;
+                    GetComponent<FriendAvatarController>().wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                }
                 break;
             case "Legs":
                 wornPant = item;
                 wornPantId = itemId;
                 wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornPant = item;
+                    GetComponent<FriendAvatarController>().wornPantId = itemId;
+                    GetComponent<FriendAvatarController>().wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                }
                 break;
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornHair = item;
+                    GetComponent<FriendAvatarController>().wornHairId = itemId;
+                }
                 break;
             case "Feet":
                 wornShose = item;
                 wornShoesId = itemId;
                 wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornShose = item;
+                    GetComponent<FriendAvatarController>().wornShoesId = itemId;
+                    GetComponent<FriendAvatarController>().wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                }
                 break;
             case "EyeWearable":
                 wornEyewearable = item;
                 wornEyewearableId = itemId;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornEyewearable = item;
+                    GetComponent<FriendAvatarController>().wornEyewearableId = itemId;
+                }
                 break;
             case "Chain":
                 wornChain = item;
                 wornChainId = itemId;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornChain = item;
+                    GetComponent<FriendAvatarController>().wornChainId = itemId;
+                }
                 break;
             case "Glove":
                 wornGloves = item;
                 Material m = new Material(wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
                 wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m;
                 wornGlovesId = itemId;
+                if (GetComponent<FriendAvatarController>())
+                {
+                    GetComponent<FriendAvatarController>().wornGloves = item;
+                    Material m1 = new Material(GetComponent<FriendAvatarController>().wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
+                    GetComponent<FriendAvatarController>().wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m1;
+                    GetComponent<FriendAvatarController>().wornGlovesId = itemId;
+                }
                 break;
         }
         if (item.name.Contains("arabic"))
@@ -1405,24 +1445,52 @@ public class AvatarController : MonoBehaviour
         {
             case "Chest":
                 Destroy(wornShirt);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornShirt);
+                }
                 break;
             case "Legs":
                 Destroy(wornPant);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornPant);
+                }
                 break;
             case "Hair":
                 Destroy(wornHair);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornHair);
+                }
                 break;
             case "Feet":
                 Destroy(wornShose);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornShose);
+                }
                 break;
             case "EyeWearable":
                 Destroy(wornEyewearable);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornEyewearable);
+                }
                 break;
             case "Chain":
                 Destroy(wornChain);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornChain);
+                }
                 break;
             case "Glove":
                 Destroy(wornGloves);
+                if (GetComponent<FriendAvatarController>())
+                {
+                    Destroy(GetComponent<FriendAvatarController>().wornGloves);
+                }
                 break;
         }
     }

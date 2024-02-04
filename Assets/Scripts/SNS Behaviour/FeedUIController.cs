@@ -562,7 +562,7 @@ public class FeedUIController : MonoBehaviour
 
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
-
+        //Other player avatar initialization required here
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
             switch (OtherPlayerProfileData.Instance.backKeyManageList[OtherPlayerProfileData.Instance.backKeyManageList.Count - 1])
@@ -1546,7 +1546,7 @@ public class FeedUIController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         isProfileFollowerDataLoaded = true;
-        if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
+      if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
         {
             profileFollowerPaginationPageNo += 1;
         }

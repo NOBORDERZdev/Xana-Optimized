@@ -478,6 +478,7 @@ public class APIController : MonoBehaviour
                 GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.hotFriendContainer.transform);
             }
         }
+        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
 
 

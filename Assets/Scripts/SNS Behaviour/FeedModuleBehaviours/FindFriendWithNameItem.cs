@@ -141,7 +141,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
-       Debug.Log("Search User id:" + searchUserRow.id);
+        Debug.Log("Search User id:" + searchUserRow.id);
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;

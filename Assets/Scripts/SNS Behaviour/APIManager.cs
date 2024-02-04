@@ -3268,6 +3268,22 @@ public class HotFeedUser
 /// /// <summary>
 /// All Following Classes
 /// </summary>
+/// 
+
+[System.Serializable]
+public class FollowerFollowingUserAvatarData
+{
+    public int id;
+    public string name;
+    public string thumbnail;
+    public SavingCharacterDataClass json;
+    public string description;
+    public bool isDeleted;
+    public int createdBy;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+}
+
 [System.Serializable]
 public class AllFollowing
 {
@@ -3278,6 +3294,7 @@ public class AllFollowing
     public bool is_close_friend;
     public bool isFollowing;
     public AllUserWithFeedUserProfile userProfile;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
 }
 
 [System.Serializable]
@@ -3377,6 +3394,7 @@ public class AllFollower
     public string email;
     public string avatar;
     public AllUserWithFeedUserProfile userProfile;
+    //public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
 }
 
 [System.Serializable]

@@ -58,6 +58,7 @@ public class UserPostItem : MonoBehaviour
             RePlayVideoAfterEnable();
         }
         cnt += 1;
+        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
 
     private void Update()//delete image after object out of screen

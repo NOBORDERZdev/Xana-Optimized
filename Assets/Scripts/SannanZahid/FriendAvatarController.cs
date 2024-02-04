@@ -846,6 +846,10 @@ public class FriendAvatarController : MonoBehaviour
 
     public void WearDefaultItem(string type, GameObject applyOn)
     {
+        if (wornHair || wornPant || wornShirt || wornShose || wornEyewearable || wornGloves || wornChain)
+        {
+            UnStichItem(type);
+        }
         switch (type)
         {
             case "Legs":
