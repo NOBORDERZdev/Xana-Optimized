@@ -18,11 +18,14 @@ public class Actor : MonoBehaviour
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
     public AnimatorOverrideController overrideController;
+    bool _lastAction = false;
 
     private void OnEnable()
     {
         if(_startCoroutineFLag)
         {
+           // Debug.LogError("OnEnable  --- "+ _lastAction);
+            _PlayerAnimator.SetBool("Action", _lastAction);
             StartCoroutine(StartActorBehaviour());
         }
     }
@@ -30,6 +33,8 @@ public class Actor : MonoBehaviour
     {
         if (_startCoroutineFLag)
         {
+          //  Debug.LogError("OnDisable  --- " + _lastAction);
+
             StopCoroutine(StartActorBehaviour());
         }
     }
@@ -44,7 +49,7 @@ public class Actor : MonoBehaviour
     public void Init(ActorBehaviour playerBehaviour)
     {
         _startCoroutineFLag = true;
-        _PlayerAnimator = GetComponent<Animator>();
+        _PlayerAnimator = this.transform.GetComponent<Animator>();
          overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
         _PlayerAnimator.runtimeAnimatorController = overrideController;
         _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
@@ -63,11 +68,26 @@ public class Actor : MonoBehaviour
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
 
-        _PlayerAnimator.SetBool("Action", false);
+        if(playerBehaviour.IdleAnimationFlag)
+        {
+            _PlayerAnimator.SetBool("Action", true);
+            _lastAction = true;
+
+            StateMoveBehaviour = 2;
+
+        }
+        else
+        {
+            _PlayerAnimator.SetBool("Action", false);
+            _lastAction = false;
+
+            StateMoveBehaviour = 1;
+
+        }
         _PlayerAnimator.SetBool("Menu Action", false);
         //StopAllCoroutines();
         //_moveFlag = true;
-        StateMoveBehaviour = 1;
+       ///----- StateMoveBehaviour = 1;
         //StartCoroutine(StartActorBehaviour());
 
     }
@@ -87,6 +107,7 @@ public class Actor : MonoBehaviour
                     transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
                     _playerMoves.Enqueue(move);
                     _PlayerAnimator.SetBool("Action", false);
+                    _lastAction = false;
                     _PlayerAnimator.SetBool("IdleMenu", false);
                 }
                 break;
@@ -100,6 +121,7 @@ public class Actor : MonoBehaviour
                         {
                             StateMoveBehaviour = 2;
                             _PlayerAnimator.SetBool("Action", true);
+                            _lastAction = true;
                             _PlayerAnimator.SetBool("IdleMenu", false);
                             _playerMoves.Enqueue(move);
                     }
@@ -122,6 +144,7 @@ public class Actor : MonoBehaviour
                     if (_playerMoves.Peek().behaviour != MoveBehaviour.Behaviour.Action)
                     {
                         _PlayerAnimator.SetBool("Action", false);
+                        _lastAction = false;
                     }
                     StateMoveBehaviour = 1;
                 }
@@ -131,6 +154,7 @@ public class Actor : MonoBehaviour
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
+       // Debug.LogError("IdlePlayerAvatorForMenu  --- " + flag);
         if(flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;
