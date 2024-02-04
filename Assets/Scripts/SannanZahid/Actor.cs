@@ -152,13 +152,13 @@ public class Actor : MonoBehaviour
         }
         goto CheckedInLoop;
     }
-    public void IdlePlayerAvatorForMenu(bool flag)
+    public void IdlePlayerAvatorForMenu(bool flag,bool MAction)
     {
        // Debug.LogError("IdlePlayerAvatorForMenu  --- " + flag);
         if(flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;
-            _PlayerAnimator.SetBool("Menu Action", true);
+            _PlayerAnimator.SetBool("Menu Action", MAction);
             _moveFlag = false;
             StateMoveBehaviour = 0;
         }
