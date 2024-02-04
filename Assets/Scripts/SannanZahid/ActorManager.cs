@@ -52,7 +52,7 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = _previousPos;
+            GameManager.Instance.mainCharacter.transform.position = new Vector3(1f, _previousPos.y, _previousPos.z);
             GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
         }
     }
