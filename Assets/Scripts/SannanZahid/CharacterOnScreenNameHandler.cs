@@ -10,7 +10,8 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     #region Positioning Mechanics
     private void Start()
     {
-        if (!XanaConstants.xanaConstants.isBackFromPMY)
+        if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY
+            || !XanaConstants.xanaConstants.isBackFromPMY || !XanaConstants.xanaConstants.isFromPMYLobby)
             StartCoroutine(SetName());
     }
     public void SetNameOfPlayerAgain()

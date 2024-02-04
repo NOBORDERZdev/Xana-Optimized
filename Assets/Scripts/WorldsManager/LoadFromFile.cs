@@ -408,7 +408,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
                 //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
-                StartCoroutine(setPlayerCamAngle(0.38f, 0.2275f));
+                StartCoroutine(setPlayerCamAngle(0.38f, 0.8f)); // 0.38  //0.2275
             }
 
             RaycastHit hit;
