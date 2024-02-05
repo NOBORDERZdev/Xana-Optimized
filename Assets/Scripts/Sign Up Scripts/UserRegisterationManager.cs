@@ -230,8 +230,8 @@ public class UserRegisterationManager : MonoBehaviour
                 if (welcomeScreen != null)
                     welcomeScreen.SetActive(true);
             }
-            //else if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
-            //    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            else if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+                UIManager.Instance._SplashScreen.SetActive(true);
         }
     }
 

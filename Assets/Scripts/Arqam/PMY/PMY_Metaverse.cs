@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,8 @@ using UnityEngine.UI;
 public class PMY_Metaverse : MonoBehaviour
 {
     public BottomTabManager bottomTabManager;
-    //private void OnEnable()
-    //{
-    //    if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
-    //        AdditiveScenesManager.OnAllSceneLoaded += SetDataForPMY;
-    //}
+    public Canvas[] canvas;
+
     private void OnDisable()
     {
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
@@ -24,14 +22,13 @@ public class PMY_Metaverse : MonoBehaviour
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
         {
             AdditiveScenesManager.OnAllSceneLoaded += SetDataForPMY;
-            UIManager.Instance._SplashScreen.SetActive(true);
+            foreach (var canvasGroup in canvas)
+                canvasGroup.enabled = false;
         }
     }
 
     void SetDataForPMY()
     {
-        //if (PlayerPrefs.GetInt("IsProcessComplete") == 1)
-        //{
         if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
         {
             XanaConstants.xanaConstants.isBackFromPMY = false;
@@ -45,19 +42,19 @@ public class PMY_Metaverse : MonoBehaviour
         }
         else
             PlayPMYManually();  // call when user launch the app except very first time
-        //}
-        //else 
-        if (IsLoggedIn())
-            PlayPMYManually();
 
         UserRegisterationManager.instance.StartGameAction += PlayPMYManually;
     }
 
     private void PlayPMYManually()
     {
-        //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        //UIManager.Instance._SplashScreen.SetActive(true);
         bottomTabManager.OnClickHomeWorldButton();
+
+        //Image blackScreen = LoadingHandler.Instance.Loading_WhiteScreen.GetComponent<Image>();
+        //blackScreen.DOFade(0, 0.5f).SetDelay(0.5f).OnComplete(delegate
+        //{
+        //    blackScreen.color = new Color(0, 0, 0, 0);
+        //});
     }
 
     private bool IsLoggedIn()
