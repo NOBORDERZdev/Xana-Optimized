@@ -40,5 +40,8 @@ public class TagPrefabInfo : MonoBehaviour
                 MyProfileDataManager.Instance.userSelectedTags.Remove(tagName.text);
         }   
     }
-
+    private void OnEnable()
+    {
+        isSelected = false;
+    }
 }

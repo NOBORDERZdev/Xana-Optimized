@@ -177,10 +177,9 @@ public class BottomTabManager : MonoBehaviour
             }
             else
             {
-                if (i == 2 || i == 3)
-                {
-                    break;
-                }
+                //if (i == 2 || i == 3){
+                //    break;
+                //}
                 allButtonIcon[i].color = ActiveButtonColor;
                 //if (i == 2)
                 //{
@@ -466,6 +465,7 @@ public class BottomTabManager : MonoBehaviour
                 FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 3;
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
+                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
             else
             {
@@ -555,7 +555,7 @@ public class BottomTabManager : MonoBehaviour
             //FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
-            FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
+            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
 
             MyProfileDataManager.Instance.MyProfileSceenShow(false);
             MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
@@ -647,8 +647,8 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance.Canvas.SetActive(false);
 
                 UIManager.Instance.HomeWorldScreen.SetActive(false);
-                FeedUIController.Instance.bottomTabManager.CheckLoginOrNotForFooterButton();
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
