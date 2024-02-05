@@ -140,16 +140,16 @@ public class WorldItemPreviewTab : MonoBehaviour
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
-        if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
-        {
+        /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
+        {*/
             CreatorNameTxt.text = creator_Name;
             CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
             AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
             if (string.IsNullOrEmpty(userAvatarURL))
             {
-                NoAvatarIcon.gameObject.SetActive(true);
+                //NoAvatarIcon.gameObject.SetActive(true);
                 XanaAvatarIcon.gameObject.SetActive(false);
-                AvatarIcon.gameObject.SetActive(false);
+                //AvatarIcon.gameObject.SetActive(true);
             }
             //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
             //{
@@ -159,17 +159,17 @@ public class WorldItemPreviewTab : MonoBehaviour
             //}
             else
             {
-                NoAvatarIcon.gameObject.SetActive(false);
+                //NoAvatarIcon.gameObject.SetActive(false);
                 XanaAvatarIcon.gameObject.SetActive(false);
-                AvatarIcon.gameObject.SetActive(true);
+                //AvatarIcon.gameObject.SetActive(true);
                 StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
             }
             creatorPanel.SetActive(true);
-        }
+        /*}
         else
         {
             creatorPanel.SetActive(false);
-        }
+        }*/
 
         CheckWorldFav(isFavourite);
     }

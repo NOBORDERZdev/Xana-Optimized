@@ -32,36 +32,7 @@ public class WorldItemView : MonoBehaviour
         m_EnvironmentName = detail.EnvironmentName;
         m_WorldDescription = detail.WorldDescription;
         m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-        creatorName = detail.CreatorName;
-        createdAt = detail.CreatedAt;
-        userLimit = detail.UserLimit;
-        userAvatarURL = detail.UserAvatarURL;
-        updatedAt = detail.UpdatedAt;
-        entityType = detail.EntityType;
-        m_BannerLink = detail.BannerLink;
-        m_PressedIndex = detail.PressedIndex;
-        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
-        worldTags = detail.WorldTags;
-        Creator_Name = detail.Creator_Name;
-        CreatorAvatarURL = detail.CreatorAvatarURL;
-        CreatorDescription = detail.CreatorDescription;
-        worldVisitCount= detail.WorldVisitCount;
-        isFavourite = detail.isFavourite;
-        if (creatorNameText)
-            creatorNameText.text = creatorName;
-        Init(index, _loopcount);
-    }
-
-
-    public void InitItem(WorldItemDetail detail, int _loopcount = 0)
-    {
-        if (PreviewLogo)
-            PreviewLogo.gameObject.SetActive(true);
-        idOfObject = detail.IdOfWorld;
-        m_EnvironmentName = detail.EnvironmentName;
-        m_WorldDescription = detail.WorldDescription;
-        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-        creatorName = detail.CreatorName;
+        //creatorName = detail.Creator_Name;
         createdAt = detail.CreatedAt;
         userLimit = detail.UserLimit;
         userAvatarURL = detail.UserAvatarURL;
@@ -76,6 +47,37 @@ public class WorldItemView : MonoBehaviour
         CreatorDescription = detail.CreatorDescription;
         worldVisitCount = detail.WorldVisitCount;
         isFavourite = detail.isFavourite;
+        if (creatorNameText)
+            creatorNameText.text = Creator_Name;
+        Init(index, _loopcount);
+    }
+
+
+    public void InitItem(WorldItemDetail detail, int _loopcount = 0)
+    {
+        if (PreviewLogo)
+            PreviewLogo.gameObject.SetActive(true);
+        idOfObject = detail.IdOfWorld;
+        m_EnvironmentName = detail.EnvironmentName;
+        m_WorldDescription = detail.WorldDescription;
+        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+        //creatorName = detail.CreatorName;
+        createdAt = detail.CreatedAt;
+        userLimit = detail.UserLimit;
+        userAvatarURL = detail.UserAvatarURL;
+        updatedAt = detail.UpdatedAt;
+        entityType = detail.EntityType;
+        m_BannerLink = detail.BannerLink;
+        m_PressedIndex = detail.PressedIndex;
+        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        worldTags = detail.WorldTags;
+        Creator_Name = detail.Creator_Name;
+        CreatorAvatarURL = detail.CreatorAvatarURL;
+        CreatorDescription = detail.CreatorDescription;
+        worldVisitCount = detail.WorldVisitCount;
+        isFavourite = detail.isFavourite;
+        if (creatorNameText)
+            creatorNameText.text = Creator_Name;
         Init(0, _loopcount);
     }
 
@@ -87,7 +89,7 @@ public class WorldItemView : MonoBehaviour
     public string m_EnvironmentName;
     public string m_WorldDescription;
     public string m_ThumbnailDownloadURL, ThumbnailDownloadURLHigh;
-    public string creatorName;
+    //public string creatorName;
     public string createdAt;
     public string userLimit;
     public string userAvatarURL;
@@ -325,7 +327,8 @@ public class WorldItemView : MonoBehaviour
             eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
-        joinedUserCount.text = worldVisitCount+" visits";
+        if (!string.IsNullOrEmpty(worldVisitCount))
+            joinedUserCount.text = worldVisitCount + " visits";
         gameObject.GetComponent<Button>().interactable = true;
         isVisible = true;
         //StartCoroutine(DownloadImage());
@@ -348,7 +351,7 @@ public class WorldItemView : MonoBehaviour
     public void OnClickPrefab()
     {
         m_EnvName = m_EnvironmentName;
-        m_CreaName = creatorName;
+        m_CreaName = Creator_Name;
         XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
@@ -362,9 +365,9 @@ public class WorldItemView : MonoBehaviour
         //}
         //else
         //{
-            worldItemPreview.Init(this.gameObject,worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
-        entityType, Creator_Name, CreatorDescription, CreatorAvatarURL,isFavourite,idOfObject);
+        worldItemPreview.Init(this.gameObject, worldIcon.sprite,
+    m_EnvironmentName, m_WorldDescription, Creator_Name, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
+    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
         //}
 
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
