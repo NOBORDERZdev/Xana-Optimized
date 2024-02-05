@@ -129,7 +129,7 @@ public class WorldItemDetail
     public string WorldDescription;
     public string ThumbnailDownloadURL;
     public string ThumbnailDownloadURLHigh;
-    public string CreatorName;
+    //public string CreatorName;
     public string CreatedAt;
     public string UserLimit;
     public string UserAvatarURL;

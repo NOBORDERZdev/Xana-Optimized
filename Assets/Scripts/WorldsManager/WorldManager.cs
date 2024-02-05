@@ -18,7 +18,7 @@ public class WorldManager : MonoBehaviour
     [Header("Api Parameter's")]
     private string finalAPIURL;
     private string status = "Publish";
-    private int hotSpacePN=1, hotGamesPN=1, followingPN=1, mySpacesPN=1;
+    private int hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -50,7 +50,7 @@ public class WorldManager : MonoBehaviour
     public string searchResponse;
 
     public string worldstr;
-   
+
     public WorldItemManager WorldItemManager;
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
@@ -141,7 +141,7 @@ public class WorldManager : MonoBehaviour
     {
         aPIURLGlobal = chnager;
     }
-    
+
     public void SearchWorldCall(string searchKey, bool isFromTag = false)
     {
         if (searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
@@ -206,8 +206,8 @@ public class WorldManager : MonoBehaviour
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
-   
-    public string PrepareApiURL(APIURL aPIURL,int recordPerPage=30)
+
+    public string PrepareApiURL(APIURL aPIURL, int recordPerPage = 30)
     {
         switch (aPIURL)
         {
@@ -299,7 +299,7 @@ public class WorldManager : MonoBehaviour
         }));
     }
 
-    IEnumerator FetchUserMapFromServer(string apiURL, Action<bool                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           > callback)
+    IEnumerator FetchUserMapFromServer(string apiURL, Action<bool> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
@@ -322,7 +322,7 @@ public class WorldManager : MonoBehaviour
             www.Dispose();
         }
     }
-   
+
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
@@ -390,23 +390,26 @@ public class WorldManager : MonoBehaviour
                     _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
-
-                if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
-                {
-                    _event.CreatorName = _WorldInfo.data.rows[i].user.name;
-                    _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
-                    _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
-                    _event.UserLimit = "15";
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.name))
-                        _event.CreatorName = _WorldInfo.data.rows[i].user.name;
-                    else
-                        _event.CreatorName = "XANA";
-                    _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
-                }
             }
+
+            if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
+            {
+                _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
+                _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
+                _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
+                _event.UserLimit = "15";
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.name))
+                    _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
+                else
+                    _event.Creator_Name = "XANA";
+                _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
+            }
+            if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
+                _event.Creator_Name = _WorldInfo.data.rows[i].creator;
+
             //if (_WorldInfo.data.rows[i].name.Contains("XANA Lobby"))
             //{
             //    isLobbyActive = true;
@@ -427,16 +430,16 @@ public class WorldManager : MonoBehaviour
             //    }
             //}  
         }
-        if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count>0)
+        if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count > 0)
         {
             WorldItemManager.DisplayWorlds(_apiURL);
             WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
-        else if(WorldItemManager.gameObject.activeInHierarchy)
+        else if (WorldItemManager.gameObject.activeInHierarchy)
         {
             WorldItemManager.WorldLoadingText(_apiURL);
         }
-            
+
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         //if (!UIManager.Instance.IsSplashActive)
@@ -810,6 +813,7 @@ public class UserInfo
     public UserProfileInfo userProfile;
 }
 
+[System.Serializable]
 public class UserProfileInfo
 {
     public string bio;
@@ -830,7 +834,7 @@ public class WorldCreatorDetail
 
 public enum APIURL
 {
-    HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag,Temp
+    HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag, Temp
 }
 
 public enum WorldType

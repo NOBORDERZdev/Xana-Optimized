@@ -10151,6 +10151,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1549620715}
     m_Modifications:
+    - target: {fileID: 660345961, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 660
+      objectReference: {fileID: 0}
+    - target: {fileID: 660345961, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 660345961, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -79
+      objectReference: {fileID: 0}
+    - target: {fileID: 920029321, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_overflowMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
       value: Description Panel Parent
@@ -10238,6 +10254,18 @@ PrefabInstance:
     - target: {fileID: 1558925941770329759, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170315383973604804, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170315383973604804, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170315383973604804, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.6039216
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
@@ -10400,7 +10428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -23141,7 +23169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2153b777dbf9f4429ae91ce647f5af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerAnimator: {fileID: 3836157402595034107}
   PostMood: 0
   LastMoodSelected: 
 --- !u!4 &1900354415
@@ -29197,7 +29224,6 @@ MonoBehaviour:
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
   ThumbnailDownloadURLHigh: 
-  creatorName: 
   createdAt: 
   userLimit: 
   userAvatarURL: 
@@ -29313,7 +29339,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OpenAI
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
   m_sharedMaterial: {fileID: -1348047706647286274, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
@@ -56532,7 +56558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5.5M visits
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
   m_sharedMaterial: {fileID: -1348047706647286274, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
@@ -60137,7 +60163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Creator Name
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
   m_sharedMaterial: {fileID: -1348047706647286274, guid: a42bccfd68da37e4fb81138d3dade56d, type: 2}
@@ -67594,7 +67620,6 @@ MonoBehaviour:
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
   ThumbnailDownloadURLHigh: 
-  creatorName: 
   createdAt: 
   userLimit: 
   userAvatarURL: 
@@ -71591,7 +71616,6 @@ MonoBehaviour:
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
   ThumbnailDownloadURLHigh: 
-  creatorName: 
   createdAt: 
   userLimit: 
   userAvatarURL: 
