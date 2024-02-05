@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
-    public Transform SecondSliderScrollView;
+    /*public Transform SecondSliderScrollView;*/
 
     [Header("Footer Reference")]
     public GameObject _footerCan;
@@ -27,10 +27,11 @@ public class UIManager : MonoBehaviour
         HomeWorldTabsHolder, 
         WorldWorldTabsHolder, 
         WorldScrollerHolder,
-        LobbyTabHolder,
+        /*LobbyTabHolder,*/
         AdvanceSearchInputField;
-   
 
+    public GameObject worldHolder;
+    public GameObject searchWorldHolder;
     private void Awake()
     {
         Instance = this;
@@ -132,12 +133,14 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
-                    HomeWorldTabsHolder.gameObject.SetActive(true);
+                    /*LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
+                  //  HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    WorldManager.instance.WorldPageStateHandler(false);
-                    WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = false;
+                    //WorldManager.instance.WorldPageStateHandler(false);
+                    //WorldManager.instance.WorldScrollReset();
+                    worldHolder.SetActive(true);
+                    searchWorldHolder.SetActive(false);
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = false;*/
                     break;
                 }
             case 1:
@@ -147,12 +150,12 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(true);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(false);
-                    HomeWorldTabsHolder.gameObject.SetActive(false);
+                    /*LobbyTabHolder.gameObject.SetActive(false);*/
+                  //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(true);
-                    WorldManager.instance.WorldPageStateHandler(true);
-                    WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                    //WorldManager.instance.WorldPageStateHandler(true);
+                    //WorldManager.instance.WorldScrollReset();
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     break;
                 }
             case 2:
@@ -162,12 +165,14 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(false);
-                    HomeWorldTabsHolder.gameObject.SetActive(false);
+                    /*LobbyTabHolder.gameObject.SetActive(false);*/
+                    worldHolder.SetActive(false);
+                    searchWorldHolder.SetActive(true);
+                  //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    WorldManager.instance.WorldPageStateHandler(true);
+                    //WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                   /* SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     ShowFooter(true);
                     break;
                 }
