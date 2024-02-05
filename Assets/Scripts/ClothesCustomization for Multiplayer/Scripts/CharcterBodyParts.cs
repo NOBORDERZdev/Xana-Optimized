@@ -1522,10 +1522,10 @@ public class CharcterBodyParts : MonoBehaviour
     /// To Show the player
     /// </summary>
      public void ShowPlayer(){  
-        if(Body)
-        Body.gameObject.SetActive(true);
-        if(Head)
-        Head.gameObject.SetActive(true);
+        //if(Body)
+        //Body.gameObject.SetActive(true);
+        //if(Head)
+        //Head.gameObject.SetActive(true);
         // if(avatarController.wornHair)   // Sohaib, cloths showing disabled
         //avatarController.wornHair.SetActive(true);
         // if(avatarController.wornPant)
