@@ -3,21 +3,22 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.Collections;
 using System.Collections.Generic;
+using static CanvasGroupFade;
 
 public class MoodManager : MonoBehaviour
 {
-    public Animator PlayerAnimator;
+   // public Animator PlayerAnimator;
   //  [SerializeField]
   //  AnimatorOverrideController overrideController;
     public bool PostMood = false;
     public string LastMoodSelected = "";
-    public void ViewMoodActionAnimation(string animkey,string originalKey, AnimatorOverrideController overrideController)
+    public void ViewMoodActionAnimation(string animkey,string originalKey, AnimatorOverrideController overrideController, Animator _anim)
     {
         PostMood = true;
         LastMoodSelected = originalKey;
-        StartCoroutine(DownloadAddressableAnimation(animkey,  overrideController));
+        StartCoroutine(DownloadAddressableAnimation(animkey,  overrideController, _anim));
     }
-    public IEnumerator DownloadAddressableAnimation(string key, AnimatorOverrideController overrideController)
+    public IEnumerator DownloadAddressableAnimation(string key, AnimatorOverrideController overrideController, Animator _anim)
     {
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -41,6 +42,7 @@ public class MoodManager : MonoBehaviour
                 {
                     var clips = new List<KeyValuePair<AnimationClip, AnimationClip>>();
                     overrideController.GetOverrides(clips);
+                   
                     for (int i = 0; i < clips.Count; i++)
                     {
                         var stateName = clips[i].Key.name;
@@ -49,8 +51,7 @@ public class MoodManager : MonoBehaviour
                         {
                             clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, loadOp.Result);
                             yield return new WaitForSeconds(Time.deltaTime);
-                            PlayerAnimator.SetBool("Menu Action", true);
-                            PlayerAnimator.SetBool("IdleMenu", true);
+                           // _anim.SetBool("IdleMenu", true);
                             break;
                         }
                     }
@@ -60,19 +61,19 @@ public class MoodManager : MonoBehaviour
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
     }
-    public void SetMoodPosted(string animkey, bool walkFlag,AnimatorOverrideController overrideController)
+    public void SetMoodPosted(string animkey, bool walkFlag,AnimatorOverrideController overrideController, Animator _anim)
     {
        // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + animkey);
 
         int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
         if(NoOfAnimations == 1)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle", overrideController));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle", overrideController, _anim));
         else
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle", overrideController));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle", overrideController, _anim));
        if(!walkFlag)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk", overrideController));
+            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk", overrideController, _anim));
     }
-    public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace, AnimatorOverrideController overrideController)
+    public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace, AnimatorOverrideController overrideController, Animator _anim)
     {
        // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + key);
         if (key != "" && Application.internetReachability != NetworkReachability.NotReachable)
@@ -106,10 +107,10 @@ public class MoodManager : MonoBehaviour
                             clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, loadOp.Result);
                             if (NodeAnimToReplace == "Idle")
                             {
-                                GameManager.Instance.mainCharacter.GetComponent<Actor>().ActionClipTime = loadOp.Result.length;
+                                _anim.transform.GetComponent<Actor>().ActionClipTime = loadOp.Result.length;
                             }
                             yield return new WaitForSeconds(Time.deltaTime);
-                            PlayerAnimator.SetBool("Menu Action", false);
+                            _anim.SetBool("Menu Action", false);
                             break;
                         }
                     }
