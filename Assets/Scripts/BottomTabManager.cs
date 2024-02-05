@@ -282,12 +282,18 @@ public class BottomTabManager : MonoBehaviour
                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 }
 
-
             }
+           
             WorldManager.LoadHomeScreenWorlds?.Invoke();
             FlexibleRect.OnAdjustSize?.Invoke(false);
             //WorldManager.instance.ChangeWorld(APIURL.Hot);
             //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+        }
+
+        if (WorldSearchManager.IsSearchBarActive)
+        {
+            WorldSearchManager.IsSearchBarActive = false;
+            WorldManager.instance.worldSearchManager.ClearInputField();
         }
     }
 

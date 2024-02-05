@@ -29,7 +29,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void SearchScreenLoad()
     {
-        Debug.LogError("search 0");
+        WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.ClearWorldScrollWorlds();
@@ -37,7 +37,7 @@ public class AllWorldManage : MonoBehaviour
 
     public void SearchScreenLoad(string searchKey)
     {
-        Debug.LogError("search 1");
+        WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.ClearWorldScrollWorlds();
