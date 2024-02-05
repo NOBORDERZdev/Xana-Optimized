@@ -56,35 +56,35 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
             yield return new WaitForSeconds(.1f);
             if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = false;
+                player1.GetComponent<AvatarController>().isModulePlayer = false;
                 player1.GetComponent<AvatarController>().staticPlayer = true;
-                player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+                player2.GetComponent<AvatarController>().isModulePlayer = true;
             }
             else if (UFE.gameMode == GameMode.VersusMode)
             {
-                player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = false;
+                player1.GetComponent<AvatarController>().isModulePlayer = false;
                 player1.GetComponent<AvatarController>().staticPlayer = true;
-                player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+                player2.GetComponent<AvatarController>().isModulePlayer = true;
             }
             else
             {
-                player1.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
-                player2.GetComponent<AvatarController>().isLoadStaticClothFromJson = true;
+                player1.GetComponent<AvatarController>().isModulePlayer = true;
+                player2.GetComponent<AvatarController>().isModulePlayer = true;
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
                 {
-                    player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                    player1.GetComponent<AvatarController>().moduleClothJson = FightingGameManager.instance.player1Data.clothJson;
                 }
                 else
                 {
-                    player1.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                    player1.GetComponent<AvatarController>().moduleClothJson = FightingGameManager.instance.player2Data.clothJson;
                 }
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
-                    player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                    player2.GetComponent<AvatarController>().moduleClothJson = FightingGameManager.instance.player1Data.clothJson;
                 }
                 else
                 {
-                    player2.GetComponent<AvatarController>().staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                    player2.GetComponent<AvatarController>().moduleClothJson = FightingGameManager.instance.player2Data.clothJson;
                 }
             }
             yield return new WaitForSeconds(.1f);

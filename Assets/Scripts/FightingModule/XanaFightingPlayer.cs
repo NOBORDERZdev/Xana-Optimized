@@ -22,13 +22,13 @@ public class XanaFightingPlayer : MonoBehaviour
             {
                 if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
                 {
-                    avatarController.isLoadStaticClothFromJson = false;
+                    avatarController.isModulePlayer = false;
                     avatarController.staticPlayer = true;
                     controlsScript.myInfo.characterName = PlayerPrefs.GetString("PlayerName").ToUpper();
                 }
                 else if (UFE.gameMode==UFE3D.GameMode.VersusMode)
                 {
-                    avatarController.isLoadStaticClothFromJson = false;
+                    avatarController.isModulePlayer = false;
                     avatarController.staticPlayer = true;
                     controlsScript.myInfo.characterName = PlayerPrefs.GetString("PlayerName").ToUpper();
                 }
@@ -36,12 +36,12 @@ public class XanaFightingPlayer : MonoBehaviour
                 {
                     if (PhotonNetwork.LocalPlayer.ActorNumber == 1)
                     {
-                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                        cloth = avatarController.moduleClothJson = FightingGameManager.instance.player1Data.clothJson;
                         controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name.ToUpper();
                     }
                     else
                     {
-                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                        cloth = avatarController.moduleClothJson = FightingGameManager.instance.player2Data.clothJson;
                         controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name.ToUpper();
                     }
                 }
@@ -60,13 +60,13 @@ public class XanaFightingPlayer : MonoBehaviour
             {
                 if (UFE.gameMode == UFE3D.GameMode.TrainingRoom)
                 {
-                    avatarController.isLoadStaticClothFromJson = true;
+                    avatarController.isModulePlayer = true;
                     avatarController.staticPlayer = false;
                     controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
                 }
                 else if (UFE.gameMode==UFE3D.GameMode.VersusMode)
                 {
-                    avatarController.isLoadStaticClothFromJson = true;
+                    avatarController.isModulePlayer = true;
                     avatarController.staticPlayer = false;
                     controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
                 }
@@ -74,12 +74,12 @@ public class XanaFightingPlayer : MonoBehaviour
                 {
                     if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                     {
-                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player1Data.clothJson;
+                        cloth = avatarController.moduleClothJson = FightingGameManager.instance.player1Data.clothJson;
                         controlsScript.myInfo.characterName = FightingGameManager.instance.player1Data.name.ToUpper();
                     }
                     else
                     {
-                        cloth = avatarController.staticClothJson = FightingGameManager.instance.player2Data.clothJson;
+                        cloth = avatarController.moduleClothJson = FightingGameManager.instance.player2Data.clothJson;
                         controlsScript.myInfo.characterName = FightingGameManager.instance.player2Data.name.ToUpper();
                     }
                 }

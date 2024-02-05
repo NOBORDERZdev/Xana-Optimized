@@ -15,8 +15,8 @@ public class AvatarController : MonoBehaviour
     public Stitcher stitcher;
     private ItemDatabase itemDatabase;
     public bool staticPlayer;
-    public bool isLoadStaticClothFromJson;
-    public string staticClothJson;
+    public bool isModulePlayer;
+    public string moduleClothJson;
     public string clothJson;
     public SkinnedMeshRenderer head;
     public SkinnedMeshRenderer Body;
@@ -210,13 +210,13 @@ public class AvatarController : MonoBehaviour
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
     void Custom_IntializeAvatar()
     {
-        if (isLoadStaticClothFromJson)
+        if (isModulePlayer)
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+            _CharacterData = _CharacterData.CreateFromJSON(moduleClothJson);
             _PCharacterData=_CharacterData;
-            clothJson = staticClothJson;
+            clothJson = moduleClothJson;
             if (_CharacterData.myItemObj.Count > 0)
             {
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -1237,9 +1237,9 @@ public class AvatarController : MonoBehaviour
             if (applyHairColor /*&& _CharData.HairColor != null && getHairColorFormFile */)
             {
                 SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-                if (isLoadStaticClothFromJson)
+                if (isModulePlayer)
                 {
-                    _CharacterData = _CharacterData.CreateFromJSON(staticClothJson);
+                    _CharacterData = _CharacterData.CreateFromJSON(moduleClothJson);
                 }
                 else
                 {
