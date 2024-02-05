@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PMY_Metaverse : MonoBehaviour
 {
@@ -35,7 +36,10 @@ public class PMY_Metaverse : MonoBehaviour
         {
             XanaConstants.xanaConstants.isBackFromPMY = false;
             if (IsLoggedIn())
+            {
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            }
             else
                 UserRegisterationManager.instance.welcomeScreen.SetActive(true);
         }

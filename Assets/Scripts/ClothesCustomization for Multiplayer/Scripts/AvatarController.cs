@@ -67,16 +67,18 @@ public class AvatarController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("else main");
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            //Debug.LogError("else main");
+            if (XanaConstants.xanaConstants)
             {
-                EquipNFT();
+                if (XanaConstants.xanaConstants.isNFTEquiped)
+                {
+                    EquipNFT();
+                }
+                if (XanaConstants.xanaConstants.isNFTEquiped)
+                {
+                    GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                }
             }
-            if (XanaConstants.xanaConstants.isNFTEquiped)
-            {
-                GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-            }
-
         }
     }
 
