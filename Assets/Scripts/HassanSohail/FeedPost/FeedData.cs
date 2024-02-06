@@ -24,31 +24,34 @@ public class FeedData : MonoBehaviour
     bool isEnable = false;
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
-    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){ 
-        _data = data;
-        DisplayName.text = data.user.name;
-        PostText.text = data.text_post;
-        isEnable= true;
-        //Likes.text = data.like_count.ToString();
-        UpdateLikeCount(data.like_count);
-        timeUpdateInterval=1;
-        if (isEnable)
+    public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){
+        if (gameObject.activeInHierarchy)
         {
-            Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
-        }
-        if (data.isLikedByUser)
-        {
-            isLiked = true;
-            Likes.color = LikedColor;
-        }
-        UpdateHeart();
-        if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
-        {
-            StartCoroutine(GetProfileImage(data.user.avatar));
-        }
-        if (isFeed)
-        {
-            Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
+            _data = data;
+            DisplayName.text = data.user.name;
+            PostText.text = data.text_post;
+            isEnable= true;
+            //Likes.text = data.like_count.ToString();
+            UpdateLikeCount(data.like_count);
+            timeUpdateInterval=1;
+            if (isEnable)
+            {
+                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+            }
+            if (data.isLikedByUser)
+            {
+                isLiked = true;
+                Likes.color = LikedColor;
+            }
+            UpdateHeart();
+            if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
+            {
+                StartCoroutine(GetProfileImage(data.user.avatar));
+            }
+            if (isFeed)
+            {
+                Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
+            }
         }
     }
    

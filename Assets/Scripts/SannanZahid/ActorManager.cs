@@ -33,7 +33,7 @@ public class ActorManager : MonoBehaviour
     }
     public void IdlePlayerAvatorForMenu(bool flag)
     {
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag,false);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
         if (flag)
         {
@@ -52,14 +52,14 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = _previousPos;
+            GameManager.Instance.mainCharacter.transform.position = new Vector3(1f, _previousPos.y, _previousPos.z);
             GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
         }
     }
     public void IdlePlayerAvatorForPostMenu(bool flag)
     {
        
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag);
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().IdlePlayerAvatorForMenu(flag,true);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(!flag);
         if (flag)
         {

@@ -33,16 +33,16 @@ public class SocketController : MonoBehaviour
     }
     void OnSocketDisconnect(CustomError args)
     {
-        Debug.Log("<color=blue> Post -- Disconnect  </color>");
+      //  Debug.Log("<color=blue> Post -- Disconnect  </color>");
     }
     void OnError(CustomError args)
     {
-        Debug.Log("<color=blue> Post -- Connection Error  </color>");
+       // Debug.Log("<color=blue> Post -- Connection Error  </color>");
     }
     void OnConnected(ConnectResponse resp)
     {
         socketId = resp.sid;
-        Debug.Log("<color=blue> Post -- Connected  </color>");
+       // Debug.Log("<color=blue> Post -- Connected  </color>");
         EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
 
         // Bind Events to listen
@@ -53,21 +53,21 @@ public class SocketController : MonoBehaviour
     }
     void ReceivePost(string msg)
     {
-        Debug.Log("<color=blue> Post -- Received : </color>");
+       // Debug.Log("<color=blue> Post -- Received : </color>");
         ReceivedFriendPostData data = JsonConvert.DeserializeObject<ReceivedFriendPostData>(msg);
         updateFriendPostDelegate?.Invoke(data);
 
         // Use this data to show post on screen
 
-        Debug.Log("<color=blue> Post -- Msg : </color>" + data.msg);
-        Debug.Log("<color=blue> Post -- ID : </color>" + data.creatorId);
-        Debug.Log("<color=blue> Post -- Post : </color>" + data.text_post);
-        Debug.Log("<color=blue> Post -- Mood : </color>" + data.text_mood);
+      //  Debug.Log("<color=blue> Post -- Msg : </color>" + data.msg);
+      //  Debug.Log("<color=blue> Post -- ID : </color>" + data.creatorId);
+      //  Debug.Log("<color=blue> Post -- Post : </color>" + data.text_post);
+      //  Debug.Log("<color=blue> Post -- Mood : </color>" + data.text_mood);
     }
     
      void FeedLikeUpdate(string msg)
     {
-       Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
+      // Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
         FeedLikeSocket socketInput = JsonConvert.DeserializeObject<FeedLikeSocket>(msg);
        updateFeedLike?.Invoke(socketInput);
 
@@ -102,7 +102,7 @@ public class SocketController : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
+      //  Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
@@ -121,11 +121,11 @@ public class SocketController : MonoBehaviour
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 //Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
-                Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
+               // Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
             }
             else
             {
-                Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
+               // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
         }
