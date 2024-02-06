@@ -757,7 +757,7 @@ public class APIManager : MonoBehaviour
         {
             FeedUIController.Instance.ShowLoader(true);
         }
-        StartCoroutine(IEAdFrndAllFollowing(1,500));
+        StartCoroutine(IEAdFrndAllFollowing(1,20));
     }
 
     public AllFollowingRoot adFrndFollowing;
