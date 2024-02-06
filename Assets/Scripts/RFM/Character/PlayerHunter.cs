@@ -74,7 +74,8 @@ namespace RFM.Character
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
 
-                other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
+                // commented because RaiseEvent probably doesn't work when the object is disabled
+                //other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
             }
         }
 

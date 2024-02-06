@@ -28,6 +28,7 @@ namespace Climbing
     public class DetectionCharacterController : MonoBehaviour
     {
         public bool showDebug = true;
+        public bool isGroundStay;
 
         [Header("Layers")]
         public LayerMask ledgeLayer;
@@ -41,11 +42,23 @@ namespace Climbing
         [SerializeField] private float FindLedgeNumRays = 7;
         [SerializeField] private float DropLedgeNumRays = 8;
 
+
+        private void OnCollisionStay(Collision collision)
+        {
+            Debug.Log("Collision Stay" + collision.transform.name);
+            isGroundStay = true;
+        }
+
+        private void OnCollisionExit(Collision collision)
+        {
+            isGroundStay = false;
+        }
+
         public bool FindLedgeCollision(out RaycastHit hit)
         {
             Vector3 rayOrigin = transform.TransformDirection(OriginLedgeRay) + transform.position;
 
-            for(int i = 0; i < FindLedgeNumRays; i++)
+            for (int i = 0; i < FindLedgeNumRays; i++)
             {
                 bool ret = ThrowRayToLedge(rayOrigin + new Vector3(0, 0.15f * i, 0), out hit);
 
@@ -67,7 +80,7 @@ namespace Climbing
 
                 Debug.DrawLine(origin, transform.position - new Vector3(0, i * 0.15f, 0));
 
-                if(Physics.Raycast(origin, -transform.forward, out hit, 0.8f, ledgeLayer))
+                if (Physics.Raycast(origin, -transform.forward, out hit, 0.8f, ledgeLayer))
                 {
                     if (showDebug) //Normal
                     {
@@ -141,7 +154,7 @@ namespace Climbing
 
             if (!Physics.Raycast(origin1, direction, out hit, length) && !Physics.Raycast(origin2, direction, out hit, length)) //Check Forward
             {
-                Vector3 origin3 = origin + direction * 0.15f + new Vector3(0,0.5f,0);
+                Vector3 origin3 = origin + direction * 0.15f + new Vector3(0, 0.5f, 0);
 
                 if (showDebug)
                 {
@@ -171,7 +184,11 @@ namespace Climbing
             if (showDebug)
             {
                 Debug.DrawLine(origin, origin + transform.TransformDirection(direction) * length, Color.green);
+                //  Debug.dr(origin, origin + transform.TransformDirection(direction) * length, Color.green);
             }
+            Gizmos.DrawSphere(origin, 5);
+            // return Physics.SphereCast(origin, 5, Vector3.down, out hit, 10);
+
 
             return Physics.Raycast(origin, transform.TransformDirection(direction), out hit, length, climbLayer);
         }
@@ -205,13 +222,14 @@ namespace Climbing
             return Physics.Raycast(origin, direction, length);
         }
 
-        public bool IsGrounded(float stepHeight) {
+        public bool IsGrounded(float stepHeight)
+        {
             if (showDebug)
             {
                 Debug.DrawLine(transform.position + new Vector3(0, 0.5f, 0), transform.position + new Vector3(0, 0.5f, 0) + Vector3.down * 0.8f, Color.green);
             }
             RaycastHit hit;
-            return Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), Vector3.down, out hit, 0.7f);//0.2f
+            return Physics.Raycast(transform.position + new Vector3(0, 0.3f, 0), Vector3.down, out hit, 0.7f) || isGroundStay;//0.2f
         }
 
         public void FindAheadPoints(ref List<HandlePoints> list)

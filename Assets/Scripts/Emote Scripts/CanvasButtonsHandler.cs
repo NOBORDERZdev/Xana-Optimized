@@ -90,7 +90,7 @@ public class CanvasButtonsHandler : MonoBehaviour
         if (_inst != this)
             _inst = this;
     }
-    public void ToggleRFMSetLayoutPanel() 
+    public void ToggleRFMSetLayoutPanel()
     {
         EventsManager.onSetLayoutPanelActivate();
     }
@@ -102,7 +102,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     {
         slideAction?.Invoke(slide);
     }
-    public void RFMResetSprintButton() 
+    public void RFMResetSprintButton()
     {
         if (isSpiritInUse)
             OnSpiritButtonDown();
@@ -110,7 +110,7 @@ public class CanvasButtonsHandler : MonoBehaviour
         spiritFillImg.fillAmount = spirit / maxSpirit;
         spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
         joystickIssuesReference = gameObject.GetComponentInChildren<JoyStickIssue>();
-        if(joystickIssuesReference)
+        if (joystickIssuesReference)
             joystickIssuesReference.ResetJoyStick();
     }
     public void OnSpiritButtonDown()
@@ -162,13 +162,17 @@ public class CanvasButtonsHandler : MonoBehaviour
                 overlay.gameObject.SetActive(false);
             }
             spirit += Time.deltaTime;
+            if (spirit > maxSpirit)
+            {
+                spirit = maxSpirit;
+            }
             spiritFillImg.fillAmount = spirit / maxSpirit;
             spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
             yield return new WaitForUpdate();
         }
     }
 
-    public void ShowRFMButtons(bool visible) 
+    public void ShowRFMButtons(bool visible)
     {
         slideBtn.SetActive(visible);
         runBtn.SetActive(visible);
@@ -230,7 +234,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void EnableJJPortalPopup(GameObject obj, int indexForText)
     {
-        if(LoadingHandler.Instance != null)
+        if (LoadingHandler.Instance != null)
         {
             LoadingHandler.Instance.ResetLoadingValues();
         }

@@ -58,6 +58,10 @@ namespace Climbing
             {
                 animator.applyRootMotion = false;
             }
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Fall Idle"))
+            {
+                controller.onAir = true;
+            }
         }
 
         private void LateUpdate()

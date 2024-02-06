@@ -190,6 +190,7 @@ public class LoadingHandler : MonoBehaviour
     {
         if (/*WorldItemView.m_EnvName == "RFMDummy"*/RFM.Globals.IsRFMWorld)
         {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             loadingBgImage.sprite = rfmLoadingScreenSprite;
             loadingBgImageAlter.sprite = rfmLoadingScreenSprite;
             loadingPanelHelpScreen.SetActive(false);
