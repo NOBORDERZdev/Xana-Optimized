@@ -318,7 +318,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
                 if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
                 {
-                    _event.CreatorName = _WorldInfo.data.rows[i].user.name;
+                    _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
                     _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
                     _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
                     _event.UserLimit = "15";
@@ -326,9 +326,12 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 else
                 {
                     if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.name))
-                        _event.CreatorName = _WorldInfo.data.rows[i].user.name;
+                        _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
                     else
-                        _event.CreatorName = "XANA";
+                        _event.Creator_Name = "XANA";
+
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
+                        _event.Creator_Name = _WorldInfo.data.rows[i].creator;
                     
                 }
             }

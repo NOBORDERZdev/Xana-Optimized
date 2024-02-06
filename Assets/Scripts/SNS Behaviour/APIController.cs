@@ -471,6 +471,10 @@ public class APIController : MonoBehaviour
                     GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
                     //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
                     searchUserObj.GetComponent<FindFriendWithNameItem>().SetupDataHotUsers(hotUserRoot.data.rows[j].user, hotUserRoot.data.rows[j].am_i_following, hotUserRoot.data.rows[j].is_following_me, hotUserRoot.data.rows[j].is_close_friend);
+                    if (hotUserRoot.data.rows[j].user.userOccupiedAssets.Count > 0)
+                    {
+                        searchUserObj.GetComponent<FindFriendWithNameItem>()._userAvatarData = hotUserRoot.data.rows[j].user.userOccupiedAssets[0].json;
+                    }
                 }
             }
             if (hotUserRoot.data.rows.Count > 10 )
@@ -478,6 +482,7 @@ public class APIController : MonoBehaviour
                 GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.hotFriendContainer.transform);
             }
         }
+        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
 
 

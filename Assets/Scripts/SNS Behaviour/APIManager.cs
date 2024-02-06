@@ -510,12 +510,93 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+
+        //////////////////////Old Picture and video type feed fetching code
+        //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+        //{
+        //    www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+        //    www.SendWebRequest();
+        //    while (!www.isDone)
+        //    {
+        //        yield return null;
+        //    }
+
+        //    if (www.isNetworkError || www.isHttpError)
+        //    {
+        //        Debug.Log(www.error);
+        //        FeedUIController.Instance.ShowLoader(false);
+
+        //        switch (callingFrom)
+        //        {
+        //            case "OtherPlayerFeed":
+        //                if (OtherPlayerProfileData.Instance != null && pageNum == 1)
+        //                {
+        //                    OtherPlayerProfileData.Instance.RemoveAndCheckBackKey();
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        string data = www.downloadHandler.text;
+        //        //Debug.Log("IERequestGetFeedsByUserId success data" + data);
+        //        var settings = new JsonSerializerSettings
+        //        {
+        //            NullValueHandling = NullValueHandling.Ignore,
+        //            MissingMemberHandling = MissingMemberHandling.Ignore
+        //        };
+        //        AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
+        //        if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
+        //        {
+        //            //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
+        //            allFeedWithUserIdRoot.Data.Rows.Clear();
+
+        //            for (int i = 0; i < test.Data.Rows.Count; i++)
+        //            {
+        //                // myList.Where(p => p.Name == nameToExtract);
+        //                // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
+
+        //                if (!allFeedWithUserIdRoot.Data.Rows.Any(x => x.Id == test.Data.Rows[i].Id))
+        //                {
+        //                    allFeedWithUserIdRoot.Data.Rows.Add(test.Data.Rows[i]);
+        //                }
+        //                //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
+        //                //{
+        //                //}
+        //            }
+        //        }
+        //        else
+        //        {
+
+        //            allFeedWithUserIdRoot = test;
+        //        }
+        //        if (callingFrom == "OtherPlayerFeed")
+        //        {
+        //            allFeedWithUserIdRoot = test;
+        //        }
+        //        switch (callingFrom)
+        //        {
+        //            case "OtherPlayerFeed":
+        //                OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum);
+        //                break;
+        //            case "MyProfile":
+        //                MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}
+        //////////////////////New text post type feed fetching code
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             www.SendWebRequest();
-            while(!www.isDone)
+            while (!www.isDone)
             {
                 yield return null;
             }
@@ -540,26 +621,28 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                //Debug.Log("IERequestGetFeedsByUserId success data" + data);
+                Debug.Log("IERequestGetFeedsByUserId success data" + data);
+                Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
-                if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
+                //AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
+                FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
+                if (allTextPostFeedWithUserIdRoot.data.count > test.data.rows.Count)
                 {
                     //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
-                    allFeedWithUserIdRoot.Data.Rows.Clear();
-                    
-                    for (int i = 0; i < test.Data.Rows.Count; i++)
+                    allTextPostFeedWithUserIdRoot.data.rows.Clear();
+
+                    for (int i = 0; i < test.data.rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
                         // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
 
-                        if (!allFeedWithUserIdRoot.Data.Rows.Any(x => x.Id == test.Data.Rows[i].Id))
+                        if (!allTextPostFeedWithUserIdRoot.data.rows.Any(x => x.id == test.data.rows[i].id))
                         {
-                            allFeedWithUserIdRoot.Data.Rows.Add(test.Data.Rows[i]);
+                            allTextPostFeedWithUserIdRoot.data.rows.Add(test.data.rows[i]);
                         }
                         //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
                         //{
@@ -569,11 +652,11 @@ public class APIManager : MonoBehaviour
                 else
                 {
 
-                    allFeedWithUserIdRoot = test;
+                    allTextPostFeedWithUserIdRoot = test;
                 }
                 if (callingFrom == "OtherPlayerFeed")
                 {
-                    allFeedWithUserIdRoot = test;
+                    allTextPostFeedWithUserIdRoot = test;
                 }
                 switch (callingFrom)
                 {
@@ -2810,6 +2893,9 @@ public class APIManager : MonoBehaviour
     //public AllFeedRow userPostData = new AllFeedRow();
     [Header("Single User All Feed Data")]
     public AllFeedByUserIdRoot allFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    public AllTextPostByUserIdRoot allTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
+    //For Temp use
+    public FeedResponse allTextPostFeedWithUserIdRoot = new FeedResponse();
     public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
 
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
@@ -2969,6 +3055,7 @@ public class SingleUserProfileData
     public string avatar;
     public string[] tags;
     public SingleUserProfile userProfile;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3206,6 +3293,34 @@ public class AllFeedByUserIdRoot
     public string Msg;
 }
 
+[System.Serializable]
+public class AllTextPostByUserIdRoot
+{
+    public bool Success;
+    public AllTextPostByUserIdData Data;
+    public string Msg;
+}
+
+[System.Serializable]
+public class AllTextPostByUserIdData
+{
+    public int Count;
+    public List<AllTextPostByUserIdRow> Rows;
+}
+
+[System.Serializable]
+public class AllTextPostByUserIdRow
+{
+    public int Id;
+    public int user_id;
+    public string text_post;
+    public string text_mood;
+    public int like_count;
+    public DateTime CreatedAt;
+    public DateTime UpdatedAt;
+
+}
+
 /// <summary>
 /// All Following Classes
 /// </summary>
@@ -3268,6 +3383,22 @@ public class HotFeedUser
 /// /// <summary>
 /// All Following Classes
 /// </summary>
+/// 
+
+[System.Serializable]
+public class FollowerFollowingUserAvatarData
+{
+    public int id;
+    public string name;
+    public string thumbnail;
+    public SavingCharacterDataClass json;
+    public string description;
+    public bool isDeleted;
+    public int createdBy;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+}
+
 [System.Serializable]
 public class AllFollowing
 {
@@ -3290,6 +3421,7 @@ public class AllFollowingRow
     public DateTime createdAt;
     public DateTime updatedAt;
     public AllFollowing following;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3377,6 +3509,7 @@ public class AllFollower
     public string email;
     public string avatar;
     public AllUserWithFeedUserProfile userProfile;
+
 }
 
 [System.Serializable]
@@ -3389,6 +3522,7 @@ public class AllFollowersRows
     public DateTime createdAt;
     public DateTime updatedAt;
     public AllFollower follower;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3510,6 +3644,7 @@ public class SearchUserRow
     public bool am_i_following;
     public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
 }
 
 [System.Serializable]
