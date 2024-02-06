@@ -927,9 +927,9 @@ public class OtherPlayerProfileData : MonoBehaviour
     #region Get User Details API Integrate........
     public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1)
     {
-        print("User details here 1: " + singleUserProfileData1.userOccupiedAssets.Count);
+        //print("User details here 1: " + singleUserProfileData1.userOccupiedAssets.Count);
         singleUserProfileData = singleUserProfileData1;
-        print("User details here 2: " + singleUserProfileData.userOccupiedAssets.Count);
+        //print("User details here 2: " + singleUserProfileData.userOccupiedAssets.Count);
 
         CheckAndResetFeedClickOnUserProfile();//check for user and if new user then clear old data.......
 
