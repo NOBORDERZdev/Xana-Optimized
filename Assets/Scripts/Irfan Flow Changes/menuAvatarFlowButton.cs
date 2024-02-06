@@ -17,8 +17,11 @@ public class menuAvatarFlowButton : MonoBehaviour
  
     void OnClickMenuAvatarBtn()
     {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        /* comment out due to new avatar not having store for now
         GameManager.Instance.AvatarMenuBtnPressed();
         StoreManager.instance.SubmitUserDetailAPI();
+        */
     }
 
     public void StoreBtnController()
