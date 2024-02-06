@@ -57,6 +57,7 @@ MonoBehaviour:
     isVerified: 0
     isRegister: 0
     isDeleted: 0
+    tags: []
     userProfile:
       id: 0
       userId: 0
@@ -65,6 +66,7 @@ MonoBehaviour:
       country: 
       website: 
       bio: 
+      username: 
       isDeleted: 0
     followerCount: 0
     followingCount: 0
@@ -78,9 +80,21 @@ MonoBehaviour:
       Count: 0
       Rows: []
     Msg: 
+  currentPageAllTextPostFeedWithUserIdRoot:
+    success: 0
+    data:
+      count: 0
+      rows: []
+    msg: 
+  currentPageAllTextPostWithUserIdRoot:
+    Success: 0
+    Data:
+      Count: 0
+    Msg: 
   myProfileScreen: {fileID: 0}
   editProfileScreen: {fileID: 0}
   pickImageOptionScreen: {fileID: 0}
+  OtherPlayerdataObj: {fileID: 0}
   mainFullScreenContainer: {fileID: 0}
   mainProfileDetailPart: {fileID: 0}
   userPostPart: {fileID: 0}
@@ -114,7 +128,7 @@ MonoBehaviour:
   allTagContainer: {fileID: 0}
   allMovieContainer: {fileID: 0}
   allOwnedNFTContainer: {fileID: 0}
-  photoPrefab: {fileID: 2064129161553524108, guid: 61342266d0eb51f47b3d392baf239e06, type: 3}
+  photoPrefab: {fileID: 9094557258527362675, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
   photoPrefabInMyPostFeed: {fileID: 2064129161553524108, guid: 8ae45173fcb0aae43a354d77cbd01def, type: 3}
   NFTImagePrefab: {fileID: 2064129161553524108, guid: 31d695b4d223e5e43a8bcbf08fe3ca77, type: 3}
   createYourFirstPostMsgObj: {fileID: 0}
@@ -126,6 +140,7 @@ MonoBehaviour:
   defultProfileImage: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
   editProfileImage: {fileID: 0}
   editProfileNameAdvanceInputfield: {fileID: 0}
+  editProfileUniqueNameAdvanceInputfield: {fileID: 0}
   editProfileJobAdvanceInputfield: {fileID: 0}
   editProfileWebsiteAdvanceInputfield: {fileID: 0}
   editProfileBioInputfield: {fileID: 0}
@@ -133,9 +148,16 @@ MonoBehaviour:
   editProfilemainInfoPart: {fileID: 0}
   websiteErrorObj: {fileID: 0}
   nameErrorMessageObj: {fileID: 0}
+  uniqueNameErrorMessageObj: {fileID: 0}
   editProfileDoneButton: {fileID: 0}
   editProfileBioScreen: {fileID: 0}
   bioEditAdvanceInputField: {fileID: 0}
+  tags_row: {fileID: 0}
+  tags_row_obj: {fileID: 0}
+  tags_row_parent: {fileID: 0}
+  availableTagsAtServer: []
+  userSelectedTags: []
+  dropDownBtn: {fileID: 0}
   profileMainScrollRectFasterEx: {fileID: 0}
   isFeedLoaded: 0
   profileFeedAPiCurrentPageIndex: 1
@@ -144,6 +166,7 @@ MonoBehaviour:
   loadedMyPostAndVideoId: 
   loadedMyPostAndVideoIdInFeedPage: 
   NFTDataLoaded: 0
+  TestingJasonForTags: 
   checkEditNameUpdated: 0
   checkEditInfoUpdated: 0
   setImageAvatarTempPath: 
@@ -165,6 +188,7 @@ MonoBehaviour:
       isVerified: 0
       isRegister: 0
       isDeleted: 0
+      tags: []
       userProfile:
         id: 0
         userId: 0
@@ -173,6 +197,7 @@ MonoBehaviour:
         country: 
         website: 
         bio: 
+        username: 
         isDeleted: 0
       followerCount: 0
       followingCount: 0

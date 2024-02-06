@@ -14,6 +14,7 @@ public class ProfileUIHandler : MonoBehaviour
     public GameObject TagPrefab;
     public Button followerBtn;
     public Button followingBtn;
+    public GameObject editProfileBtn;
 
     [Space]
     [Header("User Avatar Preview Objects")]
@@ -91,9 +92,14 @@ public class ProfileUIHandler : MonoBehaviour
     {
         if (AvatarRef)
         {
-            _tempAvatarData = _userAvatarData;
-            AvatarRef.GetComponent<FriendAvatarController>().IntializeAvatar(_userAvatarData);
+                _tempAvatarData = _userAvatarData;
+                AvatarRef.GetComponent<FriendAvatarController>().IntializeAvatar(_userAvatarData);
         }
+    }
+
+    public void SetUserAvatarDefaultClothing()
+    {
+        AvatarRef.GetComponent<FriendAvatarController>().SetAvatarClothDefault(AvatarRef);
     }
 
     public void SetMainScrolRefs()

@@ -19,7 +19,7 @@ public class FeedData : MonoBehaviour
    [SerializeField] Sprite UnLikedHeart;
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
-    FeedResponseRow _data;
+    public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;

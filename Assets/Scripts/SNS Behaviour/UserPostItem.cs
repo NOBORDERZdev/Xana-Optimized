@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class UserPostItem : MonoBehaviour
 {
     public AllFeedByUserIdRow userData;
+    public AllTextPostByUserIdRow userTextPostData;
     public TaggedFeedsByUserIdRow tagUserData;
     public FeedsByFollowingUser feedUserData;
     //public AllFeedByUserIdData userPostData;
@@ -58,7 +59,7 @@ public class UserPostItem : MonoBehaviour
             RePlayVideoAfterEnable();
         }
         cnt += 1;
-        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
+        //GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
 
     private void Update()//delete image after object out of screen
@@ -72,7 +73,7 @@ public class UserPostItem : MonoBehaviour
         {
             return;
         }
-
+        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
         lastUpdateCallTime += Time.deltaTime;
         if (lastUpdateCallTime > 0.3f )//call every 0.4 sec
         {

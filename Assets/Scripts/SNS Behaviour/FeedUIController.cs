@@ -563,6 +563,18 @@ public class FeedUIController : MonoBehaviour
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         //Other player avatar initialization required here
+            if (OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets != null 
+                && OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets.Count > 0)
+            {
+            print("user occupied assets data here: " + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+            }
+            else
+            {
+            print("wearing default clothing here");
+                ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+            }
+
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
             switch (OtherPlayerProfileData.Instance.backKeyManageList[OtherPlayerProfileData.Instance.backKeyManageList.Count - 1])
