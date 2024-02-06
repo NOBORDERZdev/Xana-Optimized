@@ -26,6 +26,8 @@ public class FindFriendWithNameItem : MonoBehaviour
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
     public bool IsInFollowingTab;
+
+    public SavingCharacterDataClass _userAvatarData;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -141,7 +143,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
-       Debug.Log("Search User id:" + searchUserRow.id);
+        Debug.Log("Search User id:" + searchUserRow.id);
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -175,6 +177,9 @@ public class FindFriendWithNameItem : MonoBehaviour
         singleUserProfileData.followingCount = searchUserRow.followingCount;
         singleUserProfileData.feedCount = searchUserRow.feedCount;
         singleUserProfileData.isFollowing = searchUserRow.is_following_me;
+        singleUserProfileData.userOccupiedAssets = searchUserRow.userOccupiedAssets;
+        print("searchUserRow occupied asstes count: " + searchUserRow.userOccupiedAssets.Count);
+        print("singleUserProfileData occupied asstes count: " + singleUserProfileData.userOccupiedAssets.Count);
 
         SingleUserProfile singleUserProfile = new SingleUserProfile();
         singleUserProfileData.userProfile = singleUserProfile;

@@ -77,7 +77,8 @@ public class ScrollRectGiftScreen : MonoBehaviour
     void Start()
     {
         // SetHeightWidth();
-        StartScrollSnap();
+        //Coomented for now as profile scroll not working properly---------UMER
+        //StartScrollSnap();
 
     }
     //public void SetHeightWidth()
@@ -132,7 +133,8 @@ public class ScrollRectGiftScreen : MonoBehaviour
     void Update()
     {
         // if moving to target position
-        if (_lerp)
+        //Falsed for now as profile scroll not working properly---------UMER
+        if (/*_lerp*/false)
         {
             // prevent overshooting with values greater than 1
             float decelerate = Mathf.Min(decelerationRate * Time.deltaTime, 1f);

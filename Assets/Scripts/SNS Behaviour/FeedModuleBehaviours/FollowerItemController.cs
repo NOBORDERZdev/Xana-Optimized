@@ -89,6 +89,16 @@ public class FollowerItemController : MonoBehaviour
         OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        //Other player avatar initialization required here
+        if (followerRawData.userOccupiedAssets.Count > 0)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(followerRawData.userOccupiedAssets[0].json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed",false))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
