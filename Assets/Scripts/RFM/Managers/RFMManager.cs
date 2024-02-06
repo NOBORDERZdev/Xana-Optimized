@@ -612,7 +612,10 @@ namespace RFM.Managers
                 //GameplayTimeOver();
             }
 
-            var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
+
+            // I did this fix in my branch and you did it in your branch. So I have commented out mine.
+
+            /*var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
             var huntersCount = 0;
 
             for (int i = 0; i < hunters.Length; i++)
@@ -629,7 +632,7 @@ namespace RFM.Managers
                 Debug.Log($"All hunters have left the game. Triggering winning condition for runners.");
                 Timer timerToSet = UnityEngine.Object.FindObjectOfType<Timer>();
                 timerToSet.FinishGameOnHuntersLeft();
-            }
+            }*/
         }
 
 
