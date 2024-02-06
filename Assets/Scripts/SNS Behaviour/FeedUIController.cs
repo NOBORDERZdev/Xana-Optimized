@@ -553,7 +553,7 @@ public class FeedUIController : MonoBehaviour
         Initiate.Fade("Main", Color.black, 1.0f);
     }
 
-    public void OnClickCheckOtherPlayerProfile()
+    public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
     {
         //otherPlayerProfileScreen.SetActive(true);
         OtherPlayerProfileData.Instance.gameObject.SetActive(true);
@@ -563,17 +563,20 @@ public class FeedUIController : MonoBehaviour
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         //Other player avatar initialization required here
-            if (OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets != null 
-                && OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets.Count > 0)
+
+        if (_callFromFindFriendWithName)
+        {
+            if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
             {
-            print("user occupied assets data here: " + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
-                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+                //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
             }
             else
             {
-            print("wearing default clothing here");
+                //print("wearing default clothing here");
                 ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
             }
+        }
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {

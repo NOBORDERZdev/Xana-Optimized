@@ -16,6 +16,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public static OtherPlayerProfileData Instance;
 
     public SingleUserProfileData singleUserProfileData;
+    public SingleUserProfileData visitedUserProfileAssetsData;
 
     public AllUserWithFeedRow FeedRawData;
 
@@ -493,7 +494,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
 
     public List<int> loadedMyPostAndVideoId = new List<int>();
-    public void AllFeedWithUserId(int pageNumb)
+    public void AllFeedWithUserId(int pageNumb, bool _callFromFindFriendWithName = false)
     {
         //Old photo and video type feed displaying implimentation
         //        /*foreach (Transform item in userPostParent)
@@ -570,7 +571,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         //FeedUIController.Instance.ShowLoader(false);
 
-        FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
+        FeedUIController.Instance.OnClickCheckOtherPlayerProfile(_callFromFindFriendWithName);
 
         for (int i = 0; i < currentPageAllTextPostFeedWithUserIdRoot.data.rows.Count; i++)
         {
@@ -925,12 +926,10 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
 
     #region Get User Details API Integrate........
-    public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1)
+    public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1, bool _callFromFindFriendWithName = false)
     {
-        //print("User details here 1: " + singleUserProfileData1.userOccupiedAssets.Count);
         singleUserProfileData = singleUserProfileData1;
-        //print("User details here 2: " + singleUserProfileData.userOccupiedAssets.Count);
-
+        visitedUserProfileAssetsData = singleUserProfileData1;
         CheckAndResetFeedClickOnUserProfile();//check for user and if new user then clear old data.......
 
         LoadUserData(true);
@@ -939,7 +938,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
-        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 30, "OtherPlayerFeed");
+        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 30, "OtherPlayerFeed", _callFromFindFriendWithName);
         RequestGetOtherUserRole(singleUserProfileData1.id);
     }
 
