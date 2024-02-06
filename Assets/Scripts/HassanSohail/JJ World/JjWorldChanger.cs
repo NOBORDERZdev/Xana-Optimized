@@ -194,11 +194,12 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem(worldName, true))
         {
-
+            Debug.Log("Upgrade Premium feature = false");
             return false;
         }
         else
         {
+            Debug.Log("Upgrade Premium feature = true");
             return true;
         }
     }

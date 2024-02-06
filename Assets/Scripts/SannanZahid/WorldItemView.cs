@@ -22,29 +22,61 @@ public class WorldItemView : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    private bool justOnetime = false;
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount = 0)
     {
-        if (PreviewLogo)
-            PreviewLogo.gameObject.SetActive(true);
-        Index = index;
-        GridIndex = gridPos;
-        idOfObject = detail.IdOfWorld;
-        m_EnvironmentName = detail.EnvironmentName;
-        m_WorldDescription = detail.WorldDescription;
-        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-        creatorName = detail.CreatorName;
-        createdAt = detail.CreatedAt;
-        userLimit = detail.UserLimit;
-        userAvatarURL = detail.UserAvatarURL;
-        updatedAt = detail.UpdatedAt;
-        entityType = detail.EntityType;
-        m_BannerLink = detail.BannerLink;
-        m_PressedIndex = detail.PressedIndex;
-        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
-        worldTags = detail.WorldTags;
-        Creator_Name = detail.Creator_Name;
-        CreatorAvatarURL = detail.CreatorAvatarURL;
-        CreatorDescription = detail.CreatorDescription;
+
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY
+           && APIBaseUrlChange.instance.IsXanaLive)
+        {
+            if (justOnetime) return;
+            justOnetime = true;
+            creatorName = "JJ Creator";
+            Index = 2;
+            GridIndex = gridPos;
+            idOfObject = "3154";
+            m_EnvironmentName = "PMY ACADEMY";
+            m_WorldDescription = "This space is an “inquiry learning” metaverse program that allows students to learn from a free perspective through initiatives from various companies that address SDG thinking and social issues.";
+            //m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+            creatorName = "J&J Bussiness Creation";
+            createdAt = "24-01-01T13:41:11.026Z";
+            userLimit = "15";
+            //userAvatarURL = detail.UserAvatarURL;
+            updatedAt = "24-01-01T13:41:11.026Z";
+            entityType = "ENVIRONMENT";
+            //m_BannerLink = detail.BannerLink;
+            //m_PressedIndex = detail.PressedIndex;
+            //ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+            //worldTags = detail.WorldTags;
+            //Creator_Name = detail.Creator_Name;
+            //CreatorAvatarURL = detail.CreatorAvatarURL;
+            //CreatorDescription = detail.CreatorDescription;
+        }
+        else
+        {
+            if (PreviewLogo)
+                PreviewLogo.gameObject.SetActive(true);
+            Index = index;
+            GridIndex = gridPos;
+            idOfObject = detail.IdOfWorld;
+            m_EnvironmentName = detail.EnvironmentName;
+            m_WorldDescription = detail.WorldDescription;
+            m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+            creatorName = detail.CreatorName;
+            createdAt = detail.CreatedAt;
+            userLimit = detail.UserLimit;
+            userAvatarURL = detail.UserAvatarURL;
+            updatedAt = detail.UpdatedAt;
+            entityType = detail.EntityType;
+            m_BannerLink = detail.BannerLink;
+            m_PressedIndex = detail.PressedIndex;
+            ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+            worldTags = detail.WorldTags;
+            Creator_Name = detail.Creator_Name;
+            CreatorAvatarURL = detail.CreatorAvatarURL;
+            CreatorDescription = detail.CreatorDescription;
+        }
         Init(index, _loopcount);
     }
 
@@ -111,6 +143,7 @@ public class WorldItemView : MonoBehaviour
         {
             if (m_EnvironmentName == "PMY ACADEMY")
             {
+                Debug.Log("Env Name: " + m_EnvironmentName);
                 worldItemPreview.classCodeInputField.Text = "";
                 worldItemPreview.enterClassCodePanel.SetActive(true);
                 UIManager.Instance._SplashScreen.SetActive(false);
