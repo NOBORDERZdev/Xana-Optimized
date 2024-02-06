@@ -77,6 +77,11 @@ public class CharcterBodyParts : MonoBehaviour
 
     AvatarController avatarController;
 
+    public GameObject[] maleAvatarMeshes;
+    public GameObject[] femaleAvatarMeshes;
+
+    public enum AvatarGender { Male, Female };
+    public AvatarGender avatarGender;
     private void Awake()
     {
         instance = this;
@@ -129,6 +134,27 @@ public class CharcterBodyParts : MonoBehaviour
         characterBodyMat = Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0];
     }
 
+
+    public void SetAvatarByGender(string _gender)
+    {
+
+        if (_gender == "Male")
+        {
+            avatarGender = AvatarGender.Male;
+            foreach (GameObject obj in maleAvatarMeshes)
+                obj.SetActive(true);
+            foreach (GameObject obj in femaleAvatarMeshes)
+                obj.SetActive(false);
+        }
+        else if (_gender == "Female")
+        {
+            avatarGender = AvatarGender.Female;
+            foreach (GameObject obj in maleAvatarMeshes)
+                obj.SetActive(false);
+            foreach (GameObject obj in femaleAvatarMeshes)
+                obj.SetActive(true);
+        }
+    }
 
     //Set Texture For Shirt
     public void TextureForShirt(Texture texture)

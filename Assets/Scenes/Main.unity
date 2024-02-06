@@ -303,7 +303,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7195881398598916481}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7010824
 PrefabInstance:
@@ -8234,6 +8234,7 @@ MonoBehaviour:
   SaveItemList:
     id: 
     name: 
+    gender: 
     thumbnail: 
     myItemObj: []
     SavedBones: []
@@ -12098,7 +12099,7 @@ RectTransform:
   m_Children:
   - {fileID: 798694254}
   m_Father: {fileID: 106914947}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -15183,6 +15184,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+--- !u!1 &374503753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -676550142019228866, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 374503752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &374503754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2917958921677600101, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 374503752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &374503755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2477160393199835660, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 374503752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &374503756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2550410412981069290, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+  m_PrefabInstance: {fileID: 374503752}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &377244765
 GameObject:
   m_ObjectHideFlags: 0
@@ -17201,7 +17222,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 106914947}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466728311
 GameObject:
@@ -20959,7 +20980,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 106914947}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &671338303
 GameObject:
@@ -28182,7 +28203,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7195881398598916481}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1009227460
 PrefabInstance:
@@ -30668,7 +30689,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 106914947}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1120139488
 PrefabInstance:
@@ -35131,6 +35152,7 @@ MonoBehaviour:
   _PCharacterData:
     id: 
     name: 
+    gender: 
     thumbnail: 
     myItemObj: []
     SavedBones: []
@@ -35960,6 +35982,13 @@ MonoBehaviour:
   defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 0}
+  maleAvatarMeshes:
+  - {fileID: 374503753}
+  - {fileID: 374503754}
+  femaleAvatarMeshes:
+  - {fileID: 374503756}
+  - {fileID: 374503755}
+  avatarGender: 0
 --- !u!114 &1303355051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42310,7 +42339,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7195881398598916481}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1565411577
 GameObject:
@@ -56687,6 +56716,7 @@ MonoBehaviour:
   _PCharacterData:
     id: 
     name: 
+    gender: 
     thumbnail: 
     myItemObj: []
     SavedBones: []
@@ -57352,6 +57382,9 @@ MonoBehaviour:
   defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 0}
+  maleAvatarMeshes: []
+  femaleAvatarMeshes: []
+  avatarGender: 0
 --- !u!114 &98365739056566247
 MonoBehaviour:
   m_ObjectHideFlags: 0

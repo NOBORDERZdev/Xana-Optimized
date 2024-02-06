@@ -212,6 +212,7 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _CharacterData.id = SaveItemList.id;
             _CharacterData.name = SaveItemList.name;
+            _CharacterData.gender = SaveItemList.gender;
             _CharacterData.thumbnail = SaveItemList.thumbnail;
             _CharacterData.myItemObj = SaveItemList.myItemObj;
             _CharacterData.PresetValue = SaveItemList.PresetValue;
@@ -337,6 +338,7 @@ public class SavingCharacterDataClass
 {
     public string id;
     public string name;
+    public string gender;
     public string thumbnail;
     public List<Item> myItemObj;
 

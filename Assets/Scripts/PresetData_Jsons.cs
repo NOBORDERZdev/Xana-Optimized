@@ -24,6 +24,8 @@ public class PresetData_Jsons : MonoBehaviour
     AvatarController avatarController;
     CharcterBodyParts charcterBodyParts;
 
+    public string avatarGender;
+
     private void OnEnable()
     {
         StartCoroutine(RegisterForUndoRedo());
@@ -143,6 +145,9 @@ public class PresetData_Jsons : MonoBehaviour
 
             XanaConstants.xanaConstants.bodyNumber = 0;
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
+
+
+            CharcterBodyParts.instance.SetAvatarByGender(_CharacterData.gender);
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
