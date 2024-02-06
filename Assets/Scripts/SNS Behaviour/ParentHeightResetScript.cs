@@ -30,7 +30,7 @@ public class ParentHeightResetScript : MonoBehaviour
 
     public void OnEnable()
     {
-        StartCoroutine(SetFirstTabPos());
+        //StartCoroutine(SetFirstTabPos());
     }
 
     public IEnumerator SetFirstTabPos()

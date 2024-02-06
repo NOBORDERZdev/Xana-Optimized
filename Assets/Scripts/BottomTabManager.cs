@@ -653,7 +653,7 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
+            //GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
             if (OtherPlayerProfileData.Instance)
             {
                 OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
@@ -664,6 +664,8 @@ public class BottomTabManager : MonoBehaviour
             }
             ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
             ProfileUIHandler.instance.SetMainScrolRefs();
+            ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
+            ProfileUIHandler.instance.editProfileBtn.SetActive(true);
         }
 
         //home page thumnbail images destroy

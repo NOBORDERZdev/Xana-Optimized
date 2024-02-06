@@ -377,7 +377,7 @@ public class FeedResponse
 [System.Serializable]
 public class FeedResponseData
 {
-    public bool count;
+    public int count;
     public List<FeedResponseRow> rows;
 }
 

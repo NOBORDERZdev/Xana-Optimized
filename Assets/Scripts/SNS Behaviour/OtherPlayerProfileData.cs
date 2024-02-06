@@ -20,9 +20,16 @@ public class OtherPlayerProfileData : MonoBehaviour
     public AllUserWithFeedRow FeedRawData;
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
+    public List<AllTextPostByUserIdRow> allMyTextPostRootDataList = new List<AllTextPostByUserIdRow>();//image feed list
+    //For Temp use needs to be deleted later 
+    public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
 
     public AllFeedByUserIdRoot currentPageAllFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    public AllTextPostByUserIdRoot currentPageAllTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
+    //Used temp need to to delete later
+    public FeedResponse currentPageAllTextPostFeedWithUserIdRoot = new FeedResponse();
+
 
     public int lastUserId;
     public bool lastUserIsFollowFollowing;
@@ -187,6 +194,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             ProfileUIHandler.instance.followerBtn.interactable = false;
             ProfileUIHandler.instance.followingBtn.interactable = false;
+            ProfileUIHandler.instance.editProfileBtn.SetActive(false);
         }
 
         Debug.Log("Other user profile load data");
@@ -487,6 +495,69 @@ public class OtherPlayerProfileData : MonoBehaviour
     public List<int> loadedMyPostAndVideoId = new List<int>();
     public void AllFeedWithUserId(int pageNumb)
     {
+        //Old photo and video type feed displaying implimentation
+        //        /*foreach (Transform item in userPostParent)
+        //{
+        //    Destroy(item.gameObject);
+        //}
+        //foreach (Transform item in allMovieContainer)
+        //{
+        //    Destroy(item.gameObject);
+        //}*/
+        //        currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
+
+        //        //FeedUIController.Instance.ShowLoader(false);
+
+        //        FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
+
+        //        for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
+        //        {
+        //            if (!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+        //            {
+        //                bool isVideo = false;
+
+        //                Transform parent = userPostParent;
+        //                if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Image))
+        //                {
+        //                    parent = userPostParent;
+        //                }
+        //                //else if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.Data.Rows[i].Video))
+        //                //{
+        //                //    isVideo = true;
+        //                //    parent = allMovieContainer;
+        //                //}
+
+        //                //GameObject userTagPostObject = Instantiate(userPostPrefab, userPostParent);
+        //                GameObject userTagPostObject = Instantiate(userPostPrefab, parent);
+        //                UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
+        //                userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
+
+        //                FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+        //                feedUserData.Id = singleUserProfileData.id;
+        //                feedUserData.Name = singleUserProfileData.name;
+        //                feedUserData.Email = singleUserProfileData.email;
+        //                feedUserData.Avatar = singleUserProfileData.avatar;
+        //                userPostItem.feedUserData = feedUserData;
+
+        //                userPostItem.avtarUrl = singleUserProfileData.avatar;
+        //                userPostItem.LoadFeed();
+
+        //                loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+
+        //                if (!isVideo)//image
+        //                {
+        //                    allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+        //                }
+        //                else
+        //                {
+        //                    allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+        //                }
+        //            }
+        //        }
+
+        //        StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
+
+        //New user text post displaying implimentation
         /*foreach (Transform item in userPostParent)
         {
             Destroy(item.gameObject);
@@ -495,61 +566,66 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             Destroy(item.gameObject);
         }*/
-        currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
+        currentPageAllTextPostFeedWithUserIdRoot = APIManager.Instance.allTextPostFeedWithUserIdRoot;
 
         //FeedUIController.Instance.ShowLoader(false);
 
         FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
 
-        for (int i = 0; i < currentPageAllFeedWithUserIdRoot.Data.Rows.Count; i++)
+        for (int i = 0; i < currentPageAllTextPostFeedWithUserIdRoot.data.rows.Count; i++)
         {
-            if (!loadedMyPostAndVideoId.Contains(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+            if (singleUserProfileData.id == currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].user_id)
             {
-                bool isVideo = false;
-
-                Transform parent = userPostParent;
-                if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Image))
+                if (!loadedMyPostAndVideoId.Contains(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].id))
                 {
-                    parent = userPostParent;
-                }
-                else if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
-                {
-                    isVideo = true;
-                    parent = allMovieContainer;
-                }
+                    bool isVideo = false;
 
-                //GameObject userTagPostObject = Instantiate(userPostPrefab, userPostParent);
-                GameObject userTagPostObject = Instantiate(userPostPrefab, parent);
-                UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
-                userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
+                    Transform parent = userPostParent;
+                    if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].text_post))
+                    {
+                        parent = userPostParent;
+                    }
+                    //else if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.Data.Rows[i].Video))
+                    //{
+                    //    isVideo = true;
+                    //    parent = allMovieContainer;
+                    //}
 
-                FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
-                feedUserData.Id = singleUserProfileData.id;
-                feedUserData.Name = singleUserProfileData.name;
-                feedUserData.Email = singleUserProfileData.email;
-                feedUserData.Avatar = singleUserProfileData.avatar;
-                userPostItem.feedUserData = feedUserData;
+                    //GameObject userTagPostObject = Instantiate(userPostPrefab, userPostParent);
+                    GameObject userTagPostObject = Instantiate(MyProfileDataManager.Instance.photoPrefab, parent);
+                    //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
+                    FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
+                    userPostItem.SetFeedPrefab(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i], false);
+                    //userPostItem.userTextPostData = currentPageAllTextPostWithUserIdRoot.Data.Rows[i];
 
-                userPostItem.avtarUrl = singleUserProfileData.avatar;
-                userPostItem.LoadFeed();
+                    //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+                    //feedUserData.Id = singleUserProfileData.id;
+                    //feedUserData.Name = singleUserProfileData.name;
+                    //feedUserData.Email = singleUserProfileData.email;
+                    //feedUserData.Avatar = singleUserProfileData.avatar;
+                    //userPostItem.feedUserData = feedUserData;
 
-                loadedMyPostAndVideoId.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id);
+                    //userPostItem.avtarUrl = singleUserProfileData.avatar;
+                    //userPostItem.LoadFeed();
 
-                if (!isVideo)//image
-                {
-                    allMyFeedImageRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                }
-                else
-                {
-                    allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+                    loadedMyPostAndVideoId.Add(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].id);
+
+                    //if (!isVideo)//image
+                    //{
+                    allMyTextPostFeedInFeedPageRootDataList.Add(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i]);
+                    //}
+                    //else
+                    //{
+                    //    allMyFeedVideoRootDataList.Add(currentPageAllTextPostWithUserIdRoot.Data.Rows[i]);
+                    //}
                 }
             }
+
+            StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
+        }
         }
 
-        StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
-    }
-
-    IEnumerator WaitToFeedLoadedUpdate(int pageNum)
+        IEnumerator WaitToFeedLoadedUpdate(int pageNum)
     {
         yield return new WaitForSeconds(0.1f);
         //userPostMainPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
@@ -563,7 +639,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
 
         isFeedLoaded = true;
-        if (pageNum > 1 && currentPageAllFeedWithUserIdRoot.Data.Rows.Count > 0)
+        if (pageNum > 1 && currentPageAllTextPostFeedWithUserIdRoot.data.rows.Count > 0)
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
@@ -851,7 +927,9 @@ public class OtherPlayerProfileData : MonoBehaviour
     #region Get User Details API Integrate........
     public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1)
     {
+        //print("User details here 1: " + singleUserProfileData1.userOccupiedAssets.Count);
         singleUserProfileData = singleUserProfileData1;
+        //print("User details here 2: " + singleUserProfileData.userOccupiedAssets.Count);
 
         CheckAndResetFeedClickOnUserProfile();//check for user and if new user then clear old data.......
 
