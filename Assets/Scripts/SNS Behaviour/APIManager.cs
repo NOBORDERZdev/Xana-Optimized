@@ -3308,6 +3308,7 @@ public class AllTextPostByUserIdData
     public List<AllTextPostByUserIdRow> Rows;
 }
 
+[System.Serializable]
 public class AllTextPostByUserIdRow
 {
     public int Id;
