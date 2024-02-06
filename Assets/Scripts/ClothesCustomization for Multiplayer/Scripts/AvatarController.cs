@@ -1299,7 +1299,7 @@ public class AvatarController : MonoBehaviour
                 {
                     GetComponent<FriendAvatarController>().wornShirt = item;
                     GetComponent<FriendAvatarController>().wornShirtId = itemId;
-                    GetComponent<FriendAvatarController>().wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                    //GetComponent<FriendAvatarController>().wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 }
                 break;
             case "Legs":
@@ -1310,7 +1310,7 @@ public class AvatarController : MonoBehaviour
                 {
                     GetComponent<FriendAvatarController>().wornPant = item;
                     GetComponent<FriendAvatarController>().wornPantId = itemId;
-                    GetComponent<FriendAvatarController>().wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                    //GetComponent<FriendAvatarController>().wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 }
                 break;
             case "Hair":
@@ -1330,7 +1330,7 @@ public class AvatarController : MonoBehaviour
                 {
                     GetComponent<FriendAvatarController>().wornShose = item;
                     GetComponent<FriendAvatarController>().wornShoesId = itemId;
-                    GetComponent<FriendAvatarController>().wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
+                    //GetComponent<FriendAvatarController>().wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 }
                 break;
             case "EyeWearable":
