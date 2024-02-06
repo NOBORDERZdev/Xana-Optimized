@@ -598,6 +598,7 @@ namespace RFM.Managers
                 }
             }
 
+            Debug.LogError("CheckForGameOverCondition runners count: " + runnersCount);
             if (runnersCount == 0)
             {
                 //if (PhotonNetwork.IsMasterClient)
@@ -610,6 +611,28 @@ namespace RFM.Managers
                 //Timer.StopAllTimers();
                 //GameplayTimeOver();
             }
+
+
+            // I did this fix in my branch and you did it in your branch. So I have commented out mine.
+
+            /*var hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
+            var huntersCount = 0;
+
+            for (int i = 0; i < hunters.Length; i++)
+            {
+                if (hunters[i].enabled)
+                {
+                    huntersCount++;
+                }
+            }
+
+            Debug.LogError("CheckForGameOverCondition hunters count: " + huntersCount);
+            if (huntersCount == 0)
+            {
+                Debug.Log($"All hunters have left the game. Triggering winning condition for runners.");
+                Timer timerToSet = UnityEngine.Object.FindObjectOfType<Timer>();
+                timerToSet.FinishGameOnHuntersLeft();
+            }*/
         }
 
 
