@@ -143,7 +143,11 @@ public class FeedController : MonoBehaviour
                     FeedAPIData.InsertRange(0,tempData);
                     //scrollerController._data.InsertRange(0,tempData);
                     AddDataToTopScroller(tempData);
-            }
+                }
+                else
+                {
+                    noFeedsScreen.gameObject.SetActive(true);
+                }
             }
         }
         catch (System.Exception ex)
