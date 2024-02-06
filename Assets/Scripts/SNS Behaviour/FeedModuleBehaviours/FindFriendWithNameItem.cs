@@ -232,8 +232,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.website = searchUserRow.userProfile.website;
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
-
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
     }
 
     public void FollowFollowingSetUp(bool isFollowing)
