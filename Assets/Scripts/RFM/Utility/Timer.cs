@@ -135,6 +135,13 @@ namespace RFM
             }
         }
 
+        public void FinishGameOnHuntersLeft()
+        {
+            _finished = true;
+            _running = false;
+            _onFinishedCallback?.Invoke();
+        }
+
 
         private void Run()
         {

@@ -9,7 +9,6 @@ namespace RFM.Character
 {
     public class NPCRunner : Runner
     {
-        public float timeSurvived;
 
         [SerializeField] private Animator animator;
         [SerializeField] private string velocityNameX, velocityNameY;
@@ -242,10 +241,10 @@ namespace RFM.Character
                                 var hunterPV = PhotonView.Find(hunterViewID);
                                 if (hunterPV != null)
                                 {
-                                    if (hunterPV.TryGetComponent(out PlayerHunter _))
+                                    if (hunterPV.TryGetComponent(out PlayerHunter _playerHunter))
                                     {
                                         var oldValue = 0;
-                                        if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                                        /*if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
                                         {
                                             oldValue = (int)hunterPV.Owner.CustomProperties["rewardMultiplier"];
                                         }
@@ -253,8 +252,10 @@ namespace RFM.Character
                                         {
                                             hunterPV.Owner.SetCustomProperties(
                                                 new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", 0 } });
-                                        }
+                                        }*/
 
+                                        oldValue = _playerHunter.RewardMultiplier;
+                                        _playerHunter.RewardMultiplier = oldValue + 1;
                                         hunterPV.Owner.SetCustomProperties(
                                             new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue + 1 } }, // to be set
                                             new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", oldValue } } // expected value

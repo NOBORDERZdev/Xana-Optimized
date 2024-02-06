@@ -6,6 +6,7 @@ namespace RFM.Character
     public abstract class Runner : MonoBehaviour, IPunObservable
     {
         public int money;
+        public float timeSurvived;
         public string nickName = "Player";
         internal int participationAmount = 100;
 

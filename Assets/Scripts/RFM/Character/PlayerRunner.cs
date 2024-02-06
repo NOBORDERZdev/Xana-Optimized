@@ -1,6 +1,7 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RFM.Character
 {
@@ -10,8 +11,7 @@ namespace RFM.Character
         private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
 
         public GameObject playerBody;
-        [HideInInspector] public float timeSurvived;
-        [HideInInspector] public int Money = 0;
+        //[HideInInspector] public int Money = 0;
         private bool gainingMoney = false;
         private float timeElapsed = 0f;
 
@@ -61,7 +61,8 @@ namespace RFM.Character
             _showMoney = RFM.Managers.RFMUIManager.Instance.showMoney;
             _moneyScaleShaker = _showMoney.gameObject.GetComponent<MoreMountains.Feedbacks.MMScaleShaker>();
             _showMoney.text = "00";
-            Money = 0;
+            //Money = 0;
+            money = 0;
             _showMoney.gameObject.SetActive(true);
 
             gainingMoney = true;
@@ -76,7 +77,7 @@ namespace RFM.Character
             gainingMoney = false;
             //CancelInvoke(nameof(AddMoney));
 
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             PhotonNetwork.Destroy(transform.root.gameObject);
@@ -84,9 +85,9 @@ namespace RFM.Character
 
         private void AddMoney()
         {
-            Money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
+            money += RFM.Managers.RFMManager.CurrentGameConfiguration.MoneyPerInterval;
             timeSurvived += RFM.Managers.RFMManager.CurrentGameConfiguration.GainingMoneyTimeInterval;
-            _showMoney.text = Money.ToString("F0") + "";
+            _showMoney.text = money.ToString("F0") + "";
             _moneyScaleShaker.Play();
         }
 
@@ -95,7 +96,7 @@ namespace RFM.Character
         {
             gainingMoney = false;
             //CancelInvoke(nameof(AddMoney));
-            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", Money } });
+            PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "money", money } });
             PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { "timeSurvived", timeSurvived } });
 
             // Find the hunter that caught this runner and increment their reward multiplier.
@@ -104,27 +105,30 @@ namespace RFM.Character
             {
                 if (hunterPV.TryGetComponent(out NPCHunter hunter))
                 {
-
                     var oldValue = 0;
-                    if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(hunter.nickName + "rewardMultiplier"))
-                    {
-                        oldValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[hunter.nickName + "rewardMultiplier"];
-                    }
-                    else
-                    {
-                        PhotonNetwork.CurrentRoom.SetCustomProperties(
-                            new ExitGames.Client.Photon.Hashtable { { hunter.nickName + "rewardMultiplier", 0 } });
-                    }
+                    /* if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(hunter.nickName + "rewardMultiplier"))
+                     {
+                         oldValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[hunter.nickName + "rewardMultiplier"];
+                     }
+                     else
+                     {
+                         PhotonNetwork.CurrentRoom.SetCustomProperties(
+                             new ExitGames.Client.Photon.Hashtable { { hunter.nickName + "rewardMultiplier", 0 } });
+                     }*/
+
+                    oldValue = hunter.RewardMultiplier;
+
+                    hunter.RewardMultiplier = oldValue + 1;
 
                     PhotonNetwork.CurrentRoom.SetCustomProperties(
                         new ExitGames.Client.Photon.Hashtable { { hunter.nickName + "rewardMultiplier", oldValue + 1 } }, // to be set
                         new ExitGames.Client.Photon.Hashtable { { hunter.nickName + "rewardMultiplier", oldValue } } // expected value
                         );
                 }
-                if (hunterPV.TryGetComponent(out PlayerHunter _))
+                if (hunterPV.TryGetComponent(out PlayerHunter _playerHunter))
                 {
                     var oldValue = 0;
-                    if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
+                    /*if (hunterPV.Owner.CustomProperties.ContainsKey("rewardMultiplier"))
                     {
                         oldValue = (int)hunterPV.Owner.CustomProperties["rewardMultiplier"];
                     }
@@ -132,7 +136,11 @@ namespace RFM.Character
                     {
                         hunterPV.Owner.SetCustomProperties(
                             new ExitGames.Client.Photon.Hashtable { { "rewardMultiplier", 0 } });
-                    }
+                    }*/
+
+                    oldValue = _playerHunter.RewardMultiplier;
+
+                    _playerHunter.RewardMultiplier = oldValue + 1;
 
                     hunterPV.Owner.SetCustomProperties(
                         new ExitGames.Client.Photon.Hashtable { {"rewardMultiplier", oldValue + 1 } }, // to be set
@@ -148,7 +156,16 @@ namespace RFM.Character
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            
+            if (stream.IsWriting)
+            {
+                stream.SendNext(money);
+                stream.SendNext(timeSurvived);
+            }
+            else
+            {
+                money = (int)stream.ReceiveNext();
+                timeSurvived = (float)stream.ReceiveNext();
+            }
         }
 
         private void ReceivePhotonEvents(EventData photonEvent)
