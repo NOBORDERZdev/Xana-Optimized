@@ -1,5 +1,6 @@
 ﻿using AdvancedInputFieldPlugin;
 using Newtonsoft.Json;
+using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -789,7 +790,8 @@ public class APIManager : MonoBehaviour
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
                 Debug.Log("GetAllFollowing Data" + data);
-                adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                //adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                adFrndFollowing = JsonUtility.FromJson<AllFollowingRoot>(data);
                 APIController.Instance.SpwanAdFrndFollowing();
                 GetBestFriend();
 
@@ -1026,7 +1028,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetAllFollowingFromProfile(string user_Id, int pageNum, int pageSize)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdFrndGetAllAolowing /*+ "/"*/ + user_Id + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing /*+ "/"*/ + user_Id + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
@@ -1042,9 +1044,10 @@ public class APIManager : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
-                profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
-
-                FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
+                //profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
+                //FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
+                profileAllFollowingRoot = JsonUtility.FromJson<AllFollowingRoot>(data);
+                APIController.Instance.SpwanProfileFollowing();
             }
         }
     }
@@ -1672,6 +1675,45 @@ public class APIManager : MonoBehaviour
                Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 APIController.Instance.FeedGetAllSearchUser();
+            }
+        }
+    }
+    public void RequestGetSearchUserForProfile(string name)
+    {
+        StartCoroutine(IERequestGetSearchUserForProfile(name));
+    }
+    public IEnumerator IERequestGetSearchUserForProfile(string name)
+    {
+        WWWForm form = new WWWForm();
+        if (!name.All(char.IsDigit)) // is seraching with name
+        {
+            form.AddField("name", name);
+            form.AddField("userId", 0);
+        }
+        else // is searching with number
+        {
+            form.AddField("name", "");
+            form.AddField("userId", name);
+        }
+
+
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/50";
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("Search user name data:" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                APIController.Instance.FeedGetAllSearchUserForProfile();
             }
         }
     }
@@ -3527,6 +3569,7 @@ public class AllFollowersRows
     public int followingCount;
     public int feedCount;
     public bool isFollowing;
+    public bool isFriend;
 }
 
 [System.Serializable]
