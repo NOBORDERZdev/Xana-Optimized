@@ -125,7 +125,6 @@ public class JjWorldChanger : MonoBehaviour
         else if (XanaConstants.xanaConstants.EnviornmentName.Contains("PMY ACADEMY"))
             XanaConstants.xanaConstants.isFromPMYLobby = true;
 
-        if (XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.PMY)
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
