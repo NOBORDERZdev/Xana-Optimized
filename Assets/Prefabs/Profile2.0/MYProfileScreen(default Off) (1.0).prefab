@@ -6834,6 +6834,64 @@ MonoBehaviour:
   TagPrefab: {fileID: 9156112392926067791, guid: b4d75d32f61ce1c40bcddb30ffdddcdb, type: 3}
   followerBtn: {fileID: 201799890803583822}
   followingBtn: {fileID: 201799890502910020}
+  editProfileBtn: {fileID: 1229295623195201993}
+  AvatarRef: {fileID: 0}
+  _renderTexCamera: {fileID: 6309606372472288006}
+  _userIdleAnimator: {fileID: 9100000, guid: 3968ea0677437a440b1736d50d6e78d5, type: 2}
+  _tempAvatarData:
+    id: 
+    name: 
+    thumbnail: 
+    myItemObj: []
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
   myProfileUserPostPartObj: {fileID: 201799889051435436}
   OtherProfileUserPostPartObj: {fileID: 1537363362}
   myProfileImitateTopPartButton: {fileID: 1229295624411844502}
@@ -7763,7 +7821,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: -8, y: -8}
+  m_CellSize: {x: 351.7316, y: 351.7316}
   m_Spacing: {x: 12, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 3
@@ -7788,7 +7846,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201799890627987673}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cdfe10dcdb334ab8bfe538f329a613c, type: 3}
   m_Name: 
@@ -20743,7 +20801,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 100
+  far clip plane: 7
   field of view: 20
   orthographic: 0
   orthographic size: 5

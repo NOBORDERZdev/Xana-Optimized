@@ -247,6 +247,7 @@ public class ConstantsGod
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
+    public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
 
     #region Jj World Api's
