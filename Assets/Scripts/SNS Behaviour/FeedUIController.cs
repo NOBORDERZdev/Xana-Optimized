@@ -3043,6 +3043,7 @@ public class FeedUIController : MonoBehaviour
         profileFollowersPanel.SetActive(true);
         profileFollowingPanel.SetActive(false);
         profileFinfFriendScreen.SetActive(false);
+        profileFinfFriendAdvancedInputField.Text = "";
         APIManager.Instance.RequestGetAllFollowersFromProfile(APIManager.Instance.userId.ToString(), 1, 50);
         ProfileFollowerFollowingScreenSetup(0, "");
     }
@@ -3051,6 +3052,7 @@ public class FeedUIController : MonoBehaviour
         profileFollowingPanel.SetActive(true);
         profileFollowersPanel.SetActive(false);
         profileFinfFriendScreen.SetActive(false);
+        profileFinfFriendAdvancedInputField.Text = "";
         APIManager.Instance.RequestGetAllFollowingFromProfile(APIManager.Instance.userId.ToString(), 1, 50);
         ProfileFollowerFollowingScreenSetup(1, "");
         //FeedUIController.Instance.OnClickProfileFollowingButton();

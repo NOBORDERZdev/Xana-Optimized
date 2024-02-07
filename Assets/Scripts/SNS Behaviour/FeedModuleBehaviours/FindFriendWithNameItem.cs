@@ -29,6 +29,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public bool IsInFollowingTab;
 
     public SavingCharacterDataClass _userAvatarData;
+    public bool isFromProfilePageSearch;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -66,7 +67,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
     }
 
-    public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false)
+    public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false,bool isFromProfileSearch=false)
     {
         searchUserRow = searchUserRow1;
 
@@ -101,7 +102,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             UpdateBfBtn(searchUserRow.am_i_following, searchUserRow.is_following_me, searchUserRow.is_close_friend);
         }
-
+        isFromProfilePageSearch = isFromProfileSearch;
     }
     public void SetupData(AllFollowersRows allFollowersRows1)
     {
@@ -179,9 +180,15 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
 
     }
-
+    
     public void OnClickUserProfileButton()
     {
+        if(isFromProfilePageSearch)
+        {
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+        }
         Debug.Log("Search User id:" + searchUserRow.id);
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();

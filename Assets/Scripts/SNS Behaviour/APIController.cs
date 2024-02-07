@@ -472,7 +472,7 @@ public class APIController : MonoBehaviour
                     {
                         GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.profileSerachResultsContainer);
                         //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j], true);
+                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j], true,true);
                     }
                 }
                 if (APIManager.Instance.searchUserRoot.data.rows.Count > 10)
