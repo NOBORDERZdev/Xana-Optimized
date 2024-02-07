@@ -517,6 +517,7 @@ namespace RFM.Managers
                 if (PhotonNetwork.IsMasterClient)
                 {
                     photonView.RPC(nameof(SetGameOver), RpcTarget.AllBuffered, "RUNNERS WIN");
+                    CancelInvoke(nameof(CheckForGameOverCondition));
                 };
                 GameplayTimeOver(); 
             },
