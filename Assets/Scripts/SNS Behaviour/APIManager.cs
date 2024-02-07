@@ -504,11 +504,11 @@ public class APIManager : MonoBehaviour
     }
 
     //this api is used to get feed for single user.......
-    public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom)
+    public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-        StartCoroutine(IERequestGetFeedsByUserId(userId, pageNum, pageSize, callingFrom));
+        StartCoroutine(IERequestGetFeedsByUserId(userId, pageNum, pageSize, callingFrom, _callFromFindFriendWithName));
     }
-    public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom)
+    public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
 
         //////////////////////Old Picture and video type feed fetching code
@@ -661,7 +661,7 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherPlayerFeed":
-                        OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum);
+                        OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum, _callFromFindFriendWithName);
                         break;
                     case "MyProfile":
                         MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
@@ -757,7 +757,7 @@ public class APIManager : MonoBehaviour
         {
             FeedUIController.Instance.ShowLoader(true);
         }
-        StartCoroutine(IEAdFrndAllFollowing(1,500));
+        StartCoroutine(IEAdFrndAllFollowing(1,20));
     }
 
     public AllFollowingRoot adFrndFollowing;

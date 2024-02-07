@@ -116,6 +116,8 @@ public class BottomTabManager : MonoBehaviour
                 postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
 
             }
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+            allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
@@ -140,6 +142,8 @@ public class BottomTabManager : MonoBehaviour
                 postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
             }
+            allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
+            allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
@@ -439,15 +443,15 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to feed button click.......
     public void OnClickFeedButton()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed"))
-        {
-            print("Please Upgrade to Premium account");
-            return;
-        }
-        else
-        {
-            print("Horayyy you have Access");
-        }
+        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed"))
+        //{
+        //    print("Please Upgrade to Premium account");
+        //    return;
+        //}
+        //else
+        //{
+        //    print("Horayyy you have Access");
+        //}
 
         if (GameManager.Instance.defaultSelection != 3)
         {
@@ -511,15 +515,15 @@ public class BottomTabManager : MonoBehaviour
 
     public void OnClickAddFriends()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("AdFriends"))
-        {
-            print("Please Upgrade to Premium account");
-            return;
-        }
-        else
-        {
-            print("Horayyy you have Access");
-        }
+        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("AdFriends"))
+        //{
+        //    print("Please Upgrade to Premium account");
+        //    return;
+        //}
+        //else
+        //{
+        //    print("Horayyy you have Access");
+        //}
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {

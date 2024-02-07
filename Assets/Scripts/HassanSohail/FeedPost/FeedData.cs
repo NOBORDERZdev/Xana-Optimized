@@ -19,6 +19,7 @@ public class FeedData : MonoBehaviour
    [SerializeField] Sprite UnLikedHeart;
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
+   [SerializeField] Button LikeBtn;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
@@ -130,6 +131,7 @@ public class FeedData : MonoBehaviour
         int feedId = _data.id;
         WWWForm form = new WWWForm();
         form.AddField("textPostId", feedId);
+        LikeBtn.interactable= false;
         using (UnityWebRequest www = UnityWebRequest.Post(url,form))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -140,6 +142,7 @@ public class FeedData : MonoBehaviour
             }
             if (www.isNetworkError || www.isHttpError)
             {
+                LikeBtn.interactable= true;
                 StartCoroutine(LikeUnLike());
             }
             else
@@ -150,6 +153,7 @@ public class FeedData : MonoBehaviour
                 isLiked = !isLiked;
                 scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
+                LikeBtn.interactable= true;
             }
         }
     }
