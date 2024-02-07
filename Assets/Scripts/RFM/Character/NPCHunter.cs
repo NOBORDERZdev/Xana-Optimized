@@ -74,10 +74,8 @@ namespace RFM.Character
             nickNameText.text = nickName.ToString();
         }
 
-        internal override void OnGameStarted()
+        private void OnGameStarted()
         {
-            base.OnGameStarted();
-
             //if (PhotonNetwork.IsMasterClient) // Only the master client controls the hunter.
             // Other clients just sync the movement
             // Muneeb: Why is the above check commented out?
