@@ -14,6 +14,10 @@ public class XanaConstants : MonoBehaviour
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
+    public bool LoginasGustprofile = false; // for gust profile
+    public string NFTUrl;
+    public string clothJson;
+    public string defaultFightingName;
 
     public int mic;
     public int minimap;
