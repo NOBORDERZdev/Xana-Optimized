@@ -104,8 +104,9 @@ public class CanvasButtonsHandler : MonoBehaviour
     }
     public void RFMResetSprintButton()
     {
-        if (isSpiritInUse)
-            OnSpiritButtonDown();
+        isSpiritInUse = false;
+        //if (isSpiritInUse)
+        OnSpiritButtonDown();
         spirit = maxSpirit;
         spiritFillImg.fillAmount = spirit / maxSpirit;
         spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
