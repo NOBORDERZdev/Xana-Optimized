@@ -9,6 +9,9 @@ namespace RFM.Character
     {
         [SerializeField] private GameObject killVFX;
 
+        private TMPro.TextMeshProUGUI _showMoney;
+        private MoreMountains.Feedbacks.MMScaleShaker _moneyScaleShaker;
+
         private void OnEnable()
         {
             RFM.EventsManager.onGameStart += OnGameStarted;
@@ -53,6 +56,9 @@ namespace RFM.Character
                     new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient },
                     SendOptions.SendReliable);
 
+                RewardMultiplier++;
+                UpdateScore();
+
                 other.GetComponent<Collider>().enabled = false; // disable the runner collider on local client to avoid duplicate calls
 
                 return;
@@ -73,8 +79,42 @@ namespace RFM.Character
                     new RaiseEventOptions { Receivers = ReceiverGroup.All },
                     SendOptions.SendReliable);
 
+                RewardMultiplier++;
+                UpdateScore();
+
                 // commented because RaiseEvent probably doesn't work when the object is disabled
                 //other.gameObject.SetActive(false); // disable the runner on local client to avoid duplicate calls
+                other.GetComponent<Collider>().enabled = false;
+            }
+        }
+
+        private void OnGameStarted()
+        {
+            if (!this.enabled) return;
+
+            // nickName = PhotonNetwork.LocalPlayer.NickName;
+            if (!Globals.IsLocalPlayerHunter) return;
+
+            if (!GetComponent<PhotonView>().IsMine) return;
+
+            _showMoney = RFM.Managers.RFMUIManager.Instance.showMoney;
+            _moneyScaleShaker = _showMoney.gameObject.GetComponent<MoreMountains.Feedbacks.MMScaleShaker>();
+            
+            RewardMultiplier = 0;
+            UpdateScore();
+
+            _showMoney.gameObject.SetActive(true);
+        }
+
+        private void UpdateScore()
+        {
+            if (!this.enabled) return;
+            if (!GetComponent<PhotonView>().IsMine) return;
+
+            if (Globals.IsLocalPlayerHunter)
+            {
+                _showMoney.text = (RewardMultiplier * 100).ToString("F0");
+                _moneyScaleShaker.Play();
             }
         }
 
@@ -87,7 +127,14 @@ namespace RFM.Character
 
         public override void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            
+            //if (stream.IsWriting)
+            //{
+            //    stream.SendNext(RewardMultiplier);
+            //}
+            //else
+            //{
+            //    RewardMultiplier = (int)stream.ReceiveNext();
+            //}
         }
     }
 }

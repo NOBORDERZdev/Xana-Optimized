@@ -62,6 +62,7 @@ namespace RFM.Managers
             huntersScores = new Dictionary<string[], int>();
 
             gameOverPanel.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -205,6 +206,7 @@ namespace RFM.Managers
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
+            RFM.RFMAudioManager.Instance.PlayRunnerCatchSFX();
             var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss\:fff");
 
             //// Convert the seconds to a TimeSpan.

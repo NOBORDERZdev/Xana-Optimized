@@ -74,10 +74,8 @@ namespace RFM.Character
             nickNameText.text = nickName.ToString();
         }
 
-        internal override void OnGameStarted()
+        private void OnGameStarted()
         {
-            base.OnGameStarted();
-
             //if (PhotonNetwork.IsMasterClient) // Only the master client controls the hunter.
             // Other clients just sync the movement
             // Muneeb: Why is the above check commented out?
@@ -316,7 +314,7 @@ namespace RFM.Character
                     if (TryGetComponent(out PhotonView _))
                     {
                         var oldValue = 0;
-                        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(nickName + "rewardMultiplier"))
+                        /*if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(nickName + "rewardMultiplier"))
                         {
                             oldValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[nickName + "rewardMultiplier"];
                         }
@@ -324,7 +322,10 @@ namespace RFM.Character
                         {
                             PhotonNetwork.CurrentRoom.SetCustomProperties(
                                 new ExitGames.Client.Photon.Hashtable { { nickName + "rewardMultiplier", 0 } });
-                        }
+                        }*/
+
+                        oldValue = RewardMultiplier;
+                        RewardMultiplier = oldValue + 1;
 
                         PhotonNetwork.CurrentRoom.SetCustomProperties(
                             new ExitGames.Client.Photon.Hashtable { { nickName + "rewardMultiplier", oldValue + 1 } }, // to be set
@@ -385,11 +386,13 @@ namespace RFM.Character
             if (stream.IsWriting)
             {
                 stream.SendNext(_navMeshAgent.destination);
+                stream.SendNext(RewardMultiplier);
                 //stream.SendNext(rewardMultiplier);
             }
             else
             {
                 _targetPosition = (Vector3)stream.ReceiveNext();
+                RewardMultiplier = (int)stream.ReceiveNext();
                 //rewardMultiplier = (int)stream.ReceiveNext();
 
                 // Check for discrepancies and lag compensation

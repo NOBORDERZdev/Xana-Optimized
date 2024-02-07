@@ -288,6 +288,11 @@ public class SoundManagerSettings : MonoBehaviour
         }
 
         BuilderEventManager.BGMVolume?.Invoke(Vol);
+
+        if (RFM.Globals.IsRFMWorld)
+        {
+            RFM.EventsManager.BGMVolumeChanged(Vol);
+        }
     }
     public void SetVideoVolume(float Vol)
     {
@@ -368,6 +373,11 @@ public class SoundManagerSettings : MonoBehaviour
         //            gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;
         //    }
         //}
+
+        if (RFM.Globals.IsRFMWorld) // TODO: wtf is this slider for?
+        {
+            RFM.EventsManager.SFXVolumeChanged(vol);
+        }
     }
     //Setting AudioSource Volume Slider Range between 0 and 0.7
     public void SetAudioSourceSliderVal(AudioSource _audioSrcRef, float _vol)
