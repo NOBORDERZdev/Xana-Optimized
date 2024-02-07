@@ -10,6 +10,8 @@ namespace RFM
     {
         public static event Action onCalculateScores;
         public static event Action onDestroyAllNPCHunters;
+        public static event Action<float> onBGMVolumeChanged;
+        public static event Action<float> onSFXVolumeChanged;
 
         public static event Action onCountdownStart, onTakePositionTimeStart, onGameStart, onGameTimeup,
             onShowScores, onHideCanvasElements, onToggleHelpPanel, onToggleSetLayoutPanel;
@@ -30,5 +32,8 @@ namespace RFM
         public static void onSetLayoutPanelActivate() => onToggleSetLayoutPanel?.Invoke();
 
         public static void OnShowRearViewMirror(bool active) => onShowRearViewMirror?.Invoke(active);
+
+        public static void BGMVolumeChanged(float vol) => onBGMVolumeChanged?.Invoke(vol);
+        public static void SFXVolumeChanged(float vol) => onSFXVolumeChanged?.Invoke(vol);
     }
 }

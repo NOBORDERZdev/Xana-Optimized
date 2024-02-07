@@ -206,6 +206,7 @@ namespace RFM.Managers
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
         {
+            RFM.RFMAudioManager.Instance.PlayRunnerCatchSFX();
             var timeSurvivedInMS = TimeSpan.FromSeconds(timeSurvived).ToString(@"mm\:ss\:fff");
 
             //// Convert the seconds to a TimeSpan.
