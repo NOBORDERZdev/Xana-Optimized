@@ -465,7 +465,7 @@ namespace RFM.Managers
                 }
                 else
                 {
-                    GetComponent<PhotonView>().RPC("SpawnNPCsRPC", RpcTarget.MasterClient, numOfHunters, (numOfRunners - i));
+                    GetComponent<PhotonView>().RPC(nameof(SpawnNPCsRPC), RpcTarget.MasterClient, numOfHunters, (numOfRunners - i));
                     StopCoroutine(SpawnNPCsCoroutine);
                 }
                 yield return new WaitForSeconds(delay);
@@ -486,7 +486,7 @@ namespace RFM.Managers
                 }
                 else
                 {
-                    GetComponent<PhotonView>().RPC("SpawnNPCsRPC", RpcTarget.MasterClient, (numOfHunters - (i)), 0);
+                    GetComponent<PhotonView>().RPC(nameof(SpawnNPCsRPC), RpcTarget.MasterClient, (numOfHunters - (i)), 0);
                     StopCoroutine(SpawnNPCsCoroutine);
                 }
                 yield return new WaitForSeconds(delay);
@@ -680,6 +680,7 @@ namespace RFM.Managers
             _mainCam.SetActive(false);
             //_gameCanvas.SetActive(false);
             CanvasButtonsHandler.inst.ShowRFMButtons(false);
+            RFM.RFMAudioManager.Instance.PlayRunnerCatchSFX();
 
             statusTMP.text = "Player caught! Spectating...";
             statusBG.SetActive(true);

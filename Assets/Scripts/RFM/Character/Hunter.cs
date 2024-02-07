@@ -17,18 +17,18 @@ namespace RFM.Character
 
         public abstract void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info);
 
-        internal virtual void OnGameStarted()
-        {
-            // If prizePool exists on custom properties of current room, add participation amount to it. otherwise, create it.
-            //if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("prizePool"))
-            //{
-            //    PhotonNetwork.CurrentRoom.CustomProperties["prizePool"] = (int)PhotonNetwork.CurrentRoom.CustomProperties["prizePool"] + participationAmount;
-            //}
-            //else
-            //{
-            //    PhotonNetwork.CurrentRoom.CustomProperties.Add("prizePool", participationAmount);
-            //}
-        }
+        //internal virtual void OnGameStarted()
+        //{
+        //    // If prizePool exists on custom properties of current room, add participation amount to it. otherwise, create it.
+        //    //if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("prizePool"))
+        //    //{
+        //    //    PhotonNetwork.CurrentRoom.CustomProperties["prizePool"] = (int)PhotonNetwork.CurrentRoom.CustomProperties["prizePool"] + participationAmount;
+        //    //}
+        //    //else
+        //    //{
+        //    //    PhotonNetwork.CurrentRoom.CustomProperties.Add("prizePool", participationAmount);
+        //    //}
+        //}
     }
 
 }
