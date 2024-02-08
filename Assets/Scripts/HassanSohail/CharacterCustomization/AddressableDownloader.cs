@@ -95,7 +95,7 @@ public class AddressableDownloader : MonoBehaviour
             while (true)
             {
                 AsyncOperationHandle loadOp;
-                Debug.LogError("key :- "+key.ToLower());
+               // Debug.LogError("key :- "+key.ToLower());
                 bool flag = false;
                 loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
                 if (!flag)
