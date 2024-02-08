@@ -14,6 +14,10 @@ public class LookAtCamera : MonoBehaviour
     UserPostFeature _postHandler;
     [SerializeField]
     Transform _playerTransform;
+    [SerializeField]
+    Transform boxerplayerTransform;
+    [SerializeField]
+    Transform newplayerTransform;
     public Vector3 Offset;
     bool SnapToPosition = false;
     Vector3 LastDisablePosition = default;
@@ -24,12 +28,17 @@ public class LookAtCamera : MonoBehaviour
 
         SnapToPosition = false;
         _postHandler.OnUpdatePostText += UpdateText;
+        BoxerNFTEventManager.OnNFTequip += (nft) => _playerTransform = boxerplayerTransform.transform;
+        BoxerNFTEventManager.OnNFTUnequip += () => _playerTransform = newplayerTransform.transform;
     }
     private void OnDisable()
     {
         LastDisablePosition = transform.position;
         SnapToPosition = true;
         _postHandler.OnUpdatePostText -= UpdateText;
+        BoxerNFTEventManager.OnNFTequip -= (nft) => boxerplayerTransform = boxerplayerTransform.transform;
+        BoxerNFTEventManager.OnNFTUnequip -= () => _playerTransform = newplayerTransform.transform;
+
     }
     void Start()
     {

@@ -222,6 +222,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
                     string jbody = JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
+                    //if user does not have data then open preset panel
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     print("!!GetUserData IF");
                 }

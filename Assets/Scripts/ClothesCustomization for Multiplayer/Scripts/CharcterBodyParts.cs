@@ -158,19 +158,39 @@ public class CharcterBodyParts : MonoBehaviour
     //Set Texture For Shirt
     public void TextureForShirt(Texture texture)
     {
-        Body.materials[0].SetTexture(shirt_TextureName, texture);
+        if (XanaConstants.xanaConstants.isNFTEquiped)
+            Body.materials[0].SetTexture(shirt_TextureName, texture);
+        else if (avatarController.avatarGender == AvatarGender.Male)
+            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(shirt_TextureName, texture);
+        else if (avatarController.avatarGender ==AvatarGender.Female)
+            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(shirt_TextureName, texture);
+
+        //Body.materials[0].SetTexture(shirt_TextureName, texture);
     }
 
 
     // Set texture For 
     public void TextureForPant(Texture texture)
     {
-        Body.materials[0].SetTexture(Pent_TextureName, texture);
+        if (XanaConstants.xanaConstants.isNFTEquiped)
+            Body.materials[0].SetTexture(Pent_TextureName, texture);
+        else if (avatarController.avatarGender == AvatarGender.Male)
+            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Pent_TextureName, texture);
+        else if (avatarController.avatarGender == AvatarGender.Female)
+            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Pent_TextureName, texture);
+        //Body.materials[0].SetTexture(Pent_TextureName, texture);
     }
 
     public void TextureForShoes(Texture texture)
     {
-        Body.materials[0].SetTexture(Shoes_TextureName, texture);
+        if (XanaConstants.xanaConstants.isNFTEquiped)
+            Body.materials[0].SetTexture(Shoes_TextureName, texture);
+        else if (avatarController.avatarGender == AvatarGender.Male)
+            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Shoes_TextureName, texture);
+        else if (avatarController.avatarGender == AvatarGender.Female)
+            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Shoes_TextureName, texture);
+
+        //Body.materials[0].SetTexture(Shoes_TextureName, texture);
     }
 
     public void TextureForGlove(Texture texture)
@@ -178,8 +198,16 @@ public class CharcterBodyParts : MonoBehaviour
         Body.materials[0].SetTexture(Glove_TextureName, texture);
     }
 
-    // Set Default 
+    // Set Default Texture for player
     public void DefaultTexture(bool ApplyClothMask = true)
+    {
+        if(XanaConstants.xanaConstants.isNFTEquiped)
+            DefaultTextureForBoxer(ApplyClothMask);
+        else
+            DefaultTextureForNewCharacter(ApplyClothMask);
+    }
+
+    void DefaultTextureForBoxer(bool ApplyClothMask = true)
     {
         if (ApplyClothMask)
         {
@@ -214,17 +242,69 @@ public class CharcterBodyParts : MonoBehaviour
         //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
 
         //set dafault texture for shader to not impact on any other property like skin color 
-        RemoveTattoo(null,null,CurrentTextureType.FaceTattoo);
+        RemoveTattoo(null, null, CurrentTextureType.FaceTattoo);
         RemoveTattoo(null, null, CurrentTextureType.ChestTattoo);
         RemoveTattoo(null, null, CurrentTextureType.LegsTattoo);
         RemoveTattoo(null, null, CurrentTextureType.ArmTattoo);
-        RemoveMustacheTexture(null,null);
+        RemoveMustacheTexture(null, null);
         RemoveEyeLidTexture(null, null);
-
-
-
     }
 
+
+    void DefaultTextureForNewCharacter(bool ApplyClothMask = true)
+    {
+        SkinnedMeshRenderer HeadMeshComponent;
+        SkinnedMeshRenderer Body;
+        if (avatarController.avatarGender == AvatarGender.Female)
+        {
+            Body= femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
+            HeadMeshComponent = femaleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
+        }
+        else
+        {
+            Body = maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
+            HeadMeshComponent = maleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
+        }
+        if (ApplyClothMask)
+        {
+            Body.materials[0].SetTexture(Pent_TextureName, Pent_Texture);
+            Body.materials[0].SetTexture(shirt_TextureName, Shirt_Texture);
+            Body.materials[0].SetTexture(Shoes_TextureName, Shoe_Texture);
+        }
+        Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+        Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
+        Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
+
+        //SkinnedMeshRenderer HeadMeshComponent = Head.GetComponent<SkinnedMeshRenderer>();
+
+        //HeadMeshComponent.material.SetColor(Skin_ColorName, DefaultSkinColor);
+        //HeadMeshComponent.material.SetColor(Lip_ColorName, DefaultLipColor);
+        //HeadMeshComponent.material.SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+
+        HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+        HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+
+        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texture);
+        // After EyeShader update need to pass this texture to another property
+        HeadMeshComponent.materials[0].SetTexture("_Mask_texture", Eye_Texture);
+
+        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrow);
+        HeadMeshComponent.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+
+        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashes);
+        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeup);
+        HeadMeshComponent.materials[2].SetColor(GredientColorName, DefaultGredientColor);
+        HeadMeshComponent.materials[2].SetFloat(SssIntensity, defaultSssValue);
+        //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
+
+        //set dafault texture for shader to not impact on any other property like skin color 
+        RemoveTattoo(null, null, CurrentTextureType.FaceTattoo);
+        RemoveTattoo(null, null, CurrentTextureType.ChestTattoo);
+        RemoveTattoo(null, null, CurrentTextureType.LegsTattoo);
+        RemoveTattoo(null, null, CurrentTextureType.ArmTattoo);
+        RemoveMustacheTexture(null, null);
+        RemoveEyeLidTexture(null, null);
+    }
 
 
     BlendShapeImporter blend;
@@ -715,7 +795,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ChangeHairColor(Color color)
     {
-       // print("Change Hair From Slider : " + color);
+        // print("Change Hair From Slider : " + color);
         if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
         {
             // For Band using Eye Shader so variable name is Changed 
@@ -1385,7 +1465,7 @@ public class CharcterBodyParts : MonoBehaviour
         SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>();
         //blend shapes
 
-        for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount-1; i++)
+        for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
             if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
             {
@@ -1517,25 +1597,26 @@ public class CharcterBodyParts : MonoBehaviour
     /// <summary>
     /// To hide player meshes for camera man account
     /// </summary>
-    public void HidePlayer(){ 
-        if(Body)
-        Body.gameObject.SetActive(false);
-         if(Head)
-        Head.gameObject.SetActive(false);
-         if(avatarController.wornHair)
-        avatarController.wornHair.SetActive(false);
-         if(avatarController.wornPant)
-        avatarController.wornPant.SetActive(false);
-         if(avatarController.wornShirt)
-        avatarController.wornShirt.SetActive(false);
-         if(avatarController.wornShose)
-        avatarController.wornShose.SetActive(false);
-         if(avatarController.wornEyewearable)
-        avatarController.wornEyewearable.SetActive(false);
-        if(avatarController.wornGloves)
-        avatarController.wornGloves.SetActive(false);
-         if(avatarController.wornChain)
-        avatarController.wornChain.SetActive(false);
+    public void HidePlayer()
+    {
+        if (Body)
+            Body.gameObject.SetActive(false);
+        if (Head)
+            Head.gameObject.SetActive(false);
+        if (avatarController.wornHair)
+            avatarController.wornHair.SetActive(false);
+        if (avatarController.wornPant)
+            avatarController.wornPant.SetActive(false);
+        if (avatarController.wornShirt)
+            avatarController.wornShirt.SetActive(false);
+        if (avatarController.wornShose)
+            avatarController.wornShose.SetActive(false);
+        if (avatarController.wornEyewearable)
+            avatarController.wornEyewearable.SetActive(false);
+        if (avatarController.wornGloves)
+            avatarController.wornGloves.SetActive(false);
+        if (avatarController.wornChain)
+            avatarController.wornChain.SetActive(false);
 
         avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(false);
         //.gameObject.SetActive(false);
@@ -1546,25 +1627,26 @@ public class CharcterBodyParts : MonoBehaviour
     /// <summary>
     /// To Show the player
     /// </summary>
-     public void ShowPlayer(){ 
-        if(Body)
-        Body.gameObject.SetActive(true);
-         if(Head)
-        Head.gameObject.SetActive(true);
-         if(avatarController.wornHair)
-        avatarController.wornHair.SetActive(true);
-         if(avatarController.wornPant)
-        avatarController.wornPant.SetActive(true);
-         if(avatarController.wornShirt)
-        avatarController.wornShirt.SetActive(true);
-         if(avatarController.wornShose)
-        avatarController.wornShose.SetActive(true);
-         if(avatarController.wornEyewearable)
-        avatarController.wornEyewearable.SetActive(true);
-        if(avatarController.wornGloves)
-        avatarController.wornGloves.SetActive(true);
-         if(avatarController.wornChain)
-        avatarController.wornChain.SetActive(true);
+    public void ShowPlayer()
+    {
+        if (Body)
+            Body.gameObject.SetActive(true);
+        if (Head)
+            Head.gameObject.SetActive(true);
+        if (avatarController.wornHair)
+            avatarController.wornHair.SetActive(true);
+        if (avatarController.wornPant)
+            avatarController.wornPant.SetActive(true);
+        if (avatarController.wornShirt)
+            avatarController.wornShirt.SetActive(true);
+        if (avatarController.wornShose)
+            avatarController.wornShose.SetActive(true);
+        if (avatarController.wornEyewearable)
+            avatarController.wornEyewearable.SetActive(true);
+        if (avatarController.wornGloves)
+            avatarController.wornGloves.SetActive(true);
+        if (avatarController.wornChain)
+            avatarController.wornChain.SetActive(true);
         avatarController.GetComponent<ArrowManager>().PhotonUserName.gameObject.SetActive(true);
     }
 
@@ -1574,43 +1656,45 @@ public class CharcterBodyParts : MonoBehaviour
     /// </summary>
     /// <param name="type"> texture type</param>
     /// <param name="applyOn">object on which texture is to be apply</param>
-     public void SetTextureDefault(CurrentTextureType type, GameObject applyOn){ 
-      switch (type){
-        case CurrentTextureType.Null:
-            break;
-        case CurrentTextureType.FaceTattoo:
-            break;
-        case CurrentTextureType.ChestTattoo:
-            break;
-        case CurrentTextureType.LegsTattoo:
-            break;
-        case CurrentTextureType.ArmTattoo:
-            break;
-        case CurrentTextureType.Mustache:
-            applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, applyOn);
-            break;
-        case CurrentTextureType.EyeLid:
-            break;
-        case CurrentTextureType.EyeLense:
+    public void SetTextureDefault(CurrentTextureType type, GameObject applyOn)
+    {
+        switch (type)
+        {
+            case CurrentTextureType.Null:
+                break;
+            case CurrentTextureType.FaceTattoo:
+                break;
+            case CurrentTextureType.ChestTattoo:
+                break;
+            case CurrentTextureType.LegsTattoo:
+                break;
+            case CurrentTextureType.ArmTattoo:
+                break;
+            case CurrentTextureType.Mustache:
+                applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, applyOn);
+                break;
+            case CurrentTextureType.EyeLid:
+                break;
+            case CurrentTextureType.EyeLense:
                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
-            break;
-        case CurrentTextureType.EyeLashes:
-            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
-            break;
-        case CurrentTextureType.EyeBrows:
-            applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
-            break;
-        case CurrentTextureType.Skin:
-            break;
-        case CurrentTextureType.Lip:
+                break;
+            case CurrentTextureType.EyeLashes:
+                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+                break;
+            case CurrentTextureType.EyeBrows:
+                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+                break;
+            case CurrentTextureType.Skin:
+                break;
+            case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(null, applyOn);
-            break;
-        case CurrentTextureType.Makeup:
-            applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
-            break;
-        default:
-            break;
-        }   
-        
-     }
+                break;
+            case CurrentTextureType.Makeup:
+                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+                break;
+            default:
+                break;
+        }
+
+    }
 }

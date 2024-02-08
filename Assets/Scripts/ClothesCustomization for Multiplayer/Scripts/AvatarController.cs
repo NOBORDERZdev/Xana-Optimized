@@ -1386,7 +1386,7 @@ public class AvatarController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+            if (StoreManager.instance != null && StoreManager.instance.loaderForItems)
                 StoreManager.instance.loaderForItems.SetActive(false);
         }
     }
