@@ -8200,10 +8200,10 @@ MonoBehaviour:
   DefaultSkin: {fileID: 2800000, guid: 3c7e75fc4791c3d449fee113e387f146, type: 3}
   DefaultEyes: {fileID: 2800000, guid: 931e5d5c182c2b343813aff12f10a6b2, type: 3}
   DefaultLips: {fileID: 2800000, guid: 3c7e75fc4791c3d449fee113e387f146, type: 3}
-  DefaultPent: {fileID: 5890572416019439444, guid: 7e109dd7b6f776f499b366e3a6f7551e, type: 3}
-  DefaultShoes: {fileID: 5173388033758056773, guid: db2ff7d9b10a4b44b912fb3923cb0628, type: 3}
-  DefaultShirt: {fileID: 4514070305550524654, guid: 6dc6217541a31264fad14639568c9f59, type: 3}
-  DefaultHair: {fileID: 4915315300308063219, guid: b6dd8b5871995184499c7c983f57589c, type: 3}
+  DefaultPent: {fileID: 5417918544974661652, guid: 323839bccb1c37d418f916c78ea8ae6e, type: 3}
+  DefaultShoes: {fileID: 2972552550992016218, guid: b008555e26333c8498b5045acb22828a, type: 3}
+  DefaultShirt: {fileID: 3428267401913419843, guid: 5967168ab7fc8db41b12ab59b8b54df4, type: 3}
+  DefaultHair: {fileID: 8258088121323357894, guid: c8c852b1fa45d6a4ea8da54b6d00ea8b, type: 3}
 --- !u!4 &100743011
 Transform:
   m_ObjectHideFlags: 0
@@ -8234,8 +8234,8 @@ MonoBehaviour:
   SaveItemList:
     id: 
     name: 
-    gender: 
     thumbnail: 
+    gender: 
     myItemObj: []
     SavedBones: []
     SkinId: 0
@@ -8287,7 +8287,7 @@ MonoBehaviour:
     punch: 0
     kick: 0
   _sliderindexes: {fileID: 11400000, guid: 007ece8573d836d4b8f5fc3bfe09bf52, type: 2}
-  characterController: {fileID: 0}
+  characterController: {fileID: 1303355041}
 --- !u!1 &105533695
 GameObject:
   m_ObjectHideFlags: 0
@@ -12122,6 +12122,8 @@ MonoBehaviour:
   _postText: {fileID: 1115837620}
   _postHandler: {fileID: 952789167}
   _playerTransform: {fileID: 0}
+  boxerplayerTransform: {fileID: 0}
+  newplayerTransform: {fileID: 0}
   Offset: {x: 0, y: 0, z: 0}
 --- !u!114 &257020933
 MonoBehaviour:
@@ -15172,6 +15174,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2917958921677600101, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
@@ -26010,7 +26016,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98569066d4359e1448dc469d5a00a267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targ: {fileID: 7195881398598916481}
+  targ: {fileID: 1303355052}
+  boxerplayerTransform: {fileID: 7195881398598916481}
+  newplayerTransform: {fileID: 1303355052}
   Offset: {x: 0.07, y: 1.05, z: 0.39}
   MainCamera: {fileID: 1825815854}
   divisable: 8.25
@@ -35145,15 +35153,16 @@ MonoBehaviour:
   wornGlovesId: 0
   wornChainId: 0
   presetValue: 
+  avatarGender: 0
   masks: []
-  IsInit: 0
+  IsInit: 1
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   _PCharacterData:
     id: 
     name: 
-    gender: 
     thumbnail: 
+    gender: 
     myItemObj: []
     SavedBones: []
     SkinId: 0
@@ -35988,7 +35997,6 @@ MonoBehaviour:
   femaleAvatarMeshes:
   - {fileID: 374503756}
   - {fileID: 374503755}
-  avatarGender: 0
 --- !u!114 &1303355051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42603,7 +42611,9 @@ MonoBehaviour:
   _cameraTransform: {fileID: 1825815854}
   _postText: {fileID: 39320824}
   _postHandler: {fileID: 952789167}
-  _playerTransform: {fileID: 7195881398598916481}
+  _playerTransform: {fileID: 1303355052}
+  boxerplayerTransform: {fileID: 7195881398598916481}
+  newplayerTransform: {fileID: 1303355052}
   Offset: {x: 0, y: 1.8, z: 0}
 --- !u!114 &1569002311
 MonoBehaviour:
@@ -56709,6 +56719,7 @@ MonoBehaviour:
   wornGlovesId: 0
   wornChainId: 0
   presetValue: 
+  avatarGender: 0
   masks: []
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
@@ -56716,8 +56727,8 @@ MonoBehaviour:
   _PCharacterData:
     id: 
     name: 
-    gender: 
     thumbnail: 
+    gender: 
     myItemObj: []
     SavedBones: []
     SkinId: 0
@@ -57384,7 +57395,6 @@ MonoBehaviour:
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 0}
   maleAvatarMeshes: []
   femaleAvatarMeshes: []
-  avatarGender: 0
 --- !u!114 &98365739056566247
 MonoBehaviour:
   m_ObjectHideFlags: 0

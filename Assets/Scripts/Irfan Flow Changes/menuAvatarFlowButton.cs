@@ -10,9 +10,16 @@ public class menuAvatarFlowButton : MonoBehaviour
     {
         _instance = this;
     }
-    void Start()
+    void OnEnable()
     {
-        this.gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+        MainSceneEventHandler.OpenPresetPanel += OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+    }
+
+    void OnDisable()
+    {
+        MainSceneEventHandler.OpenPresetPanel -= OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.RemoveListener(OnClickMenuAvatarBtn);
     }
  
     void OnClickMenuAvatarBtn()
