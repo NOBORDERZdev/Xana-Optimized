@@ -77,11 +77,10 @@ public class CharcterBodyParts : MonoBehaviour
 
     AvatarController avatarController;
 
+    //public AvatarGender avatarGender;
     public GameObject[] maleAvatarMeshes;
     public GameObject[] femaleAvatarMeshes;
 
-    public enum AvatarGender { Male, Female };
-    public AvatarGender avatarGender;
     private void Awake()
     {
         instance = this;
@@ -135,20 +134,20 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
 
-    public void SetAvatarByGender(string _gender)
+    public void SetAvatarByGender(AvatarGender _gender)
     {
 
-        if (_gender == "Male")
+        if (_gender == AvatarGender.Male)
         {
-            avatarGender = AvatarGender.Male;
+            avatarController.avatarGender = _gender;
             foreach (GameObject obj in maleAvatarMeshes)
                 obj.SetActive(true);
             foreach (GameObject obj in femaleAvatarMeshes)
                 obj.SetActive(false);
         }
-        else if (_gender == "Female")
+        else if (_gender == AvatarGender.Female)
         {
-            avatarGender = AvatarGender.Female;
+            avatarController.avatarGender = _gender;
             foreach (GameObject obj in maleAvatarMeshes)
                 obj.SetActive(false);
             foreach (GameObject obj in femaleAvatarMeshes)

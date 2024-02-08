@@ -248,7 +248,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                         yield return new WaitForSeconds(0.1f);
                     //}
                     loadprevious();
-                    StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
 
                     //On merging from Release getting this error
@@ -479,6 +479,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string id;
         public string name;
         public string thumbnail;
+        public string gender;
         public List<Item> myItemObj;
 
         public List<BoneDataContainer> SavedBones;

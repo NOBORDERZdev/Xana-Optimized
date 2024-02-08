@@ -77,6 +77,7 @@ public class AddressableDownloader : MonoBehaviour
         int _counter = 0;
         while (!XanaConstants.isAddressableCatalogDownload)
         {
+            Debug.LogError("Waiting for Addressable Catalog to download");  
             yield return new WaitForSeconds(1f);
         }
 
@@ -94,7 +95,7 @@ public class AddressableDownloader : MonoBehaviour
             while (true)
             {
                 AsyncOperationHandle loadOp;
-
+                Debug.LogError("key :- "+key.ToLower());
                 bool flag = false;
                 loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
                 if (!flag)

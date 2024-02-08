@@ -206,6 +206,7 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
+        SaveItemList.gender= characterController.avatarGender.ToString();
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
@@ -254,6 +255,7 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
+
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
         }
@@ -338,8 +340,8 @@ public class SavingCharacterDataClass
 {
     public string id;
     public string name;
-    public string gender;
     public string thumbnail;
+    public string gender;
     public List<Item> myItemObj;
 
     public List<BoneDataContainer> SavedBones;
