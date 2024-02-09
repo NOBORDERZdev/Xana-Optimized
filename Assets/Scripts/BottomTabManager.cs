@@ -565,9 +565,6 @@ public class BottomTabManager : MonoBehaviour
             FeedUIController.Instance.ResetAllFeedScreen(true);
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
 
-            MyProfileDataManager.Instance.MyProfileSceenShow(false);
-            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
-            MyProfileDataManager.Instance.gameObject.SetActive(false);
 
             //Invoke(nameof(InvokeDisableFeed),1f);
             //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
@@ -601,6 +598,19 @@ public class BottomTabManager : MonoBehaviour
                 // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
+        }
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.MyProfileSceenShow(false);
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            FeedUIController.Instance.AddFriendPanel.SetActive(true);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+        else
+        {
+            FeedUIController.Instance.AddFriendPanel.SetActive(true);
+            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(false);
+            OtherPlayerProfileData.Instance.myPlayerdataObj.gameObject.SetActive(false);
         }
     }
 
@@ -674,6 +684,7 @@ public class BottomTabManager : MonoBehaviour
             ProfileUIHandler.instance.SetMainScrolRefs();
             ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
+            ProfileUIHandler.instance.followProfileBtn.SetActive(false);
         }
 
         //home page thumnbail images destroy
