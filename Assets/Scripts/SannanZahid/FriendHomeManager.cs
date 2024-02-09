@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -30,9 +31,8 @@ public class FriendHomeManager : MonoBehaviour
     {
         return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
     }
-    IEnumerator BuildMoodDialog()
+   IEnumerator BuildMoodDialog()
     {
-
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
@@ -42,42 +42,14 @@ public class FriendHomeManager : MonoBehaviour
         {
             if (isSucess)
             {
+                var friendIds = new HashSet<int>(SpawnFriendsObj.Select(x => x.id));
                 foreach (FriendsDetail friend in _friendsDataFetched.data.rows)
                 {
-                    if (SpawnFriendsObj.Find(x => x.id == friend.id) == null)
+                    if (!friendIds.Contains(friend.id))
                     {
-                        FriendSpawnData FriendSpawn = new FriendSpawnData();
-                        Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
-                        Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
-                        Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
-                        CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
-                        CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
-                        CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
-                        CreatedFriend.gameObject.SetActive(true);
-                        CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
-                        if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
-                        {
-                            CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
-                        }
-                        else
-                        {
-                            CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
-                        }
-                        CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
-                            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
-                        FriendSpawn.id = friend.id;
-                        FriendSpawn.friendObj = CreatedFriend;
-                        FriendSpawn.friendNameObj = CreatedNameTag;
-                        FriendSpawn.friendPostBubbleObj = CreatedFriendPostBubble;
-                        SpawnFriendsObj.Add(FriendSpawn);
-                        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
-                            friend.id,
-                            CreatedFriend.GetComponent<PlayerPostBubbleHandler>(),
-                            CreatedFriend.GetComponent<Actor>()
-                            );
+                        StartCoroutine(CreateFriend(friend));
                     }
                 }
-
             }
             else
             {
@@ -85,15 +57,50 @@ public class FriendHomeManager : MonoBehaviour
             }
         }));
     }
+
+    IEnumerator CreateFriend(FriendsDetail friend)
+    {
+        FriendSpawnData FriendSpawn = new FriendSpawnData();
+        Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
+        yield return null; // Wait for the next frame to continue execution
+
+        Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
+        Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
+        CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
+        CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
+        CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
+        CreatedFriend.gameObject.SetActive(true);
+        CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
+        if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
+        {
+            CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+        }
+        else
+        {
+            CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
+        }
+        CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
+            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
+        FriendSpawn.id = friend.id;
+        FriendSpawn.friendObj = CreatedFriend;
+        FriendSpawn.friendNameObj = CreatedNameTag;
+        FriendSpawn.friendPostBubbleObj = CreatedFriendPostBubble;
+        SpawnFriendsObj.Add(FriendSpawn);
+        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().GetLatestPostOfFriend(
+            friend.id,
+            CreatedFriend.GetComponent<PlayerPostBubbleHandler>(),
+            CreatedFriend.GetComponent<Actor>()
+            );
+        yield return null;
+    }
+
     IEnumerator FetchUserMapFromServer(string apiURL, Action<bool> callback)
     {
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            www.SendWebRequest();
-            while (!www.isDone)
-                yield return new WaitForSeconds(Time.deltaTime);
-            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
             {
                 callback(false);
             }
@@ -102,7 +109,6 @@ public class FriendHomeManager : MonoBehaviour
                 _friendsDataFetched = JsonUtility.FromJson<BestFriendData>(www.downloadHandler.text);
                 callback(true);
             }
-            www.Dispose();
         }
     }
     public void EnableFriendsView(bool flag)
