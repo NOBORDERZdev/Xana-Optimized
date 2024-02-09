@@ -42,6 +42,11 @@ public class ResponseHolder : ScriptableObject
         return null;
     }
 
+    private void OnDisable()
+    {
+        apiResponses.Clear();
+    }
+
     [Serializable]
     public class Response
     {

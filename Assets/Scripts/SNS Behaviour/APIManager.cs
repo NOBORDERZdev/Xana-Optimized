@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -183,14 +184,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
-                if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {
@@ -243,10 +246,12 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log(www.error);
 
-                if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-                {
-                    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                }
+                // OLD FEED UI
+                //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+                //{
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //}
+                // END OLD FEED UI
             }
             else
             {
@@ -499,18 +504,99 @@ public class APIManager : MonoBehaviour
     }
 
     //this api is used to get feed for single user.......
-    public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom)
+    public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-        StartCoroutine(IERequestGetFeedsByUserId(userId, pageNum, pageSize, callingFrom));
+        StartCoroutine(IERequestGetFeedsByUserId(userId, pageNum, pageSize, callingFrom, _callFromFindFriendWithName));
     }
-    public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom)
+    public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+
+        //////////////////////Old Picture and video type feed fetching code
+        //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+        //{
+        //    www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+        //    www.SendWebRequest();
+        //    while (!www.isDone)
+        //    {
+        //        yield return null;
+        //    }
+
+        //    if (www.isNetworkError || www.isHttpError)
+        //    {
+        //        Debug.Log(www.error);
+        //        FeedUIController.Instance.ShowLoader(false);
+
+        //        switch (callingFrom)
+        //        {
+        //            case "OtherPlayerFeed":
+        //                if (OtherPlayerProfileData.Instance != null && pageNum == 1)
+        //                {
+        //                    OtherPlayerProfileData.Instance.RemoveAndCheckBackKey();
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        string data = www.downloadHandler.text;
+        //        //Debug.Log("IERequestGetFeedsByUserId success data" + data);
+        //        var settings = new JsonSerializerSettings
+        //        {
+        //            NullValueHandling = NullValueHandling.Ignore,
+        //            MissingMemberHandling = MissingMemberHandling.Ignore
+        //        };
+        //        AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
+        //        if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
+        //        {
+        //            //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
+        //            allFeedWithUserIdRoot.Data.Rows.Clear();
+
+        //            for (int i = 0; i < test.Data.Rows.Count; i++)
+        //            {
+        //                // myList.Where(p => p.Name == nameToExtract);
+        //                // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
+
+        //                if (!allFeedWithUserIdRoot.Data.Rows.Any(x => x.Id == test.Data.Rows[i].Id))
+        //                {
+        //                    allFeedWithUserIdRoot.Data.Rows.Add(test.Data.Rows[i]);
+        //                }
+        //                //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
+        //                //{
+        //                //}
+        //            }
+        //        }
+        //        else
+        //        {
+
+        //            allFeedWithUserIdRoot = test;
+        //        }
+        //        if (callingFrom == "OtherPlayerFeed")
+        //        {
+        //            allFeedWithUserIdRoot = test;
+        //        }
+        //        switch (callingFrom)
+        //        {
+        //            case "OtherPlayerFeed":
+        //                OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum);
+        //                break;
+        //            case "MyProfile":
+        //                MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //    }
+        //}
+        //////////////////////New text post type feed fetching code
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             www.SendWebRequest();
-            while(!www.isDone)
+            while (!www.isDone)
             {
                 yield return null;
             }
@@ -535,24 +621,28 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                //Debug.Log("IERequestGetFeedsByUserId success data" + data);
+                Debug.Log("IERequestGetFeedsByUserId success data" + data);
+                Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                AllFeedByUserIdRoot test = JsonConvert.DeserializeObject<AllFeedByUserIdRoot>(data, settings);
-                if (allFeedWithUserIdRoot.Data.Rows.Count > test.Data.Rows.Count)
+                //AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
+                FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
+                if (allTextPostFeedWithUserIdRoot.data.count > test.data.rows.Count)
                 {
-                    //allFeedWithUserIdRoot.Data.Rows.Clear(); //Riken
-                    for (int i = 0; i < test.Data.Rows.Count; i++)
+                    //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
+                    allTextPostFeedWithUserIdRoot.data.rows.Clear();
+
+                    for (int i = 0; i < test.data.rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
                         // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
 
-                        if (!allFeedWithUserIdRoot.Data.Rows.Any(x => x.Id == test.Data.Rows[i].Id))
+                        if (!allTextPostFeedWithUserIdRoot.data.rows.Any(x => x.id == test.data.rows[i].id))
                         {
-                            allFeedWithUserIdRoot.Data.Rows.Add(test.Data.Rows[i]);
+                            allTextPostFeedWithUserIdRoot.data.rows.Add(test.data.rows[i]);
                         }
                         //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
                         //{
@@ -562,16 +652,16 @@ public class APIManager : MonoBehaviour
                 else
                 {
 
-                    allFeedWithUserIdRoot = test;
+                    allTextPostFeedWithUserIdRoot = test;
                 }
                 if (callingFrom == "OtherPlayerFeed")
                 {
-                    allFeedWithUserIdRoot = test;
+                    allTextPostFeedWithUserIdRoot = test;
                 }
                 switch (callingFrom)
                 {
                     case "OtherPlayerFeed":
-                        OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum);
+                        OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum, _callFromFindFriendWithName);
                         break;
                     case "MyProfile":
                         MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
@@ -667,7 +757,7 @@ public class APIManager : MonoBehaviour
         {
             FeedUIController.Instance.ShowLoader(true);
         }
-        StartCoroutine(IEAdFrndAllFollowing(1,500));
+        StartCoroutine(IEAdFrndAllFollowing(1,20));
     }
 
     public AllFollowingRoot adFrndFollowing;
@@ -1599,7 +1689,7 @@ public class APIManager : MonoBehaviour
     }
 
     IEnumerator IERequestHotFirends(){ 
-        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_NonFriendUser + "1/100";
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_HotUsers + "1/100";
         using (UnityWebRequest www= UnityWebRequest.Get(uri)){
              www.SetRequestHeader("Authorization", userAuthorizeToken);
              yield return www.SendWebRequest();
@@ -1617,8 +1707,8 @@ public class APIManager : MonoBehaviour
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Hot Friends Data" + data);
-                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.ShowHotFirend(searchUserRoot);
+                hotUsersRoot = JsonUtility.FromJson<HotUsersRoot>(data);
+                APIController.Instance.ShowHotFirend(hotUsersRoot);
                 //APIController.Instance.FeedGetAllSearchUser();
             }
         }
@@ -1985,10 +2075,12 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    // Old API
     public void RequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         StartCoroutine(IERequestUpdateUserProfile(user_gender, user_job, user_country, user_website, user_bio));
     }
+
     public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
     {
         WWWForm form = new WWWForm();
@@ -2014,7 +2106,69 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("<color = red> UpdateUserProfile data:" + data + "</color>");
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+                // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
+            }
+        }
+    }
+
+    // New API
+    public void RequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
+    {
+        StartCoroutine(IERequestUpdateUserProfile(unique_Name, user_gender, user_job, user_country, user_website, user_bio, _tags));
+    }
+
+
+    class UserProfile
+    {
+        public string bio;
+        public string username;
+        public string[] tags;
+    }
+
+    public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio,string[] _tags)
+    {
+        WWWForm form = new WWWForm();
+        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "   job:" + user_job + "  :bio:" + user_bio);
+        //form.AddField("gender", user_gender);
+        //form.AddField("job", user_job);
+        //form.AddField("country", user_country);
+        //form.AddField("website", user_website);
+        //form.AddField("bio", user_bio);
+        //form.AddField("username", unique_Name);
+
+        UserProfile userProfile = new UserProfile
+        {
+            bio = user_bio,
+            username = unique_Name,
+            tags = _tags,
+        };
+
+        string jsonData = JsonUtility.ToJson(userProfile);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile;
+
+        // using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+        using (UnityWebRequest www = new UnityWebRequest(apiUrl, "POST"))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
+            {
+                Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
+                //Debug.Log("data" + form);
+            }
+            else
+            {
+                //Debug.Log("Form upload complete!");
+                string data = www.downloadHandler.text;
+                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }
@@ -2739,9 +2893,13 @@ public class APIManager : MonoBehaviour
     //public AllFeedRow userPostData = new AllFeedRow();
     [Header("Single User All Feed Data")]
     public AllFeedByUserIdRoot allFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    public AllTextPostByUserIdRoot allTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
+    //For Temp use
+    public FeedResponse allTextPostFeedWithUserIdRoot = new FeedResponse();
     public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
 
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
+    public HotUsersRoot hotUsersRoot = new HotUsersRoot();
     public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
     public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
@@ -2783,6 +2941,7 @@ public class GetUserDetailProfileData
     public string country;
     public string website;
     public string bio;
+    public string username; // Unique UserName
     public bool isDeleted;
     public DateTime createdAt;
     public DateTime updatedAt;
@@ -2894,7 +3053,9 @@ public class SingleUserProfileData
     public string name;
     public string email;
     public string avatar;
+    public string[] tags;
     public SingleUserProfile userProfile;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3132,6 +3293,34 @@ public class AllFeedByUserIdRoot
     public string Msg;
 }
 
+[System.Serializable]
+public class AllTextPostByUserIdRoot
+{
+    public bool Success;
+    public AllTextPostByUserIdData Data;
+    public string Msg;
+}
+
+[System.Serializable]
+public class AllTextPostByUserIdData
+{
+    public int Count;
+    public List<AllTextPostByUserIdRow> Rows;
+}
+
+[System.Serializable]
+public class AllTextPostByUserIdRow
+{
+    public int Id;
+    public int user_id;
+    public string text_post;
+    public string text_mood;
+    public int like_count;
+    public DateTime CreatedAt;
+    public DateTime UpdatedAt;
+
+}
+
 /// <summary>
 /// All Following Classes
 /// </summary>
@@ -3194,6 +3383,22 @@ public class HotFeedUser
 /// /// <summary>
 /// All Following Classes
 /// </summary>
+/// 
+
+[System.Serializable]
+public class FollowerFollowingUserAvatarData
+{
+    public int id;
+    public string name;
+    public string thumbnail;
+    public SavingCharacterDataClass json;
+    public string description;
+    public bool isDeleted;
+    public int createdBy;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+}
+
 [System.Serializable]
 public class AllFollowing
 {
@@ -3202,6 +3407,7 @@ public class AllFollowing
     public string email;
     public string avatar;
     public bool is_close_friend;
+    public bool isFollowing;
     public AllUserWithFeedUserProfile userProfile;
 }
 
@@ -3215,6 +3421,7 @@ public class AllFollowingRow
     public DateTime createdAt;
     public DateTime updatedAt;
     public AllFollowing following;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3302,6 +3509,7 @@ public class AllFollower
     public string email;
     public string avatar;
     public AllUserWithFeedUserProfile userProfile;
+
 }
 
 [System.Serializable]
@@ -3314,6 +3522,7 @@ public class AllFollowersRows
     public DateTime createdAt;
     public DateTime updatedAt;
     public AllFollower follower;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
     public int followerCount;
     public int followingCount;
     public int feedCount;
@@ -3433,8 +3642,9 @@ public class SearchUserRow
     public int followerCount;
     public bool is_following_me;
     public bool am_i_following;
-    public bool is_my_close_friend;
+    public bool is_close_friend;
     public AllUserWithFeedUserProfile userProfile;
+    public List<FollowerFollowingUserAvatarData> userOccupiedAssets;
 }
 
 [System.Serializable]
@@ -3809,5 +4019,29 @@ public class CommentPostDetail
     public bool success;
     public CommentPostData data;
     public string msg;
+}
+#endregion
+#region Hot Users API Classes //Most Active Users in 24 hours
+[System.Serializable]
+public class HotUsersRoot
+{
+    public bool success;
+    public HotUsersData data;
+    public string msg;
+}
+[System.Serializable]
+public class HotUsersData
+{
+    public int count;
+    public List<HotUsersRow> rows;
+}
+[System.Serializable]
+public class HotUsersRow
+{
+    public int totalActivityCount;
+    public bool is_following_me;
+    public bool am_i_following;
+    public bool is_close_friend;
+    public SearchUserRow user;
 }
 #endregion

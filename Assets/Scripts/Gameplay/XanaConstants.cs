@@ -14,7 +14,7 @@ public class XanaConstants : MonoBehaviour
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
-
+    public bool LoginasGustprofile = false; // for gust profile
     public string NFTUrl;
     public string clothJson;
     public string defaultFightingName;
@@ -114,6 +114,9 @@ public class XanaConstants : MonoBehaviour
     // Tutorials
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
+
+    public static bool isDescriptionFullPage = false;
+
     public string r_EmoteStoragePersistentPath
     {
         get

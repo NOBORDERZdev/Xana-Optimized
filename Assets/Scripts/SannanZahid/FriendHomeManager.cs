@@ -15,7 +15,8 @@ public class FriendHomeManager : MonoBehaviour
 
     private void OnDisable()
     {
-        FriendPostSocket.instance.updateFriendPostDelegate -= UpdateFriendPost;
+        if (SocketController.instance != null)
+            SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
     }
 
 
@@ -23,7 +24,7 @@ public class FriendHomeManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
-        FriendPostSocket.instance.updateFriendPostDelegate += UpdateFriendPost;
+        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
     }
     string PrepareApiURL()
     {
@@ -151,8 +152,9 @@ public class FriendHomeManager : MonoBehaviour
 
     private void UpdateFriendPost(ReceivedFriendPostData data)
     {
-        print("________________________ " + data.creatorId);
-        print("________________________ " + data.text_mood);
+      //  print("________________________ " + data.creatorId);
+     //   print("________________________ " + data.text_mood);
+       // print("________________________ " + data.text_post);
         foreach (var frds in SpawnFriendsObj)
         {
             if (frds.id == int.Parse(data.creatorId))
@@ -165,9 +167,13 @@ public class FriendHomeManager : MonoBehaviour
 
                 if (!string.IsNullOrEmpty(data.text_mood) && !data.text_mood.Equals("null"))
                 {
-                    print("________________________ " + data.text_mood);
+                  //  print("________________________ " + data.text_mood);
                     GameManager.Instance.PostManager.GetComponent<UserAnimationPostFeature>().SetMood(data.text_mood, frds.friendObj.GetComponent<Actor>());
                     // Update Animation Here
+                }
+                if(string.IsNullOrEmpty(data.text_post))
+                {
+                    frds.friendPostBubbleObj.transform.GetChild(0).gameObject.SetActive(false);
                 }
             }
         }
