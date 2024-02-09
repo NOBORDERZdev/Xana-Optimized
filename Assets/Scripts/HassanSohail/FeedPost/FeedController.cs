@@ -307,7 +307,7 @@ public class FeedController : MonoBehaviour
             feedContentParent.gameObject.SetActive(false);
             print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
             FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-            if (feedResponseData.data.rows.Count>0)
+            if (feedResponseData!=null && feedResponseData.data.rows.Count>0)
             {
                 foreach (var item in feedResponseData.data.rows)
                 {
@@ -365,12 +365,15 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
+        EmptySearchPanel();
+        noFeedSerach. gameObject.SetActive(false);
+        noFeedsScreen.gameObject.SetActive(false);
+        FeedLoader.gameObject.SetActive(false);
         FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
     }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
-
     }
 }
 
