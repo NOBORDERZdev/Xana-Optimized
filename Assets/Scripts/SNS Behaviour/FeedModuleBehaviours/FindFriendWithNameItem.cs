@@ -190,6 +190,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
             FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
             MyProfileDataManager.Instance.gameObject.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
         }
         else
         {
@@ -197,12 +198,22 @@ public class FindFriendWithNameItem : MonoBehaviour
             OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
             //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
             FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
 
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (searchUserRow.is_following_me)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
