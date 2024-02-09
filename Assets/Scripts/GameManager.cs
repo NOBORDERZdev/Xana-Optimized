@@ -44,11 +44,17 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
+    public AdditiveScenesManager additiveScenesManager;
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
+        if (additiveScenesManager == null) // If Null then find object
+        {
+           additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
+        }
     }
     public string GetStringFolderPath()
     {
