@@ -210,7 +210,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         textHeaderUserName.text = singleUserProfileData.name;
         textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
         textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
-        textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
+        //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
 
         UpdateUserTags();
 
@@ -1020,7 +1020,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             textHeaderUserName.text = singleUserProfileData.name;
             textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
             textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
-            textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
+            //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
         }
     }
 
