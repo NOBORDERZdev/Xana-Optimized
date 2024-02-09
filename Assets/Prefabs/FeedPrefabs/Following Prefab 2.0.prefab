@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 8843178650936255803}
   - component: {fileID: 1144497293814194114}
   - component: {fileID: 4960076600295106440}
+  - component: {fileID: 7352257285248411478}
   m_Layer: 5
   m_Name: ProfileImage
   m_TagString: Untagged
@@ -212,6 +213,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7352257285248411478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168753581049737063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bac33ade27cf4542bd53b1b13d90941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultShader: {fileID: 4800000, guid: 8d19bf0a0d7a69643b050c159096b413, type: 3}
+  _defaultETC1Shader: {fileID: 4800000, guid: 9734f2045a9c1f74d956d0573ac8a2f3, type: 3}
+  _source: 0
+  _separateMask: {fileID: 0}
+  _sprite: {fileID: 0}
+  _spriteBorderMode: 0
+  _texture: {fileID: 0}
+  _textureUVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _channelWeights: {r: 0, g: 0, b: 0, a: 1}
+  _raycastThreshold: 0
+  _invertMask: 0
+  _invertOutsides: 0
 --- !u!1 &2247327692572157239
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +390,7 @@ GameObject:
   - component: {fileID: 5943842364923286594}
   - component: {fileID: 2412541787083468474}
   m_Layer: 5
-  m_Name: Following Prefab 2
+  m_Name: Following Prefab 2.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +481,7 @@ MonoBehaviour:
     isFriend: 0
   userNameText: {fileID: 2247327692572157233}
   userBioText: {fileID: 5557817698360802583}
-  profileImage: {fileID: 4960076600295106440}
+  profileImage: {fileID: 2247327693282093958}
   followFollowingText: {fileID: 0}
   followFollowingImage: {fileID: 0}
   followColor: {r: 0, g: 0, b: 0, a: 1}
@@ -613,7 +643,7 @@ MonoBehaviour:
     isFollowing: 0
   userNameText: {fileID: 2247327692572157233}
   BioText: {fileID: 5557817698360802583}
-  profileImage: {fileID: 4960076600295106440}
+  profileImage: {fileID: 2247327693282093958}
   followFollowingText: {fileID: 0}
   followFollowingImage: {fileID: 0}
   followColor: {r: 0, g: 0, b: 0, a: 1}
@@ -767,8 +797,7 @@ GameObject:
   - component: {fileID: 2247327693282093957}
   - component: {fileID: 2247327693282093959}
   - component: {fileID: 2247327693282093958}
-  - component: {fileID: 1747912982671442552}
-  - component: {fileID: 5157833177781093174}
+  - component: {fileID: 2701366739360652800}
   m_Layer: 5
   m_Name: UserProfileImage
   m_TagString: Untagged
@@ -824,9 +853,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ae461579bfba5fb459764722e5f2bf0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -834,20 +863,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1747912982671442552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2247327693282093956}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
---- !u!114 &5157833177781093174
+--- !u!114 &2701366739360652800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -856,26 +872,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2247327693282093956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bac33ade27cf4542bd53b1b13d90941, type: 3}
+  m_Script: {fileID: 11500000, guid: eddc1fbd4bd796345832996a9560b9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultShader: {fileID: 4800000, guid: 8d19bf0a0d7a69643b050c159096b413, type: 3}
-  _defaultETC1Shader: {fileID: 4800000, guid: 9734f2045a9c1f74d956d0573ac8a2f3, type: 3}
-  _source: 0
-  _separateMask: {fileID: 0}
-  _sprite: {fileID: 0}
-  _spriteBorderMode: 0
-  _texture: {fileID: 0}
-  _textureUVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  _channelWeights: {r: 0, g: 0, b: 0, a: 1}
-  _raycastThreshold: 0
-  _invertMask: 0
-  _invertOutsides: 0
 --- !u!1 &2247327693751602657
 GameObject:
   m_ObjectHideFlags: 0
