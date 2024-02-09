@@ -216,6 +216,7 @@ public class SNSSettingController : MonoBehaviour
 
             myAccountScreen.SetActive(false);
             FeedUIController.Instance.ResetAllFeedScreen(false);
+            FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
