@@ -15,6 +15,7 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followerBtn;
     public Button followingBtn;
     public GameObject editProfileBtn;
+    public GameObject followProfileBtn;
 
     [Space]
     [Header("User Avatar Preview Objects")]
