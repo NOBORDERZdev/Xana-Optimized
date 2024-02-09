@@ -2865,22 +2865,22 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to profile follower button click.......
     public void OnClickFollowerButton()
     {
-        FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(0, topHaderUserNameText.text);
+        //FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(0, topHaderUserNameText.text);
+        FeedUIController.Instance.OnClickProfileFollowerButton();
+        //if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count != myProfileData.followerCount)
+        //{
+        //    //FeedUIController.Instance.ProfileFollowerFollowingListClear();
 
-        if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count != myProfileData.followerCount)
-        {
-            FeedUIController.Instance.ProfileFollowerFollowingListClear();
+        //    //FeedUIController.Instance.ShowLoader(true);
+        //    FeedUIController.Instance.isProfileFollowerDataLoaded = false;
+        //    APIManager.Instance.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
 
-            //FeedUIController.Instance.ShowLoader(true);
-            FeedUIController.Instance.isProfileFollowerDataLoaded = false;
-            APIManager.Instance.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
-
-            if (followingCo != null)
-            {
-                StopCoroutine(followingCo);
-            }
-            followingCo = StartCoroutine(WaitToCallFollowing());
-        }
+        //    //if (followingCo != null)
+        //    //{
+        //    //    StopCoroutine(followingCo);
+        //    //}
+        //    //followingCo = StartCoroutine(WaitToCallFollowing());
+        //}
     }
 
     Coroutine followingCo;
@@ -2894,22 +2894,22 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to profile Following button click.......
     public void OnClickFollowingButtton()
     {
-        FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(1, topHaderUserNameText.text);
+        //FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(1, topHaderUserNameText.text);
+        FeedUIController.Instance.OnClickProfileFollowingButton();
+        //if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count != myProfileData.followingCount)
+        //{
+        //    //FeedUIController.Instance.ProfileFollowerFollowingListClear();
 
-        if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count != myProfileData.followingCount)
-        {
-            FeedUIController.Instance.ProfileFollowerFollowingListClear();
+        //    //FeedUIController.Instance.ShowLoader(true);
+        //    FeedUIController.Instance.isProfileFollowingDataLoaded = false;
+        //    APIManager.Instance.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
 
-            //FeedUIController.Instance.ShowLoader(true);
-            FeedUIController.Instance.isProfileFollowingDataLoaded = false;
-            APIManager.Instance.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
-
-            if (followeCo != null)
-            {
-                StopCoroutine(followeCo);
-            }
-            followeCo = StartCoroutine(WaitToFollower());
-        }
+        //    //if (followeCo != null)
+        //    //{
+        //    //    StopCoroutine(followeCo);
+        //    //}
+        //    //followeCo = StartCoroutine(WaitToFollower());
+        //}
     }
 
     Coroutine followeCo;

@@ -12,6 +12,7 @@ using SimpleJSON;
 public class FindFriendWithNameItem : MonoBehaviour
 {
     public SearchUserRow searchUserRow;
+    public AllFollowersRows allFollowersRows;
 
     public TextMeshProUGUI userNameText;
     public TextMeshProUGUI userBioText;
@@ -40,7 +41,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             profileImage.sprite = defaultSP;
         }
-        if (cnt > 0 && !string.IsNullOrEmpty(searchUserRow.avatar))
+        if (cnt > 0 && (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar)))
         {
             if (AssetCache.Instance.HasFile(searchUserRow.avatar))
             {
@@ -55,7 +56,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!string.IsNullOrEmpty(searchUserRow.avatar))
+        if (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar))
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
@@ -102,6 +103,44 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
 
     }
+    public void SetupData(AllFollowersRows allFollowersRows1)
+    {
+        allFollowersRows = allFollowersRows1;
+        this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
+        userNameText.text = allFollowersRows.follower.name;
+        if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
+        {
+            userBioText.text = APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
+        }
+        else
+        {
+            userBioText.text = "";
+        }
+        if (!string.IsNullOrEmpty(allFollowersRows.follower.avatar))
+        {
+            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
+            if (isUrlContainsHttpAndHttps)
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(allFollowersRows.follower.avatar, allFollowersRows.follower.avatar, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(profileImage, allFollowersRows.follower.avatar, changeAspectRatio: true);
+                    }
+                });
+            }
+            else
+            {
+                GetImageFromAWS(allFollowersRows.follower.avatar, profileImage);
+            }
+        }
+        FollowFollowingSetUp(allFollowersRows.isFollowing);
+        if (allFollowersRows.isFollowing)
+        {
+            UpdateBfBtn(allFollowersRows.isFollowing, true, allFollowersRows.isFriend);
+        }
+
+    }
     public void SetupDataHotUsers(SearchUserRow searchUserRow1, bool amifollowing, bool isfollowingme, bool isclosefriend)
     {
         searchUserRow = searchUserRow1;
@@ -144,6 +183,27 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         Debug.Log("Search User id:" + searchUserRow.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+        else
+        {
+            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
+            //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            //MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -193,8 +253,20 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.website = searchUserRow.userProfile.website;
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
+        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
+    }
 
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData, true);
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
     }
 
     public void FollowFollowingSetUp(bool isFollowing)

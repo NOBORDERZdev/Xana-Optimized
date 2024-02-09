@@ -156,16 +156,27 @@ public class FeedUIController : MonoBehaviour
     [Space]
     [Header("Profile Follower and Following list Reference")]
     public GameObject profileFollowerFollowingListScreen;
+    public GameObject profileFollowersPanel;
     public Transform profileFollowerListContainer;
+    public GameObject noProfileFollowers;
+    public GameObject profileFollowingPanel;
     public Transform profileFollowingListContainer;
+    public GameObject noProfileFollowing;
     public Transform adFrndFollowingListContainer;
     public GameObject followerPrefab;
     public GameObject followingPrefab;
     public GameObject adFriendFollowingPrefab;
+    public GameObject profileSerachBar;
+    public GameObject profileSerachBarContainer;
+    public Transform profileSerachResultsContainer;
+    public GameObject profileFinfFriendScreen;
+    public AdvancedInputField profileFinfFriendAdvancedInputField;
+    public GameObject profileNoSearchFound;
     public TextMeshProUGUI profileFFScreenTitleText;
     public Transform profileFFLineSelection;
     public Transform[] profileFFSelectionTab;
     public TextMeshProUGUI[] profileFFSelectionTabText;
+    public Image[] profileFFSelectionTabLine;
     public HorizontalScrollSnap profileFollowerFollowingHorizontalScroll;
     public ScrollRectFasterEx[] profileFFScreenScrollrectFasterEXList;
     public int profileFollowerPaginationPageNo = 1;
@@ -397,6 +408,21 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
+    public void OnClickProfileSearchBtn()
+    {
+
+        profileSerachBar.SetActive(!profileSerachBar.activeInHierarchy);
+        if (profileSerachBar.activeInHierarchy)
+        {
+            profileSerachBarContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
+        }
+        else
+        {
+            profileSerachBarContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        }
+        profileFinfFriendAdvancedInputField.Text = "";
+        profileFinfFriendScreen.gameObject.SetActive(false);
+    }
     public void OnClickFeedSearchBtn()
     {
 
@@ -556,27 +582,27 @@ public class FeedUIController : MonoBehaviour
     public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
     {
         //otherPlayerProfileScreen.SetActive(true);
-        OtherPlayerProfileData.Instance.gameObject.SetActive(true);
-        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-        MyProfileDataManager.Instance.gameObject.SetActive(false);
+        //OtherPlayerProfileData.Instance.gameObject.SetActive(true);
+        //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        //MyProfileDataManager.Instance.gameObject.SetActive(false);
 
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        //ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        //ProfileUIHandler.instance.SetMainScrolRefs();
         //Other player avatar initialization required here
 
-        if (_callFromFindFriendWithName)
-        {
-            if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
-            {
-                //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
-                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
-            }
-            else
-            {
-                //print("wearing default clothing here");
-                ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
-            }
-        }
+        //if (_callFromFindFriendWithName)
+        //{
+        //    if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
+        //    {
+        //        //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+        //        ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
+        //    }
+        //    else
+        //    {
+        //        //print("wearing default clothing here");
+        //        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //    }
+        //}
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
@@ -1045,7 +1071,32 @@ public class FeedUIController : MonoBehaviour
             }
         }
     }
-
+    public void OnValueChangedProfileSearch()
+    {
+        //if (!string.IsNullOrEmpty(findFriendInputField.text))
+        if (!string.IsNullOrEmpty(profileFinfFriendAdvancedInputField.Text))
+        {
+            //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
+            APIManager.Instance.RequestGetSearchUserForProfile(profileFinfFriendAdvancedInputField.Text);
+            if (!profileFinfFriendScreen.gameObject.activeInHierarchy)
+            {
+                profileFinfFriendScreen.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            //if user typed character clear then clear all search user list.
+            if (profileFinfFriendScreen.gameObject.activeInHierarchy)
+            {
+                profileFinfFriendAdvancedInputField.Text = "";
+                profileFinfFriendScreen.gameObject.SetActive(false);
+            }
+            foreach (Transform item in profileSerachResultsContainer)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+    }
     //this method is used to back button click find friend screen.......
     public void OnClickBackFindFriendButton()
     {
@@ -1467,29 +1518,33 @@ public class FeedUIController : MonoBehaviour
     //this method is used to profile follower button click.......
     public void ProfileFollowerFollowingScreenSetup(int Tabindex, string userName)
     {
-        string titleLocalize = TextLocalization.GetLocaliseTextByKey("s friends");
-        if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
-        {
-            titleLocalize = "'" + titleLocalize;
-        }
+        //string titleLocalize = TextLocalization.GetLocaliseTextByKey("s friends");
+        //if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
+        //{
+        //    titleLocalize = "'" + titleLocalize;
+        //}
 
-        profileFFScreenTitleText.text = userName + titleLocalize;
+        //profileFFScreenTitleText.text = userName + titleLocalize;
         profileFollowerFollowingListScreen.SetActive(true);
-        if (tempFollowFollowingScreenOpenCount == 0)
+        if (ProfileUIHandler.instance)
         {
-            StartCoroutine(WaitToProfileFollowerFollowingHorizontalScroll(Tabindex));
+            ProfileUIHandler.instance.gameObject.SetActive(false);
         }
-        else
-        {
-            profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
-        }
+        //if (tempFollowFollowingScreenOpenCount == 0)
+        //{
+        //    StartCoroutine(WaitToProfileFollowerFollowingHorizontalScroll(Tabindex));
+        //}
+        //else
+        //{
+        //    profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
+        //}
         ProfileFFLineSelectionSetup(Tabindex);
 
-        for (int i = 0; i < profileFFScreenScrollrectFasterEXList.Length; i++)
-        {
-            profileFFScreenScrollrectFasterEXList[i].verticalNormalizedPosition = 1;
-        }
-        tempFollowFollowingScreenOpenCount++;
+        //for (int i = 0; i < profileFFScreenScrollrectFasterEXList.Length; i++)
+        //{
+        //    profileFFScreenScrollrectFasterEXList[i].verticalNormalizedPosition = 1;
+        //}
+        //tempFollowFollowingScreenOpenCount++;
         //MyProfileDataManager.Instance.MyProfileSceenShow(false);
     }
 
@@ -1508,20 +1563,22 @@ public class FeedUIController : MonoBehaviour
 
     public void ProfileFFLineSelectionSetup(int index)
     {
-        float xPos = profileFFSelectionTab[index].position.x;
-        profileFFLineSelection.transform.DOMoveX(xPos, .2f);
+        //float xPos = profileFFSelectionTab[index].position.x;
+        //profileFFLineSelection.transform.DOMoveX(xPos, .2f);
 
         for (int i = 0; i < profileFFSelectionTabText.Length; i++)
         {
             if (i == index)
             {
                 profileFFSelectionTabText[i].color = selectedColor;
-                profileFFSelectionTabText[i].fontStyle = FontStyles.Bold;
+                profileFFSelectionTabLine[i].gameObject.SetActive(true);
+                //profileFFSelectionTabText[i].fontStyle = FontStyles.Bold;
             }
             else
             {
                 profileFFSelectionTabText[i].color = unSelectedColor;
-                profileFFSelectionTabText[i].fontStyle = FontStyles.Normal;
+                profileFFSelectionTabLine[i].gameObject.SetActive(false);
+                //profileFFSelectionTabText[i].fontStyle = FontStyles.Normal;
             }
         }
     }
@@ -1529,31 +1586,39 @@ public class FeedUIController : MonoBehaviour
     public void OnClickProfileFollowerFollowingBackButton()
     {
         RemoveUnFollowedUserFromFollowingTab();
-
+        MyProfileDataManager.Instance.MyProfileSceenShow(true);
         profileFollowerFollowingListScreen.SetActive(false);
-
-        //MyProfileDataManager.Instance.MyProfileSceenShow(true);
     }
 
     public void ProfileGetAllFollower(int pageNum)
     {
+        noProfileFollowers.SetActive(false);
+        foreach (Transform item in profileFollowerListContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
         //Debug.Log("ProfileGetAllFollower:" + APIManager.Instance.profileAllFollowerRoot.data.rows.Count + "    :pageNum:" + pageNum);
-        for (int i = 0; i < APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
+        if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
         {
-            if (!profileFollowerLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id))
+            for (int i = 0; i < APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
             {
-                GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                followerObject.GetComponent<FollowerItemController>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[i]);
-                profileFollowerItemControllersList.Add(followerObject.GetComponent<FollowerItemController>());
-                profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
+                if (!profileFollowerLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id))
+                {
+                    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[i]);
+                    //profileFollowerItemControllersList.Add(followerObject.GetComponent<FollowerItemController>());
+                    //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
+                }
             }
-        }
-
-        if (waitToProfileFollowerDataLoadCo != null)
+        }else
         {
-            StopCoroutine(waitToProfileFollowerDataLoadCo);
+            noProfileFollowers.SetActive(true);
         }
-        waitToProfileFollowerDataLoadCo = StartCoroutine(WaitToProfileFollowerDataLoad(pageNum));
+        //if (waitToProfileFollowerDataLoadCo != null)
+        //{
+        //    StopCoroutine(waitToProfileFollowerDataLoadCo);
+        //}
+        //waitToProfileFollowerDataLoadCo = StartCoroutine(WaitToProfileFollowerDataLoad(pageNum));
     }
 
     Coroutine waitToProfileFollowerDataLoadCo;
@@ -2975,8 +3040,24 @@ public class FeedUIController : MonoBehaviour
         UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
     }
 
-
-     /// <summary>
+    public void OnClickProfileFollowerButton() 
+    {
+        profileFollowersPanel.SetActive(true);
+        profileFollowingPanel.SetActive(false);
+        profileFinfFriendScreen.SetActive(false);
+        APIManager.Instance.RequestGetAllFollowersFromProfile(APIManager.Instance.userId.ToString(), 1, 50);
+        ProfileFollowerFollowingScreenSetup(0, "");
+    }
+    public void OnClickProfileFollowingButton()
+    {
+        profileFollowingPanel.SetActive(true);
+        profileFollowersPanel.SetActive(false);
+        profileFinfFriendScreen.SetActive(false);
+        APIManager.Instance.RequestGetAllFollowingFromProfile(APIManager.Instance.userId.ToString(), 1, 50);
+        ProfileFollowerFollowingScreenSetup(1, "");
+        //FeedUIController.Instance.OnClickProfileFollowingButton();
+    }
+    /// <summary>
     /// Check following count. if count is less than zero than show no following panel
     /// </summary>
     /// 
