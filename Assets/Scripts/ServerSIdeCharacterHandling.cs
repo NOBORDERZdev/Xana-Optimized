@@ -222,6 +222,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
                     string jbody = JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
+                    //if user does not have data then open preset panel
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     print("!!GetUserData IF");
                 }
@@ -248,7 +250,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                         yield return new WaitForSeconds(0.1f);
                     //}
                     loadprevious();
-                    StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
 
                     //On merging from Release getting this error
@@ -479,6 +481,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string id;
         public string name;
         public string thumbnail;
+        public string gender;
         public List<Item> myItemObj;
 
         public List<BoneDataContainer> SavedBones;

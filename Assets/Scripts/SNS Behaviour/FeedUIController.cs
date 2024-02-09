@@ -204,6 +204,8 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
     [SerializeField] public GameObject AddFreindContainer;
     [SerializeField] public GameObject ExtraPrefab;
+    [Header("Feed 2.0")]
+    [SerializeField] GameObject FeedSerachBar;
     private void Awake()
     {
         if (Instance == null)
@@ -246,28 +248,29 @@ public class FeedUIController : MonoBehaviour
     {
         //Debug.Log("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         //Debug.Log("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
-
-        if (GlobalVeriableClass.callingScreen == "Feed")
-        {
-            StartCoroutine(WaitToSceneLoad());
-        }
-
-        SetupFollowerAndFeedScreen(false);
+        
+        // OLD FEED UI
+        //if (GlobalVeriableClass.callingScreen == "Feed")
+        //{
+        //    StartCoroutine(WaitToSceneLoad());
+        //}
+        ///SetupFollowerAndFeedScreen(false);
+        //END Old UI CODE
     }
 
     IEnumerator WaitToSceneLoad()
     {
         yield return new WaitForSeconds(0);
-
-        SetupLineSelectionPosition();//move Selection Line
-
+        // OLD FEED UI
+        ///SetupLineSelectionPosition();//move Selection Line
+        // END OLD FEED UI
         //APIManager.Instance.RequestGetAllFollowers(1, 10, "FeedStart");//Get All Follower
-
-        for (int i = 0; i < allFeedMessageTextList.Count; i++)
-        {
-            AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
-        }
-
+        // OLD FEED UI
+        //for (int i = 0; i < allFeedMessageTextList.Count; i++)
+        //{
+        //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
+        //}
+        // END Old UI
         //Debug.Log("FeedUIController Start:" + Application.internetReachability);
         //rik for start of the feed scene load data and default api calling....... 
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -315,8 +318,10 @@ public class FeedUIController : MonoBehaviour
 
     public void AllFeedScreenMessageTextActive(bool isActive, int index, string message)
     {
-        allFeedMessageTextList[index].text = message;
-        allFeedMessageTextList[index].gameObject.SetActive(isActive);
+        // OLD FEED UI
+        ////allFeedMessageTextList[index].text = message;
+        ////allFeedMessageTextList[index].gameObject.SetActive(isActive);
+        // END OLD FEED UI
     }
 
     public void OnClickFollowingTabBtnClick()
@@ -344,11 +349,14 @@ public class FeedUIController : MonoBehaviour
         if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
         {
            Debug.Log("Feed Data Load");
-            StartCoroutine(WaitToSceneLoad());
+        
+            // OLD FEED UI
+            ///StartCoroutine(WaitToSceneLoad());
+            // END OLD FEED UI
         }
 
         feedUiScreen.SetActive(isFeedScreen);
-        otherPlayerProfileScreen.SetActive(false);
+        //otherPlayerProfileScreen.SetActive(false);
         giftItemScreens.SetActive(false);
         feedVideoScreen.SetActive(false);
         //findFriendScreen.SetActive(false);
@@ -356,7 +364,10 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
-        OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        if (OtherPlayerProfileData.Instance)
+        {
+            OtherPlayerProfileData.Instance.backKeyManageList.Clear();
+        }
 
         SNSSettingController.Instance.myAccountScreen.SetActive(false);
         SNSSettingController.Instance.myAccountPersonalInfoScreen.SetActive(false);
@@ -386,7 +397,21 @@ public class FeedUIController : MonoBehaviour
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
+    public void OnClickFeedSearchBtn()
+    {
 
+        FeedSerachBar.SetActive(!FeedSerachBar.activeInHierarchy);
+        //if (FeedSerachBar.activeInHierarchy)
+        //{
+        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
+        //}
+        //else
+        //{
+        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        //}
+        //FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
+        //FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
+    }
     /*public IEnumerator WaitToResetAllFeedScreen(bool isFeedScreen)
     {
         yield return new WaitForSeconds(0f);
@@ -505,19 +530,20 @@ public class FeedUIController : MonoBehaviour
         }
         else
         {
-            if (!TopPanelMainStoryObj.activeSelf)
-            {
-                return;
-            }
-            TopPanelMainStoryObj.SetActive(false);
+            //Commented in order to make profile 2.0 work after ahsan bhai removed old feedui object from scene ----- UMER
+            //if (!TopPanelMainStoryObj.activeSelf)
+            //{
+            //    return;
+            //}
+            //TopPanelMainStoryObj.SetActive(false);
 
-            TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
+            //TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+            //TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
 
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            }
+            //for (int i = 0; i < allFeedPanel.Length; i++)
+            //{
+            //    allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+            //}
         }
     }
     #endregion
@@ -527,16 +553,38 @@ public class FeedUIController : MonoBehaviour
         Initiate.Fade("Main", Color.black, 1.0f);
     }
 
-    public void OnClickCheckOtherPlayerProfile()
+    public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
     {
-        otherPlayerProfileScreen.SetActive(true);
+        //otherPlayerProfileScreen.SetActive(true);
+        OtherPlayerProfileData.Instance.gameObject.SetActive(true);
+        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        MyProfileDataManager.Instance.gameObject.SetActive(false);
+
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        //Other player avatar initialization required here
+
+        if (_callFromFindFriendWithName)
+        {
+            if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
+            {
+                //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
+            }
+            else
+            {
+                //print("wearing default clothing here");
+                ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+            }
+        }
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
             switch (OtherPlayerProfileData.Instance.backKeyManageList[OtherPlayerProfileData.Instance.backKeyManageList.Count - 1])
             {
                 case "FollowerFollowingListScreen":
-                    MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
+                    //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+                    //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
                     break;
@@ -595,8 +643,9 @@ public class FeedUIController : MonoBehaviour
     {
         if (feedUiScreen.activeSelf)
         {
-            SetupLineSelectionPosition();//move Selection Line
-
+            // OLD FEED UI
+            /// SetupLineSelectionPosition();//move Selection Line
+            // END OLD FEED UI
             //feedUiSelectionLine.transform.DOMove(new Vector3((feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x), feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
             /*for (int i = 0; i < feedUiTabTitleText.Length; i++)
             {
@@ -613,8 +662,9 @@ public class FeedUIController : MonoBehaviour
             //  if (feedUiHorizontalSnap.CurrentPage != 0)
             // {
             isChangeMainScrollRect = true;
-            feedUiScrollRectFasterEx = allFeedScrollRectFasterEx[feedUiHorizontalSnap.CurrentPage];
-
+            // OLD FEED UI
+            //feedUiScrollRectFasterEx = allFeedScrollRectFasterEx[feedUiHorizontalSnap.CurrentPage];
+           // OLD FEED UI
             StartCoroutine(WaitChangeScrollRectFasterOnMain());
             // }
         }
@@ -622,53 +672,55 @@ public class FeedUIController : MonoBehaviour
 
     void SetupLineSelectionPosition()
     {
-        float xPos;
-        if (feedUiHorizontalSnap.CurrentPage == 0)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 25f;
-        }
-        else if (feedUiHorizontalSnap.CurrentPage == 1)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 10f;
-        }
-        else if (feedUiHorizontalSnap.CurrentPage == 2)
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x + 11f;
-        }
-        else
-        {
-            xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x;
-        }
+        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+        //float xPos;
+        //if (feedUiHorizontalSnap.CurrentPage == 0)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 25f;
+        //}
+        //else if (feedUiHorizontalSnap.CurrentPage == 1)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 10f;
+        //}
+        //else if (feedUiHorizontalSnap.CurrentPage == 2)
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x + 11f;
+        //}
+        //else
+        //{
+        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x;
+        //}
 
-        //feedUiSelectionLine.transform.DOMove(new Vector3(xPos, feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
-        feedUiSelectionLine.transform.DOMoveX(xPos, .2f);
+        ////feedUiSelectionLine.transform.DOMove(new Vector3(xPos, feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
+        //feedUiSelectionLine.transform.DOMoveX(xPos, .2f);
 
-        //SetColor Feed Tab Title Text
-        for (int i = 0; i < feedUiTabTitleText.Length; i++)
-        {
-            if (i == feedUiHorizontalSnap.CurrentPage)
-            {
-                feedUiTabTitleText[i].color = selectedColor;
-                feedUiTabTitleText[i].fontStyle = FontStyles.Bold;
-            }
-            else
-            {
-                feedUiTabTitleText[i].color = unSelectedColor;
-                feedUiTabTitleText[i].fontStyle = FontStyles.Normal;
-            }
-            /*if (i == 1)//new cmnt
-            {
-                StartCoroutine(SetContentOnFollowingItemScreen());
-            }*/
-        }
+        ////SetColor Feed Tab Title Text
+        //for (int i = 0; i < feedUiTabTitleText.Length; i++)
+        //{
+        //    if (i == feedUiHorizontalSnap.CurrentPage)
+        //    {
+        //        feedUiTabTitleText[i].color = selectedColor;
+        //        feedUiTabTitleText[i].fontStyle = FontStyles.Bold;
+        //    }
+        //    else
+        //    {
+        //        feedUiTabTitleText[i].color = unSelectedColor;
+        //        feedUiTabTitleText[i].fontStyle = FontStyles.Normal;
+        //    }
+        //    /*if (i == 1)//new cmnt
+        //    {
+        //        StartCoroutine(SetContentOnFollowingItemScreen());
+        //    }*/
+        //}
+        //------UMER
     }
 
     public IEnumerator SetContentOnFollowingItemScreen()
     {
         yield return new WaitForSeconds(0.01f);
-        followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.05f);
-        followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     public void SetUpFeedTabDefaultTop()
@@ -692,10 +744,12 @@ public class FeedUIController : MonoBehaviour
                 if (i == index)
                 {
                     allFeedPanel[i].transform.gameObject.SetActive(true);
-                    if (callingIndex == 1)//set default scroll top.......
-                    {
-                        SetUpFeedTabDefaultTop();
-                    }
+                    // OLD FEED UI
+                    ////if (callingIndex == 1)//set default scroll top.......
+                    ////{
+                    ////    SetUpFeedTabDefaultTop();
+                    ////}
+                    //  End OLD FEED UI
                 }
             }
             yield return new WaitForSeconds(0.5f);
@@ -1507,7 +1561,7 @@ public class FeedUIController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         isProfileFollowerDataLoaded = true;
-        if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
+      if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
         {
             profileFollowerPaginationPageNo += 1;
         }
@@ -1862,15 +1916,16 @@ public class FeedUIController : MonoBehaviour
             DestroyImmediate(editDeleteCurrentPostFeedVideoItem.gameObject);
             editDeleteCurrentPostFeedVideoItem = null;
         }
-
-        if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
-        {
-            AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-        }
-        else
-        {
-            AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-        }
+        // OLD FEED UI
+        //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //{
+        //    AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //}
+        //else
+        //{
+        //    AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //}
+        // END OLD FEED UI
 
         if (videoFeedRect.GetComponent<ScrollSnapRect>().startingPage > 0)
         {
