@@ -19,8 +19,8 @@ public class AvatarController : MonoBehaviour
     public bool isLoadStaticClothFromJson;
     public string staticClothJson;
     public string clothJson;
-    public SkinnedMeshRenderer head;
-    public SkinnedMeshRenderer Body;
+    //public SkinnedMeshRenderer head;
+    //public SkinnedMeshRenderer Body;
     public GameObject wornHair, wornPant, wornShirt, wornShose, wornEyewearable, wornGloves, wornChain;
     [HideInInspector]
     public int wornHairId, hairColorPaletteId, wornPantId, wornShirtId, wornShoesId, wornEyewearableId, skinId, faceId, eyeBrowId, eyeBrowColorPaletteId, eyesId, eyesColorId, eyesColorPaletteId, noseId, lipsId, lipsColorId, lipsColorPaletteId, bodyFat, makeupId, eyeLashesId, wornGlovesId, wornChainId;
@@ -30,15 +30,15 @@ public class AvatarController : MonoBehaviour
     public AvatarGender avatarGender;
 
     public List<Texture> masks = new List<Texture>();
-    CharcterBodyParts characterBodyParts;
     public bool IsInit = false;
 
     //NFT avatar color codes
     public NFTColorCodes _nftAvatarColorCodes;
     public bool isVisibleOnCam = false;
+    public CharcterBodyParts characterBodyParts;
     private void Awake()
     {
-        characterBodyParts = this.GetComponent<CharcterBodyParts>();
+        //characterBodyParts = this.GetComponent<CharcterBodyParts>();
         if (SceneManager.GetActiveScene().name == "ARModuleActionScene" || SceneManager.GetActiveScene().name == "ARModuleRoomScene" || SceneManager.GetActiveScene().name == "ARModuleRealityScene")
         {
             transform.localScale *= 2;
@@ -112,12 +112,12 @@ public class AvatarController : MonoBehaviour
             characterBodyParts.DefaultTexture(false);
             ResizeClothToBodyFat(this.gameObject, 0);
 
-            characterBodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 0);
-            characterBodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 0);
+            characterBodyParts.head.materials[2].SetInt("_Active", 0);
+            characterBodyParts.body.materials[0].SetInt("_Active", 0);
 
             //extra blendshape added to character to build muscles on Character
-            characterBodyParts.Head.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(54, 100);
-            characterBodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+            characterBodyParts.head.SetBlendShapeWeight(54, 100);
+            characterBodyParts.body.SetBlendShapeWeight(0, 100);
 
             BoxerNFTEventManager.OnNFTequipShaderUpdate?.Invoke();
 
@@ -150,8 +150,8 @@ public class AvatarController : MonoBehaviour
             UnStichItem("Glove");
         }
 
-        characterBodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 1);
-        characterBodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 1);
+        characterBodyParts.head.materials[2].SetInt("_Active", 1);
+        characterBodyParts.body.materials[0].SetInt("_Active", 1);
 
         BoxerNFTEventManager.OnNFTUnequipShaderUpdate?.Invoke();
         BoxerNFTEventManager.NFTLightUpdate?.Invoke(LightPresetNFT.DefaultSkin);
@@ -227,6 +227,15 @@ public class AvatarController : MonoBehaviour
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _PCharacterData=_CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
+
+            if (_CharacterData.gender == AvatarGender.Female.ToString())
+            {
+                CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
+            }
+            else
+            {
+                CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
+            }
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
                 if (_CharacterData.myItemObj.Count > 0)
@@ -440,14 +449,6 @@ public class AvatarController : MonoBehaviour
                 }
                 SetItemIdsFromFile(_CharacterData);
                 characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                if (_CharacterData.gender == AvatarGender.Female.ToString())
-                {
-                    CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
-                }
-                else
-                {
-                    CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
-                }
 
             }
             else // wolrd scence 
@@ -624,22 +625,15 @@ public class AvatarController : MonoBehaviour
                     characterBodyParts.SetSssIntensity(0, this.gameObject);
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                     LoadBonesData(_CharacterData, this.gameObject);
-                    if (_CharacterData.gender == AvatarGender.Female.ToString())
-                    {
-                        CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
-                    }
-                    else
-                    {
-                        CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
-                    }
+                    
                 }
             }
         }
         if (XanaConstants.xanaConstants.isNFTEquiped)
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        if (head != null && Body != null)
+        if (characterBodyParts.head != null && characterBodyParts.body != null)
         {
-            head.enabled = Body.enabled = true;
+            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         }
     }
 
@@ -820,9 +814,9 @@ public class AvatarController : MonoBehaviour
         characterBodyParts.SetSssIntensity(0, this.gameObject);
         characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
         LoadBonesData(_CharacterData, this.gameObject);
-        if (head != null && Body != null)
+        if (characterBodyParts.head != null && characterBodyParts.body != null)
         {
-            head.enabled = Body.enabled = true;
+            characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         }
     }
 

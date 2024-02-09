@@ -56,8 +56,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShose)
                 playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
             playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
             defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
