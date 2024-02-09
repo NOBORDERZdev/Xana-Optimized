@@ -16,6 +16,7 @@ public class FeedController : MonoBehaviour
 {
     [SerializeField] private FeedUIController feedUIController;
     [SerializeField] private GameObject feedPostPrefab;
+    [SerializeField] private GameObject emptyPrefab;
     [SerializeField] private Transform feedContentParent;
     int feedPageNumber = 1;
     int feedPageSize = 100;
@@ -319,6 +320,9 @@ public class FeedController : MonoBehaviour
                         temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }
+                GameObject emptySerach = Instantiate(emptyPrefab);
+                emptySerach.transform.SetParent(SearchContentPanel.transform);
+                emptySerach.transform.localScale = Vector3.one;
             }
             else
             {
