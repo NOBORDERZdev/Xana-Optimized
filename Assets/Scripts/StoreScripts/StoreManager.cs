@@ -161,7 +161,7 @@ public class StoreManager : MonoBehaviour
     public GameObject UndoBtn, RedoBtn, AvatarSaved, AvatarSavedGuest, AvatarUpdated;
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
-    public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
+    public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel;
    // public GameObject backbutton_preset;
     public Transform contentList;
 

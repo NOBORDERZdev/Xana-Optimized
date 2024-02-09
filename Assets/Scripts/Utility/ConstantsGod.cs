@@ -243,4 +243,8 @@ public class ConstantsGod
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
+
+    #region UGC Api's
+    public static string UGCAiApi = "https://36dc-39-61-48-164.ngrok-free.app/analyze-image/";
+    #endregion
 }

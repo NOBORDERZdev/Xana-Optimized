@@ -199,7 +199,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
-    public GameObject LogoImage,LogoImage2,LogoImage3;
+    public GameObject LogoImage,LogoImage2,LogoImage3,renderImage;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
@@ -3463,10 +3463,11 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
+            Debug.Log("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
-
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
             //  StoreManager.instance.OnSaveBtnClicked();
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
