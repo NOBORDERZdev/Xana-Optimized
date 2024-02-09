@@ -61,11 +61,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
         {
             XanaConstants.xanaConstants.isBackFromPMY = true;
-            if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-            {
-                PlayerPrefs.DeleteKey("IsProcessComplete");
-                PlayerPrefs.DeleteKey("shownWelcome");
-            }
+            //if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+            //{
+            //    PlayerPrefs.DeleteKey("IsProcessComplete");
+            //    PlayerPrefs.DeleteKey("shownWelcome");
+            //}
         }
 
         disableSoundXanalobby();

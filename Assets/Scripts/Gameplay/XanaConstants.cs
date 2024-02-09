@@ -113,11 +113,12 @@ public class XanaConstants : MonoBehaviour
     public bool isBackFromPMY = false;
     public enum MetaverseType { PMY, XANA }
     public MetaverseType metaverseType;
-    [Space(5)]
-    //[HideInInspector]
+    public GameObject xanaData;
+    [HideInInspector]
     public bool isScreenSoundOn = true;
     [HideInInspector]
     public bool needToClearMemory = true;
+    [Space(5)]
     // Tutorials
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
@@ -155,6 +156,15 @@ public class XanaConstants : MonoBehaviour
 
     public void Awake()
     {
+        if (metaverseType == MetaverseType.PMY)
+        {
+            if (!Application.isEditor)
+                pmy_isTesting = false;
+            xanaData.SetActive(false);
+        }
+        else
+            xanaData.SetActive(true);
+
         if (xanaConstants)
         {
             DestroyImmediate(this.gameObject);
