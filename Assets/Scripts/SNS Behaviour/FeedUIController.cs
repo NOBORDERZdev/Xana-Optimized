@@ -217,6 +217,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject ExtraPrefab;
     [Header("Feed 2.0")]
     [SerializeField] GameObject FeedSerachBar;
+    public FeedController feedController;
     private void Awake()
     {
         if (Instance == null)
@@ -235,6 +236,10 @@ public class FeedUIController : MonoBehaviour
             return;
         }
         callCount += 1;
+        if (feedController == null)
+        {
+            feedController = feedUiScreen.GetComponentInChildren<FeedController>();
+        }
     }
 
     IEnumerator WaitToStartCallForFeedScene()

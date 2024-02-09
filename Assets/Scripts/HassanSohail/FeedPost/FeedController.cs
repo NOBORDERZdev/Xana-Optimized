@@ -16,6 +16,7 @@ public class FeedController : MonoBehaviour
 {
     [SerializeField] private FeedUIController feedUIController;
     [SerializeField] private GameObject feedPostPrefab;
+    [SerializeField] private GameObject emptyPrefab;
     [SerializeField] private Transform feedContentParent;
     int feedPageNumber = 1;
     int feedPageSize = 100;
@@ -266,7 +267,7 @@ public class FeedController : MonoBehaviour
             SerachPanel.SetActive(true);
             SearchContentPanel.SetActive(true);
         }
-    }
+    } 
 
     public void SearchFeed(){
         print("~~~~~");
@@ -306,7 +307,7 @@ public class FeedController : MonoBehaviour
             feedContentParent.gameObject.SetActive(false);
             print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
             FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-            if (feedResponseData.data.rows.Count>0)
+            if (feedResponseData!=null && feedResponseData.data.rows.Count>0)
             {
                 foreach (var item in feedResponseData.data.rows)
                 {
@@ -319,6 +320,9 @@ public class FeedController : MonoBehaviour
                         temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }
+                GameObject emptySerach = Instantiate(emptyPrefab);
+                emptySerach.transform.SetParent(SearchContentPanel.transform);
+                emptySerach.transform.localScale = Vector3.one;
             }
             else
             {
@@ -361,12 +365,31 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
+        EmptySearchPanel();
+        noFeedSerach. gameObject.SetActive(false);
+        noFeedsScreen.gameObject.SetActive(false);
+        FeedLoader.gameObject.SetActive(false);
         FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
     }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+    }
 
+    /// <summary>
+    /// To reset the feed controller on signout
+    /// </summary>
+    public void ResetFeedController(){ 
+        SerachPanel.SetActive(false);
+        feedContentParent.gameObject.SetActive(true);
+        SerchBarObj.SetActive(false);
+        searchInputField.Text = "";
+        isFeedInitialized = false;
+        FeedAPIData.Clear();
+        scrollerController._data.Clear();
+        scrollerController.feedHeight.Clear();
+        scrollerController.scroller.ClearAll();
+        scrollerController.scroller.ReloadData();
     }
 }
 

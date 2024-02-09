@@ -24,7 +24,7 @@ public class BottomTabManager : MonoBehaviour
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
-
+    AdditiveScenesManager additiveScenesManager;
     private void Awake()
     {
         if (GameManager.Instance.defaultSelection == 3)
@@ -51,6 +51,10 @@ public class BottomTabManager : MonoBehaviour
         if (UIManager.Instance != null && GameManager.Instance.defaultSelection == 0)
         {
             CheckLoginOrNotForFooterButton();
+        }
+        if (additiveScenesManager== null)
+        {
+            additiveScenesManager = GameManager.Instance.additiveScenesManager;
         }
     }
 
@@ -212,10 +216,10 @@ public class BottomTabManager : MonoBehaviour
         if (/*GameManager.Instance.defaultSelection != 0*/ true)
         {
             GameManager.Instance.defaultSelection = 0;
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(false);
+                additiveScenesManager.SNSMessage.SetActive(false);
             }
             //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
@@ -258,10 +262,10 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.defaultSelection = 1;
             //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //OnSelectedClick(0);
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(false);
+                additiveScenesManager.SNSMessage.SetActive(false);
             }
             ////---->>>Sannan   if (UIManager.Instance != null)
             //   {
@@ -338,10 +342,10 @@ public class BottomTabManager : MonoBehaviour
         {
             // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(false);
+                additiveScenesManager.SNSMessage.SetActive(false);
             }
             if (UIManager.Instance != null)
             {
@@ -374,14 +378,14 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
             // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             OnSelectedClick(1);
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if(additiveScenesManager != null)
             {
                 if (MessageController.Instance != null)
                 {
                     MessageController.Instance.isChatDetailsScreenDeactive = true;
                 }
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(true);
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
+                additiveScenesManager.SNSMessage.SetActive(true);
+                additiveScenesManager.SNSmodule.SetActive(false);
                 GameManager.Instance.defaultSelection = 1;
                 MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
             }
@@ -463,10 +467,10 @@ public class BottomTabManager : MonoBehaviour
             // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
             GlobalVeriableClass.callingScreen = "Feed";
             // GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(true);
+                additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 3;
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
@@ -536,10 +540,10 @@ public class BottomTabManager : MonoBehaviour
             GameManager.Instance.defaultSelection = 5;
             GlobalVeriableClass.callingScreen = "Feed";
 
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(true);
+                additiveScenesManager.SNSMessage.SetActive(false);
             }
             else
             {
@@ -627,10 +631,10 @@ public class BottomTabManager : MonoBehaviour
             // LoaderShow(true);
             //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
 
-            if (FindObjectOfType<AdditiveScenesManager>() != null)
+            if (additiveScenesManager != null)
             {
-                FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(true);
-                FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                additiveScenesManager.SNSmodule.SetActive(true);
+                additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 4;
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
             }
@@ -689,10 +693,10 @@ public class BottomTabManager : MonoBehaviour
 
     public void ShopButtonClicked()
     {
-        if (FindObjectOfType<AdditiveScenesManager>() != null)
+        if (additiveScenesManager != null)
         {
-            FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-            FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+            additiveScenesManager.SNSmodule.SetActive(false);
+            additiveScenesManager.SNSMessage.SetActive(false);
             // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().GameManager.Instance.defaultSelection = 4;
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
