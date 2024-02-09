@@ -75,7 +75,7 @@ public class CharcterBodyParts : MonoBehaviour
     private Material characterHeadMat, characterBodyMat;
 
 
-    AvatarController avatarController;
+    public AvatarController avatarController;
 
     //public AvatarGender avatarGender;
     public GameObject[] maleAvatarMeshes;
@@ -127,7 +127,7 @@ public class CharcterBodyParts : MonoBehaviour
     private void Start()
     {
         blend = BlendShapeImporter.Instance;
-        avatarController = GetComponent<AvatarController>();
+        //avatarController = GetComponent<AvatarController>();
 
         characterHeadMat = Head.GetComponent<SkinnedMeshRenderer>().materials[2];
         characterBodyMat = Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0];
