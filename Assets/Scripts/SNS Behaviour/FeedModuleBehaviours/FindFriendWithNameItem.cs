@@ -106,6 +106,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void SetupData(AllFollowersRows allFollowersRows1)
     {
         allFollowersRows = allFollowersRows1;
+        searchUserRow.id = allFollowersRows.follower.id;
         this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
         userNameText.text = allFollowersRows.follower.name;
         if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
