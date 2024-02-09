@@ -1589,7 +1589,15 @@ public class FeedUIController : MonoBehaviour
         MyProfileDataManager.Instance.MyProfileSceenShow(true);
         profileFollowerFollowingListScreen.SetActive(false);
     }
-
+    public void OnClickStartFollowingButton()
+    {
+        profileFollowerFollowingListScreen.SetActive(false);
+        MyProfileDataManager.Instance.myProfileScreen.SetActive(false); 
+        AddFriendPanel.SetActive(true);
+        AddFriendSerachBar.SetActive(false);
+        OnClickHotFrnd();
+        APIManager.Instance.SetHotFriend();
+    }
     public void ProfileGetAllFollower(int pageNum)
     {
         noProfileFollowers.SetActive(false);
