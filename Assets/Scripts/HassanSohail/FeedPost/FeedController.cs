@@ -267,7 +267,7 @@ public class FeedController : MonoBehaviour
             SerachPanel.SetActive(true);
             SearchContentPanel.SetActive(true);
         }
-    }
+    } 
 
     public void SearchFeed(){
         print("~~~~~");
@@ -374,6 +374,22 @@ public class FeedController : MonoBehaviour
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+    }
+
+    /// <summary>
+    /// To reset the feed controller on signout
+    /// </summary>
+    public void ResetFeedController(){ 
+        SerachPanel.SetActive(false);
+        feedContentParent.gameObject.SetActive(true);
+        SerchBarObj.SetActive(false);
+        searchInputField.Text = "";
+        isFeedInitialized = false;
+        FeedAPIData.Clear();
+        scrollerController._data.Clear();
+        scrollerController.feedHeight.Clear();
+        scrollerController.scroller.ClearAll();
+        scrollerController.scroller.ReloadData();
     }
 }
 
