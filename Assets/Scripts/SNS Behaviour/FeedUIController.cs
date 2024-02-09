@@ -469,41 +469,75 @@ public class FeedUIController : MonoBehaviour
         MyProfileDataManager.Instance.myProfileData = new GetUserDetailData();
         MyProfileDataManager.Instance.allMyFeedImageRootDataList.Clear();
         MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Clear();
-        OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.Clear();
-        OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Clear();
-        OtherPlayerProfileData.Instance.backKeyManageList.Clear();
-        foreach (Transform item in followingFeedTabContainer)
+        if (OtherPlayerProfileData.Instance != null)
         {
-            Destroy(item.gameObject);
+            OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.Clear();
+            OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Clear();
+            OtherPlayerProfileData.Instance.backKeyManageList.Clear();
         }
-        foreach (Transform item in followingFeedTabLeftContainer)
+        if(followingFeedTabContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in followingFeedTabContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in followingFeedTabRightContainer)
+        
+        if (followingFeedTabContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in followingFeedTabLeftContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in forYouFeedTabContainer)
+
+        if (followingFeedTabRightContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in followingFeedTabRightContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in hotTabContainer)
+        
+        if (forYouFeedTabContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in forYouFeedTabContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in videofeedParent)
+        if (hotTabContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in hotTabContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in MyProfileDataManager.Instance.allPhotoContainer)
+        
+        if (videofeedParent)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in videofeedParent)
+            {
+                Destroy(item.gameObject);
+            }
         }
-        foreach (Transform item in MyProfileDataManager.Instance.allMovieContainer)
+
+        if (MyProfileDataManager.Instance.allPhotoContainer)
         {
-            Destroy(item.gameObject);
+            foreach (Transform item in MyProfileDataManager.Instance.allPhotoContainer)
+            {
+                Destroy(item.gameObject);
+            }
         }
+
+        if (MyProfileDataManager.Instance.allMovieContainer)
+        {
+            foreach (Transform item in MyProfileDataManager.Instance.allMovieContainer)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+       
     }
 
     #region fade In Out screen methods.......
