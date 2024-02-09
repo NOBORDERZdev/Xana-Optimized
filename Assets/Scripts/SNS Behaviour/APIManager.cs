@@ -592,15 +592,15 @@ public class APIManager : MonoBehaviour
         //    }
         //}
         //////////////////////New text post type feed fetching code
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.GetUserAllTextPosts + userId + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            www.SendWebRequest();
-            while (!www.isDone)
-            {
-                yield return null;
-            }
+            yield return www.SendWebRequest();
+            //while (!www.isDone)
+            //{
+            //    yield return null;
+            //}
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -629,21 +629,21 @@ public class APIManager : MonoBehaviour
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                //AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
-                FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
-                if (allTextPostFeedWithUserIdRoot.data.count > test.data.rows.Count)
+                AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
+                //FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
+                if (allTextPostWithUserIdRoot.data.rows.Count > test.data.rows.Count)
                 {
                     //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
-                    allTextPostFeedWithUserIdRoot.data.rows.Clear();
+                    allTextPostWithUserIdRoot.data.rows.Clear();
 
                     for (int i = 0; i < test.data.rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
                         // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
 
-                        if (!allTextPostFeedWithUserIdRoot.data.rows.Any(x => x.id == test.data.rows[i].id))
+                        if (!allTextPostWithUserIdRoot.data.rows.Any(x => x.id == test.data.rows[i].id))
                         {
-                            allTextPostFeedWithUserIdRoot.data.rows.Add(test.data.rows[i]);
+                            allTextPostWithUserIdRoot.data.rows.Add(test.data.rows[i]);
                         }
                         //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
                         //{
@@ -653,11 +653,11 @@ public class APIManager : MonoBehaviour
                 else
                 {
 
-                    allTextPostFeedWithUserIdRoot = test;
+                    allTextPostWithUserIdRoot = test;
                 }
                 if (callingFrom == "OtherPlayerFeed")
                 {
-                    allTextPostFeedWithUserIdRoot = test;
+                    allTextPostWithUserIdRoot = test;
                 }
                 switch (callingFrom)
                 {
@@ -3418,29 +3418,38 @@ public class AllFeedByUserIdRoot
 [System.Serializable]
 public class AllTextPostByUserIdRoot
 {
-    public bool Success;
-    public AllTextPostByUserIdData Data;
-    public string Msg;
+    public bool success;
+    public AllTextPostByUserIdData data;
+    public string msg;
 }
 
 [System.Serializable]
 public class AllTextPostByUserIdData
 {
     public int Count;
-    public List<AllTextPostByUserIdRow> Rows;
+    public List<FeedResponseRow> rows;
 }
 
 [System.Serializable]
 public class AllTextPostByUserIdRow
 {
-    public int Id;
+    public int id;
     public int user_id;
     public string text_post;
     public string text_mood;
     public int like_count;
-    public DateTime CreatedAt;
-    public DateTime UpdatedAt;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+    public bool isLikedByUser;
+    public UserData user;
+}
 
+[System.Serializable]
+public class UserData
+{
+    public int id;
+    public string name;
+    public string avatar;
 }
 
 /// <summary>

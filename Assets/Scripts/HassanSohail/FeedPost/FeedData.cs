@@ -20,6 +20,7 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
    [SerializeField] Button LikeBtn;
+    private bool isFeedScreen;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
@@ -49,6 +50,11 @@ public class FeedData : MonoBehaviour
             {
                 StartCoroutine(GetProfileImage(data.user.avatar));
             }
+            else
+            {
+                ProfileImage.sprite = defaultProfileImage;
+            }
+            isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
                 Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
@@ -188,6 +194,14 @@ public class FeedData : MonoBehaviour
 
     public void SetFeedUiController(FeedScroller controller){ 
         scrollerController = controller;    
+    }
+
+    private void OnEnable()
+    {
+        if (isFeedScreen && _data != null)
+        {
+            SetFeedPrefab(_data, false); // Sending back same data to initialize prefab elements in case of no pooling
+        }
     }
 
     private void OnDisable()
