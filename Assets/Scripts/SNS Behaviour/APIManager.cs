@@ -630,6 +630,14 @@ public class APIManager : MonoBehaviour
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
                 AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
+                if (callingFrom == "MyProfile")
+                {
+                    MyProfileDataManager.Instance.totalPostText.text = test.data.Count.ToString();
+                }
+                else
+                {
+                    OtherPlayerProfileData.Instance.textPlayerTottlePost.text = test.data.Count.ToString();
+                }
                 //FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
                 if (allTextPostWithUserIdRoot.data.rows.Count > test.data.rows.Count)
                 {

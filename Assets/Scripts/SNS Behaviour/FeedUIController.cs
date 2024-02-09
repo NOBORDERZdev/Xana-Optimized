@@ -2019,7 +2019,7 @@ public class FeedUIController : MonoBehaviour
 
         if (videofeedParent.childCount <= 0)
         {
-            MyProfileDataManager.Instance.totalPostText.text = "0";
+            //MyProfileDataManager.Instance.totalPostText.text = "0";
             OnClickVideoItemBackButton();
         }
     }

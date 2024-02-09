@@ -360,7 +360,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
-        totalPostText.text = myProfileData.feedCount.ToString();
+        //totalPostText.text = myProfileData.feedCount.ToString();
 
         UpdateUserTags();
 
@@ -2958,7 +2958,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
-        totalPostText.text = myProfileData.feedCount.ToString();
+        //totalPostText.text = myProfileData.feedCount.ToString();
     }
     #endregion
 
