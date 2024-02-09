@@ -582,27 +582,27 @@ public class FeedUIController : MonoBehaviour
     public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
     {
         //otherPlayerProfileScreen.SetActive(true);
-        OtherPlayerProfileData.Instance.gameObject.SetActive(true);
-        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-        MyProfileDataManager.Instance.gameObject.SetActive(false);
+        //OtherPlayerProfileData.Instance.gameObject.SetActive(true);
+        //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        //MyProfileDataManager.Instance.gameObject.SetActive(false);
 
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        //ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        //ProfileUIHandler.instance.SetMainScrolRefs();
         //Other player avatar initialization required here
 
-        if (_callFromFindFriendWithName)
-        {
-            if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
-            {
-                //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
-                ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
-            }
-            else
-            {
-                //print("wearing default clothing here");
-                ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
-            }
-        }
+        //if (_callFromFindFriendWithName)
+        //{
+        //    if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
+        //    {
+        //        //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
+        //        ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
+        //    }
+        //    else
+        //    {
+        //        //print("wearing default clothing here");
+        //        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //    }
+        //}
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
@@ -1526,6 +1526,10 @@ public class FeedUIController : MonoBehaviour
 
         //profileFFScreenTitleText.text = userName + titleLocalize;
         profileFollowerFollowingListScreen.SetActive(true);
+        if (ProfileUIHandler.instance)
+        {
+            ProfileUIHandler.instance.gameObject.SetActive(false);
+        }
         //if (tempFollowFollowingScreenOpenCount == 0)
         //{
         //    StartCoroutine(WaitToProfileFollowerFollowingHorizontalScroll(Tabindex));
@@ -1582,10 +1586,8 @@ public class FeedUIController : MonoBehaviour
     public void OnClickProfileFollowerFollowingBackButton()
     {
         RemoveUnFollowedUserFromFollowingTab();
-
+        MyProfileDataManager.Instance.MyProfileSceenShow(true);
         profileFollowerFollowingListScreen.SetActive(false);
-
-        //MyProfileDataManager.Instance.MyProfileSceenShow(true);
     }
 
     public void ProfileGetAllFollower(int pageNum)

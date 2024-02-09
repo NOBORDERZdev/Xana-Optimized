@@ -183,6 +183,27 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         Debug.Log("Search User id:" + searchUserRow.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+        else
+        {
+            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
+            //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            //MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -233,6 +254,19 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
+    }
+
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
     }
 
     public void FollowFollowingSetUp(bool isFollowing)
