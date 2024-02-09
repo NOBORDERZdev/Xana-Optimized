@@ -113,6 +113,8 @@ public class FollowingItemController : MonoBehaviour
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
         //if ( followingRawData.userOccupiedAssets.Count > 0 )
         //{

@@ -196,6 +196,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             ProfileUIHandler.instance.followerBtn.interactable = false;
             ProfileUIHandler.instance.followingBtn.interactable = false;
             ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+            ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         }
 
         Debug.Log("Other user profile load data");
@@ -895,11 +896,13 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
         }
     }
 
