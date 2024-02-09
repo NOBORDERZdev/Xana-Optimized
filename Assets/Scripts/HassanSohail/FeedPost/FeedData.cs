@@ -157,7 +157,8 @@ public class FeedData : MonoBehaviour
                 UpdateLikeCount(likeResponse.data.likeCount);
                 //Likes.text =  likeResponse.data.likeCount.ToString();
                 isLiked = !isLiked;
-                scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
+                if(scrollerController)
+                    scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
                 LikeBtn.interactable= true;
             }
