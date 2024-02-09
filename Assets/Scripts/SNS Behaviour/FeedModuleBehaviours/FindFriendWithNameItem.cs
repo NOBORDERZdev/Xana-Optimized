@@ -205,6 +205,15 @@ public class FindFriendWithNameItem : MonoBehaviour
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (searchUserRow.is_following_me)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();

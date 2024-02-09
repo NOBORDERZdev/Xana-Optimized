@@ -93,6 +93,15 @@ public class FollowerItemController : MonoBehaviour
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (followerRawData.isFollowing)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed",false))

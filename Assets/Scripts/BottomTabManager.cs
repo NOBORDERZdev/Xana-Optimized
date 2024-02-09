@@ -680,6 +680,7 @@ public class BottomTabManager : MonoBehaviour
             ProfileUIHandler.instance.SetMainScrolRefs();
             ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
+            ProfileUIHandler.instance.followProfileBtn.SetActive(false);
         }
 
         //home page thumnbail images destroy
