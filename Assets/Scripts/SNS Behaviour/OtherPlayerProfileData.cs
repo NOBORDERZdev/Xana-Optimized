@@ -21,7 +21,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public AllUserWithFeedRow FeedRawData;
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
-    public List<AllTextPostByUserIdRow> allMyTextPostRootDataList = new List<AllTextPostByUserIdRow>();//image feed list
+    public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
     //For Temp use needs to be deleted later 
     public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
@@ -568,22 +568,20 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             Destroy(item.gameObject);
         }*/
-        currentPageAllTextPostFeedWithUserIdRoot = APIManager.Instance.allTextPostFeedWithUserIdRoot;
+        currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
 
         //FeedUIController.Instance.ShowLoader(false);
 
         FeedUIController.Instance.OnClickCheckOtherPlayerProfile(_callFromFindFriendWithName);
 
-        for (int i = 0; i < currentPageAllTextPostFeedWithUserIdRoot.data.rows.Count; i++)
+        for (int i = 0; i < currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
-            if (singleUserProfileData.id == currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].user_id)
-            {
-                if (!loadedMyPostAndVideoId.Contains(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].id))
+                if (!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
                 {
                     bool isVideo = false;
 
                     Transform parent = userPostParent;
-                    if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].text_post))
+                    if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post))
                     {
                         parent = userPostParent;
                     }
@@ -597,7 +595,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                     GameObject userTagPostObject = Instantiate(MyProfileDataManager.Instance.photoPrefab, parent);
                     //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
-                    userPostItem.SetFeedPrefab(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i], false);
+                    userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
                     //userPostItem.userTextPostData = currentPageAllTextPostWithUserIdRoot.Data.Rows[i];
 
                     //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
@@ -610,19 +608,17 @@ public class OtherPlayerProfileData : MonoBehaviour
                     //userPostItem.avtarUrl = singleUserProfileData.avatar;
                     //userPostItem.LoadFeed();
 
-                    loadedMyPostAndVideoId.Add(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].id);
+                    loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
 
-                    //if (!isVideo)//image
-                    //{
-                    allMyTextPostFeedInFeedPageRootDataList.Add(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i]);
+                //if (!isVideo)//image
+                //{
+                allMyTextPostRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                     //}
                     //else
                     //{
                     //    allMyFeedVideoRootDataList.Add(currentPageAllTextPostWithUserIdRoot.Data.Rows[i]);
                     //}
                 }
-            }
-
             StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
         }
         }

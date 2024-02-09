@@ -342,29 +342,29 @@ public class UserPostItem : MonoBehaviour
             {
                Debug.Log("H1 > ");
                 FeedUIController.Instance.feedFullViewScreenCallingFrom = "MyProfile";
-                //if (isVideoFeed)
-                if (!string.IsNullOrEmpty(userData.Video))
-                {
-                    feedRowsDataList = MyProfileDataManager.Instance.allMyFeedVideoRootDataList;
-                }
-                else
-                {
-                    feedRowsDataList = MyProfileDataManager.Instance.allMyFeedImageRootDataList;
-                }
+                if (isVideoFeed)
+                    if (!string.IsNullOrEmpty(userData.Video))
+                    {
+                        feedRowsDataList = MyProfileDataManager.Instance.allMyFeedVideoRootDataList;
+                    }
+                    else
+                    {
+                        feedRowsDataList = MyProfileDataManager.Instance.allMyFeedImageRootDataList;
+                    }
             }
             else if (FeedUIController.Instance.otherPlayerProfileScreen.activeSelf)
             {
                Debug.Log("H2 > ");
                 FeedUIController.Instance.feedFullViewScreenCallingFrom = "OtherProfile";
-                //if (isVideoFeed)
-                if (!string.IsNullOrEmpty(userData.Video))
-                {
-                    feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList;
-                }
-                else
-                {
-                    feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList;
-                }
+                if (isVideoFeed)
+                    if (!string.IsNullOrEmpty(userData.Video))
+                    {
+                        feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList;
+                    }
+                    else
+                    {
+                        feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList;
+                    }
             }
             else if (FeedUIController.Instance.forYouFeedTabContainer.gameObject.activeInHierarchy)
             {
