@@ -112,7 +112,7 @@ public class FeedController : MonoBehaviour
 
 
     public void PullNewPlayerPost(){ 
-        FeedLoader.SetActive(true);
+        
         GetPlayerNewPosts(APIManager.Instance.userId);
     }
 
@@ -129,6 +129,7 @@ public class FeedController : MonoBehaviour
             else
             {
                 noFeedsScreen.gameObject.SetActive(false);
+                FeedLoader.SetActive(true);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
@@ -386,8 +387,14 @@ public class FeedController : MonoBehaviour
         searchInputField.Text = "";
         isFeedInitialized = false;
         FeedAPIData.Clear();
-        scrollerController._data.Clear();
-        scrollerController.feedHeight.Clear();
+        if (scrollerController._data !=null && scrollerController._data.Count>0)
+        {
+            scrollerController._data.Clear();
+        }
+        if (scrollerController.feedHeight != null && scrollerController.feedHeight.Count>0)
+        {
+            scrollerController.feedHeight.Clear();
+        }
         scrollerController.scroller.ClearAll();
         scrollerController.scroller.ReloadData();
     }
