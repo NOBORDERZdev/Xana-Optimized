@@ -387,11 +387,14 @@ public class FeedController : MonoBehaviour
         searchInputField.Text = "";
         isFeedInitialized = false;
         FeedAPIData.Clear();
-        if (scrollerController._data.Count>0)
+        if (scrollerController._data !=null && scrollerController._data.Count>0)
         {
             scrollerController._data.Clear();
         }
-        scrollerController.feedHeight.Clear();
+        if (scrollerController.feedHeight != null && scrollerController.feedHeight.Count>0)
+        {
+            scrollerController.feedHeight.Clear();
+        }
         scrollerController.scroller.ClearAll();
         scrollerController.scroller.ReloadData();
     }
