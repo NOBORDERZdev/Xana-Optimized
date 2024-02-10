@@ -94,6 +94,8 @@ public class MyProfileDataManager : MonoBehaviour
     public Transform allMovieContainer;
     public Transform allOwnedNFTContainer;
     public GameObject photoPrefab;
+    public GameObject EmptyFeedPrefab;
+    public GameObject emptyFeedObjRef;
     public GameObject photoPrefabInMyPostFeed;
     public GameObject NFTImagePrefab;
 
@@ -849,39 +851,41 @@ public class MyProfileDataManager : MonoBehaviour
         //    }
         //}
         // END OLD FEED UI
-        for (int i = 0; i < currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
+        for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
-                Debug.Log("currentPageAllFeedWithUserIdRoot");
-            if ((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null)
-               || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+            if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
             {
-                bool isVideo = false;
-
-                Transform parent = allPhotoContainer;
-                if (Feedparent == null)
+                Debug.Log("currentPageAllFeedWithUserIdRoot");
+                if ((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null)
+                   || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
                 {
-                    parent = allPhotoContainer;
-                    if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post))
+                    bool isVideo = false;
+
+                    Transform parent = allPhotoContainer;
+                    if (Feedparent == null)
                     {
                         parent = allPhotoContainer;
+                        if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post))
+                        {
+                            parent = allPhotoContainer;
+                        }
+                        //else if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].Video))
+                        //{
+                        //    isVideo = true;
+                        //    parent = allMovieContainer;
+                        //}
+                        IsMyProfileFeed = true;
                     }
-                    //else if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].Video))
+                    //else
                     //{
-                    //    isVideo = true;
-                    //    parent = allMovieContainer;
+                    //    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+                    //    {
+                    //        isVideo = true;
+                    //    }
                     //}
-                    IsMyProfileFeed = true;
-                }
-                //else
-                //{
-                //    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
-                //    {
-                //        isVideo = true;
-                //    }
-                //}
-                GameObject userTagPostObject;
-                //if (Feedparent == null)
-                //{
+                    GameObject userTagPostObject;
+                    //if (Feedparent == null)
+                    //{
 
                     userTagPostObject = Instantiate(photoPrefab, parent);
                     Debug.Log("userTagPostObject is Instantiate in parent ");
@@ -912,11 +916,11 @@ public class MyProfileDataManager : MonoBehaviour
                     {
                         if (IsNew)
                         {
-                        allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                            allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         }
                         else
                         {
-                        allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                            allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         }
                     }
                     //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
@@ -947,11 +951,11 @@ public class MyProfileDataManager : MonoBehaviour
                     {
                         Debug.Log("Latest Profile pic set as top");
                         userTagPostObject.transform.SetAsFirstSibling();
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
-                    //if (!isVideo)//text post
-                    //{
-                    allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
+                        //if (!isVideo)//text post
+                        //{
+                        allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         //}
                         //else
                         //{
@@ -964,13 +968,13 @@ public class MyProfileDataManager : MonoBehaviour
                         Debug.Log("Latest Profile pic set as top   5555");
 
 
-                    //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                    //{
+                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+                        //{
 
 
-                    //if (!isVideo)//image
-                    //{
-                    allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                        //if (!isVideo)//image
+                        //{
+                        allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         //}
                         //else
                         //{
@@ -981,10 +985,19 @@ public class MyProfileDataManager : MonoBehaviour
                         // }
                     }
                 }
+            }
+            else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
+            {
+                if (emptyFeedObjRef)
+                {
+                    Destroy(emptyFeedObjRef); 
+                    emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                }
                 else
                 {
-                    Debug.Log("Text post is not of current user");
+                    emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
                 }
+            }
         }
 
         Debug.Log("Pagenmub bar");
