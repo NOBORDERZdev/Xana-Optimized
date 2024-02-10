@@ -77,8 +77,8 @@ public class AvatarChangerSyncing : MonoBehaviourPun
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShose)
                 playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             anim = playerObj.GetComponent<Animator>();
             defaultAvatar = anim.avatar;
             avatarIndex = avatarIndex - 1;
