@@ -3946,7 +3946,7 @@ public class UserRegisterationManager : MonoBehaviour
                         LoggedInAsGuest = false;
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
-                        ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+                        //ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
                         ////Debug.Log("IS LOGGED VALUE CHANGED");
 
