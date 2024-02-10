@@ -53,6 +53,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public Transform mainPostContainer;
     public GameObject userPostMainPart;
     public GameObject userPostPrefab;
+    public GameObject emptyFeedObjRef;
     public Transform userPostParent;
     public Transform userTagPostParent;
     public Transform allMovieContainer;
@@ -574,8 +575,10 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         FeedUIController.Instance.OnClickCheckOtherPlayerProfile(_callFromFindFriendWithName);
 
-        for (int i = 0; i < currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
+        for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
+            if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+            {
                 if (!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
                 {
                     bool isVideo = false;
@@ -621,6 +624,19 @@ public class OtherPlayerProfileData : MonoBehaviour
                 }
             StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
         }
+            else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
+        {
+            if (emptyFeedObjRef)
+            {
+                Destroy(emptyFeedObjRef);
+                emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
+            }
+            else
+            {
+                emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
+            }
+        }
+    }
         }
 
         IEnumerator WaitToFeedLoadedUpdate(int pageNum)
