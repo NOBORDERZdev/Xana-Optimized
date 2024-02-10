@@ -557,13 +557,11 @@ public class BottomTabManager : MonoBehaviour
             }
             //below camera line was Commented before but i uncommented it in order to make profile 2.0 work ------- UMER
             GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
-
             FeedUIController.Instance.SetAddFriendScreen(true);
             APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-            //FeedUIController.Instance.feedUiScreen.GetComponent<FeedScreenOff>().OffFeedScreen();
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
@@ -615,6 +613,8 @@ public class BottomTabManager : MonoBehaviour
             OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(false);
             OtherPlayerProfileData.Instance.myPlayerdataObj.gameObject.SetActive(false);
         }
+        FeedUIController.Instance.feedUiScreen.SetActive(false);
+
     }
 
     //void InvokeDisableFeed(){ 
