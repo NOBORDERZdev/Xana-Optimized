@@ -193,7 +193,10 @@ public class BottomTabManager : MonoBehaviour
                 //{
                 //    allButtonIcon[i].transform.GetChild(0).GetComponent<Image>().color = Color.black;
                 //}
-                AllTitleText[i].color = unSellectedColor;
+                if (AllTitleText.Count> i && AllTitleText[i] != null) 
+                {
+                    AllTitleText[i].color = unSellectedColor;
+                }
                 allButtonIcon[i].transform.parent.GetComponent<Button>().interactable = true;
 
             }
