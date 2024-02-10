@@ -990,13 +990,9 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 if (emptyFeedObjRef)
                 {
-                    Destroy(emptyFeedObjRef); 
-                    emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                    Destroy(emptyFeedObjRef);
                 }
-                else
-                {
-                    emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
-                }
+                emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
             }
         }
 
