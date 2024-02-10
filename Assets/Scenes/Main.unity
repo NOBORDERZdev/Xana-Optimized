@@ -10799,11 +10799,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -676550142019228866, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
   m_PrefabInstance: {fileID: 2302478908437067940}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &1259829655 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3176972086519479685, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
-  m_PrefabInstance: {fileID: 2302478908437067940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1263416359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3755408541960160119, guid: e374f7ce7ded7a142ac4b5664386e809, type: 3}
@@ -24946,8 +24941,6 @@ MonoBehaviour:
   isLoadStaticClothFromJson: 0
   staticClothJson: 
   clothJson: 
-  head: {fileID: 0}
-  Body: {fileID: 0}
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
@@ -24983,6 +24976,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  characterBodyParts: {fileID: 0}
   _PCharacterData:
     id: 
     name: 
@@ -25065,7 +25059,6 @@ MonoBehaviour:
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
   DefaultLipColor: {r: 0.8392157, g: 0.6117647, b: 0.5647059, a: 1}
   DefaultGredientColor: {r: 0.5568628, g: 0.20784314, b: 0.20784314, a: 1}
-  Body: {fileID: 4457784110141273236}
   BothEyes:
   - {fileID: 3306201604878478215}
   - {fileID: 6285129308878969499}
@@ -25080,7 +25073,6 @@ MonoBehaviour:
   - {fileID: 5129657310867407998}
   Body_Bone: {fileID: 1083334628920067071}
   JBone: {fileID: 4636308269950668743}
-  Head: {fileID: 4216767754775734108}
   Nose: {fileID: 853477837598680998}
   Lips: {fileID: 6177758485045272417}
   PelvisBone: {fileID: 7519735757588355981}
@@ -25655,6 +25647,10 @@ MonoBehaviour:
   avatarController: {fileID: 0}
   maleAvatarMeshes: []
   femaleAvatarMeshes: []
+  boxerBody: {fileID: 0}
+  boxerHead: {fileID: 0}
+  body: {fileID: 0}
+  head: {fileID: 0}
 --- !u!114 &2209432607024942603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29441,7 +29437,6 @@ MonoBehaviour:
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
   DefaultLipColor: {r: 0.8392157, g: 0.6117647, b: 0.5647059, a: 1}
   DefaultGredientColor: {r: 0.5568628, g: 0.20784314, b: 0.20784314, a: 1}
-  Body: {fileID: 1259829655}
   BothEyes:
   - {fileID: 1632449553}
   - {fileID: 707288916}
@@ -29456,7 +29451,6 @@ MonoBehaviour:
   - {fileID: 1643584608}
   Body_Bone: {fileID: 1625812637}
   JBone: {fileID: 1998117414}
-  Head: {fileID: 1606920347}
   Nose: {fileID: 845926738}
   Lips: {fileID: 312522368}
   PelvisBone: {fileID: 434963619}
@@ -30035,6 +30029,10 @@ MonoBehaviour:
   femaleAvatarMeshes:
   - {fileID: 1485809472}
   - {fileID: 22198969}
+  boxerBody: {fileID: 1625812638}
+  boxerHead: {fileID: 1606920348}
+  body: {fileID: 0}
+  head: {fileID: 0}
 --- !u!114 &2302478907825561415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30155,8 +30153,6 @@ MonoBehaviour:
   isLoadStaticClothFromJson: 0
   staticClothJson: 
   clothJson: 
-  head: {fileID: 0}
-  Body: {fileID: 0}
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
@@ -30192,6 +30188,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  characterBodyParts: {fileID: 2302478907825561414}
   _PCharacterData:
     id: 
     name: 

@@ -97,12 +97,12 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             //otherPlayer._CharData = _CharacterData;
             if (IsNFTCharacter)
             {
-                bodyparts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 0);
-                bodyparts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 0);
+                bodyparts.head.materials[2].SetInt("_Active", 0);
+                bodyparts.body.materials[0].SetInt("_Active", 0);
 
                 //extra blendshape added to character to build muscles on Character
-                bodyparts.Head.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(54, 100);
-                bodyparts.Body_Bone.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+                bodyparts.head.SetBlendShapeWeight(54, 100);
+                bodyparts.body.SetBlendShapeWeight(0, 100);
 
                 bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
 
