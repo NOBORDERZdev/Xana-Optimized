@@ -1190,6 +1190,7 @@ public void GetNFTList()
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
         print("Useridxanalia "+PlayerPrefs.GetString("Useridxanalia"));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL+ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
+        XanaConstants.xanaConstants.LoginasGustprofile = true;
      }
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
