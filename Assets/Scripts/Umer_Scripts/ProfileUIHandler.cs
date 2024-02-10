@@ -20,6 +20,8 @@ public class ProfileUIHandler : MonoBehaviour
     [Header("User Avatar Preview Objects")]
     public GameObject AvatarRef;
     public Transform _renderTexCamera;
+    RenderTexture newRenderTexture;
+    public RawImage AvatarPreviewImgRef;
     public AnimatorOverrideController _userIdleAnimator;
     public SavingCharacterDataClass _tempAvatarData;
 
@@ -52,6 +54,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        SetCameraRenderTexture();
         if (AvatarRef)
         {
             AvatarRef.SetActive(true);
@@ -60,6 +63,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        newRenderTexture.Release();
         if (AvatarRef)
         {
             AvatarRef.SetActive(false);
@@ -86,6 +90,18 @@ public class ProfileUIHandler : MonoBehaviour
         //Destroy(AvatarRef.GetComponent<AvatarController>());
         //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
         //SetUserAvatarClothing();
+    }
+
+    public void SetCameraRenderTexture()
+    {
+        if (!newRenderTexture)
+        {
+            newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture.antiAliasing = 2;
+            //Graphics.Blit(m_RenderTexture, newRenderTexture);
+            _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
+            AvatarPreviewImgRef.texture = newRenderTexture;
+        }
     }
 
     public void SetUserAvatarClothing(SavingCharacterDataClass _userAvatarData)
