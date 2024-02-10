@@ -626,15 +626,11 @@ public class OtherPlayerProfileData : MonoBehaviour
         }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
         {
-            if (emptyFeedObjRef)
-            {
-                Destroy(emptyFeedObjRef);
+                if (emptyFeedObjRef)
+                {
+                    Destroy(emptyFeedObjRef);
+                }
                 emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
-            }
-            else
-            {
-                emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
-            }
         }
     }
         }
