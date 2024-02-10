@@ -135,7 +135,9 @@ public class XanaLobbyManager : MonoBehaviour
         _Type = type;
         ratioId = ((int)ratio);
 
+        title = title.IsNullOrEmpty() ? "" : title;
         aurthur = aurthur.IsNullOrEmpty() ? "" : aurthur;
+        des = des.IsNullOrEmpty() ? "" : des;
 
         XLRatios.instance.renderTexture.Release();
         // Setting Landscape 

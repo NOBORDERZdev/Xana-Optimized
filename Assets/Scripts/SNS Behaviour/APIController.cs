@@ -455,6 +455,37 @@ public class APIController : MonoBehaviour
             }
         }
     }
+    public void FeedGetAllSearchUserForProfile()
+    {
+        FeedUIController.Instance.profileNoSearchFound.SetActive(false);
+        foreach (Transform item in FeedUIController.Instance.profileSerachResultsContainer)
+        {
+            Destroy(item.gameObject);
+        }
+        if (FeedUIController.Instance.profileFinfFriendAdvancedInputField.Text != "")
+        {
+            if (APIManager.Instance.searchUserRoot.data.rows.Count > 0)
+            {
+                for (int j = 0; j < APIManager.Instance.searchUserRoot.data.rows.Count; j++)
+                {
+                    if (!APIManager.Instance.searchUserRoot.data.rows[j].id.Equals(APIManager.Instance.userId))
+                    {
+                        GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.profileSerachResultsContainer);
+                        //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.searchUserRoot.data.rows[j], true);
+                    }
+                }
+                if (APIManager.Instance.searchUserRoot.data.rows.Count > 10)
+                {
+                    GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.profileSerachResultsContainer);
+                }
+            }
+            else
+            {
+                FeedUIController.Instance.profileNoSearchFound.SetActive(true);
+            }
+        }
+    }
 
     public void ShowHotFirend(HotUsersRoot hotUserRoot)
     {
@@ -567,7 +598,8 @@ public class APIController : MonoBehaviour
         APIManager.Instance.SetAdFrndFollowing();
     }
 
-    public void SpwanAdFrndFollowing(){
+    public void SpwanAdFrndFollowing()
+    {
         FeedUIController.Instance.AddFrndNoFollowing.SetActive(false);
         if (APIManager.Instance.adFrndFollowing.data.rows.Count > 0)
         {
@@ -606,13 +638,41 @@ public class APIController : MonoBehaviour
         {
             FeedUIController.Instance.AddFrndNoFollowing.SetActive(true);
         }
-}
+    }
+    public void SpwanProfileFollowing()
+    {
+        FeedUIController.Instance.noProfileFollowing.SetActive(false);
+        foreach (Transform item in FeedUIController.Instance.profileFollowingListContainer.transform)
+        {
+            Destroy(item.gameObject);
+        }
+        if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
+        {
+            for (int i = 0; i < APIManager.Instance.profileAllFollowingRoot.data.rows.Count; i++)
+            {
+                if (APIManager.Instance.userId == APIManager.Instance.profileAllFollowingRoot.data.rows[i].followedBy && !APIManager.Instance.profileAllFollowingRoot.data.rows[i].userId.Equals(APIManager.Instance.userId))
+                {
+                    GameObject followingObject = Instantiate(FeedUIController.Instance.followingPrefab, FeedUIController.Instance.profileFollowingListContainer);
+                    followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.profileAllFollowingRoot.data.rows[i], false);
+                    //followingObject.GetComponent<Button>().enabled = false;
+                    followingObject.GetComponent<FindFriendWithNameItem>().IsInFollowingTab = true;
+                }
+            }
+            if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.profileFollowerListContainer);
+            }
+        }
+        else
+        {
+            FeedUIController.Instance.noProfileFollowing.SetActive(true);
+        }
+    }
+    #endregion
 
-        #endregion
-
-        #region Chat Module Reference................................................................................
-        //this method is used to instantiate following user in chat module.......
-        public void GetAllFollowingUser(int pageNum)
+    #region Chat Module Reference................................................................................
+    //this method is used to instantiate following user in chat module.......
+    public void GetAllFollowingUser(int pageNum)
     {
         //Debug.Log("GetAllFollowingUser");
         if (pageNum == 1)

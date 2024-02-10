@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Animations;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -15,12 +14,13 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followerBtn;
     public Button followingBtn;
     public GameObject editProfileBtn;
+    public GameObject followProfileBtn;
 
     [Space]
     [Header("User Avatar Preview Objects")]
     public GameObject AvatarRef;
     public Transform _renderTexCamera;
-    public AnimatorController _userIdleAnimator;
+    public AnimatorOverrideController _userIdleAnimator;
     public SavingCharacterDataClass _tempAvatarData;
 
     [Space]
@@ -79,7 +79,7 @@ public class ProfileUIHandler : MonoBehaviour
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         AvatarRef.name = "UserPreviewAvatar";
         AvatarRef.transform.position = new Vector3(0f, 0f, 0f);
-        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator;
+        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());

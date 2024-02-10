@@ -7264,6 +7264,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7141477522733626315, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
   m_PrefabInstance: {fileID: 7141477523539331644}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &806278747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 844188210639412706, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+  m_PrefabInstance: {fileID: 4874600109039586143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &808954639
 GameObject:
   m_ObjectHideFlags: 0
@@ -14578,6 +14589,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 21}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1612651027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
+  m_PrefabInstance: {fileID: 6488498069992646580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81af333af03cae448add401e50b8daca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1614372456
 GameObject:
   m_ObjectHideFlags: 0
@@ -40744,6 +40766,10 @@ PrefabInstance:
     - target: {fileID: 4315575899925783400, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575899925783400, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575900349432258, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -40756,14 +40782,26 @@ PrefabInstance:
     - target: {fileID: 4315575900463091639, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575900463091639, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901401270404, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901401270404, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901407857811, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901407857811, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901412831425, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -40776,10 +40814,18 @@ PrefabInstance:
     - target: {fileID: 4315575901481115099, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901481115099, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901551702254, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901551702254, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901620861125, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_Pivot.x
@@ -42457,7 +42503,7 @@ PrefabInstance:
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: AllTitleText.Array.data[5]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 806278747}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: allButtonIcon.Array.data[5]
       value: 
@@ -43414,6 +43460,10 @@ PrefabInstance:
       propertyPath: m_CharacterAnimator
       value: 
       objectReference: {fileID: 45990420}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: additiveScenesManager
+      value: 
+      objectReference: {fileID: 1612651027}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_RenderTextureCamera
       value: 
