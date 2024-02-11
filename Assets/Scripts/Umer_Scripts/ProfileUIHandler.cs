@@ -16,6 +16,10 @@ public class ProfileUIHandler : MonoBehaviour
     public GameObject editProfileBtn;
     public GameObject followProfileBtn;
 
+
+    public GameObject avatarBgObject;
+
+
     [Space]
     [Header("User Avatar Preview Objects")]
     public GameObject AvatarRef;
@@ -87,6 +91,8 @@ public class ProfileUIHandler : MonoBehaviour
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
+
+        GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
         //Destroy(AvatarRef.GetComponent<AvatarController>());
         //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
         //SetUserAvatarClothing();
