@@ -78,7 +78,7 @@ public class FollowUser : MonoBehaviour
                             FixedYOffset + (MultipleDistance * (Vector3.Distance(MainCamera.position, targ.position) / divisableDistance)), 
                             Offset.z
                             );
-        transform.position = Vector3.MoveTowards(transform.position, targ.position + Offset, Time.deltaTime);
+        transform.position = targ.position + Offset;//Vector3.MoveTowards(transform.position, targ.position + Offset, Time.deltaTime);
         PreviousDistance = tempDistance;
     }
 }
