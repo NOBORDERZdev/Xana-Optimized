@@ -11,7 +11,7 @@ public class FriendHomeManager : MonoBehaviour
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
-
+    public bool SpawnFriendsAgain;
     public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
 
     private void OnDisable()
@@ -20,8 +20,15 @@ public class FriendHomeManager : MonoBehaviour
             SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
     }
 
-
-
+    public void SpawnFriends()
+    {
+        if(SpawnFriendsAgain)
+        {
+            Debug.LogError("Spawning Friends Again");
+            SpawnFriendsAgain = false;
+            StartCoroutine(BuildMoodDialog());
+        }
+    }
     void Start()
     {
         StartCoroutine(BuildMoodDialog());
@@ -149,6 +156,7 @@ public class FriendHomeManager : MonoBehaviour
             Destroy(SpawnFriendsObjref.friendPostBubbleObj.gameObject);
         }
         SpawnFriendsObj.Clear();
+        SpawnFriendsAgain = true;
     }
     public void AddFriendToHome()
     {
