@@ -32,6 +32,7 @@ public class FeedController : MonoBehaviour
     [SerializeField] GameObject SearchContentPanel;
     [SerializeField] GameObject SerchBarObj;
     [SerializeField] AdvancedInputField searchInputField;
+    [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
 
     private void OnEnable()
@@ -261,12 +262,14 @@ public class FeedController : MonoBehaviour
             SearchContentPanel.SetActive(false);
             EmptySearchPanel();
             searchInputField.Text = "";
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
         }
         else// serach is not active 
         {
             SerchBarObj.SetActive(true);
             SerachPanel.SetActive(true);
             SearchContentPanel.SetActive(true);
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 60);
         }
     } 
 
