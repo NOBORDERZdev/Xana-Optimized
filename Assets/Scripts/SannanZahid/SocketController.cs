@@ -56,13 +56,6 @@ public class SocketController : MonoBehaviour
        // Debug.Log("<color=blue> Post -- Received : </color>");
         ReceivedFriendPostData data = JsonConvert.DeserializeObject<ReceivedFriendPostData>(msg);
         updateFriendPostDelegate?.Invoke(data);
-
-        // Use this data to show post on screen
-
-      //  Debug.Log("<color=blue> Post -- Msg : </color>" + data.msg);
-      //  Debug.Log("<color=blue> Post -- ID : </color>" + data.creatorId);
-      //  Debug.Log("<color=blue> Post -- Post : </color>" + data.text_post);
-      //  Debug.Log("<color=blue> Post -- Mood : </color>" + data.text_mood);
     }
     
      void FeedLikeUpdate(string msg)
