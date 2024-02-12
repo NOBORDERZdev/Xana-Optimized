@@ -80,12 +80,12 @@ public class FriendAvatarController : MonoBehaviour
         bodyParts.DefaultTexture(false);
         ResizeClothToBodyFat(this.gameObject, 0);
 
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 0);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 0);
+        bodyParts.head.materials[2].SetInt("_Active", 0);
+        bodyParts.body.materials[0].SetInt("_Active", 0);
 
         //extra blendshape added to character to build muscles on Character
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(54, 100);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+        bodyParts.head.SetBlendShapeWeight(54, 100);
+        bodyParts.body.SetBlendShapeWeight(0, 100);
 
         BoxerNFTEventManager.OnNFTequipShaderUpdate?.Invoke();
 
@@ -117,8 +117,8 @@ public class FriendAvatarController : MonoBehaviour
             UnStichItem("Glove");
         }
 
-        bodyParts.Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetInt("_Active", 1);
-        bodyParts.Body_Bone.GetComponent<SkinnedMeshRenderer>().materials[0].SetInt("_Active", 1);
+        bodyParts.head.materials[2].SetInt("_Active", 1);
+        bodyParts.body.materials[0].SetInt("_Active", 1);
 
         BoxerNFTEventManager.OnNFTUnequipShaderUpdate?.Invoke();
         BoxerNFTEventManager.NFTLightUpdate?.Invoke(LightPresetNFT.DefaultSkin);

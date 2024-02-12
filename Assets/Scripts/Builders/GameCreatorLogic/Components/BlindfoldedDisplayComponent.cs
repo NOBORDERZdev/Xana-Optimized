@@ -173,9 +173,9 @@ public class BlindfoldedDisplayComponent : ItemComponent
                 rr.transform.GetChild(0).gameObject.SetActive(false);
             }
             GamificationComponentData.instance.isBlindfoldedFootPrinting = false;
-            GamificationComponentData.instance.activeComponent = null;
         }
 
+        GamificationComponentData.instance.activeComponent = null;
         //CanvasComponenetsManager._instance.avatarInvisiblityText.gameObject.SetActive(false);
         if (!notTriggerOther)
         {
@@ -196,7 +196,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
-        if(!gameObject.activeInHierarchy)
+        if (!gameObject.activeInHierarchy)
             this.gameObject.SetActive(true);
 
         Physics.IgnoreLayerCollision(9, 22, true);

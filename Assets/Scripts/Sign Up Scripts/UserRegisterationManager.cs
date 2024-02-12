@@ -1286,7 +1286,7 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 8:
                 {
-
+                    Debug.LogError("Signup here");
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
                     EmailFieldNew.Text = "";
@@ -3947,7 +3947,7 @@ public class UserRegisterationManager : MonoBehaviour
                         LoggedInAsGuest = false;
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
                         //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
-                        ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+                        //ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
                         ////Debug.Log("IS LOGGED VALUE CHANGED");
 

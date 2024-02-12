@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -781,10 +782,10 @@ MonoBehaviour:
   DefaultSkin: {fileID: 2800000, guid: 3c7e75fc4791c3d449fee113e387f146, type: 3}
   DefaultEyes: {fileID: 2800000, guid: 931e5d5c182c2b343813aff12f10a6b2, type: 3}
   DefaultLips: {fileID: 2800000, guid: 3c7e75fc4791c3d449fee113e387f146, type: 3}
-  DefaultPent: {fileID: 5890572416019439444, guid: 7e109dd7b6f776f499b366e3a6f7551e, type: 3}
-  DefaultShoes: {fileID: 5173388033758056773, guid: db2ff7d9b10a4b44b912fb3923cb0628, type: 3}
-  DefaultShirt: {fileID: 4514070305550524654, guid: 6dc6217541a31264fad14639568c9f59, type: 3}
-  DefaultHair: {fileID: 4915315300308063219, guid: b6dd8b5871995184499c7c983f57589c, type: 3}
+  DefaultPent: {fileID: 5417918544974661652, guid: 2374a017bed222249856e9305c09c4ec, type: 3}
+  DefaultShoes: {fileID: 2972552550992016218, guid: 2071728f32652e542bb068ef60390880, type: 3}
+  DefaultShirt: {fileID: 3428267401913419843, guid: 20351c56780a169468c6b4c862937669, type: 3}
+  DefaultHair: {fileID: 8258088121323357894, guid: 544ffac1878c7d44db745aa899f544b3, type: 3}
 --- !u!4 &100743011
 Transform:
   m_ObjectHideFlags: 0
@@ -7264,6 +7265,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7141477522733626315, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
   m_PrefabInstance: {fileID: 7141477523539331644}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &806278747 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 844188210639412706, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+  m_PrefabInstance: {fileID: 4874600109039586143}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &808954639
 GameObject:
   m_ObjectHideFlags: 0
@@ -10797,11 +10809,6 @@ CanvasRenderer:
 --- !u!1 &1259829653 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -676550142019228866, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
-  m_PrefabInstance: {fileID: 2302478908437067940}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1259829655 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3176972086519479685, guid: 6e0335279e363594792eb2d760679f2c, type: 3}
   m_PrefabInstance: {fileID: 2302478908437067940}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1263416359 stripped
@@ -14583,6 +14590,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 21}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1612651027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
+  m_PrefabInstance: {fileID: 6488498069992646580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81af333af03cae448add401e50b8daca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1614372456
 GameObject:
   m_ObjectHideFlags: 0
@@ -24946,8 +24964,6 @@ MonoBehaviour:
   isLoadStaticClothFromJson: 0
   staticClothJson: 
   clothJson: 
-  head: {fileID: 0}
-  Body: {fileID: 0}
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
@@ -24983,6 +24999,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  characterBodyParts: {fileID: 0}
   _PCharacterData:
     id: 
     name: 
@@ -25065,7 +25082,6 @@ MonoBehaviour:
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
   DefaultLipColor: {r: 0.8392157, g: 0.6117647, b: 0.5647059, a: 1}
   DefaultGredientColor: {r: 0.5568628, g: 0.20784314, b: 0.20784314, a: 1}
-  Body: {fileID: 4457784110141273236}
   BothEyes:
   - {fileID: 3306201604878478215}
   - {fileID: 6285129308878969499}
@@ -25080,7 +25096,6 @@ MonoBehaviour:
   - {fileID: 5129657310867407998}
   Body_Bone: {fileID: 1083334628920067071}
   JBone: {fileID: 4636308269950668743}
-  Head: {fileID: 4216767754775734108}
   Nose: {fileID: 853477837598680998}
   Lips: {fileID: 6177758485045272417}
   PelvisBone: {fileID: 7519735757588355981}
@@ -25655,6 +25670,10 @@ MonoBehaviour:
   avatarController: {fileID: 0}
   maleAvatarMeshes: []
   femaleAvatarMeshes: []
+  boxerBody: {fileID: 0}
+  boxerHead: {fileID: 0}
+  body: {fileID: 0}
+  head: {fileID: 0}
 --- !u!114 &2209432607024942603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29441,7 +29460,6 @@ MonoBehaviour:
   DefaultHairColor: {r: 0.36078432, g: 0.20784314, b: 0.18039216, a: 1}
   DefaultLipColor: {r: 0.8392157, g: 0.6117647, b: 0.5647059, a: 1}
   DefaultGredientColor: {r: 0.5568628, g: 0.20784314, b: 0.20784314, a: 1}
-  Body: {fileID: 1259829655}
   BothEyes:
   - {fileID: 1632449553}
   - {fileID: 707288916}
@@ -29456,7 +29474,6 @@ MonoBehaviour:
   - {fileID: 1643584608}
   Body_Bone: {fileID: 1625812637}
   JBone: {fileID: 1998117414}
-  Head: {fileID: 1606920347}
   Nose: {fileID: 845926738}
   Lips: {fileID: 312522368}
   PelvisBone: {fileID: 434963619}
@@ -30035,6 +30052,10 @@ MonoBehaviour:
   femaleAvatarMeshes:
   - {fileID: 1485809472}
   - {fileID: 22198969}
+  boxerBody: {fileID: 1625812638}
+  boxerHead: {fileID: 1606920348}
+  body: {fileID: 0}
+  head: {fileID: 0}
 --- !u!114 &2302478907825561415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30155,8 +30176,6 @@ MonoBehaviour:
   isLoadStaticClothFromJson: 0
   staticClothJson: 
   clothJson: 
-  head: {fileID: 0}
-  Body: {fileID: 0}
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
@@ -30192,6 +30211,7 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  characterBodyParts: {fileID: 2302478907825561414}
   _PCharacterData:
     id: 
     name: 
@@ -38645,9 +38665,49 @@ PrefabInstance:
       value: MainMenu-New
       objectReference: {fileID: 0}
     - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 319518062}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
       objectReference: {fileID: 6527359761169222394}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AvatarSelectionBtnClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ShopButtonClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: BottomTabManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107168949793, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2589320107453626336, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -40707,6 +40767,10 @@ PrefabInstance:
     - target: {fileID: 4315575899925783400, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575899925783400, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575900349432258, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -40719,14 +40783,26 @@ PrefabInstance:
     - target: {fileID: 4315575900463091639, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575900463091639, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901401270404, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901401270404, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901407857811, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901407857811, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901412831425, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -40739,10 +40815,18 @@ PrefabInstance:
     - target: {fileID: 4315575901481115099, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901481115099, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901551702254, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 2302478909215631682}
+    - target: {fileID: 4315575901551702254, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeMoodView
       objectReference: {fileID: 0}
     - target: {fileID: 4315575901620861125, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_Pivot.x
@@ -42420,7 +42504,7 @@ PrefabInstance:
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: AllTitleText.Array.data[5]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 806278747}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: allButtonIcon.Array.data[5]
       value: 
@@ -43316,7 +43400,7 @@ PrefabInstance:
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_ChHead
       value: 
-      objectReference: {fileID: 1990008814}
+      objectReference: {fileID: 1606920347}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: UIManager
       value: 
@@ -43377,6 +43461,10 @@ PrefabInstance:
       propertyPath: m_CharacterAnimator
       value: 
       objectReference: {fileID: 45990420}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: additiveScenesManager
+      value: 
+      objectReference: {fileID: 1612651027}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_RenderTextureCamera
       value: 
