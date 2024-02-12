@@ -72,8 +72,10 @@ MonoBehaviour:
     followingCount: 0
     feedCount: 0
   allMyFeedImageRootDataList: []
+  allMyTextPostFeedImageRootDataList: []
   allMyFeedVideoRootDataList: []
   allMyFeedInFeedPageRootDataList: []
+  allMyTextPostFeedInFeedPageRootDataList: []
   currentPageAllFeedWithUserIdRoot:
     Success: 0
     Data:
@@ -87,10 +89,11 @@ MonoBehaviour:
       rows: []
     msg: 
   currentPageAllTextPostWithUserIdRoot:
-    Success: 0
-    Data:
+    success: 0
+    data:
       Count: 0
-    Msg: 
+      rows: []
+    msg: 
   myProfileScreen: {fileID: 0}
   editProfileScreen: {fileID: 0}
   pickImageOptionScreen: {fileID: 0}
@@ -129,6 +132,7 @@ MonoBehaviour:
   allMovieContainer: {fileID: 0}
   allOwnedNFTContainer: {fileID: 0}
   photoPrefab: {fileID: 9094557258527362675, guid: 8e0a5b9aef86c8e44a587e5470163c73, type: 3}
+  EmptyFeedPrefab: {fileID: 9094557258527362675, guid: 6195e10d38674224b8d4b2979c361e21, type: 3}
   photoPrefabInMyPostFeed: {fileID: 2064129161553524108, guid: 8ae45173fcb0aae43a354d77cbd01def, type: 3}
   NFTImagePrefab: {fileID: 2064129161553524108, guid: 31d695b4d223e5e43a8bcbf08fe3ca77, type: 3}
   createYourFirstPostMsgObj: {fileID: 0}

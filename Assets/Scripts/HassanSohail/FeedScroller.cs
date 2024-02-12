@@ -35,7 +35,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     /// than one kind of cell, but this example just has the one type.
     /// </summary>
     public EnhancedScrollerCellView cellViewPrefab;
-
+    
     /// <summary>
     /// The higher the number here, the more we have to pull down to refresh
     /// </summary>

@@ -4354,6 +4354,10 @@ public class UserRegisterationManager : MonoBehaviour
                         //    StoreManager.instance.GetAllMainCategories();
                         //}
                     }
+
+
+                    GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().SpawnFriends();
+
                 }
             }
         }

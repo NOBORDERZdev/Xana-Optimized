@@ -4,6 +4,7 @@ using EnhancedUI.EnhancedScroller;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TMPro;
@@ -16,6 +17,7 @@ public class FeedController : MonoBehaviour
 {
     [SerializeField] private FeedUIController feedUIController;
     [SerializeField] private GameObject feedPostPrefab;
+    [SerializeField] private GameObject emptyPrefab;
     [SerializeField] private Transform feedContentParent;
     int feedPageNumber = 1;
     int feedPageSize = 100;
@@ -31,6 +33,7 @@ public class FeedController : MonoBehaviour
     [SerializeField] GameObject SearchContentPanel;
     [SerializeField] GameObject SerchBarObj;
     [SerializeField] AdvancedInputField searchInputField;
+    [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
 
     private void OnEnable()
@@ -78,26 +81,24 @@ public class FeedController : MonoBehaviour
             }
             else
             {
+                isFeedInitialized = true;
+                print("~~~~~ "+ response.downloadHandler.text);
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 // FeedAPIData.Add(feedResponseData);
-                isFeedInitialized = true;
                 foreach (var item in feedResponseData.data.rows)
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        FeedAPIData.Add(item);
-                        scrollerController._data.Add(item);
-                        //GameObject temp =  Instantiate(feedPostPrefab);
-                        //temp.transform.SetParent(feedPostParent);
-                        //temp.transform.localScale = Vector3.one;
-                        //temp.GetComponent<FeedData>().SetFeedPrefab(item);
-                        //feedList.Add(temp.GetComponent<FeedData>());
+                        if (!FeedAPIData.Any(list1 => list1.id == item.id))
+                        {
+                            FeedAPIData.Add(item);
+                            scrollerController._data.Add(item);
+                        }
                     }
 
                 }
                 Invoke(nameof(InovkeScrollReload), 2f);
-                // feedUIController.IntFeedScroller(feedResponseData);
             }
 
         }
@@ -111,7 +112,7 @@ public class FeedController : MonoBehaviour
 
 
     public void PullNewPlayerPost(){ 
-        FeedLoader.SetActive(true);
+        
         GetPlayerNewPosts(APIManager.Instance.userId);
     }
 
@@ -128,6 +129,7 @@ public class FeedController : MonoBehaviour
             else
             {
                 noFeedsScreen.gameObject.SetActive(false);
+                FeedLoader.SetActive(true);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
@@ -135,15 +137,21 @@ public class FeedController : MonoBehaviour
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        tempData.Add(item);
+                        if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
+                            tempData.Add(item);
+                        }
                     }
                 }
-                if (tempData.Count>0)
-                {
+                if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
                     //scrollerController._data.InsertRange(0,tempData);
                     AddDataToTopScroller(tempData);
-            }
+                        
+                }
+                else{
+                    //noFeedsScreen.gameObject.SetActive(true);
+                    FeedLoader.SetActive(false);
+                }
             }
         }
         catch (System.Exception ex)
@@ -153,6 +161,8 @@ public class FeedController : MonoBehaviour
        
         response.Dispose();
     }
+
+    
 
     public void AddDataToTopScroller(List<FeedResponseRow> tempData)
     {
@@ -193,8 +203,10 @@ public class FeedController : MonoBehaviour
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        FeedAPIData.Add(item);
-                        scrollerController._data.Add(item);
+                         if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
+                            FeedAPIData.Add(item);
+                            scrollerController._data.Add(item);
+                        }
                     }
                 }
             }
@@ -255,14 +267,16 @@ public class FeedController : MonoBehaviour
             SearchContentPanel.SetActive(false);
             EmptySearchPanel();
             searchInputField.Text = "";
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
         }
         else// serach is not active 
         {
             SerchBarObj.SetActive(true);
             SerachPanel.SetActive(true);
             SearchContentPanel.SetActive(true);
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 60);
         }
-    }
+    } 
 
     public void SearchFeed(){
         print("~~~~~");
@@ -302,7 +316,7 @@ public class FeedController : MonoBehaviour
             feedContentParent.gameObject.SetActive(false);
             print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
             FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-            if (feedResponseData.data.rows.Count>0)
+            if (feedResponseData!=null && feedResponseData.data.rows.Count>0)
             {
                 foreach (var item in feedResponseData.data.rows)
                 {
@@ -315,6 +329,9 @@ public class FeedController : MonoBehaviour
                         temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }
+                GameObject emptySerach = Instantiate(emptyPrefab);
+                emptySerach.transform.SetParent(SearchContentPanel.transform);
+                emptySerach.transform.localScale = Vector3.one;
             }
             else
             {
@@ -357,12 +374,37 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
+        EmptySearchPanel();
+        noFeedSerach. gameObject.SetActive(false);
+        noFeedsScreen.gameObject.SetActive(false);
+        FeedLoader.gameObject.SetActive(false);
         FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
     }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+    }
 
+    /// <summary>
+    /// To reset the feed controller on signout
+    /// </summary>
+    public void ResetFeedController(){ 
+        SerachPanel.SetActive(false);
+        feedContentParent.gameObject.SetActive(true);
+        SerchBarObj.SetActive(false);
+        searchInputField.Text = "";
+        isFeedInitialized = false;
+        FeedAPIData.Clear();
+        if (scrollerController._data !=null && scrollerController._data.Count>0)
+        {
+            scrollerController._data.Clear();
+        }
+        if (scrollerController.feedHeight != null && scrollerController.feedHeight.Count>0)
+        {
+            scrollerController.feedHeight.Clear();
+        }
+        scrollerController.scroller.ClearAll();
+        scrollerController.scroller.ReloadData();
     }
 }
 

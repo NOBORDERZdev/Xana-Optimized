@@ -105,19 +105,26 @@ public class FollowingItemController : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
+        print("Follower id :" + followingRawData.following.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FollowingItemController>(followingRawData.following.id.ToString(), this);
         MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
         OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
-        if ( followingRawData.userOccupiedAssets.Count > 0 )
-        {
-            ProfileUIHandler.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
-        }
-        else
-        {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
-        }
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //if ( followingRawData.userOccupiedAssets.Count > 0 )
+        //{
+        //    ProfileUIHandler.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
+        //}
+        //else
+        //{
+        //    ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //}
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed", false))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
@@ -186,6 +193,19 @@ public class FollowingItemController : MonoBehaviour
         }
 
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+    }
+
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
     }
 
     public void FollowFollowingSetUp(bool isFollowing)

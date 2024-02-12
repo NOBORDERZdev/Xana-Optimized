@@ -19,6 +19,8 @@ public class FeedData : MonoBehaviour
    [SerializeField] Sprite UnLikedHeart;
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
+   [SerializeField] Button LikeBtn;
+    private bool isFeedScreen;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
@@ -48,6 +50,11 @@ public class FeedData : MonoBehaviour
             {
                 StartCoroutine(GetProfileImage(data.user.avatar));
             }
+            else
+            {
+                ProfileImage.sprite = defaultProfileImage;
+            }
+            isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
                 Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
@@ -130,6 +137,7 @@ public class FeedData : MonoBehaviour
         int feedId = _data.id;
         WWWForm form = new WWWForm();
         form.AddField("textPostId", feedId);
+        LikeBtn.interactable= false;
         using (UnityWebRequest www = UnityWebRequest.Post(url,form))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -140,6 +148,7 @@ public class FeedData : MonoBehaviour
             }
             if (www.isNetworkError || www.isHttpError)
             {
+                LikeBtn.interactable= true;
                 StartCoroutine(LikeUnLike());
             }
             else
@@ -148,8 +157,10 @@ public class FeedData : MonoBehaviour
                 UpdateLikeCount(likeResponse.data.likeCount);
                 //Likes.text =  likeResponse.data.likeCount.ToString();
                 isLiked = !isLiked;
-                scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
+                if(scrollerController)
+                    scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
+                LikeBtn.interactable= true;
             }
         }
     }
@@ -184,6 +195,14 @@ public class FeedData : MonoBehaviour
 
     public void SetFeedUiController(FeedScroller controller){ 
         scrollerController = controller;    
+    }
+
+    private void OnEnable()
+    {
+        if (isFeedScreen && _data != null)
+        {
+            SetFeedPrefab(_data, false); // Sending back same data to initialize prefab elements in case of no pooling
+        }
     }
 
     private void OnDisable()

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor.Animations;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -15,12 +14,19 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followerBtn;
     public Button followingBtn;
     public GameObject editProfileBtn;
+    public GameObject followProfileBtn;
+
+
+    public GameObject avatarBgObject;
+
 
     [Space]
     [Header("User Avatar Preview Objects")]
     public GameObject AvatarRef;
     public Transform _renderTexCamera;
-    public AnimatorController _userIdleAnimator;
+    RenderTexture newRenderTexture;
+    public RawImage AvatarPreviewImgRef;
+    public AnimatorOverrideController _userIdleAnimator;
     public SavingCharacterDataClass _tempAvatarData;
 
     [Space]
@@ -52,6 +58,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        SetCameraRenderTexture();
         if (AvatarRef)
         {
             AvatarRef.SetActive(true);
@@ -60,6 +67,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnDisable()
     {
+        newRenderTexture.Release();
         if (AvatarRef)
         {
             AvatarRef.SetActive(false);
@@ -79,13 +87,27 @@ public class ProfileUIHandler : MonoBehaviour
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         AvatarRef.name = "UserPreviewAvatar";
         AvatarRef.transform.position = new Vector3(0f, 0f, 0f);
-        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator;
+        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
+
+        GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
         //Destroy(AvatarRef.GetComponent<AvatarController>());
         //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
         //SetUserAvatarClothing();
+    }
+
+    public void SetCameraRenderTexture()
+    {
+        if (!newRenderTexture)
+        {
+            newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture.antiAliasing = 2;
+            //Graphics.Blit(m_RenderTexture, newRenderTexture);
+            _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
+            AvatarPreviewImgRef.texture = newRenderTexture;
+        }
     }
 
     public void SetUserAvatarClothing(SavingCharacterDataClass _userAvatarData)

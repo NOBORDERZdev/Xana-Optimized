@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 3425760110052333869}
   - component: {fileID: 6544263194338141140}
   - component: {fileID: 1289804007355833246}
+  - component: {fileID: 5952019592684611109}
   m_Layer: 5
   m_Name: ProfileImage
   m_TagString: Untagged
@@ -346,6 +347,35 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5952019592684611109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4975292017810576241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bac33ade27cf4542bd53b1b13d90941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultShader: {fileID: 4800000, guid: 8d19bf0a0d7a69643b050c159096b413, type: 3}
+  _defaultETC1Shader: {fileID: 4800000, guid: 9734f2045a9c1f74d956d0573ac8a2f3, type: 3}
+  _source: 0
+  _separateMask: {fileID: 0}
+  _sprite: {fileID: 0}
+  _spriteBorderMode: 0
+  _texture: {fileID: 0}
+  _textureUVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _channelWeights: {r: 0, g: 0, b: 0, a: 1}
+  _raycastThreshold: 0
+  _invertMask: 0
+  _invertOutsides: 0
 --- !u!1 &5333363854145499616
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,8 +521,7 @@ GameObject:
   - component: {fileID: 5333363854157731731}
   - component: {fileID: 5333363854157731729}
   - component: {fileID: 5333363854157731728}
-  - component: {fileID: 5580561451122966126}
-  - component: {fileID: 1344249142013935392}
+  - component: {fileID: 423179975030599580}
   m_Layer: 5
   m_Name: UserProfileImage
   m_TagString: Untagged
@@ -548,9 +577,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ae461579bfba5fb459764722e5f2bf0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f8949ec8e03f9b40a621746cbba2b94, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -558,20 +587,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5580561451122966126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5333363854157731730}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
---- !u!114 &1344249142013935392
+--- !u!114 &423179975030599580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -580,26 +596,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5333363854157731730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bac33ade27cf4542bd53b1b13d90941, type: 3}
+  m_Script: {fileID: 11500000, guid: eddc1fbd4bd796345832996a9560b9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultShader: {fileID: 4800000, guid: 8d19bf0a0d7a69643b050c159096b413, type: 3}
-  _defaultETC1Shader: {fileID: 4800000, guid: 9734f2045a9c1f74d956d0573ac8a2f3, type: 3}
-  _source: 0
-  _separateMask: {fileID: 0}
-  _sprite: {fileID: 0}
-  _spriteBorderMode: 0
-  _texture: {fileID: 0}
-  _textureUVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  _channelWeights: {r: 0, g: 0, b: 0, a: 1}
-  _raycastThreshold: 0
-  _invertMask: 0
-  _invertOutsides: 0
 --- !u!1 &5333363855164092919
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,9 +826,35 @@ MonoBehaviour:
       website: 
       bio: 
       isDeleted: 0
+    userOccupiedAssets: []
+  allFollowersRows:
+    id: 0
+    userId: 0
+    isFav: 0
+    followedBy: 0
+    follower:
+      id: 0
+      name: 
+      email: 
+      avatar: 
+      userProfile:
+        id: 0
+        userId: 0
+        gender: 
+        job: 
+        country: 
+        website: 
+        bio: 
+        isDeleted: 0
+    userOccupiedAssets: []
+    followerCount: 0
+    followingCount: 0
+    feedCount: 0
+    isFollowing: 0
+    isFriend: 0
   userNameText: {fileID: 5333363856199227687}
   userBioText: {fileID: 1734628346159710465}
-  profileImage: {fileID: 1289804007355833246}
+  profileImage: {fileID: 5333363854157731728}
   followFollowingText: {fileID: 0}
   followFollowingImage: {fileID: 0}
   followColor: {r: 0, g: 0, b: 0, a: 1}
@@ -840,6 +865,60 @@ MonoBehaviour:
   MakeBfBtn: {fileID: 0}
   RemoveBfBtn: {fileID: 0}
   IsInFollowingTab: 0
+  _userAvatarData:
+    id: 
+    name: 
+    thumbnail: 
+    myItemObj: []
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
   cnt: 0
 --- !u!114 &526696485743192148
 MonoBehaviour:
@@ -930,13 +1009,14 @@ MonoBehaviour:
         website: 
         bio: 
         isDeleted: 0
+    userOccupiedAssets: []
     followerCount: 0
     followingCount: 0
     feedCount: 0
     isFollowing: 0
   userNameText: {fileID: 5333363856199227687}
   BioText: {fileID: 1734628346159710465}
-  profileImage: {fileID: 1289804007355833246}
+  profileImage: {fileID: 5333363854157731728}
   followFollowingText: {fileID: 0}
   followFollowingImage: {fileID: 0}
   followColor: {r: 0, g: 0, b: 0, a: 1}

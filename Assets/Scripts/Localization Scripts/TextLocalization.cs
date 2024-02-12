@@ -90,8 +90,8 @@ public class TextLocalization : MonoBehaviour
 
     private void StaticLocalizeTextPro()
     {
-        if (string.IsNullOrEmpty(key))
-            return;
+        //if (string.IsNullOrEmpty(key))
+        //    return;
         if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
 
         #region Old Method
