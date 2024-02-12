@@ -678,6 +678,7 @@ public class BottomTabManager : MonoBehaviour
             if (OtherPlayerProfileData.Instance)
             {
                 OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
+                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
             }
             if (MyProfileDataManager.Instance)
             {
