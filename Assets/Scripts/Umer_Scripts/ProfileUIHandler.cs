@@ -83,7 +83,8 @@ public class ProfileUIHandler : MonoBehaviour
     public void InstantiateUserPreviewAvatar()
     {
         _renderTexCamera.parent = null;
-        _renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
+        //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
+        _renderTexCamera.position = new Vector3(0f, 0.86f, -5.27f);
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         AvatarRef.name = "UserPreviewAvatar";
         AvatarRef.transform.position = new Vector3(0f, 0f, 0f);
