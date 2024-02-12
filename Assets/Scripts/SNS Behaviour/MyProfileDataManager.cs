@@ -452,7 +452,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileImage.sprite = defultProfileImage;
         }
 
-        StartCoroutine(WaitToRefreshProfileScreen());
+        //StartCoroutine(WaitToRefreshProfileScreen());
     }
 
     public void UpdateUserTags()
@@ -546,7 +546,7 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     //this method is used to Refresh my profile main content size fitter.......
-    IEnumerator WaitToRefreshProfileScreen()
+    public IEnumerator WaitToRefreshProfileScreen()
     {
         Debug.Log("Enter in Content Size Filter Section");
         textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;

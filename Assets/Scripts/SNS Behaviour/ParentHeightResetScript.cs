@@ -104,6 +104,10 @@ public class ParentHeightResetScript : MonoBehaviour
         else*/
         //{
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().sizeDelta.y);
+        if (MyProfileDataManager.Instance)
+        {
+            StartCoroutine(MyProfileDataManager.Instance.WaitToRefreshProfileScreen());
+        }
         //}
 
         //Commented below lines for now to make profile scroller work properly as below 3 lines were making issues in scroller
