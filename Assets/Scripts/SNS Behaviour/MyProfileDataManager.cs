@@ -913,6 +913,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    userPostItem.isProfileScene = true;
                     //userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
                     if (!allMyTextPostFeedImageRootDataList.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i]))
                     {

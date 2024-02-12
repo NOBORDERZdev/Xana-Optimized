@@ -104,8 +104,9 @@ public class ParentHeightResetScript : MonoBehaviour
         else*/
         //{
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().sizeDelta.y);
-        if (MyProfileDataManager.Instance)
+        if (MyProfileDataManager.Instance.gameObject.activeSelf)
         {
+            //print("==========My Profile Data Manager is active");
             StartCoroutine(MyProfileDataManager.Instance.WaitToRefreshProfileScreen());
         }
         //}

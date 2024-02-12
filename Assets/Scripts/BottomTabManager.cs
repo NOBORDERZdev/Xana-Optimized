@@ -492,10 +492,10 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.ResetAllFeedScreen(true);
                 MyProfileDataManager.Instance.MyProfileSceenShow(false);//false my profile screen
             }
-            else
-            {
-                APIManager.Instance.RequestGetUserDetails("myProfile");
-            }
+            //else
+            //{
+            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //}
 
             if (FeedUIController.Instance != null)
             {
@@ -695,7 +695,7 @@ public class BottomTabManager : MonoBehaviour
 
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
-        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
     }
 
     public void ShopButtonClicked()
