@@ -452,7 +452,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileImage.sprite = defultProfileImage;
         }
 
-        StartCoroutine(WaitToRefreshProfileScreen());
+        //StartCoroutine(WaitToRefreshProfileScreen());
     }
 
     public void UpdateUserTags()
@@ -546,7 +546,7 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     //this method is used to Refresh my profile main content size fitter.......
-    IEnumerator WaitToRefreshProfileScreen()
+    public IEnumerator WaitToRefreshProfileScreen()
     {
         Debug.Log("Enter in Content Size Filter Section");
         textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
@@ -1486,7 +1486,7 @@ public class MyProfileDataManager : MonoBehaviour
     void TabCommonChange(int index)
     {
         // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
-        tabScrollRectGiftScreen.LerpToPage(index);
+        //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
         parentHeightResetScript.OnHeightReset(index);
         if (index == 2)
         {
