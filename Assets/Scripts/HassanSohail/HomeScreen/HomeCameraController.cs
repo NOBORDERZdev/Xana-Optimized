@@ -27,11 +27,19 @@ public class HomeCameraController : MonoBehaviour
     private Vector2[] lastZoomPositions; // Touch mode only
 
     void Awake() {
+      centerAlignCam();
+    }
+    
+    /// <summary>
+    /// To Center align the camera to the gird of avatar movements.
+    /// </summary>
+    void centerAlignCam()
+    {
         cam = GetComponent<Camera>();
         cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
         cam.transform.position = new Vector3(2.16f, 3.68f, -0.1077f);
     }
-    
+
     void Update() {
 #if UNITY_EDITOR
         HandleMouse();
