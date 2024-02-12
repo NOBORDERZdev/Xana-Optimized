@@ -326,6 +326,7 @@ public class FeedController : MonoBehaviour
                         temp.transform.SetParent(SearchContentPanel.transform);
                         temp.transform.localScale = Vector3.one;
                         temp.GetComponent<FeedData>().SetFeedPrefab(item,false);
+                        temp.GetComponent<FeedData>().isProfileScene = true;
                         temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }

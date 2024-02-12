@@ -20,12 +20,13 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
    [SerializeField] Button LikeBtn;
-    private bool isFeedScreen;
+    private bool isFeedScreen =true;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
+    public bool isProfileScene = false;
     public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){
         if (gameObject.activeInHierarchy)
         {
@@ -54,6 +55,7 @@ public class FeedData : MonoBehaviour
             {
                 ProfileImage.sprite = defaultProfileImage;
             }
+
             isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
@@ -199,9 +201,18 @@ public class FeedData : MonoBehaviour
 
     private void OnEnable()
     {
-        if (isFeedScreen && _data != null)
+        //print("ON ENABLE GETTING CALLED: " + isFeedScreen);
+        if (/*isProfileScene && */_data != null)
         {
-            SetFeedPrefab(_data, false); // Sending back same data to initialize prefab elements in case of no pooling
+            if (isProfileScene)
+            {
+                SetFeedPrefab(_data, false);
+            }
+            else
+            {
+                SetFeedPrefab(_data);
+            }
+            // Sending back same data to initialize prefab elements in case of no pooling
         }
     }
 
