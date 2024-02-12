@@ -44,7 +44,7 @@ public class PostScreenInput : MonoBehaviour
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
-        if (ShowText.text.Count()<=40)
+        if (ShowText.text.Count()<=33)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
