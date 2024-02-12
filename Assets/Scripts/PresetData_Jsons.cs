@@ -163,10 +163,11 @@ public class PresetData_Jsons : MonoBehaviour
 
             //CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
 
-            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
+            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf || StoreManager.instance.selfiePanel.activeSelf)
             {
                 /*Invoke("abcd", 5f);*/
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                StoreManager.instance.selfiePanel.SetActive(false);
                 if (!UIManager.Instance.isAvatarSelectionBtnClicked)
                 {
                     UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
@@ -193,6 +194,16 @@ public class PresetData_Jsons : MonoBehaviour
                     //UserRegisterationManager.instance.usernamePanal.SetActive(true);
                     // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
+                }
+                if (UGCManager.isSelfieTaken)
+                {
+                    UserRegisterationManager.instance.renderImage.SetActive(true);
+                    UserRegisterationManager.instance.LogoImage.SetActive(false);
+                }
+                else
+                {
+                    UserRegisterationManager.instance.renderImage.SetActive(false);
+                    UserRegisterationManager.instance.LogoImage.SetActive(true);
                 }
             }
             else

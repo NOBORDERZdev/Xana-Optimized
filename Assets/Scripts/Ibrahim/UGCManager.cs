@@ -1,3 +1,4 @@
+using AIFLogger;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -102,17 +103,17 @@ public class UGCManager : MonoBehaviour
                 Debug.Log("width:" + texture.width + " :height:" + texture.height);
                 // Calculate scaling factors to fit the image within the panel
                 // Calculate the scaling factor to fit the texture into the panel
-                float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
-                float panelHeight = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
+               // float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
+               // float panelHeight = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
 
-                float scaleX = panelWidth / texture.width;
-                float scaleY = panelHeight / texture.height;
+               // float scaleX = panelWidth / texture.width;
+               // float scaleY = panelHeight / texture.height;
 
                 // Use the minimum scaling factor to ensure the entire texture fits
-                float scaleFactor = Mathf.Min(scaleX, scaleY);
+                //float scaleFactor = Mathf.Min(scaleX, scaleY);
 
                 // Apply the scaling factor to the sprite's RectTransform
-                selfieSprite.rectTransform.sizeDelta = new Vector2(texture.width * scaleFactor, texture.height * scaleFactor);
+               // selfieSprite.rectTransform.sizeDelta = new Vector2(texture.width * scaleFactor, texture.height * scaleFactor);
                 Sprite capturedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
                 selfieSprite.sprite = capturedSprite;
@@ -156,8 +157,7 @@ public class UGCManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(www.error);
-                Debug.LogError("Failed to send image to the server");
+                Debug.Log("Failed to send image to the server : " + www.error);
                 selfieLoader.SetActive(false);
             }
             else
@@ -179,6 +179,8 @@ public class UGCManager : MonoBehaviour
                     ugcItems = response;
                     isSelfieTaken = true;
                     SetFaceData(ugcItemsData.GetFaceData(response.face_type), ugcItemsData.GetNoseData(response.nose_shape), ugcItemsData.GetlipData(response.lip_shape));
+                    
+                      //  ugcItemsData.GetHairData(response.hair_style)) ;
                     Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
@@ -187,7 +189,7 @@ public class UGCManager : MonoBehaviour
         }
     }
 
-    public void SetFaceData(UGCItemsData.ItemData _itemData1, UGCItemsData.ItemData _itemData2, UGCItemsData.ItemData _itemData3)
+    public void SetFaceData(UGCItemsData.ItemData _itemData1, UGCItemsData.ItemData _itemData2, UGCItemsData.ItemData _itemData3)//, UGCItemsData.HairsData _itemHair)
     {
         itemData = new UGCItemData();
         itemData.faceItemData.typeName = _itemData1.typeName;
@@ -199,6 +201,8 @@ public class UGCManager : MonoBehaviour
         itemData.lipItemData.typeName = _itemData3.typeName;
         itemData.lipItemData.index = _itemData3.index;
         itemData.lipItemData.value = _itemData3.value;
+       // itemData.hairItemData.typeName = _itemHair.typeName;
+       // itemData.hairItemData.keyValue = _itemHair.keyValue;
         itemData.eyes_color = ugcItems.eyes_color;
         itemData.hair_color = ugcItems.hair_color;
         itemData.skin_color = ugcItems.skin_color;
@@ -314,6 +318,7 @@ public class UGCItemData
     public string[] skin_color;
     public string[] lips_color;
     public string gender;
+    public HairDataContain hairItemData;
     public DataContain faceItemData;
     public DataContain lipItemData;
     public DataContain noseItemData;
@@ -322,6 +327,7 @@ public class UGCItemData
         faceItemData = new DataContain();
         lipItemData = new DataContain();
         noseItemData = new DataContain();
+        hairItemData = new HairDataContain();
     }
 }
 [Serializable]
@@ -330,6 +336,12 @@ public class DataContain
     public string typeName;
     public int index;
     public int value;
+}
+[Serializable]
+public class HairDataContain
+{
+    public string typeName;
+    public string keyValue;
 }
 
 

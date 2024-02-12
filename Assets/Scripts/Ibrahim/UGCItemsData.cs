@@ -5,16 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ScriptableObjects/UGCItemsData")]
 public class UGCItemsData : ScriptableObject
 {
-    [System.Serializable]
-    public class ItemData
-    {
-        public string typeName;
-        public int index;
-        public int value;
-    }
     public List<ItemData> faceTypes;
     public List<ItemData> lipTypes;
     public List<ItemData> noseTypes;
+    public List<HairsData> hairTypes;
 
     public ItemData GetFaceData(string name)
     {
@@ -48,5 +42,29 @@ public class UGCItemsData : ScriptableObject
             }
         }
         return null;
+    }
+    public HairsData GetHairData(string name)
+    {
+        foreach (HairsData item in hairTypes)
+        {
+            if (item.typeName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+    [System.Serializable]
+    public class ItemData
+    {
+        public string typeName;
+        public int index;
+        public int value;
+    }
+    [System.Serializable]
+    public class HairsData
+    {
+        public string typeName;
+        public string keyValue;
     }
 }
