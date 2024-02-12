@@ -7,13 +7,6 @@ public class PMY_Bg_Switcher : MonoBehaviour
 {
     public Sprite pmyBg;
 
-
-    //private void OnEnable()
-    //{
-    //    if(XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
-    //        GetComponent<Image>().sprite = pmyBg;
-    //}
-
     private void Start()
     {
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
