@@ -188,6 +188,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
             MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
             FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
             MyProfileDataManager.Instance.gameObject.SetActive(false);
@@ -196,13 +197,13 @@ public class FindFriendWithNameItem : MonoBehaviour
         else
         {
             OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
             OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
             //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
             FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileUIHandler.instance.SetMainScrolRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
