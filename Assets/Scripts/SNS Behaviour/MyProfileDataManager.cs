@@ -300,7 +300,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             LoadDataMyProfile();//set data
-            APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, 1, 10, "MyProfile");
+            APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, 1, 40, "MyProfile");
         }
     }
 

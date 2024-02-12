@@ -950,7 +950,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
-        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 30, "OtherPlayerFeed", _callFromFindFriendWithName);
+        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 40, "OtherPlayerFeed", _callFromFindFriendWithName);
         RequestGetOtherUserRole(singleUserProfileData1.id);
     }
 
@@ -964,7 +964,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         FeedUIController.Instance.ShowLoader(true);
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(id));
-        APIManager.Instance.RequestGetFeedsByUserId(id, 1, 30, "OtherPlayerFeed");
+        APIManager.Instance.RequestGetFeedsByUserId(id, 1, 40, "OtherPlayerFeed");
         RequestGetOtherUserRole(id);
     }
 
