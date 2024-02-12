@@ -300,7 +300,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             LoadDataMyProfile();//set data
-            APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, 1, 40, "MyProfile");
+            APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, 1, 10, "MyProfile");
         }
     }
 
@@ -633,6 +633,7 @@ public class MyProfileDataManager : MonoBehaviour
     //public float lastVerticalNormalizedPosition = -1;
     public void ProfileAPiPagination()
     {
+        /*
         Debug.Log("ProfileAPiPagination 000");
         if (myProfileScreen.activeSelf)
         {
@@ -654,6 +655,7 @@ public class MyProfileDataManager : MonoBehaviour
                 // OnScrollNFT();
             }
         }
+        */
     }
 
     public List<int> loadedMyPostAndVideoId = new List<int>();

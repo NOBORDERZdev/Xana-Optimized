@@ -218,6 +218,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (/*GameManager.Instance.defaultSelection != 0*/ true)
         {
+            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
             GameManager.Instance.defaultSelection = 0;
             if (additiveScenesManager != null)
             {
@@ -694,6 +695,7 @@ public class BottomTabManager : MonoBehaviour
 
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
     }
 
     public void ShopButtonClicked()
