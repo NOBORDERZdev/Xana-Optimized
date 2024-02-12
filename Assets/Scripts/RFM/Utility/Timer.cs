@@ -129,7 +129,6 @@ namespace RFM
             {
                 _finished = true;
                 _running = false;
-                Debug.LogError("_onFinishedCallback called");
                 _onFinishedCallback?.Invoke();
                 Destroy(gameObject);
             }
