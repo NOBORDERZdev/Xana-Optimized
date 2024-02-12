@@ -108,6 +108,7 @@ public class FollowingItemController : MonoBehaviour
         print("Follower id :" + followingRawData.following.id);
         APIManager.Instance.RequestGetUserLatestAvatarData<FollowingItemController>(followingRawData.following.id.ToString(), this);
         MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
         MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
         OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
         ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
