@@ -500,6 +500,7 @@ public class BottomTabManager : MonoBehaviour
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
+                FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
                 // OLD FEED UI
                 ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
                 ////{
