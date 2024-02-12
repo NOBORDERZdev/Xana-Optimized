@@ -27,12 +27,19 @@ public class HomeCameraController : MonoBehaviour
     private Vector2[] lastZoomPositions; // Touch mode only
 
     void Awake() {
-        cam = GetComponent<Camera>();
-        cam.fieldOfView =ZoomBounds[1]-5; // to set zoom on start 
-        cam.transform.position = new Vector3(1.9f,3.68f,0);
-        StartCoroutine(AllignWithCharacter());
+      centerAlignCam();
     }
     
+    /// <summary>
+    /// To Center align the camera to the gird of avatar movements.
+    /// </summary>
+    void centerAlignCam()
+    {
+        cam = GetComponent<Camera>();
+        cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
+        cam.transform.position = new Vector3(2.16f, 3.68f, -0.1077f);
+    }
+
     void Update() {
 #if UNITY_EDITOR
         HandleMouse();
@@ -46,20 +53,6 @@ public class HomeCameraController : MonoBehaviour
         print("iNPUT " + Input.touchCount);
         if (Input.touchCount>1)
         {
-            // wasZoomingLastFrame = true; // ADDED        
-            //// Zoom based on the distance between the new positions compared to the 
-            //// distance between the previous positions.
-            //float newDistance = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-            //float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-            //float offset = newDistance - oldDistance;
-
-            //ZoomCamera(offset, ZoomSpeedTouch);
-
-            //lastZoomPositions = new Vector2[] { Input.GetTouch(0).position, Input.GetTouch(1).position };
-
-           // break;
-
-
             // get current touch positions
             Touch tZero = Input.GetTouch(0);
             Touch tOne = Input.GetTouch(1);
@@ -88,41 +81,6 @@ public class HomeCameraController : MonoBehaviour
                 PanCamera(touch.position);
             }
         }
-        //switch (Input.touchCount)
-        //{
-        //    case 1: // Panning
-
-        //        wasZoomingLastFrame = false;
-            
-        //    // If the touch began, capture its position and its finger ID.
-        //    // Otherwise, if the finger ID of the touch doesn't match, skip it.
-        //    Touch touch = Input.GetTouch(0);
-        //    if (touch.phase == TouchPhase.Began) {
-        //        lastPanPosition = touch.position;
-        //        panFingerId = touch.fingerId;
-        //    } else if (touch.fingerId == panFingerId && touch.phase == TouchPhase.Moved) {
-        //        PanCamera(touch.position);
-        //    }
-        //    break;
-     
-        //    case 2: // Zooming
-        //      wasZoomingLastFrame = true; // ADDED        
-        //    // Zoom based on the distance between the new positions compared to the 
-        //    // distance between the previous positions.
-        //    float newDistance = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-        //    float oldDistance = Vector2.Distance(lastZoomPositions[0], lastZoomPositions[1]);
-        //    float offset = newDistance - oldDistance;
-
-        //    ZoomCamera(offset, ZoomSpeedTouch);
-
-        //    lastZoomPositions = new Vector2[] { Input.GetTouch(0).position, Input.GetTouch(1).position };
-
-        //   break;
-                
-        //default:
-        //    wasZoomingLastFrame = false;
-        //    break;
-        //}
     }
     
     void HandleMouse() {
@@ -167,9 +125,10 @@ public class HomeCameraController : MonoBehaviour
     IEnumerator AllignWithCharacter()
     {
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], BoundsX[1]);
+        print("~~~~~~~ player cam pos "+pos);
         transform.position = pos;
     }
 }

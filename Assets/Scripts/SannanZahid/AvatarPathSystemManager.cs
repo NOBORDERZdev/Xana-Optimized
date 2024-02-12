@@ -26,7 +26,7 @@ public class AvatarPathSystemManager : MonoBehaviour
             for (int j = 0; j < _col; j++)
             {
                 tempTransform = Instantiate(_startPoint.gameObject,
-                    new Vector3((float)i/1.5f + _startPoint.position.x, 0, (float)-j/1.5f + _startPoint.position.z),
+                    new Vector3((float)i/1.7f + _startPoint.position.x, 0, (float)-j/1.7f + _startPoint.position.z),
                     Quaternion.identity).transform;
                 points[i,j]=(tempTransform);
                 tempTransform.name = "{ " + i + " - " + j+" }";
