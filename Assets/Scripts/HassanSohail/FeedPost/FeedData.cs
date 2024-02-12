@@ -202,7 +202,7 @@ public class FeedData : MonoBehaviour
     private void OnEnable()
     {
         //print("ON ENABLE GETTING CALLED: " + isFeedScreen);
-        if (/*isProfileScene && */_data != null)
+        if (/*isProfileScene && */_data.user_id != 0)
         {
             if (isProfileScene)
             {
