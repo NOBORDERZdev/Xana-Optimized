@@ -103,12 +103,13 @@ public class ParentHeightResetScript : MonoBehaviour
         }
         else*/
         //{
-        this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().rect.height);
+        this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().sizeDelta.y);
         //}
 
-        mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        if (gameObject.activeInHierarchy)
-            StartCoroutine(waitToReset());
+        //Commented below lines for now to make profile scroller work properly as below 3 lines were making issues in scroller
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //if (gameObject.activeInHierarchy)
+        //    StartCoroutine(waitToReset());
     }
 
     IEnumerator waitToReset()

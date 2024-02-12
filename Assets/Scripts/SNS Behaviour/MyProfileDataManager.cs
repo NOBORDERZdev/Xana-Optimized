@@ -1486,7 +1486,7 @@ public class MyProfileDataManager : MonoBehaviour
     void TabCommonChange(int index)
     {
         // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
-        tabScrollRectGiftScreen.LerpToPage(index);
+        //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
         parentHeightResetScript.OnHeightReset(index);
         if (index == 2)
         {
