@@ -32,7 +32,7 @@ public class AllWorldManage : MonoBehaviour
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
     }
 
     public void SearchScreenLoad(string searchKey)
@@ -40,12 +40,12 @@ public class AllWorldManage : MonoBehaviour
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
     }
 
     public void BackToPreviousScreen()
     {
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
         //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);

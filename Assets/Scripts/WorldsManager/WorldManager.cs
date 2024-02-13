@@ -7,7 +7,7 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
-
+using DG.Tweening;
 
 public class WorldManager : MonoBehaviour
 {
@@ -29,7 +29,7 @@ public class WorldManager : MonoBehaviour
     private int recordPerPage = 30;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
-    private APIURL aPIURLGlobal;
+    public APIURL aPIURLGlobal;
     [SerializeField]
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
@@ -51,12 +51,15 @@ public class WorldManager : MonoBehaviour
 
     public string worldstr;
 
+    public List<WorldItemDetail> resultWorldList = new List<WorldItemDetail>();
+
     public WorldItemManager WorldItemManager;
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
     public WorldItemPreviewTab worldItemPreviewTabRef;
     public WorldSearchManager worldSearchManager;
+    public SearchWorldController searchWorldControllerRef;
     public static WorldManager instance;
     public APIURL GetCurrentTabSelected()
     {
@@ -151,7 +154,7 @@ public class WorldManager : MonoBehaviour
             else
                 aPIURLGlobal = APIURL.SearchWorld;
             this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
-            ClearWorldScrollWorlds();
+            WorldScrollReset();
             SearchPageNumb = 1;
             SearchTagPageNumb = 1;
             SearchPageSize = 40;
@@ -163,7 +166,7 @@ public class WorldManager : MonoBehaviour
         else
         {
             this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
-            ClearWorldScrollWorlds();
+            WorldScrollReset();
             previousSearchKey = SearchKey = searchKey;
         }
     }
@@ -206,6 +209,7 @@ public class WorldManager : MonoBehaviour
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
+
 
     public string PrepareApiURL(APIURL aPIURL, int recordPerPage = 30)
     {
@@ -325,6 +329,7 @@ public class WorldManager : MonoBehaviour
 
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
+        resultWorldList.Clear();
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             WorldItemDetail _event;
@@ -418,7 +423,9 @@ public class WorldManager : MonoBehaviour
             //}
             //else
             //{
-            WorldItemManager.AddWorld(_apiURL, _event);
+            //WorldItemManager.AddWorld(_apiURL, _event);
+
+            resultWorldList.Add(_event);
             //}
             //if (!isLobbyActive)
             //{
@@ -430,7 +437,7 @@ public class WorldManager : MonoBehaviour
             //    }
             //}  
         }
-        if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count > 0)
+        /*if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count > 0)
         {
             WorldItemManager.DisplayWorlds(_apiURL);
             WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
@@ -438,7 +445,22 @@ public class WorldManager : MonoBehaviour
         else if (WorldItemManager.gameObject.activeInHierarchy)
         {
             WorldItemManager.WorldLoadingText(_apiURL);
+        }*/
+
+
+        if (_WorldInfo.data.count > 0)
+        {
+            WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
+        else 
+        {
+            WorldItemManager.WorldLoadingText(_apiURL);
+        }
+        if(aPIURLGlobal==APIURL.SearchWorld && resultWorldList.Count>0)
+        {
+            WorldScrollReset();
+        }
+        searchWorldControllerRef.LoadData(0);
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -460,7 +482,8 @@ public class WorldManager : MonoBehaviour
     }
     public void WorldScrollReset()
     {
-        WorldItemManager.WorldScrollReset();
+        searchWorldControllerRef.scroller.ClearAll();
+        searchWorldControllerRef.ClearData();
     }
     public void ClearWorldScrollWorlds()
     {
