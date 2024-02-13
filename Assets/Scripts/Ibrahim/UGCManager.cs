@@ -4,24 +4,30 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class UGCManager : MonoBehaviour
 {
-    [Header("UGC Data Refrence")]
+    public static UGCManager instance;
     private Texture2D texture;
     public Image selfieSprite;
-    public GameObject selfieLoader;
     public SkinnedMeshRenderer faceAvatar;
-    public UGCItemsData ugcItemsData;
-    private UGCItemData itemData;
     private UGCItemsClass ugcItems;
+    public TMP_Text warningText;
+    public GameObject warningPanel;
     public static bool isSelfieTaken = false;
+    public Material skincolor;
+    public Material haircolor;
+    private void Awake()
+    {
+        instance = this;
+    }
     public void OnClickSaveSelfieButton()
     {
-        selfieLoader.SetActive(true);
+        StoreManager.instance.loaderPanel.SetActive(true);
         isSelfieTaken = false;
         if (texture != null)
         {
@@ -34,7 +40,7 @@ public class UGCManager : MonoBehaviour
     {
         //selfieSprite.sprite = null;
         isSelfieTaken = false;
-        texture = null;
+        //texture = null;
         OnClickSelfieButton();
     }
     public void OnClickBackSelfieButton()
@@ -103,17 +109,17 @@ public class UGCManager : MonoBehaviour
                 Debug.Log("width:" + texture.width + " :height:" + texture.height);
                 // Calculate scaling factors to fit the image within the panel
                 // Calculate the scaling factor to fit the texture into the panel
-               // float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
-               // float panelHeight = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
+                //float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
+                //float panelHeight = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
 
-               // float scaleX = panelWidth / texture.width;
-               // float scaleY = panelHeight / texture.height;
+                //float scaleX = panelWidth / texture.width;
+                //float scaleY = panelHeight / texture.height;
 
                 // Use the minimum scaling factor to ensure the entire texture fits
                 //float scaleFactor = Mathf.Min(scaleX, scaleY);
 
                 // Apply the scaling factor to the sprite's RectTransform
-               // selfieSprite.rectTransform.sizeDelta = new Vector2(texture.width * scaleFactor, texture.height * scaleFactor);
+                //selfieSprite.rectTransform.sizeDelta = new Vector2(texture.width * scaleFactor, texture.height * scaleFactor);
                 Sprite capturedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
                 selfieSprite.sprite = capturedSprite;
@@ -158,7 +164,9 @@ public class UGCManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("Failed to send image to the server : " + www.error);
-                selfieLoader.SetActive(false);
+                warningPanel.SetActive(true);
+                warningText.text = www.error;
+                StoreManager.instance.loaderPanel.SetActive(false);
             }
             else
             {
@@ -167,20 +175,23 @@ public class UGCManager : MonoBehaviour
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
                     Debug.Log(response.description);
-                    selfieLoader.SetActive(false);
+                    warningPanel.SetActive(true);
+                    warningText.text = response.description;
+                    StoreManager.instance.loaderPanel.SetActive(false);
                     SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
                 }
                 else
                 {
                     Debug.Log("Response Data: " + response.ToString());
                     // selfieSprite.gameObject.SetActive(false);
-                    selfieLoader.SetActive(false);
+                    StoreManager.instance.loaderPanel.SetActive(false);
                     SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
                     ugcItems = response;
                     isSelfieTaken = true;
-                    SetFaceData(ugcItemsData.GetFaceData(response.face_type), ugcItemsData.GetNoseData(response.nose_shape), ugcItemsData.GetlipData(response.lip_shape));
-                    
-                      //  ugcItemsData.GetHairData(response.hair_style)) ;
+                    SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
+                        StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
+                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color)) ;
+                  
                     Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
@@ -188,42 +199,55 @@ public class UGCManager : MonoBehaviour
             }
         }
     }
-
-    public void SetFaceData(UGCItemsData.ItemData _itemData1, UGCItemsData.ItemData _itemData2, UGCItemsData.ItemData _itemData3)//, UGCItemsData.HairsData _itemHair)
+    public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        itemData = new UGCItemData();
-        itemData.faceItemData.typeName = _itemData1.typeName;
-        itemData.faceItemData.index = _itemData1.index;
-        itemData.faceItemData.value = _itemData1.value;
-        itemData.noseItemData.typeName = _itemData2.typeName;
-        itemData.noseItemData.index = _itemData2.index;
-        itemData.noseItemData.value = _itemData2.value;
-        itemData.lipItemData.typeName = _itemData3.typeName;
-        itemData.lipItemData.index = _itemData3.index;
-        itemData.lipItemData.value = _itemData3.value;
-       // itemData.hairItemData.typeName = _itemHair.typeName;
-       // itemData.hairItemData.keyValue = _itemHair.keyValue;
-        itemData.eyes_color = ugcItems.eyes_color;
-        itemData.hair_color = ugcItems.hair_color;
-        itemData.skin_color = ugcItems.skin_color;
-        itemData.lips_color = ugcItems.lips_color;
-        itemData.gender = ugcItems.gender;
-        faceAvatar.SetBlendShapeWeight(itemData.faceItemData.index, itemData.faceItemData.value);
-        faceAvatar.SetBlendShapeWeight(itemData.noseItemData.index, itemData.noseItemData.value);
-        faceAvatar.SetBlendShapeWeight(itemData.lipItemData.index, itemData.lipItemData.value);
+        skincolor.color = new Color(float.Parse(ugcItems.skin_color[0]), float.Parse(ugcItems.skin_color[1]), float.Parse(ugcItems.skin_color[2]), float.Parse(ugcItems.skin_color[3]));
+        haircolor.color = new Color(float.Parse(ugcItems.hair_color[0]), float.Parse(ugcItems.hair_color[1]), float.Parse(ugcItems.hair_color[2]), float.Parse(ugcItems.hair_color[3]));
 
-        var dirPath = Application.persistentDataPath + "/UGCItemsDataJson";
-        var fileName = $"{itemData.faceItemData.typeName}.json";
-        var jsonFilePath = System.IO.Path.Combine(dirPath, fileName);
-        if (!Directory.Exists(dirPath))
-        {
-            Directory.CreateDirectory(dirPath);
+        if (_itemFace != null)
+        faceAvatar.SetBlendShapeWeight(_itemFace.index, _itemFace.value);
+        if (_itemNose != null)
+            faceAvatar.SetBlendShapeWeight(_itemNose.index, _itemNose.value);
+        if (_itemLips != null)
+            faceAvatar.SetBlendShapeWeight(_itemLips.index, _itemLips.value);
+        if (_itemHair != null) {
+            Debug.Log("yaha aya ha bhai");
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _itemHair.keyValue, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.black, true, false));
+            //StartCoroutine(ImplementColors(Color.black, SliderType.HairColor, applyOn));
         }
-        string json = JsonUtility.ToJson(itemData, true);
-        File.WriteAllText(jsonFilePath, json);
+        if (_itemEye != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_itemEye.keyValue, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject));
+            Debug.Log("adas    " + _itemEye.keyValue);
+        }
+        StoreManager.instance.itemData.gender = ugcItems.gender;
+        StoreManager.instance.itemData .hair_color = ugcItems.hair_color;
+        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
+        StoreManager.instance.itemData.eyes_color = ugcItems.eyes_color;
 
-        Debug.Log($"UGCItemsData data saved to: {jsonFilePath}");
-
+        if (_itemFace != null)
+        {
+            StoreManager.instance.itemData.faceItemData.typeName = _itemFace.typeName;
+            StoreManager.instance.itemData.faceItemData.index = _itemFace.index;
+            StoreManager.instance.itemData.faceItemData.value = _itemFace.value;
+        }
+        if (_itemNose != null)
+        {
+            StoreManager.instance.itemData.noseItemData.typeName = _itemNose.typeName;
+            StoreManager.instance.itemData.noseItemData.index = _itemNose.index;
+            StoreManager.instance.itemData.noseItemData.value = _itemNose.value;
+        }
+        if (_itemLips != null)
+        {
+            StoreManager.instance.itemData.lipItemData.typeName = _itemLips.typeName;
+            StoreManager.instance.itemData.lipItemData.index = _itemLips.index;
+            StoreManager.instance.itemData.lipItemData.value = _itemLips.value;
+        }
+        if (_itemHair != null)
+        {
+            StoreManager.instance.itemData._hairItemData.typeName = _itemHair.typeName;
+            StoreManager.instance.itemData._hairItemData.keyValue = _itemHair.keyValue;
+        }
     }
     #region Permission Methods
     private string permissionCheck = "";
@@ -298,7 +322,7 @@ public class UGCItemsClass
     public string face_type;
     public string lip_shape;
     public string nose_shape;
-    public string[] eyes_color;
+    public string eyes_color;
     public string[] hair_color;
     public string[] skin_color;
     public string[] lips_color;
@@ -310,38 +334,4 @@ public class UGCItemsClass
         return face_type + lip_shape + nose_shape + eyes_color + hair_color + skin_color + lips_color + hair_style + gender;
     }
 }
-[Serializable]
-public class UGCItemData
-{
-    public string[] eyes_color;
-    public string[] hair_color;
-    public string[] skin_color;
-    public string[] lips_color;
-    public string gender;
-    public HairDataContain hairItemData;
-    public DataContain faceItemData;
-    public DataContain lipItemData;
-    public DataContain noseItemData;
-    public UGCItemData()
-    {
-        faceItemData = new DataContain();
-        lipItemData = new DataContain();
-        noseItemData = new DataContain();
-        hairItemData = new HairDataContain();
-    }
-}
-[Serializable]
-public class DataContain
-{
-    public string typeName;
-    public int index;
-    public int value;
-}
-[Serializable]
-public class HairDataContain
-{
-    public string typeName;
-    public string keyValue;
-}
-
 

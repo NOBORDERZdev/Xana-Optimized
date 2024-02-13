@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 public class SavaCharacterProperties : MonoBehaviour
 {
@@ -344,6 +345,15 @@ public class SavingCharacterDataClass
     public string gender;
     public List<Item> myItemObj;
 
+    public string eyes_color;
+    public string[] hair_color;
+    public string[] skin_color;
+    public string face_gender;
+    public DataContain faceItemData;
+    public DataContain lipItemData;
+    public DataContain noseItemData;
+    public HairDataContain hairItemData;
+
     public List<BoneDataContainer> SavedBones;
     public int SkinId;
     public Color Skin;
@@ -405,10 +415,26 @@ public class SavingCharacterDataClass
     }
     public SavingCharacterDataClass()
     {
-
+        faceItemData = new DataContain();
+        lipItemData = new DataContain();
+        noseItemData = new DataContain();
+        hairItemData = new HairDataContain();
     }
-}
 
+}
+[Serializable]
+public class DataContain
+{
+    public string typeName;
+    public int index;
+    public int value;
+}
+[Serializable]
+public class HairDataContain
+{
+    public string typeName;
+    public string keyValue;
+}
 public class BoxerNFTDataClass
 {
     public bool isNFTAquiped = false;

@@ -258,7 +258,7 @@ public class ConstantsGod
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
-    public static string UGCAiApi = "https://36dc-39-61-48-164.ngrok-free.app/analyze-image/";
+    public static string UGCAiApi = "https://fce2-39-61-48-164.ngrok-free.app/analyze-image/";
     #endregion
 
     #region Feed Api's

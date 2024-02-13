@@ -8,7 +8,8 @@ public class UGCItemsData : ScriptableObject
     public List<ItemData> faceTypes;
     public List<ItemData> lipTypes;
     public List<ItemData> noseTypes;
-    public List<HairsData> hairTypes;
+    public List<HairsEyeData> hairTypes;
+    public List<HairsEyeData> eyeColor;
 
     public ItemData GetFaceData(string name)
     {
@@ -43,9 +44,20 @@ public class UGCItemsData : ScriptableObject
         }
         return null;
     }
-    public HairsData GetHairData(string name)
+    public HairsEyeData GetHairData(string name)
     {
-        foreach (HairsData item in hairTypes)
+        foreach (HairsEyeData item in hairTypes)
+        {
+            if (item.typeName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+    public HairsEyeData GetEyeData(string name)
+    {
+        foreach (HairsEyeData item in eyeColor)
         {
             if (item.typeName.Equals(name, StringComparison.OrdinalIgnoreCase))
             {
@@ -62,9 +74,35 @@ public class UGCItemsData : ScriptableObject
         public int value;
     }
     [System.Serializable]
-    public class HairsData
+    public class HairsEyeData
     {
         public string typeName;
         public string keyValue;
     }
+}
+[Serializable]
+public class UGCItemData
+{
+    public string eyes_color;
+    public string[] hair_color;
+    public string[] skin_color;
+    public string gender;
+    public HairData _hairItemData;
+    public DataContain faceItemData;
+    public DataContain lipItemData;
+    public DataContain noseItemData;
+    public UGCItemData()
+    {
+        faceItemData = new DataContain();
+        lipItemData = new DataContain();
+        noseItemData = new DataContain();
+        _hairItemData = new HairData();
+    }
+}
+
+[Serializable]
+public class HairData
+{
+    public string typeName;
+    public string keyValue;
 }

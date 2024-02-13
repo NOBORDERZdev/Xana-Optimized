@@ -3470,7 +3470,6 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
-            Debug.Log("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;

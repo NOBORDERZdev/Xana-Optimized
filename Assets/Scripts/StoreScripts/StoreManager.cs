@@ -161,7 +161,7 @@ public class StoreManager : MonoBehaviour
     public GameObject UndoBtn, RedoBtn, AvatarSaved, AvatarSavedGuest, AvatarUpdated;
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
-    public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel;
+    public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel, loaderPanel;
    // public GameObject backbutton_preset;
     public Transform contentList;
 
@@ -196,7 +196,8 @@ public class StoreManager : MonoBehaviour
     public Button newAvatarPresetBtn;
     public CanvasScaler _CanvasScaler;
     public Action storeOpen;
-
+    public UGCItemsData ugcItemsData;
+    public UGCItemData itemData;
     private void Awake()
     {
 

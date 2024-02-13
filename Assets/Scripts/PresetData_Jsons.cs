@@ -141,14 +141,19 @@ public class PresetData_Jsons : MonoBehaviour
 
             // Hack for latest update // keep all preset body fat to 0
             //change lipsto default
+
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-
-            //print(_CharacterData.BodyFat);
+            if (UGCManager.isSelfieTaken)
+            {
+                SaveUGCDataOnJson(_CharacterData);
+            }
+            //print(_CharacterData.BodyFat);          
             _CharacterData.BodyFat = 0;
             _CharacterData.PresetValue = gameObject.name;
-
             XanaConstants.xanaConstants.bodyNumber = 0;
+
+
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
 
@@ -295,6 +300,37 @@ public class PresetData_Jsons : MonoBehaviour
             });
         }
 
+    }
+    void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
+    {
+        _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
+        _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
+        _CharacterData.eyes_color = StoreManager.instance.itemData.eyes_color;
+        _CharacterData.face_gender = StoreManager.instance.itemData.gender;
+
+        if (StoreManager.instance.itemData.faceItemData != null)
+        {
+            _CharacterData.faceItemData.typeName = StoreManager.instance.itemData.faceItemData.typeName;
+            _CharacterData.faceItemData.index = StoreManager.instance.itemData.faceItemData.index;
+            _CharacterData.faceItemData.value = StoreManager.instance.itemData.faceItemData.value;
+        }
+        if (StoreManager.instance.itemData.noseItemData != null)
+        {
+            _CharacterData.noseItemData.typeName = StoreManager.instance.itemData.noseItemData.typeName;
+            _CharacterData.noseItemData.index = StoreManager.instance.itemData.noseItemData.index;
+            _CharacterData.noseItemData.value = StoreManager.instance.itemData.noseItemData.value;
+        }
+        if (StoreManager.instance.itemData.lipItemData != null)
+        {
+            _CharacterData.lipItemData.typeName = StoreManager.instance.itemData.lipItemData.typeName;
+            _CharacterData.lipItemData.index = StoreManager.instance.itemData.lipItemData.index;
+            _CharacterData.lipItemData.value = StoreManager.instance.itemData.lipItemData.value;
+        }
+        if (StoreManager.instance.itemData._hairItemData != null)
+        {
+            _CharacterData.hairItemData.typeName = StoreManager.instance.itemData._hairItemData.typeName;
+            _CharacterData.hairItemData.keyValue = StoreManager.instance.itemData._hairItemData.keyValue;
+        }
     }
 }
 
