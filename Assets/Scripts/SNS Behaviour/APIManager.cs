@@ -2265,7 +2265,10 @@ public class APIManager : MonoBehaviour
         //form.AddField("website", user_website);
         //form.AddField("bio", user_bio);
         //form.AddField("username", unique_Name);
-
+        if(user_bio == "")
+        {
+            user_bio = " ";
+        }
         UserProfile userProfile = new UserProfile
         {
             bio = user_bio,

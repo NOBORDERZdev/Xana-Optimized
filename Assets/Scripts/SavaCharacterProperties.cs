@@ -216,6 +216,7 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.name = SaveItemList.name;
             _CharacterData.gender = SaveItemList.gender;
             _CharacterData.thumbnail = SaveItemList.thumbnail;
+            _CharacterData.avatarType = SaveItemList.avatarType;
             _CharacterData.myItemObj = SaveItemList.myItemObj;
             _CharacterData.PresetValue = SaveItemList.PresetValue;
             _CharacterData.HairColorPaletteValue = SaveItemList.HairColorPaletteValue;
@@ -343,6 +344,8 @@ public class SavingCharacterDataClass
     public string name;
     public string thumbnail;
     public string gender;
+    public enum AvatarType { OldAvatar, NewAvatar, BoxerAvatar};
+    public AvatarType avatarType = AvatarType.OldAvatar;
     public List<Item> myItemObj;
 
     public string eyes_color;

@@ -163,6 +163,11 @@ public class FriendAvatarController : MonoBehaviour
     Color presetHairColor;
     public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
+        if (_CharacterData.gender == AvatarGender.Female.ToString())
+            CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
+        else
+            CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
+
         Custom_IntializeAvatar(_CharacterData);
     }
     void Custom_IntializeAvatar(SavingCharacterDataClass _CharacterData)
