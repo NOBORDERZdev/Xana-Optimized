@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 1862764576496021732}
   - component: {fileID: 5112916289727344559}
   - component: {fileID: 4737647443338879248}
+  - component: {fileID: 8193987884441129197}
   m_Layer: 0
   m_Name: Mobile BG
   m_TagString: Untagged
@@ -228,6 +229,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8193987884441129197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509603282940932534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a9af07c8a79a354d810658d8ff1622e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pmyBg: {fileID: 21300000, guid: 37d97a1dcf658c144980351b5b549035, type: 3}
 --- !u!1 &2122963584025517992
 GameObject:
   m_ObjectHideFlags: 0
@@ -2810,7 +2824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6426210753342032471
 RectTransform:
   m_ObjectHideFlags: 0
