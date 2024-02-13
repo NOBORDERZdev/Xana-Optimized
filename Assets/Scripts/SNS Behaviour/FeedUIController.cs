@@ -651,7 +651,7 @@ public class FeedUIController : MonoBehaviour
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
+                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     break;
                 case "HotTabScreen":
                     //Debug.Log("Comes from Hot or Discover tab full feed screen");
