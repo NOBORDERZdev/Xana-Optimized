@@ -1,9 +1,7 @@
-﻿using Photon.Pun;
-using RFM.Managers;
+﻿using RFM.Managers;
 using System;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace RFM
 {
@@ -129,7 +127,6 @@ namespace RFM
             {
                 _finished = true;
                 _running = false;
-                Debug.LogError("_onFinishedCallback called");
                 _onFinishedCallback?.Invoke();
                 Destroy(gameObject);
             }
@@ -156,7 +153,7 @@ namespace RFM
         public static IEnumerator SetDurationAndRunEnumerator(float value, Action onFinishedCallback = null,
             TMPro.TextMeshProUGUI timeText = null, bool showTimeInMMSS = false, Action<float> onOneSecondCallback = null)
         {
-            Debug.LogError("SetDurationAndRunEnumerator: " + value + " showTimeInMMSS: " + showTimeInMMSS);
+            // Debug.LogError("SetDurationAndRunEnumerator: " + value + " showTimeInMMSS: " + showTimeInMMSS);
             // SetDurationAndRun(value, onFinishedCallback, timeText);
 
             var timerObj = new GameObject("timerObj");
@@ -211,7 +208,7 @@ namespace RFM
                     _elapsedSeconds += sec;
                     if (sec >= 5)
                     {
-                        FindObjectOfType<SceneManage>().LoadMain(false);
+                        FindObjectOfType<SceneManage>().LoadMain(false); // TODO: wth
                     }
                     paused = false;
                 }

@@ -104,11 +104,14 @@ public class CanvasButtonsHandler : MonoBehaviour
     }
     public void RFMResetSprintButton()
     {
-        if (isSpiritInUse)
-            OnSpiritButtonDown();
+        isSpiritInUse = false;
+        //if (isSpiritInUse)
+        OnSpiritButtonDown();
         spirit = maxSpirit;
         spiritFillImg.fillAmount = spirit / maxSpirit;
         spiritText.text = ((spirit / maxSpirit) * 100).ToString("00") + "%";
+        overlay.gameObject.SetActive(false);
+        RFMInputController.run = runIcon.interactable = isSpiritInUse = true;
         joystickIssuesReference = gameObject.GetComponentInChildren<JoyStickIssue>();
         if (joystickIssuesReference)
             joystickIssuesReference.ResetJoyStick();
