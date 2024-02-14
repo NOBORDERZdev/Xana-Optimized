@@ -108,11 +108,11 @@ public class FeedController : MonoBehaviour
             Debug.Log(ex.Message);
         }
         response.Dispose();
-        }
+    }
 
 
     public void PullNewPlayerPost(){ 
-        
+        FeedLoader.SetActive(true);
         GetPlayerNewPosts(APIManager.Instance.userId);
     }
 
@@ -124,12 +124,12 @@ public class FeedController : MonoBehaviour
             await response.SendWebRequest();
             if (response.isNetworkError)
             {
+               
                 Debug.Log(response.error);
             }
             else
             {
                 noFeedsScreen.gameObject.SetActive(false);
-                FeedLoader.SetActive(true);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
@@ -150,9 +150,10 @@ public class FeedController : MonoBehaviour
                 }
                 else{
                     //noFeedsScreen.gameObject.SetActive(true);
-                    FeedLoader.SetActive(false);
+                    //FeedLoader.SetActive(false);
                 }
             }
+            Invoke(nameof(turnoffLoaderForReload),1f);
         }
         catch (System.Exception ex)
         {
@@ -162,7 +163,9 @@ public class FeedController : MonoBehaviour
         response.Dispose();
     }
 
-    
+    void turnoffLoaderForReload(){ 
+       FeedLoader.SetActive(false);
+    }
 
     public void AddDataToTopScroller(List<FeedResponseRow> tempData)
     {

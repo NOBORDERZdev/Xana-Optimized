@@ -135,7 +135,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject nameErrorMessageObj;
     public GameObject uniqueNameErrorMessageObj;
     public Button editProfileDoneButton;
-    bool isEditProfileNameAlreadyExists;
+    public bool isEditProfileNameAlreadyExists;
 
     [Space]
     public GameObject editProfileBioScreen;
