@@ -7,6 +7,7 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
+using UnityEngine.SceneManagement;
 
 
 public class WorldManager : MonoBehaviour
@@ -754,6 +755,10 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void GoToUGC()
+    {
+        SceneManager.LoadScene("UGC");
+    }
     public void ClearHomePageData()
     {
         worldSpaceHomeScreenRef.RemoveThumbnailImages();
