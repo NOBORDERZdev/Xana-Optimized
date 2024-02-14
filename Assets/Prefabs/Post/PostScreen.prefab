@@ -2278,9 +2278,9 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 5
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 0.5
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -2978,6 +2978,7 @@ GameObject:
   - component: {fileID: 4315575900797177265}
   - component: {fileID: 4315575900797177267}
   - component: {fileID: 4315575900797177266}
+  - component: {fileID: 8083853629307919044}
   m_Layer: 0
   m_Name: SpeechBubble
   m_TagString: Untagged
@@ -3133,6 +3134,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 1
+--- !u!114 &8083853629307919044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4315575900797177269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.16470589}
+  m_EffectDistance: {x: 0.8, y: -8}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4315575900813549220
 GameObject:
   m_ObjectHideFlags: 0
