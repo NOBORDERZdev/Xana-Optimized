@@ -4863,14 +4863,14 @@ public class StoreManager : MonoBehaviour
         CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(itemData.skin_color));
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(itemData.lips_color));
         CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(itemData.skin_color));
-        if (itemData.faceItemData != null && CharcterBodyParts.instance != null)
+        if (itemData.faceItemData != 0 && CharcterBodyParts.instance != null)
         {
             Debug.Log("1111111111111111111111111111111111111111111111");
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.faceItemData, 100);
         }
-        if (itemData.noseItemData != null)
+        if (itemData.noseItemData != 0)
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.noseItemData, 100);
-        if (itemData.lipItemData != null)
+        if (itemData.lipItemData != 0)
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {

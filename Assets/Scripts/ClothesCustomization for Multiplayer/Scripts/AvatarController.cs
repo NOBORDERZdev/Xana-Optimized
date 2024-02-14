@@ -59,7 +59,7 @@ public class AvatarController : MonoBehaviour
         }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
-        if (XanaConstants.xanaConstants!=null)
+        if (XanaConstants.xanaConstants != null)
         {
             if (!currScene.Contains("Main")) // call for worlds only
             {
@@ -197,7 +197,7 @@ public class AvatarController : MonoBehaviour
 
     public async void IntializeAvatar(bool canWriteFile = false)
     {
-        while(!XanaConstants.isAddressableCatalogDownload)
+        while (!XanaConstants.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -225,7 +225,7 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             //Debug.LogError("File Path: " + File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-            _PCharacterData=_CharacterData;
+            _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
 
             if (_CharacterData.gender == AvatarGender.Female.ToString())
@@ -362,6 +362,11 @@ public class AvatarController : MonoBehaviour
                             characterBodyParts.TextureForGlove(null);
                         }
                     }
+                    if (_CharacterData.type == ControllerType.Ai)
+                    {
+                        ApplyAIData(_CharacterData);
+                    }
+
                 }
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
@@ -563,6 +568,10 @@ public class AvatarController : MonoBehaviour
                                     }
                                 }
                             }
+                        }
+                        if (_CharacterData.type == ControllerType.Ai)
+                        {
+                            ApplyAIData(_CharacterData);
                         }
                     }
 
@@ -1174,8 +1183,8 @@ public class AvatarController : MonoBehaviour
         //Equipment equipment = applyOn.GetComponent<Equipment>();
         CharcterBodyParts bodyparts = applyOn.GetComponent<CharcterBodyParts>();
 
-        float _size3 = 1f + ((float)bodyFat / 100f );
-        
+        float _size3 = 1f + ((float)bodyFat / 100f);
+
         Debug.Log("Resizing Body Parts & Cloths : " + bodyFat + "  :  " + _size3);
 
         if (bodyparts._scaleBodyParts.Count > 0)
@@ -1705,4 +1714,40 @@ public class AvatarController : MonoBehaviour
     {
         isVisibleOnCam = true;
     }
+    void ApplyAIData(SavingCharacterDataClass _CharacterData)
+    {
+        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
+        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
+        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+        CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(_CharacterData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+        if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.hairItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true, true));
+        }
+    }
+    Color HexToColor(string hex)
+    {
+        Color color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            Debug.Log(" color string: " + color);
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
+        }
+    }
+}
+public enum ControllerType
+{
+    New,
+    Ai
 }
