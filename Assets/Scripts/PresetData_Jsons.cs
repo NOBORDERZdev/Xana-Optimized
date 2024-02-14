@@ -150,7 +150,6 @@ public class PresetData_Jsons : MonoBehaviour
             if (UGCManager.isSelfieTaken)
             {
                 SaveUGCDataOnJson(_CharacterData);
-                Debug.Log("yaha aya ha");
             }
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));

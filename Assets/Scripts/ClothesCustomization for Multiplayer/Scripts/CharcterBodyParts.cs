@@ -1315,15 +1315,6 @@ public class CharcterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        string avatarType = "OldAvatar";
-        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-        {
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-            avatarType = _CharacterData.avatarType;
-        }
-        if (avatarType == "OldAvatar")
-        {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
             // Update Mask Texture As well & reset Its Color
@@ -1337,11 +1328,7 @@ public class CharcterBodyParts : MonoBehaviour
                 mainMaterial.SetTexture("_Mask_texture", Eye_Color_Texture);
                 mainMaterial.SetColor(Eye_ColorName, Color.white);
             }
-        }
-        else
-        {
-            mainMaterial.SetTexture("_BaseMap", texture);
-        }
+
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }
