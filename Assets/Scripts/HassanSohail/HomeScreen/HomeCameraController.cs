@@ -37,7 +37,7 @@ public class HomeCameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
-        cam.transform.position = new Vector3(2.16f, 3.68f, -0.1077f);
+        cam.transform.position = new Vector3(4.255f, 3.68f, -2.01f);
         //StartCoroutine (AllignWithCharacter());
     }
     void Update() {
@@ -122,19 +122,19 @@ public class HomeCameraController : MonoBehaviour
     
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - (offset * speed), ZoomBounds[0], ZoomBounds[1]);
     }
-    public void ViewPlayer(){ 
-        StartCoroutine(AllignWithCharacter());
-    }
+    //public void ViewPlayer(){ 
+    //    StartCoroutine(AllignWithCharacter());
+    //}
 
-    IEnumerator AllignWithCharacter()
-    {
-        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
-            yield return new WaitForSeconds(2f);
-        //Vector3 pos = transform.position;
-        yield return new WaitForSeconds(3f);
-       // pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], -0.43f);
-       Vector3 pos = new Vector3(GameManager.Instance.mainCharacter.transform.position.x, transform.position.y,Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsZ[0], -0.7f));
-        print("~~~~~~~ player cam pos "+pos);
-        transform.position = pos;
-    }
+    //IEnumerator AllignWithCharacter()
+    //{
+    //    while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+    //        yield return new WaitForSeconds(2f);
+    //    //Vector3 pos = transform.position;
+    //    yield return new WaitForSeconds(3f);
+    //   // pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], -0.43f);
+    //   Vector3 pos = new Vector3(GameManager.Instance.mainCharacter.transform.position.x, transform.position.y,Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsZ[0], -0.7f));
+    //    print("~~~~~~~ player cam pos "+pos);
+    //    transform.position = pos;
+    //}
 }
