@@ -169,6 +169,7 @@ public class HomeCameraController : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
         Vector3 pos = transform.position;
+        yield return new WaitForSeconds(0.1f);
         pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], BoundsX[1]);
         transform.position = pos;
     }
