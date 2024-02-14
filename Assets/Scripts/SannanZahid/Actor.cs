@@ -134,6 +134,7 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
+                transform.eulerAngles = new Vector3(0,180,0);
                 yield return new WaitForSeconds(ActionClipTime*2f);
                 if(!_moveFlag)
                 {
