@@ -348,9 +348,9 @@ public class SavingCharacterDataClass
     public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
 
-    public string[] hair_color;
-    public string[] skin_color;
-    public string[] lip_color;
+    public string hair_color;
+    public string skin_color;
+    public string lip_color;
     public string face_gender;
     public DataContain faceItemData;
     public DataContain lipItemData;

@@ -147,7 +147,7 @@ public class UGCManager : MonoBehaviour
     {
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
-        form.AddBinaryData("file", imageBytes, "image.jpg", "image/jpeg");
+        form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
 
         using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.UGCAiApi, form))
         {
@@ -172,22 +172,24 @@ public class UGCManager : MonoBehaviour
                     warningPanel.SetActive(true);
                     warningText.text = response.description;
                     StoreManager.instance.loaderPanel.SetActive(false);
-                    SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
+                    //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
                 }
                 else
                 {
                     Debug.Log("Response Data: " + response.ToString());
                     // selfieSprite.gameObject.SetActive(false);
                     StoreManager.instance.loaderPanel.SetActive(false);
-                    SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
+                   // SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
                     ugcItems = response;
                     isSelfieTaken = true;
                     SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
                         StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
                         StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
-                    StoreManager.instance.ApplyUGCValueOnCharacter();
-                    //Swipe_menu.instance.OnClickNext();
+                    //StoreManager.instance.ApplyUGCValueOnCharacter();
+                    Swipe_menu.instance.OnClickNext();
+                    GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                    
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
                 }
             }
@@ -331,9 +333,9 @@ public class UGCItemsClass
     public string lip_shape;
     public string nose_shape;
     public string eyes_color;
-    public string[] hair_color;
-    public string[] skin_color;
-    public string[] lips_color;
+    public string hair_color;
+    public string skin_color;
+    public string lips_color;
     public string hair_style;
     public string gender;
 

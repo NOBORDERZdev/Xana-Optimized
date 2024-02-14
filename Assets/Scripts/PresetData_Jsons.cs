@@ -143,16 +143,14 @@ public class PresetData_Jsons : MonoBehaviour
             //change lipsto default
 
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));        
+            _CharacterData.BodyFat = 0;
+            _CharacterData.PresetValue = gameObject.name;
+            XanaConstants.xanaConstants.bodyNumber = 0;
             if (UGCManager.isSelfieTaken)
             {
                 SaveUGCDataOnJson(_CharacterData);
             }
-            //print(_CharacterData.BodyFat);          
-            _CharacterData.BodyFat = 0;
-            _CharacterData.PresetValue = gameObject.name;
-            XanaConstants.xanaConstants.bodyNumber = 0;
-
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
@@ -229,7 +227,11 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
+            if (UGCManager.isSelfieTaken)
+            {
 
+                StoreManager.instance.ApplyUGCValueOnCharacter();
+            }
             SavePresetOnServer(_CharacterData);
             ApplyPreset();
 

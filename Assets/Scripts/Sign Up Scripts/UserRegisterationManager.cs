@@ -3473,7 +3473,6 @@ public class UserRegisterationManager : MonoBehaviour
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
             //  StoreManager.instance.OnSaveBtnClicked();
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)

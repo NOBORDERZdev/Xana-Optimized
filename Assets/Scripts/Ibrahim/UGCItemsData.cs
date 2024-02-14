@@ -83,9 +83,9 @@ public class UGCItemsData : ScriptableObject
 [Serializable]
 public class UGCItemData
 {
-    public string[] hair_color;
-    public string[] skin_color;
-    public string[] lips_color;
+    public string hair_color;
+    public string skin_color;
+    public string lips_color;
     public string gender;
     public HairEyeData _hairItemData;
     public HairEyeData _eyeItemData;
