@@ -121,7 +121,7 @@ public class FeedData : MonoBehaviour
     }
     IEnumerator GetProfileImage(string url)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         if (!string.IsNullOrEmpty(url))
         {
            // bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
