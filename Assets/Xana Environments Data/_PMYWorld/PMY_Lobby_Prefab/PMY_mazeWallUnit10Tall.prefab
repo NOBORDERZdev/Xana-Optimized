@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1076782560537798066}
   - component: {fileID: 1076782560534943822}
   - component: {fileID: 1076782560535793550}
-  - component: {fileID: 1076782560540116526}
+  - component: {fileID: 8567400762037953850}
   m_Layer: 0
   m_Name: mazeWallUnit10Tall_base
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1076782560540116526
-MeshCollider:
+--- !u!65 &8567400762037953850
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,10 +94,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 328b72463646d824fbbbe304124d2933, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 6, y: 3, z: 0.9350891}
+  m_Center: {x: -3, y: 1.5, z: 0.38281053}
 --- !u!1 &1076782560538245670
 GameObject:
   m_ObjectHideFlags: 0
