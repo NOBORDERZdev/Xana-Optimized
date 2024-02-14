@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public Transform FriendsHomeManager;
     public AdditiveScenesManager additiveScenesManager;
 
+    internal string selectedPresetData="";
     private void Awake()
     {
         if (Instance == null)

@@ -144,6 +144,8 @@ public class PresetData_Jsons : MonoBehaviour
             XanaConstants.xanaConstants.bodyNumber = 0;
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
+            GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
+
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             {
                 Invoke("abcd", 5f);
