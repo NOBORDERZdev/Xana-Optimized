@@ -200,14 +200,11 @@ public class UGCManager : MonoBehaviour
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
 
-        //StoreManager.instance.itemData.gender = ugcItems.gender;
-        //StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
-        //StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
-        //StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
-        StoreManager.instance.itemData.gender = "Female";
-        StoreManager.instance.itemData.hair_color = "#FF69B4";
-        StoreManager.instance.itemData.skin_color = "#FF69B4";
-        StoreManager.instance.itemData.lips_color = "#7869ff";
+        StoreManager.instance.itemData.gender = ugcItems.gender;
+        StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
+        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
+        StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
+
         if (_itemFace != null)
         {
             StoreManager.instance.itemData.faceItemData = _itemFace.index;
