@@ -4858,6 +4858,30 @@ public class StoreManager : MonoBehaviour
             XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
         //}
     }
+    public void ApplyUGCValueOnCharacter()
+    {
+        Color skincolor = new Color(float.Parse(StoreManager.instance.itemData.skin_color[0]), float.Parse(StoreManager.instance.itemData.skin_color[1]), float.Parse(StoreManager.instance.itemData.skin_color[2]), float.Parse(StoreManager.instance.itemData.skin_color[3]));
+        Color haircolor = new Color(float.Parse(StoreManager.instance.itemData.hair_color[0]), float.Parse(StoreManager.instance.itemData.hair_color[1]), float.Parse(StoreManager.instance.itemData.hair_color[2]), float.Parse(StoreManager.instance.itemData.hair_color[3]));
+        Color lipcolor = new Color(float.Parse(StoreManager.instance.itemData.lips_color[0]), float.Parse(StoreManager.instance.itemData.lips_color[1]), float.Parse(StoreManager.instance.itemData.lips_color[2]), float.Parse(StoreManager.instance.itemData.lips_color[3]));
+
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", skincolor);
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", lipcolor);
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", skincolor);
+        if (StoreManager.instance.itemData.faceItemData != null)
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.faceItemData.index, StoreManager.instance.itemData.faceItemData.value);
+        if (StoreManager.instance.itemData.noseItemData != null)
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.noseItemData.index, StoreManager.instance.itemData.noseItemData.value);
+        if (StoreManager.instance.itemData.lipItemData != null)
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.lipItemData.index, StoreManager.instance.itemData.lipItemData.value);
+        if (StoreManager.instance.itemData._hairItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, StoreManager.instance.itemData._hairItemData.keyValue, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), haircolor, true, true));
+        }
+        if (StoreManager.instance.itemData._eyeItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(StoreManager.instance.itemData._eyeItemData.keyValue, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
+        }
+    }
 }
 public class RequestedData
 {

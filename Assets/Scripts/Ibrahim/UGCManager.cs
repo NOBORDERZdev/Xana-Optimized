@@ -11,20 +11,13 @@ using UnityEngine.UI;
 
 public class UGCManager : MonoBehaviour
 {
-    public static UGCManager instance;
     private Texture2D texture;
     public Image selfieSprite;
-    public SkinnedMeshRenderer faceAvatar;
     private UGCItemsClass ugcItems;
     public TMP_Text warningText;
     public GameObject warningPanel;
     public static bool isSelfieTaken = false;
-    public Material skincolor;
-    public Material haircolor;
-    private void Awake()
-    {
-        instance = this;
-    }
+
     public void OnClickSaveSelfieButton()
     {
         StoreManager.instance.loaderPanel.SetActive(true);
@@ -33,7 +26,7 @@ public class UGCManager : MonoBehaviour
         {
             // Encode texture to PNG format
             byte[] imageBytes = texture.EncodeToPNG();
-            StartCoroutine( IERequest(imageBytes));
+            StartCoroutine(IERequest(imageBytes));
         }
     }
     public void OnClickRetakeSelfieButton()
@@ -123,6 +116,7 @@ public class UGCManager : MonoBehaviour
                 Sprite capturedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
                 selfieSprite.sprite = capturedSprite;
+                selfieSprite.preserveAspect = true;
                 StoreManager.instance.selfiePanel.SetActive(true);
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
@@ -190,9 +184,9 @@ public class UGCManager : MonoBehaviour
                     isSelfieTaken = true;
                     SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
                         StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
-                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color)) ;
-                  
-                    Swipe_menu.instance.OnClickNext();
+                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
+                    StoreManager.instance.ApplyUGCValueOnCharacter();
+                    //Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
                 }
@@ -201,35 +195,22 @@ public class UGCManager : MonoBehaviour
     }
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        skincolor.color = new Color(float.Parse(ugcItems.skin_color[0]), float.Parse(ugcItems.skin_color[1]), float.Parse(ugcItems.skin_color[2]), float.Parse(ugcItems.skin_color[3]));
-        haircolor.color = new Color(float.Parse(ugcItems.hair_color[0]), float.Parse(ugcItems.hair_color[1]), float.Parse(ugcItems.hair_color[2]), float.Parse(ugcItems.hair_color[3]));
 
-        if (_itemFace != null)
-        faceAvatar.SetBlendShapeWeight(_itemFace.index, _itemFace.value);
-        if (_itemNose != null)
-            faceAvatar.SetBlendShapeWeight(_itemNose.index, _itemNose.value);
-        if (_itemLips != null)
-            faceAvatar.SetBlendShapeWeight(_itemLips.index, _itemLips.value);
-        if (_itemHair != null) {
-            Debug.Log("yaha aya ha bhai");
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _itemHair.keyValue, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.black, true, false));
-            //StartCoroutine(ImplementColors(Color.black, SliderType.HairColor, applyOn));
-        }
-        if (_itemEye != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_itemEye.keyValue, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject));
-            Debug.Log("adas    " + _itemEye.keyValue);
-        }
         StoreManager.instance.itemData.gender = ugcItems.gender;
-        StoreManager.instance.itemData .hair_color = ugcItems.hair_color;
+        StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
         StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
-        StoreManager.instance.itemData.eyes_color = ugcItems.eyes_color;
-
+        StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
         if (_itemFace != null)
         {
             StoreManager.instance.itemData.faceItemData.typeName = _itemFace.typeName;
             StoreManager.instance.itemData.faceItemData.index = _itemFace.index;
             StoreManager.instance.itemData.faceItemData.value = _itemFace.value;
+        }
+        else 
+        {
+            StoreManager.instance.itemData.faceItemData.typeName = "Rectangular";
+            StoreManager.instance.itemData.faceItemData.index = 52;
+            StoreManager.instance.itemData.faceItemData.value = 100;
         }
         if (_itemNose != null)
         {
@@ -237,16 +218,43 @@ public class UGCManager : MonoBehaviour
             StoreManager.instance.itemData.noseItemData.index = _itemNose.index;
             StoreManager.instance.itemData.noseItemData.value = _itemNose.value;
         }
+        else
+        {
+            StoreManager.instance.itemData.noseItemData.typeName = "Nostril_front_narrow";
+            StoreManager.instance.itemData.noseItemData.index = 67;
+            StoreManager.instance.itemData.noseItemData.value = 100;
+        }
         if (_itemLips != null)
         {
             StoreManager.instance.itemData.lipItemData.typeName = _itemLips.typeName;
             StoreManager.instance.itemData.lipItemData.index = _itemLips.index;
             StoreManager.instance.itemData.lipItemData.value = _itemLips.value;
         }
+        else
+        {
+            StoreManager.instance.itemData.lipItemData.typeName = "heavy lower lips";
+            StoreManager.instance.itemData.lipItemData.index = 58;
+            StoreManager.instance.itemData.lipItemData.value = 100;
+        }
         if (_itemHair != null)
         {
             StoreManager.instance.itemData._hairItemData.typeName = _itemHair.typeName;
             StoreManager.instance.itemData._hairItemData.keyValue = _itemHair.keyValue;
+        }
+        else
+        {
+            StoreManager.instance.itemData._hairItemData.typeName = "Classic Boy Style";
+            StoreManager.instance.itemData._hairItemData.keyValue = "ai_boy_h_115";
+        }
+        if (_itemEye != null)
+        {
+            StoreManager.instance.itemData._eyeItemData.typeName = _itemEye.typeName;
+            StoreManager.instance.itemData._eyeItemData.keyValue = _itemEye.keyValue;
+        }
+        else
+        {
+            StoreManager.instance.itemData._eyeItemData.typeName = "Dusky Blue";
+            StoreManager.instance.itemData._eyeItemData.keyValue = "ai_dusky_blue";
         }
     }
     #region Permission Methods

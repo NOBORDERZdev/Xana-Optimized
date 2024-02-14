@@ -348,14 +348,15 @@ public class SavingCharacterDataClass
     public AvatarType avatarType = AvatarType.OldAvatar;
     public List<Item> myItemObj;
 
-    public string eyes_color;
     public string[] hair_color;
     public string[] skin_color;
+    public string[] lip_color;
     public string face_gender;
     public DataContain faceItemData;
     public DataContain lipItemData;
     public DataContain noseItemData;
-    public HairDataContain hairItemData;
+    public HairEyeDataContain hairItemData;
+    public HairEyeDataContain eyeItemData;
 
     public List<BoneDataContainer> SavedBones;
     public int SkinId;
@@ -421,7 +422,8 @@ public class SavingCharacterDataClass
         faceItemData = new DataContain();
         lipItemData = new DataContain();
         noseItemData = new DataContain();
-        hairItemData = new HairDataContain();
+        hairItemData = new HairEyeDataContain();
+        eyeItemData = new HairEyeDataContain();
     }
 
 }
@@ -433,7 +435,7 @@ public class DataContain
     public int value;
 }
 [Serializable]
-public class HairDataContain
+public class HairEyeDataContain
 {
     public string typeName;
     public string keyValue;

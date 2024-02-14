@@ -248,7 +248,13 @@ public class PresetData_Jsons : MonoBehaviour
                 StoreManager.instance.GreyRibbonImage.SetActive(true);
                 StoreManager.instance.WhiteRibbonImage.SetActive(false);
             }
+
+            //if (UGCManager.isSelfieTaken)
+            //{
+            //    StoreManager.instance.ApplyUGCValueOnCharacter();
+            //}
         }
+
     }
     void SavedButtonClickedBlue()
     {
@@ -305,7 +311,7 @@ public class PresetData_Jsons : MonoBehaviour
     {
         _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
         _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
-        _CharacterData.eyes_color = StoreManager.instance.itemData.eyes_color;
+        _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;
         _CharacterData.face_gender = StoreManager.instance.itemData.gender;
 
         if (StoreManager.instance.itemData.faceItemData != null)
@@ -330,6 +336,11 @@ public class PresetData_Jsons : MonoBehaviour
         {
             _CharacterData.hairItemData.typeName = StoreManager.instance.itemData._hairItemData.typeName;
             _CharacterData.hairItemData.keyValue = StoreManager.instance.itemData._hairItemData.keyValue;
+        }
+        if (StoreManager.instance.itemData._eyeItemData != null)
+        {
+            _CharacterData.eyeItemData.typeName = StoreManager.instance.itemData._eyeItemData.typeName;
+            _CharacterData.eyeItemData.keyValue = StoreManager.instance.itemData._eyeItemData.keyValue;
         }
     }
 }
