@@ -45,7 +45,7 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     private void Update()
     {
         SetARPoseOnAvatar();
-        RotatePlayerHeadManually();
+        //RotatePlayerHeadManually();
     }
 
     public float rotationSpeed = 1.0f;
