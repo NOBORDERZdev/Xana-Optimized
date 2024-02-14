@@ -823,24 +823,11 @@ MonoBehaviour:
     skin_color: 
     lip_color: 
     face_gender: 
-    faceItemData:
-      typeName: 
-      index: 0
-      value: 0
-    lipItemData:
-      typeName: 
-      index: 0
-      value: 0
-    noseItemData:
-      typeName: 
-      index: 0
-      value: 0
-    hairItemData:
-      typeName: 
-      keyValue: 
-    eyeItemData:
-      typeName: 
-      keyValue: 
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -14816,24 +14803,11 @@ MonoBehaviour:
     skin_color: 
     lip_color: 
     face_gender: 
-    faceItemData:
-      typeName: 
-      index: 0
-      value: 0
-    lipItemData:
-      typeName: 
-      index: 0
-      value: 0
-    noseItemData:
-      typeName: 
-      index: 0
-      value: 0
-    hairItemData:
-      typeName: 
-      keyValue: 
-    eyeItemData:
-      typeName: 
-      keyValue: 
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -16736,24 +16710,11 @@ MonoBehaviour:
     skin_color: 
     lip_color: 
     face_gender: 
-    faceItemData:
-      typeName: 
-      index: 0
-      value: 0
-    lipItemData:
-      typeName: 
-      index: 0
-      value: 0
-    noseItemData:
-      typeName: 
-      index: 0
-      value: 0
-    hairItemData:
-      typeName: 
-      keyValue: 
-    eyeItemData:
-      typeName: 
-      keyValue: 
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -27480,24 +27441,11 @@ MonoBehaviour:
     skin_color: 
     lip_color: 
     face_gender: 
-    faceItemData:
-      typeName: 
-      index: 0
-      value: 0
-    lipItemData:
-      typeName: 
-      index: 0
-      value: 0
-    noseItemData:
-      typeName: 
-      index: 0
-      value: 0
-    hairItemData:
-      typeName: 
-      keyValue: 
-    eyeItemData:
-      typeName: 
-      keyValue: 
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -32732,24 +32680,11 @@ MonoBehaviour:
     skin_color: 
     lip_color: 
     face_gender: 
-    faceItemData:
-      typeName: 
-      index: 0
-      value: 0
-    lipItemData:
-      typeName: 
-      index: 0
-      value: 0
-    noseItemData:
-      typeName: 
-      index: 0
-      value: 0
-    hairItemData:
-      typeName: 
-      keyValue: 
-    eyeItemData:
-      typeName: 
-      keyValue: 
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -33042,7 +32977,7 @@ GameObject:
   - component: {fileID: 2302478907849768332}
   - component: {fileID: 2302478907849768371}
   m_Layer: 0
-  m_Name: FriendPostSocket
+  m_Name: SocketController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33057,9 +32992,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2302478907849768370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14eeb84a0f71e304bbe8951d37a1ed93, type: 3}
+  m_Script: {fileID: 11500000, guid: bb374cc1354e37040bcc643d6dea6c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  socketId: 
 --- !u!1001 &2302478907873349860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37614,7 +37550,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2302478908779166134}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -0.15, y: -1.36, z: 3.95}
+  m_LocalPosition: {x: -0.13, y: -1.36, z: 4.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -38426,7 +38362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targ: {fileID: 45990421}
   boxerplayerTransform: {fileID: 2104213416}
-  newplayerTransform: {fileID: 45990421}
+  newplayerTransform: {fileID: 1671144882}
   Offset: {x: 0.07, y: 1.05, z: 0.39}
   MainCamera: {fileID: 1999834765}
   divisable: 8.25
