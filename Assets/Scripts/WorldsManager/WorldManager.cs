@@ -450,17 +450,15 @@ public class WorldManager : MonoBehaviour
 
         if (_WorldInfo.data.count > 0)
         {
+            searchWorldControllerRef.LoadData(0);
             WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
         else 
         {
             WorldItemManager.WorldLoadingText(_apiURL);
         }
-        if(aPIURLGlobal==APIURL.SearchWorld && resultWorldList.Count>0)
-        {
-            WorldScrollReset();
-        }
-        searchWorldControllerRef.LoadData(0);
+
+        
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
