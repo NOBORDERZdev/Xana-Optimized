@@ -1650,7 +1650,8 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
-        BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        //--> remove for xana avatar2.0
+       // BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -4452,10 +4453,11 @@ public class UserRegisterationManager : MonoBehaviour
         //}
 
         //   //print(myObject1.msg + " | success: " + myObject1.success);
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-        {
-            StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        } 
+        //--> remove for xana avatar2.0
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+        //{
+        //    StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
+        //} 
     }
 
 
