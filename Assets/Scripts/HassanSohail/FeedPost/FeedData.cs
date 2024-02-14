@@ -1,3 +1,4 @@
+using SuperStar.Helpers;
 using System;
 using System.Collections;
 using TMPro;
@@ -116,17 +117,60 @@ public class FeedData : MonoBehaviour
     }
     IEnumerator GetProfileImage(string url)
     {
-        string newUrl = url+"?width=256&height=256";
-        using (WWW www = new WWW(url))
+        yield return new WaitForSeconds(1);
+        if (!string.IsNullOrEmpty(url))
         {
-            yield return www;
-            if (ProfileImage != null && www.texture!= null)
+            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
+            if (isUrlContainsHttpAndHttps)
             {
-                ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+                {
+                    if (success)
+                    {
+                        AssetCache.Instance.LoadSpriteIntoImage(ProfileImage, url, changeAspectRatio: true);
+                    }
+                });
             }
-            www.Dispose();
+            else
+            {
+                GetImageFromAWS(url, ProfileImage);
+            }
         }
+        //string newUrl = url+"?width=256&height=256";
+        //using (WWW www = new WWW(url))
+        //{
+        //    yield return www;
+        //    if (ProfileImage != null && www.texture!= null)
+        //    {
+        //        ProfileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
+        //    }
+        //    www.Dispose();
+        //}
      }
+
+
+    public void GetImageFromAWS(string key, Image mainImage)
+    {
+        //Debug.Log("GetImageFromAWS key:" + key);
+        //GetExtentionType(key);
+        if (AssetCache.Instance.HasFile(key))
+        {
+            //Debug.Log("Chat Image Available on Disk");
+            AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
+            return;
+        }
+        else
+        {
+            AssetCache.Instance.EnqueueOneResAndWait(key, (ConstantsGod.r_AWSImageKitBaseUrl + key), (success) =>
+            {
+                if (success)
+                {
+                    AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
+                }
+            });
+            return;
+        }
+    }
 
     public void LikeUnlikePost()
     {
