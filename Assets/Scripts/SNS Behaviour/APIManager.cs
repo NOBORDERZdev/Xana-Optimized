@@ -2255,6 +2255,18 @@ public class APIManager : MonoBehaviour
         public string[] tags;
     }
 
+    class UniqueUserNameError
+    {
+        public bool success;
+        public UniqueUserNameErrorDetail data;
+        public string msg;
+    }
+
+    class UniqueUserNameErrorDetail
+    {
+        public bool isUsernameAvailable;
+    }
+
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
     {
         WWWForm form = new WWWForm();
@@ -2299,7 +2311,17 @@ public class APIManager : MonoBehaviour
             else
             {
                 //Debug.Log("Form upload complete!");
+
                 string data = www.downloadHandler.text;
+                UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+                if (!test.success)
+                {
+                    if (test.msg.Contains("Username"))
+                    {
+                        MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                        MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                    }
+                }
                 Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
