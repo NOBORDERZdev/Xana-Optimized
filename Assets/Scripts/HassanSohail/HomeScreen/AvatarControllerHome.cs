@@ -9,7 +9,7 @@ public class AvatarControllerHome : MonoBehaviour
     #region Editor_Wandering
     [SerializeField] GameObject worldObj;
     [SerializeField] GameObject storeCam;
-    [SerializeField] GameObject worldCam;
+    [SerializeField] public GameObject worldCam;
     [SerializeField] GameObject cineCam;
     [SerializeField] RuntimeAnimatorController ArAnimator;
     [Header("Wandering")]
