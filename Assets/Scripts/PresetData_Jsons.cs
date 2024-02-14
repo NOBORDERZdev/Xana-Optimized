@@ -150,6 +150,7 @@ public class PresetData_Jsons : MonoBehaviour
             if (UGCManager.isSelfieTaken)
             {
                 SaveUGCDataOnJson(_CharacterData);
+                Debug.Log("yaha aya ha");
             }
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
@@ -315,35 +316,11 @@ public class PresetData_Jsons : MonoBehaviour
         _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
         _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;
         _CharacterData.face_gender = StoreManager.instance.itemData.gender;
-
-        if (StoreManager.instance.itemData.faceItemData != null)
-        {
-            _CharacterData.faceItemData.typeName = StoreManager.instance.itemData.faceItemData.typeName;
-            _CharacterData.faceItemData.index = StoreManager.instance.itemData.faceItemData.index;
-            _CharacterData.faceItemData.value = StoreManager.instance.itemData.faceItemData.value;
-        }
-        if (StoreManager.instance.itemData.noseItemData != null)
-        {
-            _CharacterData.noseItemData.typeName = StoreManager.instance.itemData.noseItemData.typeName;
-            _CharacterData.noseItemData.index = StoreManager.instance.itemData.noseItemData.index;
-            _CharacterData.noseItemData.value = StoreManager.instance.itemData.noseItemData.value;
-        }
-        if (StoreManager.instance.itemData.lipItemData != null)
-        {
-            _CharacterData.lipItemData.typeName = StoreManager.instance.itemData.lipItemData.typeName;
-            _CharacterData.lipItemData.index = StoreManager.instance.itemData.lipItemData.index;
-            _CharacterData.lipItemData.value = StoreManager.instance.itemData.lipItemData.value;
-        }
-        if (StoreManager.instance.itemData._hairItemData != null)
-        {
-            _CharacterData.hairItemData.typeName = StoreManager.instance.itemData._hairItemData.typeName;
-            _CharacterData.hairItemData.keyValue = StoreManager.instance.itemData._hairItemData.keyValue;
-        }
-        if (StoreManager.instance.itemData._eyeItemData != null)
-        {
-            _CharacterData.eyeItemData.typeName = StoreManager.instance.itemData._eyeItemData.typeName;
-            _CharacterData.eyeItemData.keyValue = StoreManager.instance.itemData._eyeItemData.keyValue;
-        }
+        _CharacterData.faceItemData = StoreManager.instance.itemData.faceItemData;
+        _CharacterData.noseItemData = StoreManager.instance.itemData.noseItemData;
+        _CharacterData.lipItemData = StoreManager.instance.itemData.lipItemData;
+        _CharacterData.hairItemData = StoreManager.instance.itemData._hairItemData;
+        _CharacterData.eyeItemData = StoreManager.instance.itemData._eyeItemData;
     }
 }
 

@@ -161,6 +161,7 @@ public class UGCManager : MonoBehaviour
                 warningPanel.SetActive(true);
                 warningText.text = www.error;
                 StoreManager.instance.loaderPanel.SetActive(false);
+
             }
             else
             {
@@ -173,6 +174,7 @@ public class UGCManager : MonoBehaviour
                     warningText.text = response.description;
                     StoreManager.instance.loaderPanel.SetActive(false);
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
+                    
                 }
                 else
                 {
@@ -198,65 +200,55 @@ public class UGCManager : MonoBehaviour
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
 
-        StoreManager.instance.itemData.gender = ugcItems.gender;
-        StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
-        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
-        StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
+        //StoreManager.instance.itemData.gender = ugcItems.gender;
+        //StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
+        //StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
+        //StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
+        StoreManager.instance.itemData.gender = "Female";
+        StoreManager.instance.itemData.hair_color = "#FF69B4";
+        StoreManager.instance.itemData.skin_color = "#FF69B4";
+        StoreManager.instance.itemData.lips_color = "#7869ff";
         if (_itemFace != null)
         {
-            StoreManager.instance.itemData.faceItemData.typeName = _itemFace.typeName;
-            StoreManager.instance.itemData.faceItemData.index = _itemFace.index;
-            StoreManager.instance.itemData.faceItemData.value = _itemFace.value;
+            StoreManager.instance.itemData.faceItemData = _itemFace.index;
         }
         else 
         {
-            StoreManager.instance.itemData.faceItemData.typeName = "Rectangular";
-            StoreManager.instance.itemData.faceItemData.index = 52;
-            StoreManager.instance.itemData.faceItemData.value = 100;
+            StoreManager.instance.itemData.faceItemData = 52;
+
         }
         if (_itemNose != null)
         {
-            StoreManager.instance.itemData.noseItemData.typeName = _itemNose.typeName;
-            StoreManager.instance.itemData.noseItemData.index = _itemNose.index;
-            StoreManager.instance.itemData.noseItemData.value = _itemNose.value;
+            StoreManager.instance.itemData.noseItemData = _itemNose.index;
         }
         else
         {
-            StoreManager.instance.itemData.noseItemData.typeName = "Nostril_front_narrow";
-            StoreManager.instance.itemData.noseItemData.index = 67;
-            StoreManager.instance.itemData.noseItemData.value = 100;
+            StoreManager.instance.itemData.noseItemData = 67;
+
         }
         if (_itemLips != null)
         {
-            StoreManager.instance.itemData.lipItemData.typeName = _itemLips.typeName;
-            StoreManager.instance.itemData.lipItemData.index = _itemLips.index;
-            StoreManager.instance.itemData.lipItemData.value = _itemLips.value;
+            StoreManager.instance.itemData.lipItemData = _itemLips.index;
         }
         else
         {
-            StoreManager.instance.itemData.lipItemData.typeName = "heavy lower lips";
-            StoreManager.instance.itemData.lipItemData.index = 58;
-            StoreManager.instance.itemData.lipItemData.value = 100;
+            StoreManager.instance.itemData.lipItemData = 58;
         }
         if (_itemHair != null)
         {
-            StoreManager.instance.itemData._hairItemData.typeName = _itemHair.typeName;
-            StoreManager.instance.itemData._hairItemData.keyValue = _itemHair.keyValue;
+            StoreManager.instance.itemData._hairItemData = _itemHair.keyValue;
         }
         else
         {
-            StoreManager.instance.itemData._hairItemData.typeName = "Classic Boy Style";
-            StoreManager.instance.itemData._hairItemData.keyValue = "ai_boy_h_115";
+            StoreManager.instance.itemData._hairItemData = "ai_boy_h_115";
         }
         if (_itemEye != null)
         {
-            StoreManager.instance.itemData._eyeItemData.typeName = _itemEye.typeName;
-            StoreManager.instance.itemData._eyeItemData.keyValue = _itemEye.keyValue;
+            StoreManager.instance.itemData._eyeItemData = _itemEye.keyValue;
         }
         else
         {
-            StoreManager.instance.itemData._eyeItemData.typeName = "Dusky Blue";
-            StoreManager.instance.itemData._eyeItemData.keyValue = "ai_dusky_blue";
+            StoreManager.instance.itemData._eyeItemData = "ai_dusky_blue";
         }
     }
     #region Permission Methods

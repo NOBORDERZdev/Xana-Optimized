@@ -4867,28 +4867,36 @@ public class StoreManager : MonoBehaviour
         Color lipcolor = HexToColor(itemData.lips_color);
 
         CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", skincolor);
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", lipcolor);
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", skincolor);
-        if (StoreManager.instance.itemData.faceItemData != null)
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.faceItemData.index, StoreManager.instance.itemData.faceItemData.value);
-        if (StoreManager.instance.itemData.noseItemData != null)
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.noseItemData.index, StoreManager.instance.itemData.noseItemData.value);
-        if (StoreManager.instance.itemData.lipItemData != null)
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(StoreManager.instance.itemData.lipItemData.index, StoreManager.instance.itemData.lipItemData.value);
-        if (StoreManager.instance.itemData._hairItemData != null)
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", Color.red);
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", Color.blue);
+
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.faceItemData, 100);
+
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.noseItemData, 100);
+
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
+        if (itemData._hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, StoreManager.instance.itemData._hairItemData.keyValue, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), haircolor, true, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), haircolor, true, true));
         }
-        if (StoreManager.instance.itemData._eyeItemData != null)
+        if (itemData._eyeItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(StoreManager.instance.itemData._eyeItemData.keyValue, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
         }
     }
     Color HexToColor(string hex)
     {
         Color color;
-        ColorUtility.TryParseHtmlString(hex, out color);
-        return color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            Debug.LogError(" color string: " + color);
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
+        }
     }
 }
 public class RequestedData

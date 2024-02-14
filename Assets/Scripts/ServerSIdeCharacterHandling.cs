@@ -489,11 +489,11 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string skin_color;
         public string lip_color;
         public string face_gender;
-        public DataContain faceItemData;
-        public DataContain lipItemData;
-        public DataContain noseItemData;
-        public HairEyeData hairItemData;
-        public HairEyeData eyeItemData;
+        public int faceItemData;
+        public int lipItemData;
+        public int noseItemData;
+        public string hairItemData;
+        public string eyeItemData;
 
         public List<BoneDataContainer> SavedBones;
         public int SkinId;

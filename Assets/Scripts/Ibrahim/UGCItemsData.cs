@@ -87,30 +87,30 @@ public class UGCItemData
     public string skin_color;
     public string lips_color;
     public string gender;
-    public HairEyeData _hairItemData;
-    public HairEyeData _eyeItemData;
-    public DataContain faceItemData;
-    public DataContain lipItemData;
-    public DataContain noseItemData;
-    public UGCItemData()
-    {
-        faceItemData = new DataContain();
-        lipItemData = new DataContain();
-        noseItemData = new DataContain();
-        _hairItemData = new HairEyeData();
-        _eyeItemData = new HairEyeData();
-    }
+    public string _hairItemData;
+    public string _eyeItemData;
+    public int faceItemData;
+    public int lipItemData;
+    public int noseItemData;
+    //public UGCItemData()
+    //{
+    //    faceItemData = new DataContain();
+    //    lipItemData = new DataContain();
+    //    noseItemData = new DataContain();
+    //    _hairItemData = new HairEyeData();
+    //    _eyeItemData = new HairEyeData();
+    //}
 }
-[Serializable]
-public class DataContain
-{
-    public string typeName;
-    public int index;
-    public int value;
-}
-[Serializable]
-public class HairEyeData
-{
-    public string typeName;
-    public string keyValue;
-}
+//[Serializable]
+//public class DataContain
+//{
+//    public string typeName;
+//    public int index;
+//    public int value;
+//}
+//[Serializable]
+//public class HairEyeData
+//{
+//    public string typeName;
+//    public string keyValue;
+//}
