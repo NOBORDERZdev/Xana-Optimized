@@ -57,16 +57,13 @@ public class SocketController : MonoBehaviour
         ReceivedFriendPostData data = JsonConvert.DeserializeObject<ReceivedFriendPostData>(msg);
         updateFriendPostDelegate?.Invoke(data);
     }
-    
-     void FeedLikeUpdate(string msg)
+    void FeedLikeUpdate(string msg)
     {
       // Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
         FeedLikeSocket socketInput = JsonConvert.DeserializeObject<FeedLikeSocket>(msg);
        updateFeedLike?.Invoke(socketInput);
 
     }
-
-
     void EmitUserSocketToApi()
     {
         StartCoroutine(SendSocketIdOfUserForPost());
@@ -123,6 +120,9 @@ public class SocketController : MonoBehaviour
             www.Dispose();
         }
     }
+
+    
+
 
     private void OnDisable()
     {
