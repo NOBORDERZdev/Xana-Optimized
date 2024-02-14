@@ -222,7 +222,8 @@ public class CharcterBodyParts : MonoBehaviour
     // Set Default Texture for player
     public void DefaultTexture(bool ApplyClothMask = true)
     {
-        if(XanaConstants.xanaConstants.isNFTEquiped)
+
+        if (XanaConstants.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask);
@@ -276,16 +277,19 @@ public class CharcterBodyParts : MonoBehaviour
     {
         SkinnedMeshRenderer HeadMeshComponent;
         SkinnedMeshRenderer Body;
-        if (avatarController.avatarGender == AvatarGender.Female)
-        {
-            Body= femaleAvatarMeshes.avatar_body;
-            HeadMeshComponent = femaleAvatarMeshes.avatar_head;
-        }
-        else
-        {
-            Body = maleAvatarMeshes.avatar_body;
-            HeadMeshComponent = maleAvatarMeshes.avatar_head;
-        }
+        //if (avatarController.avatarGender == AvatarGender.Female)
+        //{
+        //    Body= femaleAvatarMeshes.avatar_body;
+        //    HeadMeshComponent = femaleAvatarMeshes.avatar_head;
+        //}
+        //else
+        //{
+
+        maleAvatarMeshes.avatar_parent.SetActive(true);
+        femaleAvatarMeshes.avatar_parent.SetActive(false);
+        Body = maleAvatarMeshes.avatar_body;
+        HeadMeshComponent = maleAvatarMeshes.avatar_head;
+        //}
         if (ApplyClothMask)
         {
             Body.materials[0].SetTexture(Pent_TextureName, Pent_Texture);

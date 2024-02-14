@@ -483,6 +483,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string thumbnail;
         public string gender;
         public List<Item> myItemObj;
+        public string avatarType = "OldAvatar";
 
         public List<BoneDataContainer> SavedBones;
         public int SkinId;

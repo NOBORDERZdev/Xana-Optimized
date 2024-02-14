@@ -344,8 +344,8 @@ public class SavingCharacterDataClass
     public string name;
     public string thumbnail;
     public string gender;
-    public enum AvatarType { OldAvatar, NewAvatar, BoxerAvatar};
-    public AvatarType avatarType = AvatarType.OldAvatar;
+
+    public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
 
     public string[] hair_color;

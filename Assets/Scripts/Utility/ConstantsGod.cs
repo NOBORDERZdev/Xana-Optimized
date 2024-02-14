@@ -68,10 +68,12 @@ public class ConstantsGod
     public static string FILTERPROFILE = "/item/get-filter-assets";
     public static string UPLOADFILE = "/item/upload-file";
     public static string UPLOADFILECLOUDIMAGE = "/item/upload-file-v3";
-    public static string OCCUPIDEASSETS = "/item/get-user-occupied-asset/";
+    //public static string OCCUPIDEASSETS = "/item/get-user-occupied-asset/";
+    public static string OCCUPIDEASSETS = "/item/v2/get-user-occupied-asset/";
     public static string USERLATESTOCCUPIEDASSET = "/item/get-latest-user-occupied-asset/";
     public static string DELETEOCCUPIDEUSER = "/item/delete-user-occupied-asset/";
-    public static string CREATEOCCUPIDEUSER = "/item/create-user-occupied-asset";
+    //public static string CREATEOCCUPIDEUSER = "/item/create-user-occupied-asset";
+    public static string CREATEOCCUPIDEUSER = "/item/v2/create-user-occupied-asset";
     public static string UPDATEOCCUPIDEUSER = "/item/update-user-occupied-asset/";
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
