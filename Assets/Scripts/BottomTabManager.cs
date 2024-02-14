@@ -630,6 +630,9 @@ public class BottomTabManager : MonoBehaviour
         {
             // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //---->>>Sannan OnSelectedClick(4);
+            if (GlobalVeriableClass.callingScreen == "Profile")
+                return;
+
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
