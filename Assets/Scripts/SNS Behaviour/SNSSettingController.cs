@@ -79,7 +79,8 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Screen Back Button Click.......
     public void OnClickMyAccountBackButton()
     {
-        MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
+        OnClickSettingOpen();
+        //MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
     }
 
     //this method is used to terms and policy.......

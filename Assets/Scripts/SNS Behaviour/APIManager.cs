@@ -2255,6 +2255,12 @@ public class APIManager : MonoBehaviour
         public string[] tags;
     }
 
+    class UniqueUserNameError
+    {
+        public bool success;
+        public string msg;
+    }
+
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
     {
         WWWForm form = new WWWForm();
@@ -2294,13 +2300,26 @@ public class APIManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
+                //Jugar for mainnet issue as API is not deployed yet on mainnet
+                MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
                 //Debug.Log("data" + form);
             }
             else
             {
                 //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+
+                //string data = www.downloadHandler.text;
+                UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+                if (!test.success)
+                {
+                    if (test.msg.Contains("Username"))
+                    {
+                        MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                        MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                    }
+                }
+                Debug.Log("<color=red> UpdateUserProfile data:" + www.downloadHandler.text + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }

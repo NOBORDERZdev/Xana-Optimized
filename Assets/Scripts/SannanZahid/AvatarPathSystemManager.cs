@@ -26,7 +26,7 @@ public class AvatarPathSystemManager : MonoBehaviour
             for (int j = 0; j < _col; j++)
             {
                 tempTransform = Instantiate(_startPoint.gameObject,
-                    new Vector3((float)i/1.5f + _startPoint.position.x, 0, (float)-j/1.5f + _startPoint.position.z),
+                    new Vector3((float)i/0.6f + _startPoint.position.x, 0, (float)-j/0.6f + _startPoint.position.z),
                     Quaternion.identity).transform;
                 points[i,j]=(tempTransform);
                 tempTransform.name = "{ " + i + " - " + j+" }";
@@ -146,6 +146,22 @@ public class AvatarPathSystemManager : MonoBehaviour
                 points[i, j].GetComponent<ActorMovePoint>().IsInUse = true;
                 return points[i, j];
             }
+        }
+    }
+
+    public Transform  GetGridCenterPoint()
+    {
+        int centerRow = Mathf.FloorToInt( _row / 2);
+        int centerCol =  Mathf.FloorToInt(_col / 2);
+        if (!points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse)
+        {
+            points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse = true;
+            print("centerRow : "+ centerRow +"centerCol"+centerCol);
+            return points[centerRow, centerCol];
+        }
+        else
+        {
+            return points[0, 0];
         }
     }
 }

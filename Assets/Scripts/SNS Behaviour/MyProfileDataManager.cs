@@ -65,6 +65,7 @@ public class MyProfileDataManager : MonoBehaviour
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI jobText;
     public TextMeshProUGUI textUserBio;
+    public GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
     public TextMeshProUGUI websiteText;
 
     public GameObject seeMoreBioButton;
@@ -135,7 +136,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject nameErrorMessageObj;
     public GameObject uniqueNameErrorMessageObj;
     public Button editProfileDoneButton;
-    bool isEditProfileNameAlreadyExists;
+    public bool isEditProfileNameAlreadyExists;
 
     [Space]
     public GameObject editProfileBioScreen;
@@ -179,6 +180,10 @@ public class MyProfileDataManager : MonoBehaviour
     bool tempLogout = false;
     private void OnEnable()
     {
+        if (profileMainScrollRectFasterEx.GetComponent<Mask>().enabled)
+        {
+            profileMainScrollRectFasterEx.GetComponent<Mask>().enabled = false;
+        }
         if (tempOPCount == 0)
         {
             userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
@@ -225,6 +230,7 @@ public class MyProfileDataManager : MonoBehaviour
         jobText.gameObject.SetActive(false);
         textUserBio.text = "";
         websiteText.text = "";
+        _alignment_space.SetActive(false);
         websiteText.gameObject.SetActive(false);
         profileImage.sprite = defultProfileImage;
     }
@@ -366,52 +372,67 @@ public class MyProfileDataManager : MonoBehaviour
 
         UpdateUserTags();
 
-        if (string.IsNullOrEmpty(myProfileData.userProfile.website))
+        websiteText.gameObject.SetActive(false);
+        // Website functionality is disabled
         {
-            websiteText.gameObject.SetActive(false);
+            //if (string.IsNullOrEmpty(myProfileData.userProfile.website))
+            //{
+            //    websiteText.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    Debug.Log("Profile Website:" + myProfileData.userProfile.website);
+            //    Uri uriResult;
+            //    bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
+            //        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            //    if (result)
+            //    {
+            //        Debug.Log("Given URL is valid");
+            //        Uri websiteHost = new Uri(myProfileData.userProfile.website);
+            //        websiteText.text = websiteHost.Host.ToString();
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Given URL is Invalid");
+            //        websiteText.text = myProfileData.userProfile.website.ToString();
+            //    }
+            //    websiteText.gameObject.SetActive(true);
+            //}
         }
-        else
-        {
-            Debug.Log("Profile Website:" + myProfileData.userProfile.website);
-            Uri uriResult;
-            bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-            if (result)
-            {
-                Debug.Log("Given URL is valid");
-                Uri websiteHost = new Uri(myProfileData.userProfile.website);
-                websiteText.text = websiteHost.Host.ToString();
-            }
-            else
-            {
-                Debug.Log("Given URL is Invalid");
-                websiteText.text = myProfileData.userProfile.website.ToString();
-            }
-            websiteText.gameObject.SetActive(true);
-        }
+
 
         if (myProfileData.userProfile != null)
         {
-            if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
-            {
-                jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
-                jobText.gameObject.SetActive(true);
-            }
-            else
-            {
-                jobText.gameObject.SetActive(false);
-            }
+            jobText.gameObject.SetActive(false);
+            // Job functionality is disabled
+            //{
+            //    if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
+            //    {
+            //        jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
+            //        jobText.gameObject.SetActive(true);
+            //    }
+            //    else
+            //    {
+            //        jobText.gameObject.SetActive(false);
+            //    }
+            //}
 
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
             {
                 textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+                if (textUserBio.text == " ")
+                    _alignment_space.SetActive(false);
+                else
+                    _alignment_space.SetActive(true);
                 SetupBioPart(textUserBio.text);//check and show only 10 line.......
             }
             else
             {
                 //textUserBio.text = "You have no bio yet.";
                 seeMoreBioButton.SetActive(false);
-                textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+                _alignment_space.SetActive(false);
+                // Currently No place holder for bio
+                //textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
             }
         }
         else
@@ -452,7 +473,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileImage.sprite = defultProfileImage;
         }
 
-        StartCoroutine(WaitToRefreshProfileScreen());
+        //StartCoroutine(WaitToRefreshProfileScreen());
     }
 
     public void UpdateUserTags()
@@ -546,7 +567,7 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     //this method is used to Refresh my profile main content size fitter.......
-    IEnumerator WaitToRefreshProfileScreen()
+    public IEnumerator WaitToRefreshProfileScreen()
     {
         Debug.Log("Enter in Content Size Filter Section");
         textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
@@ -633,6 +654,7 @@ public class MyProfileDataManager : MonoBehaviour
     //public float lastVerticalNormalizedPosition = -1;
     public void ProfileAPiPagination()
     {
+        /*
         Debug.Log("ProfileAPiPagination 000");
         if (myProfileScreen.activeSelf)
         {
@@ -654,6 +676,7 @@ public class MyProfileDataManager : MonoBehaviour
                 // OnScrollNFT();
             }
         }
+        */
     }
 
     public List<int> loadedMyPostAndVideoId = new List<int>();
@@ -911,6 +934,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    userPostItem.isProfileScene = true;
                     //userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
                     if (!allMyTextPostFeedImageRootDataList.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i]))
                     {
@@ -1486,7 +1510,7 @@ public class MyProfileDataManager : MonoBehaviour
     void TabCommonChange(int index)
     {
         // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
-        tabScrollRectGiftScreen.LerpToPage(index);
+        //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
         parentHeightResetScript.OnHeightReset(index);
         if (index == 2)
         {
