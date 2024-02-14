@@ -32,6 +32,13 @@ public class CharacterCounter : MonoBehaviour
 
         if (rectTransform.rect.height >= 15)
             GetComponent<VerticalLayoutGroup>().padding.top = 2;
+
+        yield return new WaitForSeconds(0.1f);
+        contentSizeFitter.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        contentSizeFitter.enabled = true;
+        if (rectTransform.rect.height >= 15)
+            GetComponent<VerticalLayoutGroup>().padding.top = 2;
     }
 
 }
