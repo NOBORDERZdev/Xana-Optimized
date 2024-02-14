@@ -12,6 +12,7 @@ public class PlayerPostBubbleHandler : MonoBehaviour
     public void InitObj(Transform _bubbleObjF, TMPro.TMP_Text postTextF)
     {
         BubbleObj = _bubbleObjF;
+        _postText = postTextF;
 
         if (postTextF.text.Length >= 20)
         {
@@ -43,13 +44,16 @@ public class PlayerPostBubbleHandler : MonoBehaviour
     }
     public void UpdateText(string txt)
     {
-        if (txt.Length >= 20)
+        if (txt != "" && txt != null)
         {
-            _postText.text = InsertNewlines(txt);
-        }
-        else
-        {
-            _postText.text = txt;
+            if (txt.Length >= 20)
+            {
+                _postText.text = InsertNewlines(txt);
+            }
+            else
+            {
+                _postText.text = txt;
+            }
         }
     }
 

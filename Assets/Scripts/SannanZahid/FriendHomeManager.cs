@@ -87,7 +87,7 @@ public class FriendHomeManager : MonoBehaviour
             CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
-            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
+            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
         FriendSpawn.id = friend.id;
         FriendSpawn.friendObj = CreatedFriend;
         FriendSpawn.friendNameObj = CreatedNameTag;
