@@ -163,6 +163,11 @@ public class FriendAvatarController : MonoBehaviour
     Color presetHairColor;
     public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
+        if (_CharacterData.gender == AvatarGender.Female.ToString())
+            CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
+        else
+            CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
+
         Custom_IntializeAvatar(_CharacterData);
     }
     void Custom_IntializeAvatar(SavingCharacterDataClass _CharacterData)
@@ -173,124 +178,130 @@ public class FriendAvatarController : MonoBehaviour
           //  _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
-                if (_CharacterData.myItemObj.Count > 0)
+                if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-                    for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+                    SetAvatarClothDefault(this.gameObject);
+                }
+                else
+                {
+                    if (_CharacterData.myItemObj.Count > 0)
                     {
-                        if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                        for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                         {
-                            string type = _CharacterData.myItemObj[i].ItemType;
-                            if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Glove") || type.Contains("Chain"))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
                             {
-                                //getHairColorFormFile = true;
-                                if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                                string type = _CharacterData.myItemObj[i].ItemType;
+                                if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Glove") || type.Contains("Chain"))
                                 {
-                                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
-                                }
-                                else
-                                {
-                                    if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+                                    //getHairColorFormFile = true;
+                                    if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
-                                        {
-                                            if (wornShirt)
-                                            {
-                                                UnStichItem("Chest");
-                                                bodyParts.TextureForShirt(null);
-                                            }
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
-                                        {
-                                            if (wornHair)
-                                                UnStichItem("Hair");
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
-                                        {
-                                            // IF fullcostume[3 piece suit] than remove bottom
-                                            if (wornPant)
-                                            {
-                                                UnStichItem("Legs");
-                                                bodyParts.TextureForPant(null);
-                                            }
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
-                                        {
-                                            if (wornShose)
-                                            {
-                                                UnStichItem("Feet");
-                                                bodyParts.TextureForShoes(null);
-                                            }
-
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
-                                        {
-                                            if (wornEyewearable)
-                                                UnStichItem("EyeWearable");
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
-                                        {
-                                            if (wornGloves)
-                                            {
-                                                UnStichItem("Glove");
-                                                bodyParts.TextureForGlove(null);
-                                            }
-
-                                        }
-                                        else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
-                                        {
-                                            if (wornChain)
-                                                UnStichItem("Chain");
-                                        }
-
+                                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                     }
                                     else
                                     {
-                                        WearDefaultItem(type, this.gameObject);
+                                        if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+                                        {
+                                            if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                            {
+                                                if (wornShirt)
+                                                {
+                                                    UnStichItem("Chest");
+                                                    bodyParts.TextureForShirt(null);
+                                                }
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
+                                            {
+                                                if (wornHair)
+                                                    UnStichItem("Hair");
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
+                                            {
+                                                // IF fullcostume[3 piece suit] than remove bottom
+                                                if (wornPant)
+                                                {
+                                                    UnStichItem("Legs");
+                                                    bodyParts.TextureForPant(null);
+                                                }
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
+                                            {
+                                                if (wornShose)
+                                                {
+                                                    UnStichItem("Feet");
+                                                    bodyParts.TextureForShoes(null);
+                                                }
+
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
+                                            {
+                                                if (wornEyewearable)
+                                                    UnStichItem("EyeWearable");
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
+                                            {
+                                                if (wornGloves)
+                                                {
+                                                    UnStichItem("Glove");
+                                                    bodyParts.TextureForGlove(null);
+                                                }
+
+                                            }
+                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
+                                            {
+                                                if (wornChain)
+                                                    UnStichItem("Chain");
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            WearDefaultItem(type, this.gameObject);
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                }
                             }
-                            else
+                            else // wear the default item of that specific part.
                             {
-                                WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
-                            }
-                        }
-                        else // wear the default item of that specific part.
-                        {
-                            if (XanaConstants.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
-                            {
-                                if (wornShirt)
-                                    UnStichItem("Chest");
-                                bodyParts.TextureForShirt(null);
-                            }
-                            else
-                            {
-                                WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                if (XanaConstants.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                {
+                                    if (wornShirt)
+                                        UnStichItem("Chest");
+                                    bodyParts.TextureForShirt(null);
+                                }
+                                else
+                                {
+                                    WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                }
                             }
                         }
                     }
-                }
-                // Added By WaqasAhmad
-                // When User Reset From Store 
-                // _CharacterData file clear & no Data is available
-                // Implemented Default Cloths
-                else
-                {
-                    WearDefaultItem("Legs", this.gameObject);
-                    WearDefaultItem("Chest", this.gameObject);
-                    WearDefaultItem("Feet", this.gameObject);
-                    WearDefaultItem("Hair", this.gameObject);
-
-                    if (wornEyewearable)
-                        UnStichItem("EyeWearable");
-                    if (wornChain)
-                        UnStichItem("Chain");
-                    if (wornGloves)
+                    // Added By WaqasAhmad
+                    // When User Reset From Store 
+                    // _CharacterData file clear & no Data is available
+                    // Implemented Default Cloths
+                    else
                     {
-                        UnStichItem("Glove");
-                        bodyParts.TextureForGlove(null);
+                        WearDefaultItem("Legs", this.gameObject);
+                        WearDefaultItem("Chest", this.gameObject);
+                        WearDefaultItem("Feet", this.gameObject);
+                        WearDefaultItem("Hair", this.gameObject);
+
+                        if (wornEyewearable)
+                            UnStichItem("EyeWearable");
+                        if (wornChain)
+                            UnStichItem("Chain");
+                        if (wornGloves)
+                        {
+                            UnStichItem("Glove");
+                            bodyParts.TextureForGlove(null);
+                        }
                     }
                 }
-
                 if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 {
                     StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
@@ -390,101 +401,107 @@ public class FriendAvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine) // self
                 {
-                    if (_CharacterData.myItemObj.Count > 0)
+                    if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                     {
-                        for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+                        SetAvatarClothDefault(this.gameObject);
+                    }
+                    else
+                    {
+                        if (_CharacterData.myItemObj.Count > 0)
                         {
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                             {
-                                string type = _CharacterData.myItemObj[i].ItemType;
-                                if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Glove") || type.Contains("Chain"))
+                                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
                                 {
-                                    if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                                    string type = _CharacterData.myItemObj[i].ItemType;
+                                    if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Glove") || type.Contains("Chain"))
                                     {
-                                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
-                                    }
-                                    else
-                                    {
-                                        if (XanaConstants.xanaConstants.isNFTEquiped)
+                                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                         {
-                                            if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
-                                            {
-                                                if (wornShirt)
-                                                {
-                                                    UnStichItem("Chest");
-                                                    bodyParts.TextureForShirt(null);
-                                                }
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
-                                            {
-                                                if (wornHair)
-                                                    UnStichItem("Hair");
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
-                                            {
-                                                if (wornPant)
-                                                {
-                                                    UnStichItem("Legs");
-                                                    bodyParts.TextureForPant(null);
-                                                }
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
-                                            {
-                                                if (wornShose)
-                                                {
-                                                    UnStichItem("Feet");
-                                                    bodyParts.TextureForShoes(null);
-                                                }
-
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
-                                            {
-                                                if (wornEyewearable)
-                                                    UnStichItem("EyeWearable");
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
-                                            {
-                                                if (wornGloves)
-                                                {
-                                                    UnStichItem("Glove");
-                                                    bodyParts.TextureForGlove(null);
-                                                }
-
-                                            }
-                                            else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
-                                            {
-                                                if (wornChain)
-                                                    UnStichItem("Chain");
-                                            }
-
+                                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                         }
                                         else
                                         {
-                                            WearDefaultItem(type, this.gameObject);
+                                            if (XanaConstants.xanaConstants.isNFTEquiped)
+                                            {
+                                                if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                                {
+                                                    if (wornShirt)
+                                                    {
+                                                        UnStichItem("Chest");
+                                                        bodyParts.TextureForShirt(null);
+                                                    }
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
+                                                {
+                                                    if (wornHair)
+                                                        UnStichItem("Hair");
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
+                                                {
+                                                    if (wornPant)
+                                                    {
+                                                        UnStichItem("Legs");
+                                                        bodyParts.TextureForPant(null);
+                                                    }
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
+                                                {
+                                                    if (wornShose)
+                                                    {
+                                                        UnStichItem("Feet");
+                                                        bodyParts.TextureForShoes(null);
+                                                    }
+
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
+                                                {
+                                                    if (wornEyewearable)
+                                                        UnStichItem("EyeWearable");
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
+                                                {
+                                                    if (wornGloves)
+                                                    {
+                                                        UnStichItem("Glove");
+                                                        bodyParts.TextureForGlove(null);
+                                                    }
+
+                                                }
+                                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
+                                                {
+                                                    if (wornChain)
+                                                        UnStichItem("Chain");
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                WearDefaultItem(type, this.gameObject);
+                                            }
                                         }
                                     }
+                                    else
+                                    {
+                                        WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                    }
                                 }
-                                else
+                                else // wear the default item of that specific part.
                                 {
-                                    WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
-                                }
-                            }
-                            else // wear the default item of that specific part.
-                            {
-                                if (XanaConstants.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
-                                {
-                                    if (wornShirt)
-                                        UnStichItem("Chest");
-                                    bodyParts.TextureForShirt(null);
-                                }
-                                else
-                                {
-                                    WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                    if (XanaConstants.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                    {
+                                        if (wornShirt)
+                                            UnStichItem("Chest");
+                                        bodyParts.TextureForShirt(null);
+                                    }
+                                    else
+                                    {
+                                        WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject);
+                                    }
                                 }
                             }
                         }
                     }
-
                     if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                     {
                         StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));

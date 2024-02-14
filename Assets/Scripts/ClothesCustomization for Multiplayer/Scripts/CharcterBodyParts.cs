@@ -78,14 +78,22 @@ public class CharcterBodyParts : MonoBehaviour
     public AvatarController avatarController;
 
     //public AvatarGender avatarGender;
-    public GameObject[] maleAvatarMeshes;
-    public GameObject[] femaleAvatarMeshes;
+    public AvatarMeshes maleAvatarMeshes;
+    public AvatarMeshes femaleAvatarMeshes;
     public SkinnedMeshRenderer boxerBody;
     public SkinnedMeshRenderer boxerHead;
     [HideInInspector]
     public SkinnedMeshRenderer body;
     [HideInInspector]
     public SkinnedMeshRenderer head;
+
+    [Serializable]
+    public class AvatarMeshes
+    {
+        public GameObject avatar_parent;
+        public SkinnedMeshRenderer avatar_body;
+        public SkinnedMeshRenderer avatar_head;
+    }
     private void Awake()
     {
         instance = this;
@@ -133,8 +141,8 @@ public class CharcterBodyParts : MonoBehaviour
     {
         blend = BlendShapeImporter.Instance;
         //avatarController = GetComponent<AvatarController>();
-        head = maleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
-        body = maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
+        head = maleAvatarMeshes.avatar_head;
+        body = maleAvatarMeshes.avatar_body;
         characterHeadMat = head.materials[2];
         characterBodyMat = body.materials[0];
         IntCharacterBones();
@@ -147,22 +155,18 @@ public class CharcterBodyParts : MonoBehaviour
         if (_gender == AvatarGender.Male)
         {
             avatarController.avatarGender = _gender;
-            foreach (GameObject obj in maleAvatarMeshes)
-                obj.SetActive(true);
-            foreach (GameObject obj in femaleAvatarMeshes)
-                obj.SetActive(false);
-            body= maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
-            head= maleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
+            maleAvatarMeshes.avatar_parent.SetActive(true);
+            femaleAvatarMeshes.avatar_parent.SetActive(false);
+            body = maleAvatarMeshes.avatar_body;
+            head = maleAvatarMeshes.avatar_head;
         }
         else if (_gender == AvatarGender.Female)
         {
             avatarController.avatarGender = _gender;
-            foreach (GameObject obj in maleAvatarMeshes)
-                obj.SetActive(false);
-            foreach (GameObject obj in femaleAvatarMeshes)
-                obj.SetActive(true);
-            body = femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
-            head = femaleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
+            maleAvatarMeshes.avatar_parent.SetActive(false);
+            femaleAvatarMeshes.avatar_parent.SetActive(true);
+            body = femaleAvatarMeshes.avatar_body;
+            head = femaleAvatarMeshes.avatar_head;
         }
 
         if (XanaConstants.xanaConstants.isNFTEquiped)
@@ -178,9 +182,9 @@ public class CharcterBodyParts : MonoBehaviour
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(shirt_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(shirt_TextureName, texture);
+            maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
         else if (avatarController.avatarGender ==AvatarGender.Female)
-            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(shirt_TextureName, texture);
+            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
 
         //Body.materials[0].SetTexture(shirt_TextureName, texture);
     }
@@ -192,9 +196,9 @@ public class CharcterBodyParts : MonoBehaviour
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Pent_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Pent_TextureName, texture);
+            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Pent_TextureName, texture);
+            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
         //Body.materials[0].SetTexture(Pent_TextureName, texture);
     }
 
@@ -203,9 +207,9 @@ public class CharcterBodyParts : MonoBehaviour
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Shoes_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Shoes_TextureName, texture);
+            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture(Shoes_TextureName, texture);
+            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
 
         //Body.materials[0].SetTexture(Shoes_TextureName, texture);
     }
@@ -218,7 +222,8 @@ public class CharcterBodyParts : MonoBehaviour
     // Set Default Texture for player
     public void DefaultTexture(bool ApplyClothMask = true)
     {
-        if(XanaConstants.xanaConstants.isNFTEquiped)
+
+        if (XanaConstants.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask);
@@ -272,16 +277,19 @@ public class CharcterBodyParts : MonoBehaviour
     {
         SkinnedMeshRenderer HeadMeshComponent;
         SkinnedMeshRenderer Body;
-        if (avatarController.avatarGender == AvatarGender.Female)
-        {
-            Body= femaleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
-            HeadMeshComponent = femaleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
-        }
-        else
-        {
-            Body = maleAvatarMeshes[0].GetComponent<SkinnedMeshRenderer>();
-            HeadMeshComponent = maleAvatarMeshes[1].GetComponent<SkinnedMeshRenderer>();
-        }
+        //if (avatarController.avatarGender == AvatarGender.Female)
+        //{
+        //    Body= femaleAvatarMeshes.avatar_body;
+        //    HeadMeshComponent = femaleAvatarMeshes.avatar_head;
+        //}
+        //else
+        //{
+
+        maleAvatarMeshes.avatar_parent.SetActive(true);
+        femaleAvatarMeshes.avatar_parent.SetActive(false);
+        Body = maleAvatarMeshes.avatar_body;
+        HeadMeshComponent = maleAvatarMeshes.avatar_head;
+        //}
         if (ApplyClothMask)
         {
             Body.materials[0].SetTexture(Pent_TextureName, Pent_Texture);
