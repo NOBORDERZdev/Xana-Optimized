@@ -229,7 +229,7 @@ public class PresetData_Jsons : MonoBehaviour
                 XanaConstants.xanaConstants.isPresetHairColor = true;
             if (UGCManager.isSelfieTaken)
             {
-
+                Debug.Log("Selfie Taken");
                 StoreManager.instance.ApplyUGCValueOnCharacter();
             }
             SavePresetOnServer(_CharacterData);
@@ -311,6 +311,7 @@ public class PresetData_Jsons : MonoBehaviour
     }
     void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
     {
+        _CharacterData.type = StoreManager.instance.itemData.type;
         _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
         _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
         _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;

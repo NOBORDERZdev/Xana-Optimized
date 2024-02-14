@@ -92,6 +92,7 @@ public class UGCItemData
     public int faceItemData;
     public int lipItemData;
     public int noseItemData;
+    public ControllerType type;
     //public UGCItemData()
     //{
     //    faceItemData = new DataContain();

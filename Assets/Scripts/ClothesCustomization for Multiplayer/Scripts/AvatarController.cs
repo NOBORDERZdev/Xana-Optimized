@@ -355,12 +355,10 @@ public class AvatarController : MonoBehaviour
                         characterBodyParts.TextureForGlove(null);
                     }
                 }
-
                 if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 {
                     StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
-                }
-
+                }               
                 if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                 {
                     StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
@@ -374,7 +372,6 @@ public class AvatarController : MonoBehaviour
                 {
                     StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
                 }
-
                 //New texture are downloading for Boxer NFT 
                 if (!string.IsNullOrEmpty(_CharacterData.faceTattooTextureName) && _CharacterData.faceTattooTextureName != null)
                     StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.faceTattooTextureName, this.gameObject, CurrentTextureType.FaceTattoo));
@@ -449,7 +446,25 @@ public class AvatarController : MonoBehaviour
                 }
                 SetItemIdsFromFile(_CharacterData);
                 characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-
+                if (_CharacterData.type == ControllerType.Ai)
+                {
+                    characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
+                    characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
+                    characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+                    CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(_CharacterData.skin_color));
+                    CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
+                    CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+                    if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
+                    {
+                        Debug.Log(" asdkjhfasjd afg fdg g " + _CharacterData.eyeItemData);
+                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+                    }
+                    if (_CharacterData.hairItemData != null)
+                    {
+                        Debug.LogError("Hair Item Data: " + _CharacterData.hairItemData);
+                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true, true));
+                    }
+                }
             }
             else // wolrd scence 
             {
@@ -636,7 +651,19 @@ public class AvatarController : MonoBehaviour
             characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         }
     }
-
+    Color HexToColor(string hex)
+    {
+        Color color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
+        }
+    }
     void BuildCharacterFromLocalJson()
     {
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
@@ -1687,5 +1714,11 @@ public class AvatarController : MonoBehaviour
     void OnBecameVisible()
     {
         isVisibleOnCam = true;
-    }
+    }   
+}
+public enum ControllerType
+{
+    Ai,
+    New,
+    Old
 }

@@ -4860,24 +4860,21 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter()
     {
-        Color skincolor = HexToColor(itemData.skin_color);
-
-        Color haircolor = HexToColor(itemData.hair_color);
-
-        Color lipcolor = HexToColor(itemData.lips_color);
-
-        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", skincolor);
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", Color.red);
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", Color.blue);
-
+        CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(itemData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(itemData.lips_color));
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(itemData.skin_color));
+        if (itemData.faceItemData != null && CharcterBodyParts.instance != null)
+        {
+            Debug.Log("1111111111111111111111111111111111111111111111");
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.faceItemData, 100);
-
+        }
+        if (itemData.noseItemData != null)
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.noseItemData, 100);
-
+        if (itemData.lipItemData != null)
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), haircolor, true, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(itemData.hair_color), true, true));
         }
         if (itemData._eyeItemData != null)
         {
@@ -4889,7 +4886,7 @@ public class StoreManager : MonoBehaviour
         Color color;
         if (ColorUtility.TryParseHtmlString(hex, out color))
         {
-            Debug.LogError(" color string: " + color);
+            Debug.Log(" color string: " + color);
             return color;
         }
         else

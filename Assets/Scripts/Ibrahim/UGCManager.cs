@@ -21,7 +21,7 @@ public class UGCManager : MonoBehaviour
     public void OnClickSaveSelfieButton()
     {
         StoreManager.instance.loaderPanel.SetActive(true);
-        isSelfieTaken = false;
+        //isSelfieTaken = false;
         if (texture != null)
         {
             // Encode texture to PNG format
@@ -38,6 +38,7 @@ public class UGCManager : MonoBehaviour
     }
     public void OnClickBackSelfieButton()
     {
+        isSelfieTaken = false;
         StoreManager.instance.selfiePanel.SetActive(false);
         selfieSprite.sprite = null;
         texture = null;
