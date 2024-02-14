@@ -3520,7 +3520,6 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
-                Debug.LogError("MakeProfilePicture in userRegistration");
                 ProfilePictureManager.instance.MakeProfilePicture(Localusername);
                 string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(Email, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));

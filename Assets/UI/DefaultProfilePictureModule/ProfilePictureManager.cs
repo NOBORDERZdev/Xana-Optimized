@@ -41,7 +41,7 @@ public class ProfilePictureManager : MonoBehaviour
 
     public IEnumerator IEMakeProfilePicture(string userName)
     {
-        Debug.LogError("IEMakeProfilePicture: " + userName);
+        //Debug.LogError("IEMakeProfilePicture: " + userName);
         profileBGImg.color = profileBGColors[UnityEngine.Random.Range(0, profileBGColors.Length)];
         userName = userName.Replace(" ", "");
 
@@ -94,7 +94,7 @@ public class ProfilePictureManager : MonoBehaviour
             byte[] fileData = File.ReadAllBytes(savePath);
             while (string.IsNullOrEmpty(UserRegisterationManager.instance.TokenDataClass.data.token))
             {
-                Debug.LogError("Waiting for token");
+                //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
 
@@ -131,8 +131,7 @@ public class ProfilePictureManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("UpdateUserAvatar data:" + data);
-                
+                //Debug.Log("UpdateUserAvatar data:" + data);
             }
         }
 
