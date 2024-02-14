@@ -101,7 +101,13 @@ public class UGCItemData
         _eyeItemData = new HairEyeData();
     }
 }
-
+[Serializable]
+public class DataContain
+{
+    public string typeName;
+    public int index;
+    public int value;
+}
 [Serializable]
 public class HairEyeData
 {

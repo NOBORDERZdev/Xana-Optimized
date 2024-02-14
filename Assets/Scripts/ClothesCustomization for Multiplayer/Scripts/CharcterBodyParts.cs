@@ -67,6 +67,8 @@ public class CharcterBodyParts : MonoBehaviour
     public List<BoneDataContainer> BonesData = new List<BoneDataContainer>();
 
     public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
+    [Tooltip("Default Texture for New Character")]
+    public Texture2D defaultMakeupv2, defaultEyelashesv2, defaultEyebrowv2, Eye_Texturev2;
     public Sprite defaultPngForSkinIcon;
     public static Action<Color> OnSkinColorApply;
     public float defaultSssValue;
@@ -310,15 +312,15 @@ public class CharcterBodyParts : MonoBehaviour
         HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
         HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
 
-        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texture);
+        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texturev2);
         // After EyeShader update need to pass this texture to another property
         HeadMeshComponent.materials[0].SetTexture("_Mask_texture", Eye_Texture);
 
-        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrow);
+        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrowv2);
         HeadMeshComponent.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
-        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashes);
-        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeup);
+        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashesv2);
+        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeupv2);
         HeadMeshComponent.materials[2].SetColor(GredientColorName, DefaultGredientColor);
         HeadMeshComponent.materials[2].SetFloat(SssIntensity, defaultSssValue);
         //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);

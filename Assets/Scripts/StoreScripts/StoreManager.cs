@@ -4860,11 +4860,11 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter()
     {
-        Color skincolor = HexToColor(instance.itemData.skin_color);
+        Color skincolor = HexToColor(itemData.skin_color);
 
-        Color haircolor = HexToColor(instance.itemData.hair_color);
+        Color haircolor = HexToColor(itemData.hair_color);
 
-        Color lipcolor = HexToColor(instance.itemData.lips_color);
+        Color lipcolor = HexToColor(itemData.lips_color);
 
         CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", skincolor);
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", lipcolor);
