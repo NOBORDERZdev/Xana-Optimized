@@ -4,6 +4,7 @@ using EnhancedUI.EnhancedScroller;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TMPro;
@@ -80,26 +81,24 @@ public class FeedController : MonoBehaviour
             }
             else
             {
+                isFeedInitialized = true;
+                print("~~~~~ "+ response.downloadHandler.text);
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 // FeedAPIData.Add(feedResponseData);
-                isFeedInitialized = true;
                 foreach (var item in feedResponseData.data.rows)
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        FeedAPIData.Add(item);
-                        scrollerController._data.Add(item);
-                        //GameObject temp =  Instantiate(feedPostPrefab);
-                        //temp.transform.SetParent(feedPostParent);
-                        //temp.transform.localScale = Vector3.one;
-                        //temp.GetComponent<FeedData>().SetFeedPrefab(item);
-                        //feedList.Add(temp.GetComponent<FeedData>());
+                        if (!FeedAPIData.Any(list1 => list1.id == item.id))
+                        {
+                            FeedAPIData.Add(item);
+                            scrollerController._data.Add(item);
+                        }
                     }
 
                 }
                 Invoke(nameof(InovkeScrollReload), 2f);
-                // feedUIController.IntFeedScroller(feedResponseData);
             }
 
         }
@@ -109,11 +108,11 @@ public class FeedController : MonoBehaviour
             Debug.Log(ex.Message);
         }
         response.Dispose();
-        }
+    }
 
 
     public void PullNewPlayerPost(){ 
-        
+        FeedLoader.SetActive(true);
         GetPlayerNewPosts(APIManager.Instance.userId);
     }
 
@@ -125,12 +124,12 @@ public class FeedController : MonoBehaviour
             await response.SendWebRequest();
             if (response.isNetworkError)
             {
+               
                 Debug.Log(response.error);
             }
             else
             {
                 noFeedsScreen.gameObject.SetActive(false);
-                FeedLoader.SetActive(true);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
@@ -138,20 +137,23 @@ public class FeedController : MonoBehaviour
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        tempData.Add(item);
+                        if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
+                            tempData.Add(item);
+                        }
                     }
                 }
-                if (tempData.Count>0)
-                {
+                if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
                     //scrollerController._data.InsertRange(0,tempData);
                     AddDataToTopScroller(tempData);
+                        
                 }
-                else
-                {
-                    noFeedsScreen.gameObject.SetActive(true);
+                else{
+                    //noFeedsScreen.gameObject.SetActive(true);
+                    //FeedLoader.SetActive(false);
                 }
             }
+            Invoke(nameof(turnoffLoaderForReload),1f);
         }
         catch (System.Exception ex)
         {
@@ -159,6 +161,10 @@ public class FeedController : MonoBehaviour
         }
        
         response.Dispose();
+    }
+
+    void turnoffLoaderForReload(){ 
+       FeedLoader.SetActive(false);
     }
 
     public void AddDataToTopScroller(List<FeedResponseRow> tempData)
@@ -200,8 +206,10 @@ public class FeedController : MonoBehaviour
                 {
                     if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                     {
-                        FeedAPIData.Add(item);
-                        scrollerController._data.Add(item);
+                         if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
+                            FeedAPIData.Add(item);
+                            scrollerController._data.Add(item);
+                        }
                     }
                 }
             }
@@ -321,6 +329,7 @@ public class FeedController : MonoBehaviour
                         temp.transform.SetParent(SearchContentPanel.transform);
                         temp.transform.localScale = Vector3.one;
                         temp.GetComponent<FeedData>().SetFeedPrefab(item,false);
+                        temp.GetComponent<FeedData>().isProfileScene = true;
                         temp.GetComponent<FeedData>().SetFeedUiController(scrollerController);
                     }
                 }

@@ -3236,7 +3236,7 @@ public class UserRegisterationManager : MonoBehaviour
             //   print("Password not matched");
         }
     }
-
+    public ClassWithToken TokenDataClass=new ClassWithToken();
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         //print(Jsondata);
@@ -3250,7 +3250,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return request.SendWebRequest();
 
         ClassWithToken myObject = new ClassWithToken();
-        myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
+        TokenDataClass=myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
         //print(myObject.data.token);
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -3519,6 +3519,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
+                ProfilePictureManager.instance.MakeProfilePicture(Localusername);
                 string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(Email, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);

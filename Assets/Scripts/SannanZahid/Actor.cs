@@ -33,7 +33,7 @@ public class Actor : MonoBehaviour
     {
         if (_startCoroutineFLag)
         {
-          //  Debug.LogError("OnDisable  --- " + _lastAction);
+           // Debug.LogError("OnDisable  --- " + _lastAction);
 
             StopCoroutine(StartActorBehaviour());
         }
@@ -45,6 +45,28 @@ public class Actor : MonoBehaviour
     void ClearMoves()
     {
         _playerMoves.Clear();
+    }
+    IEnumerator StartBehaviour()
+    {
+        while(ActionClipTime.Equals( 0f))
+            yield return new WaitForSeconds(0.5f); 
+
+        StartCoroutine(StartActorBehaviour());
+    }
+
+     public void Init(ActorBehaviour playerBehaviour , Transform playerTransform)
+    {
+        _startCoroutineFLag = true;
+        _PlayerAnimator = this.transform.GetComponent<Animator>();
+         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
+        _PlayerAnimator.runtimeAnimatorController = overrideController;
+        _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
+        _PlayerCategory = playerBehaviour.CategoryOfMode;
+        foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
+            SetMoveActions(move);
+        MoveTarget = playerTransform;
+        transform.position = MoveTarget.position;
+        StartCoroutine(StartBehaviour());
     }
     public void Init(ActorBehaviour playerBehaviour)
     {
@@ -58,7 +80,7 @@ public class Actor : MonoBehaviour
             SetMoveActions(move);
         MoveTarget = GameManager.Instance.avatarPathSystemManager.GetAvatarSpawnPoint();
         transform.position = MoveTarget.position;
-        StartCoroutine(StartActorBehaviour());
+        StartCoroutine(StartBehaviour());
     }
     public void SetNewBehaviour(ActorBehaviour playerBehaviour)
     {
@@ -78,10 +100,10 @@ public class Actor : MonoBehaviour
         }
         else
         {
-            _PlayerAnimator.SetBool("Action", false);
-            _lastAction = false;
+           // _PlayerAnimator.SetBool("Action", false);
+          //  _lastAction = false;
 
-            StateMoveBehaviour = 1;
+           // StateMoveBehaviour = 1;
 
         }
         _PlayerAnimator.SetBool("Menu Action", false);
@@ -100,6 +122,14 @@ public class Actor : MonoBehaviour
             case 0:
                 if(_moveFlag)
                 {
+                     transform.eulerAngles = new Vector3(0,180,0);
+                     _PlayerAnimator.SetBool("Action", true);
+                    _lastAction = true;
+                    _PlayerAnimator.SetBool("IdleMenu", false);
+                    //Debug.LogError("ActionClipTime ----> " + ActionClipTime);
+                    
+                    yield return new WaitForSeconds(ActionClipTime); 
+                   // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
                     MoveBehaviour move = _playerMoves.Dequeue();
                     StateMoveBehaviour = 1;
                     MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
@@ -134,6 +164,7 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
+                transform.eulerAngles = new Vector3(0,180,0);
                 yield return new WaitForSeconds(ActionClipTime*2f);
                 if(!_moveFlag)
                 {

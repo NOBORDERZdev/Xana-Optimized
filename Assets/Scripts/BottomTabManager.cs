@@ -218,6 +218,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (/*GameManager.Instance.defaultSelection != 0*/ true)
         {
+            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
             GameManager.Instance.defaultSelection = 0;
             if (additiveScenesManager != null)
             {
@@ -491,15 +492,16 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.ResetAllFeedScreen(true);
                 MyProfileDataManager.Instance.MyProfileSceenShow(false);//false my profile screen
             }
-            else
-            {
-                APIManager.Instance.RequestGetUserDetails("myProfile");
-            }
+            //else
+            //{
+            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //}
 
             if (FeedUIController.Instance != null)
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
+                FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
                 // OLD FEED UI
                 ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
                 ////{
@@ -628,6 +630,9 @@ public class BottomTabManager : MonoBehaviour
         {
             // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             //---->>>Sannan OnSelectedClick(4);
+            if (GlobalVeriableClass.callingScreen == "Profile")
+                return;
+
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
@@ -678,6 +683,7 @@ public class BottomTabManager : MonoBehaviour
             if (OtherPlayerProfileData.Instance)
             {
                 OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
+                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
             }
             if (MyProfileDataManager.Instance)
             {
@@ -692,6 +698,7 @@ public class BottomTabManager : MonoBehaviour
 
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
     }
 
     public void ShopButtonClicked()

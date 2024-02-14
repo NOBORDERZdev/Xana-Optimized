@@ -20,17 +20,22 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
    [SerializeField] Button LikeBtn;
-    private bool isFeedScreen;
+    private bool isFeedScreen =true;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
+    public bool isProfileScene = false;
     public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){
         if (gameObject.activeInHierarchy)
         {
             _data = data;
             DisplayName.text = data.user.name;
+            if(DisplayName.text.Length > 15)
+            {
+                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+            }
             PostText.text = data.text_post;
             isEnable= true;
             //Likes.text = data.like_count.ToString();
@@ -54,6 +59,7 @@ public class FeedData : MonoBehaviour
             {
                 ProfileImage.sprite = defaultProfileImage;
             }
+
             isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
@@ -74,16 +80,16 @@ public class FeedData : MonoBehaviour
             DateTime currentTime = DateTime.Now;
             TimeSpan timeDifference = currentTime - postTime;
             StartCoroutine(ReCallingTimeDifference(postTime));
-            if (timeDifference.TotalMinutes < 1){
+            if (timeDifference.TotalMinutes <= 1){
                 timeUpdateInterval =1;
                 return $"{Math.Floor(timeDifference.TotalSeconds)} s";
             }
-            else if (timeDifference.TotalMinutes < 60)
+            else if (timeDifference.TotalMinutes <= 60)
             {
                 timeUpdateInterval =60;
                 return $"{Math.Floor(timeDifference.TotalMinutes)} m";
             }
-            else if (timeDifference.TotalHours < 24)
+            else if (timeDifference.TotalHours <= 24)
             {
                 timeUpdateInterval =3600;
                 return $"{Math.Floor(timeDifference.TotalHours)} h";
@@ -92,7 +98,7 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays)} d"; 
              }
-            else if (timeDifference.TotalDays < 365)
+            else if (timeDifference.TotalDays <= 365)
             {
                  timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 30)} mo";
@@ -199,9 +205,18 @@ public class FeedData : MonoBehaviour
 
     private void OnEnable()
     {
-        if (isFeedScreen && _data != null)
+        //print("ON ENABLE GETTING CALLED: " + isFeedScreen);
+        if (/*isProfileScene && */_data.user_id != 0)
         {
-            SetFeedPrefab(_data, false); // Sending back same data to initialize prefab elements in case of no pooling
+            if (isProfileScene)
+            {
+                SetFeedPrefab(_data, false);
+            }
+            else
+            {
+                SetFeedPrefab(_data);
+            }
+            // Sending back same data to initialize prefab elements in case of no pooling
         }
     }
 
