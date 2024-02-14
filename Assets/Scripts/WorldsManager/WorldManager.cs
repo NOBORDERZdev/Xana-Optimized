@@ -162,6 +162,7 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
             this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
             ClearWorldScrollWorlds();
             previousSearchKey = SearchKey = searchKey;
@@ -315,9 +316,15 @@ public class WorldManager : MonoBehaviour
             {
                 searchResponse = www.downloadHandler.text;
                 //Debug.LogError(apiURL+"-------"+www.downloadHandler.text);
-                _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
-                worldstr = www.downloadHandler.text;
-                callback(true);
+
+                if (SearchKey == "" && (aPIURLGlobal == APIURL.SearchWorld || aPIURLGlobal == APIURL.SearchWorldByTag))
+                    callback(false);
+                else
+                {
+                    _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
+                    worldstr = www.downloadHandler.text;
+                    callback(true);
+                }
             }
             www.Dispose();
         }
