@@ -366,40 +366,49 @@ public class MyProfileDataManager : MonoBehaviour
 
         UpdateUserTags();
 
-        if (string.IsNullOrEmpty(myProfileData.userProfile.website))
+        websiteText.gameObject.SetActive(false);
+        // Website functionality is disabled
         {
-            websiteText.gameObject.SetActive(false);
+            //if (string.IsNullOrEmpty(myProfileData.userProfile.website))
+            //{
+            //    websiteText.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    Debug.Log("Profile Website:" + myProfileData.userProfile.website);
+            //    Uri uriResult;
+            //    bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
+            //        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            //    if (result)
+            //    {
+            //        Debug.Log("Given URL is valid");
+            //        Uri websiteHost = new Uri(myProfileData.userProfile.website);
+            //        websiteText.text = websiteHost.Host.ToString();
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("Given URL is Invalid");
+            //        websiteText.text = myProfileData.userProfile.website.ToString();
+            //    }
+            //    websiteText.gameObject.SetActive(true);
+            //}
         }
-        else
-        {
-            Debug.Log("Profile Website:" + myProfileData.userProfile.website);
-            Uri uriResult;
-            bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
-                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-            if (result)
-            {
-                Debug.Log("Given URL is valid");
-                Uri websiteHost = new Uri(myProfileData.userProfile.website);
-                websiteText.text = websiteHost.Host.ToString();
-            }
-            else
-            {
-                Debug.Log("Given URL is Invalid");
-                websiteText.text = myProfileData.userProfile.website.ToString();
-            }
-            websiteText.gameObject.SetActive(true);
-        }
+
 
         if (myProfileData.userProfile != null)
         {
-            if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
+            jobText.gameObject.SetActive(false);
+            // Job functionality is disabled
             {
-                jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
-                jobText.gameObject.SetActive(true);
-            }
-            else
-            {
-                jobText.gameObject.SetActive(false);
+                if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
+                {
+                    jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
+                    jobText.gameObject.SetActive(true);
+                }
+                else
+                {
+                    jobText.gameObject.SetActive(false);
+                }
             }
 
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
@@ -411,7 +420,8 @@ public class MyProfileDataManager : MonoBehaviour
             {
                 //textUserBio.text = "You have no bio yet.";
                 seeMoreBioButton.SetActive(false);
-                textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+                // Currently No place holder for bio
+                //textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
             }
         }
         else
