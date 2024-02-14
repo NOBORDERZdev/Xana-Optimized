@@ -179,6 +179,10 @@ public class MyProfileDataManager : MonoBehaviour
     bool tempLogout = false;
     private void OnEnable()
     {
+        if (profileMainScrollRectFasterEx.GetComponent<Mask>().enabled)
+        {
+            profileMainScrollRectFasterEx.GetComponent<Mask>().enabled = false;
+        }
         if (tempOPCount == 0)
         {
             userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
