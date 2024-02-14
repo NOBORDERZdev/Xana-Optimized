@@ -16,10 +16,12 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     public ARPoseDriver _aRPoseDriver;
     public GameObject moveTargetObj;
     public GameObject playerHead;
+    public GameObject playerBody;
     public GameObject cameraTransform;
     public GameObject mirrorARFace;
     public GameObject mirrorARFace2;
     public Vector3 headRotation;
+    public float bodyRotRatio;
     public SkinnedMeshRenderer maleDFaceskinRenderer;
     public SkinnedMeshRenderer feMaleDFaceskinRenderer;
     public ARFaceManager m_ARFaceManager;
@@ -45,7 +47,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     private void Update()
     {
         SetARPoseOnAvatar();
-        //RotatePlayerHeadManually();
+#if UNITY_EDITOR
+        RotatePlayerHeadManually();
+#endif
     }
 
     public float rotationSpeed = 1.0f;
@@ -63,6 +67,8 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
         {
             headRotation.z -= Time.deltaTime * 50;
         }
+        /*Vector3 bodyRot= new Vector3(0, headRotation.y/ bodyRotRatio, 0);
+        playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
         playerHead.transform.rotation = Quaternion.Euler(headRotation);
     }
     private void OnDisable()
@@ -115,9 +121,13 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
                 faceAngle.y = differenceAngles.y;
                 mirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
+                /*Vector3 bodyRot = new Vector3(0, faceAngle.y / bodyRotRatio, 0);
+                playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
                 playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(mirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
 #else
                 headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
+                /*Vector3 bodyRot = new Vector3(0, headRotation.y / bodyRotRatio, 0);
+                playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
                 playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
 #endif
 
