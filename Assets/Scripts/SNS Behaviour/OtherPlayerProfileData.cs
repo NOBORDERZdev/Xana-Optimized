@@ -906,12 +906,14 @@ public class OtherPlayerProfileData : MonoBehaviour
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            GetComponent<TextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            GetComponent<TextLocalization>().LocalizeTextText("Unfollow");
         }
     }
 
