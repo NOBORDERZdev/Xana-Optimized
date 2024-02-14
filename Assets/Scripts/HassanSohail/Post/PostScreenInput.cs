@@ -16,6 +16,7 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField] Color normalColor = new Vector4();
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
    int maxWidth = 270;
+    int maxHeight = 100;
    float characterOffset = 5.0f;
    string placeHolderText = "Enter the text";
    TouchScreenKeyboard keyboard;
@@ -44,7 +45,11 @@ public class PostScreenInput : MonoBehaviour
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
-        if (ShowText.text.Count()<=33)
+        if (bubbleImage.rect.height >= maxHeight)
+        {
+            BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        }
+        if (ShowText.text.Count()<=40)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
@@ -56,6 +61,7 @@ public class PostScreenInput : MonoBehaviour
         inputField.ActivateInputField();
         //inputField.MoveToEndOfLine(shift: true, ctrl: false);
         inputField.caretPosition = inputField.text.Length;
+        BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
     //private string FormatInput(string input)
     //{
@@ -66,7 +72,7 @@ public class PostScreenInput : MonoBehaviour
     //        int length = Mathf.Min(36, input.Length - i);
     //        formattedText += input.Substring(i, length);
     //        formattedText += "\n";
-        
+
     //        // Check if the formattedText exceeds 110 characters
     //        if (formattedText.Length > 110)
     //        {
@@ -78,16 +84,16 @@ public class PostScreenInput : MonoBehaviour
     //    return formattedText;
     //}
 
-//    public void IncreaseImageWidth()
-//    {
-//        float currentWidth = bubbleImage.rect.width;
-//        float newWidth = currentWidth + characterOffset;
-//        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
-//    }
-//    public void DecreaseImageWidth()
-//    {
-//        float currentWidth = bubbleImage.rect.width;
-//        float newWidth = currentWidth - characterOffset;
-//        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
-//    }
+    //    public void IncreaseImageWidth()
+    //    {
+    //        float currentWidth = bubbleImage.rect.width;
+    //        float newWidth = currentWidth + characterOffset;
+    //        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
+    //    }
+    //    public void DecreaseImageWidth()
+    //    {
+    //        float currentWidth = bubbleImage.rect.width;
+    //        float newWidth = currentWidth - characterOffset;
+    //        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
+    //    }
 }

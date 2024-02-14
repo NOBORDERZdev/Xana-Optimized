@@ -136,7 +136,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject nameErrorMessageObj;
     public GameObject uniqueNameErrorMessageObj;
     public Button editProfileDoneButton;
-    bool isEditProfileNameAlreadyExists;
+    public bool isEditProfileNameAlreadyExists;
 
     [Space]
     public GameObject editProfileBioScreen;
@@ -180,6 +180,10 @@ public class MyProfileDataManager : MonoBehaviour
     bool tempLogout = false;
     private void OnEnable()
     {
+        if (profileMainScrollRectFasterEx.GetComponent<Mask>().enabled)
+        {
+            profileMainScrollRectFasterEx.GetComponent<Mask>().enabled = false;
+        }
         if (tempOPCount == 0)
         {
             userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......

@@ -113,6 +113,10 @@ public class XLWorldInfo : MonoBehaviour
     {
         if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
 
+        //Reset joystick when OpenWorldInfo
+        if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
+            ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
+
         //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
         if (XanaLobbyManager.Instance != null)
         {
