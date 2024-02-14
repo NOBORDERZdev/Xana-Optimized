@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -105,6 +106,12 @@ public class ProfileUIHandler : MonoBehaviour
         {
             newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
             newRenderTexture.antiAliasing = 4;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();
+                _uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                _uaCamData.antialiasingQuality = AntialiasingQuality.Low;
+            }
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
             AvatarPreviewImgRef.texture = newRenderTexture;

@@ -12,10 +12,10 @@ public class HomeCameraController : MonoBehaviour
     float ZoomSpeedTouch = 0.1f;
     float ZoomSpeedMouse = 0.5f;
     
-    [SerializeField]
-    float[] BoundsX = new float[]{-2f, 2f};
-    [SerializeField]
-    float[] BoundsZ = new float[]{-5f, -2f};
+    //[SerializeField]
+    float[] BoundsX = new float[]{1.5f, 8f};
+    //[SerializeField]
+    float[] BoundsZ = new float[]{-5f, 1f};
     float[] ZoomBounds = new float[]{35f, 45f};
     
     private Camera cam;
@@ -37,9 +37,9 @@ public class HomeCameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
-        cam.transform.position = new Vector3(2.16f, 3.68f, -0.1077f);
+        cam.transform.position = new Vector3(4.255f, 3.68f, -2.01f);
+        //StartCoroutine (AllignWithCharacter());
     }
-
     void Update() {
 #if UNITY_EDITOR
         HandleMouse();
@@ -122,13 +122,19 @@ public class HomeCameraController : MonoBehaviour
     
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - (offset * speed), ZoomBounds[0], ZoomBounds[1]);
     }
-    IEnumerator AllignWithCharacter()
-    {
-        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
-            yield return new WaitForSeconds(1f);
-        Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], BoundsX[1]);
-        print("~~~~~~~ player cam pos "+pos);
-        transform.position = pos;
-    }
+    //public void ViewPlayer(){ 
+    //    StartCoroutine(AllignWithCharacter());
+    //}
+
+    //IEnumerator AllignWithCharacter()
+    //{
+    //    while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+    //        yield return new WaitForSeconds(2f);
+    //    //Vector3 pos = transform.position;
+    //    yield return new WaitForSeconds(3f);
+    //   // pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], -0.43f);
+    //   Vector3 pos = new Vector3(GameManager.Instance.mainCharacter.transform.position.x, transform.position.y,Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsZ[0], -0.7f));
+    //    print("~~~~~~~ player cam pos "+pos);
+    //    transform.position = pos;
+    //}
 }
