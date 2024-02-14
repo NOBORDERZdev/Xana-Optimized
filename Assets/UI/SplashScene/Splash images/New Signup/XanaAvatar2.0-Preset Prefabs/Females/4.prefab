@@ -90,7 +90,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dbd110571754094bb4bac58b72c9e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JsonDataPreset: '{"id":"86951","name":"Test","gender":"Female","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680177258349_file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1274,"ItemName":"Girl_Pant_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1312,"ItemName":"Girl_Shirt_V007","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1527,"ItemName":"Girl_H_029","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1185,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  JsonDataPreset: '{   "id": "86951",   "name": "Test",   "thumbnail": "https://cdn.xana.net/xanaprod/Defaults/1680177258349_file.png",  
+    "gender": "Female",   "avatarType": "NewAvatar",   "myItemObj": [     {      
+    "Slug": "",       "ItemType": "Legs",       "ItemPrefab": {         "m_FileID":
+    0,         "m_PathID": 0       },       "ItemID": 1274,       "ItemName": "Girl_Pant_V007",      
+    "ItemDescription": "",       "ItemLinkAndroid": "",       "ItemLinkIOS": "",      
+    "SubCategoryname": "",       "Stackable": false,       "ItemIcon": {        
+    "m_FileID": 0,         "m_PathID": 0       }     },     {       "Slug": "",      
+    "ItemType": "Chest",       "ItemPrefab": {         "m_FileID": 0,         "m_PathID":
+    0       },       "ItemID": 1312,       "ItemName": "Girl_Shirt_V007",       "ItemDescription":
+    "",       "ItemLinkAndroid": "",       "ItemLinkIOS": "",       "SubCategoryname":
+    "",       "Stackable": false,       "ItemIcon": {         "m_FileID": 0,        
+    "m_PathID": 0       }     },     {       "Slug": "",       "ItemType": "Hair",      
+    "ItemPrefab": {         "m_FileID": 0,         "m_PathID": 0       },       "ItemID":
+    1527,       "ItemName": "Girl_H_029",       "ItemDescription": "",       "ItemLinkAndroid":
+    "",       "ItemLinkIOS": "",       "SubCategoryname": "",       "Stackable":
+    false,       "ItemIcon": {         "m_FileID": 0,         "m_PathID": 0      
+    }     },     {       "Slug": "",       "ItemType": "Feet",       "ItemPrefab":
+    {         "m_FileID": 0,         "m_PathID": 0       },       "ItemID": 1185,      
+    "ItemName": "Shoes_478",       "ItemDescription": "",       "ItemLinkAndroid":
+    "",       "ItemLinkIOS": "",       "SubCategoryname": "",       "Stackable":
+    false,       "ItemIcon": {         "m_FileID": 0,         "m_PathID": 0      
+    }     }   ] }'
   IsStartUp_Canvas: 1
   eyeTex: {fileID: 2800000, guid: a715a20fdc5e5f248856acb9c32dff8d, type: 3}
   avatarGender: 1
@@ -160,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6e815775ba505774ebdb13a2ff6f598b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c306828f3cb041043ac973b08de21dad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
