@@ -32,6 +32,10 @@ public class FeedData : MonoBehaviour
         {
             _data = data;
             DisplayName.text = data.user.name;
+            if(DisplayName.text.Length > 15)
+            {
+                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+            }
             PostText.text = data.text_post;
             isEnable= true;
             //Likes.text = data.like_count.ToString();
