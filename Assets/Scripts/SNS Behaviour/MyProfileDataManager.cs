@@ -65,6 +65,7 @@ public class MyProfileDataManager : MonoBehaviour
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI jobText;
     public TextMeshProUGUI textUserBio;
+    public GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
     public TextMeshProUGUI websiteText;
 
     public GameObject seeMoreBioButton;
@@ -225,6 +226,7 @@ public class MyProfileDataManager : MonoBehaviour
         jobText.gameObject.SetActive(false);
         textUserBio.text = "";
         websiteText.text = "";
+        _alignment_space.SetActive(false);
         websiteText.gameObject.SetActive(false);
         profileImage.sprite = defultProfileImage;
     }
@@ -399,27 +401,32 @@ public class MyProfileDataManager : MonoBehaviour
         {
             jobText.gameObject.SetActive(false);
             // Job functionality is disabled
-            {
-                if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
-                {
-                    jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
-                    jobText.gameObject.SetActive(true);
-                }
-                else
-                {
-                    jobText.gameObject.SetActive(false);
-                }
-            }
+            //{
+            //    if (!string.IsNullOrEmpty(myProfileData.userProfile.job))
+            //    {
+            //        jobText.text = APIManager.DecodedString(myProfileData.userProfile.job);
+            //        jobText.gameObject.SetActive(true);
+            //    }
+            //    else
+            //    {
+            //        jobText.gameObject.SetActive(false);
+            //    }
+            //}
 
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
             {
                 textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+                if (textUserBio.text == " ")
+                    _alignment_space.SetActive(false);
+                else
+                    _alignment_space.SetActive(true);
                 SetupBioPart(textUserBio.text);//check and show only 10 line.......
             }
             else
             {
                 //textUserBio.text = "You have no bio yet.";
                 seeMoreBioButton.SetActive(false);
+                _alignment_space.SetActive(false);
                 // Currently No place holder for bio
                 //textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
             }
