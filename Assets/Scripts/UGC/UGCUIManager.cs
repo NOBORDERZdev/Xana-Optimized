@@ -34,7 +34,7 @@ public class UGCUIManager : MonoBehaviour
 
     void Start()
     {
-
+        Invoke(nameof(DisableLoadingPanel), 1.5f);
     }
 
     void Update()
@@ -42,6 +42,10 @@ public class UGCUIManager : MonoBehaviour
         
     }
 
+    public void DisableLoadingPanel()
+    {
+        loadingScreen.SetActive(false);
+    }
     public IEnumerator IEVideoButtonDown()
     {
         while (isPressed && !isRecording)
