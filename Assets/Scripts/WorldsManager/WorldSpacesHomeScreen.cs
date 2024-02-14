@@ -20,6 +20,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public GameObject category3;
     public GameObject category4;
     public TMPro.TextMeshProUGUI category1Heading, category2Heading, category3Heading, category4Heading;
+
+    /*private int apiHitCountC1 = 0, apiHitCountC2 = 0, apiHitCountC3 = 0, apiHitCountC4 = 0;*/
+
     public WorldManager worldManager;
     public ResponseHolder apiResponseHolder;
     public static List<string> mostVisitedTagList = new List<string>();
@@ -172,6 +175,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void Category1Loading()
     {
+        //apiHitCountC1++;
         worldManager.SearchKey = mostVisitedTagList[0];
         category1Heading.text = mostVisitedTagList[0];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
@@ -184,14 +188,24 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     category1Parent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
+                    /*if (apiHitCountC1 < 5)
+                        Invoke("Category1Loading", 1);*/
                 }
+                /*else
+                    apiResponseHolder.AddReponse(finalAPIURL, response);*/
                 StartCoroutine(SetContentItem(category1, worldInfo));
             }
+           /* else
+            {
+                if (apiHitCountC1 < 5)
+                    Invoke("Category1Loading", 1);
+            }*/
         }));
     }
 
     void Category2Loading()
     {
+        //apiHitCountC2++;
         worldManager.SearchKey = mostVisitedTagList[1];
         category2Heading.text = mostVisitedTagList[1];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
@@ -204,14 +218,24 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     category2Parent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
+                   /* if (apiHitCountC2 < 5)
+                        Invoke("Category2Loading", 1);*/
                 }
+                /*else
+                    apiResponseHolder.AddReponse(finalAPIURL, response);*/
                 StartCoroutine(SetContentItem(category2, worldInfo));
             }
+            /*else
+            {
+                if (apiHitCountC2 < 5)
+                    Invoke("Category2Loading", 1);
+            }*/
         }));
     }
 
     void Category3Loading()
     {
+        //apiHitCountC3++;
         worldManager.SearchKey = mostVisitedTagList[2];
         category3Heading.text = mostVisitedTagList[2];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
@@ -224,14 +248,24 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     category3Parent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
+                   /* if (apiHitCountC3 < 5)
+                        Invoke("Category3Loading", 1);*/
                 }
+                /*else
+                    apiResponseHolder.AddReponse(finalAPIURL, response);*/
                 StartCoroutine(SetContentItem(category3, worldInfo));
             }
+            /*else
+            {
+                if (apiHitCountC3 < 5)
+                    Invoke("Category3Loading",1);
+            }*/
         }));
     }
 
     void Category4Loading()
     {
+        //apiHitCountC4++;
         worldManager.SearchKey = mostVisitedTagList[3];
         category4Heading.text = mostVisitedTagList[3];
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
@@ -244,9 +278,18 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     category4Parent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
+                    /*if (apiHitCountC4 < 5)
+                        Invoke("Category4Loading", 1);*/
                 }
+                /*else
+                    apiResponseHolder.AddReponse(finalAPIURL, response);*/
                 StartCoroutine(SetContentItem(category4, worldInfo));
             }
+            /*else
+            {
+                if (apiHitCountC4 < 5)
+                    Invoke("Category4Loading", 1);
+            }*/
         }));
     }
 
@@ -313,7 +356,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.userProfile.bio))
                     _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
-                
+
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
                 if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
@@ -332,7 +375,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
                     if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
                         _event.Creator_Name = _WorldInfo.data.rows[i].creator;
-                    
+
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
@@ -364,7 +407,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             callback(true, apiResponseHolder.GetResponse(apiURL));
             yield break;
         }
-       // Debug.LogError("API URL :- " + apiURL);
+        // Debug.LogError("API URL :- " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -382,6 +425,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 apiResponseHolder.AddReponse(apiURL, www.downloadHandler.text);
                 callback(true, www.downloadHandler.text);
             }
+            Debug.LogError(apiURL + "---" + www.downloadHandler.text);
             www.Dispose();
         }
     }

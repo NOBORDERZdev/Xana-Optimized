@@ -11,6 +11,7 @@ using DG.Tweening;
 
 public class WorldManager : MonoBehaviour
 {
+    public TMPro.TextMeshProUGUI worldFoundText;
     [Header("World View prefab")]
     public GameObject EventPrefabLobby;
     [HideInInspector]
@@ -53,7 +54,7 @@ public class WorldManager : MonoBehaviour
 
     public List<WorldItemDetail> resultWorldList = new List<WorldItemDetail>();
 
-    public WorldItemManager WorldItemManager;
+    /*public WorldItemManager WorldItemManager;*/
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
@@ -96,7 +97,7 @@ public class WorldManager : MonoBehaviour
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
     }
-    public void CheckWorldTabAndReset(APIURL tab)
+    /*public void CheckWorldTabAndReset(APIURL tab)
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
@@ -134,7 +135,7 @@ public class WorldManager : MonoBehaviour
         //}
         yield return new WaitForEndOfFrame();
         CheckWorldTabAndReset(tab);
-    }
+    }*/
     public void ChangeWorldTab(APIURL tab)
     {
         aPIURLGlobal = tab;
@@ -153,7 +154,7 @@ public class WorldManager : MonoBehaviour
                 aPIURLGlobal = APIURL.SearchWorldByTag;
             else
                 aPIURLGlobal = APIURL.SearchWorld;
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+              /*this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
             WorldScrollReset();
             SearchPageNumb = 1;
             SearchTagPageNumb = 1;
@@ -165,7 +166,7 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
+            /* this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
             WorldScrollReset();
             previousSearchKey = SearchKey = searchKey;
         }
@@ -451,11 +452,11 @@ public class WorldManager : MonoBehaviour
         if (_WorldInfo.data.count > 0)
         {
             searchWorldControllerRef.LoadData(0);
-            WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
+            WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
         else 
         {
-            WorldItemManager.WorldLoadingText(_apiURL);
+            WorldLoadingText(_apiURL);
         }
 
         
@@ -469,24 +470,60 @@ public class WorldManager : MonoBehaviour
 
     }
 
+
+    public void WorldLoadingText(APIURL aPIURL)
+    {
+        LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+        switch (aPIURL)
+        {
+            case APIURL.HotSpaces:
+                worldFoundText.text = "";
+                return;
+            case APIURL.HotGames:
+                worldFoundText.text = "";
+                return;
+            case APIURL.MySpace:
+                worldFoundText.text = "";
+                return;
+            case APIURL.FolloingSpace:
+                worldFoundText.text = "";
+                return;
+            case APIURL.SearchWorld:
+                worldFoundText.text = "No world found with given search key";
+                return;
+            case APIURL.SearchWorldByTag:
+                worldFoundText.text = "No world found with given search tag";
+                return;
+            case APIURL.Temp:
+                worldFoundText.text = "";
+                return;
+            default:
+                worldFoundText.text = "No world found with given search key";
+                return;
+        }
+    }
+
+
+
+
     public void ShowTutorial()
     {
         TutorialsManager.instance.ShowTutorials();
     }
 
-    public void WorldPageStateHandler(bool _checkCheck)
-    {
-        WorldItemManager.WorldPageStateHandler(_checkCheck);
-    }
     public void WorldScrollReset()
     {
         searchWorldControllerRef.scroller.ClearAll();
         searchWorldControllerRef.ClearData();
     }
+    /*public void WorldPageStateHandler(bool _checkCheck)
+    {
+        WorldItemManager.WorldPageStateHandler(_checkCheck);
+    }
     public void ClearWorldScrollWorlds()
     {
         WorldItemManager.ClearWorldScrollWorlds();
-    }
+    }*/
     private void CreateLightingAsset(WorldItemView _event)
     {
         string path = "Assets/Resources/Environment Data/" + _event.m_EnvironmentName + "Data";
@@ -847,6 +884,35 @@ public class WorldCreatorDetail
     public string avatar;
     public string description;
 }
+
+
+[Serializable]
+public class WorldItemDetail
+{
+    public string IdOfWorld;
+    public string EnvironmentName;
+    public string WorldDescription;
+    public string ThumbnailDownloadURL;
+    public string ThumbnailDownloadURLHigh;
+    //public string CreatorName;
+    public string CreatedAt;
+    public string UserLimit;
+    public string UserAvatarURL;
+    public string UpdatedAt = "00";
+    public string EntityType = "None";
+    public string BannerLink;
+    public int PressedIndex;
+    public string[] WorldTags;
+    public string Creator_Name;
+    public string CreatorAvatarURL;
+    public string CreatorDescription;
+    public string WorldVisitCount;
+    public bool isFavourite;
+}
+
+
+
+
 
 //public enum APIURL
 //{

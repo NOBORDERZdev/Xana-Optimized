@@ -143,31 +143,31 @@ public class AllWorldManage : MonoBehaviour
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
     }
 
     public void HotGamesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.HotGames);
+        WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
     }
 
     public void FollowingSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.FolloingSpace);
+        WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
     }
 
     public void MySpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.MySpace);
+        WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
     }
 
     public void CategorySpacesLoadMore(int tag)
     {
         WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.SearchWorldByTag);
+        WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }

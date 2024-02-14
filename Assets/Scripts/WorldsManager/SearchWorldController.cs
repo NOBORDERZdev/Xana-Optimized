@@ -213,14 +213,14 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
     /// This should not be used in your application
     /// </summary>
     /// <returns>The delay</returns>
-    IEnumerator FakeDelay()
+    /*IEnumerator FakeDelay()
     {
         // wait for one second
         yield return new WaitForSeconds(1f);
 
         // load the data
         LoadData(_data.Count);
-    }
+    }*/
 
     #endregion
 }
