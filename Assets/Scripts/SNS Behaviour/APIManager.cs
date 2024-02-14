@@ -2258,13 +2258,7 @@ public class APIManager : MonoBehaviour
     class UniqueUserNameError
     {
         public bool success;
-        public UniqueUserNameErrorDetail data;
         public string msg;
-    }
-
-    class UniqueUserNameErrorDetail
-    {
-        public bool isUsernameAvailable;
     }
 
     public IEnumerator IERequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
@@ -2312,7 +2306,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
 
-                string data = www.downloadHandler.text;
+                //string data = www.downloadHandler.text;
                 UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
                 if (!test.success)
                 {
@@ -2322,7 +2316,7 @@ public class APIManager : MonoBehaviour
                         MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
                     }
                 }
-                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+                Debug.Log("<color=red> UpdateUserProfile data:" + www.downloadHandler.text + "</color>");
                 // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
             }
         }

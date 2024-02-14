@@ -103,82 +103,100 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
 
     }
-    public void SetupData(AllFollowersRows allFollowersRows1)
+    public void SetupData(AllFollowersRows allFollowersRows1, bool _emptyElement = false)
     {
-        allFollowersRows = allFollowersRows1;
-        searchUserRow.id = allFollowersRows.follower.id;
-        this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
-        userNameText.text = allFollowersRows.follower.name;
-        if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
+        if (!_emptyElement)
         {
-            userBioText.text = APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
-        }
-        else
-        {
-            userBioText.text = "";
-        }
-        if (!string.IsNullOrEmpty(allFollowersRows.follower.avatar))
-        {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
-            if (isUrlContainsHttpAndHttps)
+            allFollowersRows = allFollowersRows1;
+            searchUserRow.id = allFollowersRows.follower.id;
+            this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
+            userNameText.text = allFollowersRows.follower.name;
+            if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
             {
-                AssetCache.Instance.EnqueueOneResAndWait(allFollowersRows.follower.avatar, allFollowersRows.follower.avatar, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(profileImage, allFollowersRows.follower.avatar, changeAspectRatio: true);
-                    }
-                });
+                userBioText.text = APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
             }
             else
             {
-                GetImageFromAWS(allFollowersRows.follower.avatar, profileImage);
+                userBioText.text = "";
+            }
+            if (!string.IsNullOrEmpty(allFollowersRows.follower.avatar))
+            {
+                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
+                if (isUrlContainsHttpAndHttps)
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(allFollowersRows.follower.avatar, allFollowersRows.follower.avatar, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(profileImage, allFollowersRows.follower.avatar, changeAspectRatio: true);
+                        }
+                    });
+                }
+                else
+                {
+                    GetImageFromAWS(allFollowersRows.follower.avatar, profileImage);
+                }
+            }
+            FollowFollowingSetUp(allFollowersRows.isFollowing);
+            if (allFollowersRows.isFollowing)
+            {
+                UpdateBfBtn(allFollowersRows.isFollowing, true, allFollowersRows.isFriend);
             }
         }
-        FollowFollowingSetUp(allFollowersRows.isFollowing);
-        if (allFollowersRows.isFollowing)
+        else
         {
-            UpdateBfBtn(allFollowersRows.isFollowing, true, allFollowersRows.isFriend);
+            profileImage.transform.parent.gameObject.SetActive(!_emptyElement);
+            followFollowingImage.gameObject.SetActive(!_emptyElement);
+            userNameText.text = "";
+            userBioText.text = "";
         }
-
     }
-    public void SetupDataHotUsers(SearchUserRow searchUserRow1, bool amifollowing, bool isfollowingme, bool isclosefriend)
+    public void SetupDataHotUsers(SearchUserRow searchUserRow1, bool amifollowing, bool isfollowingme, bool isclosefriend, bool _emptyElement = false)
     {
-        searchUserRow = searchUserRow1;
+        if (!_emptyElement)
+        {
+            searchUserRow = searchUserRow1;
 
-        userNameText.text = searchUserRow.name;
-        if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
-        {
-            userBioText.text = APIManager.DecodedString(searchUserRow.userProfile.bio);
-        }
-        else
-        {
-            userBioText.text = "";
-        }
-        if (!string.IsNullOrEmpty(searchUserRow.avatar))
-        {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
-            if (isUrlContainsHttpAndHttps)
+            userNameText.text = searchUserRow.name;
+            if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
             {
-                AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(profileImage, searchUserRow.avatar, changeAspectRatio: true);
-                    }
-                });
+                userBioText.text = APIManager.DecodedString(searchUserRow.userProfile.bio);
             }
             else
             {
-                GetImageFromAWS(searchUserRow.avatar, profileImage);
+                userBioText.text = "";
+            }
+            if (!string.IsNullOrEmpty(searchUserRow.avatar))
+            {
+                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
+                if (isUrlContainsHttpAndHttps)
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(profileImage, searchUserRow.avatar, changeAspectRatio: true);
+                        }
+                    });
+                }
+                else
+                {
+                    GetImageFromAWS(searchUserRow.avatar, profileImage);
+                }
+            }
+            FollowFollowingSetUp(amifollowing);
+            if (amifollowing || isfollowingme)
+            {
+                UpdateBfBtn(amifollowing, isfollowingme, isclosefriend);
             }
         }
-        FollowFollowingSetUp(amifollowing);
-        if (amifollowing || isfollowingme)
+        else
         {
-            UpdateBfBtn(amifollowing, isfollowingme, isclosefriend);
+            profileImage.transform.parent.gameObject.SetActive(!_emptyElement);
+            followFollowingImage.gameObject.SetActive(!_emptyElement);
+            userNameText.text = "";
+            userBioText.text = "";
         }
-
     }
 
     public void OnClickUserProfileButton()
