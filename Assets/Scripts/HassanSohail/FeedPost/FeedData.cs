@@ -33,6 +33,10 @@ public class FeedData : MonoBehaviour
         {
             _data = data;
             DisplayName.text = data.user.name;
+            if(DisplayName.text.Length > 15)
+            {
+                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+            }
             PostText.text = data.text_post;
             isEnable= true;
             //Likes.text = data.like_count.ToString();
@@ -77,16 +81,16 @@ public class FeedData : MonoBehaviour
             DateTime currentTime = DateTime.Now;
             TimeSpan timeDifference = currentTime - postTime;
             StartCoroutine(ReCallingTimeDifference(postTime));
-            if (timeDifference.TotalMinutes < 1){
+            if (timeDifference.TotalMinutes <= 1){
                 timeUpdateInterval =1;
                 return $"{Math.Floor(timeDifference.TotalSeconds)} s";
             }
-            else if (timeDifference.TotalMinutes < 60)
+            else if (timeDifference.TotalMinutes <= 60)
             {
                 timeUpdateInterval =60;
                 return $"{Math.Floor(timeDifference.TotalMinutes)} m";
             }
-            else if (timeDifference.TotalHours < 24)
+            else if (timeDifference.TotalHours <= 24)
             {
                 timeUpdateInterval =3600;
                 return $"{Math.Floor(timeDifference.TotalHours)} h";
@@ -95,7 +99,7 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays)} d"; 
              }
-            else if (timeDifference.TotalDays < 365)
+            else if (timeDifference.TotalDays <= 365)
             {
                  timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 30)} mo";
