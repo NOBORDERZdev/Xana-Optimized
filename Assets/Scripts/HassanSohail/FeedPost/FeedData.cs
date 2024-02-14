@@ -117,24 +117,31 @@ public class FeedData : MonoBehaviour
     }
     IEnumerator GetProfileImage(string url)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         if (!string.IsNullOrEmpty(url))
         {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
-            if (isUrlContainsHttpAndHttps)
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
-                {
+           // bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
+             AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+             {
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(ProfileImage, url, changeAspectRatio: true);
                     }
-                });
-            }
-            else
-            {
-                GetImageFromAWS(url, ProfileImage);
-            }
+              });
+            //if (isUrlContainsHttpAndHttps)
+            //{
+            //    AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+            //    {
+            //        if (success)
+            //        {
+            //            AssetCache.Instance.LoadSpriteIntoImage(ProfileImage, url, changeAspectRatio: true);
+            //        }
+            //    });
+            //}
+            //else
+            //{
+            //    GetImageFromAWS(url, ProfileImage);
+            //}
         }
         //string newUrl = url+"?width=256&height=256";
         //using (WWW www = new WWW(url))
