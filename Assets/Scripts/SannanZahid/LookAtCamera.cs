@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using static UserPostFeature;
@@ -17,9 +19,11 @@ public class LookAtCamera : MonoBehaviour
     public Vector3 Offset;
     bool SnapToPosition = false;
     Vector3 LastDisablePosition = default;
+
+    Coroutine routine;
     private void OnEnable()
     {
-        if(SnapToPosition)
+        if (SnapToPosition)
             transform.position = LastDisablePosition;
 
         SnapToPosition = false;
@@ -41,7 +45,18 @@ public class LookAtCamera : MonoBehaviour
     }
     public void UpdateText(string txt)
     {
-        if(txt != "")
-        _postText.text = txt;
+        if (txt != "")
+        {
+            if (txt.Length > 20)
+            {
+                _postText.text = _postHandler.InsertNewlines(txt);
+            }
+            else
+            {
+                _postText.text = txt;
+            }
+        }
+
+
     }
 }
