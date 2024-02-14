@@ -485,6 +485,16 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public List<Item> myItemObj;
         public string avatarType = "OldAvatar";
 
+        public string hair_color;
+        public string skin_color;
+        public string lip_color;
+        public string face_gender;
+        public int faceItemData;
+        public int lipItemData;
+        public int noseItemData;
+        public string hairItemData;
+        public string eyeItemData;
+
         public List<BoneDataContainer> SavedBones;
         public int SkinId;
         public Color Skin;

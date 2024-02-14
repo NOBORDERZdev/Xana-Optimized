@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Photon.Pun;
 using System;
+using System.IO;
 
 public class CharcterBodyParts : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     [SerializeField]
     public Color DefaultSkinColor, DefaultEyebrowColor, DefaultHairColor, DefaultLipColor, DefaultGredientColor;
-    
+
     [Tooltip("Region for Bones")]
     public GameObject[] BothEyes, EyeIner, EyesOut, BothLips;
     public GameObject Body_Bone, JBone, Nose, Lips, PelvisBone, ForeHead, headAll;
@@ -66,6 +67,8 @@ public class CharcterBodyParts : MonoBehaviour
     public List<BoneDataContainer> BonesData = new List<BoneDataContainer>();
 
     public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
+    [Tooltip("Default Texture for New Character")]
+    public Texture2D defaultMakeupv2, defaultEyelashesv2, defaultEyebrowv2, Eye_Texturev2;
     public Sprite defaultPngForSkinIcon;
     public static Action<Color> OnSkinColorApply;
     public float defaultSssValue;
@@ -134,7 +137,7 @@ public class CharcterBodyParts : MonoBehaviour
         eyeLidContrastPropertyName = "_Eyelid_Contrast";
 
         defaultSssValue = 2.5f;
-        
+
     }
 
     private void Start()
@@ -183,7 +186,7 @@ public class CharcterBodyParts : MonoBehaviour
             body.materials[0].SetTexture(shirt_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
-        else if (avatarController.avatarGender ==AvatarGender.Female)
+        else if (avatarController.avatarGender == AvatarGender.Female)
             femaleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
 
         //Body.materials[0].SetTexture(shirt_TextureName, texture);
@@ -309,15 +312,15 @@ public class CharcterBodyParts : MonoBehaviour
         HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
         HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
 
-        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texture);
+        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texturev2);
         // After EyeShader update need to pass this texture to another property
         HeadMeshComponent.materials[0].SetTexture("_Mask_texture", Eye_Texture);
 
-        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrow);
+        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrowv2);
         HeadMeshComponent.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
-        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashes);
-        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeup);
+        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashesv2);
+        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeupv2);
         HeadMeshComponent.materials[2].SetColor(GredientColorName, DefaultGredientColor);
         HeadMeshComponent.materials[2].SetFloat(SssIntensity, defaultSssValue);
         //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
@@ -1307,24 +1310,25 @@ public class CharcterBodyParts : MonoBehaviour
     //}
     public void ApplyEyeLenTexture(Texture texture, GameObject applyOn)
     {
+
         Material mainMaterial = applyOn.GetComponent<CharcterBodyParts>().head.materials[0];
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
+            mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
-        mainMaterial.SetTexture(eyeLen_TextureName, texture);
+            // Update Mask Texture As well & reset Its Color
 
-        // Update Mask Texture As well & reset Its Color
+            if (texture.name.ToLower() == "eye_color_texture" && mainMaterial.GetColor(Eye_ColorName) != Color.white)
+            {
+                mainMaterial.SetTexture("_Mask_texture", Eye_Mask_Texture);
+            }
+            else
+            {
+                mainMaterial.SetTexture("_Mask_texture", Eye_Color_Texture);
+                mainMaterial.SetColor(Eye_ColorName, Color.white);
+            }
 
-        if (texture.name.ToLower() == "eye_color_texture" && mainMaterial.GetColor(Eye_ColorName) != Color.white)
-        {
-            mainMaterial.SetTexture("_Mask_texture", Eye_Mask_Texture);
-        }
-        else
-        {
-            mainMaterial.SetTexture("_Mask_texture", Eye_Color_Texture);
-            mainMaterial.SetColor(Eye_ColorName, Color.white);
-        }
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }

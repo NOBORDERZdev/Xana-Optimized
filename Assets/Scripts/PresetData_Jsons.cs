@@ -141,14 +141,17 @@ public class PresetData_Jsons : MonoBehaviour
 
             // Hack for latest update // keep all preset body fat to 0
             //change lipsto default
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
 
-            //print(_CharacterData.BodyFat);
+            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));        
             _CharacterData.BodyFat = 0;
             _CharacterData.PresetValue = gameObject.name;
-
             XanaConstants.xanaConstants.bodyNumber = 0;
+            if (UGCManager.isSelfieTaken)
+            {
+                SaveUGCDataOnJson(_CharacterData);
+            }
+
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
 
@@ -163,10 +166,11 @@ public class PresetData_Jsons : MonoBehaviour
 
             //CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
 
-            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
+            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf || StoreManager.instance.selfiePanel.activeSelf)
             {
                 /*Invoke("abcd", 5f);*/
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                StoreManager.instance.selfiePanel.SetActive(false);
                 if (!UIManager.Instance.isAvatarSelectionBtnClicked)
                 {
                     UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
@@ -194,6 +198,16 @@ public class PresetData_Jsons : MonoBehaviour
                     // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
                 }
+                if (UGCManager.isSelfieTaken)
+                {
+                    UserRegisterationManager.instance.renderImage.SetActive(true);
+                    UserRegisterationManager.instance.LogoImage.SetActive(false);
+                }
+                else
+                {
+                    UserRegisterationManager.instance.renderImage.SetActive(false);
+                    UserRegisterationManager.instance.LogoImage.SetActive(true);
+                }
             }
             else
             {
@@ -213,7 +227,11 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
+            if (UGCManager.isSelfieTaken)
+            {
 
+                StoreManager.instance.ApplyUGCValueOnCharacter();
+            }
             SavePresetOnServer(_CharacterData);
             ApplyPreset();
 
@@ -232,7 +250,13 @@ public class PresetData_Jsons : MonoBehaviour
                 StoreManager.instance.GreyRibbonImage.SetActive(true);
                 StoreManager.instance.WhiteRibbonImage.SetActive(false);
             }
+
+            //if (UGCManager.isSelfieTaken)
+            //{
+            //    StoreManager.instance.ApplyUGCValueOnCharacter();
+            //}
         }
+
     }
     void SavedButtonClickedBlue()
     {
@@ -284,6 +308,18 @@ public class PresetData_Jsons : MonoBehaviour
             });
         }
 
+    }
+    void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
+    {
+        _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
+        _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
+        _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;
+        _CharacterData.face_gender = StoreManager.instance.itemData.gender;
+        _CharacterData.faceItemData = StoreManager.instance.itemData.faceItemData;
+        _CharacterData.noseItemData = StoreManager.instance.itemData.noseItemData;
+        _CharacterData.lipItemData = StoreManager.instance.itemData.lipItemData;
+        _CharacterData.hairItemData = StoreManager.instance.itemData._hairItemData;
+        _CharacterData.eyeItemData = StoreManager.instance.itemData._eyeItemData;
     }
 }
 

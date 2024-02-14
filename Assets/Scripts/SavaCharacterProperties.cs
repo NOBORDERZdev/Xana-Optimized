@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 public class SavaCharacterProperties : MonoBehaviour
 {
@@ -206,7 +207,19 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
-        SaveItemList.gender= characterController.avatarGender.ToString();
+        SaveItemList.gender = characterController.avatarGender.ToString();
+
+        SaveItemList.face_gender = StoreManager.instance.itemData.gender;
+        SaveItemList.hair_color = StoreManager.instance.itemData.hair_color;
+        SaveItemList.lip_color = StoreManager.instance.itemData.lips_color;
+        SaveItemList.skin_color = StoreManager.instance.itemData.skin_color;
+        SaveItemList.faceItemData = StoreManager.instance.itemData.faceItemData;
+        SaveItemList.lipItemData = StoreManager.instance.itemData.lipItemData;
+        SaveItemList.noseItemData = StoreManager.instance.itemData.noseItemData;
+        SaveItemList.hairItemData = StoreManager.instance.itemData._hairItemData;
+        SaveItemList.eyeItemData = StoreManager.instance.itemData._eyeItemData;
+
+
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
@@ -256,6 +269,16 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
+
+            _CharacterData.face_gender =  SaveItemList.face_gender;
+            _CharacterData.hair_color = SaveItemList.hair_color;
+            _CharacterData.lip_color = SaveItemList.lip_color;
+            _CharacterData.skin_color = SaveItemList.skin_color;
+            _CharacterData.faceItemData = SaveItemList.faceItemData;
+            _CharacterData.lipItemData = SaveItemList.lipItemData;
+            _CharacterData.noseItemData = SaveItemList.noseItemData;
+            _CharacterData.hairItemData = SaveItemList.hairItemData;
+            _CharacterData.eyeItemData = SaveItemList.eyeItemData;
 
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
@@ -347,6 +370,16 @@ public class SavingCharacterDataClass
     public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
 
+    public string hair_color;
+    public string skin_color;
+    public string lip_color;
+    public string face_gender;
+    public int faceItemData;
+    public int lipItemData;
+    public int noseItemData;
+    public string hairItemData;
+    public string eyeItemData;
+
     public List<BoneDataContainer> SavedBones;
     public int SkinId;
     public Color Skin;
@@ -410,8 +443,8 @@ public class SavingCharacterDataClass
     {
 
     }
-}
 
+}
 public class BoxerNFTDataClass
 {
     public bool isNFTAquiped = false;

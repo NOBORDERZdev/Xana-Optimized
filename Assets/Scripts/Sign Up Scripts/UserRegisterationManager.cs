@@ -199,7 +199,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
-    public GameObject LogoImage,LogoImage2,LogoImage3;
+    public GameObject LogoImage,LogoImage2,LogoImage3,renderImage;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
@@ -3473,7 +3473,6 @@ public class UserRegisterationManager : MonoBehaviour
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
-
             //  StoreManager.instance.OnSaveBtnClicked();
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
