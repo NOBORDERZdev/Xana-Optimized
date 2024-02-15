@@ -10,9 +10,9 @@ using Photon.Pun.Demo.PunBasics;
 
 public class WorldItemView : MonoBehaviour
 {
-    [SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;
-    public int Index;
-    public Vector2 GridIndex { get; protected set; }
+    /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
+    /*public int Index;
+    public Vector2 GridIndex { get; protected set; }*/
     public RectTransform RectTransform => transform as RectTransform;
     public void Activated()
     {
@@ -26,8 +26,8 @@ public class WorldItemView : MonoBehaviour
     {
         if (PreviewLogo)
             PreviewLogo.gameObject.SetActive(true);
-        Index = index;
-        GridIndex = gridPos;
+        /*Index = index;
+        GridIndex = gridPos;*/
         idOfObject = detail.IdOfWorld;
         m_EnvironmentName = detail.EnvironmentName;
         m_WorldDescription = detail.WorldDescription;
