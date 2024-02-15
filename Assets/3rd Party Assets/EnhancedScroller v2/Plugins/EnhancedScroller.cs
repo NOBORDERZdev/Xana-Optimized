@@ -316,6 +316,9 @@ namespace EnhancedUI.EnhancedScroller
         /// </summary>
         public CellViewReused cellViewReused;
 
+        public bool isScrollEnded;
+
+
         /// <summary>
         /// The Delegate is what the scroller will call when it needs to know information about
         /// the underlying data or views. This allows a true MVC process.
@@ -1779,6 +1782,7 @@ namespace EnhancedUI.EnhancedScroller
                 _lastPadder.minWidth = lastSize;
                 _lastPadder.gameObject.SetActive(_lastPadder.minWidth > 0);
             }
+           
         }
 
         /// <summary>
@@ -1787,7 +1791,6 @@ namespace EnhancedUI.EnhancedScroller
         private void _RefreshActive()
         {
             //_refreshActive = false;
-
             int startIndex;
             int endIndex;
             var velocity = Vector2.zero;

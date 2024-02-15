@@ -76,8 +76,14 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
     /// <summary>
     /// Populates the data with a lot of records
     /// </summary>
+    float scrollPosition;
     public void LoadData(int pageStartIndex)
     {
+        if (pageStartIndex == 0)
+            scroller.isScrollEnded = true;
+        else
+            scroller.isScrollEnded = false;
+
         // grab the last index of the data to jump to when we are finished
         var previousLastIndex = _data.Count;
 
@@ -97,13 +103,20 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
         }
 
         // cache the scroller's position so that we can set it back after the reload
-        var scrollPosition = scroller.ScrollPosition;
 
+
+        scrollPosition = scroller.ScrollPosition;
         // tell the scroller to reload now that we have the data.
-        scroller.ReloadData();
+        if (pageStartIndex != 0)
+        {
+            scroller.ReloadData();
+        }
 
         // set the scroller's position back to the cached position
-        scroller.ScrollPosition = scrollPosition;
+        if (pageStartIndex == 0)
+            scroller.ScrollPosition = scrollPosition + 400;
+        else
+            scroller.ScrollPosition = scrollPosition;
 
         // toggle off loading new so that we can load again at the bottom of the scroller
         _loadingNew = false;
@@ -174,7 +187,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
 
             // in this example, we just pass the data to our cell's view which will update its UI
             //cellView.SetData(_data[dataIndex]);
-            cellView.GetComponent<WorldItemView>().InitItem(_data[dataIndex]); 
+            cellView.GetComponent<WorldItemView>().InitItem(_data[dataIndex]);
 
             // return the cell to the scroller
             return cellView;
@@ -199,12 +212,12 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
             // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
             // 1 second delay.
 
-            worldManagerRef.GetBuilderWorlds(worldManagerRef.aPIURLGlobal, (a) => 
+            worldManagerRef.GetBuilderWorlds(worldManagerRef.aPIURLGlobal, (a) =>
             {
                 //StartCoroutine(FakeDelay());
             });
 
-            
+
         }
     }
 
