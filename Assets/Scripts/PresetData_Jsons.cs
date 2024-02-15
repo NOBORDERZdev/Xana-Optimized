@@ -160,6 +160,8 @@ public class PresetData_Jsons : MonoBehaviour
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
+            //Store selected preset data when signup
+            GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
             if (_CharacterData.gender == AvatarGender.Female.ToString())
             {

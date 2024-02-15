@@ -32,7 +32,8 @@ public class AllWorldManage : MonoBehaviour
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
+        WorldManager.instance.SearchPageNumb = 1;
     }
 
     public void SearchScreenLoad(string searchKey)
@@ -40,12 +41,12 @@ public class AllWorldManage : MonoBehaviour
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
     }
 
     public void BackToPreviousScreen()
     {
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
         //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);
@@ -143,31 +144,36 @@ public class AllWorldManage : MonoBehaviour
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        WorldManager.instance.hotSpacePN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
     }
 
     public void HotGamesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.HotGames);
+        WorldManager.instance.hotGamesPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
     }
 
     public void FollowingSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.FolloingSpace);
+        WorldManager.instance.followingPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
     }
 
     public void MySpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.MySpace);
+        WorldManager.instance.mySpacesPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
     }
 
     public void CategorySpacesLoadMore(int tag)
     {
         WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
         SearchScreenLoad();
-        WorldManager.instance.ChangeWorld(APIURL.SearchWorldByTag);
+        WorldManager.instance.SearchTagPageNumb = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }

@@ -1768,7 +1768,7 @@ public class MyProfileDataManager : MonoBehaviour
 
     public void OnClickEditProfileDoneButton()
     {
-        ProfilePostPartShow();
+        ProfilePostPartShow(true);
 
         checkEditNameUpdated = 0;
         checkEditInfoUpdated = 0;
@@ -2326,10 +2326,24 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     //this method is used to show profile post main part.......
-    public void ProfilePostPartShow()
+    public void ProfilePostPartShow(bool _resetProfileScreen = false)
     {
         if (!mainFullScreenContainer.activeSelf)
             mainFullScreenContainer.SetActive(true);//fo disable profile screen post part.......
+        if (_resetProfileScreen)
+        {
+            if (allPhotoContainer.childCount > 0)
+            {
+                loadedMyPostAndVideoId.Clear();
+                for (int i = 0; i < allPhotoContainer.childCount; i++)
+                {
+                    Destroy(allPhotoContainer.GetChild(i).gameObject);
+                }
+                //APIManager.Instance.userId = myProfileData.id;
+                //APIManager.Instance.LoadMyPost();
+            }
+            ProfileTabButtonClick();
+        }
     }
 
     public string setImageAvatarTempPath = "";

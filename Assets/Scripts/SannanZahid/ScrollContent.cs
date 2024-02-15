@@ -5,7 +5,7 @@ namespace DynamicScrollRect
 {
     public class ScrollContent : MonoBehaviour
     {
-        public Vector2 Spacing = Vector2.zero;
+       /* public Vector2 Spacing = Vector2.zero;
         [Min(1)][SerializeField] private int _fixedItemCount = 1;
         public int TotalItems = 0;
         private DynamicScrollRect _dynamicScrollRect;
@@ -124,7 +124,7 @@ namespace DynamicScrollRect
                     {
                         if (count == 0)
                         {
-                            /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
+                            //LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
                             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                         }
                         return;
@@ -319,6 +319,6 @@ namespace DynamicScrollRect
         {
             ClearContent();
             InitItemsVertical(Worlds.Count);
-        }
+        }*/
     }
 }

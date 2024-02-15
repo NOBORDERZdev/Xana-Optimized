@@ -2301,8 +2301,8 @@ public class APIManager : MonoBehaviour
             {
                 Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
                 //Jugar for mainnet issue as API is not deployed yet on mainnet
-                MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                //MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                //MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
                 //Debug.Log("data" + form);
             }
             else

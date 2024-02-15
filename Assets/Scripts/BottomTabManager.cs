@@ -216,40 +216,45 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeButton()
     {
-        if (/*GameManager.Instance.defaultSelection != 0*/ true)
+        if (!(GlobalVeriableClass.callingScreen == "Home"))
         {
-            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
-            GameManager.Instance.defaultSelection = 0;
-            if (additiveScenesManager != null)
+            GlobalVeriableClass.callingScreen = "Home";
+            if (/*GameManager.Instance.defaultSelection != 0*/ true)
             {
-                additiveScenesManager.SNSmodule.SetActive(false);
-                additiveScenesManager.SNSMessage.SetActive(false);
-            }
-            //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
-            GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
-            if (UIManager.Instance != null)
-            {
-                CheckLoginOrNotForFooterButton();
-                UIManager.Instance.HomeWorldScreen.SetActive(false);
-                UIManager.Instance.HomePage.SetActive(true);
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                UIManager.Instance.Canvas.SetActive(true);
+                GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
+                GameManager.Instance.defaultSelection = 0;
+                if (additiveScenesManager != null)
+                {
+                    additiveScenesManager.SNSmodule.SetActive(false);
+                    additiveScenesManager.SNSMessage.SetActive(false);
+                }
+                //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+                GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
+                if (UIManager.Instance != null)
+                {
+                    CheckLoginOrNotForFooterButton();
+                    UIManager.Instance.HomeWorldScreen.SetActive(false);
+                    UIManager.Instance.HomePage.SetActive(true);
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    UIManager.Instance.Canvas.SetActive(true);
 
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
                     if (FeedUIController.Instance)
                     {
-                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 0;
+                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
                         FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
                 }
             }
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
+            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
+        }
+        //GlobalVeriableClass.callingScreen = "";
     }
     public void OnClickHomeButtonIdleAvatar()
     {
