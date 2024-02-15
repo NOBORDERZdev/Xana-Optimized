@@ -127,6 +127,8 @@ public class FriendAvatarController : MonoBehaviour
 
     public void SetAvatarClothDefault(GameObject applyOn)
     {
+        applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.avatar_parent.SetActive(true);
+        applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.avatar_parent.SetActive(false);
         IsInit = false;
         WearDefaultItem("Legs", applyOn.gameObject);
         WearDefaultItem("Chest", applyOn.gameObject);
