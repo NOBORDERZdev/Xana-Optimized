@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class FlexibleRect : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class FlexibleRect : MonoBehaviour
     public float Offset;
 
     public RectTransform MyRect;
+    public ScrollRect srcollRect;
 
     public static Action<bool> OnAdjustSize;
     private float defaultHeight;
@@ -40,13 +42,13 @@ public class FlexibleRect : MonoBehaviour
             {
                 MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
             }
-            MyRect.GetComponentInParent<HomeScreenScrollHandler>().verticalNormalizedPosition = 1;
+            srcollRect.verticalNormalizedPosition = 1;
 
         }
         else
         {
             MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, defaultHeight);
-            MyRect.GetComponentInParent<HomeScreenScrollHandler>().verticalNormalizedPosition = 1;
+            srcollRect.verticalNormalizedPosition = 1;
             Debug.LogWarning("No Children Found to scale against or Rect Transform not found");
         }
     }
