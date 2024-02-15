@@ -7,10 +7,12 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
-
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class WorldManager : MonoBehaviour
 {
+    public TMPro.TextMeshProUGUI worldFoundText;
     [Header("World View prefab")]
     public GameObject EventPrefabLobby;
     [HideInInspector]
@@ -29,7 +31,7 @@ public class WorldManager : MonoBehaviour
     private int recordPerPage = 30;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
-    private APIURL aPIURLGlobal;
+    public APIURL aPIURLGlobal;
     [SerializeField]
     [NonReorderable]
     List<AutoSwtichEnv> AutoSwtichWorldList;
@@ -51,12 +53,15 @@ public class WorldManager : MonoBehaviour
 
     public string worldstr;
 
-    public WorldItemManager WorldItemManager;
+    public List<WorldItemDetail> resultWorldList = new List<WorldItemDetail>();
+
+    /*public WorldItemManager WorldItemManager;*/
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
     public WorldItemPreviewTab worldItemPreviewTabRef;
     public WorldSearchManager worldSearchManager;
+    public SearchWorldController searchWorldControllerRef;
     public static WorldManager instance;
     public APIURL GetCurrentTabSelected()
     {
@@ -93,7 +98,7 @@ public class WorldManager : MonoBehaviour
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
     }
-    public void CheckWorldTabAndReset(APIURL tab)
+    /*public void CheckWorldTabAndReset(APIURL tab)
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
         {
@@ -131,7 +136,7 @@ public class WorldManager : MonoBehaviour
         //}
         yield return new WaitForEndOfFrame();
         CheckWorldTabAndReset(tab);
-    }
+    }*/
     public void ChangeWorldTab(APIURL tab)
     {
         aPIURLGlobal = tab;
@@ -144,14 +149,15 @@ public class WorldManager : MonoBehaviour
 
     public void SearchWorldCall(string searchKey, bool isFromTag = false)
     {
+        WorldLoadingText(APIURL.Temp);
         if (searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
         {
             if (isFromTag)
                 aPIURLGlobal = APIURL.SearchWorldByTag;
             else
                 aPIURLGlobal = APIURL.SearchWorld;
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
-            ClearWorldScrollWorlds();
+            /*this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
+            WorldScrollReset();
             SearchPageNumb = 1;
             SearchTagPageNumb = 1;
             SearchPageSize = 40;
@@ -162,10 +168,10 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
-            this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());
-            ClearWorldScrollWorlds();
+            /* this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
+            WorldScrollReset();
             previousSearchKey = SearchKey = searchKey;
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
         }
     }
     void SetAutoSwtichStreaming()
@@ -207,6 +213,7 @@ public class WorldManager : MonoBehaviour
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
+
 
     public string PrepareApiURL(APIURL aPIURL, int recordPerPage = 30)
     {
@@ -332,6 +339,7 @@ public class WorldManager : MonoBehaviour
 
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
+        resultWorldList.Clear();
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             WorldItemDetail _event;
@@ -425,7 +433,9 @@ public class WorldManager : MonoBehaviour
             //}
             //else
             //{
-            WorldItemManager.AddWorld(_apiURL, _event);
+            //WorldItemManager.AddWorld(_apiURL, _event);
+
+            resultWorldList.Add(_event);
             //}
             //if (!isLobbyActive)
             //{
@@ -437,7 +447,7 @@ public class WorldManager : MonoBehaviour
             //    }
             //}  
         }
-        if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count > 0)
+        /*if (WorldItemManager.gameObject.activeInHierarchy && _WorldInfo.data.count > 0)
         {
             WorldItemManager.DisplayWorlds(_apiURL);
             WorldItemManager.WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
@@ -445,7 +455,20 @@ public class WorldManager : MonoBehaviour
         else if (WorldItemManager.gameObject.activeInHierarchy)
         {
             WorldItemManager.WorldLoadingText(_apiURL);
+        }*/
+
+
+        searchWorldControllerRef.LoadData(_WorldInfo.data.count);
+        if (_WorldInfo.data.count > 0)
+        {
+            WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
+        else
+        {
+            WorldLoadingText(_apiURL);
+        }
+
+
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -456,23 +479,60 @@ public class WorldManager : MonoBehaviour
 
     }
 
+
+    public void WorldLoadingText(APIURL aPIURL)
+    {
+        LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+        switch (aPIURL)
+        {
+            case APIURL.HotSpaces:
+                worldFoundText.text = "";
+                return;
+            case APIURL.HotGames:
+                worldFoundText.text = "";
+                return;
+            case APIURL.MySpace:
+                worldFoundText.text = "";
+                return;
+            case APIURL.FolloingSpace:
+                worldFoundText.text = "";
+                return;
+            case APIURL.SearchWorld:
+                worldFoundText.text = "No world found with given search key";
+                return;
+            case APIURL.SearchWorldByTag:
+                worldFoundText.text = "No world found with given search tag";
+                return;
+            case APIURL.Temp:
+                worldFoundText.text = "";
+                return;
+            default:
+                worldFoundText.text = "No world found with given search key";
+                return;
+        }
+    }
+
+
+
+
     public void ShowTutorial()
     {
         TutorialsManager.instance.ShowTutorials();
     }
 
-    public void WorldPageStateHandler(bool _checkCheck)
-    {
-        WorldItemManager.WorldPageStateHandler(_checkCheck);
-    }
     public void WorldScrollReset()
     {
-        WorldItemManager.WorldScrollReset();
+        searchWorldControllerRef.scroller.ClearAll();
+        searchWorldControllerRef.ClearData();
+    }
+    /*public void WorldPageStateHandler(bool _checkCheck)
+    {
+        WorldItemManager.WorldPageStateHandler(_checkCheck);
     }
     public void ClearWorldScrollWorlds()
     {
         WorldItemManager.ClearWorldScrollWorlds();
-    }
+    }*/
     private void CreateLightingAsset(WorldItemView _event)
     {
         string path = "Assets/Resources/Environment Data/" + _event.m_EnvironmentName + "Data";
@@ -650,7 +710,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-        CheckAgain:
+    CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
@@ -761,6 +821,10 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void GoToUGC()
+    {
+        SceneManager.LoadScene("UGC");
+    }
     public void ClearHomePageData()
     {
         worldSpaceHomeScreenRef.RemoveThumbnailImages();
@@ -833,6 +897,35 @@ public class WorldCreatorDetail
     public string avatar;
     public string description;
 }
+
+
+[Serializable]
+public class WorldItemDetail
+{
+    public string IdOfWorld;
+    public string EnvironmentName;
+    public string WorldDescription;
+    public string ThumbnailDownloadURL;
+    public string ThumbnailDownloadURLHigh;
+    //public string CreatorName;
+    public string CreatedAt;
+    public string UserLimit;
+    public string UserAvatarURL;
+    public string UpdatedAt = "00";
+    public string EntityType = "None";
+    public string BannerLink;
+    public int PressedIndex;
+    public string[] WorldTags;
+    public string Creator_Name;
+    public string CreatorAvatarURL;
+    public string CreatorDescription;
+    public string WorldVisitCount;
+    public bool isFavourite;
+}
+
+
+
+
 
 //public enum APIURL
 //{

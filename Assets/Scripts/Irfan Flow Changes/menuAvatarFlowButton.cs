@@ -10,15 +10,25 @@ public class menuAvatarFlowButton : MonoBehaviour
     {
         _instance = this;
     }
-    void Start()
+    void OnEnable()
     {
-        this.gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+        MainSceneEventHandler.OpenPresetPanel += OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.AddListener(OnClickMenuAvatarBtn);
+    }
+
+    void OnDisable()
+    {
+        MainSceneEventHandler.OpenPresetPanel -= OnClickMenuAvatarBtn;
+        gameObject.GetComponent<Button>().onClick.RemoveListener(OnClickMenuAvatarBtn);
     }
  
     void OnClickMenuAvatarBtn()
     {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        /* comment out due to new avatar not having store for now
         GameManager.Instance.AvatarMenuBtnPressed();
         StoreManager.instance.SubmitUserDetailAPI();
+        */
     }
 
     public void StoreBtnController()
