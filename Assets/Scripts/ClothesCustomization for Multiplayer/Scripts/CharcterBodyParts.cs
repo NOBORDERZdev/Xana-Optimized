@@ -309,29 +309,31 @@ public class CharcterBodyParts : MonoBehaviour
         //HeadMeshComponent.material.SetColor(Lip_ColorName, DefaultLipColor);
         //HeadMeshComponent.material.SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
-        HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-        HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+        #region #region Xana Avatar 1.0 //--> remove for xana avatar2.0
+        //HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+        //HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
 
-        HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texturev2);
-        // After EyeShader update need to pass this texture to another property
-        HeadMeshComponent.materials[0].SetTexture("_Mask_texture", Eye_Texture);
+        //HeadMeshComponent.materials[0].SetTexture(eyeLen_TextureName, Eye_Texturev2);
+        //// After EyeShader update need to pass this texture to another property
+        //HeadMeshComponent.materials[0].SetTexture("_Mask_texture", Eye_Texture);
 
-        HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrowv2);
-        HeadMeshComponent.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+        //HeadMeshComponent.materials[1].SetTexture(EyeBrrow_TextureName, defaultEyebrowv2);
+        //HeadMeshComponent.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
-        HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashesv2);
-        HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeupv2);
-        HeadMeshComponent.materials[2].SetColor(GredientColorName, DefaultGredientColor);
-        HeadMeshComponent.materials[2].SetFloat(SssIntensity, defaultSssValue);
-        //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
+        //HeadMeshComponent.materials[3].SetTexture(eyeLashes_TextureName, defaultEyelashesv2);
+        //HeadMeshComponent.materials[2].SetTexture(Makeup_TextureName, defaultMakeupv2);
+        //HeadMeshComponent.materials[2].SetColor(GredientColorName, DefaultGredientColor);
+        //HeadMeshComponent.materials[2].SetFloat(SssIntensity, defaultSssValue);
+        ////Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
 
-        //set dafault texture for shader to not impact on any other property like skin color 
-        RemoveTattoo(null, null, CurrentTextureType.FaceTattoo);
-        RemoveTattoo(null, null, CurrentTextureType.ChestTattoo);
-        RemoveTattoo(null, null, CurrentTextureType.LegsTattoo);
-        RemoveTattoo(null, null, CurrentTextureType.ArmTattoo);
-        RemoveMustacheTexture(null, null);
-        RemoveEyeLidTexture(null, null);
+        ////set dafault texture for shader to not impact on any other property like skin color 
+        //RemoveTattoo(null, null, CurrentTextureType.FaceTattoo);
+        //RemoveTattoo(null, null, CurrentTextureType.ChestTattoo);
+        //RemoveTattoo(null, null, CurrentTextureType.LegsTattoo);
+        //RemoveTattoo(null, null, CurrentTextureType.ArmTattoo);
+        //RemoveMustacheTexture(null, null);
+        //RemoveEyeLidTexture(null, null);
+        #endregion
     }
 
 
