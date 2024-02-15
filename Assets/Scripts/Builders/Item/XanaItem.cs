@@ -219,6 +219,7 @@ public class XanaItem : MonoBehaviour
         NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
         if (ninjaComponentData.IsActive)
         {
+            return; //Ninja component not working fine with new character
             NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
             itemComponent.Init(ninjaComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
