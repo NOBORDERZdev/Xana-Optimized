@@ -20,7 +20,8 @@ public class WorldManager : MonoBehaviour
     [Header("Api Parameter's")]
     private string finalAPIURL;
     private string status = "Publish";
-    private int hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
+    [HideInInspector]
+    public int hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -458,7 +459,7 @@ public class WorldManager : MonoBehaviour
         }*/
 
 
-        searchWorldControllerRef.LoadData(_WorldInfo.data.count);
+        searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
         if (_WorldInfo.data.count > 0)
         {
             WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
