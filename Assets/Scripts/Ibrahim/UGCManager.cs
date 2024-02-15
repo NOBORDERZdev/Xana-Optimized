@@ -78,7 +78,7 @@ public class UGCManager : MonoBehaviour
                     Sprite capturedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
                     selfieSprite.sprite = capturedSprite;
-                    selfiePanel.SetActive(true);
+                    StoreManager.instance.selfiePanel.SetActive(true);
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
                 }
