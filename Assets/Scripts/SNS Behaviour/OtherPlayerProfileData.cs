@@ -599,6 +599,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                     //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    userPostItem.isProfileScene = true;
                     //userPostItem.userTextPostData = currentPageAllTextPostWithUserIdRoot.Data.Rows[i];
 
                     //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
@@ -904,13 +905,15 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
         }
     }
 
@@ -949,7 +952,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
-        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 30, "OtherPlayerFeed", _callFromFindFriendWithName);
+        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 40, "OtherPlayerFeed", _callFromFindFriendWithName);
         RequestGetOtherUserRole(singleUserProfileData1.id);
     }
 
@@ -963,7 +966,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         FeedUIController.Instance.ShowLoader(true);
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(id));
-        APIManager.Instance.RequestGetFeedsByUserId(id, 1, 30, "OtherPlayerFeed");
+        APIManager.Instance.RequestGetFeedsByUserId(id, 1, 40, "OtherPlayerFeed");
         RequestGetOtherUserRole(id);
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followingBtn;
     public GameObject editProfileBtn;
     public GameObject followProfileBtn;
+
+
+    public GameObject avatarBgObject;
+
 
     [Space]
     [Header("User Avatar Preview Objects")]
@@ -79,14 +84,18 @@ public class ProfileUIHandler : MonoBehaviour
     public void InstantiateUserPreviewAvatar()
     {
         _renderTexCamera.parent = null;
-        _renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
+        //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
+        _renderTexCamera.position = new Vector3(0f, 0.86f, -5.27f);
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
+        AvatarRef.GetComponent<FootStaticIK>().ikActive = true;
         AvatarRef.name = "UserPreviewAvatar";
-        AvatarRef.transform.position = new Vector3(0f, 0f, 0f);
+        AvatarRef.transform.position = new Vector3(-0.057f, 0.069f, 0f);
         AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
+
+        GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
         //Destroy(AvatarRef.GetComponent<AvatarController>());
         //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
         //SetUserAvatarClothing();
@@ -97,7 +106,13 @@ public class ProfileUIHandler : MonoBehaviour
         if (!newRenderTexture)
         {
             newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
-            newRenderTexture.antiAliasing = 2;
+            newRenderTexture.antiAliasing = 4;
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();
+                _uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+                _uaCamData.antialiasingQuality = AntialiasingQuality.Low;
+            }
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
             AvatarPreviewImgRef.texture = newRenderTexture;

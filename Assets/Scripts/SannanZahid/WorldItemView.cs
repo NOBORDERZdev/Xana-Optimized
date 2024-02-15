@@ -31,6 +31,9 @@ public class WorldItemView : MonoBehaviour
         idOfObject = detail.IdOfWorld;
         m_EnvironmentName = detail.EnvironmentName;
         m_WorldDescription = detail.WorldDescription;
+        //Changed image quality due to poor text quality
+        if (m_EnvironmentName == "ZONE-X")
+            detail.ThumbnailDownloadURL = detail.ThumbnailDownloadURL.Replace("?width=640&height=360", "?width=960&height=540");
         m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
         //creatorName = detail.Creator_Name;
         createdAt = detail.CreatedAt;

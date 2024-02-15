@@ -7,6 +7,7 @@ using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class WorldManager : MonoBehaviour
@@ -320,9 +321,15 @@ public class WorldManager : MonoBehaviour
             {
                 searchResponse = www.downloadHandler.text;
                 //Debug.LogError(apiURL+"-------"+www.downloadHandler.text);
-                _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
-                worldstr = www.downloadHandler.text;
-                callback(true);
+
+                if (SearchKey == "" && (aPIURLGlobal == APIURL.SearchWorld || aPIURLGlobal == APIURL.SearchWorldByTag))
+                    callback(false);
+                else
+                {
+                    _WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
+                    worldstr = www.downloadHandler.text;
+                    callback(true);
+                }
             }
             www.Dispose();
         }
@@ -812,6 +819,10 @@ public class WorldManager : MonoBehaviour
         }
     }
 
+    public void GoToUGC()
+    {
+        SceneManager.LoadScene("UGC");
+    }
     public void ClearHomePageData()
     {
         worldSpaceHomeScreenRef.RemoveThumbnailImages();

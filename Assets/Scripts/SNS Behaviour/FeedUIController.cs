@@ -651,7 +651,7 @@ public class FeedUIController : MonoBehaviour
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(3);
+                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     break;
                 case "HotTabScreen":
                     //Debug.Log("Comes from Hot or Discover tab full feed screen");
@@ -1647,14 +1647,25 @@ public class FeedUIController : MonoBehaviour
         //Debug.Log("ProfileGetAllFollower:" + APIManager.Instance.profileAllFollowerRoot.data.rows.Count + "    :pageNum:" + pageNum);
         if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
         {
-            for (int i = 0; i < APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
+            for (int i = 0; i <= APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
             {
-                if (!profileFollowerLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id))
+                if (i < APIManager.Instance.profileAllFollowerRoot.data.rows.Count)
                 {
-                    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[i]);
-                    //profileFollowerItemControllersList.Add(followerObject.GetComponent<FollowerItemController>());
-                    //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
+                    if (!profileFollowerLoadedItemIDList.Contains(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id))
+                    {
+                        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[i]);
+                        //profileFollowerItemControllersList.Add(followerObject.GetComponent<FollowerItemController>());
+                        //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
+                    }
+                }
+                else
+                {
+                    for (int j = 0;j < 4;j++)
+                    {
+                        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0],true);
+                    }
                 }
             }
         }else

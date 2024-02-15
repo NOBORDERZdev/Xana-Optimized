@@ -199,7 +199,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
-    public GameObject LogoImage,LogoImage2,LogoImage3;
+    public GameObject LogoImage,LogoImage2,LogoImage3,renderImage;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;
@@ -1650,7 +1650,8 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
-        BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        //--> remove for xana avatar2.0
+       // BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -3236,7 +3237,7 @@ public class UserRegisterationManager : MonoBehaviour
             //   print("Password not matched");
         }
     }
-
+    public ClassWithToken TokenDataClass=new ClassWithToken();
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
         //print(Jsondata);
@@ -3250,7 +3251,7 @@ public class UserRegisterationManager : MonoBehaviour
         yield return request.SendWebRequest();
 
         ClassWithToken myObject = new ClassWithToken();
-        myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
+        TokenDataClass=myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
         //print(myObject.data.token);
         if (!request.isHttpError && !request.isNetworkError)
         {
@@ -3473,7 +3474,6 @@ public class UserRegisterationManager : MonoBehaviour
             usernamePanal.SetActive(false);
            // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
-
             //  StoreManager.instance.OnSaveBtnClicked();
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
@@ -3520,6 +3520,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
+                ProfilePictureManager.instance.MakeProfilePicture(Localusername);
                 string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(Email, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
@@ -4452,10 +4453,11 @@ public class UserRegisterationManager : MonoBehaviour
         //}
 
         //   //print(myObject1.msg + " | success: " + myObject1.success);
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-        {
-            StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        } 
+        //--> remove for xana avatar2.0
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+        //{
+        //    StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
+        //} 
     }
 
 
