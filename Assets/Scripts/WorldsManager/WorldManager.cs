@@ -149,13 +149,14 @@ public class WorldManager : MonoBehaviour
 
     public void SearchWorldCall(string searchKey, bool isFromTag = false)
     {
+        WorldLoadingText(APIURL.Temp);
         if (searchKey != previousSearchKey && !string.IsNullOrEmpty(searchKey))
         {
             if (isFromTag)
                 aPIURLGlobal = APIURL.SearchWorldByTag;
             else
                 aPIURLGlobal = APIURL.SearchWorld;
-              /*this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
+            /*this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
             WorldScrollReset();
             SearchPageNumb = 1;
             SearchTagPageNumb = 1;
@@ -170,6 +171,7 @@ public class WorldManager : MonoBehaviour
             /* this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
             WorldScrollReset();
             previousSearchKey = SearchKey = searchKey;
+            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
         }
     }
     void SetAutoSwtichStreaming()
@@ -456,17 +458,17 @@ public class WorldManager : MonoBehaviour
         }*/
 
 
+        searchWorldControllerRef.LoadData(_WorldInfo.data.count);
         if (_WorldInfo.data.count > 0)
         {
-            searchWorldControllerRef.LoadData(0);
             WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
-        else 
+        else
         {
             WorldLoadingText(_apiURL);
         }
 
-        
+
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -708,7 +710,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-        CheckAgain:
+    CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {

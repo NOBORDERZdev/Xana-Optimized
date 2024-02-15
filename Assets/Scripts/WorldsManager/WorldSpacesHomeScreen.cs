@@ -391,8 +391,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             GameObject userTag = Instantiate(userTagPrefab, userTagParent.transform);
             userTag.GetComponent<TagPrefabInfo>().tagName.text = userTagInfo.data.rows[i].tagName;
             userTag.SetActive(true);
-            if (mostVisitedTagList.Count < 5)
-                mostVisitedTagList.Add(userTagInfo.data.rows[i].tagName);
             yield return new WaitForEndOfFrame();
         }
     }

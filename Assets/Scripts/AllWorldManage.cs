@@ -33,6 +33,7 @@ public class AllWorldManage : MonoBehaviour
         UIManager.Instance.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
+        WorldManager.instance.SearchPageNumb = 1;
     }
 
     public void SearchScreenLoad(string searchKey)
@@ -168,6 +169,7 @@ public class AllWorldManage : MonoBehaviour
     {
         WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
         SearchScreenLoad();
+        WorldManager.instance.SearchTagPageNumb = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }
