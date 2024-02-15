@@ -2300,6 +2300,9 @@ public class APIManager : MonoBehaviour
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
+                //Jugar for mainnet issue as API is not deployed yet on mainnet
+                MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
                 //Debug.Log("data" + form);
             }
             else
