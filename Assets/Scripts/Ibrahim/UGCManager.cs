@@ -33,6 +33,7 @@ public class UGCManager : MonoBehaviour
     {
         //selfieSprite.sprite = null;
         isSelfieTaken = false;
+        StoreManager.instance.itemData.CharactertypeAi = false;
         //texture = null;
         OnClickSelfieButton();
     }
@@ -43,6 +44,7 @@ public class UGCManager : MonoBehaviour
         selfieSprite.sprite = null;
         texture = null;
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        StoreManager.instance.itemData.CharactertypeAi = false;
     }
     public void OnClickSelfieButton()
     {
@@ -71,14 +73,12 @@ public class UGCManager : MonoBehaviour
                     }
 
                     string fileName = Path.GetFileName(path);
-                    Debug.Log("filename : " + fileName);
-                    Debug.Log("width:" + texture.width + " :height:" + texture.height);
-
 
                     Sprite capturedSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 
                     selfieSprite.sprite = capturedSprite;
-                    selfiePanel.SetActive(true);
+                    selfieSprite.preserveAspect = true;
+                    StoreManager.instance.elfiePanel.SetActive(true);
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
                 }
@@ -99,8 +99,7 @@ public class UGCManager : MonoBehaviour
                     return;
                 }
                 string fileName = Path.GetFileName(path);
-                Debug.Log("Camera filename : " + fileName);
-                Debug.Log("width:" + texture.width + " :height:" + texture.height);
+
                 // Calculate scaling factors to fit the image within the panel
                 // Calculate the scaling factor to fit the texture into the panel
                 //float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
@@ -189,11 +188,10 @@ public class UGCManager : MonoBehaviour
                         StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
                         StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
                     //StoreManager.instance.ApplyUGCValueOnCharacter();
-                    Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
-                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-                    
+                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);                    
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    Swipe_menu.instance.OnClickNext();
                 }
             }
         }
@@ -202,51 +200,42 @@ public class UGCManager : MonoBehaviour
     {
 
         StoreManager.instance.itemData.gender = ugcItems.gender;
-        StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
-        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
-        StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
-        StoreManager.instance.itemData.Charactertype = true;
+        StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
+        StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
+        StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
+        StoreManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)
         {
             StoreManager.instance.itemData.faceItemData = _itemFace.index;
-        }
-        else 
-        {
-            StoreManager.instance.itemData.faceItemData = 52;
-
         }
         if (_itemNose != null)
         {
             StoreManager.instance.itemData.noseItemData = _itemNose.index;
         }
-        else
-        {
-            StoreManager.instance.itemData.noseItemData = 67;
-
-        }
         if (_itemLips != null)
         {
             StoreManager.instance.itemData.lipItemData = _itemLips.index;
-        }
-        else
-        {
-            StoreManager.instance.itemData.lipItemData = 58;
         }
         if (_itemHair != null)
         {
             StoreManager.instance.itemData._hairItemData = _itemHair.keyValue;
         }
-        else
-        {
-            StoreManager.instance.itemData._hairItemData = "ai_boy_h_115";
-        }
         if (_itemEye != null)
         {
             StoreManager.instance.itemData._eyeItemData = _itemEye.keyValue;
         }
+    }
+    Color HexToColor(string hex)
+    {
+        Color color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            return color;
+        }
         else
         {
-            StoreManager.instance.itemData._eyeItemData = "ai_dusky_blue";
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
         }
     }
     #region Permission Methods

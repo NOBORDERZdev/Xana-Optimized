@@ -4860,12 +4860,15 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter()
     {
-        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(itemData.skin_color));
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(itemData.lips_color));
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(itemData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
+        for (int i = 0; i < CharcterBodyParts.instance.head.sharedMesh.blendShapeCount - 1; i++)
+        {
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(i, 0);
+        }
         if (itemData.faceItemData != 0 && CharcterBodyParts.instance != null)
         {
-            Debug.Log("1111111111111111111111111111111111111111111111");
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.faceItemData, 100);
         }
         if (itemData.noseItemData != 0)
@@ -4874,25 +4877,21 @@ public class StoreManager : MonoBehaviour
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(itemData.hair_color), true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
         }
         if (itemData._eyeItemData != null)
         {
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
         }
     }
-    Color HexToColor(string hex)
+    public void ApplyDefaultValueOnCharacter()
     {
-        Color color;
-        if (ColorUtility.TryParseHtmlString(hex, out color))
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.default_skin_color);
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.default_lips_color);
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.default_skin_color);
+        for (int i = 0; i < CharcterBodyParts.instance.head.sharedMesh.blendShapeCount - 1; i++)
         {
-            Debug.Log(" color string: " + color);
-            return color;
-        }
-        else
-        {
-            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
-            return Color.white; // Return a default color or handle the error as needed
+            CharcterBodyParts.instance.head.SetBlendShapeWeight(i, 0);
         }
     }
 }

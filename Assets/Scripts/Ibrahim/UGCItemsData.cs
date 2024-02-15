@@ -83,35 +83,17 @@ public class UGCItemsData : ScriptableObject
 [Serializable]
 public class UGCItemData
 {
-    public string hair_color;
-    public string skin_color;
-    public string lips_color;
+    public Color hair_color;
+    public Color skin_color;
+    public Color lips_color;
     public string gender;
     public string _hairItemData;
     public string _eyeItemData;
     public int faceItemData;
     public int lipItemData;
     public int noseItemData;
-    public bool Charactertype;
-    //public UGCItemData()
-    //{
-    //    faceItemData = new DataContain();
-    //    lipItemData = new DataContain();
-    //    noseItemData = new DataContain();
-    //    _hairItemData = new HairEyeData();
-    //    _eyeItemData = new HairEyeData();
-    //}
+    public bool CharactertypeAi;
+
+    public Color default_skin_color;
+    public Color default_lips_color;
 }
-//[Serializable]
-//public class DataContain
-//{
-//    public string typeName;
-//    public int index;
-//    public int value;
-//}
-//[Serializable]
-//public class HairEyeData
-//{
-//    public string typeName;
-//    public string keyValue;
-//}

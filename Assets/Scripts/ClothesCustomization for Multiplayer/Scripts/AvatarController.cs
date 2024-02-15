@@ -362,10 +362,8 @@ public class AvatarController : MonoBehaviour
                             characterBodyParts.TextureForGlove(null);
                         }
                     }
-                    Debug.Log("ha bhai" + _CharacterData.Charactertype);
-                    if (_CharacterData.Charactertype == true)
+                    if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                     {
-                        Debug.Log("ha bhai");
                         ApplyAIData(_CharacterData);
                     }
 
@@ -571,7 +569,7 @@ public class AvatarController : MonoBehaviour
                                 }
                             }
                         }
-                        if (_CharacterData.Charactertype == true)
+                        if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                         {
                             Debug.Log("ha bhai");
                             ApplyAIData(_CharacterData);
@@ -1296,7 +1294,14 @@ public class AvatarController : MonoBehaviour
                 {
                     _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                 }
-                StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
+                if (_CharacterData.charactertypeAi == true)
+                {
+                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
+                }
+                else
+                {
+                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
+                }
             }
             else if (type == "Hair" && XanaConstants.xanaConstants.isPresetHairColor && presetHairColor != null)
             {
@@ -1722,9 +1727,17 @@ public class AvatarController : MonoBehaviour
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+        //CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
+        //CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
+        //CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
+        if (_CharacterData.skin_color != null)
+        {
+            StartCoroutine(characterBodyParts.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
+        }
+        if (_CharacterData.lip_color != null)
+        {
+            StartCoroutine(characterBodyParts.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+        }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
 
@@ -1732,21 +1745,7 @@ public class AvatarController : MonoBehaviour
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true));
-        }
-    }
-    Color HexToColor(string hex)
-    {
-        Color color;
-        if (ColorUtility.TryParseHtmlString(hex, out color))
-        {
-            Debug.Log(" color string: " + color);
-            return color;
-        }
-        else
-        {
-            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
-            return Color.white; // Return a default color or handle the error as needed
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
         }
     }
 }

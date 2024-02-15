@@ -209,8 +209,7 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
         SaveItemList.gender = characterController.avatarGender.ToString();
 
-        SaveItemList.Charactertype = StoreManager.instance.itemData.Charactertype;
-        SaveItemList.face_gender = StoreManager.instance.itemData.gender;
+        SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
         SaveItemList.hair_color = StoreManager.instance.itemData.hair_color;
         SaveItemList.lip_color = StoreManager.instance.itemData.lips_color;
         SaveItemList.skin_color = StoreManager.instance.itemData.skin_color;
@@ -271,8 +270,7 @@ public class SavaCharacterProperties : MonoBehaviour
 
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
 
-            _CharacterData.Charactertype = SaveItemList.Charactertype;
-            _CharacterData.face_gender =  SaveItemList.face_gender;
+            _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
             _CharacterData.hair_color = SaveItemList.hair_color;
             _CharacterData.lip_color = SaveItemList.lip_color;
             _CharacterData.skin_color = SaveItemList.skin_color;
@@ -372,16 +370,15 @@ public class SavingCharacterDataClass
     public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
 
-    public string hair_color;
-    public string skin_color;
-    public string lip_color;
-    public string face_gender;
+    public Color hair_color;
+    public Color skin_color;
+    public Color lip_color;
     public int faceItemData;
     public int lipItemData;
     public int noseItemData;
     public string hairItemData;
     public string eyeItemData;
-    public bool Charactertype;
+    public bool charactertypeAi;
 
     public List<BoneDataContainer> SavedBones;
     public int SkinId;

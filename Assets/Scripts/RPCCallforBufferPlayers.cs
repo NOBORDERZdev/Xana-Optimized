@@ -164,7 +164,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
                     otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
                 }
-                if (_CharacterData.Charactertype == true) 
+                if (_CharacterData.charactertypeAi == true) 
                 {
                     ApplyAIData(_CharacterData, bodyparts);
                 }
@@ -484,9 +484,17 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         applyon.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         applyon.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         applyon.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        applyon.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
-        applyon.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
-        applyon.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+        //applyon.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
+        //applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
+        //applyon.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
+        if (_CharacterData.skin_color != null)
+        {
+            StartCoroutine(applyon.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
+        }
+        if (_CharacterData.lip_color != null)
+        {
+            StartCoroutine(applyon.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+        }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
 
@@ -494,25 +502,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", applyon.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
         }
     }
-    Color HexToColor(string hex)
-    {
-        Color color;
-        if (ColorUtility.TryParseHtmlString(hex, out color))
-        {
-            Debug.Log(" color string: " + color);
-            return color;
-        }
-        else
-        {
-            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
-            return Color.white; // Return a default color or handle the error as needed
-        }
-    }
-
-
     public void UnStichItem(string type)
     {
         switch (type)
