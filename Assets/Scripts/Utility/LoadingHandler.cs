@@ -181,13 +181,14 @@ public class LoadingHandler : MonoBehaviour
         //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + " ~~~~~~~  Activated Loading ~~~~~~~ ");
         if (teleportFeader.gameObject.activeInHierarchy) // XanaConstants.xanaConstants.JjWorldSceneChange
         {
+            loadingPanel.SetActive(false);
             return;
         }
         ResetLoadingValues();
         //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
         //bool isFedderActive = false;
         //if (!XanaConstants.xanaConstants.isFromXanaLobby)
-        {
+        //{
             //isFedderActive = true;
             if (XanaConstants.xanaConstants.isBackFromWorld)
             {
@@ -205,7 +206,7 @@ public class LoadingHandler : MonoBehaviour
                 ActivateFadder_AtLoadingStart();
             }
            
-        }
+        //}
 
         //StartCoroutine(CustomLoading());
     }
@@ -579,6 +580,7 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator TeleportFader(FadeAction action)
     {
+        loadingPanel.SetActive(false);
         // teleportFeader.gameObject.SetActive(true);
         switch (action)
         {
