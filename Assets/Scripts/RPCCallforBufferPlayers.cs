@@ -106,13 +106,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
                 bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
 
-            }
+                }
 
-            if (_CharacterData.myItemObj.Count != 0)
-            {
-                for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+                if (_CharacterData.myItemObj.Count != 0)
                 {
-                        
+                    for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+                    {
+
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
                             if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
@@ -156,14 +156,18 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                             }
                         }
                     }
-            }
-            else // if player is all default cloths
-            {
-                otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
-                otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
-                otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
-                otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
-            }
+                }
+                else // if player is all default cloths
+                {
+                    otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
+                    otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
+                    otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
+                    otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
+                }
+                if (_CharacterData.Charactertype == true) 
+                {
+                    ApplyAIData(_CharacterData, bodyparts);
+                }
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 //{
                 //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, otherPlayer.gameObject));
@@ -304,57 +308,57 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 //}
                 #endregion
                 // Seperate 
-            //    if (_CharacterData.Skin != null)
-            //{
-            //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.Skin, SliderType.Skin, otherPlayer.gameObject));
-            //    //if(IsNFTCharacter)
-            //    //{
-            //    //    LightPresetNFT _lightPresetNFT = GetComponent<AvatarController>().GetLightPresetValue(_CharacterData.Skin);
-            //    //    GetComponent<SwitchToBoxerAvatar>().SwitchLight(_lightPresetNFT);
-            //    //}
-                
-            //}
-            //if (_CharacterData.EyeColor != null)
-            //{
-            //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.EyeColor, SliderType.EyesColor, otherPlayer.gameObject));
-            //}
-            //if (_CharacterData.LipColor != null)
-            //{
-            //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.LipColor, SliderType.LipsColor, otherPlayer.gameObject));
-            //}
-            ////if (_CharacterData.HairColor != null)
-            ////{
-            ////    bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, this.gameObject));
-            ////}
-            //if (_CharacterData.EyebrowColor != null)
-            //{
-            //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.EyebrowColor, SliderType.EyeBrowColor, otherPlayer.gameObject));
-            //}
+                //    if (_CharacterData.Skin != null)
+                //{
+                //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.Skin, SliderType.Skin, otherPlayer.gameObject));
+                //    //if(IsNFTCharacter)
+                //    //{
+                //    //    LightPresetNFT _lightPresetNFT = GetComponent<AvatarController>().GetLightPresetValue(_CharacterData.Skin);
+                //    //    GetComponent<SwitchToBoxerAvatar>().SwitchLight(_lightPresetNFT);
+                //    //}
 
-            //if (_CharacterData.SkinGerdientColor != null)
-            //{
-            //    bodyparts.ApplyGredientColor(_CharacterData.SkinGerdientColor, otherPlayer.gameObject);
-            //}
-            //else
-            //{
-            //    bodyparts.ApplyGredientDefault(this.gameObject);
-            //}
+                //}
+                //if (_CharacterData.EyeColor != null)
+                //{
+                //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.EyeColor, SliderType.EyesColor, otherPlayer.gameObject));
+                //}
+                //if (_CharacterData.LipColor != null)
+                //{
+                //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.LipColor, SliderType.LipsColor, otherPlayer.gameObject));
+                //}
+                ////if (_CharacterData.HairColor != null)
+                ////{
+                ////    bodyParts.StartCoroutine(bodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, this.gameObject));
+                ////}
+                //if (_CharacterData.EyebrowColor != null)
+                //{
+                //    bodyparts.StartCoroutine(bodyparts.ImplementColors(_CharacterData.EyebrowColor, SliderType.EyeBrowColor, otherPlayer.gameObject));
+                //}
 
-            //if (_CharacterData.SssIntensity != null)
-            //{
-            //    bodyParts.SetSssIntensity(_CharacterData.SssIntensity, this.gameObject);
-            //}
-            //else
-            //{
-            //    bodyParts.SetSssIntensity(bodyParts.defaultSssValue, this.gameObject);
-            //}
+                //if (_CharacterData.SkinGerdientColor != null)
+                //{
+                //    bodyparts.ApplyGredientColor(_CharacterData.SkinGerdientColor, otherPlayer.gameObject);
+                //}
+                //else
+                //{
+                //    bodyparts.ApplyGredientDefault(this.gameObject);
+                //}
 
-            //bodyparts.SetSssIntensity(0, otherPlayer.gameObject);
-            //bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject);
-            //otherPlayer.LoadBonesData(_CharacterData, otherPlayer.gameObject);
+                //if (_CharacterData.SssIntensity != null)
+                //{
+                //    bodyParts.SetSssIntensity(_CharacterData.SssIntensity, this.gameObject);
+                //}
+                //else
+                //{
+                //    bodyParts.SetSssIntensity(bodyParts.defaultSssValue, this.gameObject);
+                //}
 
-            #endregion
-            StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
+                //bodyparts.SetSssIntensity(0, otherPlayer.gameObject);
+                //bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject);
+                //otherPlayer.LoadBonesData(_CharacterData, otherPlayer.gameObject);
+
+                #endregion
+                StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
 
             //if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
             //{
@@ -473,9 +477,40 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             }
         }
     }
-       
-       
-   
+
+
+    void ApplyAIData(SavingCharacterDataClass _CharacterData, CharcterBodyParts applyon)
+    {
+        applyon.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
+        applyon.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
+        applyon.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+        applyon.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
+        applyon.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
+        applyon.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+        if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
+        {
+
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.hairItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", applyon.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true, true));
+        }
+    }
+    Color HexToColor(string hex)
+    {
+        Color color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            Debug.Log(" color string: " + color);
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
+        }
+    }
 
 
     public void UnStichItem(string type)

@@ -303,7 +303,10 @@ public class FriendAvatarController : MonoBehaviour
                             bodyParts.TextureForGlove(null);
                         }
                     }
-
+                    if (_CharacterData.Charactertype == true)
+                    {
+                        ApplyAIData(_CharacterData);
+                    }
                     #region Xana Avatar 1.0   //--> remove for xana avatar2.0
                     //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                     //{
@@ -508,6 +511,10 @@ public class FriendAvatarController : MonoBehaviour
                                     }
                                 }
                             }
+                        }
+                        if (_CharacterData.Charactertype == true)
+                        {
+                            ApplyAIData(_CharacterData);
                         }
                     }
 
@@ -1382,5 +1389,36 @@ public class FriendAvatarController : MonoBehaviour
     void OnBecameVisible()
     {
         isVisibleOnCam = true;
+    }
+    void ApplyAIData(SavingCharacterDataClass _CharacterData)
+    {
+        bodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
+        bodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
+        bodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
+        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
+        if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.hairItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), HexToColor(_CharacterData.hair_color), true));
+        }
+    }
+    Color HexToColor(string hex)
+    {
+        Color color;
+        if (ColorUtility.TryParseHtmlString(hex, out color))
+        {
+            Debug.Log(" color string: " + color);
+            return color;
+        }
+        else
+        {
+            Debug.LogError("Failed to parse hexadecimal color string: " + hex);
+            return Color.white; // Return a default color or handle the error as needed
+        }
     }
 }

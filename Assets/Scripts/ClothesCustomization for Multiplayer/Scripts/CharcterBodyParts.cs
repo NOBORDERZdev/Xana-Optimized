@@ -1317,6 +1317,7 @@ public class CharcterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
+        if (false) {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
             // Update Mask Texture As well & reset Its Color
@@ -1330,7 +1331,9 @@ public class CharcterBodyParts : MonoBehaviour
                 mainMaterial.SetTexture("_Mask_texture", Eye_Color_Texture);
                 mainMaterial.SetColor(Eye_ColorName, Color.white);
             }
-
+        }
+        else
+        mainMaterial.SetTexture("_BaseMap", texture);
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }
@@ -1495,7 +1498,6 @@ public class CharcterBodyParts : MonoBehaviour
     {
         SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().head;
         //blend shapes
-
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
             if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
