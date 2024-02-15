@@ -559,7 +559,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 currentValue = sliderCompleteValue;
                 if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy)
+                    teleportFeader.gameObject.activeInHierarchy || XanaConstants.xanaConstants.isFromPMYLobby)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
