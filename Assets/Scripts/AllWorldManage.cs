@@ -144,24 +144,28 @@ public class AllWorldManage : MonoBehaviour
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
+        WorldManager.instance.hotSpacePN = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
     }
 
     public void HotGamesLoadMore()
     {
         SearchScreenLoad();
+        WorldManager.instance.hotGamesPN = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
     }
 
     public void FollowingSpacesLoadMore()
     {
         SearchScreenLoad();
+        WorldManager.instance.followingPN = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
     }
 
     public void MySpacesLoadMore()
     {
         SearchScreenLoad();
+        WorldManager.instance.mySpacesPN = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
     }
 
