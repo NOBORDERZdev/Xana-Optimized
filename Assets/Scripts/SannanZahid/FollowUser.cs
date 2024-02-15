@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FollowUser : MonoBehaviour
 {
-    [HideInInspector]
+   // [HideInInspector]
     public Transform targ;
     public Transform boxerplayerTransform;
     public Transform newplayerTransform;
