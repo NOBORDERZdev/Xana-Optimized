@@ -4860,7 +4860,7 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter()
     {
-        CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(itemData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(itemData.skin_color));
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(itemData.lips_color));
         CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(itemData.skin_color));
         if (itemData.faceItemData != 0 && CharcterBodyParts.instance != null)

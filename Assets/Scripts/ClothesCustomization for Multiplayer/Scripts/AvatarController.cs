@@ -362,8 +362,10 @@ public class AvatarController : MonoBehaviour
                             characterBodyParts.TextureForGlove(null);
                         }
                     }
-                    if (_CharacterData.type == ControllerType.Ai)
+                    Debug.Log("ha bhai" + _CharacterData.Charactertype);
+                    if (_CharacterData.Charactertype == true)
                     {
+                        Debug.Log("ha bhai");
                         ApplyAIData(_CharacterData);
                     }
 
@@ -569,8 +571,9 @@ public class AvatarController : MonoBehaviour
                                 }
                             }
                         }
-                        if (_CharacterData.type == ControllerType.Ai)
+                        if (_CharacterData.Charactertype == true)
                         {
+                            Debug.Log("ha bhai");
                             ApplyAIData(_CharacterData);
                         }
                     }
@@ -1479,7 +1482,7 @@ public class AvatarController : MonoBehaviour
             StartCoroutine(tempBodyParts.ImplementColors(hairColor, SliderType.HairColor, applyOn));
         }
 
-        item.layer = 22;
+        item.layer = 11; //--> remove for xana avatar2.0 
         wornHair = item;
         wornHairId = itemId;
     }
@@ -1719,11 +1722,12 @@ public class AvatarController : MonoBehaviour
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(_CharacterData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
         CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
+
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
         }
         if (_CharacterData.hairItemData != null)
@@ -1745,9 +1749,4 @@ public class AvatarController : MonoBehaviour
             return Color.white; // Return a default color or handle the error as needed
         }
     }
-}
-public enum ControllerType
-{
-    New,
-    Ai
 }

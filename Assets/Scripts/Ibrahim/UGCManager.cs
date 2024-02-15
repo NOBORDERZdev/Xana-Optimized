@@ -205,7 +205,7 @@ public class UGCManager : MonoBehaviour
         StoreManager.instance.itemData.hair_color = ugcItems.hair_color;
         StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
         StoreManager.instance.itemData.lips_color = ugcItems.lips_color;
-
+        StoreManager.instance.itemData.Charactertype = true;
         if (_itemFace != null)
         {
             StoreManager.instance.itemData.faceItemData = _itemFace.index;

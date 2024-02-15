@@ -303,7 +303,7 @@ public class FriendAvatarController : MonoBehaviour
                             bodyParts.TextureForGlove(null);
                         }
                     }
-                    if (_CharacterData.type == ControllerType.Ai)
+                    if (_CharacterData.Charactertype == true)
                     {
                         ApplyAIData(_CharacterData);
                     }
@@ -512,7 +512,7 @@ public class FriendAvatarController : MonoBehaviour
                                 }
                             }
                         }
-                        if (_CharacterData.type == ControllerType.Ai)
+                        if (_CharacterData.Charactertype == true)
                         {
                             ApplyAIData(_CharacterData);
                         }
@@ -1395,7 +1395,7 @@ public class FriendAvatarController : MonoBehaviour
         bodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         bodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         bodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        CharcterBodyParts.instance.head.materials[2].SetColor("Color", HexToColor(_CharacterData.skin_color));
+        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", HexToColor(_CharacterData.skin_color));
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", HexToColor(_CharacterData.lip_color));
         CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", HexToColor(_CharacterData.hair_color));
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
