@@ -249,7 +249,10 @@ public class XanaChatSocket : MonoBehaviour
         if (eventId != msg.event_id)
             return;
 
-        string tempUser = msg.username;
+        string tempUser = msg.name;//msg.username;
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            tempUser = msg.username;
+
         receivedMsgForTesting = msg;
 
         if (CheckUserNameIsValid(tempUser))
@@ -412,6 +415,7 @@ public class ChatUserData
 {
     public string socket_id;
     public string username;
+    public string name;
     public string avatar;
     public string message;
     public string world;
