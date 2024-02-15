@@ -948,7 +948,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public IEnumerator getAllAnimations()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversionForAnimation);
         try
         {
             if (UserRegisterationManager.instance.LoggedInAsGuest)

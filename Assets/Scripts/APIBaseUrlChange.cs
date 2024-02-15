@@ -12,6 +12,7 @@ public class APIBaseUrlChange : MonoBehaviour
     public static APIBaseUrlChange instance;
     private bool firsttimecallXanaLive = false;
     public string apiversion = "";
+    public string apiversionForAnimation = "2";
 
     //public MoralisServerSettings _moralisServerSettings;  
     //[Header("TestnetMoralis")]

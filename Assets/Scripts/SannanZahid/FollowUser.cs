@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class FollowUser : MonoBehaviour
 {
+   // [HideInInspector]
     public Transform targ;
+    public Transform boxerplayerTransform;
+    public Transform newplayerTransform;
     public Vector3 Offset;
     public Transform MainCamera;
     public float divisable = 2f, divisableDistance = 1f, MultipleDistance = 1, FixedYOffset = 1.05f;
@@ -23,9 +26,18 @@ public class FollowUser : MonoBehaviour
    public  float FixedYOffset8 = 1.34f;
     public float FixedYOffset9 = 1.35f;*/
     /// </summary>
-    private void Start()
+    private void OnEnable()
     {
         PreviousDistance = (int) Vector3.Distance(MainCamera.position, targ.position);
+        BoxerNFTEventManager.OnNFTequip += (nft) => targ = boxerplayerTransform.transform;
+        BoxerNFTEventManager.OnNFTUnequip += () => targ = newplayerTransform.transform;
+    }
+
+    private void OnDisable()
+    {
+        BoxerNFTEventManager.OnNFTequip -= (nft) => targ = boxerplayerTransform.transform;
+        BoxerNFTEventManager.OnNFTUnequip -= () => targ = newplayerTransform.transform;
+
     }
     void Update()
     {

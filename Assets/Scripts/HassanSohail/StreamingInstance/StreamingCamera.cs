@@ -75,7 +75,7 @@ public class StreamingCamera : MonoBehaviour
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
                    // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                    if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
+                    if (avatar.GetComponent<CharcterBodyParts>().body.isVisible)
                     {
                        // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
                         visibleCount++;
