@@ -87,6 +87,12 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
+            if (RFM.Globals.IsRFMWorld)
+            {
+                // The currentDummyPlayer is not null which causes the player's name to not be displayed
+                PhotonUserName.text = PhotonNetwork.NickName;
+            }
+
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
                 if (!/*WorldItemView.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
@@ -96,7 +102,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 this.transform.localPosition = new Vector3(0, -0.081f, 0);
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarManager.Instance.currentDummyPlayer = this.gameObject;
-                print("nick name 3==" + XanaChatSystem.instance.UserName);
                 PhotonUserName.text = PhotonNetwork.NickName;
 
                 //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
@@ -440,7 +445,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (isOtherPlayer)
         {
             PhotonUserName.text = gameObject.GetComponent<PhotonView>().Owner.NickName;
-            Debug.Log("nick name 4==" + gameObject.GetComponent<PhotonView>().Owner.NickName);
             if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
                    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
             {
