@@ -220,7 +220,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 {
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-                    string jbody = JsonUtility.ToJson(SubCatString);
+                    string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //if user does not have data then open preset panel
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
