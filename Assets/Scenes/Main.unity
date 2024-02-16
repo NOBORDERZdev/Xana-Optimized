@@ -770,6 +770,22 @@ MonoBehaviour:
   DefaultShoes: {fileID: 2972552550992016218, guid: 2071728f32652e542bb068ef60390880, type: 3}
   DefaultShirt: {fileID: 3428267401913419843, guid: 20351c56780a169468c6b4c862937669, type: 3}
   DefaultHair: {fileID: 8258088121323357894, guid: 544ffac1878c7d44db745aa899f544b3, type: 3}
+  maleAvatarDefaultCostume:
+    DefaultSkin: {fileID: 0}
+    DefaultEyes: {fileID: 0}
+    DefaultLips: {fileID: 0}
+    DefaultPent: {fileID: 1078455175041328742, guid: 72a38509afc3d8f4e91aa296f9f50fda, type: 3}
+    DefaultShoes: {fileID: 0}
+    DefaultShirt: {fileID: 5084500881376551621, guid: 6e4a0b59048bdf34183ff99f4cf69e53, type: 3}
+    DefaultHair: {fileID: 8617159123118536823, guid: 6b8a6dcf597810645934da35bf07c7bf, type: 3}
+  femaleAvatarDefaultCostume:
+    DefaultSkin: {fileID: 0}
+    DefaultEyes: {fileID: 0}
+    DefaultLips: {fileID: 0}
+    DefaultPent: {fileID: 1927219741566561968, guid: f987e917b0e4a1c41b7d2aff6a92c172, type: 3}
+    DefaultShoes: {fileID: 0}
+    DefaultShirt: {fileID: 4554518003410865983, guid: e0db4b16bf3f17f4a90133a4114a78bf, type: 3}
+    DefaultHair: {fileID: 6674543450878381810, guid: fa4fe36ba539c2c48869bfa7b3d97a06, type: 3}
 --- !u!4 &100743011
 Transform:
   m_ObjectHideFlags: 0
@@ -804,16 +820,15 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
-    hair_color: 
-    skin_color: 
-    lip_color: 
-    face_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
-    Charactertype: 0
+    charactertypeAi: 0
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -15064,10 +15079,16 @@ MonoBehaviour:
     avatar_parent: {fileID: 1512555883}
     avatar_body: {fileID: 1512555882}
     avatar_head: {fileID: 1512555881}
+    Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
+    Shoe_Texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 1512555886}
     avatar_body: {fileID: 1512555885}
     avatar_head: {fileID: 1512555884}
+    Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
+    Shoe_Texture: {fileID: 0}
   boxerBody: {fileID: 4457784110141273236}
   boxerHead: {fileID: 5741598902726533055}
   body: {fileID: 0}
@@ -15147,16 +15168,15 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
-    hair_color: 
-    skin_color: 
-    lip_color: 
-    face_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
-    Charactertype: 0
+    charactertypeAi: 0
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -16940,11 +16960,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -592765626997318814, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 577450613566655460, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_Name
@@ -17052,7 +17072,7 @@ MonoBehaviour:
   presetValue: 
   avatarGender: 0
   masks: []
-  IsInit: 0
+  IsInit: 1
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 1671144894}
@@ -17063,16 +17083,15 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
-    hair_color: 
-    skin_color: 
-    lip_color: 
-    face_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
-    Charactertype: 0
+    charactertypeAi: 0
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -17847,10 +17866,16 @@ MonoBehaviour:
     avatar_parent: {fileID: 1671144883}
     avatar_body: {fileID: 27551951}
     avatar_head: {fileID: 197466080}
+    Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
+    Shoe_Texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 1671144884}
     avatar_body: {fileID: 755339128}
     avatar_head: {fileID: 249365142}
+    Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
+    Shoe_Texture: {fileID: 0}
   boxerBody: {fileID: 1625812638}
   boxerHead: {fileID: 1606920348}
   body: {fileID: 0}
@@ -27452,16 +27477,15 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
-    hair_color: 
-    skin_color: 
-    lip_color: 
-    face_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
-    Charactertype: 0
+    charactertypeAi: 0
     SavedBones: []
     SkinId: 0
     Skin: {r: 0, g: 0, b: 0, a: 0}
@@ -28132,10 +28156,16 @@ MonoBehaviour:
     avatar_parent: {fileID: 0}
     avatar_body: {fileID: 0}
     avatar_head: {fileID: 0}
+    Shirt_Texture: {fileID: 0}
+    Pent_Texture: {fileID: 0}
+    Shoe_Texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 0}
     avatar_body: {fileID: 0}
     avatar_head: {fileID: 0}
+    Shirt_Texture: {fileID: 0}
+    Pent_Texture: {fileID: 0}
+    Shoe_Texture: {fileID: 0}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}

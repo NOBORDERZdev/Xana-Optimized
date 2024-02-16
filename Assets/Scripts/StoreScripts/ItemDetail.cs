@@ -787,11 +787,11 @@ public class ItemDetail : MonoBehaviour
                         else if (name.Contains("eyelash"))
                             downloader.StartCoroutine(downloader.DownloadAddressableTexture(name, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
                         else
-                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(),Color.clear, false));
+                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype,"Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(),Color.clear, false));
                     }
                     else
                     {
-                        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_clothetype, GameManager.Instance.mainCharacter);
+                        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_clothetype, GameManager.Instance.mainCharacter, "Male");
                     }
                     //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(this, assetLinkAndroid, assetLinkIos, _clothetype, name.ToLower(), int.Parse(id));
                 }

@@ -165,11 +165,11 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.gender == AvatarGender.Female.ToString())
             {
-                CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Female);
+                this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Female);
             }
             else
             {
-                CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
+                this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Male);
             }
 
             //CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
