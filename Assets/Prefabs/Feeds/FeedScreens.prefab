@@ -460,7 +460,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294091037
-  m_fontColor: {r: 0.11372549, g: 0.6313726, b: 0.9490196, a: 1}
+  m_fontColor: {r: 0, g: 0.56078434, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1024,7 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollDirection: 0
-  spacing: 10
+  spacing: 3
   padding:
     m_Left: 0
     m_Right: 10
@@ -1046,6 +1046,7 @@ MonoBehaviour:
   forceSnapOnEndDrag: 0
   interruptTweeningOnDrag: 0
   tweenPaused: 0
+  isScrollEnded: 0
   _scrollPosition: 0
 --- !u!1 &5483430731322761659
 GameObject:
@@ -2122,11 +2123,11 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 42.65
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: -1
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
