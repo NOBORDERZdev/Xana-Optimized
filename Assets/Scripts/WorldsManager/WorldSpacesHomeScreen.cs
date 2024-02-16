@@ -178,6 +178,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC1++;
         worldManager.SearchKey = mostVisitedTagList[0];
         category1Heading.text = mostVisitedTagList[0];
+        category1Heading.GetComponent<TextLocalization>().LocalizeTextText(category1Heading.text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -208,6 +209,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC2++;
         worldManager.SearchKey = mostVisitedTagList[1];
         category2Heading.text = mostVisitedTagList[1];
+        category2Heading.GetComponent<TextLocalization>().LocalizeTextText(category2Heading.text);
+
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -238,6 +241,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC3++;
         worldManager.SearchKey = mostVisitedTagList[2];
         category3Heading.text = mostVisitedTagList[2];
+        category3Heading.GetComponent<TextLocalization>().LocalizeTextText(category3Heading.text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -268,6 +272,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC4++;
         worldManager.SearchKey = mostVisitedTagList[3];
         category4Heading.text = mostVisitedTagList[3];
+        category4Heading.GetComponent<TextLocalization>().LocalizeTextText(category4Heading.text);  
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
