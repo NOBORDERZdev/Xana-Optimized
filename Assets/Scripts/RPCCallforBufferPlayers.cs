@@ -117,7 +117,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                         {
                             if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                             {
-                                otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject);
+                                otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                             }
                             else
                             {
@@ -127,7 +127,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                     string type = _CharacterData.myItemObj[i].ItemType;
                                     if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
                                     {
-                                        WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor);
+                                        WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                     }
                                 }
                                 else
@@ -137,16 +137,16 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                         switch (_CharacterData.myItemObj[i].ItemType)
                                         {
                                             case "Legs":
-                                                otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
+                                                otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                                 break;
                                             case "Chest":
-                                                otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
+                                                otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                                 break;
                                             case "Feet":
-                                                otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
+                                                otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                                 break;
                                             case "Hair":
-                                                otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
+                                                otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                                 break;
                                             default:
                                                 break;
@@ -159,10 +159,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 }
                 else // if player is all default cloths
                 {
-                    otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject);
-                    otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject);
-                    otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject);
-                    otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject);
+                    otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                 }
                 if (_CharacterData.charactertypeAi == true) 
                 {
@@ -371,7 +371,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
 
 
-    public void WearAddreesable(string itemtype, string itemName, GameObject applyOn, Color hairColor)
+    public void WearAddreesable(string itemtype, string itemName, GameObject applyOn, Color hairColor, string _gender)
     {
         //print("~~~~~~~~ itemtype "+ itemtype + "~~~ itemName " + itemName +"~~ applyOn " +applyOn.name + "~~~ hairColor "+hairColor);
         if (!itemName.Contains("md", StringComparison.CurrentCultureIgnoreCase) && !string.IsNullOrEmpty(itemName))
@@ -383,7 +383,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (AddressableDownloader.Instance !=null)
                     {
                       //  print("AddressableDownloader.Instance found for hair");
-                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
+                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
                     }
                     else
                     {
@@ -395,7 +395,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (AddressableDownloader.Instance !=null)
                     {
                       //  print("AddressableDownloader.Instance found for other objects");
-                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, applyOn.GetComponent<AvatarController>(), Color.clear));
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), Color.clear));
                     }
                     else
                     {
@@ -407,7 +407,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 // If Error occur in Downloading 
                 // Then wear Default
-                applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn);
+                applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
                // print("Exception : " + e);
             }
         }
@@ -473,7 +473,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     applyOn.GetComponent<AvatarController>().WearDefaultHair(applyOn, hairColor);
                 }
                 else
-                    applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn);
+                    applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
             }
         }
     }
@@ -502,7 +502,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)
