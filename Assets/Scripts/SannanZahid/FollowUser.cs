@@ -16,15 +16,15 @@ public class FollowUser : MonoBehaviour
     float tempper;
 
     /// <summary>
-   public  float FixedYOffset1 = 0.9f;
-    public float FixedYOffset2 = 0.89f;
+   public  float FixedYOffsetLabel = 1.34f;
+   /* public float FixedYOffset2 = 0.89f;
     public float FixedYOffset3 = 0.89f;
    public  float FixedYOffset4 = 0.94f;
    public  float FixedYOffset5 = 1f;
    public  float FixedYOffset6 = 1.06f;
    public  float FixedYOffset7 = 1.2f;
    public  float FixedYOffset8 = 1.34f;
-    public float FixedYOffset9 = 1.35f;
+    public float FixedYOffset9 = 1.35f;*/
     /// </summary>
     private void OnEnable()
     {
@@ -49,7 +49,8 @@ public class FollowUser : MonoBehaviour
             MultipleDistance = -1f;
 
         tempper = Vector3.Distance(MainCamera.position, targ.position) / divisableDistance;
-        if (tempper > 0.055f)
+        FixedYOffset = FixedYOffsetLabel;
+       /* if (tempper > 0.055f)
         {
             FixedYOffset = FixedYOffset1;//1
         }
@@ -84,7 +85,7 @@ public class FollowUser : MonoBehaviour
         else if (tempper < 0.025f )
         {
             FixedYOffset = FixedYOffset9;//9
-        }
+        }*/
         Offset = new Vector3(
                             Multiple * (MainCamera.position.x - targ.position.x) / divisable,
                             FixedYOffset + (MultipleDistance * (Vector3.Distance(MainCamera.position, targ.position) / divisableDistance)), 

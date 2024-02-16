@@ -161,18 +161,19 @@ public class AvatarPathSystemManager : MonoBehaviour
 
     public Transform  GetGridCenterPoint()
     {
-        int centerRow = Mathf.FloorToInt( _row / 2);
-        int centerCol =  Mathf.FloorToInt(_col / 2);
-        if (!points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse)
-        {
-            points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse = true;
-            print("centerRow : "+ centerRow +"centerCol"+centerCol);
-            return points[centerRow, centerCol];
-        }
-        else
-        {
-            return points[0, 0];
-        }
+        //int centerRow = Mathf.FloorToInt( _row / 2);
+        //int centerCol =  Mathf.FloorToInt(_col / 2);
+        //if (!points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse)
+        //{
+        //    points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse = true;
+        //    print("centerRow : "+ centerRow +"centerCol"+centerCol);
+        //    return points[centerRow, centerCol];
+        //}
+        //else
+        //{
+        //    return points[0, 0];
+        //}
+        return points[3,1];
     }
 }
 [Serializable]

@@ -37,7 +37,7 @@ public class HomeCameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
        // cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
-        cam.transform.position = new Vector3(4.255f, 9f, -7f);
+        cam.transform.position = new Vector3(5.238f, 9f, -6f);
         //StartCoroutine (AllignWithCharacter());
     }
     void Update() {
