@@ -13,9 +13,9 @@ public class HomeCameraController : MonoBehaviour
     float ZoomSpeedMouse = 0.5f;
     
     //[SerializeField]
-    float[] BoundsX = new float[]{1f, 6f};
+    float[] BoundsX = new float[]{1f, 7f};
     //[SerializeField]
-    float[] BoundsZ = new float[]{-7f, -5f};
+    float[] BoundsZ = new float[]{-7f, -6f};
     float[] ZoomBounds = new float[]{35f, 45f};
     
     private Camera cam;
@@ -37,7 +37,7 @@ public class HomeCameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
        // cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
-        cam.transform.position = new Vector3(3.4f, 9f, -6.2f);
+        cam.transform.position = new Vector3(3.4f, 9f, -5.91f);
         //StartCoroutine (AllignWithCharacter());
     }
     void Update() {
