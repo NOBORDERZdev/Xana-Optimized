@@ -1684,7 +1684,7 @@ public class MyProfileDataManager : MonoBehaviour
             counter += availableTagsAtServer[startInd + i].Length;
         }
 
-        if (counter > 35) // Each row can has Max 35 characters
+        if (counter > 30) // Each row can has Max 35 characters
             return 3;
         else
             return 4;
