@@ -220,8 +220,10 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 {
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-                    string jbody = JsonUtility.ToJson(SubCatString);
+                    string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
+                    //if user does not have data then open preset panel
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     print("!!GetUserData IF");
                 }
@@ -248,7 +250,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                         yield return new WaitForSeconds(0.1f);
                     //}
                     loadprevious();
-                    StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
 
                     //On merging from Release getting this error
@@ -479,7 +481,20 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string id;
         public string name;
         public string thumbnail;
+        public string gender;
         public List<Item> myItemObj;
+        public string avatarType = "OldAvatar";
+
+        public Color hair_color;
+        public Color skin_color;
+        public Color lip_color;
+        public string face_gender;
+        public int faceItemData;
+        public int lipItemData;
+        public int noseItemData;
+        public string hairItemData;
+        public string eyeItemData;
+        public bool charactertypeAi;
 
         public List<BoneDataContainer> SavedBones;
         public int SkinId;

@@ -14,7 +14,7 @@ namespace DynamicScrollRect
     }
     public class DynamicScrollRect : ScrollRect
     {
-        [SerializeField] private DynamicScrollRestrictionSettings _restrictionSettings = null;
+       /* [SerializeField] private DynamicScrollRestrictionSettings _restrictionSettings = null;
         private bool _isDragging = false;
         private bool _runningBack = false;
         private bool _needRunBack = false;
@@ -382,6 +382,6 @@ namespace DynamicScrollRect
             }
             _runningBack = false;
         }
-        #endregion
+        #endregion*/
     }
 }

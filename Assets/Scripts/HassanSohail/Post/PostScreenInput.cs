@@ -60,7 +60,7 @@ public class PostScreenInput : MonoBehaviour
         inputField.Select();
         inputField.ActivateInputField();
         //inputField.MoveToEndOfLine(shift: true, ctrl: false);
-        inputField.caretPosition = inputField.text.Length;
+       // inputField.caretPosition = inputField.text.Length;
         BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
     //private string FormatInput(string input)

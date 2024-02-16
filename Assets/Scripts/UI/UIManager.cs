@@ -32,6 +32,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject worldHolder;
     public GameObject searchWorldHolder;
+
+
+    public bool isAvatarSelectionBtnClicked = false;
+
     private void Awake()
     {
         Instance = this;
@@ -45,6 +49,14 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(true);
     }
     bool a =false;
+
+
+    public void AvatarSelectionBtnClicked()
+    {
+        if (!isAvatarSelectionBtnClicked)
+            isAvatarSelectionBtnClicked = true;
+    }
+
     public void SwitchToPostScreen(bool flag)
     {
        

@@ -183,6 +183,7 @@ public class SNSSettingController : MonoBehaviour
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
 
         }
+        GlobalVeriableClass.callingScreen = "";
     }
 
     //this method is used to logout success.......
