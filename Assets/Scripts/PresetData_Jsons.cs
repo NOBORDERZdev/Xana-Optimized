@@ -159,7 +159,7 @@ public class PresetData_Jsons : MonoBehaviour
                 XanaConstants.xanaConstants.aiSelfieTaken = false;
             }
 
-            File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
+            File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));
 
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
