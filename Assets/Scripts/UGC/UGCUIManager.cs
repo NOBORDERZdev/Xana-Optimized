@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -201,7 +202,8 @@ public class UGCUIManager : MonoBehaviour
 
     public void BackToHomeScreen()
     {
-        Initiate.Fade("Main", Color.black, 1.0f);
+        //Initiate.Fade("Main", Color.black, 1.0f);
+        SceneManager.LoadScene("Main");
     }
     public IEnumerator PlayRecordedVideo()
     {
