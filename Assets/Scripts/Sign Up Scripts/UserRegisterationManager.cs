@@ -3481,7 +3481,6 @@ public class UserRegisterationManager : MonoBehaviour
                 StoreManager.instance.OnSaveBtnClicked();
             }
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
-            //PlayerPrefs.SetInt("presetPanel", 0);
             return;
         }
         //   //print(PlayerPrefs.GetInt("shownWelcome"));

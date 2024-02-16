@@ -78,7 +78,6 @@ public class XanaConstants : MonoBehaviour
     public bool isBackfromSns = false;
 
     public bool isBackFromWorld = false;
-    public bool aiSelfieTaken = false;
     public String MuseumID;
 
     // For Analatics 

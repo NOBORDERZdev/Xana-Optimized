@@ -1292,10 +1292,6 @@ public class AvatarController : MonoBehaviour
                 {
                     _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                 }
-                if (XanaConstants.xanaConstants.aiSelfieTaken) 
-                {
-                    _CharacterData.charactertypeAi = true;
-                }
                 if (_CharacterData.charactertypeAi == true)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn, true));

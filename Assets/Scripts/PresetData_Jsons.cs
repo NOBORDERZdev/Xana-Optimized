@@ -156,7 +156,6 @@ public class PresetData_Jsons : MonoBehaviour
                 _CharacterData.charactertypeAi = false;
                 StoreManager.instance.itemData.CharactertypeAi = false;
                 UGCManager.isSelfieTaken = false;
-                XanaConstants.xanaConstants.aiSelfieTaken = false;
             }
 
             File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));

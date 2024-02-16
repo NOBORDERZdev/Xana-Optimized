@@ -45,7 +45,6 @@ public class UGCManager : MonoBehaviour
         texture = null;
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance.itemData.CharactertypeAi = false;
-        XanaConstants.xanaConstants.aiSelfieTaken = false;
     }
     public void OnClickSelfieButton()
     {
@@ -199,7 +198,6 @@ public class UGCManager : MonoBehaviour
     }
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        XanaConstants.xanaConstants.aiSelfieTaken = true;
         StoreManager.instance.itemData.gender = ugcItems.gender;
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
         StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
