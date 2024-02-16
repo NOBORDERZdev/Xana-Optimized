@@ -99,6 +99,7 @@ public class JjVideo : MonoBehaviour
 
     private void OnDisable()
     {
-        awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
+        if (awsVideoplayer)
+            awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
     }
 }
