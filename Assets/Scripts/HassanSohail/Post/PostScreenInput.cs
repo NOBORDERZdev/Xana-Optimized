@@ -20,9 +20,12 @@ public class PostScreenInput : MonoBehaviour
    float characterOffset = 5.0f;
    string placeHolderText = "Enter the text";
    TouchScreenKeyboard keyboard;
+    public RectTransform bubbleParent;
     private void OnEnable()
     {
        ActiveInputFeild();
+        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
     }
 
     private void Start(){ 
@@ -49,11 +52,17 @@ public class PostScreenInput : MonoBehaviour
         {
             BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
-        if (ShowText.text.Count()<=40)
+        if (ShowText.text.Count()<=35)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
-   }
+        if (ShowText.text.Count() <= 10)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+            bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        }
+      
+    }
 
     public void ActiveInputFeild()
     {
@@ -62,6 +71,17 @@ public class PostScreenInput : MonoBehaviour
         //inputField.MoveToEndOfLine(shift: true, ctrl: false);
        // inputField.caretPosition = inputField.text.Length;
         BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        if (ShowText.text.Count() >= 100)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
+            bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
+        }
+        if (ShowText.text.Count() >= 190)
+        { 
+            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5500709f);
+            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7304096f);
+        }
+       
     }
     //private string FormatInput(string input)
     //{
