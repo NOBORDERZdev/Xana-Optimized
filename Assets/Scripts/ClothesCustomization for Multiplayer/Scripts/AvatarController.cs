@@ -1351,7 +1351,7 @@ public class AvatarController : MonoBehaviour
                 }
                 if (_CharacterData.charactertypeAi == true)
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
+                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn, true));
                 }
                 else
                 {
