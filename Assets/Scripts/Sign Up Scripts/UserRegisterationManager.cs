@@ -256,7 +256,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //PlayerPrefs.SetInt("shownWelcome", 1);
                 
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+                //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;        ------ Comment By Abdullah for Avatar Selection on OnBoarding
             }
         }
 
@@ -306,7 +306,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("shownWelcome", 1);
         }
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;             ------ Comment By Abdullah for Avatar Selection on OnBoarding
     }
     public void CoutinueAsAGuest()
     {
@@ -403,7 +403,7 @@ public class UserRegisterationManager : MonoBehaviour
     public void BacktoAvatarSelectionPanel() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;          ------ Comment By Abdullah for Avatar Selection on OnBoarding
     }
 
     public void LoginScreenClicked(int btn) 
