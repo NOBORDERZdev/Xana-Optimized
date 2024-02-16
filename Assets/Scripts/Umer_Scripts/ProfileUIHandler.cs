@@ -85,11 +85,11 @@ public class ProfileUIHandler : MonoBehaviour
     {
         _renderTexCamera.parent = null;
         //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
-        _renderTexCamera.position = new Vector3(0f, 0.86f, -5.27f);
+        _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         AvatarRef.GetComponent<FootStaticIK>().ikActive = true;
         AvatarRef.name = "UserPreviewAvatar";
-        AvatarRef.transform.position = new Vector3(-0.057f, 0.069f, 0f);
+        AvatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
         AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
