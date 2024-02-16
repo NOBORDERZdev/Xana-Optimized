@@ -72,7 +72,7 @@ public class AddressableDownloader : MonoBehaviour
     /// To Download Addressable object. with call back from coroutine
     /// </summary>
     /// <param name="name">tag or key of a addressable object</param>
-    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
+    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
         while (!XanaConstants.isAddressableCatalogDownload)
@@ -124,7 +124,7 @@ public class AddressableDownloader : MonoBehaviour
                         }
                         else
                         {
-                            applyOn.WearDefaultItem(type, applyOn.gameObject);
+                            applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
                             yield break;
                         }
                     }
