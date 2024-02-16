@@ -63,7 +63,7 @@ public class PresetData_Jsons : MonoBehaviour
     public void GetScriptRef()
     {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        charcterBodyParts = CharcterBodyParts.instance;
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
     }
 
 
