@@ -156,6 +156,7 @@ public class PresetData_Jsons : MonoBehaviour
                 _CharacterData.charactertypeAi = false;
                 StoreManager.instance.itemData.CharactertypeAi = false;
                 UGCManager.isSelfieTaken = false;
+                XanaConstants.xanaConstants.aiSelfieTaken = false;
             }
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
@@ -237,6 +238,10 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
+            SavePresetOnServer(_CharacterData);
+            ApplyPreset();
+
+            GetSavedPreset();
             if (UGCManager.isSelfieTaken)
             {
                 StoreManager.instance.ApplyUGCValueOnCharacter();
@@ -244,12 +249,8 @@ public class PresetData_Jsons : MonoBehaviour
             }
             else 
             {
-                StoreManager.instance.ApplyDefaultValueOnCharacter();
+                StoreManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
             }
-            SavePresetOnServer(_CharacterData);
-            ApplyPreset();
-
-            GetSavedPreset();
             if (!presetAlreadySaved)
             {
                 StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
@@ -307,8 +308,8 @@ public class PresetData_Jsons : MonoBehaviour
     public void ApplyPreset()
     {
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
-        if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
-            PlayerPrefs.SetInt("presetPanel", 0);
+        //if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
+        //    PlayerPrefs.SetInt("presetPanel", 0);
         avatarController.IntializeAvatar();
     }
 

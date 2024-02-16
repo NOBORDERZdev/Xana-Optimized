@@ -1066,7 +1066,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     // public enum ObjColor { skinColor,lipColor,hairColor,eyebrowColor,eyeColor}
-    public IEnumerator ImplementColors(Color _color, SliderType _objColor, GameObject applyOn)
+    public IEnumerator ImplementColors(Color _color, SliderType _objColor, GameObject applyOn, bool hairColorai = false)
     {
         yield return new WaitForSeconds(0f);
 
@@ -1110,6 +1110,10 @@ public class CharcterBodyParts : MonoBehaviour
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                     }
 
+                }
+                else if(hairColorai)
+                {
+                    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                 }
                 break;
 
@@ -1317,7 +1321,7 @@ public class CharcterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (false) {
+        if (XanaConstants.xanaConstants.isNFTEquiped) {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
             // Update Mask Texture As well & reset Its Color

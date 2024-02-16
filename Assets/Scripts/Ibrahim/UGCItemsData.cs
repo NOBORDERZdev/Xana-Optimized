@@ -94,6 +94,6 @@ public class UGCItemData
     public int noseItemData;
     public bool CharactertypeAi;
 
-    public Color default_skin_color;
-    public Color default_lips_color;
+    public Color default_male_skin_color, default_female_skin_color;
+    public Color default_male_lips_color, default_female_lips_color;
 }

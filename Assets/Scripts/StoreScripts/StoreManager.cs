@@ -4884,11 +4884,19 @@ public class StoreManager : MonoBehaviour
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
         }
     }
-    public void ApplyDefaultValueOnCharacter()
+    public void ApplyDefaultValueOnCharacter(string _gender)
     {
-        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.default_skin_color);
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.default_lips_color);
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.default_skin_color);
+        if (_gender == AvatarGender.Male.ToString()) {
+            CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.default_male_skin_color);
+            CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.default_male_lips_color);
+            CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.default_male_skin_color);
+        }
+        else
+        {
+            CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.default_female_skin_color);
+            CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.default_female_lips_color);
+            CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.default_female_skin_color);
+        }
         for (int i = 0; i < CharcterBodyParts.instance.head.sharedMesh.blendShapeCount - 1; i++)
         {
             CharcterBodyParts.instance.head.SetBlendShapeWeight(i, 0);

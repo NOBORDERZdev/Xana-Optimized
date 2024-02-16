@@ -240,7 +240,6 @@ public class AvatarController : MonoBehaviour
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-
                     SetAvatarClothDefault(this.gameObject);
                 }
                 else
@@ -571,7 +570,6 @@ public class AvatarController : MonoBehaviour
                         }
                         if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                         {
-                            Debug.Log("ha bhai");
                             ApplyAIData(_CharacterData);
                         }
                     }
@@ -1292,11 +1290,16 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
+                    Debug.LogError("data frm presetist path");
                     _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                }
+                if (XanaConstants.xanaConstants.aiSelfieTaken) 
+                {
+                    _CharacterData.charactertypeAi = true;
                 }
                 if (_CharacterData.charactertypeAi == true)
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
+                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn, true));
                 }
                 else
                 {
