@@ -83,8 +83,8 @@ public class PresetData_Jsons : MonoBehaviour
             //}
         }
         XanaConstants.xanaConstants.registerFirstTime = true;
-        if (GameManager.Instance.isStoreAssetDownloading)
-            return;
+        //if (GameManager.Instance.isStoreAssetDownloading)
+        //    return;
 
         if (!IsStartUp_Canvas)   //for presets in avatar panel 
         {
@@ -151,6 +151,12 @@ public class PresetData_Jsons : MonoBehaviour
             {
                 SaveUGCDataOnJson(_CharacterData);
             }
+            else
+            {
+                _CharacterData.charactertypeAi = false;
+                StoreManager.instance.itemData.CharactertypeAi = false;
+                UGCManager.isSelfieTaken = false;
+            }
 
             File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
 
@@ -181,6 +187,8 @@ public class PresetData_Jsons : MonoBehaviour
                 else
                 {
                     UIManager.Instance.isAvatarSelectionBtnClicked = false;
+                    GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
+                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
                 }
                 if (PlayerPrefs.GetInt("iSignup") == 1)
                 {
@@ -231,8 +239,12 @@ public class PresetData_Jsons : MonoBehaviour
                 XanaConstants.xanaConstants.isPresetHairColor = true;
             if (UGCManager.isSelfieTaken)
             {
-                Debug.Log("Selfie Taken");
                 StoreManager.instance.ApplyUGCValueOnCharacter();
+                UGCManager.isSelfieTaken = false;
+            }
+            else 
+            {
+                StoreManager.instance.ApplyDefaultValueOnCharacter();
             }
             SavePresetOnServer(_CharacterData);
             ApplyPreset();
@@ -313,11 +325,10 @@ public class PresetData_Jsons : MonoBehaviour
     }
     void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
     {
-        _CharacterData.Charactertype = StoreManager.instance.itemData.Charactertype;
+        _CharacterData.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
         _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
         _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
         _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;
-        _CharacterData.face_gender = StoreManager.instance.itemData.gender;
         _CharacterData.faceItemData = StoreManager.instance.itemData.faceItemData;
         _CharacterData.noseItemData = StoreManager.instance.itemData.noseItemData;
         _CharacterData.lipItemData = StoreManager.instance.itemData.lipItemData;
