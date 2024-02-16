@@ -16,7 +16,7 @@ public class FollowUser : MonoBehaviour
     float tempper;
 
     /// <summary>
-  /* public  float FixedYOffset1 = 0.9f;
+   public  float FixedYOffset1 = 0.9f;
     public float FixedYOffset2 = 0.89f;
     public float FixedYOffset3 = 0.89f;
    public  float FixedYOffset4 = 0.94f;
@@ -24,7 +24,7 @@ public class FollowUser : MonoBehaviour
    public  float FixedYOffset6 = 1.06f;
    public  float FixedYOffset7 = 1.2f;
    public  float FixedYOffset8 = 1.34f;
-    public float FixedYOffset9 = 1.35f;*/
+    public float FixedYOffset9 = 1.35f;
     /// </summary>
     private void OnEnable()
     {
@@ -51,39 +51,39 @@ public class FollowUser : MonoBehaviour
         tempper = Vector3.Distance(MainCamera.position, targ.position) / divisableDistance;
         if (tempper > 0.055f)
         {
-            FixedYOffset = 0.9f;//1
+            FixedYOffset = FixedYOffset1;//1
         }
         else if (tempper < 0.055f && tempper > 0.05f)
         {
-            FixedYOffset = 0.89f;//2
+            FixedYOffset = FixedYOffset2;//2
         }
         else if (tempper > 0.045f)
         {
-            FixedYOffset = 0.89f;//3
+            FixedYOffset = FixedYOffset3;//3
         }
         else if (tempper < 0.045f && tempper > 0.04f)
         {
-            FixedYOffset = 0.94f;//4
+            FixedYOffset = FixedYOffset4;//4
         }
         else if (tempper > 0.035f )
         {
-            FixedYOffset = 1f;//5
+            FixedYOffset = FixedYOffset5;//5
         }
         else if (tempper < 0.035f && tempper > 0.03f)
         {
-            FixedYOffset = 1.06f;//6
+            FixedYOffset = FixedYOffset6;//6
         }
         else if (tempper > 0.027f)
         {
-            FixedYOffset = 1.2f;//7
+            FixedYOffset = FixedYOffset7;//7
         }
         else if (tempper > 0.024f)
         {
-            FixedYOffset = 1.34f;//8
+            FixedYOffset = FixedYOffset8;//8
         }
         else if (tempper < 0.025f )
         {
-            FixedYOffset = 1.35f;//9
+            FixedYOffset = FixedYOffset9;//9
         }
         Offset = new Vector3(
                             Multiple * (MainCamera.position.x - targ.position.x) / divisable,

@@ -8,10 +8,11 @@ public class AvatarPathSystemManager : MonoBehaviour
     //[SerializeField]
     int _row , _col;
     Transform[,] points;
+    float offset=1;
     void Awake()
     {
-        _row = 5;
-        _col = 6;
+        _row = 8;
+        _col = 3;
         points = new Transform[_row, _col];
         GeneratePoints();
     }
@@ -19,15 +20,24 @@ public class AvatarPathSystemManager : MonoBehaviour
     {
         return _startPoint;
     }
-    void GeneratePoints()
+   void GeneratePoints()
     {
         Transform tempTransform;
         for (int i = 0; i < _row; i++)
             for (int j = 0; j < _col; j++)
             {
-                tempTransform = Instantiate(_startPoint.gameObject,
-                    new Vector3((float)i/0.6f + _startPoint.position.x, 0, (float)-j/0.6f + _startPoint.position.z),
-                    Quaternion.identity).transform;
+                if(j%2==0)
+                {
+                    tempTransform = Instantiate(_startPoint.gameObject,
+                  new Vector3((float)i / 0.8f + _startPoint.position.x, 0, (float)-j / .6f + _startPoint.position.z),
+                  Quaternion.identity).transform;
+                }
+                else
+                {
+                    tempTransform = Instantiate(_startPoint.gameObject,
+                  new Vector3((float)(i+0.5) / 0.82f + _startPoint.position.x, 0, (float)-j / 0.6f + _startPoint.position.z),
+                  Quaternion.identity).transform;
+                }
                 points[i,j]=(tempTransform);
                 tempTransform.name = "{ " + i + " - " + j+" }";
                 tempTransform.gameObject.GetComponent<ActorMovePoint>().Init( new Vector2(i,j) );

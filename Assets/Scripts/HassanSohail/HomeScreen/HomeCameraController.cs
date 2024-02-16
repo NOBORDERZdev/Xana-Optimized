@@ -13,9 +13,9 @@ public class HomeCameraController : MonoBehaviour
     float ZoomSpeedMouse = 0.5f;
     
     //[SerializeField]
-    float[] BoundsX = new float[]{1.5f, 8f};
+    float[] BoundsX = new float[]{1f, 12f};
     //[SerializeField]
-    float[] BoundsZ = new float[]{-5f, 1f};
+    float[] BoundsZ = new float[]{-7f, -6f};
     float[] ZoomBounds = new float[]{35f, 45f};
     
     private Camera cam;
@@ -36,8 +36,8 @@ public class HomeCameraController : MonoBehaviour
     void centerAlignCam()
     {
         cam = GetComponent<Camera>();
-        cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
-        cam.transform.position = new Vector3(4.255f, 3.68f, -2.01f);
+       // cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
+        cam.transform.position = new Vector3(4.255f, 9f, -7f);
         //StartCoroutine (AllignWithCharacter());
     }
     void Update() {
@@ -66,7 +66,7 @@ public class HomeCameraController : MonoBehaviour
             // get offset value
             float deltaDistance =currentTouchDistance - oldTouchDistance  ;
             print("DISTANCE IS "+deltaDistance);
-            ZoomCamera (deltaDistance, ZoomSpeedTouch);
+            //ZoomCamera (deltaDistance, ZoomSpeedTouch);
         }
         else if (Input.touchCount>0)
         {
@@ -94,7 +94,7 @@ public class HomeCameraController : MonoBehaviour
     
         // Check for scrolling to zoom the camera
         float scroll = Input.GetAxis("Mouse ScrollWheel")*20f;
-        ZoomCamera(scroll, ZoomSpeedMouse);
+        //ZoomCamera(scroll, ZoomSpeedMouse);
     }
     
     void PanCamera(Vector3 newPanPosition) {
