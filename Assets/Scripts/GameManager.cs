@@ -90,14 +90,14 @@ public class GameManager : MonoBehaviour
                 return (Application.persistentDataPath + "/logIn.json");
             }
         }
-        else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
-        {
-            if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
-            {
-                XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
-            }
-            return (Application.persistentDataPath + "/SavingReoPreset.json");
-        }
+        //else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
+        //{
+        //    if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
+        //    {
+        //        XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+        //    }
+        //    return (Application.persistentDataPath + "/SavingReoPreset.json");
+        //}
         else
         {
             if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)

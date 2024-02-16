@@ -308,8 +308,8 @@ public class PresetData_Jsons : MonoBehaviour
     public void ApplyPreset()
     {
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
-        //if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
-        //    PlayerPrefs.SetInt("presetPanel", 0);
+        if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
+            PlayerPrefs.SetInt("presetPanel", 0);
         avatarController.IntializeAvatar();
     }
 

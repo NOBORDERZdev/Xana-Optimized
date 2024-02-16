@@ -1290,7 +1290,6 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("data frm presetist path");
                     _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                 }
                 if (XanaConstants.xanaConstants.aiSelfieTaken) 
