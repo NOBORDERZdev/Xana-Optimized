@@ -413,23 +413,24 @@ public class UserAnalyticsHandler : MonoBehaviour
         }
         string userId = XanaConstants.xanaConstants.userId;
         string product ;
-#if UNITY_ANDROID
-    product = "xanaappandroid";
+#if !UNITY_EDITOR
+    #if UNITY_ANDROID
+        product = "xanaappandroid";
 
-#elif UNITY_IOS
+    #elif UNITY_IOS
         product ="xanaappios";
-#endif     
+    #endif     
         var data = new { userId , product};
         Debug.Log("Data:::" + data);
         if (isStart)
         {
-              Manager.Socket.Emit("user_start_date", data);
+                Manager.Socket.Emit("user_start_date", data);
         }
         else
         {
-             Manager.Socket.Emit("user_end_date", data);
+                Manager.Socket.Emit("user_end_date", data);
         }
-      
+#endif
     }
 }
 

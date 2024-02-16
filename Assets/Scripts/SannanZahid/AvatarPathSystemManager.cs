@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AvatarPathSystemManager : MonoBehaviour
@@ -29,13 +30,13 @@ public class AvatarPathSystemManager : MonoBehaviour
                 if(j%2==0)
                 {
                     tempTransform = Instantiate(_startPoint.gameObject,
-                  new Vector3((float)i / 0.8f + _startPoint.position.x, 0, (float)-j / .6f + _startPoint.position.z),
+                  new Vector3((float)i / 1.2f + _startPoint.position.x, 0, (float)-j / .9f + _startPoint.position.z),
                   Quaternion.identity).transform;
                 }
                 else
                 {
                     tempTransform = Instantiate(_startPoint.gameObject,
-                  new Vector3((float)(i+0.5) / 0.82f + _startPoint.position.x, 0, (float)-j / 0.6f + _startPoint.position.z),
+                  new Vector3((float)(i+0.5) / 1.4f + _startPoint.position.x, 0, (float)-j / .9f + _startPoint.position.z),
                   Quaternion.identity).transform;
                 }
                 points[i,j]=(tempTransform);
@@ -145,18 +146,46 @@ public class AvatarPathSystemManager : MonoBehaviour
             }
         }
     }
+      public float threshold = 1.0f;
     public Transform GetAvatarSpawnPoint()
     {
-        while (true)
+        
+        List<Transform> nearPoints = new List<Transform>();
+        foreach (Transform point in points)
         {
-            int i = UnityEngine.Random.Range(0, _row);
-            int j = UnityEngine.Random.Range(0, _col);
-            if (!points[i, j].GetComponent<ActorMovePoint>().IsInUse)
+            if (Vector3.Distance(point.position, points[3,1].position) < threshold)
             {
-                points[i, j].GetComponent<ActorMovePoint>().IsInUse = true;
-                return points[i, j];
+                nearPoints.Add(point);
             }
         }
+        Transform transform = null;
+        foreach (var point in nearPoints)
+        {
+            if (!point.GetComponent<ActorMovePoint>().IsInUse)
+            {
+                point.GetComponent<ActorMovePoint>().IsInUse = true;
+                transform= point;
+            }
+        }
+
+        if (transform!=null)
+        {
+            return transform;
+        }
+        else
+        {
+            while (true)
+            {
+                int i = UnityEngine.Random.Range(0, _row);
+                int j = UnityEngine.Random.Range(0, _col);
+                if (!points[i, j].GetComponent<ActorMovePoint>().IsInUse)
+                {
+                    points[i, j].GetComponent<ActorMovePoint>().IsInUse = true;
+                    return points[i, j];
+                }
+            }
+        }
+
     }
 
     public Transform  GetGridCenterPoint()
@@ -173,6 +202,7 @@ public class AvatarPathSystemManager : MonoBehaviour
         //{
         //    return points[0, 0];
         //}
+        points[3, 1].GetComponent<ActorMovePoint>().IsInUse = true;
         return points[3,1];
     }
 }
