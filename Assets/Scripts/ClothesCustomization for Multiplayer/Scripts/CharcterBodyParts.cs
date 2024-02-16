@@ -96,6 +96,7 @@ public class CharcterBodyParts : MonoBehaviour
         public GameObject avatar_parent;
         public SkinnedMeshRenderer avatar_body;
         public SkinnedMeshRenderer avatar_head;
+        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture;
     }
     private void Awake()
     {
@@ -154,7 +155,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void SetAvatarByGender(AvatarGender _gender)
     {
-
+        
         if (_gender == AvatarGender.Male)
         {
             avatarController.avatarGender = _gender;
@@ -223,13 +224,13 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     // Set Default Texture for player
-    public void DefaultTexture(bool ApplyClothMask = true)
+    public void DefaultTexture(bool ApplyClothMask = true, string _gender="")
     {
 
         if (XanaConstants.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
-            DefaultTextureForNewCharacter(ApplyClothMask);
+            DefaultTextureForNewCharacter(ApplyClothMask, _gender);
     }
 
     void DefaultTextureForBoxer(bool ApplyClothMask = true)
@@ -276,7 +277,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
 
-    void DefaultTextureForNewCharacter(bool ApplyClothMask = true)
+    void DefaultTextureForNewCharacter(bool ApplyClothMask = true, string _gender = "")
     {
         SkinnedMeshRenderer HeadMeshComponent;
         SkinnedMeshRenderer Body;
@@ -287,21 +288,41 @@ public class CharcterBodyParts : MonoBehaviour
         //}
         //else
         //{
-
-        maleAvatarMeshes.avatar_parent.SetActive(true);
-        femaleAvatarMeshes.avatar_parent.SetActive(false);
-        Body = maleAvatarMeshes.avatar_body;
-        HeadMeshComponent = maleAvatarMeshes.avatar_head;
-        //}
-        if (ApplyClothMask)
+        if (_gender == "Female")
         {
-            Body.materials[0].SetTexture(Pent_TextureName, Pent_Texture);
-            Body.materials[0].SetTexture(shirt_TextureName, Shirt_Texture);
-            Body.materials[0].SetTexture(Shoes_TextureName, Shoe_Texture);
+            Body = femaleAvatarMeshes.avatar_body;
+            HeadMeshComponent = femaleAvatarMeshes.avatar_head;
+            Body.materials[0].SetTexture(Shoes_TextureName, null);
+            if (ApplyClothMask)
+            {
+                if(femaleAvatarMeshes.Pent_Texture != null)
+                    Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
+                if(femaleAvatarMeshes.Shirt_Texture != null)
+                    Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
+                if (femaleAvatarMeshes.Shoe_Texture != null)
+                    Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
+            }
         }
-        Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
-        Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
-        Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
+        else
+        {
+            Body = maleAvatarMeshes.avatar_body;
+            HeadMeshComponent = maleAvatarMeshes.avatar_head;
+            Body.materials[0].SetTexture(Shoes_TextureName, null);
+            if (ApplyClothMask)
+            {
+                if(maleAvatarMeshes.Pent_Texture != null)
+                    Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
+                if(maleAvatarMeshes.Shirt_Texture != null)
+                    Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
+                if(maleAvatarMeshes.Shoe_Texture != null)
+                    Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
+            }
+        }
+        //}
+        
+        //Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+        //Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
+        //Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
 
         //SkinnedMeshRenderer HeadMeshComponent = Head.GetComponent<SkinnedMeshRenderer>();
 
