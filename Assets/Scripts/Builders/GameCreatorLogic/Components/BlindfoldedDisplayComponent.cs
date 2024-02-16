@@ -142,18 +142,18 @@ public class BlindfoldedDisplayComponent : ItemComponent
             PhotonNetwork.Destroy(footPrintAvatar.GetPhotonView());
 
         notTriggerOther = false;
-        RaycastHit hit;
-        if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
-        {
-            if (hit.collider.CompareTag("Item"))
-            {
-                //Debug.Log("Not Null");
-                BuilderEventManager.ReSpawnPlayer?.Invoke();
-                notTriggerOther = true;
+        //RaycastHit hit;
+        //if (Physics.Raycast(raycast.transform.position + new Vector3(0, 100, 0), -raycast.transform.up, out hit, 200))
+        //{
+        //    if (hit.collider.CompareTag("Item"))
+        //    {
+        //        //Debug.Log("Not Null");
+        //        BuilderEventManager.ReSpawnPlayer?.Invoke();
+        //        notTriggerOther = true;
 
-                Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");
-            }
-        }
+        //        Toast.Show("The avatar is now locked inside the object due to the avatar invisibility effect, so it will restart from the current point.");
+        //    }
+        //}
 
         if (blindfoldedDisplayComponentData.footprintPaintAvatar)
         {
@@ -199,7 +199,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         if (!gameObject.activeInHierarchy)
             this.gameObject.SetActive(true);
 
-        Physics.IgnoreLayerCollision(9, 22, true);
+        //Physics.IgnoreLayerCollision(9, 22, true);
 
         if (blindfoldedDisplayComponentData.footprintPaintAvatar)
         {

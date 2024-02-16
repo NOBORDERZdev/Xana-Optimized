@@ -67,7 +67,7 @@ public class SplashVideoPlay : MonoBehaviour
    public void OnAvatarSelectionPanal() 
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;        ------ Comment By Abdullah for Avatar Selection on OnBoarding
     }
 
 }

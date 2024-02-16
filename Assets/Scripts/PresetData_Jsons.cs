@@ -74,14 +74,14 @@ public class PresetData_Jsons : MonoBehaviour
     public void ChangecharacterOnCLickFromserver()
     {
         GetScriptRef();
-        if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
-        {
-            //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
-            //{
-            // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-            StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            //}
-        }
+        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)    ------ Comment By Abdullah for Avatar Selection on OnBoarding
+        //{
+        //    //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
+        //    //{
+        //    // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
+         //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  //  ------ Comment By Abdullah for Avatar Selection on OnBoarding
+        //    //}
+        //}   ------ Comment By Abdullah for Avatar Selection on OnBoarding
         XanaConstants.xanaConstants.registerFirstTime = true;
         //if (GameManager.Instance.isStoreAssetDownloading)
         //    return;
@@ -158,7 +158,7 @@ public class PresetData_Jsons : MonoBehaviour
                 UGCManager.isSelfieTaken = false;
             }
 
-            File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
+            File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));
 
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);

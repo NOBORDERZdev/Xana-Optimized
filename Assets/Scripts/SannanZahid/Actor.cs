@@ -131,14 +131,27 @@ public class Actor : MonoBehaviour
                     yield return new WaitForSeconds(ActionClipTime); 
                    // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
                     MoveBehaviour move = _playerMoves.Dequeue();
-                    StateMoveBehaviour = 1;
-                    MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
-                    MoveSpeed = move.Speed;
-                    transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
-                    _playerMoves.Enqueue(move);
-                    _PlayerAnimator.SetBool("Action", false);
-                    _lastAction = false;
-                    _PlayerAnimator.SetBool("IdleMenu", false);
+
+
+                    if (move.behaviour == MoveBehaviour.Behaviour.Action)
+                    {
+                        StateMoveBehaviour = 2;
+                        _PlayerAnimator.SetBool("Action", true);
+                        _lastAction = true;
+                        _PlayerAnimator.SetBool("IdleMenu", false);
+                        _playerMoves.Enqueue(move);
+                    }
+                    else
+                    {
+                        StateMoveBehaviour = 1;
+                        MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
+                        MoveSpeed = move.Speed;
+                        transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
+                        _playerMoves.Enqueue(move);
+                        _PlayerAnimator.SetBool("Action", false);
+                        _lastAction = false;
+                        _PlayerAnimator.SetBool("IdleMenu", false);
+                    }
                 }
                 break;
             case 1:
