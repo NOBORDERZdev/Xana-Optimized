@@ -237,6 +237,10 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
+            SavePresetOnServer(_CharacterData);
+            ApplyPreset();
+
+            GetSavedPreset();
             if (UGCManager.isSelfieTaken)
             {
                 StoreManager.instance.ApplyUGCValueOnCharacter();
@@ -244,12 +248,8 @@ public class PresetData_Jsons : MonoBehaviour
             }
             else 
             {
-                StoreManager.instance.ApplyDefaultValueOnCharacter();
+                StoreManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
             }
-            SavePresetOnServer(_CharacterData);
-            ApplyPreset();
-
-            GetSavedPreset();
             if (!presetAlreadySaved)
             {
                 StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;

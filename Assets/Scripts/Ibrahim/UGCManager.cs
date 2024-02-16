@@ -21,7 +21,7 @@ public class UGCManager : MonoBehaviour
     public void OnClickSaveSelfieButton()
     {
         StoreManager.instance.loaderPanel.SetActive(true);
-        //isSelfieTaken = false;
+        isSelfieTaken = false;
         if (texture != null)
         {
             // Encode texture to PNG format
@@ -198,7 +198,6 @@ public class UGCManager : MonoBehaviour
     }
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-
         StoreManager.instance.itemData.gender = ugcItems.gender;
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
         StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
