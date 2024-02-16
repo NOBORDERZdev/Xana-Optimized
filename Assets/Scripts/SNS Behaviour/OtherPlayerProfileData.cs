@@ -143,6 +143,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
         }
     }
+
     private void OnDisable()
     {
         //Debug.Log("isTempDirectMessageScreenOpen:" + isTempDirectMessageScreenOpen);
@@ -634,7 +635,8 @@ public class OtherPlayerProfileData : MonoBehaviour
                 emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
         }
     }
-        }
+        GlobalVeriableClass.callingScreen = "";
+    }
 
         IEnumerator WaitToFeedLoadedUpdate(int pageNum)
     {
