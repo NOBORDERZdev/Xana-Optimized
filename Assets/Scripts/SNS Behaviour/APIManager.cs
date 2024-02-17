@@ -2300,10 +2300,15 @@ public class APIManager : MonoBehaviour
             www.SetRequestHeader("Content-Type", "application/json");
 
             yield return www.SendWebRequest();
-
+            UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
-                Debug.Log("<color=red> ------Edit API Error " + www.error + "</color>");
+                Debug.Log("<color=red> ------Edit API Error " + www.error + www.downloadHandler.text + "</color>");
+                if ((test.msg.Contains("Username")))
+                {
+                    MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
+                    MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                }
                 //Jugar for mainnet issue as API is not deployed yet on mainnet
                 //MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
                 //MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
@@ -2314,7 +2319,7 @@ public class APIManager : MonoBehaviour
                 //Debug.Log("Form upload complete!");
 
                 //string data = www.downloadHandler.text;
-                UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+
                 if (!test.success)
                 {
                     if (test.msg.Contains("Username"))
