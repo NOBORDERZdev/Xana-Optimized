@@ -114,12 +114,12 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             /// Disabling
             /// 
-            if (postingBtn != null)
-            {
-                postingBtn.transform.GetComponent<Button>().interactable = false;
-                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
+            //if (postingBtn != null)
+            //{
+            //    postingBtn.transform.GetComponent<Button>().interactable = false;
+            //    postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
 
-            }
+            //}
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
