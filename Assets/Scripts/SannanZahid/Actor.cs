@@ -92,6 +92,7 @@ public class Actor : MonoBehaviour
 
         if(playerBehaviour.IdleAnimationFlag)
         {
+            transform.eulerAngles = new Vector3(0,180,0);
             _PlayerAnimator.SetBool("Action", true);
             _lastAction = true;
 
@@ -136,6 +137,7 @@ public class Actor : MonoBehaviour
                     if (move.behaviour == MoveBehaviour.Behaviour.Action)
                     {
                         StateMoveBehaviour = 2;
+                        transform.eulerAngles = new Vector3(0,180,0);
                         _PlayerAnimator.SetBool("Action", true);
                         _lastAction = true;
                         _PlayerAnimator.SetBool("IdleMenu", false);
@@ -163,6 +165,7 @@ public class Actor : MonoBehaviour
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
+                            transform.eulerAngles = new Vector3(0,180,0);
                             _PlayerAnimator.SetBool("Action", true);
                             _lastAction = true;
                             _PlayerAnimator.SetBool("IdleMenu", false);
