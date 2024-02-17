@@ -54,8 +54,8 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = new Vector3(1f, _previousPos.y, _previousPos.z);
-            GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
+            GameManager.Instance.mainCharacter.transform.position = GameManager.Instance.mainCharacter.GetComponent<Actor>().LastMoveToPosition();//new Vector3(3f, _previousPos.y, _previousPos.z);
+            GameManager.Instance.mainCharacter.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
     }
     public void IdlePlayerAvatorForPostMenu(bool flag)
@@ -80,8 +80,8 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = _previousPos;
-            GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
+            GameManager.Instance.mainCharacter.transform.position = GameManager.Instance.mainCharacter.GetComponent<Actor>().LastMoveToPosition(); ;
+            GameManager.Instance.mainCharacter.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
     }
     public int  GetNumberofIdleAnimations(string name)
