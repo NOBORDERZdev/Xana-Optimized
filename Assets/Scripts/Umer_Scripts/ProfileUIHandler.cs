@@ -106,7 +106,7 @@ public class ProfileUIHandler : MonoBehaviour
         if (!newRenderTexture)
         {
             newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
-            newRenderTexture.antiAliasing = 4;
+            newRenderTexture.antiAliasing = 8;
             if (Application.platform == RuntimePlatform.Android)
             {
                 UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();

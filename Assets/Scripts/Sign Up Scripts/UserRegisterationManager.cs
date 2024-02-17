@@ -199,7 +199,8 @@ public class UserRegisterationManager : MonoBehaviour
 
     public GameObject EntertheWorld_Panal;
     public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
-    public GameObject LogoImage,LogoImage2,LogoImage3,renderImage;
+    public GameObject LogoImage, LogoImage2, LogoImage3;
+    public RawImage renderImage;
     public TextMeshProUGUI UserNameSetter;
     public GameObject NewLoadingScreen;
     public Text _NewLoadingText;

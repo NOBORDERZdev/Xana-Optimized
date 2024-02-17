@@ -79,7 +79,7 @@ public class PresetData_Jsons : MonoBehaviour
         //    //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
         //    //{
         //    // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-         //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  //  ------ Comment By Abdullah for Avatar Selection on OnBoarding
+        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  //  ------ Comment By Abdullah for Avatar Selection on OnBoarding
         //    //}
         //}   ------ Comment By Abdullah for Avatar Selection on OnBoarding
         XanaConstants.xanaConstants.registerFirstTime = true;
@@ -210,12 +210,12 @@ public class PresetData_Jsons : MonoBehaviour
                 }
                 if (UGCManager.isSelfieTaken)
                 {
-                    UserRegisterationManager.instance.renderImage.SetActive(true);
+                    UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
                     UserRegisterationManager.instance.LogoImage.SetActive(false);
                 }
                 else
                 {
-                    UserRegisterationManager.instance.renderImage.SetActive(false);
+                    UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
                     UserRegisterationManager.instance.LogoImage.SetActive(true);
                 }
             }
@@ -243,10 +243,10 @@ public class PresetData_Jsons : MonoBehaviour
             GetSavedPreset();
             if (UGCManager.isSelfieTaken)
             {
-                StoreManager.instance.ApplyUGCValueOnCharacter();
+                StoreManager.instance.ApplyUGCValueOnCharacter(_CharacterData.gender);
                 UGCManager.isSelfieTaken = false;
             }
-            else 
+            else
             {
                 StoreManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
             }
