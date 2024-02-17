@@ -24,7 +24,7 @@ public class FriendHomeManager : MonoBehaviour
     {
         if(SpawnFriendsAgain)
         {
-            Debug.LogError("Spawning Friends Again");
+            Debug.Log("Spawning Friends Again");
             SpawnFriendsAgain = false;
             StartCoroutine(BuildMoodDialog());
         }
