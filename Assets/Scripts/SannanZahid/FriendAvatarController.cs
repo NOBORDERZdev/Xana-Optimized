@@ -1320,76 +1320,79 @@ public class FriendAvatarController : MonoBehaviour
                 }
             }
         }
-        if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
-        }
-        if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
-        }
-        if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
-        }
-        if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
-        }
-        else
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture("nomakeup", this.gameObject, CurrentTextureType.Makeup));
-        }
-        //--> remove for xana avatar2.0
-        //LoadBonesData(_CharacterData, this.gameObject);
 
-        if (_CharacterData.Skin != null && _CharacterData.LipColor != null && _CharacterData.HairColor != null && _CharacterData.EyebrowColor != null && _CharacterData.EyeColor != null)
-        {
-            // Seperate 
-            if (_CharacterData.Skin != null)
-            {
-                StartCoroutine(bodyParts.ImplementColors(_CharacterData.Skin, SliderType.Skin, this.gameObject));
-            }
-            if (_CharacterData.EyeColor != null)
-            {
-                StartCoroutine(bodyParts.ImplementColors(_CharacterData.EyeColor, SliderType.EyesColor, this.gameObject));
-            }
-            if (_CharacterData.LipColor != null)
-            {
-                StartCoroutine(bodyParts.ImplementColors(_CharacterData.LipColor, SliderType.LipsColor, this.gameObject));
-            }
+        #region Xana Avatar 1.0 //--> remove for xana avatar2.0
+        //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
+        //{
+        //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, this.gameObject, CurrentTextureType.EyeLense));
+        //}
+        //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
+        //{
+        //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyebrrowTexture, this.gameObject, CurrentTextureType.EyeBrows));
+        //}
+        //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
+        //{
+        //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+        //}
+        //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
+        //{
+        //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.makeupName, this.gameObject, CurrentTextureType.Makeup));
+        //}
+        //else
+        //{
+        //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture("nomakeup", this.gameObject, CurrentTextureType.Makeup));
+        //}
+        ////--> remove for xana avatar2.0
+        ////LoadBonesData(_CharacterData, this.gameObject);
 
-            if (_CharacterData.EyebrowColor != null)
-            {
-                StartCoroutine(bodyParts.ImplementColors(_CharacterData.EyebrowColor, SliderType.EyeBrowColor, this.gameObject));
-            }
-        }
+        //if (_CharacterData.Skin != null && _CharacterData.LipColor != null && _CharacterData.HairColor != null && _CharacterData.EyebrowColor != null && _CharacterData.EyeColor != null)
+        //{
+        //    // Seperate 
+        //    if (_CharacterData.Skin != null)
+        //    {
+        //        StartCoroutine(bodyParts.ImplementColors(_CharacterData.Skin, SliderType.Skin, this.gameObject));
+        //    }
+        //    if (_CharacterData.EyeColor != null)
+        //    {
+        //        StartCoroutine(bodyParts.ImplementColors(_CharacterData.EyeColor, SliderType.EyesColor, this.gameObject));
+        //    }
+        //    if (_CharacterData.LipColor != null)
+        //    {
+        //        StartCoroutine(bodyParts.ImplementColors(_CharacterData.LipColor, SliderType.LipsColor, this.gameObject));
+        //    }
 
-        if (_CharacterData.SkinGerdientColor != null)
-        {
-            bodyParts.ApplyGredientColor(_CharacterData.SkinGerdientColor, this.gameObject);
-        }
-        else
-        {
-            bodyParts.ApplyGredientDefault(this.gameObject);
-        }
+        //    if (_CharacterData.EyebrowColor != null)
+        //    {
+        //        StartCoroutine(bodyParts.ImplementColors(_CharacterData.EyebrowColor, SliderType.EyeBrowColor, this.gameObject));
+        //    }
+        //}
 
-        if (_CharacterData.SssIntensity != null)
-        {
-            bodyParts.SetSssIntensity(_CharacterData.SssIntensity, this.gameObject);
-        }
-        else
-        {
-            bodyParts.SetSssIntensity(bodyParts.defaultSssValue, this.gameObject);
-        }
+        //if (_CharacterData.SkinGerdientColor != null)
+        //{
+        //    bodyParts.ApplyGredientColor(_CharacterData.SkinGerdientColor, this.gameObject);
+        //}
+        //else
+        //{
+        //    bodyParts.ApplyGredientDefault(this.gameObject);
+        //}
 
-        SetItemIdsFromFile(_CharacterData);
+        //if (_CharacterData.SssIntensity != null)
+        //{
+        //    bodyParts.SetSssIntensity(_CharacterData.SssIntensity, this.gameObject);
+        //}
+        //else
+        //{
+        //    bodyParts.SetSssIntensity(bodyParts.defaultSssValue, this.gameObject);
+        //}
 
-        EyesBlinking.instance.isBlinking = false;
-        bodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-        bodyParts.ApplyPresiteGredient();
+        //SetItemIdsFromFile(_CharacterData);
 
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        //EyesBlinking.instance.isBlinking = false;
+        //bodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
+        //bodyParts.ApplyPresiteGredient();
+
+        //EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        #endregion
     }
     string GetUpdatedKey(string Key, string prefixAdded)
     {
