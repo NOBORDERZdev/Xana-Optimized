@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Text;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPostBubbleHandler : MonoBehaviour
 {
@@ -14,14 +17,8 @@ public class PlayerPostBubbleHandler : MonoBehaviour
         BubbleObj = _bubbleObjF;
         _postText = postTextF;
 
-        if (postTextF.text.Length >= 20)
-        {
-            _postText.text = InsertNewlines(postTextF.text);
-        }
-        else
-        {
-            _postText = postTextF;
-        }
+        _postText.text = postTextF.text;
+        InsertNewlines(_postText);
     }
 
     public void ActivatePostFirendBubble(bool flag)
@@ -46,31 +43,42 @@ public class PlayerPostBubbleHandler : MonoBehaviour
     {
         if (txt != "" && txt != null)
         {
-            if (txt.Length >= 20)
-            {
-                _postText.text = InsertNewlines(txt);
-            }
-            else
-            {
-                _postText.text = txt;
-            }
+            _postText.text = txt;
+            InsertNewlines(_postText);
         }
     }
 
-    public string InsertNewlines(string input)
+    public void InsertNewlines(TMP_Text input)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        StartCoroutine(ArrangeBubbleTxt(input));
+    }
 
-        for (int i = 0; i < input.Length; i++)
+    private IEnumerator ArrangeBubbleTxt(TMP_Text tmpText)
+    {
+        if (tmpText.text.Length > 5)
         {
-            stringBuilder.Append(input[i]);
+            ContentSizeFitter contentSizeFitter = tmpText.transform.parent.GetComponent<ContentSizeFitter>();
+            contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            if ((i + 1) % 20 == 0)
+            string str = tmpText.text;
+            tmpText.text = "";
+
+            for (int i = 0; i < str.Length; i++)
             {
-                stringBuilder.Append("\n");
+                tmpText.text += str[i];
+                tmpText.ForceMeshUpdate();
+
+                var preferredWidth = tmpText.GetPreferredValues().x;
+                if (preferredWidth > 120)
+                {
+                    yield return new WaitForEndOfFrame();
+                    contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                    yield return new WaitForEndOfFrame();
+
+                    tmpText.text = str;
+                    yield break;
+                }
             }
         }
-
-        return stringBuilder.ToString();
     }
 }

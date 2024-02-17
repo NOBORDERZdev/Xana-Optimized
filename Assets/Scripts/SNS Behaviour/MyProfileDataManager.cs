@@ -2342,7 +2342,7 @@ public class MyProfileDataManager : MonoBehaviour
                 //APIManager.Instance.userId = myProfileData.id;
                 //APIManager.Instance.LoadMyPost();
             }
-            ProfileTabButtonClick();
+            Invoke(nameof(ProfileTabButtonClick), 5);
         }
     }
 
