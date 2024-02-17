@@ -240,8 +240,9 @@ public class AvatarController : MonoBehaviour
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-
-                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    float _rand = Random.Range(0.1f, 2f);
+                    string _gen = _rand <= 1 ? "Male" : "Female";
+                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                 }
                 else
                 {
@@ -471,7 +472,9 @@ public class AvatarController : MonoBehaviour
                 {
                     if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                     {
-                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                        float _rand = Random.Range(0.1f, 2f);
+                        string _gen = _rand <= 1 ? "Male" : "Female";
+                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                     }
                     else
                     {
