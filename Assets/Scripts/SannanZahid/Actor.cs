@@ -137,8 +137,9 @@ public class Actor : MonoBehaviour
                    // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
                     MoveBehaviour move = _playerMoves.Dequeue();
 
+                    
 
-                    if (move.behaviour == MoveBehaviour.Behaviour.Action)
+                    if (move.behaviour == MoveBehaviour.Behaviour.Action || menuIdleFlag)
                     {
                         StateMoveBehaviour = 2;
                         transform.eulerAngles = new Vector3(0,180,0);
@@ -203,10 +204,12 @@ public class Actor : MonoBehaviour
         }
         goto CheckedInLoop;
     }
+    bool menuIdleFlag = false;
     public void IdlePlayerAvatorForMenu(bool flag,bool MAction)
     {
+        menuIdleFlag = flag;
        // Debug.LogError("IdlePlayerAvatorForMenu  --- " + flag);
-        if(flag)
+        if (flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;
             _PlayerAnimator.SetBool("Menu Action", MAction);
