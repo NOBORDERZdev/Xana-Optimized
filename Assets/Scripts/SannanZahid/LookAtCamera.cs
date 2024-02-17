@@ -56,16 +56,8 @@ public class LookAtCamera : MonoBehaviour
     {
         if (txt != "")
         {
-            if (txt.Length > 20)
-            {
-                _postText.text = _postHandler.InsertNewlines(txt);
-            }
-            else
-            {
-                _postText.text = txt;
-            }
+            _postText.text = txt;
+            _postHandler.InsertNewlines(_postText);
         }
-
-
     }
 }
