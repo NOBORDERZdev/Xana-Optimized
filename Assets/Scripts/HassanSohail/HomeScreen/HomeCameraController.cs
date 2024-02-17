@@ -11,10 +11,7 @@ public class HomeCameraController : MonoBehaviour
     float PanSpeed = 2.5f;
     float ZoomSpeedTouch = 0.1f;
     float ZoomSpeedMouse = 0.5f;
-    
-    //[SerializeField]
     float[] BoundsX = new float[]{1f, 7f};
-    //[SerializeField]
     float[] BoundsZ = new float[]{-7f, -5f};
     float[] ZoomBounds = new float[]{35f, 45f};
     
@@ -36,11 +33,13 @@ public class HomeCameraController : MonoBehaviour
     void centerAlignCam()
     {
         cam = GetComponent<Camera>();
-       // cam.fieldOfView =ZoomBounds[1]; // to set zoom on start 
         cam.transform.position = new Vector3(3.4f, 9f, -5.91f);
-        //StartCoroutine (AllignWithCharacter());
     }
-    void Update() {
+    public bool InputFlag;
+    void Update() 
+    {
+        if (!InputFlag)
+            return;
 #if UNITY_EDITOR
         HandleMouse();
 #elif UNITY_IOS || UNITY_ANDROID
@@ -66,7 +65,6 @@ public class HomeCameraController : MonoBehaviour
             // get offset value
             float deltaDistance =currentTouchDistance - oldTouchDistance  ;
             print("DISTANCE IS "+deltaDistance);
-            //ZoomCamera (deltaDistance, ZoomSpeedTouch);
         }
         else if (Input.touchCount>0)
         {
@@ -94,7 +92,6 @@ public class HomeCameraController : MonoBehaviour
     
         // Check for scrolling to zoom the camera
         float scroll = Input.GetAxis("Mouse ScrollWheel")*20f;
-        //ZoomCamera(scroll, ZoomSpeedMouse);
     }
     
     void PanCamera(Vector3 newPanPosition) {
@@ -122,19 +119,4 @@ public class HomeCameraController : MonoBehaviour
     
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - (offset * speed), ZoomBounds[0], ZoomBounds[1]);
     }
-    //public void ViewPlayer(){ 
-    //    StartCoroutine(AllignWithCharacter());
-    //}
-
-    //IEnumerator AllignWithCharacter()
-    //{
-    //    while (PlayerPrefs.GetString("UserNameAndPassword") == "")
-    //        yield return new WaitForSeconds(2f);
-    //    //Vector3 pos = transform.position;
-    //    yield return new WaitForSeconds(3f);
-    //   // pos.x = Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsX[0], -0.43f);
-    //   Vector3 pos = new Vector3(GameManager.Instance.mainCharacter.transform.position.x, transform.position.y,Mathf.Clamp(GameManager.Instance.mainCharacter.transform.position.x, BoundsZ[0], -0.7f));
-    //    print("~~~~~~~ player cam pos "+pos);
-    //    transform.position = pos;
-    //}
 }

@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
     public AdditiveScenesManager additiveScenesManager;
+    public Transform HomeCamera;
 
     internal string selectedPresetData="";
     private void Awake()
@@ -56,6 +57,10 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
         }
+    }
+    public void HomeCameraInputHandler(bool flag)
+    {
+        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {

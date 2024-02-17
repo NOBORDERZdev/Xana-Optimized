@@ -824,6 +824,8 @@ public class WorldManager : MonoBehaviour
 
     public void GoToUGC()
     {
+        GameManager.Instance.HomeCameraInputHandler(false);
+
         SceneManager.LoadScene("UGC");
     }
     public void ClearHomePageData()
