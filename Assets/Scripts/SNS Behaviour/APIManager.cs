@@ -639,7 +639,7 @@ public class APIManager : MonoBehaviour
                     OtherPlayerProfileData.Instance.textPlayerTottlePost.text = test.data.Count.ToString();
                 }
                 //FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
-                if (allTextPostWithUserIdRoot.data.rows.Count > test.data.rows.Count)
+                if (allTextPostWithUserIdRoot.data.rows.Count >= test.data.rows.Count)
                 {
                     //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
                     allTextPostWithUserIdRoot.data.rows.Clear();
@@ -660,6 +660,10 @@ public class APIManager : MonoBehaviour
                 }
                 else
                 {
+                    if (allTextPostWithUserIdRoot.data.rows.Count > 0)
+                    {
+                        allTextPostWithUserIdRoot.data.rows.Clear();
+                    }
 
                     allTextPostWithUserIdRoot = test;
                 }
