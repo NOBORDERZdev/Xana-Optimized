@@ -55,6 +55,8 @@ public class UIManager : MonoBehaviour
     {
         if (!isAvatarSelectionBtnClicked)
             isAvatarSelectionBtnClicked = true;
+        GameManager.Instance.HomeCameraInputHandler(false);
+
     }
 
     public void SwitchToPostScreen(bool flag)
@@ -66,6 +68,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            GameManager.Instance.HomeCameraInputHandler(!flag);
+
             _postScreen.gameObject.SetActive(flag);
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);

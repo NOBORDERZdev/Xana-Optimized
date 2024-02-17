@@ -166,6 +166,8 @@ public class WorldManager : MonoBehaviour
             SearchKey = searchKey;
             LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
+
+            searchWorldControllerRef.scroller.ScrollPosition = 0f;
         }
         else
         {
@@ -466,7 +468,10 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
-            WorldLoadingText(_apiURL);
+            if (searchWorldControllerRef.scroller.Container.transform.childCount > 3)
+                WorldLoadingText(APIURL.Temp);
+            else
+                WorldLoadingText(_apiURL);
         }
 
 
@@ -483,6 +488,7 @@ public class WorldManager : MonoBehaviour
 
     public void WorldLoadingText(APIURL aPIURL)
     {
+
         LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
         switch (aPIURL)
         {
@@ -824,6 +830,8 @@ public class WorldManager : MonoBehaviour
 
     public void GoToUGC()
     {
+        GameManager.Instance.HomeCameraInputHandler(false);
+
         SceneManager.LoadScene("UGC");
     }
     public void ClearHomePageData()
