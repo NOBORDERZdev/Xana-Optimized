@@ -13891,7 +13891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14351,6 +14351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 2302478909030753249}
   overrideController: {fileID: 0}
@@ -15157,7 +15158,7 @@ MonoBehaviour:
   presetValue: 
   avatarGender: 0
   masks: []
-  IsInit: 0
+  IsInit: 1
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 0}
@@ -17021,6 +17022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 2302478909030753249}
   overrideController: {fileID: 0}
@@ -30317,7 +30319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7465522771781175557, guid: c2fa70638f19ba849b0c7f4e0fd76527, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7465522771781175557, guid: c2fa70638f19ba849b0c7f4e0fd76527, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31503,51 +31505,6 @@ Transform:
   m_Father: {fileID: 2302478908189003027}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -60, z: 0}
---- !u!4 &2302478907849768332
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302478907849768370}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.1897767, y: 0.9442463, z: 3.295845}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2302478907849768370
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2302478907849768332}
-  - component: {fileID: 2302478907849768371}
-  m_Layer: 0
-  m_Name: SocketController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2302478907849768371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302478907849768370}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb374cc1354e37040bcc643d6dea6c11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  socketId: 
 --- !u!1001 &2302478907873349860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33087,19 +33044,19 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 0
       Speed: 1
     - behaviour: 3
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 1
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 3
       Speed: 1
     - behaviour: 4
@@ -33113,11 +33070,11 @@ MonoBehaviour:
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
-    - behaviour: 4
-      Speed: 1
-    - behaviour: 3
       Speed: 0
+    - behaviour: 4
+      Speed: 0
+    - behaviour: 3
+      Speed: 1
   - Name: Up Bouncing
     CategoryOfMode: 0
     BehaviourOfMood: 2
@@ -33127,7 +33084,7 @@ MonoBehaviour:
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 4
@@ -33155,9 +33112,9 @@ MonoBehaviour:
     - behaviour: 3
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
       Speed: 0
   - Name: Down Crying
@@ -33167,7 +33124,7 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 2
@@ -33181,7 +33138,7 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 2
@@ -33195,9 +33152,9 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 4
@@ -33213,7 +33170,7 @@ MonoBehaviour:
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
       Speed: 0
   - Name: Flat Knocking
@@ -33251,13 +33208,13 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 3
-      Speed: 0
+      Speed: 1
   - Name: Fun SillyDance
     CategoryOfMode: 3
     BehaviourOfMood: 12
@@ -33265,11 +33222,11 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
       Speed: 0
   - Name: Fun Excited
@@ -33279,7 +33236,7 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 2
@@ -33297,7 +33254,7 @@ MonoBehaviour:
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
       Speed: 0
   - Name: Fun Celebrate
@@ -33307,7 +33264,7 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 3
       Speed: 1
     - behaviour: 2
@@ -33433,11 +33390,11 @@ MonoBehaviour:
     IdleAnimationFlag: 0
     ActorMoveBehaviours:
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 4
       Speed: 0
   - Name: Flat Spin
@@ -33449,7 +33406,7 @@ MonoBehaviour:
     - behaviour: 2
       Speed: 1
     - behaviour: 4
-      Speed: 1
+      Speed: 0
     - behaviour: 2
       Speed: 1
     - behaviour: 4
@@ -34736,7 +34693,6 @@ Transform:
   - {fileID: 2302478907713652558}
   - {fileID: 1577011852222878903}
   - {fileID: 1087019349}
-  - {fileID: 2302478907849768332}
   - {fileID: 2302478909422598566}
   - {fileID: 1512555880}
   - {fileID: 520773522}
@@ -35231,6 +35187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 2302478909030753249}
   overrideController: {fileID: 0}
@@ -36466,7 +36423,7 @@ MonoBehaviour:
   MultipleDistance: 1
   FixedYOffset: 1.05
   Multiple: 1
-  FixedYOffsetLabel: 1.34
+  FixedYOffsetLabel: 1.25
 --- !u!114 &2302478909030753251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37691,7 +37648,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2302478909426159025
 PrefabInstance:
@@ -42778,6 +42735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 2302478909030753249}
   overrideController: {fileID: 0}
@@ -43789,6 +43747,10 @@ PrefabInstance:
       propertyPath: EquipUiObj
       value: 
       objectReference: {fileID: 1595459687}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: HomeCamera
+      value: 
+      objectReference: {fileID: 1999834765}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: PostManager
       value: 
@@ -81380,6 +81342,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1825815851, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: InputFlag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825815851, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: BoundsX.Array.data[0]
       value: 1.6
       objectReference: {fileID: 0}
@@ -81469,7 +81435,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -86070,6 +86036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveSpeed: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 2302478909030753249}
   overrideController: {fileID: 0}
