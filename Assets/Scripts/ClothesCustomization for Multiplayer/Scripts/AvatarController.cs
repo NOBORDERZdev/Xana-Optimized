@@ -61,8 +61,14 @@ public class AvatarController : MonoBehaviour
 
         if (IsInit)
         {
-            StartCoroutine(SetAvatarDefaultClothDelay(gameObject, "Male"));
-            //SetAvatarClothDefault(this.gameObject,"Male");
+            if (GetComponent<FriendAvatarController>())
+            {
+                SetAvatarClothDefault(this.gameObject, "Male");
+            }
+            else
+            {
+                StartCoroutine(SetAvatarDefaultClothDelay(gameObject, "Male"));
+            }
         }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
