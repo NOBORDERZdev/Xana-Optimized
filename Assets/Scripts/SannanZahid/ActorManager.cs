@@ -25,7 +25,8 @@ public class ActorManager : MonoBehaviour
         //GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().worldCam.GetComponent<HomeCameraController>().ViewPlayer();
         _previousPos = defaultPoint.position;
         _previousRot = defaultPoint.eulerAngles;
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[0],defaultPoint);
+        
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[GetPostRandomDefaultAnim()],defaultPoint);
     }
     public void SetMood(string mood)
     {
@@ -88,6 +89,24 @@ public class ActorManager : MonoBehaviour
         ActorBehaviour actor = actorBehaviour.Find(x => x.Name == name);
         return actor.NumberOfIdleAnimations;
     }
+
+    int GetPostRandomDefaultAnim(){ 
+        float _rand = UnityEngine.Random.Range(0.1f, 3.0f);
+        int value; 
+        if (_rand <= 1.0f)
+        {
+            value= 0;
+        }
+        else if (_rand >= 1.0f && _rand <= 2.0f)
+        {
+            value= 1;
+        }
+        else
+        {
+            value= 2;
+        }
+        return value;
+    } 
 }
 [Serializable]
 public class ActorBehaviour
