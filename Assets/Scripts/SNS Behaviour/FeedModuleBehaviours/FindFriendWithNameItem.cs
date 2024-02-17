@@ -109,6 +109,9 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             allFollowersRows = allFollowersRows1;
             searchUserRow.id = allFollowersRows.follower.id;
+            searchUserRow.am_i_following = allFollowersRows.isFollowing;
+            searchUserRow.is_following_me = true;
+            searchUserRow.is_close_friend = allFollowersRows.isFriend;
             this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
             userNameText.text = allFollowersRows.follower.name;
             if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
@@ -156,7 +159,9 @@ public class FindFriendWithNameItem : MonoBehaviour
         if (!_emptyElement)
         {
             searchUserRow = searchUserRow1;
-
+            searchUserRow.am_i_following = amifollowing;
+            searchUserRow.is_following_me = isfollowingme;
+            searchUserRow.is_close_friend = isclosefriend;
             userNameText.text = searchUserRow.name;
             if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
             {
@@ -426,6 +431,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                Debug.Log("user unfollow success data:" + data);
                 searchUserRow.is_following_me = false;
                 searchUserRow.am_i_following = false;
+                searchUserRow.is_close_friend = false;
                 //FollowFollowingSetUp(false);
                 if (FeedUIController.Instance != null)
                 {
@@ -437,7 +443,13 @@ public class FindFriendWithNameItem : MonoBehaviour
                     FeedUIController.Instance.CheckFollowingCount();
                 }
                 GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(int.Parse(user_Id));
-                this.gameObject.SetActive(false);
+                if (IsInFollowingTab)
+                    this.gameObject.SetActive(false);
+                else
+                {
+                    UpdateBfBtn(searchUserRow.is_following_me, searchUserRow.am_i_following, searchUserRow.is_close_friend);
+                    FollowFollowingSetUp(false);
+                }
             }
         }
     }

@@ -78,7 +78,7 @@ public class UGCManager : MonoBehaviour
 
                     selfieSprite.sprite = capturedSprite;
                     selfieSprite.preserveAspect = true;
-                    StoreManager.instance.elfiePanel.SetActive(true);
+                    StoreManager.instance.selfiePanel.SetActive(true);
                     StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
                 }
