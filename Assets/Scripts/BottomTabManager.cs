@@ -114,12 +114,12 @@ public class BottomTabManager : MonoBehaviour
             //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             /// Disabling
             /// 
-            if (postingBtn != null)
-            {
-                postingBtn.transform.GetComponent<Button>().interactable = false;
-                postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
+            //if (postingBtn != null)
+            //{
+            //    postingBtn.transform.GetComponent<Button>().interactable = false;
+            //    postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
 
-            }
+            //}
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
@@ -254,6 +254,7 @@ public class BottomTabManager : MonoBehaviour
             }
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
         }
+        GameManager.Instance.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
     }
     public void OnClickHomeButtonIdleAvatar()
@@ -263,6 +264,8 @@ public class BottomTabManager : MonoBehaviour
     }
     public void OnClickHomeWorldButton()
     {
+        GameManager.Instance.HomeCameraInputHandler(false);
+
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
         if (GameManager.Instance.defaultSelection != 1)
@@ -465,6 +468,7 @@ public class BottomTabManager : MonoBehaviour
         //{
         //    print("Horayyy you have Access");
         //}
+        GameManager.Instance.HomeCameraInputHandler(false);
 
         if (GameManager.Instance.defaultSelection != 3)
         {
@@ -539,6 +543,8 @@ public class BottomTabManager : MonoBehaviour
         //    print("Horayyy you have Access");
         //}
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+        GameManager.Instance.HomeCameraInputHandler(false);
+
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
         {
             UserRegisterationManager.instance.OpenUIPanal(17);
@@ -631,6 +637,8 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to Profile button click.......
     public void OnClickProfileButton()
     {
+        GameManager.Instance.HomeCameraInputHandler(false);
+
         if (/*GameManager.Instance.defaultSelection != 4*/ true)
         {
             // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);

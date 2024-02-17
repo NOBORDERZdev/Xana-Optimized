@@ -25,7 +25,8 @@ public class ActorManager : MonoBehaviour
         //GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().worldCam.GetComponent<HomeCameraController>().ViewPlayer();
         _previousPos = defaultPoint.position;
         _previousRot = defaultPoint.eulerAngles;
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[0],defaultPoint);
+        
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[GetPostRandomDefaultAnim()],defaultPoint);
     }
     public void SetMood(string mood)
     {
@@ -53,8 +54,8 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = new Vector3(1f, _previousPos.y, _previousPos.z);
-            GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
+            GameManager.Instance.mainCharacter.transform.position = GameManager.Instance.mainCharacter.GetComponent<Actor>().LastMoveToPosition();//new Vector3(3f, _previousPos.y, _previousPos.z);
+            GameManager.Instance.mainCharacter.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
     }
     public void IdlePlayerAvatorForPostMenu(bool flag)
@@ -79,8 +80,8 @@ public class ActorManager : MonoBehaviour
             _storeCam.SetActive(false);
             _worldCam.SetActive(true);
             _worldObj.SetActive(true);
-            GameManager.Instance.mainCharacter.transform.position = _previousPos;
-            GameManager.Instance.mainCharacter.transform.eulerAngles = _previousRot;
+            GameManager.Instance.mainCharacter.transform.position = GameManager.Instance.mainCharacter.GetComponent<Actor>().LastMoveToPosition(); ;
+            GameManager.Instance.mainCharacter.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
     }
     public int  GetNumberofIdleAnimations(string name)
@@ -88,6 +89,24 @@ public class ActorManager : MonoBehaviour
         ActorBehaviour actor = actorBehaviour.Find(x => x.Name == name);
         return actor.NumberOfIdleAnimations;
     }
+
+    int GetPostRandomDefaultAnim(){ 
+        float _rand = UnityEngine.Random.Range(0.1f, 3.0f);
+        int value; 
+        if (_rand <= 1.0f)
+        {
+            value= 0;
+        }
+        else if (_rand >= 1.0f && _rand <= 2.0f)
+        {
+            value= 1;
+        }
+        else
+        {
+            value= 2;
+        }
+        return value;
+    } 
 }
 [Serializable]
 public class ActorBehaviour

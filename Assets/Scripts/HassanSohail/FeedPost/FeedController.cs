@@ -60,9 +60,15 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
+         noFeedsScreen.gameObject.SetActive(false);
+         feedContentParent.gameObject.SetActive(true);
         //FeedUIController.Instance.ShowLoader(true);
         FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
+        if (APIManager.Instance.userId == 0)
+        {
+           APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
+        }
         await GetFeedData(APIManager.Instance.userId);
     }
 
@@ -81,24 +87,35 @@ public class FeedController : MonoBehaviour
             }
             else
             {
-                isFeedInitialized = true;
+               
                 print("~~~~~ "+ response.downloadHandler.text);
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 // FeedAPIData.Add(feedResponseData);
-                foreach (var item in feedResponseData.data.rows)
+                if (feedResponseData.data.rows.Count>0)
                 {
-                    if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
+                     isFeedInitialized = true;
+                    foreach (var item in feedResponseData.data.rows)
                     {
-                        if (!FeedAPIData.Any(list1 => list1.id == item.id))
+                        if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
                         {
-                            FeedAPIData.Add(item);
-                            scrollerController._data.Add(item);
+                            if (!FeedAPIData.Any(list1 => list1.id == item.id))
+                            {
+                                FeedAPIData.Add(item);
+                                scrollerController._data.Add(item);
+                            }
                         }
-                    }
 
+                    }
+                    Invoke(nameof(InovkeScrollReload), 2f);
                 }
-                Invoke(nameof(InovkeScrollReload), 2f);
+                else
+                {
+                    noFeedsScreen.gameObject.SetActive(true);
+                    FeedLoader.SetActive(false);
+                    feedContentParent.gameObject.SetActive(false);
+                }
+               
             }
 
         }
