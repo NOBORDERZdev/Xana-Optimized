@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class UserPostFeature : MonoBehaviour
 {
@@ -146,15 +148,8 @@ public class UserPostFeature : MonoBehaviour
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
-
-                if (RetrievedPostPlayer.data.text_post.Length >= 20)
-                {
-                    textElement.text = InsertNewlines(RetrievedPostPlayer.data.text_post);
-                }
-                else
-                {
-                    textElement.text = RetrievedPostPlayer.data.text_post;
-                }
+                textElement.text = RetrievedPostPlayer.data.text_post;
+                InsertNewlines(textElement);
 
                 if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
                 {
@@ -277,20 +272,54 @@ public class UserPostFeature : MonoBehaviour
         public string text_mood;
     }
 
-    public string InsertNewlines(string input)
+    //public string InsertNewlines(string input)
+    //{
+    //    StringBuilder stringBuilder = new StringBuilder();
+
+    //    for (int i = 0; i < input.Length; i++)
+    //    {
+    //        stringBuilder.Append(input[i]);
+
+    //        if ((i + 1) % 20 == 0)
+    //        {
+    //            stringBuilder.Append("\n");
+    //        }
+    //    }
+
+    //    return stringBuilder.ToString();
+    //}
+
+    public void InsertNewlines(TMP_Text input)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        StartCoroutine(ArrangeBubbleTxt(input));
+    }
 
-        for (int i = 0; i < input.Length; i++)
+    private IEnumerator ArrangeBubbleTxt(TMP_Text tmpText)
+    {
+        if (tmpText.text.Length > 5)
         {
-            stringBuilder.Append(input[i]);
+            ContentSizeFitter contentSizeFitter = tmpText.transform.parent.GetComponent<ContentSizeFitter>();
+            contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-            if ((i + 1) % 20 == 0)
+            string str = tmpText.text;
+            tmpText.text = "";
+
+            for (int i = 0; i < str.Length; i++)
             {
-                stringBuilder.Append("\n");
+                tmpText.text += str[i];
+                tmpText.ForceMeshUpdate();
+
+                var preferredWidth = tmpText.GetPreferredValues().x;
+                if (preferredWidth > 120)
+                {
+                    yield return new WaitForEndOfFrame();
+                    contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+                    yield return new WaitForEndOfFrame();
+
+                    tmpText.text = str;
+                    yield break;
+                }
             }
         }
-
-        return stringBuilder.ToString();
     }
 }
