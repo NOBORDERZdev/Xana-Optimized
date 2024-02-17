@@ -183,7 +183,9 @@ public class FriendAvatarController : MonoBehaviour
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    int _rand = Random.Range(0, 2);
+                    string _gen = _rand == 0 ? "Male" : "Female";
+                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                 }
                 else
                 {
@@ -415,7 +417,9 @@ public class FriendAvatarController : MonoBehaviour
                 {
                     if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                     {
-                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                        int _rand = Random.Range(0, 2);
+                        string _gen = _rand == 0 ? "Male" : "Female";
+                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                     }
                     else
                     {
