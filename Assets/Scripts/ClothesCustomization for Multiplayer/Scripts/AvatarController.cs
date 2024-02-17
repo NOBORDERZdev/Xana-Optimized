@@ -240,8 +240,8 @@ public class AvatarController : MonoBehaviour
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-                    int _rand = Random.Range(0, 2);
-                    string _gen = _rand == 0 ? "Male" : "Female";
+                    float _rand = Random.Range(0.1f, 2f);
+                    string _gen = _rand <= 1 ? "Male" : "Female";
                     SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                 }
                 else
@@ -472,8 +472,8 @@ public class AvatarController : MonoBehaviour
                 {
                     if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                     {
-                        int _rand = Random.Range(0, 2);
-                        string _gen = _rand == 0 ? "Male" : "Female";
+                        float _rand = Random.Range(0.1f, 2f);
+                        string _gen = _rand <= 1 ? "Male" : "Female";
                         SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
                     }
                     else
