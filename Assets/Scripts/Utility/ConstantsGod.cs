@@ -22,6 +22,7 @@ public class ConstantsGod
     public static string SENDMESSAGETEXT = "send message";
     public static string GUSTEUSERNAME = "guste user";
     public static string NFTTYPE = "nft type";
+    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net";
 
     public static string ANIMATION_DATA = "AnimationData";
     public static string EMOTE_SELECTION_INDEX = "EmoteAnimSelectionIndex";
@@ -260,7 +261,7 @@ public class ConstantsGod
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
-    public static string UGCAiApi = "https://101d-39-61-48-164.ngrok-free.app/analyze-image/";
+    public static string UGCAiApi = API_BASEURL_UGC + "/analyze-image/";// for main //"https://101d-39-61-48-164.ngrok-free.app/analyze-image/" for local call;
     #endregion
 
     #region Feed Api's
