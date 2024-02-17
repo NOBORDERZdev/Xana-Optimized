@@ -1128,7 +1128,7 @@ public class MyProfileDataManager : MonoBehaviour
     public void SetupEmptyMsgForPhotoTab(bool isReset)
     {
         //check for photo.......
-        if (allPhotoContainer.childCount > 0 || isReset)
+        if (allPhotoContainer.childCount > 1 || isReset)
         {
             allPhotoContainer.gameObject.SetActive(true);
             emptyPhotoPostMsgObj.SetActive(false);
