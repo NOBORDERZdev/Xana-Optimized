@@ -46,6 +46,12 @@ public class AvatarController : MonoBehaviour
         stitcher = new Stitcher();
     }
 
+    IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
+    {
+        yield return new WaitForSeconds(0.1f);
+        SetAvatarClothDefault(_obj, _gender);
+    }
+
     public void OnEnable()
     {
         BoxerNFTEventManager.OnNFTequip += EquipNFT;
@@ -55,7 +61,14 @@ public class AvatarController : MonoBehaviour
 
         if (IsInit)
         {
-            SetAvatarClothDefault(this.gameObject,"Male");
+            if (GetComponent<FriendAvatarController>())
+            {
+                SetAvatarClothDefault(this.gameObject, "Male");
+            }
+            else
+            {
+                StartCoroutine(SetAvatarDefaultClothDelay(gameObject, "Male"));
+            }
         }
 
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
