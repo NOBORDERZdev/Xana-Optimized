@@ -77,7 +77,7 @@ public class FriendHomeManager : MonoBehaviour
         CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
         CreatedFriend.gameObject.SetActive(true);
-        CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[0]);
+        CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[GetPostRandomDefaultAnim()]);
         if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
         {
             CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
@@ -194,6 +194,25 @@ public class FriendHomeManager : MonoBehaviour
 
        
     }
+
+    int GetPostRandomDefaultAnim(){ 
+        float _rand = UnityEngine.Random.Range(0.1f, 3.0f);
+        int value; 
+        if (_rand <= 1.0f)
+        {
+            value= 0;
+        }
+        else if (_rand >= 1.0f && _rand <= 2.0f)
+        {
+            value= 1;
+        }
+        else
+        {
+            value= 2;
+        }
+        return value;
+    } 
+
 }
 
 [Serializable]

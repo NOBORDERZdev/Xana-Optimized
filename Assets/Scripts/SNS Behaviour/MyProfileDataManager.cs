@@ -2236,12 +2236,12 @@ public class MyProfileDataManager : MonoBehaviour
     //this coroutine is used to show and wait until finish error message animation.......
     IEnumerator WaitUntilErrorAnimationFinished()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         //MyAnim.SetBool("playAnim", false);
         //FeedUIController.Instance.ShowLoader(false);
-        currentEditProfileErrorMessgaeObj.SetActive(false);
+        //currentEditProfileErrorMessgaeObj.SetActive(false);
     }
 
     //this method is used to show edit profile name error message.......
@@ -2342,7 +2342,7 @@ public class MyProfileDataManager : MonoBehaviour
                 //APIManager.Instance.userId = myProfileData.id;
                 //APIManager.Instance.LoadMyPost();
             }
-            ProfileTabButtonClick();
+            Invoke(nameof(ProfileTabButtonClick), 5);
         }
     }
 
