@@ -38,6 +38,10 @@ public class Actor : MonoBehaviour
             StopCoroutine(StartActorBehaviour());
         }
     }
+    public Vector3 LastMoveToPosition()
+    {
+        return MoveTarget.position;
+    }
     void SetMoveActions(MoveBehaviour move)
     {
         _playerMoves.Enqueue(move);
