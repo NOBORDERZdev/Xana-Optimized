@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using static System.Net.WebRequestMethods;
 
 public class ConstantsGod
 
@@ -260,10 +261,12 @@ public class ConstantsGod
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
-    public static string UGCAiApi = "https://101d-39-61-48-164.ngrok-free.app/analyze-image/";
+    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net";
+    public static string UGCAiApi = "/analyze-image/";   // for main //"https://101d-39-61-48-164.ngrok-free.app/analyze-image/" for local call;
     #endregion
 
     #region Feed Api's
+
     public static string FeedGetAllByUserId = "/item/get-following-text-post/";
     public static string FeedLikeDislikePost = "/item/like-text-post";
     public static string FeedSearch="/item/search-following-text-post";
