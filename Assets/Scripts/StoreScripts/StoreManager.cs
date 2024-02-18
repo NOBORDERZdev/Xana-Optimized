@@ -4858,7 +4858,7 @@ public class StoreManager : MonoBehaviour
         XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
         //}
     }
-    public void ApplyUGCValueOnCharacter()
+    public void ApplyUGCValueOnCharacter(string _gender)
     {
         CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
         CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
@@ -4877,7 +4877,7 @@ public class StoreManager : MonoBehaviour
             CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
         }
         if (itemData._eyeItemData != null)
         {

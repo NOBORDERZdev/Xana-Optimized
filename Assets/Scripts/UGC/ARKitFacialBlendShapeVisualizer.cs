@@ -56,7 +56,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             //Debug.LogError("ARKitBlandshape.......");
 
-            if (UGCARFacePoseTrackingManager.Instance.maleDFaceskinRenderer.enabled)
+            if (UGCARFacePoseTrackingManager.Instance.maleDFaceskinRenderer.gameObject.activeInHierarchy)
             {
                 skinnedMeshRenderer = UGCARFacePoseTrackingManager.Instance.maleDFaceskinRenderer;
                 strPrefix = "Male_BSP.";
