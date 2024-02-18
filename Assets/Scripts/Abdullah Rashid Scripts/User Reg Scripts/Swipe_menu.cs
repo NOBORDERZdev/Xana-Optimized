@@ -16,8 +16,10 @@ public class Swipe_menu : MonoBehaviour
     [SerializeField] private float[] pos;
     [SerializeField] private GameObject SelectedOBJ;
     public static Swipe_menu instance;
+    public GameObject backBtnstore;
 
-
+    
+     
     void Awake()
     {
         instance = this;
@@ -30,10 +32,19 @@ public class Swipe_menu : MonoBehaviour
         {
             GameObject itemGameObject = Instantiate(item, contentParent);
         }
+       
      }
     private void OnEnable()
     {
         scroll_pos = 0;
+        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        {
+            backBtnstore.SetActive(true);
+        }
+        else
+        {
+            backBtnstore.SetActive(false);
+        }
     }
 
     private void Update()

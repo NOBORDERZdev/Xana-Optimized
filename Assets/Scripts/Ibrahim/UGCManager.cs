@@ -66,7 +66,7 @@ public class UGCManager : MonoBehaviour
             {
                 if (path != null)
                 {
-                    Texture2D texture = NativeCamera.LoadImageAtPath(path, -1, false);
+                    texture = NativeCamera.LoadImageAtPath(path, -1, false);
                     if (texture == null)
                     {
                         Debug.Log("Couldn't load texture from " + path);
@@ -144,18 +144,39 @@ public class UGCManager : MonoBehaviour
         Debug.Log("Permission result: " + permission);
 #endif
     }
+
     public IEnumerator IERequest(byte[] imageBytes)
     {
+        float requestTimeout = 120f; // Timeout value in seconds (5 minutes)
+        float timer = 0f;
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-
-        using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.UGCAiApi, form))
+        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form);
+        www.SetRequestHeader("Accept", "application/json");
+        // Start the request
+        AsyncOperation operation = www.SendWebRequest();
+        // Wait until the request is done or timeout occurs
+        while (!operation.isDone && timer < requestTimeout)
         {
-            www.SetRequestHeader("Accept", "application/json");
-
-            yield return www.SendWebRequest();
-
+            yield return null; // Wait for the next frame
+            timer += Time.deltaTime;
+        }
+        // Check if the request has timed out
+        if (timer >= requestTimeout)
+        {
+            Debug.Log("Request timed out.");
+            // Handle timeout (e.g., show a message, stop further processing)
+            www.Abort(); // Stop the request
+            warningPanel.SetActive(true);
+            warningText.text = "Taking too long to respond. Please upload again.";
+            StoreManager.instance.loaderPanel.SetActive(false);
+            yield break; // Exit the coroutine
+        }
+        //using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.UGCAiApi, form))
+        {
+            // www.SetRequestHeader("Accept", "application/json");
+            //yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("Failed to send image to the server : " + www.error);
@@ -174,16 +195,15 @@ public class UGCManager : MonoBehaviour
                     warningPanel.SetActive(true);
                     warningText.text = response.description;
                     StoreManager.instance.loaderPanel.SetActive(false);
-                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
-                    
                 }
                 else
                 {
                     Debug.Log("Response Data: " + response.ToString());
                     // selfieSprite.gameObject.SetActive(false);
                     StoreManager.instance.loaderPanel.SetActive(false);
-                   // SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
+                    // SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
                     ugcItems = response;
                     isSelfieTaken = true;
                     SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
@@ -191,14 +211,19 @@ public class UGCManager : MonoBehaviour
                         StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
                     //StoreManager.instance.ApplyUGCValueOnCharacter();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
-                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);                    
+                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
                     Swipe_menu.instance.OnClickNext();
-                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+
+                    // release memory after result successfull
+                    Destroy(selfieSprite);
+                    Destroy(texture);
                 }
             }
         }
     }
+
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
         StoreManager.instance.itemData.gender = ugcItems.gender;
