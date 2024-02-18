@@ -19,7 +19,7 @@ public class Actor : MonoBehaviour
     bool _startCoroutineFLag = false;
     public AnimatorOverrideController overrideController;
     bool _lastAction = false;
-
+    [SerializeField] bool isPlayer;
     private void OnEnable()
     {
         if(_startCoroutineFLag)
@@ -69,6 +69,8 @@ public class Actor : MonoBehaviour
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
         MoveTarget = playerTransform;
+        //if(isPlayer)
+        //return;
         transform.position = MoveTarget.position;
         StartCoroutine(StartBehaviour());
     }
@@ -136,9 +138,6 @@ public class Actor : MonoBehaviour
                     yield return new WaitForSeconds(ActionClipTime); 
                    // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
                     MoveBehaviour move = _playerMoves.Dequeue();
-
-                    
-
                     if (move.behaviour == MoveBehaviour.Behaviour.Action || menuIdleFlag)
                     {
                         StateMoveBehaviour = 2;
@@ -150,6 +149,8 @@ public class Actor : MonoBehaviour
                     }
                     else
                     {
+                        if(isPlayer)
+                        break;
                         StateMoveBehaviour = 1;
                         MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
                         MoveSpeed = move.Speed;
@@ -162,6 +163,8 @@ public class Actor : MonoBehaviour
                 }
                 break;
             case 1:
+                    if(isPlayer)
+                        break;
                     transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
                     transform.LookAt(MoveTarget);
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
@@ -193,6 +196,8 @@ public class Actor : MonoBehaviour
                 }
                 else
                 {
+                     if(isPlayer)
+                        break;
                     if (_playerMoves.Peek().behaviour != MoveBehaviour.Behaviour.Action)
                     {
                         _PlayerAnimator.SetBool("Action", false);
