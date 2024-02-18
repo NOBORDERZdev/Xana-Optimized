@@ -1017,6 +1017,11 @@ public class MyProfileDataManager : MonoBehaviour
                     Destroy(emptyFeedObjRef);
                 }
                 emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                //for (int j = 0; j < 4; j++)
+                //{
+                //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                //    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
+                //}
             }
         }
 
@@ -1560,6 +1565,10 @@ public class MyProfileDataManager : MonoBehaviour
             //editProfileWebsiteInputfield.text = myProfileData.userProfile.website;
             editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
             editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            if (string.IsNullOrWhiteSpace(editProfileBioInputfield.Text))
+            {
+                editProfileBioInputfield.Text = "";
+            }
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
             if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
@@ -1843,7 +1852,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             Debug.Log("Please enter username");
-            ShowEditProfileNameErrorMessage("The name field should not be empty");
+            ShowEditProfileNameErrorMessage("Display name can't be empty");
             return;
         }
         
@@ -1872,7 +1881,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             Debug.Log("Please enter  username");
-            ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+            ShowEditProfileUniqueNameErrorMessage("Username can’t be empty");
             return;
         }
 
@@ -2241,7 +2250,7 @@ public class MyProfileDataManager : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         //MyAnim.SetBool("playAnim", false);
         //FeedUIController.Instance.ShowLoader(false);
-        //currentEditProfileErrorMessgaeObj.SetActive(false);
+        currentEditProfileErrorMessgaeObj.SetActive(false);
     }
 
     //this method is used to show edit profile name error message.......

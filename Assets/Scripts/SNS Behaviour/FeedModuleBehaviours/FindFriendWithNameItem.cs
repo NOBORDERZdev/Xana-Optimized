@@ -380,11 +380,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("follow user success data:" + data);
-                JSONNode jsonNode = JSON.Parse(data);
-                if (jsonNode["mutualFollowing"].AsBool)
-                {
+                //JSONNode jsonNode = JSON.Parse(data);
+                //if (jsonNode["mutualFollowing"].AsBool)
+                //{
                     UpdateBfBtn(false);
-                }
+                //}
                 searchUserRow.is_following_me = true;
                 searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
