@@ -99,7 +99,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         FollowFollowingSetUp(searchUserRow.am_i_following);
         if (searchUserRow.am_i_following || searchUserRow.is_following_me)
         {
-            UpdateBfBtn(searchUserRow.am_i_following, searchUserRow.is_following_me, searchUserRow.is_close_friend);
+            UpdateBfBtn(searchUserRow.am_i_following, true, searchUserRow.is_close_friend);
         }
 
     }
@@ -192,7 +192,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             FollowFollowingSetUp(amifollowing);
             if (amifollowing || isfollowingme)
             {
-                UpdateBfBtn(amifollowing, isfollowingme, isclosefriend);
+                UpdateBfBtn(amifollowing, true, isclosefriend);
             }
         }
         else
@@ -312,12 +312,15 @@ public class FindFriendWithNameItem : MonoBehaviour
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
             followFollowingText.color= followingTextColor;
+            UpdateBfBtn(false);
         }
         else
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
             followFollowingText.color= followTextColor;
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
         //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
@@ -447,7 +450,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                     this.gameObject.SetActive(false);
                 else
                 {
-                    UpdateBfBtn(searchUserRow.is_following_me, searchUserRow.am_i_following, searchUserRow.is_close_friend);
+                    UpdateBfBtn(searchUserRow.am_i_following, true, searchUserRow.is_close_friend);
                     FollowFollowingSetUp(false);
                 }
             }
