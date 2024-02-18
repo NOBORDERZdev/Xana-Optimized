@@ -253,6 +253,7 @@ public class BottomTabManager : MonoBehaviour
                 }
             }
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
         }
         GameManager.Instance.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
@@ -485,6 +486,7 @@ public class BottomTabManager : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                 additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 3;
+                FeedUIController.Instance.feedUiScreen.SetActive(true);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
@@ -494,6 +496,7 @@ public class BottomTabManager : MonoBehaviour
                 {
                     Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
                 }
+
             }
             if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
             {

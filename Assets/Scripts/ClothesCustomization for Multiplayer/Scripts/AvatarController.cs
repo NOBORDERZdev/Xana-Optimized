@@ -36,6 +36,7 @@ public class AvatarController : MonoBehaviour
     public NFTColorCodes _nftAvatarColorCodes;
     public bool isVisibleOnCam = false;
     public CharcterBodyParts characterBodyParts;
+
     private void Awake()
     {
         //characterBodyParts = this.GetComponent<CharcterBodyParts>();
@@ -255,7 +256,8 @@ public class AvatarController : MonoBehaviour
                 {
                     float _rand = Random.Range(0.1f, 2f);
                     string _gen = _rand <= 1 ? "Male" : "Female";
-                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
+                    SetAvatarClothDefault(this.gameObject, _gen);
+
                 }
                 else
                 {
@@ -487,7 +489,7 @@ public class AvatarController : MonoBehaviour
                     {
                         float _rand = Random.Range(0.1f, 2f);
                         string _gen = _rand <= 1 ? "Male" : "Female";
-                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
+                        SetAvatarClothDefault(this.gameObject, _gen);
                     }
                     else
                     {
@@ -693,7 +695,7 @@ public class AvatarController : MonoBehaviour
             {
                 float _rand = Random.Range(0.1f, 2f);
                 string _gen = _rand <= 1 ? "Male" : "Female";
-                SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
+                SetAvatarClothDefault(this.gameObject, _gen);
             }
             else
             {
@@ -1376,15 +1378,18 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
-                    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                    if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+                        _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+                    else
+                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn, false));
                 }
-                if (_CharacterData.charactertypeAi == true)
+                if (_CharacterData!= null && _CharacterData.charactertypeAi == true)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn, true));
                 }
                 else
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn, false));
+                    StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn,false));
                 }
             }
             else if (type == "Hair" && XanaConstants.xanaConstants.isPresetHairColor && presetHairColor != null)

@@ -45,6 +45,7 @@ public class UGCManager : MonoBehaviour
         texture = null;
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         StoreManager.instance.itemData.CharactertypeAi = false;
+        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
     public void OnClickSelfieButton()
     {
@@ -186,7 +187,7 @@ public class UGCManager : MonoBehaviour
                 warningPanel.SetActive(true);
                 warningText.text = www.error;
                 StoreManager.instance.loaderPanel.SetActive(false);
-
+                GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             }
             else
             {
@@ -198,6 +199,7 @@ public class UGCManager : MonoBehaviour
                     warningPanel.SetActive(true);
                     warningText.text = response.description;
                     StoreManager.instance.loaderPanel.SetActive(false);
+                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
                     
                 }
@@ -217,6 +219,7 @@ public class UGCManager : MonoBehaviour
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);                    
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
                     Swipe_menu.instance.OnClickNext();
+                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                 }
             }
         }
