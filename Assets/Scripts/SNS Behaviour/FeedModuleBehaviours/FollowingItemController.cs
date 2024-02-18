@@ -103,7 +103,7 @@ public class FollowingItemController : MonoBehaviour
             {
                 FollowFollowingSetUp(false);
             }
-            UpdateBfBtn(allFollowingRow.following.isFollowing, allFollowingRow.following.is_close_friend);
+            UpdateBfBtn(true, allFollowingRow.following.is_close_friend);
             //UpdateBfBtn(allFollowingRow.following.is_close_friend);
         }
         else
@@ -226,12 +226,14 @@ public class FollowingItemController : MonoBehaviour
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
-
+            UpdateBfBtn(false);
         }
         else
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
         //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
