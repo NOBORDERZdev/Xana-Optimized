@@ -2307,7 +2307,7 @@ public class APIManager : MonoBehaviour
                 if (test.msg.Contains("Username"))
                 {
                     MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                    MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                    MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The username must include letters");
                 }
                 //Jugar for mainnet issue as API is not deployed yet on mainnet
                 //MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
@@ -2325,7 +2325,7 @@ public class APIManager : MonoBehaviour
                     if (test.msg.Contains("Username"))
                     {
                         MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                        MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                        MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("Username already taken");
                     }
                 }
                 Debug.Log("<color=red> UpdateUserProfile data:" + www.downloadHandler.text + "</color>");
