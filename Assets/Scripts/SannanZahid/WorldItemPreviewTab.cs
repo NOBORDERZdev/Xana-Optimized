@@ -385,12 +385,12 @@ public class WorldItemPreviewTab : MonoBehaviour
                 yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                Debug.LogError("following world error :- " + www.downloadHandler.text);
+                //Debug.LogError("following world error :- " + www.downloadHandler.text);
                 CallBack(false);
             }
             else
             {
-                Debug.LogError("following world :- "+www.downloadHandler.text);
+               // Debug.LogError("following world :- "+www.downloadHandler.text);
                 CallBack(true);
             }
             www.Dispose();
