@@ -59,6 +59,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.defaultSelection = 10;
         SetCameraRenderTexture();
         if (AvatarRef)
         {
