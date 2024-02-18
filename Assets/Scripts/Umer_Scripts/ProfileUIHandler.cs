@@ -59,6 +59,7 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.defaultSelection = 10;
         SetCameraRenderTexture();
         if (AvatarRef)
         {
@@ -68,7 +69,11 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        newRenderTexture.Release();
+        _renderTexCamera.GetComponent<Camera>().targetTexture = null;
+        _renderTexCamera.gameObject.SetActive(false);
+        Object.Destroy(newRenderTexture);
+
+        //newRenderTexture.Release();
         if (AvatarRef)
         {
             AvatarRef.SetActive(false);
@@ -105,17 +110,21 @@ public class ProfileUIHandler : MonoBehaviour
     {
         if (!newRenderTexture)
         {
-            newRenderTexture = new RenderTexture(512, 512, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
-            newRenderTexture.antiAliasing = 8;
-            if (Application.platform == RuntimePlatform.Android)
-            {
+            newRenderTexture = new RenderTexture(1024, 1024, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture.antiAliasing = 4;
+            newRenderTexture.useMipMap = true;
+            newRenderTexture.filterMode = FilterMode.Trilinear;
+            //if (Application.platform == RuntimePlatform.Android)
+            //{
                 UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();
                 _uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
-                _uaCamData.antialiasingQuality = AntialiasingQuality.Low;
-            }
+                _uaCamData.antialiasingQuality = AntialiasingQuality.High; //AntialiasingQuality.Low;
+            //}
+
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
             AvatarPreviewImgRef.texture = newRenderTexture;
+            _renderTexCamera.gameObject.SetActive(true);
         }
     }
 

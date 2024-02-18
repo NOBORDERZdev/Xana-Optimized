@@ -48,6 +48,7 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
+        XanaConstants.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
         try
