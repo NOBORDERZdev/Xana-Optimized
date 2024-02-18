@@ -253,6 +253,7 @@ public class BottomTabManager : MonoBehaviour
                 }
             }
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
         }
         GameManager.Instance.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
