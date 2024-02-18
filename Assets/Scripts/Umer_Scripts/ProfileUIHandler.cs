@@ -48,6 +48,7 @@ public class ProfileUIHandler : MonoBehaviour
     public SelectionItemScript immitateMainButtonPanelScriptRef;
     public SelectionItemScript immitateOtherUserButtonPanelScriptRef;
 
+    private GameObject lightingObj;
     private void Awake()
     {
         if (instance == null)
@@ -59,9 +60,11 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.defaultSelection = 10;
         SetCameraRenderTexture();
         if (AvatarRef)
         {
+            lightingObj.SetActive(true);
             AvatarRef.SetActive(true);
         }
     }
@@ -75,6 +78,7 @@ public class ProfileUIHandler : MonoBehaviour
         //newRenderTexture.Release();
         if (AvatarRef)
         {
+            lightingObj.SetActive(false);
             AvatarRef.SetActive(false);
         }
     }
@@ -90,6 +94,7 @@ public class ProfileUIHandler : MonoBehaviour
         _renderTexCamera.parent = null;
         //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
         _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
+        lightingObj = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().profileLightingObj;
         AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         AvatarRef.GetComponent<FootStaticIK>().ikActive = true;
         AvatarRef.name = "UserPreviewAvatar";

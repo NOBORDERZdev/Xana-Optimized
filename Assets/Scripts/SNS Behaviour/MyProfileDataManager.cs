@@ -3002,7 +3002,7 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
+               // Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
                 OnlyLoadDataMyProfile();//set data                

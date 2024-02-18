@@ -55,30 +55,35 @@ public class PlayerPostBubbleHandler : MonoBehaviour
 
     private IEnumerator ArrangeBubbleTxt(TMP_Text tmpText)
     {
-        if (tmpText.text.Length > 5)
+        if (tmpText.text.Length > 0)
         {
             ContentSizeFitter contentSizeFitter = tmpText.transform.parent.GetComponent<ContentSizeFitter>();
             contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+            yield return new WaitForEndOfFrame();
 
             string str = tmpText.text;
             tmpText.text = "";
-
             for (int i = 0; i < str.Length; i++)
             {
+                Debug.LogError(i);
                 tmpText.text += str[i];
                 tmpText.ForceMeshUpdate();
 
                 var preferredWidth = tmpText.GetPreferredValues().x;
-                if (preferredWidth > 120)
+                if (preferredWidth > 134)
                 {
                     yield return new WaitForEndOfFrame();
                     contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
                     yield return new WaitForEndOfFrame();
+                    contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta =
+                        new Vector2(135f, contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta.y);
 
                     tmpText.text = str;
                     yield break;
                 }
             }
+
+            Debug.LogError(contentSizeFitter.horizontalFit);
         }
     }
 }

@@ -69,6 +69,114 @@ public class FeedData : MonoBehaviour
         }
     }
    
+    public void onclickFeedUserProfileButton()
+    {
+        //print("Getting Click here" + _data.user_id);
+        APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
+    }
+
+    public void SetupFeedUserProfile(SearchUserRow _feedUserData)
+    {
+        //print("Getting Click here name" + _feedUserData.name);
+        //Debug.Log("Search User id:" + _feedUserData.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+            MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
+        }
+        else
+        {
+            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
+            //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
+            //MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (_feedUserData.am_i_following)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+
+        AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
+        feedRawData.id = _feedUserData.id;
+        feedRawData.name = _feedUserData.name;
+        feedRawData.avatar = _feedUserData.avatar;
+        feedRawData.UserProfile = _feedUserData.userProfile;
+        feedRawData.FollowerCount = _feedUserData.followerCount;
+        feedRawData.FollowingCount = _feedUserData.followingCount;
+        feedRawData.feedCount = _feedUserData.feedCount;
+
+        //FeedUIController.Instance.ShowLoader(true);
+
+        //OtherPlayerProfileData.Instance.currentFindFriendWithNameItemScript = this;
+
+        //OtherPlayerProfileData.Instance.FeedRawData = feedRawData;
+        ////OtherPlayerProfileData.Instance.OnSetUserUi(_feedUserData.isFollowing);
+        ////OtherPlayerProfileData.Instance.LoadData();
+
+        //OtherPlayerProfileData.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
+
+        //APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
+        //APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
+
+        //this api get any user profile data and feed for other player profile....... 
+        SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
+        singleUserProfileData.id = _feedUserData.id;
+        singleUserProfileData.name = _feedUserData.name;
+        singleUserProfileData.email = "";
+        singleUserProfileData.avatar = _feedUserData.avatar;
+        singleUserProfileData.followerCount = _feedUserData.followerCount;
+        singleUserProfileData.followingCount = _feedUserData.followingCount;
+        singleUserProfileData.feedCount = _feedUserData.feedCount;
+        singleUserProfileData.isFollowing = _feedUserData.is_following_me;
+        singleUserProfileData.userOccupiedAssets = _feedUserData.userOccupiedAssets;
+        print("_feedUserData occupied asstes count: " + _feedUserData.userOccupiedAssets.Count);
+        print("singleUserProfileData occupied asstes count: " + singleUserProfileData.userOccupiedAssets.Count);
+
+        SingleUserProfile singleUserProfile = new SingleUserProfile();
+        singleUserProfileData.userProfile = singleUserProfile;
+        if (_feedUserData.userProfile != null)
+        {
+            singleUserProfileData.userProfile.id = _feedUserData.userProfile.id;
+            singleUserProfileData.userProfile.userId = _feedUserData.userProfile.userId;
+            singleUserProfileData.userProfile.gender = _feedUserData.userProfile.gender;
+            singleUserProfileData.userProfile.job = _feedUserData.userProfile.job;
+            singleUserProfileData.userProfile.country = _feedUserData.userProfile.country;
+            singleUserProfileData.userProfile.website = _feedUserData.userProfile.website;
+            singleUserProfileData.userProfile.bio = _feedUserData.userProfile.bio;
+        }
+        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData, true);
+    }
+
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
+    }
+
     void HieghtListUpdateWithDelay(){ 
        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
        gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();

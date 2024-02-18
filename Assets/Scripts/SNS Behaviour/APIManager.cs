@@ -1692,6 +1692,40 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    public void GetFeedUserProfileData<T>(int _userid, T obj) where T : class
+    {
+        StartCoroutine(IERequestFeedUserProfileData(_userid, result =>
+        {
+            FeedData _feedUserData = obj as FeedData;
+            _feedUserData.SetupFeedUserProfile(result);
+        }));
+    }
+
+    IEnumerator IERequestFeedUserProfileData(int _userid, Action<SearchUserRow> result)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("userId", _userid);
+        string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/1";
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
+        {
+            www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("Feed user profile data:" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                result(searchUserRoot.data.rows[0]);
+            }
+        }
+    }
+
     public void RequestGetUserLatestAvatarData<T>(string userid, T obj) where T : class
     {
         StartCoroutine(IERequestGetUserLatestAvatarData(userid, success =>
@@ -1710,6 +1744,10 @@ public class APIManager : MonoBehaviour
                      }else if (obj is FindFriendWithNameItem)
                      {
                          FindFriendWithNameItem _followingObj = obj as FindFriendWithNameItem;
+                         _followingObj.DressUpUserAvatar();
+                     }else if (obj is FeedData)
+                     {
+                         FeedData _followingObj = obj as FeedData;
                          _followingObj.DressUpUserAvatar();
                      }
                  }
