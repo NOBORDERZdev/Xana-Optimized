@@ -117,7 +117,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                         {
                             if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                             {
-                                otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                float _rand = UnityEngine.Random.Range(0.1f, 2f);
+                                string _gen = _rand <= 1 ? "Male" : "Female";
+                                otherPlayer.SetAvatarClothDefault(otherPlayer.gameObject, _gen);
                             }
                             else
                             {

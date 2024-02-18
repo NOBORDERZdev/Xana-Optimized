@@ -1560,6 +1560,10 @@ public class MyProfileDataManager : MonoBehaviour
             //editProfileWebsiteInputfield.text = myProfileData.userProfile.website;
             editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
             editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            if (string.IsNullOrWhiteSpace(editProfileBioInputfield.Text))
+            {
+                editProfileBioInputfield.Text = "";
+            }
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
             if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
