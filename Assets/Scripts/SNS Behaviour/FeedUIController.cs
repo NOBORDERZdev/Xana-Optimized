@@ -371,7 +371,7 @@ public class FeedUIController : MonoBehaviour
             // END OLD FEED UI
         }
 
-        feedUiScreen.SetActive(isFeedScreen);
+        //feedUiScreen.SetActive(isFeedScreen);
         //otherPlayerProfileScreen.SetActive(false);
         giftItemScreens.SetActive(false);
         feedVideoScreen.SetActive(false);
