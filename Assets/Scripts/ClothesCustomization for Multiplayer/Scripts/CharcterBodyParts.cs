@@ -1087,7 +1087,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     // public enum ObjColor { skinColor,lipColor,hairColor,eyebrowColor,eyeColor}
-    public IEnumerator ImplementColors(Color _color, SliderType _objColor, GameObject applyOn, bool hairColorai = false)
+    public IEnumerator ImplementColors(Color _color, SliderType _objColor, GameObject applyOn)
     {
         yield return new WaitForSeconds(0f);
 
@@ -1107,8 +1107,8 @@ public class CharcterBodyParts : MonoBehaviour
                 break;
 
             case SliderType.HairColor:
-                if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
-                {
+                //if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
+                //{
                     AvatarController ac = applyOn.GetComponent<AvatarController>();
                     if (ac.wornHair != null)
                     {
@@ -1131,11 +1131,11 @@ public class CharcterBodyParts : MonoBehaviour
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                     }
 
-                }
-                else if(hairColorai)
-                {
-                    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                }
+               // }
+                //else if(hairColorai)
+                //{
+                //    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                //}
                 break;
 
             case SliderType.EyeBrowColor:
