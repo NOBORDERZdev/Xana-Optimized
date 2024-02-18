@@ -81,6 +81,7 @@ public class UIManager : MonoBehaviour
     public void ResetPlayerToLastPostPosted()
     {
         GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
+         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
     public void AvaterButtonCustomPushed()
     {
