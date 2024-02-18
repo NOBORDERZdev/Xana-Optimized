@@ -103,6 +103,7 @@ public class XanaConstants : MonoBehaviour
     /// variables for builder scene integration 
     /// </summary>
     /// 
+    public bool isWalletLoadingbool = false;
     public bool isBuilderScene;
     public int builderMapID;
     public bool JjWorldSceneChange = false;
