@@ -69,7 +69,9 @@ public class ProfileUIHandler : MonoBehaviour
     private void OnDisable()
     {
         _renderTexCamera.GetComponent<Camera>().targetTexture = null;
+        _renderTexCamera.gameObject.SetActive(false);
         Object.Destroy(newRenderTexture);
+
         //newRenderTexture.Release();
         if (AvatarRef)
         {
@@ -121,6 +123,7 @@ public class ProfileUIHandler : MonoBehaviour
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
             AvatarPreviewImgRef.texture = newRenderTexture;
+            _renderTexCamera.gameObject.SetActive(true);
         }
     }
 
