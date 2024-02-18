@@ -26,19 +26,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233323368564568186}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2180737781002343563}
-  m_Father: {fileID: 2180737780680437717}
+  m_Children: []
+  m_Father: {fileID: 2180737781002343563}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 720, y: 410}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 722, y: 412}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7783159898366717482
 CanvasRenderer:
@@ -68,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d7a7a0fd3fab4814bbe7c6ba7c5c07a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 94a9f40d0296c8d478734d7b718aedce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -85,7 +84,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233323368564568186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -273,7 +272,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2895877911303751669}
+  - {fileID: 2180737781002343563}
   - {fileID: 2180737780532338604}
   - {fileID: 2180737781117438305}
   m_Father: {fileID: 0}
@@ -360,14 +359,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a820b95a10f0dc14db5be4ddf485f381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dynamicScroll: {fileID: 0}
-  Index: 0
   idOfObject: 
   m_EnvironmentName: 
   m_WorldDescription: 
   m_ThumbnailDownloadURL: 
   ThumbnailDownloadURLHigh: 
-  creatorName: 
   createdAt: 
   userLimit: 
   userAvatarURL: 
@@ -423,13 +419,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2895877911303751669}
+  m_Children:
+  - {fileID: 2895877911303751669}
+  m_Father: {fileID: 2180737780680437717}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -10}
   m_SizeDelta: {x: 720, y: 410}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2180737781002343557
