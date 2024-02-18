@@ -1381,15 +1381,15 @@ public class AvatarController : MonoBehaviour
                     if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
                         _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                     else
-                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn, false));
+                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                 }
                 if (_CharacterData!= null && _CharacterData.charactertypeAi == true)
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn, true));
+                    StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
                 }
                 else
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn,false));
+                    StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                 }
             }
             else if (type == "Hair" && XanaConstants.xanaConstants.isPresetHairColor && presetHairColor != null)

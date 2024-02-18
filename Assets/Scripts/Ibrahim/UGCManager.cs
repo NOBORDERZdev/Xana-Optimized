@@ -217,7 +217,7 @@ public class UGCManager : MonoBehaviour
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
                     // release memory after result successfull
-                    Destroy(selfieSprite);
+                   // Destroy(selfieSprite);
                     Destroy(texture);
                 }
             }
