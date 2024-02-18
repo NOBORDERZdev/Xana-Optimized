@@ -60,6 +60,7 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
+         FeedUIController.Instance.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
         //FeedUIController.Instance.ShowLoader(true);
@@ -425,7 +426,7 @@ public class FeedController : MonoBehaviour
             scrollerController.feedHeight.Clear();
         }
         scrollerController.scroller.ClearAll();
-        scrollerController.scroller.ReloadData();
+//        scrollerController.scroller.ReloadData();
     }
 }
 
