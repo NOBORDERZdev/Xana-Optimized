@@ -254,6 +254,7 @@ public class BottomTabManager : MonoBehaviour
             }
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            DisableSubScreen();
         }
         GameManager.Instance.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
@@ -306,6 +307,7 @@ public class BottomTabManager : MonoBehaviour
            
             WorldManager.LoadHomeScreenWorlds?.Invoke();
             FlexibleRect.OnAdjustSize?.Invoke(false);
+            DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);
             //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
@@ -529,6 +531,7 @@ public class BottomTabManager : MonoBehaviour
 
             //home page thumnbail images destroy
             WorldManager.instance.ClearHomePageData();
+            DisableSubScreen();
         }
     }
 
@@ -613,6 +616,8 @@ public class BottomTabManager : MonoBehaviour
                 // UIManager.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
+
+            DisableSubScreen();
         }
         if (MyProfileDataManager.Instance)
         {
@@ -630,6 +635,16 @@ public class BottomTabManager : MonoBehaviour
         FeedUIController.Instance.feedUiScreen.SetActive(false);
 
     }
+
+    void DisableSubScreen ()
+    {
+        if (FeedUIController.Instance != null)
+        {
+            SNSSettingController.Instance.settingScreen.SetActive(false);
+            SNSSettingController.Instance.myAccountScreen.SetActive(false);
+        }
+    }   
+
 
     //void InvokeDisableFeed(){ 
     //    FeedUIController.Instance.feedUiScreen.SetActive(false);
@@ -708,6 +723,8 @@ public class BottomTabManager : MonoBehaviour
             ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);
+
+            DisableSubScreen();
         }
 
         //home page thumnbail images destroy
