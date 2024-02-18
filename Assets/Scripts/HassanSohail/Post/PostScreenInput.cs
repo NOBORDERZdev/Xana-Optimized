@@ -16,16 +16,18 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField] Color normalColor = new Vector4();
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
    int maxWidth = 270;
-    int maxHeight = 100;
+    int maxHeight = 125;
    float characterOffset = 5.0f;
    string placeHolderText = "Enter the text";
    TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
+    bool bubbleHeightCheck = false;
     private void OnEnable()
     {
        ActiveInputFeild();
         bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
         bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        bubbleHeightCheck = false;
     }
 
     private void Start(){ 
@@ -33,6 +35,7 @@ public class PostScreenInput : MonoBehaviour
         ShowText.color = placeHolderColor;
     }
     public void TextChange(){
+        Debug.Log("Text Change " + bubbleImage.rect.height);
         ShowText.text = "";
         if (inputField.text.Count()>0) // if the input field is not empty
         {
@@ -48,7 +51,7 @@ public class PostScreenInput : MonoBehaviour
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
-        if (bubbleImage.rect.height >= maxHeight)
+        if (bubbleImage.rect.height >= maxHeight && bubbleHeightCheck == false)
         {
             BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
@@ -61,27 +64,39 @@ public class PostScreenInput : MonoBehaviour
             bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
             bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
         }
-      
+        if (ShowText.text.Count() >= 70)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
+            bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
+        }
+        if (ShowText.text.Count() >= 150)
+        {
+            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5200526f);
+            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7003913f);
+        }
+       
     }
 
     public void ActiveInputFeild()
     {
         inputField.Select();
         inputField.ActivateInputField();
-        //inputField.MoveToEndOfLine(shift: true, ctrl: false);
-       // inputField.caretPosition = inputField.text.Length;
         BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        if (ShowText.text.Count() >= 100)
+        if (ShowText.text.Count() >= 70)
         {
             bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
             bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
+            bubbleHeightCheck = true;
         }
-        if (ShowText.text.Count() >= 190)
-        { 
-            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5500709f);
-            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7304096f);
+        if (ShowText.text.Count() >= 150)
+        {
+            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5200526f);
+            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7003913f);
         }
-       
+        //inputField.MoveToEndOfLine(shift: true, ctrl: false);
+        // inputField.caretPosition = inputField.text.Length;
+
+
     }
     //private string FormatInput(string input)
     //{

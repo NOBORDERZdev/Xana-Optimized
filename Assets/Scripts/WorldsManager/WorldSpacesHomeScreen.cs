@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class WorldSpacesHomeScreen : MonoBehaviour
 {
@@ -398,6 +399,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             userTag.SetActive(true);
             yield return new WaitForEndOfFrame();
         }
+
+        // when all tags are instantiated, Set the Spaceing value
+        userTagParent.GetComponent<HorizontalLayoutGroup>().spacing = 20.1f;
     }
 
 
