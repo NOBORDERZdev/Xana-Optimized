@@ -1881,7 +1881,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             Debug.Log("Please enter  username");
-            ShowEditProfileUniqueNameErrorMessage("Username can’t be empty");
+            ShowEditProfileUniqueNameErrorMessage("Username can't be empty");
             return;
         }
 
