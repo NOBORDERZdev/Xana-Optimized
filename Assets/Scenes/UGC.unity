@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 2800000, guid: 53ddca067f2468c469bdfda77d23e8e9, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.8999226, g: 0.5754645, b: 0.5967783, a: 1}
+  m_IndirectSpecularColor: {r: 0.8999226, g: 0.5754645, b: 0.59677833, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -705,6 +705,7 @@ GameObject:
   - component: {fileID: 75937155}
   - component: {fileID: 75937157}
   - component: {fileID: 75937156}
+  - component: {fileID: 75937158}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -829,6 +830,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75937154}
   m_CullTransparentMesh: 1
+--- !u!114 &75937158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75937154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 75937156}
 --- !u!1 &80195028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4029,7 +4045,7 @@ MonoBehaviour:
     kick: 0
 --- !u!95 &426326462
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4046,7 +4062,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &426326463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7105,6 +7122,7 @@ GameObject:
   - component: {fileID: 1039198839}
   - component: {fileID: 1039198841}
   - component: {fileID: 1039198840}
+  - component: {fileID: 1039198842}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -7229,6 +7247,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039198838}
   m_CullTransparentMesh: 1
+--- !u!114 &1039198842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039198838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 1039198840}
 --- !u!1 &1052550538
 GameObject:
   m_ObjectHideFlags: 0
@@ -9102,6 +9135,7 @@ MonoBehaviour:
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 0}
   overrideController: {fileID: 0}
+  isPlayer: 0
 --- !u!195 &1325592276
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -10857,6 +10891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -10873,6 +10908,7 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &1823534138
 GameObject:
   m_ObjectHideFlags: 0
@@ -11745,7 +11781,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2132870624
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -11762,7 +11798,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2132870625
 MonoBehaviour:
   m_ObjectHideFlags: 0
