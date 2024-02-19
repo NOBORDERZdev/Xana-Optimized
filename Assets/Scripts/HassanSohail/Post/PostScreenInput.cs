@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
-using static System.Net.Mime.MediaTypeNames;
-
 public class PostScreenInput : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
