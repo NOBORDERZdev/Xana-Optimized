@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
-
 public class PostScreenInput : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
@@ -24,9 +23,8 @@ public class PostScreenInput : MonoBehaviour
     bool bubbleHeightCheck = false;
     private void OnEnable()
     {
-       ActiveInputFeild();
-        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        ActiveInputFeild();
+        StartCoroutine(SetBubblePos());
         bubbleHeightCheck = false;
     }
 
@@ -46,6 +44,12 @@ public class PostScreenInput : MonoBehaviour
         {
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
+            if (ShowText.text == "Enter the text")
+            {
+                BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+                bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+            }
         }
         if (bubbleImage.rect.width >= maxWidth)
         {
@@ -96,6 +100,16 @@ public class PostScreenInput : MonoBehaviour
         //inputField.MoveToEndOfLine(shift: true, ctrl: false);
         // inputField.caretPosition = inputField.text.Length;
 
+
+    }
+    IEnumerator SetBubblePos()
+    {
+        yield return new WaitForEndOfFrame();
+        ShowText.text = placeHolderText;
+        ShowText.color = placeHolderColor;
+        BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
 
     }
     //private string FormatInput(string input)
