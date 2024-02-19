@@ -141,7 +141,7 @@ public class TextLocalization : MonoBehaviour
             {
                 currentText = LocalizeTextTMP.text;
             }
-            if (CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
+            if (!currentText.IsNullOrEmpty() && CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
             {
                 if (!CustomLocalization.forceJapanese)
                 {
