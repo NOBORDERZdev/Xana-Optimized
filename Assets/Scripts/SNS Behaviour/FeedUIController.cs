@@ -3063,6 +3063,7 @@ public class FeedUIController : MonoBehaviour
         AddFrndRecommendedPanel.SetActive(false);
         findFriendInputFieldAdvanced.Text = "";
         findFriendScreen.SetActive(false);
+        APIManager.Instance.SetHotFriend();
         UpdateAdFrndBtnStatus(0);
     }
 
