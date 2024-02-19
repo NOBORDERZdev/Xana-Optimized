@@ -167,7 +167,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.SearchLoadingCanvas.SetActive(true);
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
 
-            searchWorldControllerRef.scroller.ScrollPosition = 0f;
+            searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
         }
         else
         {
@@ -342,6 +342,8 @@ public class WorldManager : MonoBehaviour
 
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
+        searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
+
         resultWorldList.Clear();
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
