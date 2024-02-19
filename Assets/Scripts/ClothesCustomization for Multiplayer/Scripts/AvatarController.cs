@@ -37,6 +37,7 @@ public class AvatarController : MonoBehaviour
     public NFTColorCodes _nftAvatarColorCodes;
     public bool isVisibleOnCam = false;
     public CharcterBodyParts characterBodyParts;
+    public bool isWearOrNot = false;
 
     private void Awake()
     {
@@ -50,8 +51,12 @@ public class AvatarController : MonoBehaviour
 
     IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
     {
-        yield return new WaitForSeconds(0.1f);
-        SetAvatarClothDefault(_obj, _gender);
+        yield return new WaitForEndOfFrame();  //WaitForSeconds(0.1f);
+        if (SceneManager.GetActiveScene().name != "Main" && !isWearOrNot)
+        {
+            //Debug.LogError(_obj.GetComponent<PhotonView>().ViewID + ":Wear Default cloth manually");
+            SetAvatarClothDefault(_obj, _gender);
+        }
     }
 
     public void OnEnable()

@@ -445,7 +445,13 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         for (int i = 0; i < userTagInfo.data.rows.Count; i++)
         {
             GameObject userTag = Instantiate(userTagPrefab, userTagParent.transform);
-            userTag.GetComponent<TagPrefabInfo>().tagName.text = userTagInfo.data.rows[i].tagName;
+
+
+            TagPrefabInfo tagScript = userTag.GetComponent<TagPrefabInfo>();
+            tagScript.tagName.text = userTagInfo.data.rows[i].tagName;
+            // Currently Not Use Localize Tag As its Search hot showing Any result
+            //tagScript.tagName.GetComponent<TextLocalization>().LocalizeTextText(userTagInfo.data.rows[i].tagName);
+
             userTag.SetActive(true);
             yield return new WaitForEndOfFrame();
         }

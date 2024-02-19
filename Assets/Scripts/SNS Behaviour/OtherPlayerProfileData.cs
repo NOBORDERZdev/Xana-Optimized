@@ -334,6 +334,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                         }
+                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                     else
                     {
@@ -350,6 +351,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                                 ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
                         }
+                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                 }
             }
