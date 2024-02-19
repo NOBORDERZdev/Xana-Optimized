@@ -507,6 +507,7 @@ public class MyProfileDataManager : MonoBehaviour
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
                         }
+                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                     else
                     {
@@ -519,6 +520,7 @@ public class MyProfileDataManager : MonoBehaviour
                                 _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
                             }
                             ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
                     }
                 }
@@ -1673,14 +1675,20 @@ public class MyProfileDataManager : MonoBehaviour
                 tempTag = Instantiate(tags_row_obj, tempRow.transform);
 
                 tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
+
+                // Currently Not Use Localize Tag As its Search hot showing Any result
+                //tempTag.GetComponent<TagPrefabInfo>().tagName.GetComponent<TextLocalization>().LocalizeTextText(availableTagsAtServer[generatedTagCount]);
+
                 //tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
 
-                if(userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
+                if (userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
                     tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
 
                 generatedTagCount += 1;
             }
         }
+
+        tempRow.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>().spacing = 18.01f;
     }
     int CalculateTagsPerRow(int startInd)
     {
