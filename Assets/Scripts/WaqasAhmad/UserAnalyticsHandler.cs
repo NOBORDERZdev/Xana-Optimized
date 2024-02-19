@@ -312,6 +312,14 @@ public class UserAnalyticsHandler : MonoBehaviour
         {
             worldType = worldType.Split("_").First();
         }
+        else if(worldType == "ENVIRONMENTS")
+        {
+            worldType = "ENVIRONMENT";
+        }
+        else if (worldType == "MUSEUMS")
+        {
+            worldType = "MUSEUM";
+        } 
 
         return worldType;
     }
