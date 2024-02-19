@@ -22,8 +22,6 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     public GameObject mirrorARFace2;
     public Vector3 headRotation;
     public float bodyRotRatio;
-    public TextMeshProUGUI cameraPosText;
-    public TextMeshProUGUI facePosText;
     public SkinnedMeshRenderer maleDFaceskinRenderer;
     public SkinnedMeshRenderer feMaleDFaceskinRenderer;
     public ARFaceManager m_ARFaceManager;
@@ -144,15 +142,13 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
                     //finalXRotValue = (face.transform.position.z - 0.6f);
                 }
 
-                facePosText.text = "Face Pos: " + face.transform.position + "  " + face.transform.localPosition + " " + finalXRotValue;
                 if (moveTargetObj != null)
                 {
-                    Vector3 movePos = new Vector3(moveTargetObj.transform.localPosition.x, moveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.2f, 0.1f));
+                    Vector3 movePos = new Vector3(moveTargetObj.transform.localPosition.x, moveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.15f, 0.1f));
                     moveTargetObj.transform.localPosition = Vector3.Lerp(moveTargetObj.transform.localPosition, movePos, 10 * Time.deltaTime);
 
                     //Debug.LogError("face:" + face.transform.position.z + " :finalXRotValue:" + finalXRotValue + " :face postion:" + face.transform.localPosition.z + ":LocalPos:" + moveTargetObj.transform.localPosition);
                 }
-                cameraPosText.text = "body Pos: " + moveTargetObj.transform.position + "  " + moveTargetObj.transform.localPosition;
             }
             else
             {
