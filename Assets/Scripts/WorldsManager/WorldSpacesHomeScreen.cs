@@ -482,7 +482,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 apiResponseHolder.AddReponse(apiURL, www.downloadHandler.text);
                 callback(true, www.downloadHandler.text);
             }
-            Debug.LogError(apiURL + "---" + www.downloadHandler.text);
+            Debug.Log(apiURL + "---" + www.downloadHandler.text);
             www.Dispose();
         }
     }
