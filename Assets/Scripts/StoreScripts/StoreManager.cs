@@ -4860,21 +4860,22 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter(string _gender)
     {
-        CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
-        CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
-        CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
-        for (int i = 0; i < CharcterBodyParts.instance.head.sharedMesh.blendShapeCount - 1; i++)
+        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
+        _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
+        _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
+        for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
         {
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(i, 0);
+            _charcterBodyParts.head.SetBlendShapeWeight(i, 0);
         }
-        if (itemData.faceItemData != 0 && CharcterBodyParts.instance != null)
+        if (itemData.faceItemData != 0 && _charcterBodyParts != null)
         {
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.faceItemData, 100);
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.faceItemData, 100);
         }
         if (itemData.noseItemData != 0)
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.noseItemData, 100);
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.noseItemData, 100);
         if (itemData.lipItemData != 0)
-            CharcterBodyParts.instance.head.SetBlendShapeWeight(itemData.lipItemData, 100);
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
@@ -4886,8 +4887,9 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyDefaultValueOnCharacter(string _gender)
     {
-        CharcterBodyParts _charcterBodyParts =  GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        if (_gender == AvatarGender.Male.ToString()) {
+        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        if (_gender == AvatarGender.Male.ToString())
+        {
             _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.default_male_skin_color);
             _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_male_lips_color);
             _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.default_male_skin_color);
@@ -4903,7 +4905,8 @@ public class StoreManager : MonoBehaviour
         for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
         {
             _charcterBodyParts.head.SetBlendShapeWeight(i, 0);
-        }        
+        }
+
     }
 }
 public class RequestedData
