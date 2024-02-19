@@ -1328,4 +1328,5 @@ public class APIController : MonoBehaviour
 public static class GlobalVeriableClass
 {
     public static string callingScreen = "";
+    public static string GettingBackFromScene = "";
 }
