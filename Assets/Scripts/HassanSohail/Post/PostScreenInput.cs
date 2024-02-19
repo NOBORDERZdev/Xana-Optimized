@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -16,13 +16,23 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
    int maxWidth = 270;
     int maxHeight = 125;
-   float characterOffset = 5.0f;
-   string placeHolderText = "Enter the text";
-   TouchScreenKeyboard keyboard;
+    float characterOffset = 5.0f;
+
+    string placeHolderText;
+    TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
     bool bubbleHeightCheck = false;
     private void OnEnable()
     {
+        if (GameManager.currentLanguage.Equals("en"))
+        {
+            placeHolderText = "Enter the text";
+        }
+        else
+        {
+            placeHolderText = "テキストを入力してください";
+        }
+        
         ActiveInputFeild();
         StartCoroutine(SetBubblePos());
         bubbleHeightCheck = false;
@@ -44,12 +54,25 @@ public class PostScreenInput : MonoBehaviour
         {
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
-            if (ShowText.text == "Enter the text")
+            if (GameManager.currentLanguage.Equals("en"))
             {
-                BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-                bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                if (ShowText.text == "Enter the text")
+                {
+                    BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                }
             }
+            else
+            {
+                if (ShowText.text == "テキストを入力してください")
+                {
+                    BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                }
+            }
+           
         }
         if (bubbleImage.rect.width >= maxWidth)
         {
