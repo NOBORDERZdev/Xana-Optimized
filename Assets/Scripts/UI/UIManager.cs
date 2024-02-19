@@ -110,7 +110,7 @@ public class UIManager : MonoBehaviour
         else
         {
             StartCoroutine(IsSplashEnable(false, 0f));
-            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
+            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
