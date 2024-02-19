@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine.Rendering.Universal;
-using UnityEditor;
 
 public class AvatarController : MonoBehaviour
 {
