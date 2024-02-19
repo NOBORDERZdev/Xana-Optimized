@@ -330,7 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -347,7 +346,6 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
 --- !u!1 &33456692 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1098244220549776415, guid: 65604cfbffefa694d9d9a00389afd62c, type: 3}
@@ -7182,7 +7180,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &720698385
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7199,8 +7197,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &720698386
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8008,7 +8005,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &849587408
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8025,8 +8022,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &849587409
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12815,7 +12811,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1277045684
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -12832,8 +12828,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1277045685
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17659,6 +17654,7 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 1512555886}
     avatar_body: {fileID: 1512555885}
@@ -17666,6 +17662,7 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   boxerBody: {fileID: 4457784110141273236}
   boxerHead: {fileID: 5741598902726533055}
   body: {fileID: 0}
@@ -22388,7 +22385,7 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!95 &1840786061
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -22405,8 +22402,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1840786062
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30073,6 +30069,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1643584608}
     - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: maleAvatarMeshes.Eye_texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: _scaleBodyParts.Array.data[0]
       value: 
       objectReference: {fileID: 718441998}
@@ -30132,6 +30132,10 @@ PrefabInstance:
       propertyPath: _scaleBodyParts.Array.data[14]
       value: 
       objectReference: {fileID: 583599532}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: femaleAvatarMeshes.Eye_texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
     - target: {fileID: 1671144895, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: bodyBlenShape
       value: 
@@ -31614,6 +31618,7 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 0}
     Pent_Texture: {fileID: 0}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 0}
     avatar_body: {fileID: 0}
@@ -31621,6 +31626,7 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 0}
     Pent_Texture: {fileID: 0}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}
@@ -31744,7 +31750,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &2265353344411290191
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -31761,8 +31767,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &2269552714904155027
 Transform:
   m_ObjectHideFlags: 0
@@ -42058,7 +42063,7 @@ MonoBehaviour:
   Offset: {x: 0, y: 1.8, z: 0}
 --- !u!95 &4828570425605656269
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -42075,8 +42080,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4828570425605656270
 MonoBehaviour:
   m_ObjectHideFlags: 0
