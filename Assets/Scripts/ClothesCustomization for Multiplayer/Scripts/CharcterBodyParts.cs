@@ -98,6 +98,8 @@ public class CharcterBodyParts : MonoBehaviour
         public SkinnedMeshRenderer avatar_head;
         public Texture Shirt_Texture, Pent_Texture, Shoe_Texture,Eye_texture;
     }
+
+    public RandomPreset[] randomPresetData;
     private void Awake()
     {
         instance = this;
@@ -1754,5 +1756,24 @@ public class CharcterBodyParts : MonoBehaviour
                 break;
         }
 
+    }
+
+}
+
+[Serializable]
+public class RandomPreset
+{
+    public string Name;
+    public string GenderType;
+    public AHPresetData PantPresetData;
+    public AHPresetData ShirtPresetData;
+    public AHPresetData HairPresetData;
+    public AHPresetData ShoesPresetData;
+
+    [Serializable]
+    public class AHPresetData
+    {
+        public string ObjectName;
+        public string ObjectType;
     }
 }
