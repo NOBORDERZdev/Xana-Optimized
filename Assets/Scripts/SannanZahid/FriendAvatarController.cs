@@ -173,6 +173,92 @@ public class FriendAvatarController : MonoBehaviour
 
         Custom_IntializeAvatar(_CharacterData);
     }
+
+    void DownloadRandomPresets(SavingCharacterDataClass _CharacterData)
+    {
+        if (_CharacterData.myItemObj.Count > 0)
+        {
+            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                {
+                    if (_CharacterData.myItemObj[i].ItemType.Contains("Legs") || _CharacterData.myItemObj[i].ItemType.Contains("Chest") || _CharacterData.myItemObj[i].ItemType.Contains("Feet") || _CharacterData.myItemObj[i].ItemType.Contains("Hair") || _CharacterData.myItemObj[i].ItemType.Contains("EyeWearable") || _CharacterData.myItemObj[i].ItemType.Contains("Glove") || _CharacterData.myItemObj[i].ItemType.Contains("Chain"))
+                    {
+                        //getHairColorFormFile = true;
+                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+                            {
+                                if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                {
+                                    if (wornShirt)
+                                    {
+                                        UnStichItem("Chest");
+                                        bodyParts.TextureForShirt(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
+                                {
+                                    if (wornHair)
+                                        UnStichItem("Hair");
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
+                                {
+                                    // IF fullcostume[3 piece suit] than remove bottom
+                                    if (wornPant)
+                                    {
+                                        UnStichItem("Legs");
+                                        bodyParts.TextureForPant(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
+                                {
+                                    if (wornShose)
+                                    {
+                                        UnStichItem("Feet");
+                                        bodyParts.TextureForShoes(null);
+                                    }
+
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
+                                {
+                                    if (wornEyewearable)
+                                        UnStichItem("EyeWearable");
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
+                                {
+                                    if (wornGloves)
+                                    {
+                                        UnStichItem("Glove");
+                                        bodyParts.TextureForGlove(null);
+                                    }
+
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
+                                {
+                                    if (wornChain)
+                                        UnStichItem("Chain");
+                                }
+
+                            }
+                            else
+                            {
+                                WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                    }
+                }
+            }
+        }
+    }
     void Custom_IntializeAvatar(SavingCharacterDataClass _CharacterData)
     {
        // if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "") //Check if data exist
@@ -183,9 +269,36 @@ public class FriendAvatarController : MonoBehaviour
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
-                    float _rand = Random.Range(0.1f, 2f);
-                    string _gen = _rand <= 1 ? "Male" : "Female";
-                    SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
+                    int _rand = Random.Range(0, 13);
+                    if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count ==0)
+                    {
+                        for(int i = 0; i < 4; i++)
+                        _CharacterData.myItemObj.Add(new Item(0,"","","",""));
+                    }
+
+
+
+                    _CharacterData.myItemObj[0].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectName;
+                    _CharacterData.myItemObj[0].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectType;
+
+                    _CharacterData.myItemObj[1].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShirtPresetData.ObjectName;
+                    _CharacterData.myItemObj[1].ItemType = CharcterBodyParts.instance.randomPresetData[_rand].ShirtPresetData.ObjectType;
+
+                    _CharacterData.myItemObj[2].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].HairPresetData.ObjectName;
+                    _CharacterData.myItemObj[2].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].HairPresetData.ObjectType;
+
+                    _CharacterData.myItemObj[3].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShoesPresetData.ObjectName;
+                    _CharacterData.myItemObj[3].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShoesPresetData.ObjectType;
+
+                    DownloadRandomPresets(_CharacterData);
+                    if (CharcterBodyParts.instance.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
+                    {
+                        this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Female);
+                    }
+                    else
+                    {
+                        this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Male);
+                    }
                 }
                 else
                 {
@@ -295,6 +408,8 @@ public class FriendAvatarController : MonoBehaviour
                         WearDefaultItem("Chest", this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                         WearDefaultItem("Feet", this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                         WearDefaultItem("Hair", this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+
+
 
                         if (wornEyewearable)
                             UnStichItem("EyeWearable");
@@ -419,7 +534,7 @@ public class FriendAvatarController : MonoBehaviour
                     {
                         float _rand = Random.Range(0.1f, 2f);
                         string _gen = _rand <= 1 ? "Male" : "Female";
-                        SetAvatarClothDefault(this.gameObject, _CharacterData.gender ?? _gen);
+                        SetAvatarClothDefault(this.gameObject, _gen);
                     }
                     else
                     {
