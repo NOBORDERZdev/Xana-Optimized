@@ -96,7 +96,7 @@ public class CharcterBodyParts : MonoBehaviour
         public GameObject avatar_parent;
         public SkinnedMeshRenderer avatar_body;
         public SkinnedMeshRenderer avatar_head;
-        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture;
+        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture,Eye_texture;
     }
     private void Awake()
     {
