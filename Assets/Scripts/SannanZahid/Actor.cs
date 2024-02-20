@@ -18,11 +18,14 @@ public class Actor : MonoBehaviour
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
     public AnimatorOverrideController overrideController;
-
+    bool _lastAction = false;
+    [SerializeField] bool isPlayer;
     private void OnEnable()
     {
         if(_startCoroutineFLag)
         {
+           // Debug.LogError("OnEnable  --- "+ _lastAction);
+            _PlayerAnimator.SetBool("Action", _lastAction);
             StartCoroutine(StartActorBehaviour());
         }
     }
@@ -30,8 +33,14 @@ public class Actor : MonoBehaviour
     {
         if (_startCoroutineFLag)
         {
+           // Debug.LogError("OnDisable  --- " + _lastAction);
+
             StopCoroutine(StartActorBehaviour());
         }
+    }
+    public Vector3 LastMoveToPosition()
+    {
+        return MoveTarget.position;
     }
     void SetMoveActions(MoveBehaviour move)
     {
@@ -41,10 +50,34 @@ public class Actor : MonoBehaviour
     {
         _playerMoves.Clear();
     }
+    IEnumerator StartBehaviour()
+    {
+        while(ActionClipTime.Equals( 0f))
+            yield return new WaitForSeconds(0.5f); 
+
+        StartCoroutine(StartActorBehaviour());
+    }
+
+     public void Init(ActorBehaviour playerBehaviour , Transform playerTransform)
+    {
+        _startCoroutineFLag = true;
+        _PlayerAnimator = this.transform.GetComponent<Animator>();
+         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
+        _PlayerAnimator.runtimeAnimatorController = overrideController;
+        _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
+        _PlayerCategory = playerBehaviour.CategoryOfMode;
+        foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
+            SetMoveActions(move);
+        MoveTarget = playerTransform;
+        //if(isPlayer)
+        //return;
+        transform.position = MoveTarget.position;
+        StartCoroutine(StartBehaviour());
+    }
     public void Init(ActorBehaviour playerBehaviour)
     {
         _startCoroutineFLag = true;
-        _PlayerAnimator = GetComponent<Animator>();
+        _PlayerAnimator = this.transform.GetComponent<Animator>();
          overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
         _PlayerAnimator.runtimeAnimatorController = overrideController;
         _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
@@ -53,7 +86,7 @@ public class Actor : MonoBehaviour
             SetMoveActions(move);
         MoveTarget = GameManager.Instance.avatarPathSystemManager.GetAvatarSpawnPoint();
         transform.position = MoveTarget.position;
-        StartCoroutine(StartActorBehaviour());
+        StartCoroutine(StartBehaviour());
     }
     public void SetNewBehaviour(ActorBehaviour playerBehaviour)
     {
@@ -62,6 +95,30 @@ public class Actor : MonoBehaviour
         _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
+
+        if(playerBehaviour.IdleAnimationFlag)
+        {
+            transform.eulerAngles = new Vector3(0,180,0);
+            _PlayerAnimator.SetBool("Action", true);
+            _lastAction = true;
+
+            StateMoveBehaviour = 2;
+
+        }
+        else
+        {
+           // _PlayerAnimator.SetBool("Action", false);
+          //  _lastAction = false;
+
+           // StateMoveBehaviour = 1;
+
+        }
+        _PlayerAnimator.SetBool("Menu Action", false);
+        //StopAllCoroutines();
+        //_moveFlag = true;
+       ///----- StateMoveBehaviour = 1;
+        //StartCoroutine(StartActorBehaviour());
+
     }
     IEnumerator StartActorBehaviour()
     {
@@ -72,17 +129,42 @@ public class Actor : MonoBehaviour
             case 0:
                 if(_moveFlag)
                 {
-                    MoveBehaviour move = _playerMoves.Dequeue();
-                    StateMoveBehaviour = 1;
-                    MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
-                    MoveSpeed = move.Speed;
-                    transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
-                    _playerMoves.Enqueue(move);
-                    _PlayerAnimator.SetBool("Action", false);
+                     transform.eulerAngles = new Vector3(0,180,0);
+                     _PlayerAnimator.SetBool("Action", true);
+                    _lastAction = true;
                     _PlayerAnimator.SetBool("IdleMenu", false);
+                    //Debug.LogError("ActionClipTime ----> " + ActionClipTime);
+                    
+                    yield return new WaitForSeconds(ActionClipTime); 
+                   // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
+                    MoveBehaviour move = _playerMoves.Dequeue();
+                    if (move.behaviour == MoveBehaviour.Behaviour.Action || menuIdleFlag)
+                    {
+                        StateMoveBehaviour = 2;
+                        transform.eulerAngles = new Vector3(0,180,0);
+                        _PlayerAnimator.SetBool("Action", true);
+                        _lastAction = true;
+                        _PlayerAnimator.SetBool("IdleMenu", false);
+                        _playerMoves.Enqueue(move);
+                    }
+                    else
+                    {
+                        if(isPlayer)
+                        break;
+                        StateMoveBehaviour = 1;
+                        MoveTarget = GameManager.Instance.avatarPathSystemManager.GetNextPoint(move.behaviour, MoveTarget);
+                        MoveSpeed = move.Speed;
+                        transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
+                        _playerMoves.Enqueue(move);
+                        _PlayerAnimator.SetBool("Action", false);
+                        _lastAction = false;
+                        _PlayerAnimator.SetBool("IdleMenu", false);
+                    }
                 }
                 break;
             case 1:
+                    if(isPlayer)
+                        break;
                     transform.position = Vector3.MoveTowards(transform.position, MoveTarget.position, MoveSpeed * Time.deltaTime);
                     transform.LookAt(MoveTarget);
                     if (Vector3.Distance(transform.position, MoveTarget.position) < 0.001f)
@@ -91,7 +173,9 @@ public class Actor : MonoBehaviour
                         if (move.behaviour == MoveBehaviour.Behaviour.Action)
                         {
                             StateMoveBehaviour = 2;
+                            transform.eulerAngles = new Vector3(0,180,0);
                             _PlayerAnimator.SetBool("Action", true);
+                            _lastAction = true;
                             _PlayerAnimator.SetBool("IdleMenu", false);
                             _playerMoves.Enqueue(move);
                     }
@@ -104,6 +188,7 @@ public class Actor : MonoBehaviour
                     }
                 break;
             case 2:
+                transform.eulerAngles = new Vector3(0,180,0);
                 yield return new WaitForSeconds(ActionClipTime*2f);
                 if(!_moveFlag)
                 {
@@ -111,9 +196,12 @@ public class Actor : MonoBehaviour
                 }
                 else
                 {
+                     if(isPlayer)
+                        break;
                     if (_playerMoves.Peek().behaviour != MoveBehaviour.Behaviour.Action)
                     {
                         _PlayerAnimator.SetBool("Action", false);
+                        _lastAction = false;
                     }
                     StateMoveBehaviour = 1;
                 }
@@ -121,11 +209,15 @@ public class Actor : MonoBehaviour
         }
         goto CheckedInLoop;
     }
-    public void IdlePlayerAvatorForMenu(bool flag)
+    bool menuIdleFlag = false;
+    public void IdlePlayerAvatorForMenu(bool flag,bool MAction)
     {
-        if(flag)
+        menuIdleFlag = flag;
+       // Debug.LogError("IdlePlayerAvatorForMenu  --- " + flag);
+        if (flag)
         {
             _PlayerAnimator.SetBool("IdleMenu", flag) ;
+            _PlayerAnimator.SetBool("Menu Action", MAction);
             _moveFlag = false;
             StateMoveBehaviour = 0;
         }

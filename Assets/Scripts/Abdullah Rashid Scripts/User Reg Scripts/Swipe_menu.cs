@@ -16,8 +16,10 @@ public class Swipe_menu : MonoBehaviour
     [SerializeField] private float[] pos;
     [SerializeField] private GameObject SelectedOBJ;
     public static Swipe_menu instance;
+    public GameObject backBtnstore;
 
-
+    
+     
     void Awake()
     {
         instance = this;
@@ -30,10 +32,19 @@ public class Swipe_menu : MonoBehaviour
         {
             GameObject itemGameObject = Instantiate(item, contentParent);
         }
+       
      }
     private void OnEnable()
     {
         scroll_pos = 0;
+        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        {
+            backBtnstore.SetActive(true);
+        }
+        else
+        {
+            backBtnstore.SetActive(false);
+        }
     }
 
     private void Update()
@@ -65,7 +76,8 @@ public class Swipe_menu : MonoBehaviour
             if(scroll_pos < pos[i] + (distance / 2) && scroll_pos > pos[i] - (distance / 2))
             {
                
-                transform.GetChild(i).localScale = Vector2.Lerp(transform.GetChild(i).localScale, new Vector2(1.27f, 1.2f), 0.1f);
+                transform.GetChild(i).localScale = Vector2.Lerp(transform.GetChild(i).localScale, new Vector2(1.06f, 0.985f), 0.1f);
+             
                 transform.GetChild(i).GetComponent<Image>().enabled = true;
                 SelectedOBJ = transform.GetChild(i).gameObject;
 
@@ -73,8 +85,8 @@ public class Swipe_menu : MonoBehaviour
                 {
                     if(a != i)
                     {
-                        transform.GetChild(a).localScale = Vector2.Lerp(transform.GetChild(a).localScale, new Vector2(1.07f, 1.07f), 0.1f);
-                       
+                        transform.GetChild(a).localScale = Vector2.Lerp(transform.GetChild(a).localScale, new Vector2(0.91f, 0.91f), 0.1f);
+                      
                     }
                    
                 }
@@ -89,11 +101,12 @@ public class Swipe_menu : MonoBehaviour
     {
         if (SelectedOBJ != null)
         {
+            GameManager.Instance.HomeCameraInputHandler(true);
             UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
-
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
         }
     }

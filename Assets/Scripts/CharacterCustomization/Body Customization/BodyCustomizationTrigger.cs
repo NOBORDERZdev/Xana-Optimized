@@ -95,11 +95,11 @@ public class BodyCustomizationTrigger : MonoBehaviour
         }
         if (m_FaceMorphFeature == FaceMorphFeature.Eyes)
         {
-            charBodyParts.ApplyBlendShapeEyesValues(charBodyParts.Head, blendShapeData, eyesPosition, eyes_Rotation_z);
+            charBodyParts.ApplyBlendShapeEyesValues(charBodyParts.head.gameObject, blendShapeData, eyesPosition, eyes_Rotation_z);
         }
         if (m_FaceMorphFeature == FaceMorphFeature.Lips)
         {
-            charBodyParts.ApplyBlendShapeLipsValues(charBodyParts.Head, blendShapeData);
+            charBodyParts.ApplyBlendShapeLipsValues(charBodyParts.head.gameObject, blendShapeData);
         }
     }
 

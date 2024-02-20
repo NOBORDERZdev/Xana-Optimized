@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AvatarPathSystemManager : MonoBehaviour
@@ -8,10 +9,11 @@ public class AvatarPathSystemManager : MonoBehaviour
     //[SerializeField]
     int _row , _col;
     Transform[,] points;
+    float offset=1;
     void Awake()
     {
-        _row = 5;
-        _col = 6;
+        _row = 8;
+        _col = 3;
         points = new Transform[_row, _col];
         GeneratePoints();
     }
@@ -19,15 +21,24 @@ public class AvatarPathSystemManager : MonoBehaviour
     {
         return _startPoint;
     }
-    void GeneratePoints()
+   void GeneratePoints()
     {
         Transform tempTransform;
         for (int i = 0; i < _row; i++)
             for (int j = 0; j < _col; j++)
             {
-                tempTransform = Instantiate(_startPoint.gameObject,
-                    new Vector3((float)i/1.5f + _startPoint.position.x, 0, (float)-j/1.5f + _startPoint.position.z),
-                    Quaternion.identity).transform;
+                if(j%2==0)
+                {
+                    tempTransform = Instantiate(_startPoint.gameObject,
+                  new Vector3((float)i / 1.2f + _startPoint.position.x, 0, (float)-j / .9f + _startPoint.position.z),
+                  Quaternion.identity).transform;
+                }
+                else
+                {
+                    tempTransform = Instantiate(_startPoint.gameObject,
+                  new Vector3((float)(i+0.5) / 1.4f + _startPoint.position.x, 0, (float)-j / .9f + _startPoint.position.z),
+                  Quaternion.identity).transform;
+                }
                 points[i,j]=(tempTransform);
                 tempTransform.name = "{ " + i + " - " + j+" }";
                 tempTransform.gameObject.GetComponent<ActorMovePoint>().Init( new Vector2(i,j) );
@@ -135,18 +146,64 @@ public class AvatarPathSystemManager : MonoBehaviour
             }
         }
     }
+      public float threshold = 1.0f;
     public Transform GetAvatarSpawnPoint()
     {
-        while (true)
+        
+        List<Transform> nearPoints = new List<Transform>();
+        foreach (Transform point in points)
         {
-            int i = UnityEngine.Random.Range(0, _row);
-            int j = UnityEngine.Random.Range(0, _col);
-            if (!points[i, j].GetComponent<ActorMovePoint>().IsInUse)
+            if (Vector3.Distance(point.position, points[3,1].position) < threshold)
             {
-                points[i, j].GetComponent<ActorMovePoint>().IsInUse = true;
-                return points[i, j];
+                nearPoints.Add(point);
             }
         }
+        Transform transform = null;
+        foreach (var point in nearPoints)
+        {
+            if (!point.GetComponent<ActorMovePoint>().IsInUse)
+            {
+                point.GetComponent<ActorMovePoint>().IsInUse = true;
+                transform= point;
+            }
+        }
+
+        if (transform!=null)
+        {
+            return transform;
+        }
+        else
+        {
+            while (true)
+            {
+                int i = UnityEngine.Random.Range(0, _row);
+                int j = UnityEngine.Random.Range(0, _col);
+                if (!points[i, j].GetComponent<ActorMovePoint>().IsInUse)
+                {
+                    points[i, j].GetComponent<ActorMovePoint>().IsInUse = true;
+                    return points[i, j];
+                }
+            }
+        }
+
+    }
+
+    public Transform  GetGridCenterPoint()
+    {
+        //int centerRow = Mathf.FloorToInt( _row / 2);
+        //int centerCol =  Mathf.FloorToInt(_col / 2);
+        //if (!points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse)
+        //{
+        //    points[centerRow, centerCol].GetComponent<ActorMovePoint>().IsInUse = true;
+        //    print("centerRow : "+ centerRow +"centerCol"+centerCol);
+        //    return points[centerRow, centerCol];
+        //}
+        //else
+        //{
+        //    return points[0, 0];
+        //}
+        points[3, 1].GetComponent<ActorMovePoint>().IsInUse = true;
+        return points[3,1];
     }
 }
 [Serializable]

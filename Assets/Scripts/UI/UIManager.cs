@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
-    public Transform SecondSliderScrollView;
+    /*public Transform SecondSliderScrollView;*/
 
     [Header("Footer Reference")]
     public GameObject _footerCan;
@@ -27,9 +27,14 @@ public class UIManager : MonoBehaviour
         HomeWorldTabsHolder, 
         WorldWorldTabsHolder, 
         WorldScrollerHolder,
-        LobbyTabHolder,
+        /*LobbyTabHolder,*/
         AdvanceSearchInputField;
-   
+
+    public GameObject worldHolder;
+    public GameObject searchWorldHolder;
+
+
+    public bool isAvatarSelectionBtnClicked = false;
 
     private void Awake()
     {
@@ -44,6 +49,16 @@ public class UIManager : MonoBehaviour
         _SplashScreen.SetActive(true);
     }
     bool a =false;
+
+
+    public void AvatarSelectionBtnClicked()
+    {
+        if (!isAvatarSelectionBtnClicked)
+            isAvatarSelectionBtnClicked = true;
+        GameManager.Instance.HomeCameraInputHandler(false);
+
+    }
+
     public void SwitchToPostScreen(bool flag)
     {
        
@@ -53,6 +68,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            GameManager.Instance.HomeCameraInputHandler(!flag);
+
             _postScreen.gameObject.SetActive(flag);
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
@@ -64,6 +81,7 @@ public class UIManager : MonoBehaviour
     public void ResetPlayerToLastPostPosted()
     {
         GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
+         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
     public void AvaterButtonCustomPushed()
     {
@@ -92,7 +110,7 @@ public class UIManager : MonoBehaviour
         else
         {
             StartCoroutine(IsSplashEnable(false, 0f));
-            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(4));
+            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
@@ -117,6 +135,7 @@ public class UIManager : MonoBehaviour
         if(Loadinghandler_CanvasRef != null)
             Loadinghandler_CanvasRef.alpha = 1.0f;
         ShowFooter(!_state);
+        if(UserRegisterationManager.instance)
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
     public int PreviousScreen;
@@ -131,12 +150,14 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(true);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
-                    HomeWorldTabsHolder.gameObject.SetActive(true);
+                    /*LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
+                  //  HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    WorldManager.instance.WorldPageStateHandler(false);
-                    WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = false;
+                    //WorldManager.instance.WorldPageStateHandler(false);
+                    //WorldManager.instance.WorldScrollReset();
+                    worldHolder.SetActive(true);
+                    searchWorldHolder.SetActive(false);
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = false;*/
                     break;
                 }
             case 1:
@@ -146,12 +167,12 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(true);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(false);
-                    HomeWorldTabsHolder.gameObject.SetActive(false);
+                    /*LobbyTabHolder.gameObject.SetActive(false);*/
+                  //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(true);
-                    WorldManager.instance.WorldPageStateHandler(true);
-                    WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                    //WorldManager.instance.WorldPageStateHandler(true);
+                    //WorldManager.instance.WorldScrollReset();
+                    /*SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     break;
                 }
             case 2:
@@ -161,12 +182,14 @@ public class UIManager : MonoBehaviour
                     SearchHomeHolder.gameObject.SetActive(false);
                     SearchWorldHolder.gameObject.SetActive(false);
                     AvatarWindowHolder.gameObject.SetActive(false);
-                    LobbyTabHolder.gameObject.SetActive(false);
-                    HomeWorldTabsHolder.gameObject.SetActive(false);
+                    /*LobbyTabHolder.gameObject.SetActive(false);*/
+                    worldHolder.SetActive(false);
+                    searchWorldHolder.SetActive(true);
+                  //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    WorldManager.instance.WorldPageStateHandler(true);
+                    //WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
-                    SecondSliderScrollView.GetComponent<Mask>().enabled = true;
+                   /* SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     ShowFooter(true);
                     break;
                 }

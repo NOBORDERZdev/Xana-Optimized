@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class UserPostItem : MonoBehaviour
 {
     public AllFeedByUserIdRow userData;
+    public AllTextPostByUserIdRow userTextPostData;
     public TaggedFeedsByUserIdRow tagUserData;
     public FeedsByFollowingUser feedUserData;
     //public AllFeedByUserIdData userPostData;
@@ -58,6 +59,7 @@ public class UserPostItem : MonoBehaviour
             RePlayVideoAfterEnable();
         }
         cnt += 1;
+        //GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
 
     private void Update()//delete image after object out of screen
@@ -71,7 +73,7 @@ public class UserPostItem : MonoBehaviour
         {
             return;
         }
-
+        GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
         lastUpdateCallTime += Time.deltaTime;
         if (lastUpdateCallTime > 0.3f )//call every 0.4 sec
         {
@@ -340,29 +342,29 @@ public class UserPostItem : MonoBehaviour
             {
                Debug.Log("H1 > ");
                 FeedUIController.Instance.feedFullViewScreenCallingFrom = "MyProfile";
-                //if (isVideoFeed)
-                if (!string.IsNullOrEmpty(userData.Video))
-                {
-                    feedRowsDataList = MyProfileDataManager.Instance.allMyFeedVideoRootDataList;
-                }
-                else
-                {
-                    feedRowsDataList = MyProfileDataManager.Instance.allMyFeedImageRootDataList;
-                }
+                if (isVideoFeed)
+                    if (!string.IsNullOrEmpty(userData.Video))
+                    {
+                        feedRowsDataList = MyProfileDataManager.Instance.allMyFeedVideoRootDataList;
+                    }
+                    else
+                    {
+                        feedRowsDataList = MyProfileDataManager.Instance.allMyFeedImageRootDataList;
+                    }
             }
             else if (FeedUIController.Instance.otherPlayerProfileScreen.activeSelf)
             {
                Debug.Log("H2 > ");
                 FeedUIController.Instance.feedFullViewScreenCallingFrom = "OtherProfile";
-                //if (isVideoFeed)
-                if (!string.IsNullOrEmpty(userData.Video))
-                {
-                    feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList;
-                }
-                else
-                {
-                    feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList;
-                }
+                if (isVideoFeed)
+                    if (!string.IsNullOrEmpty(userData.Video))
+                    {
+                        feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList;
+                    }
+                    else
+                    {
+                        feedRowsDataList = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList;
+                    }
             }
             else if (FeedUIController.Instance.forYouFeedTabContainer.gameObject.activeInHierarchy)
             {

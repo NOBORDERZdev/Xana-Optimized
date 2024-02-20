@@ -7,10 +7,12 @@ using SuperStar.Helpers;
 using System.IO;
 using System;
 using UnityEngine.Networking;
+using SimpleJSON;
 
 public class FindFriendWithNameItem : MonoBehaviour
 {
     public SearchUserRow searchUserRow;
+    public AllFollowersRows allFollowersRows;
 
     public TextMeshProUGUI userNameText;
     public TextMeshProUGUI userBioText;
@@ -25,6 +27,8 @@ public class FindFriendWithNameItem : MonoBehaviour
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
     public bool IsInFollowingTab;
+
+    public SavingCharacterDataClass _userAvatarData;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -37,7 +41,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             profileImage.sprite = defaultSP;
         }
-        if (cnt > 0 && !string.IsNullOrEmpty(searchUserRow.avatar))
+        if (cnt > 0 && (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar)))
         {
             if (AssetCache.Instance.HasFile(searchUserRow.avatar))
             {
@@ -52,7 +56,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     private void OnDisable()
     {
-        if (!string.IsNullOrEmpty(searchUserRow.avatar))
+        if (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar))
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
@@ -93,16 +97,149 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
         FollowFollowingSetUp(searchUserRow.am_i_following);
-        if (searchUserRow.am_i_following ||searchUserRow.is_following_me )
+        if (searchUserRow.am_i_following || searchUserRow.is_following_me)
         {
-           UpdateBfBtn(searchUserRow.is_my_close_friend);
+            UpdateBfBtn(searchUserRow.am_i_following, true, searchUserRow.is_close_friend);
         }
-       
+
+    }
+    public void SetupData(AllFollowersRows allFollowersRows1, bool _emptyElement = false)
+    {
+        if (!_emptyElement)
+        {
+            allFollowersRows = allFollowersRows1;
+            searchUserRow.id = allFollowersRows.follower.id;
+            searchUserRow.am_i_following = allFollowersRows.isFollowing;
+            searchUserRow.is_following_me = true;
+            searchUserRow.is_close_friend = allFollowersRows.isFriend;
+            this.GetComponent<FollowerItemController>().followerRawData = allFollowersRows;
+            userNameText.text = allFollowersRows.follower.name;
+            if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
+            {
+                userBioText.text = APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
+            }
+            else
+            {
+                userBioText.text = "";
+            }
+            if (!string.IsNullOrEmpty(allFollowersRows.follower.avatar))
+            {
+                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
+                if (isUrlContainsHttpAndHttps)
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(allFollowersRows.follower.avatar, allFollowersRows.follower.avatar, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(profileImage, allFollowersRows.follower.avatar, changeAspectRatio: true);
+                        }
+                    });
+                }
+                else
+                {
+                    GetImageFromAWS(allFollowersRows.follower.avatar, profileImage);
+                }
+            }
+            FollowFollowingSetUp(allFollowersRows.isFollowing);
+            if (allFollowersRows.isFollowing)
+            {
+                UpdateBfBtn(allFollowersRows.isFollowing, true, allFollowersRows.isFriend);
+            }
+        }
+        else
+        {
+            profileImage.transform.parent.gameObject.SetActive(!_emptyElement);
+            followFollowingImage.gameObject.SetActive(!_emptyElement);
+            userNameText.text = "";
+            userBioText.text = "";
+        }
+    }
+    public void SetupDataHotUsers(SearchUserRow searchUserRow1, bool amifollowing, bool isfollowingme, bool isclosefriend, bool _emptyElement = false)
+    {
+        if (!_emptyElement)
+        {
+            searchUserRow = searchUserRow1;
+            searchUserRow.am_i_following = amifollowing;
+            searchUserRow.is_following_me = isfollowingme;
+            searchUserRow.is_close_friend = isclosefriend;
+            userNameText.text = searchUserRow.name;
+            if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
+            {
+                userBioText.text = APIManager.DecodedString(searchUserRow.userProfile.bio);
+            }
+            else
+            {
+                userBioText.text = "";
+            }
+            if (!string.IsNullOrEmpty(searchUserRow.avatar))
+            {
+                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
+                if (isUrlContainsHttpAndHttps)
+                {
+                    AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
+                    {
+                        if (success)
+                        {
+                            AssetCache.Instance.LoadSpriteIntoImage(profileImage, searchUserRow.avatar, changeAspectRatio: true);
+                        }
+                    });
+                }
+                else
+                {
+                    GetImageFromAWS(searchUserRow.avatar, profileImage);
+                }
+            }
+            FollowFollowingSetUp(amifollowing);
+            if (amifollowing)
+            {
+                UpdateBfBtn(amifollowing, true, isclosefriend);
+            }
+        }
+        else
+        {
+            profileImage.transform.parent.gameObject.SetActive(!_emptyElement);
+            followFollowingImage.gameObject.SetActive(!_emptyElement);
+            userNameText.text = "";
+            userBioText.text = "";
+        }
     }
 
     public void OnClickUserProfileButton()
     {
-       Debug.Log("Search User id:" + searchUserRow.id);
+        Debug.Log("Search User id:" + searchUserRow.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+            MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            MyProfileDataManager.Instance.gameObject.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
+        }
+        else
+        {
+            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
+            //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            FeedUIController.Instance.AddFriendPanel.SetActive(false);
+            //MyProfileDataManager.Instance.gameObject.SetActive(false);
+        }
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (searchUserRow.is_following_me)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -136,6 +273,9 @@ public class FindFriendWithNameItem : MonoBehaviour
         singleUserProfileData.followingCount = searchUserRow.followingCount;
         singleUserProfileData.feedCount = searchUserRow.feedCount;
         singleUserProfileData.isFollowing = searchUserRow.is_following_me;
+        singleUserProfileData.userOccupiedAssets = searchUserRow.userOccupiedAssets;
+        print("searchUserRow occupied asstes count: " + searchUserRow.userOccupiedAssets.Count);
+        print("singleUserProfileData occupied asstes count: " + singleUserProfileData.userOccupiedAssets.Count);
 
         SingleUserProfile singleUserProfile = new SingleUserProfile();
         singleUserProfileData.userProfile = singleUserProfile;
@@ -149,8 +289,20 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.website = searchUserRow.userProfile.website;
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
+        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
+    }
 
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
     }
 
     public void FollowFollowingSetUp(bool isFollowing)
@@ -160,12 +312,15 @@ public class FindFriendWithNameItem : MonoBehaviour
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
             followFollowingText.color= followingTextColor;
+            UpdateBfBtn(false);
         }
         else
         {
             followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
             followFollowingText.color= followTextColor;
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
         //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
@@ -228,7 +383,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("follow user success data:" + data);
-
+                //JSONNode jsonNode = JSON.Parse(data);
+                //if (jsonNode["mutualFollowing"].AsBool)
+                //{
+                    UpdateBfBtn(false);
+                //}
                 searchUserRow.is_following_me = true;
                 searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
@@ -275,6 +434,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                Debug.Log("user unfollow success data:" + data);
                 searchUserRow.is_following_me = false;
                 searchUserRow.am_i_following = false;
+                searchUserRow.is_close_friend = false;
                 //FollowFollowingSetUp(false);
                 if (FeedUIController.Instance != null)
                 {
@@ -286,7 +446,13 @@ public class FindFriendWithNameItem : MonoBehaviour
                     FeedUIController.Instance.CheckFollowingCount();
                 }
                 GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(int.Parse(user_Id));
-                this.gameObject.SetActive(false);
+                if (IsInFollowingTab)
+                    this.gameObject.SetActive(false);
+                else
+                {
+                    UpdateBfBtn(searchUserRow.am_i_following,true, searchUserRow.is_close_friend);
+                    FollowFollowingSetUp(false);
+                }
             }
         }
     }
@@ -395,7 +561,29 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
        
     }
+    public void UpdateBfBtn(bool amifollowing, bool isfollowingme, bool isCloseFriend)
+    {
+        if (MakeBfBtn == null || RemoveBfBtn == null)
+        {
+            return;
+        }
+        if (amifollowing && isfollowingme && isCloseFriend)
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(true);
+        }
+        else if (amifollowing && isfollowingme && !isCloseFriend)
+        {
+            MakeBfBtn.SetActive(true);
+            RemoveBfBtn.SetActive(false);
+        }
+        else
+        {
+            MakeBfBtn.SetActive(false);
+            RemoveBfBtn.SetActive(false);
+        }
 
+    }
     public void OffBffBtns(){ 
         MakeBfBtn.SetActive(false);
         RemoveBfBtn.SetActive(false);

@@ -54,7 +54,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShose)
                 playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
+            playerBody = charcterBodyParts.body;
             ApplySuperMarioEffect(true);
         }
     }

@@ -30,7 +30,7 @@ public class ParentHeightResetScript : MonoBehaviour
 
     public void OnEnable()
     {
-        StartCoroutine(SetFirstTabPos());
+        //StartCoroutine(SetFirstTabPos());
     }
 
     public IEnumerator SetFirstTabPos()
@@ -102,13 +102,19 @@ public class ParentHeightResetScript : MonoBehaviour
             this.GetComponent<RectTransform>().sizeDelta = new Vector2(targetObjHeight.GetComponent<RectTransform>().rect.width, height);
         }
         else*/
+        //{
+        this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().sizeDelta.y);
+        if (MyProfileDataManager.Instance.gameObject.activeSelf)
         {
-            this.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().rect.width, targetObjHeight.GetComponent<RectTransform>().rect.height);
+            //print("==========My Profile Data Manager is active");
+            StartCoroutine(MyProfileDataManager.Instance.WaitToRefreshProfileScreen());
         }
+        //}
 
-        mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        if (gameObject.activeInHierarchy)
-            StartCoroutine(waitToReset());
+        //Commented below lines for now to make profile scroller work properly as below 3 lines were making issues in scroller
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //if (gameObject.activeInHierarchy)
+        //    StartCoroutine(waitToReset());
     }
 
     IEnumerator waitToReset()

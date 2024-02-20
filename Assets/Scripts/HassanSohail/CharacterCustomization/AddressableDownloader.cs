@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 public class AddressableDownloader : MonoBehaviour
 {
@@ -72,11 +74,12 @@ public class AddressableDownloader : MonoBehaviour
     /// To Download Addressable object. with call back from coroutine
     /// </summary>
     /// <param name="name">tag or key of a addressable object</param>
-    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
+    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
         while (!XanaConstants.isAddressableCatalogDownload)
         {
+            Debug.LogError("Waiting for Addressable Catalog to download");
             yield return new WaitForSeconds(1f);
         }
 
@@ -94,7 +97,7 @@ public class AddressableDownloader : MonoBehaviour
             while (true)
             {
                 AsyncOperationHandle loadOp;
-
+                // Debug.LogError("key :- "+key.ToLower());
                 bool flag = false;
                 loadOp = MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
                 if (!flag)
@@ -104,6 +107,7 @@ public class AddressableDownloader : MonoBehaviour
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
+                    Debug.Log("Fail To load");
                     if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
                         StoreManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
@@ -123,12 +127,17 @@ public class AddressableDownloader : MonoBehaviour
                         }
                         else
                         {
-                            applyOn.WearDefaultItem(type, applyOn.gameObject);
+                            applyOn.WearDefaultItem(type, applyOn.gameObject, _gender);
                             yield break;
                         }
                     }
                     else
                     {
+                        if (SceneManager.GetActiveScene().name != "Main")
+                        {
+                            applyOn.isWearOrNot = true;
+                        }
+                        //Debug.LogError(":Wear cloth");
                         //loadOp.Result. = key;
                         MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                         if (PlayerPrefs.GetInt("presetPanel") != 1)

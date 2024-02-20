@@ -10,6 +10,14 @@ public class NinjaSwordSyncing : MonoBehaviourPun
     Transform parentTransfrom;
     Animator anim;
     bool isDrawSword;
+
+    private void OnEnable()
+    {
+        if (photonView.IsMine)
+            return;
+        if (!GamificationComponentData.instance.withMultiplayer)
+            gameObject.SetActive(false);
+    }
     [PunRPC]
     void NinjaSwordInit(int pvID)
     {
