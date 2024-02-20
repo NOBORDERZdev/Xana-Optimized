@@ -75,7 +75,7 @@ public class BlendShapeImporter : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Camera.main != null)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -433,6 +433,8 @@ public class BlendShapeImporter : MonoBehaviour
 
     public void DismissPoints()
     {
+        GameManager.Instance.mainCharacter.GetComponent<Animator>().SetBool("Customization", false);
+        PatchForStore.isCustomizationPanelOpen = false;
         SliderX.gameObject.SetActive(false);
         SliderY.gameObject.SetActive(false);
         PlacedObjectsParent.gameObject.SetActive(false);

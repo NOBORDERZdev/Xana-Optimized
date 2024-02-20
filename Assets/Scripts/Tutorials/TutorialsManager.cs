@@ -40,12 +40,12 @@ public class TutorialsManager : MonoBehaviour
     }
     public void ShowTutorials()
     {
-        if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaConstants.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
+       /* if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaConstants.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
         {
             this.transform.GetChild(0).gameObject.SetActive(true);
             DisplayPanel(currentPanelIndex);
             XanaConstants.xanaConstants.isTutorialLoaded = true;
-        }
+        }*/
     }
     private void HandleButtons(int index)
     {
@@ -146,7 +146,7 @@ public class TutorialsManager : MonoBehaviour
         }
         else //instantiate first 6 worlds
         {
-            List<WorldItemDetail> Worlds = WorldManager.instance.WorldItemManager.Get6WorldsForTutorial();
+            /*List<WorldItemDetail> Worlds = WorldManager.instance.WorldItemManager.Get6WorldsForTutorial();
             for (int i = 0; i < 6; i++)
             {
                 panels[2].transform.GetChild(1).GetChild(0).GetChild(i).
@@ -155,7 +155,7 @@ public class TutorialsManager : MonoBehaviour
                     Worlds[i].ThumbnailDownloadURL
                     );
 
-            }
+            }*/
         }
     }
     private void SkipTutorial()

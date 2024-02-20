@@ -31,8 +31,9 @@ public class SocketHandler : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(1f);
         address = ConstantsGod.API_BASEURL;
         //Debug.Log("Address:" + address);
         if (!address.EndsWith("/"))

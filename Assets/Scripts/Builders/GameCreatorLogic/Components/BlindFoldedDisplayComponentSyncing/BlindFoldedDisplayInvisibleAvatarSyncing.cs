@@ -16,7 +16,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
     MeshRenderer playerFreeCamConsole;
     MeshRenderer playerFreeCamConsoleOther;
 
-    Material defaultHairMat;
+    Material[] defaultHairMat;
     Material defaultBodyMat;
     Material defaultShirtMat;
     Material defaultPantsMat;
@@ -44,15 +44,20 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
         {
             yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
-            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            AvatarController ac = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
-            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+
+            if (ac.wornHair)
+                playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornPant)
+                playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShirt)
+                playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShose)
+                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
             playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
             defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
@@ -60,12 +65,16 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             {
                 defaultHeadMaterials[i] = playerHead.materials[i];
             }
-
-            defaultBodyMat = playerBody.material;
-            defaultPantsMat = playerPants.material;
-            defaultShirtMat = playerShirt.material;
-            defaultHairMat = playerHair.material;
-            defaultShoesMat = playerShoes.material;
+            if (playerBody)
+                defaultBodyMat = playerBody.material;
+            if (playerPants)
+                defaultPantsMat = playerPants.material;
+            if (playerShirt)
+                defaultShirtMat = playerShirt.material;
+            if (playerHair)
+                defaultHairMat = playerHair.sharedMaterials;
+            if (playerShoes)
+                defaultShoesMat = playerShoes.material;
 
             defaultFreeCamConsoleMat = playerFreeCamConsole.material;
             AvatarInvisibilityApply();
@@ -94,11 +103,30 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
     void AvatarInvisibilityApply()
     {
-        playerHair.material = hologramMaterial;
-        playerBody.material = hologramMaterial;
-        playerShirt.material = hologramMaterial;
-        playerPants.material = hologramMaterial;
-        playerShoes.material = hologramMaterial;
+        AvatarInvisibility(false);
+        isInitialise = true;
+    }
+
+    private void AvatarInvisibility(bool state)
+    {
+        if (playerHair)
+        {
+            Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
+            for (int i = 0; i < hairMats.Length; i++)
+            {
+                hairMats[i] = hologramMaterial;
+            }
+            playerHair.sharedMaterials = state ? defaultHairMat : hairMats;
+        }
+        if (playerBody)
+            playerBody.material = state ? defaultBodyMat : hologramMaterial;
+        if (playerShirt)
+            playerShirt.material = state ? defaultShirtMat : hologramMaterial;
+        if (playerPants)
+            playerPants.material = state ? defaultPantsMat : hologramMaterial;
+        if (playerShoes)
+            playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 
         // Assign the new material to all submeshes
@@ -108,25 +136,16 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
         }
 
         // Apply the new materials to the SkinnedMeshRenderer
-        playerHead.materials = newMaterials;
+        playerHead.sharedMaterials = state ? defaultHeadMaterials : newMaterials;
 
-        playerFreeCamConsole.material = hologramMaterial;
-        playerFreeCamConsoleOther.material = hologramMaterial;
-
-        isInitialise = true;
+        playerFreeCamConsole.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
+        playerFreeCamConsoleOther.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
     }
 
     void StopAvatarInvisibility()
     {
         if (photonView.IsMine)
             return;
-        playerHair.material = defaultHairMat;
-        playerBody.material = defaultBodyMat;
-        playerShirt.material = defaultShirtMat;
-        playerPants.material = defaultPantsMat;
-        playerShoes.material = defaultShoesMat;
-        playerHead.sharedMaterials = defaultHeadMaterials;
-        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
-        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
+        AvatarInvisibility(true);
     }
 }

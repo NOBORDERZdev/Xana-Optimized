@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8971767703548865393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8971767703548865395}
+  - component: {fileID: 8971767703548865392}
+  m_Layer: 0
+  m_Name: '[FeedUiController]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8971767703548865395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8971767703548865393}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8971767703548865392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8971767703548865393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3615ee9a6ee0f04e9e3ba3670ce53b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footerCan: {fileID: 0}
+  bottomTabManager: {fileID: 0}
+  followingFeedTabLeftContainer: {fileID: 0}
+  followingFeedTabRightContainer: {fileID: 0}
+  followingFeedTabContainer: {fileID: 0}
+  forYouFeedTabContainer: {fileID: 0}
+  hotTabContainer: {fileID: 0}
+  videofeedParent: {fileID: 0}
+  followingFeedMainContainer: {fileID: 0}
+  feedUiScreen: {fileID: 0}
+  otherPlayerProfileScreen: {fileID: 0}
+  giftItemScreens: {fileID: 0}
+  feedVideoScreen: {fileID: 0}
+  apiLoaderController: {fileID: 0}
+  TopPanelMainObj: {fileID: 0}
+  TopPanelMainStoryObj: {fileID: 0}
+  TopPanelMainContainerObj: {fileID: 0}
+  selectedSprite: {fileID: 21300000, guid: 68ecddd987c47a44fbe7418ed2aab8da, type: 3}
+  unSelectedSprite: {fileID: 21300000, guid: 72a9009efdee5db4d99dee8810425c7e, type: 3}
+  feedUiHorizontalSnap: {fileID: 0}
+  feedUiSelectionLine: {fileID: 0}
+  feedUiSelectionTab:
+  - {fileID: 0}
+  - {fileID: 0}
+  feedUiTabTitleText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  selectedColor: {r: 0.22352941, g: 0.58431375, b: 1, a: 1}
+  unSelectedColor: {r: 0.39607844, g: 0.39607844, b: 0.39607844, a: 1}
+  allFeedScrollRectFasterEx:
+  - {fileID: 0}
+  - {fileID: 0}
+  feedUiScrollRectFasterEx: {fileID: 0}
+  allFeedPanel:
+  - {fileID: 0}
+  - {fileID: 0}
+  videoFeedRect: {fileID: 0}
+  allFeedMessageTextList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  allFeedCurrentpage: 1
+  followingUserCurrentpage: 1
+  myPostCurrentPage: 0
+  isDataLoad: 0
+  isAnyUserFollow: 0
+  followingFeedInitiateTotalCount: 0
+  hotFeedInitiateTotalCount: 0
+  hotForYouFeedInitiateTotalCount: 0
+  unFollowedUserListForFollowingTab: 
+  feedVideoButtonPanelImage: {fileID: 0}
+  feedFullViewScreenCallingFrom: 
+  findFriendScreen: {fileID: 0}
+  findFriendContainer: {fileID: 0}
+  findFriendInputField: {fileID: 0}
+  findFriendInputFieldAdvanced: {fileID: 0}
+  createFeedScreen: {fileID: 0}
+  createFeedTitle: {fileID: 0}
+  createFeedTitleAdvanced: {fileID: 0}
+  createFeedDescription: {fileID: 0}
+  createFeedDescriptionAdvanced: {fileID: 0}
+  createFeedImage: {fileID: 0}
+  createFeedVideoObj: {fileID: 0}
+  createFeedMediaPlayer: {fileID: 0}
+  feedEditOrDeleteData:
+    feedId: 0
+    feedTitle: 
+    feedDescriptions: 
+    feedImage: 
+    feedVideo: 
+    feedCreatedBy: 0
+    userData:
+      Id: 0
+      Name: 
+      Email: 
+      Avatar: 
+  editDeleteFeedScreen: {fileID: 0}
+  editDeleteFeedUserNameText: {fileID: 0}
+  editDeleteFeedDateTimeText: {fileID: 0}
+  editDeleteCurrentFeedImage: {fileID: 0}
+  editDeleteVideoDisplay: {fileID: 0}
+  editDeleteCurrentPostFeedVideoItem: {fileID: 0}
+  editFeedScreen: {fileID: 0}
+  editFeedDescriptionInputField: {fileID: 0}
+  editFeedCurrentFeedImage: {fileID: 0}
+  editFeedCurrentVideoDisplay: {fileID: 0}
+  deleteFeedConfirmationScreen: {fileID: 0}
+  commentPanel: {fileID: 0}
+  commentInputFieldAdvanced: {fileID: 0}
+  commentFitertextDropdown: {fileID: 0}
+  commentScrollPosition: {fileID: 0}
+  commentContentPanel: {fileID: 0}
+  commentListItemPrefab: {fileID: 1953449577996670578, guid: 00a5cf209fdb7714e9a9462c4a7ac317, type: 3}
+  CommentCount: {fileID: 0}
+  attechmentArraystr: '"'
+  fadeInOutScreen: {fileID: 0}
+  fadeInOutColor: {r: 0, g: 0, b: 0, a: 0}
+  profileFollowerFollowingListScreen: {fileID: 0}
+  profileFollowerListContainer: {fileID: 0}
+  profileFollowingListContainer: {fileID: 0}
+  adFrndFollowingListContainer: {fileID: 0}
+  followerPrefab: {fileID: 4287619021890905807, guid: a044ac05a7e04a64381e593820035397, type: 3}
+  followingPrefab: {fileID: 4287619021890905807, guid: b8e983a410bf53a4596c79505efac330, type: 3}
+  adFriendFollowingPrefab: {fileID: 5333363855922748486, guid: cad2068aa6e4e804ba28701f591111c9, type: 3}
+  profileFFScreenTitleText: {fileID: 0}
+  profileFFLineSelection: {fileID: 0}
+  profileFFSelectionTab:
+  - {fileID: 0}
+  - {fileID: 0}
+  profileFFSelectionTabText:
+  - {fileID: 0}
+  - {fileID: 0}
+  profileFollowerFollowingHorizontalScroll: {fileID: 0}
+  profileFFScreenScrollrectFasterEXList:
+  - {fileID: 0}
+  - {fileID: 0}
+  profileFollowerPaginationPageNo: 1
+  profileFollowingPaginationPageNo: 1
+  adFrndFollowingPaginationPageNo: 1
+  isProfileFollowerDataLoaded: 0
+  isProfileFollowingDataLoaded: 0
+  isAdFrndFollowingDataLoaded: 0
+  profileFollowerItemControllersList: []
+  profileFollowingItemControllersList: []
+  AdFrndFollowingItemControllersList: []
+  FrndsPanelBtns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  FrndsPanelBtnLines:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  AddFriendPanel: {fileID: 0}
+  HotFriendPanel: {fileID: 0}
+  hotFriendContainer: {fileID: 0}
+  AddFrndRecommendedPanel: {fileID: 0}
+  AddFrndRecommendedContainer: {fileID: 0}
+  AddFrndFollowingPanel: {fileID: 0}
+  AddFrndFollowingContainer: {fileID: 0}
+  AddFrndNoFollowing: {fileID: 0}
+  AddFrndMutalFrndPanel: {fileID: 0}
+  AddFrndMutalFrndContainer: {fileID: 0}
+  AddFrndNoMutalFrnd: {fileID: 0}
+  BestFriendFull: {fileID: 0}
+  AddFriendSerachBar: {fileID: 0}
+  AddFriendFollowing: {fileID: 0}
+  AddFrndNoSearchFound: {fileID: 0}
+  AddFriendPanelFollowingCont: {fileID: 0}
+  AddFreindContainer: {fileID: 0}
+  ExtraPrefab: {fileID: 4287619021890905807, guid: c2a26ac318ad1004690c70946cbf7369, type: 3}
+  FeedSerachBar: {fileID: 0}
+  callCount: 0
+  isChangeMainScrollRect: 0
+  verticalNormalizedPosition: 0
+  lastPostCreatedImageDownload: 0
+  imageOrVideo: 
+  createFeedLastPickFilePath: 
+  createFeedLastPickFileName: 

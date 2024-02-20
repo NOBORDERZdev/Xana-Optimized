@@ -738,7 +738,7 @@ namespace SuperStar.Helpers
         }
         public IEnumerator RemoveFromMemoryDelay(string key, bool force)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
             if (sprites.ContainsKey(key))
             {
                 sprites.TryGetValue(key, out SpriteCacheItem spriteCacheItem);

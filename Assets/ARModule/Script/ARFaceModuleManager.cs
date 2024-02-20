@@ -115,6 +115,8 @@ public class ARFaceModuleManager : MonoBehaviour
             if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
             {
                 GameObject mainSceneAvatar = Instantiate(XanaConstants.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
+               // mainSceneAvatar.GetComponent<AvatarControllerHome>().UpdateState(true);
+                mainSceneAvatar.GetComponent<AvatarControllerHome>().SetAvatarforAR();
                 mainSceneAvatar.transform.localScale = Vector3.one;
                 mainSceneAvatar.transform.localPosition = new Vector3(0, 0, 0);
                 mainSceneAvatar.transform.rotation = Quaternion.Euler(0, 180, 0);

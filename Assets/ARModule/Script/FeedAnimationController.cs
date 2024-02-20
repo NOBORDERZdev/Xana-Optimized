@@ -283,8 +283,9 @@ public class FeedAnimationController : MonoBehaviour
             }
             //StartCoroutine(GetAssetBundleFromServerUrl(url, _gameObject));
             SetAnimationHighlight(_gameObject);
+            lastFeedAnimBtnClicked = _gameObject;
         }
-        lastFeedAnimBtnClicked = _gameObject;
+        
     }
 
     int counter = 0;
@@ -360,6 +361,7 @@ public class FeedAnimationController : MonoBehaviour
             {
                 playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
                 yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+                counterForEtc = 0;
                 waitForStandUp = false;
             }
         }else if(runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
@@ -371,6 +373,16 @@ public class FeedAnimationController : MonoBehaviour
                 yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
             }else
                 counterForEtc = 0;
+        }else if(runtimeAnimatorGameObject != null)
+        {
+            if (counterForEtc != 0)
+            {
+                playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
+                yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
+                runtimeAnimatorGameObject = null;
+                waitForStandUp = false;
+                counterForEtc = 0;
+            }
         }
         if (counter > 4)
         {

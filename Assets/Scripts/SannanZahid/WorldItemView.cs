@@ -10,9 +10,9 @@ using Photon.Pun.Demo.PunBasics;
 
 public class WorldItemView : MonoBehaviour
 {
-    [SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;
-    public int Index;
-    public Vector2 GridIndex { get; protected set; }
+    /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
+    /*public int Index;
+    public Vector2 GridIndex { get; protected set; }*/
     public RectTransform RectTransform => transform as RectTransform;
     public void Activated()
     {
@@ -22,28 +22,68 @@ public class WorldItemView : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
+    public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount = 0)
     {
-        if(PreviewLogo)
+        if (PreviewLogo)
             PreviewLogo.gameObject.SetActive(true);
-       Index = index;
-       GridIndex = gridPos;
-       idOfObject =  detail.IdOfWorld;
-       m_EnvironmentName = detail.EnvironmentName;
-       m_WorldDescription = detail.WorldDescription;
-       m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-       creatorName = detail.CreatorName;
-       createdAt = detail.CreatedAt;
-       userLimit = detail.UserLimit;
-       userAvatarURL = detail.UserAvatarURL;
-       updatedAt = detail.UpdatedAt;
-       entityType = detail.EntityType;
-       m_BannerLink = detail.BannerLink;
-       m_PressedIndex = detail.PressedIndex;
-       ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        /*Index = index;
+        GridIndex = gridPos;*/
+        idOfObject = detail.IdOfWorld;
+        m_EnvironmentName = detail.EnvironmentName;
+        m_WorldDescription = detail.WorldDescription;
+        //Changed image quality due to poor text quality
+        if (m_EnvironmentName == "ZONE-X")
+            detail.ThumbnailDownloadURL = detail.ThumbnailDownloadURL.Replace("?width=640&height=360", "?width=960&height=540");
+        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+        //creatorName = detail.Creator_Name;
+        createdAt = detail.CreatedAt;
+        userLimit = detail.UserLimit;
+        userAvatarURL = detail.UserAvatarURL;
+        updatedAt = detail.UpdatedAt;
+        entityType = detail.EntityType;
+        m_BannerLink = detail.BannerLink;
+        m_PressedIndex = detail.PressedIndex;
+        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
         worldTags = detail.WorldTags;
-       Init();
+        Creator_Name = detail.Creator_Name;
+        CreatorAvatarURL = detail.CreatorAvatarURL;
+        CreatorDescription = detail.CreatorDescription;
+        worldVisitCount = detail.WorldVisitCount;
+        isFavourite = detail.isFavourite;
+        if (creatorNameText)
+            creatorNameText.text = Creator_Name;
+        Init(index, _loopcount);
     }
+
+
+    public void InitItem(WorldItemDetail detail, int _loopcount = 0)
+    {
+        if (PreviewLogo)
+            PreviewLogo.gameObject.SetActive(true);
+        idOfObject = detail.IdOfWorld;
+        m_EnvironmentName = detail.EnvironmentName;
+        m_WorldDescription = detail.WorldDescription;
+        m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+        //creatorName = detail.CreatorName;
+        createdAt = detail.CreatedAt;
+        userLimit = detail.UserLimit;
+        userAvatarURL = detail.UserAvatarURL;
+        updatedAt = detail.UpdatedAt;
+        entityType = detail.EntityType;
+        m_BannerLink = detail.BannerLink;
+        m_PressedIndex = detail.PressedIndex;
+        ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        worldTags = detail.WorldTags;
+        Creator_Name = detail.Creator_Name;
+        CreatorAvatarURL = detail.CreatorAvatarURL;
+        CreatorDescription = detail.CreatorDescription;
+        worldVisitCount = detail.WorldVisitCount;
+        isFavourite = detail.isFavourite;
+        if (creatorNameText)
+            creatorNameText.text = Creator_Name;
+        Init(0, _loopcount);
+    }
+
 
     public static string m_EnvName;
     public static string m_CreaName;
@@ -52,7 +92,7 @@ public class WorldItemView : MonoBehaviour
     public string m_EnvironmentName;
     public string m_WorldDescription;
     public string m_ThumbnailDownloadURL, ThumbnailDownloadURLHigh;
-    public string creatorName;
+    //public string creatorName;
     public string createdAt;
     public string userLimit;
     public string userAvatarURL;
@@ -61,6 +101,7 @@ public class WorldItemView : MonoBehaviour
     [Header("WorldNameAndDescription")]
     public TextMeshProUGUI eviroment_Name;
     public TextMeshProUGUI joinedUserCount;
+    public TextMeshProUGUI creatorNameText;
     public string m_BannerLink;
     public Image worldIcon;
     public int m_PressedIndex;
@@ -76,51 +117,58 @@ public class WorldItemView : MonoBehaviour
 
     [Header("Tags and Category")]
     public string[] worldTags;
-
+    public string Creator_Name;
+    public string CreatorAvatarURL;
+    public string CreatorDescription;
+    public string worldVisitCount;
+    public bool isFavourite;
     public WorldItemPreviewTab worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
-    private void OnEnable()
-    {
-        UpdateUserCount();
-        if(m_ThumbnailDownloadURL != "")
-        {
-            LoadImagesFromRemote();
-        }
-        UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
-    }
-    private void OnDisable()
-    {
-        if (!m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
-            worldIcon.sprite = null;
-            worldIcon.sprite = default;
-        }
-        UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
-    }
-    public void Init()
+    //private void OnEnable()
+    //{
+    //    //UpdateUserCount();
+    //    //if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
+    //    //{
+    //    //    LoadImagesFromRemote();
+    //    //}
+    //    //UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
+    //}
+    //private void OnDisable()
+    //{
+    //    if (!m_EnvironmentName.Contains("XANA Lobby"))
+    //    {
+    //        AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
+    //        worldIcon.sprite = null;
+    //        worldIcon.sprite = default;
+    //    }
+    //    //UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
+    //}
+    public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
-        StartCoroutine(DownloadPrefabSprite());
-        if (!m_EnvironmentName.Contains("XANA Lobby"))
-            this.GetComponent<Button>().interactable = false;
+        //if (!m_EnvironmentName.Contains("XANA Lobby"))
+        //    this.GetComponent<Button>().interactable = false;
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
-        UpdateUserCount();
-        LoadImagesFromRemote();
+        //UpdateUserCount();
+        SetWorldName();
+        worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
+        LoadImagesFromRemote(worlditemcount, _loopcount);
     }
-    void LoadImagesFromRemote()
+    void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
-        if (m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            if (!isBannerLoaded)
-            {
-                StartCoroutine(DownloadAndLoadBanner());
-            }
-        }
+        //if (m_EnvironmentName.Contains("XANA Lobby"))
+        //{
+        //    if (!isBannerLoaded)
+        //    {
+        //        if (gameObject.activeInHierarchy)
+        //            StartCoroutine(DownloadAndLoadBanner());
+        //    }
+        //}
         if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))//this is check if object is visible on camera then load feed or video one time
         {
-            StartCoroutine(DownloadAndLoadFeed());
+            if (gameObject.activeInHierarchy)
+                StartCoroutine(DownloadAndLoadFeed(worlditemcount, _loopcount));
         }
     }
     void UpdateUserCount()
@@ -142,7 +190,7 @@ public class WorldItemView : MonoBehaviour
             {
                 modifyEnityType = "USER";
             }
-            if(PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
+            if (PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
                 joinedUserCount.transform.parent.gameObject.SetActive(true);
             else
                 joinedUserCount.transform.parent.gameObject.SetActive(false);
@@ -150,7 +198,7 @@ public class WorldItemView : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
+                    //Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID()) // For Xana Lobby
                         joinedUserCount.text = allWorldData.player_count[i].count + 5 + "";
                     else
@@ -160,7 +208,7 @@ public class WorldItemView : MonoBehaviour
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
                     if (m_EnvironmentName.Contains("XANA Lobby") && allWorldData.player_count[i].count > 0)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
-                        break;
+                    break;
                 }
                 if (CheckServerForID().ToString() == idOfObject)
                     joinedUserCount.text = "5";
@@ -189,7 +237,7 @@ public class WorldItemView : MonoBehaviour
             {
                 if (allWorldData.player_count[i].world_type == modifyEnityType && allWorldData.player_count[i].world_id.ToString() == idOfObject)
                 {
-                    Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
+                    //Debug.Log("<color=green> Analytics -- Yes Matched : " + m_EnvironmentName + "</color>");
                     if (allWorldData.player_count[i].world_id == CheckServerForID())
                     { // For Xana Lobby
                         joinedUserCount.text = (allWorldData.player_count[i].count + 5) + "";
@@ -220,10 +268,10 @@ public class WorldItemView : MonoBehaviour
         else
             return 406; // Xana Lobby Id Testnet
     }
-    public IEnumerator DownloadAndLoadFeed()
+    public IEnumerator DownloadAndLoadFeed(int worlditemcount, int _loopcount)
     {
         yield return null;
-       if(AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
+        if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
             if (PreviewLogo)
@@ -242,6 +290,11 @@ public class WorldItemView : MonoBehaviour
 
                 }
             });
+        }
+        if (worlditemcount >= 26 || worlditemcount == _loopcount - 1)
+        {
+            /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
     }
     void GetEventType(string entityType)
@@ -265,17 +318,25 @@ public class WorldItemView : MonoBehaviour
         }
     }
 
-    public IEnumerator DownloadPrefabSprite()
+    void SetWorldName()
     {
-        yield return new WaitForSeconds(0.1f);
-
-        if (gameObject.activeInHierarchy)
+        if (m_EnvironmentName.Contains("Dubai"))
         {
-            StartCoroutine(DownloadImage());
+            eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
+            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
         }
+        else
+        {
+            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+        }
+        eviroment_Name.text = eviroment_Name.text;
+        if (!string.IsNullOrEmpty(worldVisitCount))
+            joinedUserCount.text = worldVisitCount + " visits";
+        gameObject.GetComponent<Button>().interactable = true;
         isVisible = true;
+        //StartCoroutine(DownloadImage());
     }
-    public IEnumerator DownloadImage()
+    /*public IEnumerator DownloadImage()
     {
         if (m_EnvironmentName.Contains("Dubai"))
         {
@@ -289,27 +350,29 @@ public class WorldItemView : MonoBehaviour
         eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;
         yield return null;
-    }
+    }*/
     public void OnClickPrefab()
     {
         m_EnvName = m_EnvironmentName;
-        m_CreaName = creatorName;
+        m_CreaName = Creator_Name;
         XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
- 
-        if(m_EnvironmentName.Contains("XANA Lobby"))
-        {
-            worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
-        }
-        else
-        {
-            worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
-        }
-       
+
+        //if (m_EnvironmentName.Contains("XANA Lobby"))
+        //{
+        //    worldItemPreview.Init(XanaWorldBanner,
+        //   m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, "", worldTags,
+        //   entityType, Creator_Name, CreatorDescription, CreatorAvatarURL,isFavourite);
+        //}
+        //else
+        //{
+        worldItemPreview.Init(this.gameObject, worldIcon.sprite,
+    m_EnvironmentName, m_WorldDescription, Creator_Name, createdAt, updatedAt, isBuilderScene, userAvatarURL, m_ThumbnailDownloadURL, worldTags,
+    entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
+        //}
+
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
@@ -324,7 +387,7 @@ public class WorldItemView : MonoBehaviour
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
-       
+
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
@@ -336,7 +399,7 @@ public class WorldItemView : MonoBehaviour
 
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.Log("<color = red>" + www.error + "</color>");
+            //Debug.Log("<color = red>" + www.error + "</color>");
         }
         else
         {

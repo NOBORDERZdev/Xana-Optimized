@@ -55,12 +55,11 @@ public class CheckInternet : MonoBehaviour
 
             if (once == true) { 
                 {
-                  
-                    UserRegisterationManager.instance.OpenUIPanal(1);
+                    if (PlayerPrefs.HasKey("TermsConditionAgreement") && PlayerPrefs.GetInt("shownWelcome") == 0)
+                        UserRegisterationManager.instance.OpenUIPanal(1);
                     UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
                 }
                 once=false;
-               
             }
             //UserRegisterationManager.instance.OpenUIPanal(1);
             //UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();

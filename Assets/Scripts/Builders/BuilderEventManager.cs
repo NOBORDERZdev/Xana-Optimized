@@ -8,7 +8,7 @@ public static class BuilderEventManager
 {
     public static Action<int, string> OnBuilderDataFetch;
 
-    public static Action<APIURL, Action<bool>> OnBuilderWorldLoad;
+    public static Action<APIURL, Action<bool>, bool> OnBuilderWorldLoad;
     public static Action<APIURL, bool> OnWorldTabChange;
 
     public static Action ApplySkyoxSettings;
@@ -44,9 +44,11 @@ public static class BuilderEventManager
 
     //Timer Component
     public static Action<string, float> OnTimerTriggerEnter;
+    public static Action OnTimerLimitEnd;
 
     //Elapse Time Component
     public static Action<float, bool> OnElapseTimeCounterTriggerEnter;
+    public static Action elapsedEndTime;
 
     //CountDown Component
     public static Action<int, bool> OnTimerCountDownTriggerEnter;
@@ -63,6 +65,7 @@ public static class BuilderEventManager
 
     //Situation Changer Component
     public static Action<float> OnSituationChangerTriggerEnter;
+    public static Action DisableSituationLight;
 
     //Quiz Component
     public static Action<QuizComponent, QuizComponentData> OnQuizComponentCollisionEnter;
@@ -99,6 +102,7 @@ public static class BuilderEventManager
     //Avatar change Component
     public static Action<float> OnAvatarChangeComponentTriggerEnter;
     public static Action<bool> StopAvatarChangeComponent;
+    public static Action<bool> ChangeCameraHeight;
 
     //ChangeNinja_ThrowUIPosition
     public static Action<float, bool> ChangeNinja_ThrowUIPosition;

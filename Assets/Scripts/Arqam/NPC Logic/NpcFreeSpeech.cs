@@ -24,7 +24,7 @@ public class NpcFreeSpeech : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SetApiData());
+        //StartCoroutine(SetApiData());
     }
 
     IEnumerator SetApiData()

@@ -65,6 +65,9 @@ public class LoadingHandler : MonoBehaviour
     public CanvasGroup teleportFeader;
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
+    [Header("Store Loading")]
+    public GameObject storeLoadingScreen;
+
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 
@@ -75,6 +78,8 @@ public class LoadingHandler : MonoBehaviour
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
 
+    public GameObject SearchLoadingCanvas;
+    private CanvasGroup canvasGroup;
     private void Awake()
     {
         if (Instance == null)
@@ -87,11 +92,11 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-
+      //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
-                Debug.unityLogger.filterLogType = LogType.Error;
+                        Debug.unityLogger.filterLogType = LogType.Error;
 #endif
     }
 
@@ -100,6 +105,7 @@ public class LoadingHandler : MonoBehaviour
         sliderFinalValue = Random.Range(80f, 95f);
         sliderCompleteValue = Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     IEnumerator StartBGChange()
@@ -459,6 +465,8 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
+        if(canvasGroup.alpha == 0)
+            canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
         characterLoading.SetActive(false);

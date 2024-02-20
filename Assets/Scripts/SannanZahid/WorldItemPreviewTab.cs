@@ -1,14 +1,22 @@
+using DG.Tweening;
+using Photon.Voice.Unity.Demos;
 using SuperStar.Helpers;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class WorldItemPreviewTab : MonoBehaviour
 {
+    public string worldId;
+    public GameObject thumbnailPrefabRef;
+    public GameObject worldDescriptionScrollview;
     public TextMeshProUGUI WorldNameTxt;
     public TextMeshProUGUI WorldDescriptionTxt;
-    public Text CreatorNameTxt;
+    public TextMeshProUGUI CreatorNameTxt;
     public Text CreatedAtTxt;
     public Text UpdatedAtTxt;
     public Text VisitCountTxt;
@@ -19,6 +27,9 @@ public class WorldItemPreviewTab : MonoBehaviour
     public ScrollRect ScrollControllerRef;
     public GameObject XanaProfile;
     public Button JoinEventBtn;
+    public GameObject followingWorld;
+    public GameObject followingWorldHighlight;
+    public GameObject followWorldLoader;
     public Image[] BannerImgSprite;
     bool _isBuilderScene = default;
     public static bool m_WorldIsClicked = false;
@@ -26,8 +37,10 @@ public class WorldItemPreviewTab : MonoBehaviour
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
-    string ThumbnailDownloadURL="";
-    public Transform LobbyLogoContaionr,XanaAvatarIcon,NoAvatarIcon,AvatarIcon;
+    string ThumbnailDownloadURL = "";
+    public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;
+    public TextMeshProUGUI CreatorDescriptionTxt;
+    public GameObject creatorPanel;
 
     [Header("Tags and Category")]
     public GameObject tagScroller;
@@ -38,17 +51,51 @@ public class WorldItemPreviewTab : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
 
-    public void Init(Sprite worldImg,string worldName, string worldDescription, string creatorName,
-        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL,string ThumbnailDownloadURLHigh,string[] worldTags)
+    public static Action<bool> OndescriptionPanelSizeChange;
+    private void OnEnable()
     {
+        OndescriptionPanelSizeChange += UpdateDescirptionPanelItem;
+    }
+
+    private void OnDisable()
+    {
+        OndescriptionPanelSizeChange -= UpdateDescirptionPanelItem;
+    }
+
+    void UpdateDescirptionPanelItem(bool isFullOpen)
+    {
+        if(isFullOpen)
+        {
+            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500), 0.1f).SetEase(Ease.Linear);
+            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
+            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
+        }
+        else
+        {
+            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310), 0.1f).SetEase(Ease.Linear);
+            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
+            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
+        }
+    }
+
+    public void Init(GameObject thumbnailObjRef,Sprite worldImg, string worldName, string worldDescription, string creatorName,
+        string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
+        string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
+    {
+        worldId = _worldId;
+        if (thumbnailObjRef)
+            thumbnailPrefabRef = thumbnailObjRef;
+
         PreviewLogo.gameObject.SetActive(true);
         WorldIconImg.sprite = null;
-        if (!ThumbnailDownloadURL.Equals(""))
-        {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
-        }
+        //if (!ThumbnailDownloadURL.Equals(""))
+        //{
+        //    AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailDownloadURL, true);
+        //}
         JoinEventBtn.onClick.RemoveAllListeners();
-       
+
         scrollActivity.enabled = false;
         ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
@@ -56,17 +103,21 @@ public class WorldItemPreviewTab : MonoBehaviour
         CreatorNameTxt.text = creatorName;
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
-        if (ThumbnailDownloadURLHigh == "")
-        {
-            PreviewLogo.gameObject.SetActive(false);
-            WorldIconImg.sprite = worldImg;
-        }
-        else
-        {
-            ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
-            StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
-        }
-        if(worldTags!=null && worldTags.Length>0)
+
+        PreviewLogo.gameObject.SetActive(false);
+        WorldIconImg.sprite = worldImg;
+
+        //if (ThumbnailDownloadURLHigh == "")
+        //{
+        //    PreviewLogo.gameObject.SetActive(false);
+        //    WorldIconImg.sprite = worldImg;
+        //}
+        //else
+        //{
+        //    ThumbnailDownloadURL = ThumbnailDownloadURLHigh;
+        //    StartCoroutine(DownloadAndSetImage(ThumbnailDownloadURLHigh, WorldIconImg));
+        //}
+        if (worldTags != null && worldTags.Length > 0)
         {
             m_WorldTags = worldTags;
             InstantiateWorldtags();
@@ -89,27 +140,40 @@ public class WorldItemPreviewTab : MonoBehaviour
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
-        if (string.IsNullOrEmpty(userAvatarURL))
-        {
-            NoAvatarIcon.gameObject.SetActive(true);
-            XanaAvatarIcon.gameObject.SetActive(false);
-            AvatarIcon.gameObject.SetActive(false);
-        }
-        else if(!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
-        {
-            NoAvatarIcon.gameObject.SetActive(false);
-            XanaAvatarIcon.gameObject.SetActive(true);
-            AvatarIcon.gameObject.SetActive(false);
-        }
+        /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
+        {*/
+            CreatorNameTxt.text = creator_Name;
+            CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
+            AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+            if (string.IsNullOrEmpty(userAvatarURL))
+            {
+                //NoAvatarIcon.gameObject.SetActive(true);
+                XanaAvatarIcon.gameObject.SetActive(false);
+                //AvatarIcon.gameObject.SetActive(true);
+            }
+            //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
+            //{
+            //    NoAvatarIcon.gameObject.SetActive(false);
+            //    XanaAvatarIcon.gameObject.SetActive(true);
+            //    AvatarIcon.gameObject.SetActive(false);
+            //}
+            else
+            {
+                //NoAvatarIcon.gameObject.SetActive(false);
+                XanaAvatarIcon.gameObject.SetActive(false);
+                //AvatarIcon.gameObject.SetActive(true);
+                StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
+            }
+            creatorPanel.SetActive(true);
+        /*}
         else
         {
-            NoAvatarIcon.gameObject.SetActive(false);
-            XanaAvatarIcon.gameObject.SetActive(false);
-            AvatarIcon.gameObject.SetActive(true);
-            StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
-        }
+            creatorPanel.SetActive(false);
+        }*/
+
+        CheckWorldFav(isFavourite);
     }
-    public void CallAnalytics(string idOfObject,string entityType)
+    public void CallAnalytics(string idOfObject, string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt);
@@ -124,10 +188,10 @@ public class WorldItemPreviewTab : MonoBehaviour
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        //  UIManager.Instance.HomePage.SetActive(true);
         FadeImg.sprite = WorldIconImg.sprite;
         UpdateWorldPanel();
-        string EnvironmentName = WorldNameTxt.text; 
+        string EnvironmentName = WorldNameTxt.text;
         if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
         {
             EnvironmentName = "DJ Event";
@@ -175,7 +239,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         if (BannerImgSprite.Length > 2)
             BannerImgSprite[2].sprite = FadeImg.sprite;
     }
-    IEnumerator DownloadAndSetImage(string downloadURL,Image imageHolder)
+    IEnumerator DownloadAndSetImage(string downloadURL, Image imageHolder)
     {
         yield return null;
         if (!string.IsNullOrEmpty(downloadURL))
@@ -199,7 +263,7 @@ public class WorldItemPreviewTab : MonoBehaviour
                     }
                 });
             }
-          
+
         }
     }
 
@@ -225,5 +289,111 @@ public class WorldItemPreviewTab : MonoBehaviour
             temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
         }
         tagsInstantiated = true;
+    }
+
+
+    void CheckWorldFav(bool isFavourite)
+    {
+        if (isFavourite)
+        {
+            followingWorldHighlight.SetActive(true);
+            followingWorld.SetActive(false);
+        }
+        else
+        {
+            followingWorldHighlight.SetActive(false);
+            followingWorld.SetActive(true);
+        }
+        followingWorld.GetComponent<Button>().interactable = true;
+        followingWorldHighlight.GetComponent<Button>().interactable = true;
+    }
+
+
+    public void FavoriteWorldBtnClicked()
+    {
+        if (!PremiumUsersDetails.Instance.CheckSpecificItem("Favorite Worlds"))
+        {
+            print("Please Upgrade to Premium account");
+            return;
+        }
+        else
+        {
+            print("Horayyy you have Access");
+        }
+        followingWorld.GetComponent<Button>().interactable = false;
+        followWorldLoader.SetActive(true);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
+        Debug.LogError(apiUrl);
+        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
+        {
+            if (isSucess)
+            {
+                followingWorldHighlight.SetActive(true);
+                followingWorld.SetActive(false);
+                followWorldLoader.SetActive(false);
+                if (thumbnailPrefabRef)
+                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
+            }
+            else
+            {
+                followingWorld.GetComponent<Button>().interactable = true;
+                followWorldLoader.SetActive(false);
+            }
+        }));
+    }
+
+    public void HighlightFavoriteBtnClicked()
+    {
+        followingWorldHighlight.GetComponent<Button>().interactable = false;
+        followWorldLoader.SetActive(true);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
+        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
+        {
+            if (isSucess)
+            {
+                followingWorld.SetActive(true);
+                followingWorldHighlight.SetActive(false);
+                followWorldLoader.SetActive(false);
+                if (thumbnailPrefabRef)
+                {
+                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
+
+                }
+            }
+            else
+            {
+                followingWorldHighlight.GetComponent<Button>().interactable = true;
+                followWorldLoader.SetActive(false);
+            }
+        }));
+    }
+
+    IEnumerator FollowWorldAPI(string APIurl,string worldId, Action<bool> CallBack)
+    {
+        yield return new WaitForEndOfFrame();
+        //WWWForm wWWForm = new WWWForm();
+        //wWWForm.AddField("worldId", worldId);
+        Dictionary<string, int> data = new Dictionary<string, int>();
+        data.Add("worldId",int.Parse(worldId));
+        string jsonData = JsonUtility.ToJson(data);
+        using (UnityWebRequest www = UnityWebRequest.Put(APIurl,jsonData))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SetRequestHeader("Content-Type", "application/json");
+            www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
+            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            {
+                //Debug.LogError("following world error :- " + www.downloadHandler.text);
+                CallBack(false);
+            }
+            else
+            {
+               // Debug.LogError("following world :- "+www.downloadHandler.text);
+                CallBack(true);
+            }
+            www.Dispose();
+        }
     }
 }

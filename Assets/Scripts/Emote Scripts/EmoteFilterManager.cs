@@ -326,18 +326,19 @@ public class EmoteFilterManager : MonoBehaviour
         {
             animObject.transform.GetChild(3).gameObject.SetActive(false);
         }
-        if (EmoteAnimationPlay.Instance.AnimObject==null)
+        if (EmoteAnimationPlay.Instance.AnimObject == null || EmoteAnimationPlay.Instance.currentAnimationTab == "Sit & lying")
         {
             emoteAnimationHighlightButton.SetActive(false);
             if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimationsPanelUpdate(false);
 
         }
+       
      
     }
 
     IEnumerator DelayToClose(GameObject g)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         g.SetActive(false);
     }
     public void ResetHighligt()

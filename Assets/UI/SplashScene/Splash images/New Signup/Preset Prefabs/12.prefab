@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3304758452783410725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2380900297721887245}
+  - component: {fileID: 7579432475126715896}
+  - component: {fileID: 3155937196373117725}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2380900297721887245
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304758452783410725}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3629242141790165677}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 330, y: 1000}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7579432475126715896
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304758452783410725}
+  m_CullTransparentMesh: 0
+--- !u!114 &3155937196373117725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304758452783410725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 76b254da865fe404db355d3f33ebd25e, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4618465263889137156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3629242141790165677}
+  - component: {fileID: 3530054180966156165}
+  - component: {fileID: 2310398641447724764}
+  - component: {fileID: 6676405553494135847}
+  m_Layer: 5
+  m_Name: 12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3629242141790165677
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618465263889137156}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2380900297721887245}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 9541, y: -473}
+  m_SizeDelta: {x: 392, y: 986}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3530054180966156165
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618465263889137156}
+  m_CullTransparentMesh: 0
+--- !u!114 &2310398641447724764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618465263889137156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a1f36a930d1f4cb42bae6ae680a8ec90, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6676405553494135847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618465263889137156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbd110571754094bb4bac58b72c9e90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JsonDataPreset: '{"id":"89921","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680425897273_file.png","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1275,"ItemName":"boyc106pants","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1281,"ItemName":"boyc052shirt","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1527,"ItemName":"boyh103","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1086,"ItemName":"ShoseC14","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}],"SavedBones":[{"Name":"iScale_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":0,"y":0,"z":355},"Scale":{"x":1,"y":1,"z":1}},{"Name":"iScale_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0.05000000074505806,"y":0.11060000211000443,"z":0.12319999933242798},"Rotation":{"x":0.000005008956577512436,"y":180,"z":175.00001525878906},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineIn_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":-0.039000000804662704},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineIn_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0.039000000804662704},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineOut_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":-0.039000000804662704},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"eLineOut_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0.039000000804662704},"Rotation":{"x":4.0284863093036685e-21,"y":-5.352729364683257e-21,"z":7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"lip_L","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-0.03999999910593033,"y":0.0032999999821186066,"z":-0.013700000010430813},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"lip_R","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0.03999999910593033,"y":0.002281073946505785,"z":-0.010203620418906212},"Rotation":{"x":0.000005008956122765085,"y":180,"z":180},"Scale":{"x":1,"y":1,"z":1}},{"Name":"jBone","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-1.3552526853146218e-22,"y":-0.02754758484661579,"z":-3.0531133011755682e-18},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":0.75,"y":0.8999999761581421,"z":1}},{"Name":"Xana_3_0_Head","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0,"z":0},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1,"y":1,"z":1}},{"Name":"nose","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0.05000000074505806,"z":0.15000000596046448},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":0.800000011920929,"y":0.949999988079071,"z":0.800000011920929}},{"Name":"mouth","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":0.013086539693176746,"z":0.13533389568328857},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":0.8999999761581421,"y":1.2000000476837158,"z":1}},{"Name":"foreHead","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.51318408928514e-13,"y":2.8421708795129297e-16,"z":0.01407201960682869},"Rotation":{"x":1.7842431215610857e-21,"y":5.352729364683257e-21,"z":-7.37752694813242e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"hairAll","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-7.506948396240887e-10,"y":0.11257615685462952,"z":0.005374649539589882},"Rotation":{"x":2.3854177859475864e-15,"y":8.921215607805429e-21,"z":-5.465735484172499e-20},"Scale":{"x":1,"y":1,"z":1}},{"Name":"head_Ex","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-1.8280114488788968e-7,"y":0.000006591571036551613,"z":-0.000011477729458420072},"Rotation":{"x":350.229736328125,"y":348.1413269042969,"z":26.801427841186523},"Scale":{"x":1,"y":1,"z":1}},{"Name":"Hips_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":3.552713599391162e-17,"y":-8.171241080076326e-16,"z":2.8421708795129297e-16},"Rotation":{"x":-2.1695232970902834e-27,"y":-1.516606673521762e-21,"z":1.2132853388174096e-20},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"LeftArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":3.197442173277597e-16,"y":9.237055226068124e-16,"z":7.531752592481247e-15},"Rotation":{"x":-1.5484578815569763e-14,"y":-9.401182990899061e-32,"z":3.4786105249539256e-16},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"LeftForeArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":5.684341759025859e-16,"y":-1.2079226634976645e-15,"z":-2.220445916901415e-17},"Rotation":{"x":-1.5485273382586512e-14,"y":-1.5902773592947552e-15,"z":3.500267569228442e-16},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"LeftLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-7.105427198782324e-17,"y":0,"z":1.4210854397564648e-16},"Rotation":{"x":-1.192708045940846e-15,"y":-1.0871036739201567e-17,"z":2.9016932082054695e-16},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"LeftShoulder_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.3980815637837487e-16,"y":-1.2789768693110388e-15,"z":-7.216449395365721e-18},"Rotation":{"x":-1.8087851569727025e-14,"y":1.5902773592947552e-15,"z":-8.758949596572802e-16},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"LeftUpLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":0,"y":-1.4210854397564648e-16,"z":-2.220445916901415e-17},"Rotation":{"x":2.484808373898055e-17,"y":-1.4559424388926342e-19,"z":1.3939321773582276e-17},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"Neck_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":1.0658140798173486e-16,"y":3.0198066587441613e-16,"z":-3.6948220904272494e-15},"Rotation":{"x":-1.5906838292303188e-15,"y":2.843823917672572e-12,"z":-5.405076778890337e-19},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"RightArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.664535100281698e-16,"y":1.4210854397564648e-16,"z":-8.384403909274685e-15},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"RightForeArm_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-2.4868995857482625e-16,"y":1.2079226634976645e-15,"z":4.44089183380283e-17},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"RightLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":3.552713599391162e-17,"y":0,"z":1.4210854397564648e-16},"Rotation":{"x":1.1380586152642216e-35,"y":-8.541529043768505e-18,"z":7.633991639736769e-17},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"RightShoulder_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":2.5757173430149803e-16,"y":-1.4210854397564648e-16,"z":-7.216449395365721e-18},"Rotation":{"x":0,"y":0,"z":0},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"RightUpLeg_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":2.382280061600802e-24,"y":-1.4210854397564648e-16,"z":0},"Rotation":{"x":-4.96961674779611e-17,"y":-6.399088762711063e-35,"z":7.377647044417605e-17},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"Spine1_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.468552137729187e-23,"y":-1.4210854397564648e-16,"z":-1.776356799695581e-17},"Rotation":{"x":-6.417946966607662e-43,"y":-3.033213347043524e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"Spine2_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":-6.670384409140517e-23,"y":0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554741e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1,"z":1.25}},{"Name":"Spine_Scale","Obj":{"m_FileID":0,"m_PathID":0},"Pos":{"x":6.8821424440057e-23,"y":0,"z":-1.776356799695581e-17},"Rotation":{"x":-9.640933434554741e-43,"y":-4.549820121539482e-21,"z":-1.289115667444788e-20},"Scale":{"x":1.25,"y":1,"z":1.25}}],"SkinId":6,"Skin":{"r":1,"g":0.95686274766922,"b":0.9254902005195618,"a":1},"LipColor":{"r":0.8235294222831726,"g":0.6000000238418579,"b":0.5215686559677124,"a":1},"SssIntensity":0,"SkinGerdientColor":{"r":0.5960784554481506,"g":0.3803921639919281,"b":0.3803921639919281,"a":1},"isSkinColorChanged":false,"isLipColorChanged":false,"BodyFat":25,"FaceValue":13,"NoseValue":40,"EyeValue":16,"EyesColorValue":0,"EyeBrowValue":1477,"EyeLashesValue":1509,"MakeupValue":63,"LipsValue":51,"LipsColorValue":0,"faceMorphed":false,"eyeBrowMorphed":false,"eyeMorphed":false,"noseMorphed":false,"lipMorphed":false,"PresetValue":"Preset15","eyeTextureName":"xana_eye_default","eyeLashesName":"eyelash_23","eyebrrowTexture":"eyebrow_7","makeupName":"makeup","FaceBlendsShapes":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30,0,0,0,0,0,0,15,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}'
+  IsStartUp_Canvas: 1
+  eyeTex: {fileID: 2800000, guid: a715a20fdc5e5f248856acb9c32dff8d, type: 3}

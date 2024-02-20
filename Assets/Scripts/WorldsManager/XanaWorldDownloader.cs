@@ -135,31 +135,42 @@ public class XanaWorldDownloader : MonoBehaviour
 
     public static void ArrangeData()
     {
-        for (int i = 0; i < xanaSceneData.SceneObjects.Count; i++)
+        try
         {
-            DownloadQueueData temp = new DownloadQueueData();
-            temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
-            temp.DcitionaryKey = i.ToString();
-            temp.Position = xanaSceneData.SceneObjects[i].position;
-            temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
-            temp.Scale = xanaSceneData.SceneObjects[i].scale;
+            for (int i = 0; i < xanaSceneData.SceneObjects.Count; i++)
+            {
+                DownloadQueueData temp = new DownloadQueueData();
+                temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
+                temp.DcitionaryKey = i.ToString();
+                temp.Position = xanaSceneData.SceneObjects[i].position;
+                temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
+                temp.Scale = xanaSceneData.SceneObjects[i].scale;
 
-            xanaWorldDataDictionary.Add(i.ToString(), xanaSceneData.SceneObjects[i]);
-            if (xanaSceneData.SceneObjects[i].priority == Priority.High)
-            {
-                preLoadObjects.Add(temp);
+                if (!xanaWorldDataDictionary.ContainsKey(i.ToString()))
+                {
+                    xanaWorldDataDictionary.Add(i.ToString(), xanaSceneData.SceneObjects[i]);
+                    if (xanaSceneData.SceneObjects[i].priority == Priority.High)
+                    {
+                        preLoadObjects.Add(temp);
+                    }
+                    if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
+                    {
+                        postLoadObjects.Add(temp);
+                    }
+                    else
+                    {
+                        downloadDataQueue.Add(temp);
+                        totalAssetCount++;
+                    } 
+                }
             }
-            if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
-            {
-                postLoadObjects.Add(temp);
-            }
-            else
-            {
-                downloadDataQueue.Add(temp);
-                totalAssetCount++;
-            }
+            dataArranged = true;
         }
-        dataArranged = true;
+        catch (Exception e)
+        {
+            Debug.LogError("An error occurred: " + e.Message);
+        }
+      
     }
 
     //Sorting data on start and after long Interval
@@ -178,9 +189,9 @@ public class XanaWorldDownloader : MonoBehaviour
         // Now, distances contains the vector positions sorted by proximity to the player position
         foreach (var item in distances)
         {
-            //Debug.LogError(item.Item1.ItemID+"---"+item.Item2);
+            ////Debug.LogError(item.Item1.ItemID+"---"+item.Item2);
             downloadDataQueue.Add(item.Item1);
-            // Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
+            // //Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
         }
         dataSorted = true;
     }
@@ -209,7 +220,7 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             downloadDataQueue.Insert(x, item.Item1);
             x++;
-            //Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
+            ////Debug.Log("Position: " + item.Item1 + ", Distance: " + item.Item2);
         }
     }
 
@@ -243,34 +254,35 @@ public class XanaWorldDownloader : MonoBehaviour
             downloadIsGoingOn = true;
             string downloadKey = downloadDataQueue[0].ItemID;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-            {
-                try
-                {
-                    _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Error while downloading Addressable :- " + downloadKey);
-                }
-            }
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            //{
+            //    try
+            //    {
+            //        _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
+            //    }
+            //}
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
-                Debug.LogError("Download Failed......");
+                //Debug.LogError("Download Failed......");
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.1f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadDataQueue.RemoveAt(0);
@@ -294,34 +306,35 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             string downloadKey = downloadFailed[0].ItemID;
             string dicKey = downloadFailed[0].DcitionaryKey;
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-            {
-                try
-                {
-                    _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Error while downloading Addressable :- " + downloadKey);
-                }
-            }
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            //{
+            //    try
+            //    {
+            //        _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        //Debug.LogError("Error while downloading Addressable :- " + downloadKey);
+            //    }
+            //}
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
-                Debug.LogError("Download Failed......");
+                //Debug.LogError("Download Failed......");
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(0.01f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadFailed.RemoveAt(0);
@@ -347,29 +360,28 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             string downloadKey = downloadQueues[i].ItemID;
             string dicKey = downloadQueues[i].DcitionaryKey;
-            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+                //_async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, xanaWorldDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey]);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
-                Debug.LogError(_async.Status);
+                //Debug.LogError(_async.Status);
             }
             yield return new WaitForSeconds(0.01f);
         }
         if (preLodaingObjects)
             isSpawnDownloaded = true;
-
     }
 
     void EnableDownloadingText()
@@ -448,7 +460,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError("Error while applying lightmap data :- " + e.Message);
+            //Debug.LogError("Error while applying lightmap data :- " + e.Message);
         }
 
     }
@@ -459,13 +471,13 @@ public class XanaWorldDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
         currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
             yield return null;
         }
         SortingDataShortInterval(currPlayerPosition);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         stopDownloading = false;
         StartCoroutine(DownloadAssetsFromSortedList());
         if (downloadDataQueue.Count > 0)
@@ -486,13 +498,13 @@ public class XanaWorldDownloader : MonoBehaviour
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
         currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
             yield return null;
         }
         SortingQueueData(currPlayerPosition);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         stopDownloading = false;
         StartCoroutine(DownloadAssetsFromSortedList());
         if (downloadDataQueue.Count > 0)

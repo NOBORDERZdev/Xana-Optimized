@@ -31,7 +31,7 @@ public class JJMuseumInfoManager : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("<color=red>" + request.error + " </color>");
+                //Debug.Log("<color=red>" + request.error + " </color>");
             }
             else
             {

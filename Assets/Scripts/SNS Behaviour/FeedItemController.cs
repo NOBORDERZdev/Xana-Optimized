@@ -29,7 +29,7 @@ public class FeedItemController : MonoBehaviour
      public TextMeshProUGUI feedPlayerName;
      public TextMeshProUGUI feedLike;
      public TextMeshProUGUI tottlePostText;*/
-
+    Camera mainCamera;
     [Space]
     public bool isImageSuccessDownloadAndSave = false;
     public bool isReleaseFromMemoryOrNot = false;
@@ -59,7 +59,10 @@ public class FeedItemController : MonoBehaviour
             }
         }
     }
-
+    private void Start()
+    {
+        mainCamera = GameManager.Instance.m_MainCamera;
+    }
     public void ClearMemoryAfterDestroyObj()
     {
         isClearAfterMemory = true;
@@ -97,7 +100,7 @@ public class FeedItemController : MonoBehaviour
         if (lastUpdateCallTime > 0.3f)//call every 0.4 sec
         {
             Vector3 mousePosNormal = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            Vector3 mousePosNR = Camera.main.ScreenToViewportPoint(mousePosNormal);
+            Vector3 mousePosNR = mainCamera.ScreenToViewportPoint(mousePosNormal);
 
             if (mousePosNR.y >= -0.1f && mousePosNR.y <= 1.1f)
             {

@@ -34,7 +34,7 @@ public class TextLocalization : MonoBehaviour
 
     //private void Start()
     //{
-    //    Debug.Log(LocalizeText.text + " start");
+    //    //Debug.Log(LocalizeText.text + " start");
 
     //    if (LocalizeText)
     //    {
@@ -68,7 +68,7 @@ public class TextLocalization : MonoBehaviour
         {
             yield return null;
         }
-       
+
         if (LocalizeText != null)
         {
             StaticLocalizeTextText();
@@ -90,7 +90,8 @@ public class TextLocalization : MonoBehaviour
 
     private void StaticLocalizeTextPro()
     {
-        
+        //if (string.IsNullOrEmpty(key))
+        //    return;
         if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
 
         #region Old Method
@@ -134,30 +135,31 @@ public class TextLocalization : MonoBehaviour
             }
 
         }
-        else {
+        else
+        {
             if (LocalizeTextTMP != null)
             {
                 currentText = LocalizeTextTMP.text;
             }
-            if (CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
-        {
-            if (!CustomLocalization.forceJapanese)
+            if (!currentText.IsNullOrEmpty() && CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
             {
-                switch (GameManager.currentLanguage)
+                if (!CustomLocalization.forceJapanese)
                 {
-                    case "en":
-                        LocalizeTextTMP.text = find.English;
-                        break;
-                    case "ja":
-                        LocalizeTextTMP.text = find.Japanese;
-                        break;
+                    switch (GameManager.currentLanguage)
+                    {
+                        case "en":
+                            LocalizeTextTMP.text = find.English;
+                            break;
+                        case "ja":
+                            LocalizeTextTMP.text = find.Japanese;
+                            break;
+                    }
+                }
+                else
+                {
+                    LocalizeTextTMP.text = find.Japanese;
                 }
             }
-            else
-            {
-                LocalizeTextTMP.text = find.Japanese;
-            }
-        }
         }
 
     }
@@ -208,10 +210,10 @@ public class TextLocalization : MonoBehaviour
         }
         else
         {
-            if(LocalizeText != null)
+            if (LocalizeText != null)
             {
                 currentText = LocalizeText.text;
-             } 
+            }
             if (CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
             {
                 if (!CustomLocalization.forceJapanese)
@@ -232,7 +234,7 @@ public class TextLocalization : MonoBehaviour
                 }
             }
         }
-       
+
     }
 
     /// <summary>
@@ -254,7 +256,7 @@ public class TextLocalization : MonoBehaviour
         }
         LocalizeTextText();
     }
-    
+
     /// <summary>
     /// Returns translation as string found by key (This function does not check if sheet is filled
     /// use LocalizeText() instead
@@ -280,9 +282,9 @@ public class TextLocalization : MonoBehaviour
             {
                 return find.Japanese;
             }
-            
+
         }
-        Debug.LogWarning("Key not found. Please add it to sheet:" + key);
+        //Debug.LogWarning("Key not found. Please add it to sheet:" + key);
         return key; //Normally return key as it is if not found
     }
 }

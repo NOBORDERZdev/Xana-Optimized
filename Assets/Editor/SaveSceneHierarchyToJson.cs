@@ -13,7 +13,7 @@ public class SaveParentObjectsToJson : EditorWindow
     public const string medium = "Medium";
     public const string low = "Low";
     private GameObject AssetParent;
-    [MenuItem("Tools/Create Json Of Scene Objects")]
+    [MenuItem("Tools/EditorScipts-AP/Create Json Of Scene Objects")]
     static void ShowWindow()
     {
         GetWindow<SaveParentObjectsToJson>("Save Parent Objects to JSON");

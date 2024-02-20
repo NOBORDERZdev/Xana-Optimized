@@ -105,7 +105,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     }
     public void Load(string url, GameObject prefabAnim)
     {
-        //  Debug.Log("already run==="+alreadyRuning);
+        //  //Debug.Log("already run==="+alreadyRuning);
         Init();
 
         if (alreadyRuning)
@@ -161,11 +161,11 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     IEnumerator GetAssetBundleFromServerRemotePlayerUrl(string BundleURL, int id)
     {
-        if (!isPreviousBundleLoad)
-        {
-            yield return new WaitUntil(() => isPreviousBundleLoad);
-        }
-        isPreviousBundleLoad = false;
+        //if (!isPreviousBundleLoad)
+        //{
+        //    yield return new WaitUntil(() => isPreviousBundleLoad);
+        //}
+        //isPreviousBundleLoad = false;
         //if (counter > 4)
         //{
         //AssetBundle.UnloadAllAssetBundles(false);
@@ -181,9 +181,9 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //  StartCoroutine(GetAssetBundleFromServerUrl(url, bundlePath, _gameObject));
 
 
-        //Debug.Log("List===" + bean.data.animationList.Count);
+        ////Debug.Log("List===" + bean.data.animationList.Count);
 #if UNITY_ANDROID
-        //Debug.Log("Bundle name to be find :- " + BundleURL);
+        ////Debug.Log("Bundle name to be find :- " + BundleURL);
         BundleURL = bean.data.animationList.Find(x => x.name == BundleURL).android_file;
 
 #elif UNITY_IOS
@@ -209,7 +209,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                     else
                     {
 
-                        //Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + id);
+                        ////Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + id);
                         using (WWW www = new WWW(BundleURL))
                         {
 
@@ -255,7 +255,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                                                 }
 
 
-                                                //Debug.Log("animation call=====");
+                                                ////Debug.Log("animation call=====");
 
                                                 spawnCharacterObjectRemote = remotego.transform.gameObject;
                                                 //if (photonplayerObjects[i].IsMine && AnimObject != null && isAnimRunning)
@@ -508,7 +508,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             AnimObject = null;
         }
 
-        Debug.Log("Stopppped");
+        //Debug.Log("Stopppped");
     }
 
     public void sendDataAnimationUrl(string url)
@@ -518,7 +518,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         // LoadFromFile.animClick = true;
 
 
-        //Debug.Log("mine Player===" + GameObject.FindGameObjectWithTag("Player").transform.GetChild(19).GetComponent<PhotonView>().ViewID);
+        ////Debug.Log("mine Player===" + GameObject.FindGameObjectWithTag("Player").transform.GetChild(19).GetComponent<PhotonView>().ViewID);
         Dictionary<object, object> clothsDic = new Dictionary<object, object>();
         clothsDic.Add(ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID.ToString(), remoteUrlAnimationName);
 
@@ -530,14 +530,14 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             SendOptions.SendReliable);
         cashed_data = clothsDic;
         iscashed = true;
-        Debug.Log("data send sucessfully==" + clothsDic.Count);
+        //Debug.Log("data send sucessfully==" + clothsDic.Count);
     }
 
 
-
+    
     private void NetworkingClient_EventReceived(EventData obj)
     {
-        //Debug.Log("call hua obj==" + obj.Code);
+        ////Debug.Log("call hua obj==" + obj.Code);
 
         if (obj.Code == 0)
         {
@@ -545,7 +545,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             {
 
                 firsttimecall = true;
-                Debug.Log("get data===" + obj.CustomData);
+                //Debug.Log("get data===" + obj.CustomData);
                 remotePlayerId = (int)obj.CustomData;
             }
         }
@@ -553,7 +553,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         else if (obj.Code == 1)
         {
 
-            Debug.Log("call one time====" + obj.CustomData);
+            //Debug.Log("call one time====" + obj.CustomData);
             object[] minePlayer = (object[])obj.CustomData;
 
             DisableAnim((int)minePlayer[0]);
@@ -564,7 +564,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         else if (obj.Code == 12)
         {
 
-            Debug.Log("call hua obj" + obj);
+            //Debug.Log("call hua obj" + obj);
             StartCoroutine(waittostart(obj));
 
         }
@@ -585,18 +585,18 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //}
 
 
-        //Debug.Log("LoadAssetBundleFromStorageRemote:" + bundlePath);
+        ////Debug.Log("LoadAssetBundleFromStorageRemote:" + bundlePath);
         //  currentButton.transform.GetChild(2).gameObject.SetActive(true);
         //animatorremote = PlayerAvatar.gameObject.GetComponent<Animator>();
 
-        //Debug.Log("photon objects====" + PlayerAvatar);
+        ////Debug.Log("photon objects====" + PlayerAvatar);
         AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(bundlePath);
         yield return bundle;
 
         AssetBundle assetBundle = bundle.assetBundle;
         if (assetBundle == null)
         {
-            Debug.Log("Failed to load AssetBundle!");
+            //Debug.Log("Failed to load AssetBundle!");
             yield break;
         }
 
@@ -609,7 +609,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             }
             if (newRequest.isDone)
             {
-                Debug.Log("Success load bundle from storage");
+                //Debug.Log("Success load bundle from storage");
 
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
@@ -755,7 +755,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         try
         {
             File.WriteAllBytes(path, data);
-            //Debug.Log("Saved Data to: " + path.Replace("/", "\\"));
+            ////Debug.Log("Saved Data to: " + path.Replace("/", "\\"));
             if (id.GetComponent<PhotonView>().IsMine)
             {
                 MyAnimLoader = false;
@@ -771,8 +771,8 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         }
         catch (Exception e)
         {
-            Debug.LogWarning("Failed To Save Data to: " + path.Replace("/", "\\"));
-            Debug.LogWarning("Error: " + e.Message);
+            //Debug.LogWarning("Failed To Save Data to: " + path.Replace("/", "\\"));
+            //Debug.LogWarning("Error: " + e.Message);
         }
     }
     public bool CheckForIsAssetBundleAvailable(string path)
@@ -789,7 +789,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public IEnumerator waittostart(EventData obj)
     {
-        ///Debug.Log("data count==="+data.Count);
+        /////Debug.Log("data count==="+data.Count);
         List<EventData> data = new List<EventData>();
         data.Clear();
         if (data.Count > 0)
@@ -802,12 +802,12 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
         while (data.Count > 0)
         {
-            //Debug.Log("get data 12===" + data[0].CustomData);
+            ////Debug.Log("get data 12===" + data[0].CustomData);
 
             Dictionary<object, object> clothsDic2 = new Dictionary<object, object>();
 
             clothsDic2 = (Dictionary<object, object>)data[0].CustomData;
-            //Debug.Log("get 12===" + clothsDic2.Count);
+            ////Debug.Log("get 12===" + clothsDic2.Count);
 
             foreach (KeyValuePair<object, object> keyValue in clothsDic2)
             {
@@ -815,7 +815,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                 remotePlayerId = int.Parse(s);
                 //object[] ob = (object[])clothsDic2[s];
                 //string vlaue = .ToString();
-                //Debug.Log("get send data====" + clothsDic2[s]);
+                ////Debug.Log("get send data====" + clothsDic2[s]);
                 if (!string.IsNullOrEmpty(clothsDic2[s].ToString()))
                     yield return StartCoroutine(GetAssetBundleFromServerRemotePlayerUrl(clothsDic2[s].ToString(), int.Parse(s)));
 
@@ -843,7 +843,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
                     animatorremote.runtimeAnimatorController = controller;
                     animatorremote.SetBool("IsEmote", false);
 
-                    //Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + remotePlayerId);
+                    ////Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + remotePlayerId);
                 }
             }
         }
@@ -928,7 +928,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log("Player enter hua===" + newPlayer.ActorNumber);
+        //Debug.Log("Player enter hua===" + newPlayer.ActorNumber);
 
         if (iscashed)
         {
@@ -948,7 +948,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public IEnumerator getAllAnimations()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversionForAnimation);
         try
         {
             if (UserRegisterationManager.instance.LoggedInAsGuest)
@@ -971,7 +971,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         if (uwr.isNetworkError)
         {
 
-            Debug.Log("Error While Sending: " + uwr.error);
+            //Debug.Log("Error While Sending: " + uwr.error);
         }
         else
         {
@@ -980,7 +980,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
-                //Debug.Log("Response===" + uwr.downloadHandler.text.ToString().Trim());
+                ////Debug.Log("Response===" + uwr.downloadHandler.text.ToString().Trim());
                 bean = JsonUtility.FromJson<AnimationDetails>(uwr.downloadHandler.text.ToString().Trim());
                 if (!string.IsNullOrEmpty(bean.data.ToString()))
                 {
@@ -1012,12 +1012,12 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             if (callOnce == false)
             {
                 // callOnce = true;
-                //Debug.Log("mine Player==="+ GameObject.FindGameObjectWithTag("PhotonLocalPlayer").GetComponent<PhotonView>().ViewID);
+                ////Debug.Log("mine Player==="+ GameObject.FindGameObjectWithTag("PhotonLocalPlayer").GetComponent<PhotonView>().ViewID);
                 //Dictionary<object, object> clothsDic = new Dictionary<object, object>();
                 //clothsDic.Add(GameObject.FindGameObjectWithTag("PhotonLocalPlayer").GetComponent<PhotonView>().ViewID.ToString(), (object)remoteUrlAnimation);
                 //PhotonNetwork.RaiseEvent(12, clothsDic, RaiseEventOptions.Default,
                 //    SendOptions.SendUnreliable);
-                //Debug.Log("data send sucessfully==" + clothsDic.Count);
+                ////Debug.Log("data send sucessfully==" + clothsDic.Count);
                 //  sendDataAnimationUrl(remoteUrlAnimation);
             }
 

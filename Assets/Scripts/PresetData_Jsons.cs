@@ -24,6 +24,8 @@ public class PresetData_Jsons : MonoBehaviour
     AvatarController avatarController;
     CharcterBodyParts charcterBodyParts;
 
+    public AvatarGender avatarGender;
+
     private void OnEnable()
     {
         StartCoroutine(RegisterForUndoRedo());
@@ -49,19 +51,19 @@ public class PresetData_Jsons : MonoBehaviour
 
     void Start()
     {
-        if (gameObject.GetComponent<Button>() != null) 
+        if (gameObject.GetComponent<Button>() != null)
         {
             gameObject.GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
         }
 
 
-        callScripts();
+        GetScriptRef();
     }
 
-    public void callScripts() 
+    public void GetScriptRef()
     {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        charcterBodyParts = CharcterBodyParts.instance;
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
     }
 
 
@@ -69,20 +71,20 @@ public class PresetData_Jsons : MonoBehaviour
     {
         clickname = "";
     }
-   public void ChangecharacterOnCLickFromserver()
+    public void ChangecharacterOnCLickFromserver()
     {
-        callScripts();
-        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)
+        GetScriptRef();
+        //if (StoreManager.instance.StartPanel_PresetParentPanel.activeInHierarchy)    ------ Comment By Abdullah for Avatar Selection on OnBoarding
         //{
-            if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
-            {
-                JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
-                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            }
-        //}
+        //    //if (IsStartUp_Canvas && WaheedDynamicScrollRect.ScrollContent.instance != null)
+        //    //{
+        //    // JsonDataPreset = WaheedDynamicScrollRect.ScrollContent.instance.nameData;
+        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  //  ------ Comment By Abdullah for Avatar Selection on OnBoarding
+        //    //}
+        //}   ------ Comment By Abdullah for Avatar Selection on OnBoarding
         XanaConstants.xanaConstants.registerFirstTime = true;
-        if (GameManager.Instance.isStoreAssetDownloading)
-            return;
+        //if (GameManager.Instance.isStoreAssetDownloading)
+        //    return;
 
         if (!IsStartUp_Canvas)   //for presets in avatar panel 
         {
@@ -95,11 +97,13 @@ public class PresetData_Jsons : MonoBehaviour
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
-           // print("Please Upgrade to Premium account");
+            Debug.LogError("Please Upgrade to Premium account");
+            // print("Please Upgrade to Premium account");
             return;
         }
         else
         {
+            Debug.LogError("Horayyy you have Access");
             //print("Horayyy you have Access");
             XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = this.gameObject;
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
@@ -114,44 +118,83 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn
                 && !IsStartUp_Canvas)
+            {
+                Debug.LogError("Same Button Clicked");
                 return;
+            }
 
             GameManager.Instance.isStoreAssetDownloading = true;
             StoreManager.instance.UndoSelection();
-            if (!IsStartUp_Canvas)
-                XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
-            if (XanaConstants.xanaConstants._lastClickedBtn)
+            // if (!IsStartUp_Canvas)
+            XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
+            if (XanaConstants.xanaConstants._lastClickedBtn && !IsStartUp_Canvas)
             {
                 if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<PresetData_Jsons>())
                     XanaConstants.xanaConstants._lastClickedBtn.transform.GetChild(0).gameObject.SetActive(false);
             }
+
+
+            XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             XanaConstants.xanaConstants.PresetValueString = gameObject.name;
             PlayerPrefs.SetInt("presetPanel", 1);
 
             // Hack for latest update // keep all preset body fat to 0
             //change lipsto default
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
 
-            //print(_CharacterData.BodyFat);
+            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));        
             _CharacterData.BodyFat = 0;
             _CharacterData.PresetValue = gameObject.name;
-
             XanaConstants.xanaConstants.bodyNumber = 0;
-            File.WriteAllText((Application.persistentDataPath + "/SavingReoPreset.json"), JsonUtility.ToJson(_CharacterData));
-
-            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
+            if (UGCManager.isSelfieTaken)
             {
-                Invoke("abcd", 5f);
+                SaveUGCDataOnJson(_CharacterData);
+            }
+            else
+            {
+                _CharacterData.charactertypeAi = false;
+                StoreManager.instance.itemData.CharactertypeAi = false;
+                UGCManager.isSelfieTaken = false;
+            }
+
+            File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));
+
+            //Store selected preset data when signup
+            GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
+
+            if (_CharacterData.gender == AvatarGender.Female.ToString())
+            {
+                GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Female);
+            }
+            else
+            {
+                GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Male);
+            }
+
+            //CharcterBodyParts.instance.SetAvatarByGender(AvatarGender.Male);
+
+            if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf || StoreManager.instance.selfiePanel.activeSelf)
+            {
+                /*Invoke("abcd", 5f);*/
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
-                UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
-                UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                StoreManager.instance.selfiePanel.SetActive(false);
+                if (!UIManager.Instance.isAvatarSelectionBtnClicked)
+                {
+                    UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
+                    UserRegisterationManager.instance.usernamePanal.SetActive(true);
+                }
+                else
+                {
+                    UIManager.Instance.isAvatarSelectionBtnClicked = false;
+                    GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
+                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+                }
                 if (PlayerPrefs.GetInt("iSignup") == 1)
                 {
-                   
+
                     // enable check so that it will know that index is comming from start of the game
-                   // UserRegisterationManager.instance.checkbool_preser_start = false;
+                    // UserRegisterationManager.instance.checkbool_preser_start = false;
                     //UserRegisterationManager.instance.RegistrationCompletePanal.SetActive(true);
                     //UserRegisterationManager.instance.BlackScreen.SetActive(true);
                 }
@@ -165,6 +208,16 @@ public class PresetData_Jsons : MonoBehaviour
                     // enable check so that it will know that index is comming from start of the game
                     UserRegisterationManager.instance.checkbool_preser_start = false;
                 }
+                if (UGCManager.isSelfieTaken)
+                {
+                    UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
+                    UserRegisterationManager.instance.LogoImage.SetActive(false);
+                }
+                else
+                {
+                    UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
+                    UserRegisterationManager.instance.LogoImage.SetActive(true);
+                }
             }
             else
             {
@@ -174,7 +227,7 @@ public class PresetData_Jsons : MonoBehaviour
                     StoreManager.instance.GreyRibbonImage.SetActive(false);
                     StoreManager.instance.WhiteRibbonImage.SetActive(true);
                 }
-               
+
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
             if (avatarController.wornEyewearable != null)
@@ -184,10 +237,19 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 XanaConstants.xanaConstants.isPresetHairColor = true;
-
-            avatarController.ApplyPreset(_CharacterData);
+            SavePresetOnServer(_CharacterData);
+            ApplyPreset();
 
             GetSavedPreset();
+            if (UGCManager.isSelfieTaken)
+            {
+                StoreManager.instance.ApplyUGCValueOnCharacter(_CharacterData.gender);
+                UGCManager.isSelfieTaken = false;
+            }
+            else
+            {
+                StoreManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
+            }
             if (!presetAlreadySaved)
             {
                 StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
@@ -202,7 +264,13 @@ public class PresetData_Jsons : MonoBehaviour
                 StoreManager.instance.GreyRibbonImage.SetActive(true);
                 StoreManager.instance.WhiteRibbonImage.SetActive(false);
             }
+
+            //if (UGCManager.isSelfieTaken)
+            //{
+            //    StoreManager.instance.ApplyUGCValueOnCharacter();
+            //}
         }
+
     }
     void SavedButtonClickedBlue()
     {
@@ -236,13 +304,43 @@ public class PresetData_Jsons : MonoBehaviour
             }
         }
     }
-  public  void abcd()
+    public void ApplyPreset()
     {
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
-        print("Coroutin Called " + PlayerPrefs.GetInt("presetPanel"));  
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
-        ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
         avatarController.IntializeAvatar();
-    }  
+    }
+
+    void SavePresetOnServer(SavingCharacterDataClass savingCharacterDataClass)
+    {
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+        {
+            File.WriteAllText((Application.persistentDataPath + "/logIn.json"), JsonUtility.ToJson(savingCharacterDataClass));
+            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() =>
+            {
+            });
+        }
+
+    }
+    void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
+    {
+        _CharacterData.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
+        _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
+        _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;
+        _CharacterData.lip_color = StoreManager.instance.itemData.lips_color;
+        _CharacterData.faceItemData = StoreManager.instance.itemData.faceItemData;
+        _CharacterData.noseItemData = StoreManager.instance.itemData.noseItemData;
+        _CharacterData.lipItemData = StoreManager.instance.itemData.lipItemData;
+        _CharacterData.hairItemData = StoreManager.instance.itemData._hairItemData;
+        _CharacterData.eyeItemData = StoreManager.instance.itemData._eyeItemData;
+    }
+}
+
+
+
+
+public enum AvatarGender
+{
+    Male, Female
 }

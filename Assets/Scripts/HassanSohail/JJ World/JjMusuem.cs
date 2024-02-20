@@ -118,8 +118,8 @@ public class JjMusuem : MonoBehaviour
             LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(0f, 0.5f));
         }
 
-        //yield return new WaitForSeconds(.15f);
-        //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+       // yield return new WaitForSeconds(.15f);
+       // LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
     }
 
 }
