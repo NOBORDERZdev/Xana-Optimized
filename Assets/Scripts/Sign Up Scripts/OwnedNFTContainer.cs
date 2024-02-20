@@ -25,6 +25,7 @@ public class OwnedNFTContainer : ScriptableObject
     public void CreateJsonFromRoot(string json)
     {
         NFTlistdata =  Root.CreateFromJSON(json);
+        FillAllListAsyncWaiting();
     }
     public async Task FillAllListAsyncWaiting()
     {
@@ -167,6 +168,13 @@ public class Attribute1
     public string Full_Costumes;
     public string Gloves;
     public string Shoes;
+    public int stamina;
+    public int speed;
+    public string profile;
+    public int defence;
+    public int special_move;
+    public int punch;
+    public int kick;
 }
 
 

@@ -1921,7 +1921,7 @@ public class PlayerControllerNew : MonoBehaviour
         if (handBall == null)
         {
             handBall = Instantiate(GamificationComponentData.instance.handBall, swordhandHook);
-            handBall.transform.localPosition = new Vector3(0.08f, -0.088f, -0.006f);
+            handBall.transform.localPosition = new Vector3(0, 0, 0.044f);
             handBall.transform.localRotation = Quaternion.Euler(0, -25.06f, 0);
             handBall.SetActive(false);
         }

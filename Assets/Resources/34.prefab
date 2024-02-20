@@ -6057,7 +6057,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 66977591
+    m_Bits: 335413047
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 846d2f03c8114cf44b5ee9ecb7e5cd82, type: 2}
   m_TargetDisplay: 0
@@ -8662,7 +8662,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4194304
+    m_Bits: 272629760
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -9002,7 +9002,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8257335
+    m_Bits: 276692791
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 6eac862970e00e74cb69ce6c9fbbf362, type: 2}
   m_TargetDisplay: 0
@@ -9225,7 +9225,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 8257335
+    m_Bits: 276692791
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 846d2f03c8114cf44b5ee9ecb7e5cd82, type: 2}
   m_TargetDisplay: 0
@@ -11552,6 +11552,7 @@ GameObject:
   - component: {fileID: 1868599478022124912}
   - component: {fileID: 8701127358875654265}
   - component: {fileID: 1340871213267758042}
+  - component: {fileID: 6473207067065190858}
   m_Layer: 22
   m_Name: 34
   m_TagString: PhotonLocalPlayer
@@ -12134,6 +12135,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  staticPlayer: 0
+  isLoadStaticClothFromJson: 0
+  staticClothJson: 
+  clothJson: 
+  head: {fileID: 0}
+  Body: {fileID: 0}
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
@@ -12168,6 +12175,60 @@ MonoBehaviour:
   IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
+  _PCharacterData:
+    id: 
+    name: 
+    thumbnail: 
+    myItemObj: []
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
 --- !u!114 &1582677740331861179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12455,6 +12516,20 @@ MonoBehaviour:
   QuizCorrectClip: {fileID: 8300000, guid: e6a8f51c7d98a4aba82ff18df5ca28d8, type: 3}
   RandomNumberClip: {fileID: 8300000, guid: c0fc856fbfa46497dacbb8a9a8ce9489, type: 3}
   SpecialItemClip: {fileID: 8300000, guid: 5bc8ef94bc4724f4d8d14d7208e56424, type: 3}
+--- !u!136 &6473207067065190858
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &4839337869164825302
 GameObject:
   m_ObjectHideFlags: 0

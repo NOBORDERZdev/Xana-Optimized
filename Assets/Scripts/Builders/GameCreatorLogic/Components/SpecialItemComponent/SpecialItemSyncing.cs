@@ -44,14 +44,18 @@ public class SpecialItemSyncing : MonoBehaviourPun
             this.transform.SetParent(playerObj.transform);
             transform.localEulerAngles = Vector3.up * 180;
             transform.localPosition = Vector3.up * 0.824f;
-            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            AvatarController ac = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
-            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            ApplySuperMarioEffect();
+            if (ac.wornHair)
+                playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornPant)
+                playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShirt)
+                playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShose)
+                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            ApplySuperMarioEffect(true);
         }
     }
 
@@ -60,7 +64,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
         if (photonView.IsMine)
             return;
         if (isInitialise)
-            ApplyDefaultEffect();
+            ApplySuperMarioEffect(false);
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
@@ -77,26 +81,26 @@ public class SpecialItemSyncing : MonoBehaviourPun
         return null;
     }
 
-    private void ApplySuperMarioEffect()
+    private void ApplySuperMarioEffect(bool state)
     {
-        playerHair.material.shader = newClothShader;
-        playerBody.material.shader = newSkinShader;
-        playerBody.material.SetFloat("_Outer_Glow", 2);
-        playerShirt.material.shader = newClothShader;
-        playerPants.material.shader = newClothShader;
-        playerShoes.material.shader = newClothShader;
-        isInitialise = true;
-    }
-
-    private void ApplyDefaultEffect()
-    {
-        if (playerObj == null)
+        if (playerObj == null && !state)
             return;
 
-        playerHair.material.shader = defaultClothShader;
-        playerBody.material.shader = defaultSkinShader;
-        playerShirt.material.shader = defaultClothShader;
-        playerPants.material.shader = defaultClothShader;
-        playerShoes.material.shader = defaultClothShader;
+        if (playerHair)
+            playerHair.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerBody)
+        {
+            playerBody.material.shader = state ? newSkinShader : defaultSkinShader;
+            if (state)
+                playerBody.material.SetFloat("_Outer_Glow", 2);
+        }
+        if (playerShirt)
+            playerShirt.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerPants)
+            playerPants.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerShoes)
+            playerShoes.material.shader = state ? newClothShader : defaultClothShader;
+
+        isInitialise = state;
     }
 }

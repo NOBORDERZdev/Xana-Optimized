@@ -669,11 +669,15 @@ public class MetaDataInPrefab : MonoBehaviour
                     print("showing video");
                     videoPlayer.Play();
                     ShowNFTDetails.instance.ShowVideo(this);
+                    if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
+                        ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
                 }
                 else if (!isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
                 {
                     print(SelfieController.Instance.m_IsSelfieFeatureActive);
                     ShowNFTDetails.instance.ShowImage(this);
+                    if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
+                        ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
                     isVisible = true;
                 }
             }

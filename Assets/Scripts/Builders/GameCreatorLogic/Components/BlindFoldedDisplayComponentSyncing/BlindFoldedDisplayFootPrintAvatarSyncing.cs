@@ -33,15 +33,19 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
         if (playerObj != null)
         {
             yield return new WaitForSeconds(0.5f);
-            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            AvatarController ac = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
-            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornHair)
+                playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornPant)
+                playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShirt)
+                playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShose)
+                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
             playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
@@ -82,11 +86,16 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
 
     void AvatarFootPrintVisible(bool state)
     {
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerShirt.enabled = state;
-        playerPants.enabled = state;
-        playerShoes.enabled = state;
+        if (playerHair)
+            playerHair.enabled = state;
+        if (playerBody)
+            playerBody.enabled = state;
+        if (playerShirt)
+            playerShirt.enabled = state;
+        if (playerPants)
+            playerPants.enabled = state;
+        if (playerShoes)
+            playerShoes.enabled = state;
         playerHead.enabled = state;
         playerFreeCamConsole.enabled = state;
         playerFreeCamConsoleOther.enabled = state;

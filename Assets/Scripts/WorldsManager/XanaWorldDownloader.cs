@@ -143,31 +143,42 @@ public class XanaWorldDownloader : MonoBehaviour
 
     public static void ArrangeData()
     {
-        for (int i = 0; i < xanaSceneData.SceneObjects.Count; i++)
+        try
         {
-            DownloadQueueData temp = new DownloadQueueData();
-            temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
-            temp.DcitionaryKey = i.ToString();
-            temp.Position = xanaSceneData.SceneObjects[i].position;
-            temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
-            temp.Scale = xanaSceneData.SceneObjects[i].scale;
+            for (int i = 0; i < xanaSceneData.SceneObjects.Count; i++)
+            {
+                DownloadQueueData temp = new DownloadQueueData();
+                temp.ItemID = xanaSceneData.SceneObjects[i].addressableKey;
+                temp.DcitionaryKey = i.ToString();
+                temp.Position = xanaSceneData.SceneObjects[i].position;
+                temp.Rotation = xanaSceneData.SceneObjects[i].rotation;
+                temp.Scale = xanaSceneData.SceneObjects[i].scale;
 
-            xanaWorldDataDictionary.Add(i.ToString(), xanaSceneData.SceneObjects[i]);
-            if (xanaSceneData.SceneObjects[i].priority == Priority.High)
-            {
-                preLoadObjects.Add(temp);
+                if (!xanaWorldDataDictionary.ContainsKey(i.ToString()))
+                {
+                    xanaWorldDataDictionary.Add(i.ToString(), xanaSceneData.SceneObjects[i]);
+                    if (xanaSceneData.SceneObjects[i].priority == Priority.High)
+                    {
+                        preLoadObjects.Add(temp);
+                    }
+                    if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
+                    {
+                        postLoadObjects.Add(temp);
+                    }
+                    else
+                    {
+                        downloadDataQueue.Add(temp);
+                        totalAssetCount++;
+                    } 
+                }
             }
-            if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
-            {
-                postLoadObjects.Add(temp);
-            }
-            else
-            {
-                downloadDataQueue.Add(temp);
-                totalAssetCount++;
-            }
+            dataArranged = true;
         }
-        dataArranged = true;
+        catch (Exception e)
+        {
+            Debug.LogError("An error occurred: " + e.Message);
+        }
+      
     }
 
     //Sorting data on start and after long Interval

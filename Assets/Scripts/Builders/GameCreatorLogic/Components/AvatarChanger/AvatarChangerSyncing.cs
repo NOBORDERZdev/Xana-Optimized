@@ -67,14 +67,18 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         yield return new WaitForSeconds(0.1f);
         if (playerObj != null)
         {
-            AvatarController avatarController = playerObj.GetComponent<AvatarController>();
+            AvatarController ac = playerObj.GetComponent<AvatarController>();
             CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
-            playerHair = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-            playerPants = avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-            playerShirt = avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            playerShoes = avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-            playerBody = charcterBodyParts.Body;
-            playerHead = charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornHair)
+                playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornPant)
+                playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShirt)
+                playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShose)
+                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            playerBody = charcterBodyParts.body;
+            playerHead = charcterBodyParts.head;
             anim = playerObj.GetComponent<Animator>();
             defaultAvatar = anim.avatar;
             avatarIndex = avatarIndex - 1;
@@ -95,7 +99,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
             transform.position = pos;
             transform.SetParent(gangsterCharacter.transform);
-            transform.localPosition= Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
+            transform.localPosition = Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
             transform.localEulerAngles = Vector3.zero;
             if (avatarIndex == 2)
             {
@@ -136,12 +140,19 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     {
         if (!isInitialise)
             return;
-        playerHair.enabled = state;
-        playerBody.enabled = state;
-        playerHead.enabled = state;
-        playerPants.enabled = state;
-        playerShirt.enabled = state;
-        playerShoes.enabled = state;
+
+        if (playerHair)
+            playerHair.enabled = state;
+        if (playerBody)
+            playerBody.enabled = state;
+        if (playerHead)
+            playerHead.enabled = state;
+        if (playerPants)
+            playerPants.enabled = state;
+        if (playerShirt)
+            playerShirt.enabled = state;
+        if (playerShoes)
+            playerShoes.enabled = state;
     }
 
     private void OnDisable()

@@ -232,7 +232,7 @@ public class XanaChatSocket : MonoBehaviour
 
     void ReceiveMsgs(ChatUserData msg)
     {
-        //Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        //Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.name + " : " + msg.message + "</color>");
 
         if (string.IsNullOrEmpty(msg.message))
             return;
@@ -240,7 +240,7 @@ public class XanaChatSocket : MonoBehaviour
         if (eventId != msg.event_id)
             return;
 
-        string tempUser = msg.username;
+        string tempUser = msg.name;
         receivedMsgForTesting = msg;
 
         if (CheckUserNameIsValid(tempUser))
@@ -305,7 +305,7 @@ public class XanaChatSocket : MonoBehaviour
             DisplayOldChat(www.downloadHandler.text);
         }
         else
-            //Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
+            Debug.Log("<color=red> XanaChat -- NetWorkissue </color>");
 
         www.Dispose();
     }
@@ -402,6 +402,7 @@ public class ChatUserData
 {
     public string socket_id;
     public string username;
+    public string name;
     public string avatar;
     public string message;
     public string world;

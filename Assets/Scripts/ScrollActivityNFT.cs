@@ -17,15 +17,15 @@ public class ScrollActivityNFT : MonoBehaviour
     public float normalized;
     private int lastindex = 1;
     public string NFTURL;
-     public Image NFTImage;
-    public TMP_Text NFTDescriptionImage;  
+    public Image NFTImage;
+    public TMP_Text NFTDescriptionImage;
     public Text NFTNametext;
     public Text SubButtonText;
     [HideInInspector]
-    public string subButtonTextToCheck= "Equip";
+    public string subButtonTextToCheck = "Equip";
     public CanvasScaler canUi;
-    public string CollectionAddressType;    
-  //  public UserNFTlistClass.Attribute _AttributeData;
+    public string CollectionAddressType;
+    //  public UserNFTlistClass.Attribute _AttributeData;
     // public UserNFTlistClass.Attribute _AttributeData;
     public int _NFTIndex;
     public int _NFTID;
@@ -41,35 +41,35 @@ public class ScrollActivityNFT : MonoBehaviour
 
     //Worked by Abdullah & Riken
     private void OnDisable()
-    {  
-       // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+    {
+        // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         ScrollController.verticalNormalizedPosition = 3.5f;
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
         lastindex = 1;
     }
     private void OnEnable()
     {
-      // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  
-         AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
-        {
-            if (success)
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
-                // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                //  isImageSuccessDownloadAndSave = true;
-            }    
-            else
-            {
+        // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  
+        AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
+       {
+           if (success)
+           {
+               AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
+               // CheckAndSetResolutionOfImage(imgFeed.sprite);
+               //  isImageSuccessDownloadAndSave = true;
+           }
+           else
+           {
                Debug.Log("Download Failed");
-            }
-        });  
+           }
+       });
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
         lastindex = 1;
 
         //playBtn.onClick.RemoveAllListeners();
         //playBtn.onClick.AddListener(PlayBtnClicked);
     }
-  
+
     public async void EquipBtnClicked()
     {
 
@@ -80,25 +80,30 @@ public class ScrollActivityNFT : MonoBehaviour
             print("Please Upgrade to Premium account");
             return;
         }
-         print("NFT btn clicked here");  
-         if(subButtonTextToCheck == "Equip")
+        EquipPopup.SetActive(true);
+        EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        EquipUIText.text = "";
+        EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = false;
+        print("NFT btn clicked here");
+        if (subButtonTextToCheck == "Equip")
         {
-             Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
+            EquipUIText.text= "Equiping...";
+            Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
             bool _IsInOwnerShip = await task;
-              print("_IsInOwnerShip :: " + _IsInOwnerShip);  
-             if (!_IsInOwnerShip)
+            print("_IsInOwnerShip :: " + _IsInOwnerShip);
+            if (!_IsInOwnerShip)
             {
                 print("Show UI NFT not available");
                 NftDataScript.Instance.NftTransferedPanel.SetActive(true);
                 return;
-            } 
+            }
             else
             {
                 print("NFT is in your OwnerShip Enjoy");
             }
-             print("_NFTID :: " + _NFTID.ToString());  
-             PlayerPrefs.SetInt("nftID", _NFTID);
-            PlayerPrefs.SetInt("Equiped", _NFTID);  
+            print("_NFTID :: " + _NFTID.ToString());
+            PlayerPrefs.SetInt("nftID", _NFTID);
+            PlayerPrefs.SetInt("Equiped", _NFTID);
             PlayerPrefs.Save();
             //print(_NFTID);
             //print(PlayerPrefs.GetInt("Equiped"));
@@ -112,15 +117,17 @@ public class ScrollActivityNFT : MonoBehaviour
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
+            EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = " Equip Successfully !";
             EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Equip Successfully");
+            EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else if (subButtonTextToCheck == "Unequip")
         {
- 
+            EquipUIText.text = "Unequiping...";
             SubButtonText.text = "Equip";
             SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Equip");
-            subButtonTextToCheck = "Equip";  
+            subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
             XanaConstants.xanaConstants.isNFTEquiped = false;
@@ -128,15 +135,17 @@ public class ScrollActivityNFT : MonoBehaviour
             SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
+            EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";
             EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
+            EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
-        else  
+        else
         {
             print("Not Available");
         }
     }
- 
+
 
     private void Update()
     {
@@ -203,7 +212,7 @@ public class ScrollActivityNFT : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
-       // UIManager.Instance.ShowFooter(true);
+        // UIManager.Instance.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
     {
@@ -211,8 +220,9 @@ public class ScrollActivityNFT : MonoBehaviour
         ScrollController.transform.parent.GetComponent<ScrollActivityNFT>().enabled = true;
     }
 
-   void SaveAttributesInFile()
+    void SaveAttributesInFile()
     {
+        Debug.LogError("SaveAttributesInFile: " + _NFTIndex);
         BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
         nftAttributes.isNFTAquiped = true;
         /*
@@ -240,8 +250,8 @@ public class ScrollActivityNFT : MonoBehaviour
          */
         //UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber]
 
-         nftAttributes.id = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
-         nftAttributes.Gloves = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Gloves;
+        nftAttributes.id = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
+        nftAttributes.Gloves = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Gloves;
         nftAttributes.Glasses = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].glasses;
         nftAttributes.Full_Costumes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Full_Costumes;
         nftAttributes.Chains = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Chains;
@@ -261,7 +271,14 @@ public class ScrollActivityNFT : MonoBehaviour
         nftAttributes.Skin = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Skin;
         nftAttributes.Eye_Lense = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_lense;
         nftAttributes.Eyelid = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyelid;
-         string attributesJson = JsonUtility.ToJson(nftAttributes);      
+        nftAttributes.profile = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].profile;
+        nftAttributes.speed = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].speed;
+        nftAttributes.stamina = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].stamina;
+        nftAttributes.punch = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].punch;
+        nftAttributes.kick = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].kick;
+        nftAttributes.defence = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].defence;
+        nftAttributes.special_move = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
+        string attributesJson = JsonUtility.ToJson(nftAttributes);
         File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

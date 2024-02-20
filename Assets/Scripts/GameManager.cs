@@ -44,11 +44,23 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
+    public AdditiveScenesManager additiveScenesManager;
+    public Transform HomeCamera;
+
+    internal string selectedPresetData="";
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
+        if (additiveScenesManager == null) // If Null then find object
+        {
+           additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
+        }
+    }
+    public void HomeCameraInputHandler(bool flag)
+    {
+        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {
@@ -59,15 +71,27 @@ public class GameManager : MonoBehaviour
 
             if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
             {
+                if (File.Exists(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson))
+                {
+                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                }
                 return (Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
             }
             else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
+                if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
+                {
+                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = true;
+                if (File.Exists(Application.persistentDataPath + "/logIn.json"))
+                {
+                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+                }
                 return (Application.persistentDataPath + "/logIn.json");
             }
         }
@@ -75,11 +99,19 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
+                if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
+                {
+                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
             else
             {
                 UserStatus_ = false;
+                if (File.Exists(Application.persistentDataPath + "/loginAsGuestClass.json"))
+                {
+                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+                }
                 return (Application.persistentDataPath + "/loginAsGuestClass.json");
             }
         }

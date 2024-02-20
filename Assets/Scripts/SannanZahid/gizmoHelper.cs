@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class gizmoHelper : MonoBehaviour
 {
-    public float radius = 1f;
+    public float radius = 0.1f;
     GUIStyle style = new GUIStyle();
     private void OnDrawGizmos()
     {

@@ -85,6 +85,26 @@ public class FollowerItemController : MonoBehaviour
 
     public void OnClickUserProfileButton()
     {
+        print("Follower id :"+followerRawData.follower.id);
+        APIManager.Instance.RequestGetUserLatestAvatarData<FollowerItemController>(followerRawData.follower.id.ToString(), this);
+        MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
+        OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
+        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        if (followerRawData.isFollowing)
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        }
+        else
+        {
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+        }
+        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed",false))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
@@ -152,6 +172,19 @@ public class FollowerItemController : MonoBehaviour
         }
 
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+    }
+
+    public void DressUpUserAvatar()
+    {
+        ////Other player avatar initialization required here
+        if (APIManager.Instance.VisitedUserAvatarData != null)
+        {
+            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+        }
+        else
+        {
+            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        }
     }
 
     public void FollowFollowingSetUp(bool isFollowing)

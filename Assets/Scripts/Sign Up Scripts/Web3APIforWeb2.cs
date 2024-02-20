@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -131,6 +132,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         else
         {
             //   NFTlistdata = UserNFTlistClass.Root.CreateFromJSON(request.downloadHandler.text);
+            Debug.Log("NFT DATA from API: " + request.downloadHandler.text);
             _OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
 
             /*for (int i = 0; i < NFTlistdata.list.Count; i++)
@@ -141,7 +143,7 @@ public class Web3APIforWeb2 : MonoBehaviour
                 }
             }*/
             callback?.Invoke();
-            print("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
+            Debug.Log("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
             if (_OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
@@ -149,7 +151,7 @@ public class Web3APIforWeb2 : MonoBehaviour
                     string NFTname = _OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower();
                     if (NFTname.Contains("XANA x BreakingDown"))
                     {
-                        print("BreakingDown");
+                        Debug.LogError("BreakingDown");
                     }
                     if (NFTname.Contains("deemo"))
                     {
@@ -157,18 +159,19 @@ public class Web3APIforWeb2 : MonoBehaviour
                     }
                     if (NFTname.Contains("astroboy"))
                     {
-                        print("Astroboy");
+                        Debug.LogError("Astroboy");
                         //  CryptouserData.instance.AstroboyPass = true;
                     }
                     if (NFTname.Contains("ultraman"))
                     {
-                        print("Contained Ultraman");
+                        Debug.LogError("Contained Ultraman");
                         //  CryptouserData.instance.UltramanPass = true;
                     }
                 }
             }
         }
         await Task.Delay(500);
+        Debug.Log("AllDataFetchedfromServer web2");
         AllDataFetchedfromServer?.Invoke("Web2");
     }
 
@@ -183,6 +186,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         // Serialize the data object into a JSON string
         string jsonData = JsonConvert.SerializeObject(requestData);
         // Convert the JSON data to a byte array
+        Debug.Log("jsonData: " + jsonData);
         byte[] postData = System.Text.Encoding.UTF8.GetBytes(jsonData);
 
         // Set up the UnityWebRequest

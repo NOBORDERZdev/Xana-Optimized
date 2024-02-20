@@ -10,12 +10,13 @@ using System;
 public class SceneManage : MonoBehaviourPunCallbacks
 {
     public static bool callRemove;
+    public bool isAddressableScene = true;
     public GameObject AnimHighlight;
     public GameObject popupPenal;
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
-    public string mainScene= "Main";
+    public string mainScene = "Main";
     bool exitOnce = true;
     private void OnEnable()
     {
@@ -97,8 +98,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
             }
         }
     }
-     private IEnumerator LobbySceneSwitch()
-     {
+    private IEnumerator LobbySceneSwitch()
+    {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -130,13 +131,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LeaveRoom()
     {
-        callRemove = true;
-        Launcher.instance.working = ScenesList.MainMenu;
-        PhotonNetwork.LeaveRoom(false);
-        PhotonNetwork.LeaveLobby();
-        PhotonNetwork.DestroyAll(true);
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
-        Debug.Log("Exit: Api Called");
+        if (isAddressableScene)
+        {
+            callRemove = true;
+            Launcher.instance.working = ScenesList.MainMenu;
+            PhotonNetwork.LeaveRoom(false);
+            PhotonNetwork.LeaveLobby();
+            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+            Debug.Log("Exit: Api Called");
+            PhotonNetwork.DestroyAll(true);
+        }
         StartSceneLoading();
     }
     public void StartSceneLoading()
@@ -144,10 +148,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
         print("Hello Scene Manager");
         StartCoroutine(LoadMianScene());
     }
-    IEnumerator LoadMianScene() {
+    IEnumerator LoadMianScene()
+    {
+        XanaConstants.xanaConstants.CurrentSceneName = "Addressable";
         yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
-        print("mian scne "+mainScene);
+        print("mian scne " + mainScene);
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {

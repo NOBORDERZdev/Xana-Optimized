@@ -79,8 +79,8 @@ public class SituationChangerSkyboxScript : MonoBehaviour
     string skyboxMatKey = "";
     public void ChangeSkyBox(int skyID)
     {
-        //builderMapDownload.reflectionProbe.gameObject.SetActive(false);
-        //builderMapDownload.reflectionProbe.enabled = true;
+        builderMapDownload.reflectionProbe.gameObject.SetActive(false);
+        builderMapDownload.reflectionProbe.enabled = true;
 
         if (skyID != -1)
         {
@@ -175,7 +175,7 @@ public class SituationChangerSkyboxScript : MonoBehaviour
             sceneLensFlare.scale = 1;
             sceneLensFlare.intensity = 1;
         }
-        //builderMapDownload.reflectionProbe.gameObject.SetActive(true);
+        builderMapDownload.reflectionProbe.gameObject.SetActive(true);
         DynamicGI.UpdateEnvironment();
     }
 }

@@ -97,14 +97,20 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
+        AvatarController ac = GamificationComponentData.instance.avatarController;
         //Initializing
-        playerHair = GamificationComponentData.instance.avatarController.wornHair.GetComponent<SkinnedMeshRenderer>();
-        playerPants = GamificationComponentData.instance.avatarController.wornPant.GetComponent<SkinnedMeshRenderer>();
-        playerShirt = GamificationComponentData.instance.avatarController.wornShirt.GetComponent<SkinnedMeshRenderer>();
-        playerShoes = GamificationComponentData.instance.avatarController.wornShose.GetComponent<SkinnedMeshRenderer>();
-        playerBody = GamificationComponentData.instance.charcterBodyParts.Body;
+        if (ac.wornHair)
+            playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornPant)
+            playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShirt)
+            playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShose)
+            playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
 
-        playerHead = GamificationComponentData.instance.charcterBodyParts.Head.GetComponent<SkinnedMeshRenderer>();
+        playerBody = GamificationComponentData.instance.charcterBodyParts.body;
+
+        playerHead = GamificationComponentData.instance.charcterBodyParts.head;
 
         playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
         playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
@@ -115,11 +121,16 @@ public class BuildingDetect : MonoBehaviour
             defaultHeadMaterials[i] = playerHead.materials[i];
         }
 
-        defaultBodyMat = playerBody.material;
-        defaultPantsMat = playerPants.material;
-        defaultShirtMat = playerShirt.material;
-        defaultHairMat = playerHair.sharedMaterials;
-        defaultShoesMat = playerShoes.material;
+        if (playerBody)
+            defaultBodyMat = playerBody.material;
+        if (playerPants)
+            defaultPantsMat = playerPants.material;
+        if (playerShirt)
+            defaultShirtMat = playerShirt.material;
+        if (playerHair)
+            defaultHairMat = playerHair.sharedMaterials;
+        if (playerShoes)
+            defaultShoesMat = playerShoes.material;
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
@@ -145,7 +156,7 @@ public class BuildingDetect : MonoBehaviour
         BuilderEventManager.ActivateAvatarInivisibility -= AvatarInvisibilityApply;
         BuilderEventManager.DeactivateAvatarInivisibility -= StopAvatarInvisibility;
         BuilderEventManager.StopAvatarChangeComponent -= ToggleAvatarChangeComponent;
-        ApplyDefaultEffect();
+        ApplySuperMarioEffect(false);
 
     }
 
@@ -329,12 +340,18 @@ public class BuildingDetect : MonoBehaviour
 
         if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
         {
-            playerHair.enabled = state;
-            playerBody.enabled = state;
-            playerHead.enabled = state;
-            playerPants.enabled = state;
-            playerShirt.enabled = state;
-            playerShoes.enabled = state;
+            if (playerHair)
+                playerHair.enabled = state;
+            if (playerBody)
+                playerBody.enabled = state;
+            if (playerHead)
+                playerHead.enabled = state;
+            if (playerPants)
+                playerPants.enabled = state;
+            if (playerShirt)
+                playerShirt.enabled = state;
+            if (playerShoes)
+                playerShoes.enabled = state;
         }
     }
     #endregion
@@ -391,7 +408,7 @@ public class BuildingDetect : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
         //_specialEffects.gameObject.SetActive(true);
-        ApplySuperMarioEffect();
+        ApplySuperMarioEffect(true);
         powerUpCurTime = 0;
         _playerControllerNew.specialItem = true;
 
@@ -405,24 +422,24 @@ public class BuildingDetect : MonoBehaviour
         StopSpecialItemComponent();
     }
 
-    private void ApplySuperMarioEffect()
+    private void ApplySuperMarioEffect(bool state)
     {
-        playerHair.material.shader = newClothShader;
-        playerBody.material.shader = newSkinShader;
-        playerBody.material.SetFloat("_Outer_Glow", 2);
-        playerShirt.material.shader = newClothShader;
-        playerPants.material.shader = newClothShader;
-        playerShoes.material.shader = newClothShader;
-    }
-
-    private void ApplyDefaultEffect()
-    {
-        playerHair.material.shader = defaultClothShader;
-        playerBody.material.shader = defaultSkinShader;
-        playerShirt.material.shader = defaultClothShader;
-        playerPants.material.shader = defaultClothShader;
-        playerShoes.material.shader = defaultClothShader;
-        playerHead.sharedMaterials = defaultHeadMaterials;
+        if (playerHair)
+            playerHair.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerBody)
+        {
+            playerBody.material.shader = state ? newSkinShader : defaultSkinShader;
+            if (state)
+                playerBody.material.SetFloat("_Outer_Glow", 2);
+        }
+        if (playerShirt)
+            playerShirt.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerPants)
+            playerPants.material.shader = state ? newClothShader : defaultClothShader;
+        if (playerShoes)
+            playerShoes.material.shader = state ? newClothShader : defaultClothShader;
+        if (!state)
+            playerHead.sharedMaterials = defaultHeadMaterials;
     }
 
     public void StopSpecialItemComponent()
@@ -432,7 +449,7 @@ public class BuildingDetect : MonoBehaviour
         if (_specialEffects)
         {
             PhotonNetwork.Destroy(_specialEffects.GetPhotonView());
-            ApplyDefaultEffect();
+            ApplySuperMarioEffect(false);
             _specialEffects = null;
         }
         _playerControllerNew.specialItem = false;
@@ -445,17 +462,32 @@ public class BuildingDetect : MonoBehaviour
     //Hologram Material Set
     void AvatarInvisibilityApply()
     {
-        //playerHair.material = hologramMaterial;
-        Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
-        for (int i = 0; i < hairMats.Length; i++)
+        AvatarInvisibility(false);
+    }
+    void StopAvatarInvisibility()
+    {
+        AvatarInvisibility(true);
+    }
+    private void AvatarInvisibility(bool state)
+    {
+        if (playerHair)
         {
-            hairMats[i] = hologramMaterial;
+            Material[] hairMats = new Material[playerHair.sharedMaterials.Length];
+            for (int i = 0; i < hairMats.Length; i++)
+            {
+                hairMats[i] = hologramMaterial;
+            }
+            playerHair.sharedMaterials = state ? defaultHairMat : hairMats;
         }
-        playerHair.sharedMaterials = hairMats;
-        playerBody.material = hologramMaterial;
-        playerShirt.material = hologramMaterial;
-        playerPants.material = hologramMaterial;
-        playerShoes.material = hologramMaterial;
+        if (playerBody)
+            playerBody.material = state ? defaultBodyMat : hologramMaterial;
+        if (playerShirt)
+            playerShirt.material = state ? defaultShirtMat : hologramMaterial;
+        if (playerPants)
+            playerPants.material = state ? defaultPantsMat : hologramMaterial;
+        if (playerShoes)
+            playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 
         // Assign the new material to all submeshes
@@ -465,24 +497,11 @@ public class BuildingDetect : MonoBehaviour
         }
 
         // Apply the new materials to the SkinnedMeshRenderer
-        playerHead.materials = newMaterials;
+        playerHead.sharedMaterials = state ? defaultHeadMaterials : newMaterials;
 
-        playerFreeCamConsole.material = hologramMaterial;
-        playerFreeCamConsoleOther.material = hologramMaterial;
+        playerFreeCamConsole.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
+        playerFreeCamConsoleOther.material = state ? defaultFreeCamConsoleMat : hologramMaterial;
     }
-
-    void StopAvatarInvisibility()
-    {
-        playerHair.sharedMaterials = defaultHairMat;
-        playerBody.material = defaultBodyMat;
-        playerShirt.material = defaultShirtMat;
-        playerPants.material = defaultPantsMat;
-        playerShoes.material = defaultShoesMat;
-        playerHead.sharedMaterials = defaultHeadMaterials;
-        playerFreeCamConsole.material = defaultFreeCamConsoleMat;
-        playerFreeCamConsoleOther.material = defaultFreeCamConsoleMat;
-    }
-
     #endregion
 
     #region Camera Blur Effect

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 64211638169632147}
   - component: {fileID: 1643207911}
-  - component: {fileID: 895531123}
   - component: {fileID: 64211639564321973}
   m_Layer: 0
   m_Name: '[Worlds Manager]'
@@ -52,46 +51,6 @@ MonoBehaviour:
   spawnCharacterObjectRemote: {fileID: 0}
   EventEndedPanel: {fileID: 0}
   mainScene: 
---- !u!114 &895531123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 64211638169632173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef69050fe9e26453b975a3c2ee83439d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WorldPlayPanel: {fileID: 0}
-  m_TapAndHoldPanel: {fileID: 0}
-  world_name: {fileID: 0}
-  museum_description: {fileID: 0}
-  CreaterName: {fileID: 0}
-  tapholdworld: {fileID: 0}
-  Tapcreatorname: {fileID: 0}
-  _world_name: []
-  _description:
-  - 
-  - 
-  - 
-  - 
-  _CreaterName:
-  - 
-  - 
-  - 
-  - 
-  _SceneName: 
-  _bannerimage: {fileID: 0}
-  taphold_banner: {fileID: 0}
-  tapholdimages: []
-  tapholdProfileicon: []
-  creatorPic: {fileID: 0}
-  profileIcon: {fileID: 0}
-  taphold_profile: {fileID: 0}
-  t_Scroll_discription: {fileID: 0}
-  scrollActivity: {fileID: 0}
 --- !u!114 &64211639564321973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,28 +63,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ddd724fb8528194a80bd554173bc5c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventPrefab: {fileID: 3238374975130361925, guid: 6a92f9f8b85fd954cabca62e3e85109e, type: 3}
-  eventPrefabLobby: {fileID: 0}
-  eventPrefabTab: {fileID: 3238374975130361925, guid: 03128e8d5b38644cdba2d229489efe3e, type: 3}
-  descriptionParentPanel: {fileID: 0}
-  listParentHotSection: {fileID: 0}
-  listParentAllWorlds: {fileID: 0}
-  listParentMyWorlds: {fileID: 0}
-  listParentGameWorlds: {fileID: 0}
-  listParentEventWorlds: {fileID: 0}
-  world_HotScroll: {fileID: 0}
-  world_NewScroll: {fileID: 0}
-  world_myworldScroll: {fileID: 0}
-  world_GameWorldScroll: {fileID: 0}
-  world_EventWorldScroll: {fileID: 0}
+  EventPrefabLobby: {fileID: 0}
   orientationchanged: 0
+  dataIsFatched: 0
   _WorldInfo:
     success: 0
     data:
       count: 0
       rows: []
     msg: 
-  m_AllWorldManage: {fileID: 0}
+  AllWorldTabReference: {fileID: 0}
   AutoSwtichWorldList:
   - name: Astroboy x Tottori Metaverse Museum
     isMussuem: 1
@@ -147,4 +94,11 @@ MonoBehaviour:
     isMussuem: 0
     mainnetId: 29
     testnetId: 386
+  previousSearchKey: 
+  SearchPageNumb: 1
+  SearchPageSize: 15
+  SearchTagPageNumb: 1
+  SearchTagPageSize: 15
+  SearchKey: 
   worldstr: 
+  WorldItemManager: {fileID: 0}

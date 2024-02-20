@@ -3,15 +3,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class CharacterOnScreenNameHandler : MonoBehaviour
 {
-    public static CharacterOnScreenNameHandler instance;
+   
     [SerializeField]
     TMPro.TMP_Text _onScreenName;
     
     #region Positioning Mechanics
     private void Start()
     {
-        instance = this;
-        Debug.Log("CharacterOnScreenNameHandler Start");
+       
         StartCoroutine(SetName());
     }
     public void SetNameOfPlayerAgain()
@@ -24,59 +23,46 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     IEnumerator SetName()
     {
-
-        if (!LoginRegister.ChinaUser)
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (PlayerPrefs.GetInt("WalletConnect") == 0)
+            _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+        }
+        if (PlayerPrefs.GetInt("WalletConnect") == 0)
+        {
+            while (true)
             {
-                while (true)
-                {
-                    yield return new WaitForSeconds(1f);
-                    if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty())
-                    {
-                        break;
-                    }
-                }
-                // Debug.LogError("SetName");
                 yield return new WaitForSeconds(1f);
-                if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (XanaConstants.xanaConstants != null && !XanaConstants.xanaConstants.LoginasGustprofile))
                 {
-
-                    Debug.LogError("SetName 1");
-                    _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-                }
-                else
-                {
-                    Debug.LogError("SetName 2");
-
-                    StartCoroutine(IERequestGetUserDetails());
+                    break;
                 }
             }
-        }
-      
-        else
-        {
-           
-          
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                Debug.Log("SetName 1");
-
+                _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+                while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+                    yield return new WaitForSeconds(0.5f);
+                StartCoroutine(IERequestGetUserDetails());
+            }
+            else
+            {
+                StartCoroutine(IERequestGetUserDetails());
+            }
+        }
+        else
+        {
+            yield return new WaitForSeconds(1f);
+            if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+            {
                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             }
             else
             {
-                Debug.Log("SetName 4");
                 StartCoroutine(IERequestGetUserDetails());
-
             }
         }
-
     }
-
-
-       
     public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
@@ -93,7 +79,6 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             }
             else
             {
-                Debug.Log("GetUserDetails Response: " + www.downloadHandler.text.ToString());
                 GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
                 UpdateNameText(tempMyProfileDataRoot.data.name);
             }
