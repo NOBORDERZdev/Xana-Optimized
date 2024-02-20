@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+[Serializable]
+public class AvatarDefaultClothes
+{
+    public Texture2D DefaultSkin, DefaultEyes, DefaultLips;
+    public GameObject DefaultPent, DefaultShoes, DefaultShirt, DefaultHair;
+}
 public class ItemDatabase : MonoBehaviour
 {
     public List<Item> itemList = new List<Item>();
@@ -13,6 +19,10 @@ public class ItemDatabase : MonoBehaviour
 
     public Texture2D DefaultSkin, DefaultEyes, DefaultLips;
     public GameObject DefaultPent, DefaultShoes, DefaultShirt, DefaultHair;
+
+    public AvatarDefaultClothes maleAvatarDefaultCostume;
+    public AvatarDefaultClothes femaleAvatarDefaultCostume;
+
     AddressableDownloader downloader;
     public void itemlistresettodefault()
     {

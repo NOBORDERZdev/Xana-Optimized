@@ -5,7 +5,7 @@ namespace DynamicScrollRect
 {
     public class ScrollContent : MonoBehaviour
     {
-        public Vector2 Spacing = Vector2.zero;
+       /* public Vector2 Spacing = Vector2.zero;
         [Min(1)][SerializeField] private int _fixedItemCount = 1;
         public int TotalItems = 0;
         private DynamicScrollRect _dynamicScrollRect;
@@ -85,6 +85,7 @@ namespace DynamicScrollRect
                     {
                         if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
                         {
+                            Debug.LogError("here locking");
                             DynamicScrollRect.RestrictFlag = true;
                             DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
                             RestrictState = 1;
@@ -123,7 +124,7 @@ namespace DynamicScrollRect
                     {
                         if (count == 0)
                         {
-                            LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+                            //LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
                             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
                         }
                         return;
@@ -288,7 +289,7 @@ namespace DynamicScrollRect
             if(itemIndex >= (int)(TotalItems *.75) && TotalItems > previousItems)
             {
                 previousItems = TotalItems;
-                Debug.LogError("Fetch data again");
+                //Debug.LogError("Fetch data again");
                 if (WorldManager.instance.dataIsFatched)
                 {
                     WorldManager.instance.WorldPageLoading();
@@ -318,6 +319,6 @@ namespace DynamicScrollRect
         {
             ClearContent();
             InitItemsVertical(Worlds.Count);
-        }
+        }*/
     }
 }

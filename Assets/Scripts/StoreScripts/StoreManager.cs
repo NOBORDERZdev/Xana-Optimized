@@ -161,8 +161,8 @@ public class StoreManager : MonoBehaviour
     public GameObject UndoBtn, RedoBtn, AvatarSaved, AvatarSavedGuest, AvatarUpdated;
     public GameObject Defaultreset, LastSavedreset, PanelResetDefault;
     // public GameObject ButtonFor_Preset;
-    public GameObject StartPanel_PresetParentPanel, PresetArrayContent;
-   // public GameObject backbutton_preset;
+    public GameObject StartPanel_PresetParentPanel, PresetArrayContent, selfiePanel, loaderPanel;
+    // public GameObject backbutton_preset;
     public Transform contentList;
 
     public GameObject faceTapButton;
@@ -196,7 +196,8 @@ public class StoreManager : MonoBehaviour
     public Button newAvatarPresetBtn;
     public CanvasScaler _CanvasScaler;
     public Action storeOpen;
-
+    public UGCItemsData ugcItemsData;
+    public UGCItemData itemData;
     private void Awake()
     {
 
@@ -413,7 +414,7 @@ public class StoreManager : MonoBehaviour
         //{
         //    LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         //}
-       // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
+        // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
     }
     void BackTrackPreset()
     {
@@ -639,7 +640,7 @@ public class StoreManager : MonoBehaviour
         eyeLashesDwonloadedCount = 0;
         eyesDwonloadedCount = 0;
         lipsDwonloadedCount = 0;
-        if(LoadingHandler.Instance)
+        if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
     }
@@ -924,7 +925,7 @@ public class StoreManager : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(url + Jsondata))
         {
-            string res= apiResponseHolder.GetResponse(url + Jsondata);
+            string res = apiResponseHolder.GetResponse(url + Jsondata);
             ObjofMainCategory = GetAllDataNewAPI(res);
             SaveAllMainCategoriesToArray();
             yield break;
@@ -1329,8 +1330,8 @@ public class StoreManager : MonoBehaviour
     public void OnClickBackButton()
     {
         //GameManager.Instance.mainCharacter.GetComponent<FaceIK>().ikActive= true;
-       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
-      //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
+        // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(true);
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
@@ -1344,7 +1345,7 @@ public class StoreManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
-      //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+        //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
 
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
@@ -4833,29 +4834,79 @@ public class StoreManager : MonoBehaviour
         //}
         //else
         //{
-            XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
-            XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
-            XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
-            XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
-            XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.SaveItemList.EyeValue.ToString();
+        XanaConstants.xanaConstants.hair = SavaCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
+        XanaConstants.xanaConstants.hairColoPalette = SavaCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.shirt = SavaCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
+        XanaConstants.xanaConstants.pants = SavaCharacterProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
+        XanaConstants.xanaConstants.shoes = SavaCharacterProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
+        XanaConstants.xanaConstants.eyeWearable = SavaCharacterProperties.instance.SaveItemList.EyeValue.ToString();
 
-            XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.SaveItemList.PresetValue;
-            XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.SaveItemList.SkinId.ToString();
-            XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.SaveItemList.FaceValue;
-            XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowValue;
-            XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
-            XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.SaveItemList.EyeLashesValue;
-            XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.SaveItemList.EyeValue;
-            XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.SaveItemList.EyesColorValue.ToString();
-            XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.SaveItemList.NoseValue;
-            XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.SaveItemList.LipsValue;
-            XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.SaveItemList.LipsColorValue.ToString();
-            XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
-            XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.SaveItemList.BodyFat;
-            XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
+        XanaConstants.xanaConstants.PresetValueString = SavaCharacterProperties.instance.SaveItemList.PresetValue;
+        XanaConstants.xanaConstants.skinColor = SavaCharacterProperties.instance.SaveItemList.SkinId.ToString();
+        XanaConstants.xanaConstants.faceIndex = SavaCharacterProperties.instance.SaveItemList.FaceValue;
+        XanaConstants.xanaConstants.eyeBrowIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowValue;
+        XanaConstants.xanaConstants.eyeBrowColorPaletteIndex = SavaCharacterProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
+        XanaConstants.xanaConstants.eyeLashesIndex = SavaCharacterProperties.instance.SaveItemList.EyeLashesValue;
+        XanaConstants.xanaConstants.eyeIndex = SavaCharacterProperties.instance.SaveItemList.EyeValue;
+        XanaConstants.xanaConstants.eyeColor = SavaCharacterProperties.instance.SaveItemList.EyesColorValue.ToString();
+        XanaConstants.xanaConstants.eyeColorPalette = SavaCharacterProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.noseIndex = SavaCharacterProperties.instance.SaveItemList.NoseValue;
+        XanaConstants.xanaConstants.lipIndex = SavaCharacterProperties.instance.SaveItemList.LipsValue;
+        XanaConstants.xanaConstants.lipColor = SavaCharacterProperties.instance.SaveItemList.LipsColorValue.ToString();
+        XanaConstants.xanaConstants.lipColorPalette = SavaCharacterProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
+        XanaConstants.xanaConstants.bodyNumber = SavaCharacterProperties.instance.SaveItemList.BodyFat;
+        XanaConstants.xanaConstants.makeupIndex = SavaCharacterProperties.instance.SaveItemList.MakeupValue;
         //}
+    }
+    public void ApplyUGCValueOnCharacter(string _gender)
+    {
+        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
+        _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
+        _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
+        for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
+        {
+            _charcterBodyParts.head.SetBlendShapeWeight(i, 0);
+        }
+        if (itemData.faceItemData != 0 && _charcterBodyParts != null)
+        {
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.faceItemData, 100);
+        }
+        if (itemData.noseItemData != 0)
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.noseItemData, 100);
+        if (itemData.lipItemData != 0)
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.lipItemData, 100);
+        if (itemData._hairItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
+        }
+        if (itemData._eyeItemData != null)
+        {
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
+        }
+    }
+    public void ApplyDefaultValueOnCharacter(string _gender)
+    {
+        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        if (_gender == AvatarGender.Male.ToString())
+        {
+            _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.default_male_skin_color);
+            _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_male_lips_color);
+            _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.default_male_skin_color);
+            _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.maleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
+        }
+        else
+        {
+            _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.default_female_skin_color);
+            _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_female_lips_color);
+            _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.default_female_skin_color);
+            _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.femaleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
+        }
+        for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
+        {
+            _charcterBodyParts.head.SetBlendShapeWeight(i, 0);
+        }
+
     }
 }
 public class RequestedData

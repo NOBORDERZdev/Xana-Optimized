@@ -132,7 +132,7 @@ public class Web3APIforWeb2 : MonoBehaviour
         else
         {
             //   NFTlistdata = UserNFTlistClass.Root.CreateFromJSON(request.downloadHandler.text);
-            Debug.LogError("NFT DATA from API: " + request.downloadHandler.text);
+            Debug.Log("NFT DATA from API: " + request.downloadHandler.text);
             _OwnedNFTDataObj.CreateJsonFromRoot(request.downloadHandler.text);
 
             /*for (int i = 0; i < NFTlistdata.list.Count; i++)
@@ -143,7 +143,7 @@ public class Web3APIforWeb2 : MonoBehaviour
                 }
             }*/
             callback?.Invoke();
-            Debug.LogError("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
+            Debug.Log("Total Number of NFTs are : " + _OwnedNFTDataObj.NFTlistdata.count);
             if (_OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
@@ -171,7 +171,7 @@ public class Web3APIforWeb2 : MonoBehaviour
             }
         }
         await Task.Delay(500);
-        Debug.LogError("AllDataFetchedfromServer web2");
+        Debug.Log("AllDataFetchedfromServer web2");
         AllDataFetchedfromServer?.Invoke("Web2");
     }
 

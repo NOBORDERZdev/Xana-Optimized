@@ -116,11 +116,11 @@ public class UserAnimationPostFeature : MonoBehaviour
         NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(MoodSelected);
         if(NoOfAnimations == 1)
         {
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle", MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle", MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
         }
         else
         {
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle "+ UnityEngine.Random.Range(1,3), MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(MoodSelected + " Idle "+ UnityEngine.Random.Range(1,3), MoodSelected, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
         }
     }
 
@@ -134,12 +134,12 @@ public class UserAnimationPostFeature : MonoBehaviour
         if (NoOfAnimations == 1)
         {
             print("________________________ if ");
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle", moodName, _animator.overrideController);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle", moodName, _animator.overrideController, _animator.transform.GetComponent<Animator>());
         }
         else
         {
             print("________________________ else ");
-            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle " + UnityEngine.Random.Range(1, 3), moodName, _animator.overrideController);
+            GameManager.Instance.moodManager.ViewMoodActionAnimation(moodName + " Idle " + UnityEngine.Random.Range(1, 3), moodName, _animator.overrideController, _animator.transform.GetComponent<Animator>());
         }
     }
 }

@@ -233,7 +233,7 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
             }
             yield return new WaitForSeconds(1.5f);
 
-            while (player1.GetComponent<AvatarController>().head.enabled == false && player2.GetComponent<AvatarController>().head.enabled == false)
+            while (player1.GetComponent<AvatarController>().characterBodyParts.head.enabled == false && player2.GetComponent<AvatarController>().characterBodyParts.head.enabled == false)
             {
                 yield return new WaitForSeconds(.1f);
             }

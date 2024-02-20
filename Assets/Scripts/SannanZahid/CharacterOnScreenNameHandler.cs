@@ -23,13 +23,12 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     IEnumerator SetName()
     {
-         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-           
         }
-        if (PlayerPrefs.GetInt("WalletConnect") == 0 )
-        {    
+        if (PlayerPrefs.GetInt("WalletConnect") == 0)
+        {
             while (true)
             {
                 yield return new WaitForSeconds(1f);
@@ -38,12 +37,13 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
                     break;
                 }
             }
-           
             yield return new WaitForSeconds(1f);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                 _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-               
+                _onScreenName.text = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+                while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+                    yield return new WaitForSeconds(0.5f);
+                StartCoroutine(IERequestGetUserDetails());
             }
             else
             {
@@ -62,9 +62,8 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
                 StartCoroutine(IERequestGetUserDetails());
             }
         }
-
     }
-     public IEnumerator IERequestGetUserDetails()
+    public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {

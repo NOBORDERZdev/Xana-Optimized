@@ -150,6 +150,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     IEnumerator LoadMianScene()
     {
+        XanaConstants.xanaConstants.CurrentSceneName = "Addressable";
         yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
         print("mian scne " + mainScene);

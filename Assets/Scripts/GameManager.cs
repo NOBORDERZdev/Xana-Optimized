@@ -44,11 +44,23 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
+    public AdditiveScenesManager additiveScenesManager;
+    public Transform HomeCamera;
+
+    internal string selectedPresetData="";
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
+        if (additiveScenesManager == null) // If Null then find object
+        {
+           additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
+        }
+    }
+    public void HomeCameraInputHandler(bool flag)
+    {
+        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {

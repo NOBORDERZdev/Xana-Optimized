@@ -461,7 +461,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -625,7 +625,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+        player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;

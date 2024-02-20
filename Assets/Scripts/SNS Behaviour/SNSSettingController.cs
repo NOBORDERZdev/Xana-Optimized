@@ -79,7 +79,8 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Screen Back Button Click.......
     public void OnClickMyAccountBackButton()
     {
-        MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
+        OnClickSettingOpen();
+        //MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
     }
 
     //this method is used to terms and policy.......
@@ -182,6 +183,7 @@ public class SNSSettingController : MonoBehaviour
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
 
         }
+        GlobalVeriableClass.callingScreen = "";
     }
 
     //this method is used to logout success.......
@@ -216,6 +218,7 @@ public class SNSSettingController : MonoBehaviour
 
             myAccountScreen.SetActive(false);
             FeedUIController.Instance.ResetAllFeedScreen(false);
+            FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();

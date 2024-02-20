@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
-
 public class PostScreenInput : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
@@ -16,12 +15,27 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField] Color normalColor = new Vector4();
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
    int maxWidth = 270;
-   float characterOffset = 5.0f;
-   string placeHolderText = "Enter the text";
-   TouchScreenKeyboard keyboard;
+    int maxHeight = 125;
+    float characterOffset = 5.0f;
+
+    string placeHolderText;
+    TouchScreenKeyboard keyboard;
+    public RectTransform bubbleParent;
+    bool bubbleHeightCheck = false;
     private void OnEnable()
     {
-       ActiveInputFeild();
+        if (GameManager.currentLanguage.Equals("en"))
+        {
+            placeHolderText = "Enter the text";
+        }
+        else
+        {
+            placeHolderText = "テキストを入力してください";
+        }
+        
+        ActiveInputFeild();
+        StartCoroutine(SetBubblePos());
+        bubbleHeightCheck = false;
     }
 
     private void Start(){ 
@@ -29,6 +43,7 @@ public class PostScreenInput : MonoBehaviour
         ShowText.color = placeHolderColor;
     }
     public void TextChange(){
+        Debug.Log("Text Change " + bubbleImage.rect.height);
         ShowText.text = "";
         if (inputField.text.Count()>0) // if the input field is not empty
         {
@@ -39,23 +54,86 @@ public class PostScreenInput : MonoBehaviour
         {
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
+            if (GameManager.currentLanguage.Equals("en"))
+            {
+                if (ShowText.text == "Enter the text")
+                {
+                    BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                }
+            }
+            else
+            {
+                if (ShowText.text == "テキストを入力してください")
+                {
+                    BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                }
+            }
+           
         }
         if (bubbleImage.rect.width >= maxWidth)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
         }
-        if (ShowText.text.Count()<=40)
+        if (bubbleImage.rect.height >= maxHeight && bubbleHeightCheck == false)
+        {
+            BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        }
+        if (ShowText.text.Count()<=35)
         {
             BubbleContentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         }
-   }
+        if (ShowText.text.Count() <= 10)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+            bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        }
+        if (ShowText.text.Count() >= 70)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
+            bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
+        }
+        if (ShowText.text.Count() >= 150)
+        {
+            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5200526f);
+            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7003913f);
+        }
+       
+    }
 
     public void ActiveInputFeild()
     {
         inputField.Select();
         inputField.ActivateInputField();
+        BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        if (ShowText.text.Count() >= 70)
+        {
+            bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
+            bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
+            bubbleHeightCheck = true;
+        }
+        if (ShowText.text.Count() >= 150)
+        {
+            bubbleParent.anchorMin = new Vector2(0.09747515f, 0.5200526f);
+            bubbleParent.anchorMax = new Vector2(0.8157223f, 0.7003913f);
+        }
         //inputField.MoveToEndOfLine(shift: true, ctrl: false);
-        inputField.caretPosition = inputField.text.Length;
+        // inputField.caretPosition = inputField.text.Length;
+
+
+    }
+    IEnumerator SetBubblePos()
+    {
+        yield return new WaitForEndOfFrame();
+        ShowText.text = placeHolderText;
+        ShowText.color = placeHolderColor;
+        BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
+        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+
     }
     //private string FormatInput(string input)
     //{
@@ -66,7 +144,7 @@ public class PostScreenInput : MonoBehaviour
     //        int length = Mathf.Min(36, input.Length - i);
     //        formattedText += input.Substring(i, length);
     //        formattedText += "\n";
-        
+
     //        // Check if the formattedText exceeds 110 characters
     //        if (formattedText.Length > 110)
     //        {
@@ -78,16 +156,16 @@ public class PostScreenInput : MonoBehaviour
     //    return formattedText;
     //}
 
-//    public void IncreaseImageWidth()
-//    {
-//        float currentWidth = bubbleImage.rect.width;
-//        float newWidth = currentWidth + characterOffset;
-//        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
-//    }
-//    public void DecreaseImageWidth()
-//    {
-//        float currentWidth = bubbleImage.rect.width;
-//        float newWidth = currentWidth - characterOffset;
-//        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
-//    }
+    //    public void IncreaseImageWidth()
+    //    {
+    //        float currentWidth = bubbleImage.rect.width;
+    //        float newWidth = currentWidth + characterOffset;
+    //        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
+    //    }
+    //    public void DecreaseImageWidth()
+    //    {
+    //        float currentWidth = bubbleImage.rect.width;
+    //        float newWidth = currentWidth - characterOffset;
+    //        bubbleImage.sizeDelta = new Vector2 (Mathf.Min(newWidth, maxWidth), bubbleImage.rect.height);
+    //    }
 }

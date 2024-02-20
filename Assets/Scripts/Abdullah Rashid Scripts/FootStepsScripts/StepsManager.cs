@@ -20,7 +20,7 @@ public class StepsManager : MonoBehaviour
         //        distance = 0.2f;
     }
 
-    public void EnterStep(float targetWalkSpeed)
+    public void EnterStep(float targetWalkSpeed) //it is calling from the animation event on Walk, Run, and Sprint animations.
     {
         if (isplayer)
         {

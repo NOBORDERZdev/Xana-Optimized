@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using AdvancedInputFieldPlugin;
-using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public class AllWorldManage : MonoBehaviour
 {
@@ -29,31 +25,36 @@ public class AllWorldManage : MonoBehaviour
 
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
-        UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);
+        /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
     public void SearchScreenLoad()
     {
+        WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        FlexibleRect.OnAdjustSize?.Invoke(true);
+        WorldManager.instance.WorldScrollReset();
+        WorldManager.instance.SearchPageNumb = 1;
     }
 
     public void SearchScreenLoad(string searchKey)
     {
+        WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        FlexibleRect.OnAdjustSize?.Invoke(true);
+        WorldManager.instance.WorldScrollReset();
     }
 
     public void BackToPreviousScreen()
     {
-        WorldManager.instance.ClearWorldScrollWorlds();
+        WorldManager.instance.WorldScrollReset();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
-        ScrollEnableDisable(0);
+        //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        //ScrollEnableDisable(0);
     }
-    public void XanaWorldLoad()
+    /*public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
+        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         if(UIManager.Instance.PreviousScreen==0)
         {
             UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
@@ -111,7 +112,7 @@ public class AllWorldManage : MonoBehaviour
         }
         ScrollEnableDisable(5);
         WorldManager.instance.ChangeWorld(APIURL.TestWorld);
-    }
+    }*/
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
     {
@@ -137,5 +138,42 @@ public class AllWorldManage : MonoBehaviour
         transform.GetComponent<RectTransform>().offsetMin = new Vector2(
             transform.GetComponent<RectTransform>().offsetMin.x,
             transform.GetComponent<RectTransform>().offsetMin.y + 342);
+    }
+
+
+    public void HotSpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.hotSpacePN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
+    }
+
+    public void HotGamesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.hotGamesPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
+    }
+
+    public void FollowingSpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.followingPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
+    }
+
+    public void MySpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.mySpacesPN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
+    }
+
+    public void CategorySpacesLoadMore(int tag)
+    {
+        WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
+        SearchScreenLoad();
+        WorldManager.instance.SearchTagPageNumb = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }
