@@ -9,6 +9,7 @@ using System.IO;
 public class CharcterBodyParts : MonoBehaviour
 {
     public static CharcterBodyParts instance;
+    public bool isNewAvatar = true;
     [Tooltip("Default Texture for pent and shirt")]
     public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_Texture, TattooDefaultTexture;
     // For Eye Color Slider Require Some new Textures
@@ -85,9 +86,9 @@ public class CharcterBodyParts : MonoBehaviour
     public AvatarMeshes femaleAvatarMeshes;
     public SkinnedMeshRenderer boxerBody;
     public SkinnedMeshRenderer boxerHead;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer body;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer head;
 
     [Serializable]
@@ -96,7 +97,7 @@ public class CharcterBodyParts : MonoBehaviour
         public GameObject avatar_parent;
         public SkinnedMeshRenderer avatar_body;
         public SkinnedMeshRenderer avatar_head;
-        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture,Eye_texture;
+        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_texture;
     }
 
     public RandomPreset[] randomPresetData;
@@ -146,36 +147,41 @@ public class CharcterBodyParts : MonoBehaviour
     private void Start()
     {
         blend = BlendShapeImporter.Instance;
-        //avatarController = GetComponent<AvatarController>();
-        head = maleAvatarMeshes.avatar_head;
-        body = maleAvatarMeshes.avatar_body;
-        characterHeadMat = head.materials[2];
-        characterBodyMat = body.materials[0];
+
+        if (maleAvatarMeshes.avatar_head != null)
+        {
+            head = maleAvatarMeshes.avatar_head;
+            body = maleAvatarMeshes.avatar_body;
+            characterHeadMat = head.materials[2];
+            characterBodyMat = body.materials[0];
+        }
         IntCharacterBones();
     }
 
 
     public void SetAvatarByGender(AvatarGender _gender)
     {
-        
-        if (_gender == AvatarGender.Male)
+        if (isNewAvatar)
         {
-            avatarController.avatarGender = _gender;
-            maleAvatarMeshes.avatar_parent.SetActive(true);
-            femaleAvatarMeshes.avatar_parent.SetActive(false);
-            body = maleAvatarMeshes.avatar_body;
-            head = maleAvatarMeshes.avatar_head;
-        }
-        else if (_gender == AvatarGender.Female)
-        {
-            avatarController.avatarGender = _gender;
-            maleAvatarMeshes.avatar_parent.SetActive(false);
-            femaleAvatarMeshes.avatar_parent.SetActive(true);
-            body = femaleAvatarMeshes.avatar_body;
-            head = femaleAvatarMeshes.avatar_head;
+            if (_gender == AvatarGender.Male)
+            {
+                avatarController.avatarGender = _gender;
+                maleAvatarMeshes.avatar_parent.SetActive(true);
+                femaleAvatarMeshes.avatar_parent.SetActive(false);
+                body = maleAvatarMeshes.avatar_body;
+                head = maleAvatarMeshes.avatar_head;
+            }
+            else if (_gender == AvatarGender.Female)
+            {
+                avatarController.avatarGender = _gender;
+                maleAvatarMeshes.avatar_parent.SetActive(false);
+                femaleAvatarMeshes.avatar_parent.SetActive(true);
+                body = femaleAvatarMeshes.avatar_body;
+                head = femaleAvatarMeshes.avatar_head;
+            }
         }
 
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
         {
             body = boxerBody;
             head = boxerHead;
@@ -185,7 +191,7 @@ public class CharcterBodyParts : MonoBehaviour
     //Set Texture For Shirt
     public void TextureForShirt(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
             body.materials[0].SetTexture(shirt_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
@@ -199,7 +205,7 @@ public class CharcterBodyParts : MonoBehaviour
     // Set texture For 
     public void TextureForPant(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
             body.materials[0].SetTexture(Pent_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
@@ -210,7 +216,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void TextureForShoes(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
             body.materials[0].SetTexture(Shoes_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
@@ -226,10 +232,10 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     // Set Default Texture for player
-    public void DefaultTexture(bool ApplyClothMask = true, string _gender="")
+    public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask, _gender);
@@ -297,9 +303,9 @@ public class CharcterBodyParts : MonoBehaviour
             Body.materials[0].SetTexture(Shoes_TextureName, null);
             if (ApplyClothMask)
             {
-                if(femaleAvatarMeshes.Pent_Texture != null)
+                if (femaleAvatarMeshes.Pent_Texture != null)
                     Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
-                if(femaleAvatarMeshes.Shirt_Texture != null)
+                if (femaleAvatarMeshes.Shirt_Texture != null)
                     Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
                 if (femaleAvatarMeshes.Shoe_Texture != null)
                     Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
@@ -312,16 +318,16 @@ public class CharcterBodyParts : MonoBehaviour
             Body.materials[0].SetTexture(Shoes_TextureName, null);
             if (ApplyClothMask)
             {
-                if(maleAvatarMeshes.Pent_Texture != null)
+                if (maleAvatarMeshes.Pent_Texture != null)
                     Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
-                if(maleAvatarMeshes.Shirt_Texture != null)
+                if (maleAvatarMeshes.Shirt_Texture != null)
                     Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
-                if(maleAvatarMeshes.Shoe_Texture != null)
+                if (maleAvatarMeshes.Shoe_Texture != null)
                     Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
             }
         }
         //}
-        
+
         //Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         //Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
         //Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
@@ -1111,29 +1117,29 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.HairColor:
                 //if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 //{
-                    AvatarController ac = applyOn.GetComponent<AvatarController>();
-                    if (ac.wornHair != null)
+                AvatarController ac = applyOn.GetComponent<AvatarController>();
+                if (ac.wornHair != null)
+                {
+                    //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
                     {
-                        //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
-                        {
-                            // For Band using Eye Shader so variable name is Changed 
-                            // Variable is equal to eyename
-                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
-                        }
-                        else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-                        {
-                            if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-                               ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
-                            else
-                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                        }
+                        // For Band using Eye Shader so variable name is Changed 
+                        // Variable is equal to eyename
+                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
+                    }
+                    else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
+                    {
+                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
+                           ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
+                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
                         else
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                     }
+                    else
+                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                }
 
-               // }
+                // }
                 //else if(hairColorai)
                 //{
                 //    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
@@ -1344,7 +1350,8 @@ public class CharcterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstants.xanaConstants.isNFTEquiped) {
+        if (!isNewAvatar && (XanaConstants.xanaConstants.isNFTEquiped || avatarController.staticPlayer || avatarController.isLoadStaticClothFromJson))
+        {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
             // Update Mask Texture As well & reset Its Color
@@ -1360,7 +1367,7 @@ public class CharcterBodyParts : MonoBehaviour
             }
         }
         else
-        mainMaterial.SetTexture("_BaseMap", texture);
+            mainMaterial.SetTexture("_BaseMap", texture);
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }

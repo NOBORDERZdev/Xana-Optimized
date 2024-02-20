@@ -617,24 +617,24 @@ public class WorldManager : MonoBehaviour
                 else
                 {
                     print("NFT is in your OwnerShip Enjoy " + PlayerPrefs.GetInt("Equiped"));
-                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
-                    Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
-                    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
-                    if (list != null)
-                    {
-                        HaveFighterNFT = true;
-                    }
-                    else
-                    {
-                        HaveFighterNFT = false;
-                    }
-                    if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
-                    {
-                        Debug.Log("Breaking down Arena World");
-                        fightingModulePopUp.SetActive(true);
-                        return;
-                    }
                 }
+            }
+            List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
+            Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
+            if (fighterNFTlist.Count > 0)
+            {
+                HaveFighterNFT = true;
+            }
+            else
+            {
+                HaveFighterNFT = false;
+            }
+            if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+            {
+                Debug.Log("Breaking down Arena World");
+                FightingModuleManager.Instance.EqipRandomNFT();
+                fightingModulePopUp.SetActive(true);
+                return;
             }
             if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
@@ -719,7 +719,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator Check_Orientation(Action CallBack)
     {
-    CheckAgain:
+        CheckAgain:
         yield return new WaitForSeconds(.2f);
         if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstants.xanaConstants.JjWorldSceneChange)
         {
