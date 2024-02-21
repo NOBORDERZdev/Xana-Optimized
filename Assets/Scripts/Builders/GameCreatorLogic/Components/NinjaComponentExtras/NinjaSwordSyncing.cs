@@ -26,7 +26,7 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.one;
         swordhandHook = GetComponentInParent<IKMuseum>().m_SelfieStick.transform.parent;
-        swordHook = GetComponentInParent<IKMuseum>().m_TargetPosition.transform;
+        swordHook = GetComponentInParent<CharcterBodyParts>().pelvisBoneNewCharacter.transform;
         anim = GetComponentInParent<IKMuseum>().GetComponent<Animator>();
     }
 
@@ -48,11 +48,8 @@ public class NinjaSwordSyncing : MonoBehaviourPun
             anim.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             this.transform.SetParent(swordHook, false);
-            //this.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            this.transform.localPosition = new Vector3(-0.594f, 0.145f, -0.357f);
-            //this.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-            Quaternion newRotation = Quaternion.Euler(new Vector3(46.51f, 96f, 225.586f));
-            this.transform.localRotation = newRotation;
+            this.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+            this.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
         }
         if (isDrawSword)
         {

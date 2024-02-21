@@ -1637,12 +1637,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            //swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            //swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-            
-            swordModel.transform.localPosition = new Vector3(-0.594f, 0.145f, -0.357f);
-            Quaternion newRotation = Quaternion.Euler(new Vector3(46.51f, 96f, 225.586f));
-            swordModel.transform.localRotation = newRotation;
+            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
             isMovementAllowed = true;
         }
     }
@@ -1694,11 +1690,8 @@ public class PlayerControllerNew : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            //swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localPosition = new Vector3(-0.594f, 0.145f, -0.357f);
-            //swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-            Quaternion newRotation = Quaternion.Euler(new Vector3(46.51f, 96f, 225.586f));
-            swordModel.transform.localRotation = newRotation;
+            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
@@ -1912,7 +1905,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void Ninja_Throw(bool state, int index = 0)
     {
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
-        swordHook = GamificationComponentData.instance.ikMuseum.m_TargetPosition.transform;
+        swordHook = GamificationComponentData.instance.charcterBodyParts.pelvisBoneNewCharacter.transform;
         _ballSpawn = swordhandHook;
         if (trajectoryController == null)
             trajectoryController = gameObject.AddComponent<TrajectoryController>();
