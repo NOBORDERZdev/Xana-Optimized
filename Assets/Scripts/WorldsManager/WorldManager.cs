@@ -28,6 +28,7 @@ public class WorldManager : MonoBehaviour
     private int pageCount = 200;
     private bool loadOnce = true;
     public bool dataIsFatched = false;
+    public GameObject alphaPassNeededPopUp;
     public WorldsInfo _WorldInfo;
     private APIURL aPIURLGlobal;
     public AllWorldManage AllWorldTabReference;
@@ -444,6 +445,14 @@ public class WorldManager : MonoBehaviour
     }
     public async void JoinEvent()
     {
+        if (WorldItemView.m_EnvName.Contains("RFM"))
+        {
+            if (!XanaConstants.xanaConstants.isAlphaPassHolder)
+            {
+                alphaPassNeededPopUp.SetActive(true);
+                return;
+            }
+        }
         _callSingleTime = true;
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {

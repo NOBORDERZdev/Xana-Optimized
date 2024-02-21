@@ -14,6 +14,7 @@ public class XanaConstants : MonoBehaviour
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
+    public bool isAlphaPassHolder;
 
     public int mic;
     public int minimap;

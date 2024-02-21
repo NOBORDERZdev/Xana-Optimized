@@ -718,6 +718,7 @@ public class UserRegisterationManager : MonoBehaviour
                     case "alpha-pass":
                         {
                             PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                            XanaConstants.xanaConstants.isAlphaPassHolder = true;
                             break;
                         }
                     case "premium":
@@ -1605,6 +1606,7 @@ public class UserRegisterationManager : MonoBehaviour
          userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
         XanaConstants.xanaConstants.userId = null;
+        XanaConstants.xanaConstants.isAlphaPassHolder = false;
 
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
@@ -4438,6 +4440,7 @@ public class UserRegisterationManager : MonoBehaviour
                             case "alpha-pass":
                                 {
                                     PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                                    XanaConstants.xanaConstants.isAlphaPassHolder = true;
                                     break;
                                 }
                             case "premium":
