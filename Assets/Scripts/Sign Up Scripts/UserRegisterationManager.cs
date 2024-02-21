@@ -512,7 +512,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                     //BoxerNFTEventManager.OnNFTUnequip?.Invoke();     commnet for xana 2.O    Riken
                      LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
                  }
             }

@@ -4581,6 +4581,7 @@ MonoBehaviour:
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 0}
   overrideController: {fileID: 0}
+  isPlayer: 0
 --- !u!114 &1512555890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4697,6 +4698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673a686f0e6f5641ad61051d3d77821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNewAvatar: 1
   Shirt_Texture: {fileID: 2800000, guid: d480ad06711274244b8e63a94e166a7d, type: 3}
   Pent_Texture: {fileID: 2800000, guid: 0ae2026b87f87aa409300bc9d84762e3, type: 3}
   Shoe_Texture: {fileID: 2800000, guid: 4360e8497caf645448ddfdb1564fbbff, type: 3}
@@ -5309,6 +5311,7 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 782089714223062366}
     avatar_body: {fileID: 5075101565278757974}
@@ -5316,10 +5319,12 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
     Shoe_Texture: {fileID: 0}
+    Eye_texture: {fileID: 0}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}
   head: {fileID: 0}
+  randomPresetData: []
 --- !u!114 &1512555896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5387,7 +5392,8 @@ MonoBehaviour:
   IsInit: 1
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
-  characterBodyParts: {fileID: 0}
+  characterBodyParts: {fileID: 1512555895}
+  isWearOrNot: 0
   _PCharacterData:
     id: 
     name: 

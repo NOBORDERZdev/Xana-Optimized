@@ -179,6 +179,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
             {
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f), true));
             }
+            XanaConstants.xanaConstants.isNFTEquiped = false;   //Riken Reset NFT Equip for XANA 2.O
             yield return new WaitForSeconds(3f);
             SceneManager.LoadSceneAsync(mainScene);
         }
