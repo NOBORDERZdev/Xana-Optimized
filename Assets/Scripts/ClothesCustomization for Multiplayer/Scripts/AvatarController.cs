@@ -355,7 +355,6 @@ public class AvatarController : MonoBehaviour
                             for (int i = 0; i < 4; i++)
                                 _CharacterData.myItemObj.Add(new Item(0, "", "", "", ""));
                         }
-                        Debug.LogError("Player: " + gameObject.name+"  "+ GameManager.Instance.GetStringFolderPath(), gameObject);
                         _CharacterData.myItemObj[0].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectName;
                         _CharacterData.myItemObj[0].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectType;
 
@@ -1297,21 +1296,18 @@ public class AvatarController : MonoBehaviour
             {
                 string tempKey = GetColorCodeFromNFTKey(_NFTData.Skin);
                 _CharacterData1.Skin = GetColorCode(tempKey);
-                Debug.LogError("SkinColor: " + _CharacterData1.Skin);
             }
 
             if (!string.IsNullOrEmpty(_NFTData.Lips))
             {
                 string tempKey = GetColorCodeFromNFTKey(_NFTData.Lips);
                 _CharacterData1.LipColor = GetColorCode(tempKey);
-                Debug.LogError("LipColor: " + _CharacterData1.LipColor);
             }
 
             if (!string.IsNullOrEmpty(_NFTData.Eyebrows))
             {
                 string tempKey = GetColorCodeFromNFTKey(_NFTData.Eyebrows);
                 _CharacterData1.EyebrowColor = GetColorCode(tempKey);
-                Debug.LogError("Eyebrow Color: " + _CharacterData1.EyebrowColor);
             }
 
             if (!string.IsNullOrEmpty(_NFTData.Hairs))
@@ -1319,7 +1315,6 @@ public class AvatarController : MonoBehaviour
                 string tempKey = GetColorCodeFromNFTKey(_NFTData.Hairs);
                 Debug.Log(tempKey);
                 _CharacterData1.HairColor = GetColorCode(tempKey);
-                Debug.LogError("Hair Color: " + _CharacterData1.HairColor);
             }
         }
 
@@ -1550,16 +1545,14 @@ public class AvatarController : MonoBehaviour
                     if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
                         _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                     else
-                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn)); Debug.LogError("Hair will be black");
+                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                 }
                 if ((_CharacterData != null && _CharacterData.charactertypeAi == true) || !tempBodyParts.isNewAvatar)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));  //hair_color to HairColor Riken
-                    Debug.LogError("Hair will be color");
                 }
                 else
                 {
-                    Debug.LogError("Hair will be black2");
                     StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                 }
             }

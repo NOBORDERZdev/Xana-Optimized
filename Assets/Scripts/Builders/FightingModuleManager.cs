@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class FightingModuleManager : MonoBehaviour
 {
-    public bool isUserHaveAlphaPass;
     public int _NFTIndex;
     public bool goingToFightingModule;
     public AvatarController NFTAvatarController;
@@ -60,7 +59,6 @@ public class FightingModuleManager : MonoBehaviour
     public List<List> fighterNFTlist = new List<List>();
     public void SaveNFTAttributesInFile()
     {
-        Debug.LogError("SaveAttributesInFile: " + _NFTIndex);
         BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
         nftAttributes.isNFTAquiped = true;
         nftAttributes.id = fighterNFTlist[_NFTIndex].attribute.id.ToString();
@@ -92,7 +90,6 @@ public class FightingModuleManager : MonoBehaviour
         nftAttributes.defence = fighterNFTlist[_NFTIndex].attribute.defence;
         nftAttributes.special_move = fighterNFTlist[_NFTIndex].attribute.special_move;
         string attributesJson = JsonUtility.ToJson(nftAttributes);
-        Debug.LogError("NFT Json Data: " + attributesJson);
         File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }
