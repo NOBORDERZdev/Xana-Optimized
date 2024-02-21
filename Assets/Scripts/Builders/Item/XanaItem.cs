@@ -216,14 +216,13 @@ public class XanaItem : MonoBehaviour
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
-        //Ninja component not working fine with new character
-        //NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
-        //if (ninjaComponentData.IsActive)
-        //{
-        //    NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
-        //    itemComponent.Init(ninjaComponentData);
-        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        //}
+        NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
+        if (ninjaComponentData.IsActive)
+        {
+            NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
+            itemComponent.Init(ninjaComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
 
         ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
         if (throwThingsComponentData.IsActive)

@@ -1621,8 +1621,13 @@ public class PlayerControllerNew : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.8f);
             swordModel.transform.SetParent(swordhandHook, false);
             yield return new WaitForSecondsRealtime(0.1f);
-            swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
-            swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+            //swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
+            //swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+
+            swordModel.transform.localPosition = new Vector3(0.0370000005f, 0.0729999989f, 0.0120000001f);
+            Quaternion newRotation = Quaternion.Euler(new Vector3(104.94f, 65.328f, 153.11f));
+            swordModel.transform.localRotation = newRotation;
+
             isMovementAllowed = true;
         }
         if (!isDrawSword)
@@ -1632,9 +1637,12 @@ public class PlayerControllerNew : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-
+            //swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+            //swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            
+            swordModel.transform.localPosition = new Vector3(-0.594f, 0.145f, -0.357f);
+            Quaternion newRotation = Quaternion.Euler(new Vector3(46.51f, 96f, 225.586f));
+            swordModel.transform.localRotation = newRotation;
             isMovementAllowed = true;
         }
     }
@@ -1686,8 +1694,11 @@ public class PlayerControllerNew : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            //swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
+            swordModel.transform.localPosition = new Vector3(-0.594f, 0.145f, -0.357f);
+            //swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            Quaternion newRotation = Quaternion.Euler(new Vector3(46.51f, 96f, 225.586f));
+            swordModel.transform.localRotation = newRotation;
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
@@ -1901,7 +1912,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void Ninja_Throw(bool state, int index = 0)
     {
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
-        swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
+        swordHook = GamificationComponentData.instance.ikMuseum.m_TargetPosition.transform;
         _ballSpawn = swordhandHook;
         if (trajectoryController == null)
             trajectoryController = gameObject.AddComponent<TrajectoryController>();
