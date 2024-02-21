@@ -11,12 +11,8 @@ using UnityEngine.SceneManagement;
 public class FightingModuleManager : MonoBehaviour
 {
     public bool isUserHaveAlphaPass;
-    public bool isEnvLoaded;
-    public string addressableSceneName;
-    public string environmentLabel;
     public int _NFTIndex;
-    public string player1Icon;
-    public string player2Icon;
+    public bool goingToFightingModule;
     public AvatarController NFTAvatarController;
     public static FightingModuleManager Instance;
 
@@ -30,7 +26,11 @@ public class FightingModuleManager : MonoBehaviour
 
     public void OnClickMainMenu()
     {
+        if (!goingToFightingModule)
+        {
+            goingToFightingModule = true;
         StartCoroutine(IEOnClickMainMenu());
+        }
     }
 
     public IEnumerator IEOnClickMainMenu()
@@ -43,7 +43,8 @@ public class FightingModuleManager : MonoBehaviour
         }
         Debug.LogError("UserName: " + UserName);
         Input.multiTouchEnabled = true;
-        yield return new WaitForSeconds(.1f);
+        EqipRandomNFT();
+        yield return new WaitForSeconds(.5f);
         //SceneManager.LoadScene("Demo_Fighter3D - Type 2");
         SceneManager.LoadScene("FightingModuleMenu");
     }

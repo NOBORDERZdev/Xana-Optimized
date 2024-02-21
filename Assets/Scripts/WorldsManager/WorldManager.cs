@@ -632,7 +632,6 @@ public class WorldManager : MonoBehaviour
             if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
             {
                 Debug.Log("Breaking down Arena World");
-                FightingModuleManager.Instance.EqipRandomNFT();
                 fightingModulePopUp.SetActive(true);
                 return;
             }
