@@ -90,6 +90,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal bool isBuilderWorldPlayerSetup;
     public RuntimeAnimatorController idleAnimation;
     internal bool ZoomControl;
+
+    //platformLayers
+    public LayerMask platformLayers;
     private void Awake()
     {
         instance = this;
