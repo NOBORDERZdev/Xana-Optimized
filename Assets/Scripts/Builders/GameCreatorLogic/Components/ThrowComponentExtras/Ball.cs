@@ -6,6 +6,14 @@ public class Ball : MonoBehaviourPun
     [SerializeField] private Rigidbody _rb;
     private bool _isGhost;
 
+    private void OnEnable()
+    {
+        if (photonView.IsMine)
+            return;
+        if (!GamificationComponentData.instance.withMultiplayer)
+            gameObject.SetActive(false);
+    }
+
     public void Init(Vector3 velocity, bool isGhost)
     {
         _isGhost = isGhost;

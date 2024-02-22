@@ -33,7 +33,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             return;
 
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
-        StartCoroutine(SyncingCoroutin());
+        if (GamificationComponentData.instance.withMultiplayer)
+            StartCoroutine(SyncingCoroutin());
     }
 
     private IEnumerator SyncingCoroutin()
@@ -83,8 +84,11 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
     void OnDisable()
     {
-        if (isInitialise)
-            StopAvatarInvisibility();
+        if (GamificationComponentData.instance.withMultiplayer)
+        {
+            if (isInitialise)
+                StopAvatarInvisibility();
+        }
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun.Demo.PunBasics;
 
 public class NinjaSwordSyncing : MonoBehaviourPun
 {
@@ -16,12 +17,16 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         if (photonView.IsMine)
             return;
         if (!GamificationComponentData.instance.withMultiplayer)
+        {
             gameObject.SetActive(false);
+            return;
+        }
+        NinjaSwordInit();
     }
     [PunRPC]
-    void NinjaSwordInit(int pvID)
+    void NinjaSwordInit()
     {
-        this.parentTransfrom = PhotonView.Find(pvID).transform;
+        this.parentTransfrom = FindPlayerusingPhotonView(photonView).transform;
         this.transform.SetParent(parentTransfrom);
         this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.one;
@@ -31,12 +36,12 @@ public class NinjaSwordSyncing : MonoBehaviourPun
     }
 
     [PunRPC]
-    void SwordHolding(bool isDrawSword, int pvID)
+    void SwordHolding(bool isDrawSword)
     {
         this.isDrawSword = isDrawSword;
 
         if (swordhandHook == null || swordHook == null)
-            NinjaSwordInit(pvID);
+            NinjaSwordInit();
 
         StartCoroutine(SwordHolding());
 
@@ -82,5 +87,19 @@ public class NinjaSwordSyncing : MonoBehaviourPun
             anim.CrossFade("NinjaAmimationSlash3", 0.1f);
         else if (attackno == 3)
             anim.CrossFade("Sword And Shield Attack", 0.1f);
+    }
+
+    GameObject FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
+        {
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            {
+                return playerObject;
+            }
+        }
+        return null;
     }
 }
