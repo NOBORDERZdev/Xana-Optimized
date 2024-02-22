@@ -864,6 +864,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         _IsGrounded = characterController.isGrounded;
+
+        CalculateMovingPlatformSpeed();
         if (_IsGrounded)
         {
             canDoubleJump = false;
@@ -978,6 +980,11 @@ public class PlayerControllerNew : MonoBehaviour
 
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
+                //checking moving platform
+                if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                {
+                    characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                }
                 //Debug.Log("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 characterController.Move(desiredMoveDirection * sprintSpeed * Time.deltaTime);
 
@@ -1008,6 +1015,11 @@ public class PlayerControllerNew : MonoBehaviour
                         animator.SetFloat("Blend", walkSpeed, speedSmoothTime, Time.deltaTime); // applying values to animator.
                         animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime); // applying values to animator.
                     }
+                    //checking moving platform
+                    if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                    {
+                        characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                    }
                     characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
 
                     gravityVector.y += gravityValue * Time.deltaTime;
@@ -1023,12 +1035,22 @@ public class PlayerControllerNew : MonoBehaviour
                     }
                     if (!_IsGrounded) // is in jump
                     {
+                        //checking moving platform
+                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        {
+                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                        }
                         characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
                         gravityVector.y += gravityValue * Time.deltaTime;
                         characterController.Move(gravityVector * Time.deltaTime);
                     }
                     else // walk start state
                     {
+                        //checking moving platform
+                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        {
+                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                        }
                         characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
                         gravityVector.y += gravityValue * Time.deltaTime;
                         characterController.Move(gravityVector * Time.deltaTime);
@@ -1040,6 +1062,11 @@ public class PlayerControllerNew : MonoBehaviour
         {
             PlayerIsIdle?.Invoke();
             UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            //checking moving platform
+            if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+            {
+                characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+            }
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
             characterController.Move(gravityVector * Time.deltaTime);
@@ -1621,8 +1648,13 @@ public class PlayerControllerNew : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.8f);
             swordModel.transform.SetParent(swordhandHook, false);
             yield return new WaitForSecondsRealtime(0.1f);
-            swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
-            swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+            //swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
+            //swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+
+            swordModel.transform.localPosition = new Vector3(0.0370000005f, 0.0729999989f, 0.0120000001f);
+            Quaternion newRotation = Quaternion.Euler(new Vector3(104.94f, 65.328f, 153.11f));
+            swordModel.transform.localRotation = newRotation;
+
             isMovementAllowed = true;
         }
         if (!isDrawSword)
@@ -1634,7 +1666,6 @@ public class PlayerControllerNew : MonoBehaviour
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-
             isMovementAllowed = true;
         }
     }
@@ -1901,7 +1932,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void Ninja_Throw(bool state, int index = 0)
     {
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
-        swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
+        swordHook = GamificationComponentData.instance.charcterBodyParts.pelvisBoneNewCharacter.transform;
         _ballSpawn = swordhandHook;
         if (trajectoryController == null)
             trajectoryController = gameObject.AddComponent<TrajectoryController>();
@@ -1935,5 +1966,52 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else
             ThrowMotion();
+    }
+
+
+    private Transform movingPlatform;
+    private Vector3 rayOffset = new Vector3(0f, .02f, 0f);
+    private float rayDistance = .3f;
+    private Vector3 lastMovePlatformPosition;
+    private Vector3 movedPosition;
+    internal bool isOnMovingPlatform;
+    private void CalculateMovingPlatformSpeed()
+    {
+        if (!XanaConstants.xanaConstants.isBuilderScene)
+            return;
+
+        if (!characterController.isGrounded)
+        {
+            if (movingPlatform != null)
+            {
+                movingPlatform = null;
+                movedPosition = lastMovePlatformPosition = Vector3.zero;
+            }
+            return;
+        }
+
+
+        RaycastHit hitData;
+        isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
+
+        //Debug.DrawRay(transform.position + rayOffset, -transform.up * rayDistance, (hitData.collider != null) ? Color.red : Color.green);
+
+        if (!isOnMovingPlatform)
+        {
+            movingPlatform = null;
+            movedPosition = lastMovePlatformPosition = Vector3.zero;
+            return;
+        }
+
+        if (movingPlatform == null || hitData.transform.GetInstanceID() != movingPlatform.GetInstanceID())
+        {
+            //  Debug.LogFormat("Moving TransformComponent: {0}, {1}", translateVar, translateVar.gameObject.name);
+            if (hitData.transform.GetComponentInParent<TranslateComponent>() == null && hitData.transform.GetComponentInParent<TransformComponent>() == null) return;
+            movingPlatform = hitData.transform;
+            lastMovePlatformPosition = movingPlatform.position;
+        }
+
+        movedPosition = movingPlatform.position - lastMovePlatformPosition;
+        lastMovePlatformPosition = movingPlatform.position;
     }
 }
