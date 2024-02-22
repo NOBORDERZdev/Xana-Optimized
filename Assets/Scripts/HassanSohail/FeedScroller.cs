@@ -74,8 +74,8 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     {
         if (preloadCells)
         {
-            scroller.lookAheadBefore = 3000f;
-            scroller.lookAheadAfter = 3000f;
+            scroller.lookAheadBefore = 2000f;
+            scroller.lookAheadAfter = 2000f;
         }
     }
     public void IntFeedScroller(){
