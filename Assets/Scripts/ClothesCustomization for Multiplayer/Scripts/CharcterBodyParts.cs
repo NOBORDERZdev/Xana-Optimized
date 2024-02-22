@@ -100,6 +100,10 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     public RandomPreset[] randomPresetData;
+
+    [Header("New Character PelvisBone")]
+    public GameObject pelvisBoneNewCharacter;
+
     private void Awake()
     {
         instance = this;
