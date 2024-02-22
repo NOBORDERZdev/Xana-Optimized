@@ -59,8 +59,8 @@ public class PostScreenInput : MonoBehaviour
                 if (ShowText.text == "Enter the text")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                    bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+                    bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
                 }
             }
             else
@@ -68,8 +68,8 @@ public class PostScreenInput : MonoBehaviour
                 if (ShowText.text == "テキストを入力してください")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                    bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+                    bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
                 }
             }
            
@@ -88,8 +88,8 @@ public class PostScreenInput : MonoBehaviour
         }
         if (ShowText.text.Count() <= 10)
         {
-            bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-            bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+            bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+            bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
         }
         if (ShowText.text.Count() >= 70)
         {
@@ -131,8 +131,8 @@ public class PostScreenInput : MonoBehaviour
         ShowText.text = placeHolderText;
         ShowText.color = placeHolderColor;
         BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+        bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
 
     }
     //private string FormatInput(string input)
