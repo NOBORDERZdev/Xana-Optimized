@@ -30,6 +30,13 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     /// </summary>
     public EnhancedScroller scroller;
 
+    // <summary>
+    /// If true, this will load cells before they are visible,
+    /// buffering the data if you have a lookAhead value high enough
+    /// to meet the download times
+    /// </summary>
+    bool preloadCells=true;
+
     /// <summary>
     /// This will be the prefab of each cell in our scroller. Note that you can use more
     /// than one kind of cell, but this example just has the one type.
@@ -61,7 +68,16 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     /// In this example, we are calling our initializations in the delegate's Start function,
     /// but it could have been done later, perhaps in the Update function.
     /// </summary>
- 
+
+
+    private void Awake()
+    {
+        if (preloadCells)
+        {
+            scroller.lookAheadBefore = 2000f;
+            scroller.lookAheadAfter = 2000f;
+        }
+    }
     public void IntFeedScroller(){
        // set the application frame rate.
        // this improves smoothness on some devices
@@ -74,6 +90,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
         scroller.scrollerScrolled = ScrollerScrolled;
         _data = new SmallList<FeedResponseRow>();
         feedHeight = new List<FeedHeightData>();
+       
         // load in a large set of data
         //LoadLargeData();
      }
