@@ -2134,6 +2134,14 @@ public class APIManager : MonoBehaviour
                     //Debug.Log("Username already exists");
                     MyProfileDataManager.Instance.ShowEditProfileNameErrorMessage("Username already exists");
                 }
+                else
+                {
+                    //if (XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("DefaultUserProfile"))
+                    {
+                        if (!XanaConstants.xanaConstants.profileImageModifedByUser)
+                            ProfilePictureManager.instance.MakeProfilePicture(setName_name);
+                    }
+                }
             }
         }
     }
