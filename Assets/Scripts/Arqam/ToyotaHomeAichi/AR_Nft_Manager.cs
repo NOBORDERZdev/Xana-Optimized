@@ -107,7 +107,7 @@ namespace Toyota
 
         private void Start()
         {
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
             {
                 //if (PMY_RoomIdFromXanaConstant)
                 //    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Main;
