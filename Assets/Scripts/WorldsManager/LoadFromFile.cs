@@ -454,7 +454,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
-            if (WorldItemView.m_EnvName.Contains("ToyotaHome"))
+            if (WorldItemView.m_EnvName.Contains("D +  Infinity Labo"))
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
