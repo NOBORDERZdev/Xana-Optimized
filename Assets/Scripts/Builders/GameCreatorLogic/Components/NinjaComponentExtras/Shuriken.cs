@@ -1,14 +1,38 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using UnityEngine;
 
 public class Shuriken : MonoBehaviourPun
 {
+    Player player;
+
     private void OnEnable()
     {
+        player = FindPlayerusingPhotonView(photonView);
         if (photonView.IsMine)
             return;
         if (!GamificationComponentData.instance.withMultiplayer)
+        {
             gameObject.SetActive(false);
+            return;
+        }
+
+        
+    }
+
+    Player FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
+        {
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            {
+                return _photonView.Owner;
+            }
+        }
+        return null;
     }
 
     private void OnTriggerEnter(Collider _other)
@@ -23,7 +47,10 @@ public class Shuriken : MonoBehaviourPun
     [PunRPC]
     void AddForce(Vector3 force)
     {
-        GetComponent<Rigidbody>().AddForce(force);
-        Destroy(gameObject, 10f);
+        if (player == photonView.Owner)
+        {
+            GetComponent<Rigidbody>().AddForce(force);
+            Destroy(gameObject, 10f);
+        }
     }
 }

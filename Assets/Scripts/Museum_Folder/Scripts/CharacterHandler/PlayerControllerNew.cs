@@ -1776,6 +1776,7 @@ public class PlayerControllerNew : MonoBehaviour
     public float raycastDistance = 100f;
     private Coroutine throwMainCo;
     public bool isThrowModeActive = false;
+    ThrowThingsTrejectorySyncing trejectoryMultiplayer;
 
     public void ThrowMotion()
     {
@@ -1817,6 +1818,8 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = true;
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
+
+                    trejectoryMultiplayer.photonView.RPC("Init", target: RpcTarget.Others, true, _ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
                     if (animator.GetBool("standJump"))
                         animator.SetBool("standJump", false);
@@ -1826,6 +1829,7 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = false;
                     trajectoryController.colliderAim.SetActive(false);
                     handBall.SetActive(false);
+                    trejectoryMultiplayer.photonView.RPC("Init", target: RpcTarget.Others, false, _ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     if (!isBallThrow)
                         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
                 }
@@ -1954,6 +1958,11 @@ public class PlayerControllerNew : MonoBehaviour
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
         swordHook = GamificationComponentData.instance.charcterBodyParts.pelvisBoneNewCharacter.transform;
         _ballSpawn = swordhandHook;
+
+        if (trejectoryMultiplayer == null)
+            trejectoryMultiplayer = PhotonNetwork.Instantiate("ThowTrejectory", Vector3.zero, Quaternion.identity).GetComponent<ThrowThingsTrejectorySyncing>();
+
+        //Throw Things component
         if (trajectoryController == null)
             trajectoryController = gameObject.AddComponent<TrajectoryController>();
         trajectoryController.resolution = 300;

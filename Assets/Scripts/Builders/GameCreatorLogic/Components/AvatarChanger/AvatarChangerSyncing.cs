@@ -31,9 +31,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     bool isInitialise = false;
     MeshRenderer[] meshRenderers;
     SkinnedMeshRenderer[] skinnedMeshes;
-    [PunRPC]
-    void Init(int pvID, int avatarIndex, string RuntimeItemID)
-    { }
+
     private void OnEnable()
     {
         if (photonView.IsMine)
