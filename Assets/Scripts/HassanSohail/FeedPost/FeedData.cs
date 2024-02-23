@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class FeedData : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class FeedData : MonoBehaviour
             isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
-                Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
+                Invoke(nameof(HieghtListUpdateWithDelay),0.08f);
             }
         }
     }
@@ -179,7 +180,11 @@ public class FeedData : MonoBehaviour
 
     void HieghtListUpdateWithDelay(){ 
        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
-       gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width , rectTemp.rect.height );
+
+       gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true) ;
+       //gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
     public string CalculateTimeDifference(DateTime postTime)
@@ -224,7 +229,7 @@ public class FeedData : MonoBehaviour
    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
-        yield return new WaitForSeconds(timeUpdateInterval);
+        yield return new WaitForSecondsRealtime(timeUpdateInterval);
         Date.text = CalculateTimeDifference(postTime).ToString();
     }
     IEnumerator GetProfileImage(string url)
