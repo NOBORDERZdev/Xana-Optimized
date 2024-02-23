@@ -413,7 +413,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.userProfile.bio))
                     _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
-                _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
+                //_event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
                 if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
                 {
@@ -432,6 +432,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
                         _event.Creator_Name = _WorldInfo.data.rows[i].creator;
 
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.avatar))
+                        _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
