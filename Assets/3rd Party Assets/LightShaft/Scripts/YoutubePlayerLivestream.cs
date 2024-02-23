@@ -13,6 +13,8 @@ using YoutubeLight;
 
 public class YoutubePlayerLivestream : MonoBehaviour
 {
+    public enum EnvType { JJWorld, Other }
+    public EnvType envType;
 
     public string _livestreamUrl;
 
@@ -193,7 +195,11 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if(string.IsNullOrEmpty(player_response))
         {
             Debug.Log("<color=red> Player Json is Null .</color>");
-            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+
+            if (envType.Equals(EnvType.JJWorld))
+                JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            else if (envType.Equals(EnvType.Other))
+                Toyota.AR_Nft_Manager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
         {
