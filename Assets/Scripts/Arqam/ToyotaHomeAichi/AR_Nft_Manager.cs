@@ -33,7 +33,7 @@ namespace Toyota
         [SerializeField] GameObject LandscapeObj;
         [SerializeField] GameObject PotraiteObj;
 
-        public static AR_Nft_Manager Instance { get; private set; }
+        //public static AR_Nft_Manager Instance { get; private set; }
         public RenderTexture renderTexture_16x9;
         public RenderTexture renderTexture_9x16;
         public RenderTexture renderTexture_1x1;
@@ -81,17 +81,17 @@ namespace Toyota
         [NonReorderable]
         public List<GameObject> NftPlaceholder;
 
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
-        }
+        //private void Awake()
+        //{
+        //    if (Instance != null && Instance != this)
+        //    {
+        //        Destroy(this);
+        //    }
+        //    else
+        //    {
+        //        Instance = this;
+        //    }
+        //}
 
         private void OnEnable()
         {

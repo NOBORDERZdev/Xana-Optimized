@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 namespace Toyota
 {
@@ -59,6 +60,8 @@ namespace Toyota
         [Space(5)]
         public UnityEvent nftStartAction;
 
+        [SerializeField] AR_Nft_Manager nftMAnager;
+
         private void Start()
         {
             imgVideo16x9.AddComponent<Button>();
@@ -73,7 +76,7 @@ namespace Toyota
             imgVideo4x3.AddComponent<Button>();
             imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-            if (AR_Nft_Manager.Instance.PMY_RoomIdFromXanaConstant)
+            if (nftMAnager.PMY_RoomIdFromXanaConstant)
                 StartCoroutine(UpdateRoomType()); 
         }
 
@@ -81,7 +84,7 @@ namespace Toyota
         {
             yield return new WaitForSeconds(1f);
 
-            switch (AR_Nft_Manager.Instance.PMY_RoomId)
+            switch (nftMAnager.PMY_RoomId)
             {
                 case 8:
                     roomType = RoomType.RoomA_1;
@@ -170,8 +173,8 @@ namespace Toyota
         {
             StartCoroutine(GetSprite(_imageLink, (response) =>
             {
-                if (AR_Nft_Manager.Instance && response != null)
-                    AR_Nft_Manager.Instance.NFTLoadedSprites.Add(response);
+                if (nftMAnager && response != null)
+                    nftMAnager.NFTLoadedSprites.Add(response);
 
                 if (ApplyImageOnTexture && imageMesh != null)
                 {
@@ -343,7 +346,7 @@ namespace Toyota
 
             if (_videoType == PMY_VideoTypeRes.islive && liveVideoPlayer)
             {
-                AR_Nft_Manager.Instance.videoRenderObject = liveVideoPlayer;
+                nftMAnager.videoRenderObject = liveVideoPlayer;
                 if (liveVideoPlayer)
                     liveVideoPlayer.SetActive(true);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
@@ -352,8 +355,8 @@ namespace Toyota
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
-                RenderTexture renderTexture = new RenderTexture(AR_Nft_Manager.Instance.renderTexture_16x9);
-                AR_Nft_Manager.Instance.videoRenderObject = imgVideo16x9;
+                RenderTexture renderTexture = new RenderTexture(nftMAnager.renderTexture_16x9);
+                nftMAnager.videoRenderObject = imgVideo16x9;
                 renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                 imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
@@ -394,8 +397,8 @@ namespace Toyota
                 SetThumbail(imageLink);
             }
 
-            if (AR_Nft_Manager.Instance && renderTexture_temp != null)
-                AR_Nft_Manager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
+            if (nftMAnager && renderTexture_temp != null)
+                nftMAnager.NFTLoadedVideos.Add(renderTexture_temp);
 
             if (isCreateFrame)
                 CreateFrame();   //create frame
@@ -419,17 +422,17 @@ namespace Toyota
             if (PlayerControllerNew.isJoystickDragging == true)
                 return;
 
-            if (AR_Nft_Manager.Instance != null && _videoType != PMY_VideoTypeRes.islive)
+            if (nftMAnager != null && _videoType != PMY_VideoTypeRes.islive)
             {
                 if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
                 {
-                    AR_Nft_Manager.Instance.SetInfo(_imgVideoRatio, AR_Nft_Manager.Instance.worldInfos[id].Title[0], AR_Nft_Manager.Instance.worldInfos[id].Aurthor[0], AR_Nft_Manager.Instance.worldInfos[id].Des[0], AR_Nft_Manager.Instance.worldInfos[id].url, _texture, AR_Nft_Manager.Instance.worldInfos[id].Type, AR_Nft_Manager.Instance.worldInfos[id].VideoLink, AR_Nft_Manager.Instance.worldInfos[id].videoType,
-                        AR_Nft_Manager.Instance.worldInfos[id].pdfURL, AR_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType);
+                    nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[0], nftMAnager.worldInfos[id].Aurthor[0], nftMAnager.worldInfos[id].Des[0], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
+                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType);
                 }
                 else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
                 {
-                    AR_Nft_Manager.Instance.SetInfo(_imgVideoRatio, AR_Nft_Manager.Instance.worldInfos[id].Title[1], AR_Nft_Manager.Instance.worldInfos[id].Aurthor[1], AR_Nft_Manager.Instance.worldInfos[id].Des[1], AR_Nft_Manager.Instance.worldInfos[id].url, _texture, AR_Nft_Manager.Instance.worldInfos[id].Type, AR_Nft_Manager.Instance.worldInfos[id].VideoLink, AR_Nft_Manager.Instance.worldInfos[id].videoType,
-                        AR_Nft_Manager.Instance.worldInfos[id].pdfURL, AR_Nft_Manager.Instance.worldInfos[id].quiz_data, id, roomType);
+                    nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[1], nftMAnager.worldInfos[id].Aurthor[1], nftMAnager.worldInfos[id].Des[1], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
+                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType);
 
                 }
             }
