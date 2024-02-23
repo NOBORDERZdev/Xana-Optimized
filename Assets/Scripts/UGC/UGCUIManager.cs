@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.XR.ARFoundation;
 
 public class UGCUIManager : MonoBehaviour
 {
@@ -26,23 +27,20 @@ public class UGCUIManager : MonoBehaviour
     public Camera characterRenderCamera;
     public List<GameObject> screenUI = new List<GameObject>();
     public GameObject videoImageResultScreen;
+    public GameObject savePopup;
     public GameObject recordScreen;
     public GameObject photoScreen;
     public GameObject videoPlayScreen;
     public GameObject loadingScreen;
     public Image recordButton;
     public Image photoButton;
+
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
 
     void Start()
     {
         DisableLoadingPanel();
-    }
-
-    void Update()
-    {
-
     }
 
     public void DisableLoadingPanel()
@@ -273,8 +271,13 @@ public class UGCUIManager : MonoBehaviour
             Debug.LogError("file.Name: " + file.Name + " :Full:" + file.FullName);
             NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", "") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
         }
+        savePopup.SetActive(true);
     }
 
+    public void OnSavePopUpOkButton()
+    {
+        savePopup.SetActive(false);
+    }
     public void OnTapShareButton()
     {
         Debug.LogError("OnTapShareButton called");
