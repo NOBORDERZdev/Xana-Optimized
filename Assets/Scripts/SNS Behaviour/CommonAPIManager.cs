@@ -142,7 +142,7 @@ public class CommonAPIManager : MonoBehaviour
             {
                 //Debug.Log("Get UnReadMessagesCount Success!");
                 string data = www.downloadHandler.text;
-                Debug.Log("<color=red> Get UnReadMessagesCount Success! data:" + data +"<color>");
+                Debug.Log("<color=red> Get UnReadMessagesCount Success! data:" + data +"</color>");
                 MessageUnreadCountRoot myDeserializedClass = JsonConvert.DeserializeObject<MessageUnreadCountRoot>(data);
 
                 SetUpBottomUnReadCount(myDeserializedClass.data);
