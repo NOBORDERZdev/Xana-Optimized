@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using RenderHeads.Media.AVProVideo;
 
 namespace Toyota
 {
@@ -60,7 +61,7 @@ namespace Toyota
         public UnityEvent nftStartAction;
         public UnityEvent<int> enableFrame;
 
-        [SerializeField] AR_Nft_Manager nftMAnager;
+        public AR_Nft_Manager nftMAnager;
 
         private void Start()
         {
@@ -356,10 +357,18 @@ namespace Toyota
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+
+                SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
                 RenderTexture renderTexture = new RenderTexture(nftMAnager.renderTexture_16x9);
+
+                SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+
                 nftMAnager.videoRenderObject = imgVideo16x9;
                 renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
