@@ -376,18 +376,18 @@ public class AvatarController : MonoBehaviour
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
-            SetAvatarClothDefault(gameObject, _CharacterData.gender);
-            if (_CharacterData.gender == AvatarGender.Female.ToString())
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Female);
-            }
-            else
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Male);
-            }
+            
 
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
+                if (_CharacterData.gender.Equals(AvatarGender.Female.ToString()))
+                {
+                    characterBodyParts.SetAvatarByGender(AvatarGender.Female);
+                }
+                else
+                {
+                    characterBodyParts.SetAvatarByGender(AvatarGender.Male);
+                }
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
                     int _rand = Random.Range(0, 13);
@@ -619,6 +619,14 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
+                    if (_CharacterData.gender.Equals(AvatarGender.Female.ToString()))
+                    {
+                        characterBodyParts.SetAvatarByGender(AvatarGender.Female);
+                    }
+                    else
+                    {
+                        characterBodyParts.SetAvatarByGender(AvatarGender.Male);
+                    }
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
