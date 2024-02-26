@@ -23,7 +23,8 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        StartCoroutine(SyncingCoroutin());
+        if (GamificationComponentData.instance.withMultiplayer)
+            StartCoroutine(SyncingCoroutin());
     }
 
     private IEnumerator SyncingCoroutin()
@@ -66,8 +67,11 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     {
         if (photonView.IsMine)
             return;
-        if (isInitialise)
-            AvatarFootPrintVisible(true);
+        if (GamificationComponentData.instance.withMultiplayer)
+        {
+            if (isInitialise)
+                AvatarFootPrintVisible(true);
+        }
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)

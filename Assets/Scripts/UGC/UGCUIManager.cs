@@ -8,43 +8,57 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.XR.ARFoundation;
 
 public class UGCUIManager : MonoBehaviour
 {
     public bool isPressed;
     public bool isPhoto;
     public bool isVideo;
+    public string snapSavePath;
     public float VideoRecordTimer;
     public float holdTime;
     public bool isRecording;
     public float holdTimeForPhoto;
 
+    public AvatarController UGCCharacter;
     public VideoPlayer videoPlayer;
     public RenderTexture characterRT;
     public Camera characterRenderCamera;
     public List<GameObject> screenUI = new List<GameObject>();
     public GameObject videoImageResultScreen;
+    public GameObject savePopup;
     public GameObject recordScreen;
     public GameObject photoScreen;
     public GameObject videoPlayScreen;
     public GameObject loadingScreen;
     public Image recordButton;
     public Image photoButton;
+
+    public Renderer BG;
+    public Texture texture;
+
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
 
     void Start()
     {
-        Invoke(nameof(DisableLoadingPanel), 1.5f);
-    }
-
-    void Update()
-    {
-        
+        DisableLoadingPanel();
+        BGMat = new Material(BG.material);
     }
 
     public void DisableLoadingPanel()
     {
+        StartCoroutine(IEHandleLoadingPanel());
+    }
+    public IEnumerator IEHandleLoadingPanel()
+    {
+        loadingScreen.SetActive(true);
+        while (!UGCCharacter.isClothLoaded)
+        {
+            yield return new WaitForSeconds(.5f);
+        }
+        yield return new WaitForSeconds(1f);
         loadingScreen.SetActive(false);
     }
     public IEnumerator IEVideoButtonDown()
@@ -94,12 +108,14 @@ public class UGCUIManager : MonoBehaviour
             }
         }
     }
+
+    #region TakeSnap
+
     private Camera newCam;
     private Texture2D screenshot;
     private RenderTexture screenshotRT;
     public void TakeAPhoto()
     {
-        Debug.LogError("TakePhoto");
         isPhoto = true;
         isVideo = false;
         GameObject g = new GameObject();
@@ -138,6 +154,15 @@ public class UGCUIManager : MonoBehaviour
         newCam.targetTexture = null;
         Sprite captureSp = Sprite.Create(screenshot, new Rect(0, 0, screenshot.width, screenshot.height), new Vector2(0, 0), 100f, 0, SpriteMeshType.FullRect);
         photoScreen.GetComponent<Image>().sprite = captureSp;
+        byte[] bytes = screenshot.EncodeToPNG();
+
+        if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "UGCSnap")))
+        {
+            Directory.CreateDirectory(Path.Combine(Application.persistentDataPath, "UGCSnap"));
+        }
+
+        snapSavePath = Path.Combine(Application.persistentDataPath + "/UGCSnap", "Image" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png");
+        File.WriteAllBytes(snapSavePath, bytes);
         Destroy(newCam);
         recordScreen.SetActive(false);
         photoScreen.SetActive(true);
@@ -145,6 +170,10 @@ public class UGCUIManager : MonoBehaviour
         videoImageResultScreen.SetActive(true);
         ActiveUI(true);
     }
+    #endregion
+
+
+    #region VideoRecording
 
     public void StartRecording()
     {
@@ -152,7 +181,6 @@ public class UGCUIManager : MonoBehaviour
         photoButton.gameObject.SetActive(false);
         videoRecordingTimerText.gameObject.SetActive(true);
         isRecording = true;
-        Debug.LogError("StartRecording");
         recordtimerCoroutine = StartCoroutine(IEStartVideoTimer());
         ugcRecordVideoBehaviour.StartRecording();
     }
@@ -164,7 +192,6 @@ public class UGCUIManager : MonoBehaviour
         isVideo = true;
         recordButton.gameObject.SetActive(false);
         photoButton.gameObject.SetActive(true);
-        Debug.LogError("StopRecording");
         ugcRecordVideoBehaviour.StopRecording();
         StartCoroutine(PlayRecordedVideo());
         StopCoroutine(recordtimerCoroutine);
@@ -188,6 +215,8 @@ public class UGCUIManager : MonoBehaviour
         }
         recordtimerCoroutine = null;
     }
+    #endregion
+
     public void BackToRecordScreen()
     {
         videoRecordingTimerText.gameObject.SetActive(false);
@@ -226,17 +255,51 @@ public class UGCUIManager : MonoBehaviour
         videoPlayer.Play();
     }
 
+    public void OnTapOnARButton()
+    {
+
+    }
+
+    public void OnTapBackGroundButton()
+    {
+        ChangeBG();
+    }
+    Material BGMat;
+    public  void ChangeBG()
+    {
+        BGMat.mainTexture = texture;
+        BG.material = BGMat;
+    }
     public void OnTapSaveButton()
     {
         if (isPhoto)
         {
-            NativeGallery.SaveImageToGallery(screenshot, "Xana", "Image.png");
+            NativeGallery.SaveImageToGallery(screenshot, "Xana", "Image" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png");
         }
         if (isVideo)
         {
             FileInfo file = new FileInfo(ugcRecordVideoBehaviour.videoRecordingPath);
-            Debug.LogError("file.Name: " + file.Name + " :Full:" + file.FullName);
-            NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", ""));
+            NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", "") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
+        }
+        savePopup.SetActive(true);
+    }
+
+    public void OnSavePopUpOkButton()
+    {
+        savePopup.SetActive(false);
+    }
+    public void OnTapShareButton()
+    {
+        if (isPhoto)
+        {
+            NativeShare SharePost = new NativeShare();
+            SharePost.AddFile(snapSavePath).Share();
+        }
+        if (isVideo)
+        {
+            NativeShare shareVideo = new NativeShare();
+            shareVideo.AddFile(ugcRecordVideoBehaviour.videoRecordingPath).Share();
+
         }
     }
 }
