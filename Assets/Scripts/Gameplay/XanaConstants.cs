@@ -23,6 +23,8 @@ public class XanaConstants : MonoBehaviour
     public int minimap;
     public int userName;
     public string userId;
+    public bool profileImageModifedByUser = false;
+    public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;
