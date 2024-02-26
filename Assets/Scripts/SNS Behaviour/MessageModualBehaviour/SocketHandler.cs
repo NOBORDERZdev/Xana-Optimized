@@ -40,7 +40,7 @@ public class SocketHandler : MonoBehaviour
         {
             address = address + "/";
         }
-        Debug.Log("<color = red> Socket Handler Address:" + address + "</color>");
+        Debug.Log("<color=red> Socket Handler Address:" + address + "</color>");
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);

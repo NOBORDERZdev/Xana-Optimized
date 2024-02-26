@@ -2136,7 +2136,7 @@ public class APIManager : MonoBehaviour
                 }
                 else
                 {
-                    //if (XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("DefaultUserProfile"))
+                    if (XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("userProfile"))
                     {
                         if (!XanaConstants.xanaConstants.profileImageModifedByUser)
                             ProfilePictureManager.instance.MakeProfilePicture(setName_name);

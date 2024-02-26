@@ -97,9 +97,12 @@ public class ProfilePictureManager : MonoBehaviour
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-
             AWSHandler.Instance.PostObjectMethodAvatar(fileData, "DefaultUserProfile", UploadProfile);
+            
+            Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
+            if (MyProfileDataManager.Instance)
+                MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
         }
     }
     public UploadFileRoot uploadFileRoot=new UploadFileRoot();
@@ -134,7 +137,7 @@ public class ProfilePictureManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Form upload complete!");
+                Debug.Log("Uploading complete!");
                 string data = www.downloadHandler.text;
                 //Debug.Log("UpdateUserAvatar data:" + data);
             }
