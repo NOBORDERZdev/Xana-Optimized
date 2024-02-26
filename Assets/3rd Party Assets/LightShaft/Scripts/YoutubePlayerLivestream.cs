@@ -43,7 +43,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
 #endif
 
         if (envType.Equals(EnvType.Other))
-            nftMAnager = GetComponentInParent<Toyota.AR_Nft_Manager>();
+            nftMAnager = GetComponentInParent<Toyota.AR_VideoAndImage>().nftMAnager;
     }
 
 
