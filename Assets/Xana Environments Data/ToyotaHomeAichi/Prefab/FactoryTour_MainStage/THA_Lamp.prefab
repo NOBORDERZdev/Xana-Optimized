@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7159820791748528848}
   - component: {fileID: 2668053725539351969}
+  - component: {fileID: 1604396263240748915}
   m_Layer: 0
   m_Name: THA_Lamp
   m_TagString: Untagged
@@ -192,7 +193,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7500494215740182634}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -18.269531, y: 0.8720579, z: -17.388966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -225,3 +226,17 @@ LODGroup:
     renderers:
     - renderer: {fileID: 433529045481481118}
   m_Enabled: 1
+--- !u!114 &1604396263240748915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7500494215740182634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: THA_Lamp
+  objectPriority: 0
