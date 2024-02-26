@@ -35,12 +35,16 @@ public class UGCUIManager : MonoBehaviour
     public Image recordButton;
     public Image photoButton;
 
+    public Renderer BG;
+    public Texture texture;
+
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
 
     void Start()
     {
         DisableLoadingPanel();
+        BGMat = new Material(BG.material);
     }
 
     public void DisableLoadingPanel()
@@ -112,7 +116,6 @@ public class UGCUIManager : MonoBehaviour
     private RenderTexture screenshotRT;
     public void TakeAPhoto()
     {
-        Debug.LogError("TakePhoto");
         isPhoto = true;
         isVideo = false;
         GameObject g = new GameObject();
@@ -178,7 +181,6 @@ public class UGCUIManager : MonoBehaviour
         photoButton.gameObject.SetActive(false);
         videoRecordingTimerText.gameObject.SetActive(true);
         isRecording = true;
-        Debug.LogError("StartRecording");
         recordtimerCoroutine = StartCoroutine(IEStartVideoTimer());
         ugcRecordVideoBehaviour.StartRecording();
     }
@@ -190,7 +192,6 @@ public class UGCUIManager : MonoBehaviour
         isVideo = true;
         recordButton.gameObject.SetActive(false);
         photoButton.gameObject.SetActive(true);
-        Debug.LogError("StopRecording");
         ugcRecordVideoBehaviour.StopRecording();
         StartCoroutine(PlayRecordedVideo());
         StopCoroutine(recordtimerCoroutine);
@@ -259,6 +260,16 @@ public class UGCUIManager : MonoBehaviour
 
     }
 
+    public void OnTapBackGroundButton()
+    {
+        ChangeBG();
+    }
+    Material BGMat;
+    public  void ChangeBG()
+    {
+        BGMat.mainTexture = texture;
+        BG.material = BGMat;
+    }
     public void OnTapSaveButton()
     {
         if (isPhoto)
@@ -268,7 +279,6 @@ public class UGCUIManager : MonoBehaviour
         if (isVideo)
         {
             FileInfo file = new FileInfo(ugcRecordVideoBehaviour.videoRecordingPath);
-            Debug.LogError("file.Name: " + file.Name + " :Full:" + file.FullName);
             NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", "") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
         }
         savePopup.SetActive(true);
@@ -280,16 +290,13 @@ public class UGCUIManager : MonoBehaviour
     }
     public void OnTapShareButton()
     {
-        Debug.LogError("OnTapShareButton called");
         if (isPhoto)
         {
-            Debug.LogError("OnTapShareButton isPhoto");
             NativeShare SharePost = new NativeShare();
             SharePost.AddFile(snapSavePath).Share();
         }
         if (isVideo)
         {
-            Debug.LogError("OnTapShareButton isVideo");
             NativeShare shareVideo = new NativeShare();
             shareVideo.AddFile(ugcRecordVideoBehaviour.videoRecordingPath).Share();
 
