@@ -396,12 +396,32 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
-        EmptySearchPanel();
-        noFeedSerach. gameObject.SetActive(false);
-        noFeedsScreen.gameObject.SetActive(false);
-        FeedLoader.gameObject.SetActive(false);
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-    }
+        if (SerchBarObj.activeInHierarchy) // serach is active 
+        {
+            SerchBarObj.SetActive(false);
+            SerachPanel.SetActive(false);
+            SearchContentPanel.SetActive(false);
+            EmptySearchPanel();
+            searchInputField.Text = "";
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
+            if (!isFeedInitialized)
+            {
+                Invoke(nameof(IntFeedPage), 0.01f);
+            }
+            else
+            {
+                PullNewPlayerPost();
+            }
+        }
+        else
+        {
+            EmptySearchPanel();
+            noFeedSerach.gameObject.SetActive(false);
+            noFeedsScreen.gameObject.SetActive(false);
+            FeedLoader.gameObject.SetActive(false);
+            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+        }
+     }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;

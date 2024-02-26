@@ -2672,7 +2672,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 184705086, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -8.884888
+      value: -8.884766
       objectReference: {fileID: 0}
     - target: {fileID: 213445105, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: FooterTabs
@@ -18023,7 +18023,7 @@ MonoBehaviour:
   presetValue: 
   avatarGender: 0
   masks: []
-  IsInit: 1
+  IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 0}
@@ -25896,7 +25896,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -30246,6 +30246,10 @@ PrefabInstance:
       propertyPath: NameTagHolderObj
       value: 
       objectReference: {fileID: 2302478909030753249}
+    - target: {fileID: 1671144888, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: IsInit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1671144889, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: YarnKnitLight
       value: 
@@ -31301,6 +31305,10 @@ PrefabInstance:
     - target: {fileID: 1566953196363358407, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: m_Name
       value: Xana_4.0_Final_2_12_2024
+      objectReference: {fileID: 0}
+    - target: {fileID: 1566953196363358407, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2230758519027989117, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: m_RootOrder
@@ -39539,10 +39547,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6527359761169222394}
+    - target: {fileID: 2589320107453626337, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -102.6001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107453626337, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -205.90002
+      objectReference: {fileID: 0}
     - target: {fileID: 2589320107572817803, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1594758011}
+    - target: {fileID: 2589320108043099681, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -127.6001
+      objectReference: {fileID: 0}
     - target: {fileID: 2589320108043099686, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -81879,6 +81899,10 @@ PrefabInstance:
     - target: {fileID: 869666959, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 869666960, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1825815851, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: InputFlag
