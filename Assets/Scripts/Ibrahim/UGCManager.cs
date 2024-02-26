@@ -213,7 +213,8 @@ public class UGCManager : MonoBehaviour
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                     CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
-                    Swipe_menu.instance.OnClickNext();
+                    //Swipe_menu.instance.OnClickNext();
+                    CharacSelectScroll.instance.OnClickNext();
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
                     // release memory after result successfull
