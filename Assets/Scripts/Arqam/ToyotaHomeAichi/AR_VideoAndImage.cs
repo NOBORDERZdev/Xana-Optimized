@@ -4,7 +4,6 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.VFX;
 
 namespace Toyota
 {
@@ -59,6 +58,7 @@ namespace Toyota
         public RoomType roomType;
         [Space(5)]
         public UnityEvent nftStartAction;
+        public UnityEvent<int> enableFrame;
 
         [SerializeField] AR_Nft_Manager nftMAnager;
 
@@ -76,24 +76,24 @@ namespace Toyota
             imgVideo4x3.AddComponent<Button>();
             imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-            if (nftMAnager.PMY_RoomIdFromXanaConstant)
-                StartCoroutine(UpdateRoomType()); 
+            //if (nftMAnager.PMY_RoomIdFromXanaConstant)
+            //    StartCoroutine(UpdateRoomType()); 
         }
 
-        IEnumerator UpdateRoomType()
-        {
-            yield return new WaitForSeconds(1f);
+        //IEnumerator UpdateRoomType()
+        //{
+        //    yield return new WaitForSeconds(1f);
 
-            switch (nftMAnager.PMY_RoomId)
-            {
-                case 8:
-                    roomType = RoomType.RoomA_1;
-                    break;
-                case 9:
-                    roomType = RoomType.RoomA_2;
-                    break;
-            }
-        }
+        //    switch (nftMAnager.PMY_RoomId)
+        //    {
+        //        case 8:
+        //            roomType = RoomType.RoomA_1;
+        //            break;
+        //        case 9:
+        //            roomType = RoomType.RoomA_2;
+        //            break;
+        //    }
+        //}
 
         public void InitData(string imageurl, string videourl, PMY_Ratio imgvideores, PMY_DataType dataType, PMY_VideoTypeRes videoType)
         {
@@ -190,6 +190,7 @@ namespace Toyota
                             EnableImageVideoFrame(imgVideoFrame16x9);
                         }
                         imgVideo16x9.SetActive(true);
+                        enableFrame.Invoke(0);
                         imgVideo16x9.GetComponent<RawImage>().texture = response;
                         imgVideo16x9.GetComponent<VideoPlayer>().enabled = false;
                         if (imgVideo16x9.transform.childCount > 0)
@@ -211,6 +212,7 @@ namespace Toyota
                             EnableImageVideoFrame(imgVideoFrame9x16);
                         }
                         imgVideo9x16.SetActive(true);
+                        enableFrame.Invoke(1);
                         imgVideo9x16.GetComponent<RawImage>().texture = response;
                         imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
                         if (imgVideo9x16.transform.childCount > 0)
@@ -232,6 +234,7 @@ namespace Toyota
                             EnableImageVideoFrame(imgVideoFrame1x1);
                         }
                         imgVideo1x1.SetActive(true);
+                        enableFrame.Invoke(2);
                         imgVideo1x1.GetComponent<RawImage>().texture = response;
                         imgVideo1x1.GetComponent<VideoPlayer>().enabled = false;
                         if (imgVideo1x1.transform.childCount > 0)
@@ -253,6 +256,7 @@ namespace Toyota
                             EnableImageVideoFrame(imgVideoFrame4x3);
                         }
                         imgVideo4x3.SetActive(true);
+                        enableFrame.Invoke(3);
                         imgVideo4x3.GetComponent<RawImage>().texture = response;
                         imgVideo4x3.GetComponent<VideoPlayer>().enabled = false;
                         if (imgVideo4x3.transform.childCount > 0)
