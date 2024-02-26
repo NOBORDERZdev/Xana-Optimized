@@ -85,7 +85,8 @@ public class FriendHomeManager : MonoBehaviour
         }
         else
         {
-            CreatedFriend.GetComponent<FriendAvatarController>().SetAvatarClothDefault(CreatedFriend.gameObject, "Male");
+            int _rand = UnityEngine.Random.Range(0, 13);
+            CreatedFriend.GetComponent<FriendAvatarController>().DownloadRandomPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
