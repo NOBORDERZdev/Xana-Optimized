@@ -187,25 +187,25 @@ public class FriendAvatarController : MonoBehaviour
                 _CharacterData.myItemObj.Add(new Item(0, "", "", "", ""));
         }
 
-        _CharacterData.myItemObj[0].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectName;
-        _CharacterData.myItemObj[0].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].PantPresetData.ObjectType;
+        _CharacterData.myItemObj[0].ItemName = bodyParts.randomPresetData[_rand].PantPresetData.ObjectName;
+        _CharacterData.myItemObj[0].ItemType = bodyParts.randomPresetData[_rand].PantPresetData.ObjectType;
 
-        _CharacterData.myItemObj[1].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShirtPresetData.ObjectName;
-        _CharacterData.myItemObj[1].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShirtPresetData.ObjectType;
+        _CharacterData.myItemObj[1].ItemName = bodyParts.randomPresetData[_rand].ShirtPresetData.ObjectName;
+        _CharacterData.myItemObj[1].ItemType = bodyParts.randomPresetData[_rand].ShirtPresetData.ObjectType;
 
-        _CharacterData.myItemObj[2].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].HairPresetData.ObjectName;
-        _CharacterData.myItemObj[2].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].HairPresetData.ObjectType;
+        _CharacterData.myItemObj[2].ItemName = bodyParts.randomPresetData[_rand].HairPresetData.ObjectName;
+        _CharacterData.myItemObj[2].ItemType = bodyParts.randomPresetData[_rand].HairPresetData.ObjectType;
 
-        _CharacterData.myItemObj[3].ItemName = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShoesPresetData.ObjectName;
-        _CharacterData.myItemObj[3].ItemType = GetComponent<CharcterBodyParts>().randomPresetData[_rand].ShoesPresetData.ObjectType;
+        _CharacterData.myItemObj[3].ItemName = bodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
+        _CharacterData.myItemObj[3].ItemType = bodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        if (CharcterBodyParts.instance.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
+        if (bodyParts.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
         {
-            this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Female);
+            bodyParts.SetAvatarByGender(AvatarGender.Female);
         }
         else
         {
-            this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Male);
+            bodyParts.SetAvatarByGender(AvatarGender.Male);
         }
 
         if (_CharacterData.myItemObj.Count > 0)
