@@ -80,6 +80,8 @@ namespace Toyota
         public List<PMY_WorldData> worldInfos;
         [NonReorderable]
         public List<GameObject> NftPlaceholder;
+        [HideInInspector]
+        public string roomName;
 
         //private void Awake()
         //{
@@ -342,7 +344,7 @@ namespace Toyota
         }
 
 
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Gallery)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Stage, int roomNum = 1)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -518,27 +520,31 @@ namespace Toyota
             #region For firebase analytics
             SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
             clickedNftInd = nftId;
+            roomName = roomType.ToString();
             #endregion
         }
 
-        public void SendCallAnalytics(int id = -1, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Gallery)
+        public void SendCallAnalytics(int id = -1, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Stage)
         {
             // For firebase event
             string eventName = "";
             switch (roomType)
             {
-                //case PMY_VideoAndImage.RoomType.PMYLobby:
-                //    eventName = FirebaseTrigger.CL_NFT_PMYLobby.ToString() + "_" + (id + 1);
-                //    break;
-                //case PMY_VideoAndImage.RoomType.RoomA_1:
-                //    eventName = FirebaseTrigger.CL_NFT_CRoom1.ToString() + "_" + (id + 1);
-                //    break;
-                //case PMY_VideoAndImage.RoomType.RoomA_2:
-                //    eventName = FirebaseTrigger.CL_NFT_CRoom2.ToString() + "_" + (id + 1);
-                //    break;
-                //case PMY_VideoAndImage.RoomType.Gallery:
-                //    eventName = FirebaseTrigger.CL_NFT_Gallery.ToString() + "_" + (id + 1);
-                //    break;
+                case AR_VideoAndImage.RoomType.Stage:
+                    eventName = FirebaseTrigger.CL_NFT_THA_Stage.ToString() + "_" + (id + 1);
+                    break;
+                case AR_VideoAndImage.RoomType.FactoryTour:
+                    eventName = FirebaseTrigger.CL_NFT_THA_Factory.ToString() + "_" + (id + 1);
+                    break;
+                case AR_VideoAndImage.RoomType.HomeConsulting:
+                    eventName = FirebaseTrigger.CL_NFT_THA_Consult.ToString() + "_" + (id + 1);
+                    break;
+                case AR_VideoAndImage.RoomType.Architectural:
+                    eventName = FirebaseTrigger.CL_NFT_THA_Architec.ToString() + "_" + (id + 1);
+                    break;
+                case AR_VideoAndImage.RoomType.LandInfo:
+                    eventName = FirebaseTrigger.CL_NFT_THA_LandInfo.ToString() + "_" + (id + 1);
+                    break;
             }
             SendFirebaseEvent(eventName);
         }
