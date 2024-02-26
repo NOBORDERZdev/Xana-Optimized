@@ -49,10 +49,11 @@ namespace Toyota
 
         public enum RoomType
         {
-            PMYLobby,
-            RoomA_1,
-            RoomA_2,
-            Gallery
+            Stage,
+            FactoryTour,
+            HomeConsulting,
+            Architectural,
+            LandInfo
         }
         [Space(5)]
         [Header("For Firebase Enum")]
@@ -62,6 +63,8 @@ namespace Toyota
         public UnityEvent<int> enableFrame;
 
         public AR_Nft_Manager nftMAnager;
+        [Range(1, 5)]
+        public int roomNumber = 1;
 
         private void Start()
         {
@@ -440,15 +443,16 @@ namespace Toyota
                 if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
                 {
                     nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[0], nftMAnager.worldInfos[id].Aurthor[0], nftMAnager.worldInfos[id].Des[0], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
-                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType);
+                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType, roomNumber);
                 }
                 else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
                 {
                     nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[1], nftMAnager.worldInfos[id].Aurthor[1], nftMAnager.worldInfos[id].Des[1], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
-                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType);
+                        nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType, roomNumber);
 
                 }
             }
         }
+
     }
 }
