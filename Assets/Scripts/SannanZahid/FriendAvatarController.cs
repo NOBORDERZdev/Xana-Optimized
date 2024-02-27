@@ -166,19 +166,13 @@ public class FriendAvatarController : MonoBehaviour
     Color presetHairColor;
     public void IntializeAvatar( SavingCharacterDataClass _CharacterData)
     {
-        SetAvatarClothDefault(gameObject, _CharacterData.gender);
-        if (_CharacterData.gender == AvatarGender.Female.ToString())
-            this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Female);
-        else
-            this.GetComponent<CharcterBodyParts>().SetAvatarByGender(AvatarGender.Male);
-
         Custom_IntializeAvatar(_CharacterData);
     }
 
     public void DownloadRandomPresets(int _rand)
     {
         SavingCharacterDataClass _CharacterData =new SavingCharacterDataClass();
-        SetAvatarClothDefault(gameObject, _CharacterData.gender);
+        SetAvatarClothDefault(gameObject, bodyParts.randomPresetData[_rand].GenderType);
 
         if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count == 0)
         {
@@ -199,14 +193,8 @@ public class FriendAvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemName = bodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
         _CharacterData.myItemObj[3].ItemType = bodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        if (bodyParts.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
-        {
-            bodyParts.SetAvatarByGender(AvatarGender.Female);
-        }
-        else
-        {
-            bodyParts.SetAvatarByGender(AvatarGender.Male);
-        }
+        bodyParts.SetAvatarByGender(bodyParts.randomPresetData[_rand].GenderType);
+        
 
         if (_CharacterData.myItemObj.Count > 0)
         {
@@ -301,6 +289,10 @@ public class FriendAvatarController : MonoBehaviour
                 }
                 else
                 {
+                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                    bodyParts.SetAvatarByGender(_CharacterData.gender);
+                    
+
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
