@@ -137,7 +137,8 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
     public void RefreshUserData()
     {
-        if (gameObject.activeInHierarchy)
+        //print("Visited User ID here " + singleUserProfileData.id);
+        if (gameObject.activeInHierarchy && !(string.IsNullOrEmpty(singleUserProfileData.id.ToString()) || singleUserProfileData.id == 0))
         {
             Debug.LogError("RefreshUserData");
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
@@ -201,7 +202,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         }
 
-        Debug.Log("Other user profile load data");
+        //Debug.Log("Other user profile load data");
         lastUserId = singleUserProfileData.id;
 
         lastUserIsFollowFollowing = singleUserProfileData.isFollowing;
@@ -996,7 +997,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(www.error);
+                Debug.LogError(www.error);
             }
             else
             {
