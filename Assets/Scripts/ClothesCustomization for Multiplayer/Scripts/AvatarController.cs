@@ -236,6 +236,7 @@ public class AvatarController : MonoBehaviour
 
     void DownloadRandomPresets(SavingCharacterDataClass _CharacterData, int _rand)
     {
+        SetAvatarClothDefault(gameObject, characterBodyParts.randomPresetData[_rand].GenderType);
         if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count == 0)
         {
             for (int i = 0; i < 4; i++)
@@ -253,14 +254,7 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemName = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        if (characterBodyParts.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
-        {
-            characterBodyParts.SetAvatarByGender(AvatarGender.Female);
-        }
-        else
-        {
-            characterBodyParts.SetAvatarByGender(AvatarGender.Male);
-        }
+        characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
 
         if (_CharacterData.myItemObj.Count > 0)
         {
@@ -377,15 +371,7 @@ public class AvatarController : MonoBehaviour
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
-            SetAvatarClothDefault(gameObject, _CharacterData.gender);
-            if (_CharacterData.gender == AvatarGender.Female.ToString())
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Female);
-            }
-            else
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Male);
-            }
+            
 
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
@@ -396,6 +382,9 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
+                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                    characterBodyParts.SetAvatarByGender(_CharacterData.gender);
+                    
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -620,6 +609,9 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
+                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                    characterBodyParts.SetAvatarByGender(_CharacterData.gender);
+                    
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
