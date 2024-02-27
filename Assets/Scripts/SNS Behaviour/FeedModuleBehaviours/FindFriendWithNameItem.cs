@@ -377,7 +377,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 {
                     FeedUIController.Instance.ShowLoader(false);
                 }
-                Debug.Log(www.error);
+                Debug.Log("Error on Requesting follow a user" + www.error);
             }
             else
             {
