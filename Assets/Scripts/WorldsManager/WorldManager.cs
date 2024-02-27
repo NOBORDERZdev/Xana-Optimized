@@ -478,7 +478,7 @@ public class WorldManager : MonoBehaviour
         else
         {
             if (searchWorldControllerRef.scroller.Container.transform.childCount > 3)
-                WorldLoadingText(APIURL.Temp);
+                WorldLoadingText(APIURL.SearchWorld);
             else
                 WorldLoadingText(_apiURL);
         }
