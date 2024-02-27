@@ -37,6 +37,7 @@ public class AvatarController : MonoBehaviour
     public bool isVisibleOnCam = false;
     public CharcterBodyParts characterBodyParts;
     public bool isWearOrNot = false;
+    public bool isClothLoaded = false;
 
     private void Awake()
     {
@@ -184,7 +185,7 @@ public class AvatarController : MonoBehaviour
         WearDefaultItem("Chest", applyOn.gameObject, _gender);
         WearDefaultItem("Feet", applyOn.gameObject, _gender);
         WearDefaultItem("Hair", applyOn.gameObject, _gender);
-        applyOn.GetComponent<CharcterBodyParts>().DefaultTexture(true,_gender);
+        applyOn.GetComponent<CharcterBodyParts>().DefaultTexture(true, _gender);
     }
     private void SetItemIdsFromFile(SavingCharacterDataClass _CharacterData)
     {
@@ -235,6 +236,7 @@ public class AvatarController : MonoBehaviour
 
     void DownloadRandomPresets(SavingCharacterDataClass _CharacterData, int _rand)
     {
+        SetAvatarClothDefault(gameObject, characterBodyParts.randomPresetData[_rand].GenderType);
         if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count == 0)
         {
             for (int i = 0; i < 4; i++)
@@ -252,14 +254,7 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemName = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        if (characterBodyParts.randomPresetData[_rand].GenderType == AvatarGender.Female.ToString())
-        {
-            characterBodyParts.SetAvatarByGender(AvatarGender.Female);
-        }
-        else
-        {
-            characterBodyParts.SetAvatarByGender(AvatarGender.Male);
-        }
+        characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
 
         if (_CharacterData.myItemObj.Count > 0)
         {
@@ -376,15 +371,7 @@ public class AvatarController : MonoBehaviour
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
-            SetAvatarClothDefault(gameObject, _CharacterData.gender);
-            if (_CharacterData.gender == AvatarGender.Female.ToString())
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Female);
-            }
-            else
-            {
-                characterBodyParts.SetAvatarByGender(AvatarGender.Male);
-            }
+            
 
             if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
             {
@@ -395,6 +382,9 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
+                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                    characterBodyParts.SetAvatarByGender(_CharacterData.gender);
+                    
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -619,6 +609,9 @@ public class AvatarController : MonoBehaviour
             {
                 if (GetComponent<PhotonView>() && GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
+                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                    characterBodyParts.SetAvatarByGender(_CharacterData.gender);
+                    
                     if (_CharacterData.myItemObj.Count > 0)
                     {
                         for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -804,6 +797,7 @@ public class AvatarController : MonoBehaviour
         {
             characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         }
+        isClothLoaded = true;
     }
 
     void BuildCharacterFromLocalJson()
@@ -999,7 +993,8 @@ public class AvatarController : MonoBehaviour
         //{
         //    characterBodyParts.head.enabled = characterBodyParts.body.enabled = true;
         //}
-#endregion
+        #endregion
+        isClothLoaded = true;
     }
 
 
@@ -1295,19 +1290,19 @@ public class AvatarController : MonoBehaviour
             switch (type)
             {
                 case "Legs":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultPent != null)
+                    if (ItemDatabase.instance.maleAvatarDefaultCostume.DefaultPent != null)
                         StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
                     break;
                 case "Chest":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShirt != null)
+                    if (ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShirt != null)
                         StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
                     break;
                 case "Feet":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShoes != null)
+                    if (ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShoes != null)
                         StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
                     break;
                 case "Hair":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultHair != null)
+                    if (ItemDatabase.instance.maleAvatarDefaultCostume.DefaultHair != null)
                         StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
                     break;
                 default:
@@ -1321,19 +1316,19 @@ public class AvatarController : MonoBehaviour
             switch (type)
             {
                 case "Legs":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultPent != null)
+                    if (ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultPent != null)
                         StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
                     break;
                 case "Chest":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt != null)
+                    if (ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt != null)
                         StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
                     break;
                 case "Feet":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes != null)
+                    if (ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes != null)
                         StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
                     break;
                 case "Hair":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultHair != null)
+                    if (ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultHair != null)
                         StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
                     break;
                 default:
@@ -1507,7 +1502,7 @@ public class AvatarController : MonoBehaviour
                     else
                         StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                 }
-                if (_CharacterData!= null && _CharacterData.charactertypeAi == true)
+                if (_CharacterData != null && _CharacterData.charactertypeAi == true)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
                 }
