@@ -45,6 +45,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject editProfileScreen;
     public GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
+    public GameObject settingsButton;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -197,6 +198,12 @@ public class MyProfileDataManager : MonoBehaviour
                 StartCoroutine(WaitToRefreshProfileScreen());
             }
         }
+        settingsButton.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        settingsButton.SetActive(false);
     }
 
     private void Start()
