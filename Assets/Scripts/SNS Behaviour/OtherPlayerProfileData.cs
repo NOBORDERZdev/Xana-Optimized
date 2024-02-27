@@ -138,9 +138,9 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void RefreshUserData()
     {
         //print("Visited User ID here " + singleUserProfileData.id);
-        if (gameObject.activeInHierarchy && !(string.IsNullOrEmpty(singleUserProfileData.id.ToString()) || singleUserProfileData.id == 0))
+        if (gameObject.activeInHierarchy && singleUserProfileData.id != 0)
         {
-            Debug.LogError("RefreshUserData");
+            Debug.Log("RefreshUserData");
             StartCoroutine(IERequestGetUserDetails(singleUserProfileData.id, false));
         }
     }
@@ -997,7 +997,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.LogError(www.error);
+                Debug.Log(www.error);
             }
             else
             {
