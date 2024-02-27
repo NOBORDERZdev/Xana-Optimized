@@ -177,7 +177,7 @@ namespace UnityEngine.UI.Extensions
 
             Debug.LogError(this.gameObject.name);
 
-            Transform obj = StoreManager.instance.contentList;
+            //Transform obj = StoreManager.instance.contentList;
 
             /*avatarData.Clear();
 

@@ -2672,7 +2672,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 184705086, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -8.884888
+      value: -8.884766
       objectReference: {fileID: 0}
     - target: {fileID: 213445105, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: FooterTabs
@@ -5618,6 +5618,100 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6118699874111086672, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
   m_PrefabInstance: {fileID: 549901461}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &555420689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 555420692}
+  - component: {fileID: 555420691}
+  - component: {fileID: 555420690}
+  m_Layer: 0
+  m_Name: Reporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &555420690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555420689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6767a180de870304caa2013b2772dd62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &555420691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555420689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600c02144c4813244abd262cbcbe8825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  show: 0
+  UserData: 
+  fps: 0
+  fpsText: 
+  images:
+    clearImage: {fileID: 2800000, guid: 112c6fcf56e349449ab2e6ad76b67816, type: 3}
+    collapseImage: {fileID: 2800000, guid: 4623f326a884a2546ab39078bf7822c3, type: 3}
+    clearOnNewSceneImage: {fileID: 2800000, guid: 3a6bc61a8319b1949ab9f1f2db1302b4, type: 3}
+    showTimeImage: {fileID: 2800000, guid: 782e03669fa4a614e89ef56252134250, type: 3}
+    showSceneImage: {fileID: 2800000, guid: ff4dfb29f203a174ab8e4c498afe908a, type: 3}
+    userImage: {fileID: 2800000, guid: 2bcdc012e7356f1449ce7d3a31dc458c, type: 3}
+    showMemoryImage: {fileID: 2800000, guid: f447d62f2dacf9843be7cbf168a3a9d0, type: 3}
+    softwareImage: {fileID: 2800000, guid: 6c91fc88ee6c791468318d85febfb48d, type: 3}
+    dateImage: {fileID: 2800000, guid: a7561cd0a9f62a84e99bff1abce2a222, type: 3}
+    showFpsImage: {fileID: 2800000, guid: 90b2f48155dc0e74f8e428561ac79da5, type: 3}
+    infoImage: {fileID: 2800000, guid: 2954bef266e6d794aba08ceacc887a0f, type: 3}
+    saveLogsImage: {fileID: 2800000, guid: 4a4821d80a1fc774fb76eac6213544e7, type: 3}
+    searchImage: {fileID: 2800000, guid: bfef37b5a26d2264798616d960451329, type: 3}
+    copyImage: {fileID: 2800000, guid: 7f36d71624c630046b855909c497be17, type: 3}
+    closeImage: {fileID: 2800000, guid: b65e9be99974bc94eab5d6698811d0b8, type: 3}
+    buildFromImage: {fileID: 2800000, guid: 8702be598dd9f504ca33be2afee2ca33, type: 3}
+    systemInfoImage: {fileID: 2800000, guid: e9011b1dc9256ad4d9c19a31c595f95f, type: 3}
+    graphicsInfoImage: {fileID: 2800000, guid: 999d31716332cc04eb4abc9c9270b0ca, type: 3}
+    backImage: {fileID: 2800000, guid: a0632a18e7c665641b94fea66506ab50, type: 3}
+    logImage: {fileID: 2800000, guid: e876b803a4dd5c5488078071d15aa9c0, type: 3}
+    warningImage: {fileID: 2800000, guid: 1066be8e7b994b94c8a182b8dbe30705, type: 3}
+    errorImage: {fileID: 2800000, guid: 7640ebf8b3a92124d821d3b4b8b3fd7e, type: 3}
+    barImage: {fileID: 2800000, guid: 8128d4f4c0193e34586f9631ef7d4787, type: 3}
+    button_activeImage: {fileID: 2800000, guid: 2580a2e903691e44282e56ed6e0ff37a, type: 3}
+    even_logImage: {fileID: 2800000, guid: d27aad55b568c6544b0b95a95da44bc7, type: 3}
+    odd_logImage: {fileID: 2800000, guid: 8ffbb44a2c3adae45913474e4fd487f5, type: 3}
+    selectedImage: {fileID: 2800000, guid: 17117a429b08e7e43b0b6c8421de69fe, type: 3}
+    reporterScrollerSkin: {fileID: 11400000, guid: 1cc68832d00d3284a9324a4dc05be753, type: 2}
+  size: {x: 32, y: 32}
+  maxSize: 20
+  numOfCircleToShow: 1
+  Initialized: 0
+--- !u!4 &555420692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555420689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 43
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &559586894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
@@ -17864,6 +17958,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_478
       ObjectType: Feet
+  pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &1512555896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17928,11 +18023,12 @@ MonoBehaviour:
   presetValue: 
   avatarGender: 0
   masks: []
-  IsInit: 1
+  IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 0}
   isWearOrNot: 0
+  isClothLoaded: 0
   _PCharacterData:
     id: 
     name: 
@@ -25800,7 +25896,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -30150,6 +30246,10 @@ PrefabInstance:
       propertyPath: NameTagHolderObj
       value: 
       objectReference: {fileID: 2302478909030753249}
+    - target: {fileID: 1671144888, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: IsInit
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1671144889, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: YarnKnitLight
       value: 
@@ -31206,6 +31306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Xana_4.0_Final_2_12_2024
       objectReference: {fileID: 0}
+    - target: {fileID: 1566953196363358407, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2230758519027989117, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -31936,6 +32040,7 @@ MonoBehaviour:
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 0}
   isWearOrNot: 0
+  isClothLoaded: 0
   _PCharacterData:
     id: 
     name: 
@@ -32639,6 +32744,7 @@ MonoBehaviour:
   body: {fileID: 0}
   head: {fileID: 0}
   randomPresetData: []
+  pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &2209432607024942603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39441,10 +39547,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6527359761169222394}
+    - target: {fileID: 2589320107453626337, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -102.6001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2589320107453626337, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -205.90002
+      objectReference: {fileID: 0}
     - target: {fileID: 2589320107572817803, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1594758011}
+    - target: {fileID: 2589320108043099681, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -127.6001
+      objectReference: {fileID: 0}
     - target: {fileID: 2589320108043099686, guid: c0c3e47a260e65a46bc53c34108baffa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -81781,6 +81899,10 @@ PrefabInstance:
     - target: {fileID: 869666959, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 869666960, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1825815851, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: InputFlag

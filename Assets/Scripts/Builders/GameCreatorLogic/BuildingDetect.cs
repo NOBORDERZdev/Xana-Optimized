@@ -429,8 +429,9 @@ public class BuildingDetect : MonoBehaviour
         if (playerBody)
         {
             playerBody.material.shader = state ? newSkinShader : defaultSkinShader;
-            if (state)
-                playerBody.material.SetFloat("_Outer_Glow", 2);
+            playerBody.material.SetColor("_Lips_Color", state ? new Color32(0, 0, 0, 0) : new Color32(255, 255, 255, 0));
+            //if (state)
+            //    playerBody.material.SetFloat("_Outer_Glow", 2);
         }
         if (playerShirt)
             playerShirt.material.shader = state ? newClothShader : defaultClothShader;
