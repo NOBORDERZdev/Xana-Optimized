@@ -336,6 +336,9 @@ public class WorldItemPreviewTab : MonoBehaviour
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
                     thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
+                //Reloading following space
+                WorldManager.instance.changeFollowState = true;
+                WorldManager.ReloadFollowingSpace?.Invoke();
             }
             else
             {
@@ -362,6 +365,10 @@ public class WorldItemPreviewTab : MonoBehaviour
                     thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
 
                 }
+                //Reloading following space
+                WorldManager.instance.changeFollowState = true;
+                WorldManager.ReloadFollowingSpace?.Invoke();
+
             }
             else
             {
