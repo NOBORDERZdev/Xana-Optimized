@@ -116,14 +116,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
                             otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
-                            if (_CharacterData.gender == AvatarGender.Female.ToString())
-                            {
-                                bodyparts.SetAvatarByGender(AvatarGender.Female);
-                            }
-                            else
-                            {
-                                bodyparts.SetAvatarByGender(AvatarGender.Male);
-                            }
+                            bodyparts.SetAvatarByGender(_CharacterData.gender);
+                            
 
                             if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                             {
