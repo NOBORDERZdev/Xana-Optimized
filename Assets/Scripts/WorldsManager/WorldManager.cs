@@ -8,8 +8,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
-using OpenCover.Framework.Model;
+
 
 public class WorldManager : MonoBehaviour
 {
