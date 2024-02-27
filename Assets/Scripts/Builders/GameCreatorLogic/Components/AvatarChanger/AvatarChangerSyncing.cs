@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Linq;
 using System.Collections;
 using Photon.Realtime;
+using Photon.Pun.Demo.PunBasics;
 
 public class AvatarChangerSyncing : MonoBehaviourPun
 {
@@ -30,9 +31,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     bool isInitialise = false;
     MeshRenderer[] meshRenderers;
     SkinnedMeshRenderer[] skinnedMeshes;
-    [PunRPC]
-    void Init(int pvID, int avatarIndex, string RuntimeItemID)
-    { }
+
     private void OnEnable()
     {
         if (photonView.IsMine)
@@ -63,7 +62,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         int avatarIndex = int.Parse(parts[0]);
         string RuntimeItemID = parts[1];
         int viewID = int.Parse(parts[2]);
-        playerObj = PhotonView.Find(viewID).gameObject;
+        playerObj = FindPlayerusingPhotonView(photonView);
         yield return new WaitForSeconds(0.1f);
         if (playerObj != null)
         {
@@ -170,5 +169,19 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         arrowManager.nameCanvas.transform.localPosition = canvasPos;
         if (gangsterCharacter != null)
             Destroy(gangsterCharacter);
+    }
+
+    GameObject FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        foreach (GameObject playerObject in Launcher.instance.playerobjects)
+        {
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            {
+                return playerObject;
+            }
+        }
+        return null;
     }
 }
