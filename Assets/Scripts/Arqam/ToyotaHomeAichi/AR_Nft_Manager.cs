@@ -607,8 +607,8 @@ namespace Toyota
             else
                 pdfPanel_P.SetActive(true);
 
-            //ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
-            //CameraLook.instance.isReturn = true;
+            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
+            CameraLook.instance.isReturn = true;
         }
 
         public void EnableControlls()
@@ -619,8 +619,8 @@ namespace Toyota
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
-            //ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
-            //CameraLook.instance.isReturn = false;
+            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
+            CameraLook.instance.isReturn = false;
         }
 
         private void OnDisable()
