@@ -33,15 +33,20 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     private void OnEnable()
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
+        WorldManager.ReloadFollowingSpace += FollowingSpaceLoading;
+
     }
 
     private void OnDisable()
     {
         WorldManager.LoadHomeScreenWorlds -= StartLoading;
+        WorldManager.ReloadFollowingSpace -= FollowingSpaceLoading;
+
     }
 
     void StartLoading()
     {
+        WorldManager.instance.changeFollowState = false;
         HotSpaceLoading();
         HotGamesLoading();
         FollowingSpaceLoading();
@@ -49,6 +54,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         GetAllTags();
         GetUsersMostVisitedTags(() =>
         {
+            //Reset page number because of getting null data 
+            WorldManager.instance.SearchTagPageNumb = 1;
             for (int i = 0; i < mostVisitedTagList.Count; i++)
             {
                 CategoryLoading(i);
@@ -101,16 +108,19 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void FollowingSpaceLoading()
     {
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.FolloingSpace, 10);
+        WorldManager.instance.followingPN = 1;
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
             {
                 WorldsInfo worldInfo = JsonUtility.FromJson<WorldsInfo>(response);
                 if (worldInfo.data.rows.Count == 0)
-                {
                     followingParent.SetActive(false);
-                    FlexibleRect.OnAdjustSize?.Invoke(false);
-                }
+                else if (!followingParent.activeInHierarchy)
+                    followingParent.SetActive(true);
+
+                FlexibleRect.OnAdjustSize?.Invoke(false);
+
                 StartCoroutine(SetContentItem(followingContent, worldInfo));
             }
         }));
@@ -196,21 +206,21 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     //category1Parent.SetActive(false);
                     //Debug.LogError("Index value :- " + index);
-                    CategoryParentVisibility(index,false);
+                    CategoryParentVisibility(index, false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                     /*if (apiHitCountC1 < 5)
                         Invoke("Category1Loading", 1);*/
                 }
                 else
                 {
-                    CategoryParentVisibility(index,true);
+                    CategoryParentVisibility(index, true);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
                 StartCoroutine(SetContentItem(categoryContent[index], worldInfo));
             }
             else
             {
-                CategoryParentVisibility(index,false);
+                CategoryParentVisibility(index, false);
                 FlexibleRect.OnAdjustSize?.Invoke(false);
                 //if (apiHitCountC1 < 5)
                 //    Invoke("Category1Loading", 1);
@@ -343,7 +353,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         }));
     }
 
-    void CategoryParentVisibility(int index,bool isActive)
+    void CategoryParentVisibility(int index, bool isActive)
     {
         categoryParent[index].SetActive(isActive);
     }
@@ -351,6 +361,12 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     IEnumerator SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo)
     {
+        //Hidden all child
+        foreach (Transform child in spaceContent.transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             if (i > (spaceContent.transform.childCount - 1))
@@ -465,7 +481,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        if (apiResponseHolder.CheckResponse(apiURL))
+        if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
             callback(true, apiResponseHolder.GetResponse(apiURL));
             yield break;
@@ -485,8 +501,13 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             {
                 //_WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 //worldstr = www.downloadHandler.text;
-                apiResponseHolder.AddReponse(apiURL, www.downloadHandler.text);
+                if (!apiResponseHolder.CheckResponse(apiURL))
+                    apiResponseHolder.AddReponse(apiURL, www.downloadHandler.text);
+                else
+                    apiResponseHolder.ChangeReponse(apiURL, www.downloadHandler.text);
+
                 callback(true, www.downloadHandler.text);
+                WorldManager.instance.changeFollowState = false;
             }
             Debug.Log(apiURL + "---" + www.downloadHandler.text);
             www.Dispose();

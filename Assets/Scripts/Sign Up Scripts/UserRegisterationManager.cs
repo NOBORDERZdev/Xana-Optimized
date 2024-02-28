@@ -3353,9 +3353,9 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void LoadingFadeOutScreen() 
     {
-        if (Swipe_menu.instance.contentParent.childCount > 0)
+        if (CharacSelectScroll.instance.contentParent.childCount > 0)
         {
-            foreach (Transform child in Swipe_menu.instance.contentParent)
+            foreach (Transform child in CharacSelectScroll.instance.contentParent)
             {
               //  Destroy(child.gameObject);
             }

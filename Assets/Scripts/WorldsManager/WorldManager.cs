@@ -42,6 +42,7 @@ public class WorldManager : MonoBehaviour
     public bool isCheckFightingModulePopUp;
     public bool HaveFighterNFT;
     public static Action LoadHomeScreenWorlds;
+    public static Action ReloadFollowingSpace;
     static int AutoSwtichIndex = 0;
 
     public int SearchPageNumb = 1;
@@ -64,6 +65,9 @@ public class WorldManager : MonoBehaviour
     public WorldSearchManager worldSearchManager;
     public SearchWorldController searchWorldControllerRef;
     public static WorldManager instance;
+    //[HideInInspector]
+    public bool changeFollowState = false;
+
     public APIURL GetCurrentTabSelected()
     {
         return aPIURLGlobal;
@@ -474,7 +478,7 @@ public class WorldManager : MonoBehaviour
         else
         {
             if (searchWorldControllerRef.scroller.Container.transform.childCount > 3)
-                WorldLoadingText(APIURL.Temp);
+                WorldLoadingText(APIURL.SearchWorld);
             else
                 WorldLoadingText(_apiURL);
         }

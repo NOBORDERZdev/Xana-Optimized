@@ -45,6 +45,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject editProfileScreen;
     public GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
+    public GameObject settingsButton;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -197,6 +198,12 @@ public class MyProfileDataManager : MonoBehaviour
                 StartCoroutine(WaitToRefreshProfileScreen());
             }
         }
+        settingsButton.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        settingsButton.SetActive(false);
     }
 
     private void Start()
@@ -473,6 +480,8 @@ public class MyProfileDataManager : MonoBehaviour
             profileImage.sprite = defultProfileImage;
         }
 
+        mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
+
         //StartCoroutine(WaitToRefreshProfileScreen());
     }
 
@@ -494,6 +503,7 @@ public class MyProfileDataManager : MonoBehaviour
                         else
                         {
                             ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
                     }
                 }
@@ -506,8 +516,8 @@ public class MyProfileDataManager : MonoBehaviour
                             GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
-                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                     else
                     {
@@ -686,6 +696,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to load All my feed and setup.......
     public void AllFeedWithUserId(int pageNumb, Transform Feedparent = null, bool IsNew = false)
     {
+        #region Old photo and video based feed displaying implimentation
         //Old photo and video based feed displaying implimentation
         //currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
         //bool IsMyProfileFeed = false;
@@ -858,10 +869,7 @@ public class MyProfileDataManager : MonoBehaviour
         //    }
         //}
 
-        //New Text post based feed implimentation
-        currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
-        bool IsMyProfileFeed = false;
-        FeedUIController.Instance.ShowLoader(false);
+
         // OLD FEED UI
         //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
         //{
@@ -876,6 +884,14 @@ public class MyProfileDataManager : MonoBehaviour
         //    }
         //}
         // END OLD FEED UI
+        #endregion
+
+        //New Text post based feed implimentation
+        currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
+        bool IsMyProfileFeed = false;
+        //FeedUIController.Instance.ShowLoader(false);
+        FeedUIController.Instance.ShowLoader(true);
+
         for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
             if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
@@ -920,14 +936,14 @@ public class MyProfileDataManager : MonoBehaviour
                     //    userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
                     //    Debug.Log("userTagPostObject is Instantiate in FeedParent");
                     //}
-                    if (APIManager.Instance.allTextPostWithUserIdRoot.data.rows.Count == 0)
-                    {
-                        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-                    }
-                    else
-                    {
-                        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-                    }
+                    //if (APIManager.Instance.allTextPostWithUserIdRoot.data.rows.Count == 0)
+                    //{
+                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+                    //}
+                    //else
+                    //{
+                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+                    //}
                     if (IsNew)
                     {
                         userTagPostObject.transform.SetAsFirstSibling();
@@ -1010,6 +1026,8 @@ public class MyProfileDataManager : MonoBehaviour
 
                         // }
                     }
+
+                   
                 }
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
@@ -1024,6 +1042,12 @@ public class MyProfileDataManager : MonoBehaviour
                 //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
                 //    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
                 //}
+            }
+
+
+            if (allPhotoContainer != null)
+            {
+                allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
             }
         }
 
@@ -1047,6 +1071,8 @@ public class MyProfileDataManager : MonoBehaviour
 
             }
         }
+
+        FeedUIController.Instance.ShowLoader(false);
     }
 
     public void RefreshHieght()
@@ -3010,9 +3036,10 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-               // Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
+                Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
+                XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
         }
