@@ -10,7 +10,11 @@ public class IOS_Screen_Switcher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(Application.platform == RuntimePlatform.IPhonePlayer)
+        if(Application.isEditor)
+        {
+            m_filter.transform.localRotation = Quaternion.Euler(0f, 0.426f, 180f);
+        }
+        else if(Application.platform == RuntimePlatform.IPhonePlayer)
         {
             m_filter.mesh = iosScreen;
         }
