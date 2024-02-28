@@ -54,6 +54,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         GetAllTags();
         GetUsersMostVisitedTags(() =>
         {
+            //Reset page number because of getting null data 
+            WorldManager.instance.SearchTagPageNumb = 1;
             for (int i = 0; i < mostVisitedTagList.Count; i++)
             {
                 CategoryLoading(i);
