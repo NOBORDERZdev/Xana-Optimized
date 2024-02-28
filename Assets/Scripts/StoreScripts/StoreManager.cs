@@ -4908,6 +4908,11 @@ public class StoreManager : MonoBehaviour
         }
 
     }
+    public void BackToMain()
+    {
+        GameManager.Instance.HomeCameraInputHandler(true);
+        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+    }
 }
 public class RequestedData
 {
