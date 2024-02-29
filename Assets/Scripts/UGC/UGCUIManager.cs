@@ -5,10 +5,8 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using UnityEngine.XR.ARFoundation;
 
 public class UGCUIManager : MonoBehaviour
 {
@@ -20,11 +18,13 @@ public class UGCUIManager : MonoBehaviour
     public float holdTime;
     public bool isRecording;
     public float holdTimeForPhoto;
+    public bool isUGCFaceScene;
 
     public AvatarController UGCCharacter;
     public VideoPlayer videoPlayer;
     public RenderTexture characterRT;
-    public Camera characterRenderCamera;
+    public Camera characterCam;
+    public RenderTexture videoRT;
     public List<GameObject> screenUI = new List<GameObject>();
     public GameObject videoImageResultScreen;
     public GameObject savePopup;
@@ -44,7 +44,29 @@ public class UGCUIManager : MonoBehaviour
     void Start()
     {
         DisableLoadingPanel();
-        BGMat = new Material(BG.material);
+        if (isUGCFaceScene)
+        {
+            videoRT.Release();
+            videoRT.width = 1080;
+            videoRT.height = 1920;
+            videoRT.Create();
+            videoRT.Release();
+            characterRT.Release();
+            characterRT.width = 1080;
+            characterRT.height = 1920;
+            characterRT.Create();
+            characterRT.Release();
+            characterCam.gameObject.SetActive(true);
+            BGMat = new Material(BG.material);
+        }
+        else
+        {
+            videoRT.Release();
+            videoRT.height = Screen.height;
+            videoRT.width = Screen.width;
+            videoRT.Create();
+            videoRT.Release();
+        }
     }
 
     public void DisableLoadingPanel()
@@ -54,9 +76,12 @@ public class UGCUIManager : MonoBehaviour
     public IEnumerator IEHandleLoadingPanel()
     {
         loadingScreen.SetActive(true);
-        while (!UGCCharacter.isClothLoaded)
+        if (isUGCFaceScene)
         {
-            yield return new WaitForSeconds(.5f);
+            while (!UGCCharacter.isClothLoaded)
+            {
+                yield return new WaitForSeconds(.5f);
+            }
         }
         yield return new WaitForSeconds(1f);
         loadingScreen.SetActive(false);
@@ -190,8 +215,8 @@ public class UGCUIManager : MonoBehaviour
         isRecording = false;
         isPhoto = false;
         isVideo = true;
-        recordButton.gameObject.SetActive(false);
         photoButton.gameObject.SetActive(true);
+        recordButton.gameObject.SetActive(false);
         ugcRecordVideoBehaviour.StopRecording();
         StartCoroutine(PlayRecordedVideo());
         StopCoroutine(recordtimerCoroutine);
@@ -257,7 +282,7 @@ public class UGCUIManager : MonoBehaviour
 
     public void OnTapOnARButton()
     {
-
+        SceneManager.LoadScene("ARRealityScene");
     }
 
     public void OnTapBackGroundButton()
@@ -265,7 +290,7 @@ public class UGCUIManager : MonoBehaviour
         ChangeBG();
     }
     Material BGMat;
-    public  void ChangeBG()
+    public void ChangeBG()
     {
         BGMat.mainTexture = texture;
         BG.material = BGMat;
