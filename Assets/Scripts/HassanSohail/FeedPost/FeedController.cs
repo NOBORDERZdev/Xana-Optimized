@@ -442,6 +442,7 @@ public class FeedController : MonoBehaviour
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+        ResetFeedController();
     }
 
     /// <summary>
