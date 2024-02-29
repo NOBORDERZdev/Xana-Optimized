@@ -14,6 +14,7 @@ public class FriendHomeManager : MonoBehaviour
     public bool SpawnFriendsAgain;
     public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
 
+    public GameObject menuLightObj;
     public GameObject profileLightingObj;
     private void OnDisable()
     {
