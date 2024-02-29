@@ -155,7 +155,8 @@ public class CharcterBodyParts : MonoBehaviour
         body = maleAvatarMeshes.avatar_body;
         characterHeadMat = head.materials[2];
         characterBodyMat = body.materials[0];
-        IntCharacterBones();
+        // To remove old character customization
+        //IntCharacterBones();
     }
 
 
