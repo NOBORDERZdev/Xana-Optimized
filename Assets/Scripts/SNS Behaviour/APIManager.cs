@@ -1717,6 +1717,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                string data = www.downloadHandler.text;
+                //Debug.Log("Feed user profile data:" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                if (searchUserRoot.msg.Contains("yourself"))
+                {
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+                    }
+                }
             }
             else
             {
