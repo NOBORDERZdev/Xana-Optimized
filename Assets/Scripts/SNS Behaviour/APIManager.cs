@@ -511,7 +511,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-
+        #region Old Picture and video type feed fetching code
         //////////////////////Old Picture and video type feed fetching code
         //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
         //{
@@ -591,6 +591,8 @@ public class APIManager : MonoBehaviour
         //        }
         //    }
         //}
+
+        #endregion
         //////////////////////New text post type feed fetching code
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.GetUserAllTextPosts + userId + "/" + pageNum + "/" + pageSize)))
         {
@@ -623,7 +625,6 @@ public class APIManager : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("IERequestGetFeedsByUserId success data" + data);
-                Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -633,6 +634,7 @@ public class APIManager : MonoBehaviour
                 if (callingFrom == "MyProfile")
                 {
                     MyProfileDataManager.Instance.totalPostText.text = test.data.Count.ToString();
+                    allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
