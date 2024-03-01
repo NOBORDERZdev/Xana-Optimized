@@ -135,7 +135,7 @@ public class FeedController : MonoBehaviour
     }
 
     async void GetPlayerNewPosts(int userId){ 
-         string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + 1 + "/" + 10;
+         string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + 1 + "/" + FeedAPIData.Count;
          UnityWebRequest response = UnityWebRequest.Get(url);
         try
         {
@@ -151,24 +151,41 @@ public class FeedController : MonoBehaviour
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
-                foreach (var item in feedResponseData.data.rows)
+                bool _isNameChanged = false;
+                foreach (var item1 in feedResponseData.data.rows)
                 {
-                    if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
+                    if (!String.IsNullOrEmpty(item1.text_post) && !item1.text_post.Equals("null"))
                     {
-                        if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
-                            tempData.Add(item);
+                        if (!FeedAPIData.Any(list1 => list1.id == item1.id)){ 
+                            tempData.Add(item1);
+                        }
+                        var indexes = FeedAPIData.Select((number, index) => new { Number = number, Index = index })
+                             .Where(item => (item.Number.user.id == item1.user_id && item.Number.user.name != item1.user.name))
+                             .Select(item => item.Index)
+                             .ToList();
+                        if (indexes.Count > 0)
+                        {
+                            _isNameChanged = true;
+                            foreach (var index in indexes)
+                            {
+                                FeedAPIData[index].user.name = item1.user.name;
+                            }
                         }
                     }
                 }
                 if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
                     //scrollerController._data.InsertRange(0,tempData);
-                    AddDataToTopScroller(tempData);
-                        
+                    AddDataToTopScroller(FeedAPIData);
                 }
                 else{
                     //noFeedsScreen.gameObject.SetActive(true);
                     //FeedLoader.SetActive(false);
+                    if (_isNameChanged)
+                    {
+                        AddDataToTopScroller(FeedAPIData);
+                        _isNameChanged = false;
+                    }
                 }
             }
             Invoke(nameof(turnoffLoaderForReload),1f);
@@ -396,15 +413,36 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
-        EmptySearchPanel();
-        noFeedSerach. gameObject.SetActive(false);
-        noFeedsScreen.gameObject.SetActive(false);
-        FeedLoader.gameObject.SetActive(false);
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-    }
+        if (SerchBarObj.activeInHierarchy) // serach is active 
+        {
+            SerchBarObj.SetActive(false);
+            SerachPanel.SetActive(false);
+            SearchContentPanel.SetActive(false);
+            EmptySearchPanel();
+            searchInputField.Text = "";
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
+            if (!isFeedInitialized)
+            {
+                Invoke(nameof(IntFeedPage), 0.01f);
+            }
+            else
+            {
+                PullNewPlayerPost();
+            }
+        }
+        else
+        {
+            EmptySearchPanel();
+            noFeedSerach.gameObject.SetActive(false);
+            noFeedsScreen.gameObject.SetActive(false);
+            FeedLoader.gameObject.SetActive(false);
+            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+        }
+     }
     private void OnDisable()
     {
         SocketController.instance.updateFeedLike -= UpdateFeedLike;
+        ResetFeedController();
     }
 
     /// <summary>

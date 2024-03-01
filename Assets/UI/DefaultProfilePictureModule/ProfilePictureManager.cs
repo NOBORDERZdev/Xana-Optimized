@@ -92,14 +92,17 @@ public class ProfilePictureManager : MonoBehaviour
             savePath = Application.persistentDataPath + "/Profile/userProfile.png";
 
             byte[] fileData = File.ReadAllBytes(savePath);
-            while (string.IsNullOrEmpty(UserRegisterationManager.instance.TokenDataClass.data.token))
+            while (string.IsNullOrEmpty(UserRegisterationManager.instance.TokenDataClass.data.token) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
             {
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData, "Profile", UploadProfile);
+            AWSHandler.Instance.PostObjectMethodAvatar(fileData, "DefaultUserProfile", UploadProfile);
+            
+            Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
+            if (MyProfileDataManager.Instance)
+                MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
         }
     }
     public UploadFileRoot uploadFileRoot=new UploadFileRoot();
@@ -119,7 +122,12 @@ public class ProfilePictureManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
         {
-            www.SetRequestHeader("Authorization", UserRegisterationManager.instance.TokenDataClass.data.token);
+            string tempToken = UserRegisterationManager.instance.TokenDataClass.data.token;
+
+            if (string.IsNullOrEmpty(tempToken))
+                tempToken = ConstantsGod.AUTH_TOKEN;
+
+            www.SetRequestHeader("Authorization", tempToken);
 
             yield return www.SendWebRequest();
 
@@ -129,7 +137,7 @@ public class ProfilePictureManager : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Form upload complete!");
+                Debug.Log("Uploading complete!");
                 string data = www.downloadHandler.text;
                 //Debug.Log("UpdateUserAvatar data:" + data);
             }

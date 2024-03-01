@@ -103,6 +103,7 @@ public class PlayerControllerNew : MonoBehaviour
     CinemachineFreeLook cinemachineFreeLook;
 
     internal float animationBlendValue = 0;
+
     private void OnEnable()
     {
         BuilderEventManager.OnHideOpenSword += HideorOpenSword;
@@ -864,6 +865,8 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
         _IsGrounded = characterController.isGrounded;
+
+        CalculateMovingPlatformSpeed();
         if (_IsGrounded)
         {
             canDoubleJump = false;
@@ -890,7 +893,7 @@ public class PlayerControllerNew : MonoBehaviour
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
+        if (_IsGrounded && (animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
@@ -978,6 +981,11 @@ public class PlayerControllerNew : MonoBehaviour
 
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
+                //checking moving platform
+                if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                {
+                    characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                }
                 //Debug.Log("Move Sprint:" + sprtintSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 characterController.Move(desiredMoveDirection * sprintSpeed * Time.deltaTime);
 
@@ -1008,6 +1016,11 @@ public class PlayerControllerNew : MonoBehaviour
                         animator.SetFloat("Blend", walkSpeed, speedSmoothTime, Time.deltaTime); // applying values to animator.
                         animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime); // applying values to animator.
                     }
+                    //checking moving platform
+                    if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                    {
+                        characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                    }
                     characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
 
                     gravityVector.y += gravityValue * Time.deltaTime;
@@ -1023,12 +1036,22 @@ public class PlayerControllerNew : MonoBehaviour
                     }
                     if (!_IsGrounded) // is in jump
                     {
+                        //checking moving platform
+                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        {
+                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                        }
                         characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
                         gravityVector.y += gravityValue * Time.deltaTime;
                         characterController.Move(gravityVector * Time.deltaTime);
                     }
                     else // walk start state
                     {
+                        //checking moving platform
+                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        {
+                            characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+                        }
                         characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
                         gravityVector.y += gravityValue * Time.deltaTime;
                         characterController.Move(gravityVector * Time.deltaTime);
@@ -1040,6 +1063,11 @@ public class PlayerControllerNew : MonoBehaviour
         {
             PlayerIsIdle?.Invoke();
             UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            //checking moving platform
+            if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+            {
+                characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
+            }
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;
             characterController.Move(gravityVector * Time.deltaTime);
@@ -1363,7 +1391,7 @@ public class PlayerControllerNew : MonoBehaviour
     {
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
-        animator.SetFloat("Blend", 0.0f);
+        //animator.SetFloat("Blend", 0.0f);
 
         _IsGrounded = characterController.isGrounded;
         animator.SetBool("NinjaJump", _IsGrounded);
@@ -1387,6 +1415,8 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 animator.SetFloat("BlendNX", 0.5f, 0.25f, Time.deltaTime);
                 animator.SetFloat("BlendNY", 0.5f, 0.25f, Time.deltaTime);
+                animator.SetFloat("Blend", 0.5f, 0.25f, Time.deltaTime);
+                animator.SetFloat("BlendY", 3f);
                 tpsJumpAnim();
                 IsJumping = true;
             }
@@ -1447,6 +1477,8 @@ public class PlayerControllerNew : MonoBehaviour
                 {
                     animator.SetFloat("BlendNX", 0.8f, 0.25f, Time.deltaTime);
                     animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime);
+                    animator.SetFloat("Blend", 0.8f, 0.25f, Time.deltaTime);
+                    animator.SetFloat("BlendY", 3f);
                 }
 
             }
@@ -1471,12 +1503,16 @@ public class PlayerControllerNew : MonoBehaviour
                             //movementSpeed = finalWalkSpeed;
                             animator.SetFloat("BlendNX", 0.6f, 0.25f, Time.deltaTime); // applying values to animator.
                             animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime);
+                            animator.SetFloat("Blend", 0.6f, 0.25f, Time.deltaTime);
+                            animator.SetFloat("BlendY", 3f);
                         }
                         if (timeToWalk > 3)
                         {
                             //movementSpeed = finalWalkSpeed + 1;
                             animator.SetFloat("BlendNX", 0.6f, 0.25f, Time.deltaTime); // applying values to animator.
                             animator.SetFloat("BlendNY", 0f, 0.25f, Time.deltaTime); // applying values to animator.
+                            animator.SetFloat("Blend", 0.6f, 0.25f, Time.deltaTime);
+                            animator.SetFloat("BlendY", 3f);
                         }
 
 
@@ -1503,6 +1539,8 @@ public class PlayerControllerNew : MonoBehaviour
                     {
                         animator.SetFloat("BlendNX", 0.001f, 0.2f, Time.deltaTime);
                         animator.SetFloat("BlendNY", 0.001f, 0.2f, Time.deltaTime);
+                        animator.SetFloat("Blend", 0.001f, 0.2f, Time.deltaTime);
+                        animator.SetFloat("BlendY", 3f);
                         characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
                         gravityVector.y += gravityValue * Time.deltaTime;
                         characterController.Move(gravityVector * Time.deltaTime);
@@ -1521,6 +1559,8 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetFloat("animationSpeedMultiplier", 1);
             animator.SetFloat("BlendNX", 0f, 0.3f, Time.deltaTime);
             animator.SetFloat("BlendNY", 0f, 0.3f, Time.deltaTime);
+            animator.SetFloat("Blend", 0.0f);
+            animator.SetFloat("BlendY", 3f);
         }
         if (animator.GetBool("standJump"))
             animator.SetBool("standJump", false);
@@ -1583,7 +1623,8 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
-        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 1);
+        if (GamificationComponentData.instance.withMultiplayer)
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 1);
         animator.CrossFade("NinjaAttack", 0.1f);
         yield return new WaitForSecondsRealtime(0.8f);
         isMovementAllowed = true;
@@ -1592,7 +1633,8 @@ public class PlayerControllerNew : MonoBehaviour
     {
         //StopCoroutine(NinjaAttack());
         isMovementAllowed = false;
-        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 2);
+        if (GamificationComponentData.instance.withMultiplayer)
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 2);
         animator.CrossFade("NinjaAmimationSlash3", 0.1f);
         yield return new WaitForSecondsRealtime(1f);
         isMovementAllowed = true;
@@ -1602,7 +1644,8 @@ public class PlayerControllerNew : MonoBehaviour
     IEnumerator NinjaAttack3()
     {
         //StopCoroutine(NinjaAttack());
-        swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 3);
+        if (GamificationComponentData.instance.withMultiplayer)
+            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaAttackSync", target: RpcTarget.Others, 3);
         isMovementAllowed = false;
         animator.CrossFade("Sword And Shield Attack", 0.1f);
         yield return new WaitForSecondsRealtime(1.5f);
@@ -1616,25 +1659,31 @@ public class PlayerControllerNew : MonoBehaviour
         if (isDrawSword)
         {
             isMovementAllowed = false;
-            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, true, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            if (GamificationComponentData.instance.withMultiplayer)
+                swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, true);
             animator.CrossFade("SheathingSword", 0.2f);
             yield return new WaitForSecondsRealtime(0.8f);
             swordModel.transform.SetParent(swordhandHook, false);
             yield return new WaitForSecondsRealtime(0.1f);
-            swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
-            swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+            //swordModel.transform.localPosition = new Vector3(0.0729999989f, -0.0329999998f, -0.0140000004f);
+            //swordModel.transform.localRotation = new Quaternion(0.725517809f, 0.281368196f, -0.0713528395f, 0.623990953f);
+
+            swordModel.transform.localPosition = new Vector3(0.0370000005f, 0.0729999989f, 0.0120000001f);
+            Quaternion newRotation = Quaternion.Euler(new Vector3(104.94f, 65.328f, 153.11f));
+            swordModel.transform.localRotation = newRotation;
+
             isMovementAllowed = true;
         }
         if (!isDrawSword)
         {
             isMovementAllowed = false;
-            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, false, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            if (GamificationComponentData.instance.withMultiplayer)
+                swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("SwordHolding", target: RpcTarget.Others, false);
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
             swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
             swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
-
             isMovementAllowed = true;
         }
     }
@@ -1673,7 +1722,6 @@ public class PlayerControllerNew : MonoBehaviour
         if (swordModel == null && time > 0)
         {
             swordModel = PhotonNetwork.Instantiate("Katana", Vector3.zero, new Quaternion(0, 0, 0, 0));
-            swordModel.GetComponent<NinjaSwordSyncing>().photonView.RPC("NinjaSwordInit", target: RpcTarget.Others, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
 
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
@@ -1728,6 +1776,7 @@ public class PlayerControllerNew : MonoBehaviour
     public float raycastDistance = 100f;
     private Coroutine throwMainCo;
     public bool isThrowModeActive = false;
+    ThrowThingsTrejectorySyncing trejectoryMultiplayer;
 
     public void ThrowMotion()
     {
@@ -1769,6 +1818,8 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = true;
                     trajectoryController.colliderAim.SetActive(true);
                     handBall.SetActive(true);
+
+                    trejectoryMultiplayer.photonView.RPC("Init", target: RpcTarget.Others, true, _ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     BuilderEventManager.DisableAnimationsButtons?.Invoke(false);
                     if (animator.GetBool("standJump"))
                         animator.SetBool("standJump", false);
@@ -1778,6 +1829,7 @@ public class PlayerControllerNew : MonoBehaviour
                     throwLineRenderer.enabled = false;
                     trajectoryController.colliderAim.SetActive(false);
                     handBall.SetActive(false);
+                    trejectoryMultiplayer.photonView.RPC("Init", target: RpcTarget.Others, false, _ballSpawn.position, (ActiveCamera.transform.forward + curveOffset) * _force);
                     if (!isBallThrow)
                         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
                 }
@@ -1846,7 +1898,10 @@ public class PlayerControllerNew : MonoBehaviour
         animator.SetBool("throw", false);
         animator.SetBool("throwing", true);
         GameObject spawned = PhotonNetwork.Instantiate("Ball", handBall.transform.position, handBall.transform.rotation);
-        spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
+        if (GamificationComponentData.instance.withMultiplayer)
+            spawned.GetComponent<Ball>().photonView.RPC("ThrowBall", RpcTarget.All, ((ActiveCamera.transform.forward + curveOffset) * _force), false);
+        else
+            spawned.GetComponent<Ball>().Init((ActiveCamera.transform.forward + curveOffset) * _force, false);
         yield return new WaitForSeconds(1f);
         animator.SetBool("throw", true);
         animator.SetBool("throwing", false);
@@ -1901,8 +1956,13 @@ public class PlayerControllerNew : MonoBehaviour
     public void Ninja_Throw(bool state, int index = 0)
     {
         swordhandHook = GamificationComponentData.instance.ikMuseum.m_SelfieStick.transform.parent;
-        swordHook = GamificationComponentData.instance.charcterBodyParts.PelvisBone.transform;
+        swordHook = GamificationComponentData.instance.charcterBodyParts.pelvisBoneNewCharacter.transform;
         _ballSpawn = swordhandHook;
+
+        if (trejectoryMultiplayer == null)
+            trejectoryMultiplayer = PhotonNetwork.Instantiate("ThowTrejectory", Vector3.zero, Quaternion.identity).GetComponent<ThrowThingsTrejectorySyncing>();
+
+        //Throw Things component
         if (trajectoryController == null)
             trajectoryController = gameObject.AddComponent<TrajectoryController>();
         trajectoryController.resolution = 300;
@@ -1935,5 +1995,52 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else
             ThrowMotion();
+    }
+
+
+    private Transform movingPlatform;
+    private Vector3 rayOffset = new Vector3(0f, .02f, 0f);
+    private float rayDistance = .3f;
+    private Vector3 lastMovePlatformPosition;
+    private Vector3 movedPosition;
+    internal bool isOnMovingPlatform;
+    private void CalculateMovingPlatformSpeed()
+    {
+        if (!XanaConstants.xanaConstants.isBuilderScene)
+            return;
+
+        if (!characterController.isGrounded)
+        {
+            if (movingPlatform != null)
+            {
+                movingPlatform = null;
+                movedPosition = lastMovePlatformPosition = Vector3.zero;
+            }
+            return;
+        }
+
+
+        RaycastHit hitData;
+        isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
+
+        //Debug.DrawRay(transform.position + rayOffset, -transform.up * rayDistance, (hitData.collider != null) ? Color.red : Color.green);
+
+        if (!isOnMovingPlatform)
+        {
+            movingPlatform = null;
+            movedPosition = lastMovePlatformPosition = Vector3.zero;
+            return;
+        }
+
+        if (movingPlatform == null || hitData.transform.GetInstanceID() != movingPlatform.GetInstanceID())
+        {
+            //  Debug.LogFormat("Moving TransformComponent: {0}, {1}", translateVar, translateVar.gameObject.name);
+            if (hitData.transform.GetComponentInParent<TranslateComponent>() == null && hitData.transform.GetComponentInParent<TransformComponent>() == null) return;
+            movingPlatform = hitData.transform;
+            lastMovePlatformPosition = movingPlatform.position;
+        }
+
+        movedPosition = movingPlatform.position - lastMovePlatformPosition;
+        lastMovePlatformPosition = movingPlatform.position;
     }
 }

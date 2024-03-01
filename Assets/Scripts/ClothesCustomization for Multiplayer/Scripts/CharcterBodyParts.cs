@@ -100,6 +100,10 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     public RandomPreset[] randomPresetData;
+
+    [Header("New Character PelvisBone")]
+    public GameObject pelvisBoneNewCharacter;
+
     private void Awake()
     {
         instance = this;
@@ -155,20 +159,20 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
 
-    public void SetAvatarByGender(AvatarGender _gender)
+    public void SetAvatarByGender(string _gender)
     {
         
-        if (_gender == AvatarGender.Male)
+        if (_gender == AvatarGender.Male.ToString())
         {
-            avatarController.avatarGender = _gender;
+            avatarController.avatarGender = AvatarGender.Male;
             maleAvatarMeshes.avatar_parent.SetActive(true);
             femaleAvatarMeshes.avatar_parent.SetActive(false);
             body = maleAvatarMeshes.avatar_body;
             head = maleAvatarMeshes.avatar_head;
         }
-        else if (_gender == AvatarGender.Female)
+        else if (_gender == AvatarGender.Female.ToString())
         {
-            avatarController.avatarGender = _gender;
+            avatarController.avatarGender = AvatarGender.Female;
             maleAvatarMeshes.avatar_parent.SetActive(false);
             femaleAvatarMeshes.avatar_parent.SetActive(true);
             body = femaleAvatarMeshes.avatar_body;

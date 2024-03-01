@@ -9298,6 +9298,7 @@ GameObject:
   - component: {fileID: 1868599478022124912}
   - component: {fileID: 8701127358875654265}
   - component: {fileID: 1340871213267758042}
+  - component: {fileID: 4245558004894388656}
   m_Layer: 22
   m_Name: XanaAvatar2.0
   m_TagString: PhotonLocalPlayer
@@ -9797,6 +9798,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_478
       ObjectType: Feet
+  pelvisBoneNewCharacter: {fileID: 7534189011245250971}
 --- !u!114 &756828810228821166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10137,10 +10139,11 @@ MonoBehaviour:
   presetValue: 
   avatarGender: 0
   masks: []
-  IsInit: 1
+  IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 4834376472678329915}
+  isWearOrNot: 0
   _PCharacterData:
     id: 
     name: 
@@ -10473,6 +10476,20 @@ MonoBehaviour:
   QuizCorrectClip: {fileID: 8300000, guid: e6a8f51c7d98a4aba82ff18df5ca28d8, type: 3}
   RandomNumberClip: {fileID: 8300000, guid: c0fc856fbfa46497dacbb8a9a8ce9489, type: 3}
   SpecialItemClip: {fileID: 8300000, guid: 5bc8ef94bc4724f4d8d14d7208e56424, type: 3}
+--- !u!136 &4245558004894388656
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834376472678329917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.16
+  m_Height: 1.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &4853724222966124403
 GameObject:
   m_ObjectHideFlags: 0
@@ -18058,7 +18075,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.07
   m_Pitch: 1
   Loop: 0
   Mute: 0

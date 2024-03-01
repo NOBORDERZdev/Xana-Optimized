@@ -215,6 +215,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFriendPanelFollowingCont;
     [SerializeField] public GameObject AddFreindContainer;
     [SerializeField] public GameObject ExtraPrefab;
+    public string SearchFriendInput = "";
     [Header("Feed 2.0")]
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
@@ -400,7 +401,6 @@ public class FeedUIController : MonoBehaviour
     }
 
     public void OnClickAddFriendSearchBtn(){
-        
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
@@ -1086,30 +1086,35 @@ public class FeedUIController : MonoBehaviour
     //this method is used to On find value inputfield value change.......
     public void OnValueChangeFindFriend()
     {
-        //if (!string.IsNullOrEmpty(findFriendInputField.text))
-        if (!string.IsNullOrEmpty(findFriendInputFieldAdvanced.Text))
-        {
-            //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
-            APIManager.Instance.RequestGetSearchUser(findFriendInputFieldAdvanced.Text);
-            if (!findFriendScreen.gameObject.activeInHierarchy)
+            //if (!string.IsNullOrEmpty(findFriendInputField.text))
+            if (!string.IsNullOrEmpty(findFriendInputFieldAdvanced.Text))
             {
-                findFriendScreen.gameObject.SetActive(true);
-            }
-        }
-        else
-        {
-            //if user typed character clear then clear all search user list.
-            if (findFriendScreen.gameObject.activeInHierarchy)
+            if (!SearchFriendInput.Equals(findFriendInputFieldAdvanced.Text))
             {
-                findFriendInputFieldAdvanced.Text = "";
-                findFriendScreen.gameObject.SetActive(false);
+                //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
+                APIManager.Instance.RequestGetSearchUser(findFriendInputFieldAdvanced.Text);
+                if (!findFriendScreen.gameObject.activeInHierarchy)
+                {
+                    findFriendScreen.gameObject.SetActive(true);
+                }
             }
-            foreach (Transform item in findFriendContainer)
+            }
+            else
             {
-                Destroy(item.gameObject);
+                //if user typed character clear then clear all search user list.
+                if (findFriendScreen.gameObject.activeInHierarchy)
+                {
+                    findFriendInputFieldAdvanced.Text = "";
+                    findFriendScreen.gameObject.SetActive(false);
+                }
+                foreach (Transform item in findFriendContainer)
+                {
+                    Destroy(item.gameObject);
+                }
             }
-        }
+            SearchFriendInput = findFriendInputFieldAdvanced.Text;
     }
+
     public void OnValueChangedProfileSearch()
     {
         //if (!string.IsNullOrEmpty(findFriendInputField.text))

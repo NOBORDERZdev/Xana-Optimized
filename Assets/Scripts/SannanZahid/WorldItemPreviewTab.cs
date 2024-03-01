@@ -285,10 +285,13 @@ public class WorldItemPreviewTab : MonoBehaviour
 
         for (int i = 0; i < m_WorldTags.Length; i++)
         {
-            GameObject temp = Instantiate(tagsPrefab, tagsParent);
-            temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
-            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
-            temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+            if (!m_WorldTags[i].IsNullOrEmpty())
+            {
+                GameObject temp = Instantiate(tagsPrefab, tagsParent);
+                temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
+                temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
+                temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+            }
         }
         tagsInstantiated = true;
     }
@@ -335,6 +338,9 @@ public class WorldItemPreviewTab : MonoBehaviour
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
                     thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
+                //Reloading following space
+                WorldManager.instance.changeFollowState = true;
+                WorldManager.ReloadFollowingSpace?.Invoke();
             }
             else
             {
@@ -361,6 +367,10 @@ public class WorldItemPreviewTab : MonoBehaviour
                     thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
 
                 }
+                //Reloading following space
+                WorldManager.instance.changeFollowState = true;
+                WorldManager.ReloadFollowingSpace?.Invoke();
+
             }
             else
             {

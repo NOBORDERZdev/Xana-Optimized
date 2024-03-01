@@ -511,7 +511,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-
+        #region Old Picture and video type feed fetching code
         //////////////////////Old Picture and video type feed fetching code
         //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
         //{
@@ -591,6 +591,8 @@ public class APIManager : MonoBehaviour
         //        }
         //    }
         //}
+
+        #endregion
         //////////////////////New text post type feed fetching code
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.GetUserAllTextPosts + userId + "/" + pageNum + "/" + pageSize)))
         {
@@ -623,7 +625,6 @@ public class APIManager : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 Debug.Log("IERequestGetFeedsByUserId success data" + data);
-                Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,
@@ -633,6 +634,7 @@ public class APIManager : MonoBehaviour
                 if (callingFrom == "MyProfile")
                 {
                     MyProfileDataManager.Instance.totalPostText.text = test.data.Count.ToString();
+                    allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
@@ -1715,6 +1717,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                string data = www.downloadHandler.text;
+                //Debug.Log("Feed user profile data:" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                if (searchUserRoot.msg.Contains("yourself"))
+                {
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+                    }
+                }
             }
             else
             {
@@ -2133,6 +2145,14 @@ public class APIManager : MonoBehaviour
                 {
                     //Debug.Log("Username already exists");
                     MyProfileDataManager.Instance.ShowEditProfileNameErrorMessage("Username already exists");
+                }
+                else
+                {
+                    if (XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("userProfile"))
+                    {
+                        if (!XanaConstants.xanaConstants.profileImageModifedByUser)
+                            ProfilePictureManager.instance.MakeProfilePicture(setName_name);
+                    }
                 }
             }
         }
