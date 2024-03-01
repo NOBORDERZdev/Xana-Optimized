@@ -227,13 +227,13 @@ public class WorldItemPreviewTab : MonoBehaviour
         if (!WorldNameTxt.text.Contains("XANA Lobby"))
         {
             BannerImgSprite[0].sprite = FadeImg.sprite;
-            LobbyLogoContaionr.gameObject.SetActive(false);
+           // LobbyLogoContaionr.gameObject.SetActive(false);
         }
-        else
-        {
-            LobbyLogoContaionr.gameObject.SetActive(true);
+        //else
+        //{
+        //    LobbyLogoContaionr.gameObject.SetActive(true);
 
-        }
+        //}
 
         BannerImgSprite[1].sprite = FadeImg.sprite;
         if (BannerImgSprite.Length > 2)
