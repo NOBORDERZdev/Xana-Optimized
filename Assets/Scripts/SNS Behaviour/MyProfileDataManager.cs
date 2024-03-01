@@ -897,9 +897,16 @@ public class MyProfileDataManager : MonoBehaviour
             if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
             {
                 Debug.Log("currentPageAllFeedWithUserIdRoot");
-                if ((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null)
-                   || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+                if (loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
                 {
+                    //allPhotoContainer
+                    int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    allPhotoContainer.transform.GetChild(index).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                }
+                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+                   && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null"))
+                {
+            
                     bool isVideo = false;
 
                     Transform parent = allPhotoContainer;
