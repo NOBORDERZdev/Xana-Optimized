@@ -668,7 +668,10 @@ public class BottomTabManager : MonoBehaviour
             //---->>>Sannan OnSelectedClick(4);
             if (GlobalVeriableClass.callingScreen == "Profile")
                 return;
-
+            if (FeedUIController.Instance)
+            {
+                FeedUIController.Instance.feedUiScreen.SetActive(false);
+            }
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
