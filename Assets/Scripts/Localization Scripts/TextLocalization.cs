@@ -69,7 +69,6 @@ public class TextLocalization : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForEndOfFrame();
         if (LocalizeText != null)
         {
             StaticLocalizeTextText();
