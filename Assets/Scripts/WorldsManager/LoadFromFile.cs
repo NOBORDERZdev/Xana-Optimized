@@ -36,7 +36,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
-    public PopulationGenerator populationGenerator;
 
     private GameObject player;
 
