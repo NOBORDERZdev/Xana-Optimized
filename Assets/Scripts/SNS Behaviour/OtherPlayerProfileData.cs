@@ -600,6 +600,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
                     //GameObject userTagPostObject = Instantiate(userPostPrefab, userPostParent);
                     GameObject userTagPostObject = Instantiate(MyProfileDataManager.Instance.photoPrefab, parent);
+                    userTagPostObject.AddComponent<LayoutElement>();
                     //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
                     userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
@@ -627,10 +628,11 @@ public class OtherPlayerProfileData : MonoBehaviour
                     //    allMyFeedVideoRootDataList.Add(currentPageAllTextPostWithUserIdRoot.Data.Rows[i]);
                     //}
                 }
-            StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
+            //StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
         }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
         {
+                StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
                 if (emptyFeedObjRef)
                 {
                     Destroy(emptyFeedObjRef);
@@ -648,8 +650,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
 
-        yield return new WaitForSeconds(0.2f);
-
+        yield return new WaitForSeconds(0.5f);
         FeedUIController.Instance.ShowLoader(false);
 
         yield return new WaitForSeconds(0.8f);
@@ -953,7 +954,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         LoadUserData(true);
 
-        FeedUIController.Instance.ShowLoader(true);
+        //FeedUIController.Instance.ShowLoader(true);
 
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
@@ -968,7 +969,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         LoadUserData(true);
 
-        FeedUIController.Instance.ShowLoader(true);
+        //FeedUIController.Instance.ShowLoader(true);
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(id));
         APIManager.Instance.RequestGetFeedsByUserId(id, 1, 40, "OtherPlayerFeed");
@@ -987,10 +988,15 @@ public class OtherPlayerProfileData : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetSingleUserProfile), form))
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            // Start the stopwatch
+            //Stopwatch stopwatch = Stopwatch.StartNew();
 
             www.SendWebRequest();
 
-            while(!www.isDone)
+            // Stop the stopwatch
+            //stopwatch.Stop();
+
+            while (!www.isDone)
             {
                 yield return null;
             }
@@ -1001,6 +1007,9 @@ public class OtherPlayerProfileData : MonoBehaviour
             }
             else
             {
+                //// Print the elapsed time
+                //UnityEngine.Debug.Log("Other user profile data Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
+
                 string data = www.downloadHandler.text;
                Debug.Log("IERequestGetSingleUserDetails data:" + data);
                 SingleUserProfileRoot singleUserProfileRoot = JsonConvert.DeserializeObject<SingleUserProfileRoot>(data);
@@ -1047,11 +1056,11 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this method is used to Get Other userRole and pass info.......
     public void RequestGetOtherUserRole(int userId)
     {
-        if (gameObject.activeSelf)
-        {
-            Debug.Log("RequestGetOtherUserRole userId:" + userId);
-            StartCoroutine(IERequestGetOtherUserRole(userId));
-        }
+        //if (gameObject.activeSelf)
+        //{
+        //    Debug.Log("RequestGetOtherUserRole userId:" + userId);
+        //    StartCoroutine(IERequestGetOtherUserRole(userId));
+        //}
     }
 
     IEnumerator IERequestGetOtherUserRole(int userId)
