@@ -278,7 +278,7 @@ public class MyProfileDataManager : MonoBehaviour
         //Debug.Log(callingFrom);
         if (callingFrom == "EditProfileAvatar")
         {
-            FeedUIController.Instance.ShowLoader(false);
+            //FeedUIController.Instance.ShowLoader(false);
             EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
             if (!isEditProfileNameAlreadyExists)
             {
@@ -890,7 +890,7 @@ public class MyProfileDataManager : MonoBehaviour
         currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
         bool IsMyProfileFeed = false;
         //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.ShowLoader(true);
+        //FeedUIController.Instance.ShowLoader(true);
 
         for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
@@ -1079,7 +1079,7 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
-        FeedUIController.Instance.ShowLoader(false);
+        //FeedUIController.Instance.ShowLoader(false);
     }
 
     public void RefreshHieght()
@@ -1097,6 +1097,7 @@ public class MyProfileDataManager : MonoBehaviour
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
 
         yield return new WaitForSeconds(1f);
+        FeedUIController.Instance.ShowLoader(false);
         isFeedLoaded = true;
         if (pageNum > 1 && currentPageAllTextPostWithUserIdRoot.data.rows.Count > 0)
         {
@@ -2195,7 +2196,7 @@ public class MyProfileDataManager : MonoBehaviour
                     isUrl = true;
                 }
 
-                FeedUIController.Instance.ShowLoader(true);
+                //FeedUIController.Instance.ShowLoader(true);
                 RequestForWebSiteValidation(webUrl);
                 return true;
             }
@@ -2233,7 +2234,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);
+            //FeedUIController.Instance.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
             {
