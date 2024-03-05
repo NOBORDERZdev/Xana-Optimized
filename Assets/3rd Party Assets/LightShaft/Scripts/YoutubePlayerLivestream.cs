@@ -28,7 +28,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
     public GameObject videoPlayerParent;
 
     [Header("Only for Toyota World")]
-    private Toyota.AR_Nft_Manager nftMAnager;
+    public Toyota.AR_Nft_Manager nftMAnager;
 
     void Start()
     {
@@ -42,8 +42,6 @@ public class YoutubePlayerLivestream : MonoBehaviour
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
 
-        if (envType.Equals(EnvType.Other))
-            nftMAnager = GetComponentInParent<Toyota.AR_VideoAndImage>().nftMAnager;
     }
 
 
@@ -225,7 +223,11 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 else if (json["streamingData"]["hlsManifestUrl"] == null)
                 {
                     Debug.Log("<color=red> Key Not Found .</color>");
-                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
+                    
+                    if (envType.Equals(EnvType.JJWorld))
+                        JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
+                    else if (envType.Equals(EnvType.Other))
+                        nftMAnager.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
                 }
                 else
                 {
