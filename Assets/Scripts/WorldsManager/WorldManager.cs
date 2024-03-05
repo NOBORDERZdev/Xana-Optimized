@@ -8,7 +8,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
+
 
 public class WorldManager : MonoBehaviour
 {
@@ -588,6 +588,18 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
+
+        /// <summary>
+        /// As creator name is different from actual scene name
+        /// </summary>
+        if (WorldItemView.m_EnvName == "D + Infinity Labo") 
+        {
+            WorldItemView.m_EnvName = "D_Infinity_Labo";
+            Launcher.sceneName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        }
+        
+        
         _callSingleTime = true;
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
