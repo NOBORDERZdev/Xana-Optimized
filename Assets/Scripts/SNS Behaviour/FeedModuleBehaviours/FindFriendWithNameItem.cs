@@ -207,6 +207,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         Debug.Log("Search User id:" + searchUserRow.id);
+        FeedUIController.Instance.ShowLoader(true);
         APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
@@ -249,8 +250,6 @@ public class FindFriendWithNameItem : MonoBehaviour
         feedRawData.FollowerCount = searchUserRow.followerCount;
         feedRawData.FollowingCount = searchUserRow.followingCount;
         feedRawData.feedCount = searchUserRow.feedCount;
-
-        //FeedUIController.Instance.ShowLoader(true);
 
         OtherPlayerProfileData.Instance.currentFindFriendWithNameItemScript = this;
 
