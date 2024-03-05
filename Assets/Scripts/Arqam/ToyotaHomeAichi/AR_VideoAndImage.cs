@@ -45,7 +45,6 @@ namespace Toyota
         public GameObject imgVideoFrame4x3;
 
         public bool isMultipleScreen = false;
-        public bool isCreateFrame = true;
 
         public enum RoomType
         {
@@ -131,28 +130,8 @@ namespace Toyota
                 preRecordedPlayer.SetActive(false);
 
             SetThumbail(imageLink);
-            if (isCreateFrame)
-                CreateFrame();   //create frame
         }
-        //void SetQuiz()
-        //{
-        //    if (imgVideo16x9)
-        //        imgVideo16x9.SetActive(false);
-        //    if (imgVideo9x16)
-        //        imgVideo9x16.SetActive(false);
-        //    if (imgVideo1x1)
-        //        imgVideo1x1.SetActive(false);
-        //    if (imgVideo4x3)
-        //        imgVideo4x3.SetActive(false);
-        //    if (liveVideoPlayer)
-        //        liveVideoPlayer.SetActive(false);
-        //    if (preRecordedPlayer)
-        //        preRecordedPlayer.SetActive(false);
 
-        //    SetThumbail(imageLink);
-        //    if (isCreateFrame)
-        //        CreateFrame();   //create frame
-        //}
         void SetImage()
         {
             if (imgVideo16x9)
@@ -169,8 +148,6 @@ namespace Toyota
                 preRecordedPlayer.SetActive(false);
 
             SetThumbail(imageLink);
-            if (isCreateFrame)
-                CreateFrame();   //create frame
         }
 
         void SetThumbail(string _imageLink)
@@ -415,21 +392,6 @@ namespace Toyota
 
             if (nftMAnager && renderTexture_temp != null)
                 nftMAnager.NFTLoadedVideos.Add(renderTexture_temp);
-
-            if (isCreateFrame)
-                CreateFrame();   //create frame
-        }
-
-        private void CreateFrame()
-        {
-            GameObject frame = AHFrameManager.instance.ref_PMYObjectPooler.GetPooledObjectFrame(_imgVideoRatio);
-            frame.transform.SetParent(this.gameObject.transform);
-            frame.transform.position = transform.position;
-            frame.SetActive(true);
-            frame.transform.localPosition = new Vector3(AHFrameManager.instance.frameLocalPos.x, AHFrameManager.instance.frameLocalPos.y, AHFrameManager.instance.frameLocalPos.z);
-            frame.transform.localEulerAngles = AHFrameManager.instance.frameLocalRot;
-            frame.transform.localScale = new Vector3(AHFrameManager.instance.frameLocalScale.x, AHFrameManager.instance.frameLocalScale.y, AHFrameManager.instance.frameLocalScale.z);
-
         }
 
         public void OpenWorldInfo()
