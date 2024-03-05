@@ -176,7 +176,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     public void CallAnalytics(string idOfObject, string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt);
+        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt); // Due to Flow change this API in not in use
     }
     public void SetPanelToBottom()
     {
