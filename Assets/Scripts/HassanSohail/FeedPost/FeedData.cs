@@ -45,7 +45,8 @@ public class FeedData : MonoBehaviour
             timeUpdateInterval=1;
             if (isEnable)
             {
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+                gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
             }
 
             if (data.isLikedByUser)
@@ -237,15 +238,16 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
-        }else
+        }
+        else
         {
             return "";
         }
-   }
+    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
         yield return new WaitForSecondsRealtime(timeUpdateInterval);
-        Date.text = CalculateTimeDifference(postTime).ToString();
+        Date.text = CalculateTimeDifference(postTime).ToString(); 
     }
     IEnumerator GetProfileImage(string url)
     {
