@@ -23,6 +23,7 @@ Material:
   m_Name: FloorUV_Wall 2
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
+  - _NORMALMAP
   - _OCCLUSIONMAP
   - _PARALLAXMAP
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -55,10 +56,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: a5996c9da89cf414da7c3e86923366e0, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0.55, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2fd6bd9b8da017e40ad0e8da1d468f27, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -95,7 +96,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: a5996c9da89cf414da7c3e86923366e0, type: 3}
-        m_Scale: {x: 3, y: 3}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0.55, y: 0}
     - _Metallic:
         m_Texture: {fileID: 0}
@@ -142,11 +143,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: c5c8e026922c9384c90cb1063410ba9a, type: 3}
+        m_Texture: {fileID: 2800000, guid: a5996c9da89cf414da7c3e86923366e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
+        m_Texture: {fileID: 2800000, guid: a5996c9da89cf414da7c3e86923366e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Raindrops:
@@ -211,7 +212,7 @@ Material:
     - _Hegiht_Intensity: 0.004
     - _HeightIntensity: 0.0001
     - _MetalicshiftGreen: 0
-    - _Metallic: 0.3
+    - _Metallic: 0
     - _Metallicshift: 1
     - _MetallicshiftBlack: 0
     - _MetallicshiftRed: 0
@@ -221,7 +222,7 @@ Material:
     - _NormalintensityGreen: 1
     - _NormalintensityRed: 1
     - _OcclusionIntensity: 1
-    - _OcclusionStrength: 0
+    - _OcclusionStrength: 1
     - _Occlusionshift: 1
     - _Paintedsmoothnesshift: 0
     - _Parallax: 0.0112
@@ -237,7 +238,7 @@ Material:
     - _Ripplesintensity: 0
     - _Ripplestiling: 13.3
     - _Rotation: 0
-    - _Smoothness: 0.95
+    - _Smoothness: 0.93
     - _SmoothnessBlack: 1
     - _SmoothnessGreen: 1
     - _SmoothnessRed: 1
@@ -258,8 +259,8 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _BaseColor: {r: 0.9010269, g: 0.8160377, b: 1, a: 1}
-    - _Color: {r: 0.9010269, g: 0.8160377, b: 1, a: 1}
+    - _BaseColor: {r: 0.80911756, g: 0.7490655, b: 0.8773585, a: 1}
+    - _Color: {r: 0.80911756, g: 0.7490655, b: 0.8773585, a: 1}
     - _Color2: {r: 0.7058823, g: 0.7058823, b: 0.7058823, a: 0}
     - _EmissionColor: {r: 0, g: 0.53333336, b: 4, a: 1}
     - _Overlaycolor: {r: 0.7058823, g: 0.7058823, b: 0.7058823, a: 0}
