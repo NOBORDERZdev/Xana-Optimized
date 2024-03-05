@@ -19,36 +19,12 @@ public class LoadingSavingAvatar : MonoBehaviour
     void Start()
     {
         Once = false;
-       // LoadingImg.fillAmount = 0;
-        time = 0;
-
-        //print("app version====" + Application.version);
-        //StartCoroutine(getVersion());
         versionText.text = "Ver." + Application.version;
         if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
         {
             tabBG.SetActive(true);
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!Once)
-        {
-            time += Time.deltaTime;
-           // LoadingImg.fillAmount = time / TotalTimer;
-            if (time >= TotalTimer)
-            {
-                Once = true;
-              //  CallWelcome();
-                // StartCoroutine(versionCheck());
-
-            }
-        }
-    }
-
 
     public void CallWelcome()
     {
@@ -65,7 +41,6 @@ public class LoadingSavingAvatar : MonoBehaviour
 
         if (uwr.isNetworkError)
         {
-
             Debug.Log("Error While Sending: " + uwr.error);
         }
         else
@@ -76,7 +51,6 @@ public class LoadingSavingAvatar : MonoBehaviour
                 if (bean.success)
                 {
                     version = bean.data.name;
-                    //versionText.text = "Ver." + version;
                 }
             }
             catch
