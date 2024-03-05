@@ -101,6 +101,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
         CreatorNameTxt.text = creatorName;
+        CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creatorName);
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
 
@@ -143,6 +144,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
         {*/
             CreatorNameTxt.text = creator_Name;
+            CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
             CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
             AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
             if (string.IsNullOrEmpty(userAvatarURL))

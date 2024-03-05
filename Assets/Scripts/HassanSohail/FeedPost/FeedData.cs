@@ -45,7 +45,8 @@ public class FeedData : MonoBehaviour
             timeUpdateInterval=1;
             if (isEnable)
             {
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+                gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
             }
 
             if (data.isLikedByUser)
@@ -68,6 +69,10 @@ public class FeedData : MonoBehaviour
             if (isFeed)
             {
                 Invoke(nameof(HieghtListUpdateWithDelay),0.08f);
+            }
+            else
+            {
+                PostHieghtUpdateForProfileVisit();
             }
         }
     }
@@ -180,8 +185,8 @@ public class FeedData : MonoBehaviour
         }
     }
 
-    void HieghtListUpdateWithDelay(){ 
-       scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+    void HieghtListUpdateWithDelay(){
+        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
         RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         Vector2 temp = new Vector2(rectTemp.rect.width , rectTemp.rect.height );
 
@@ -189,6 +194,15 @@ public class FeedData : MonoBehaviour
        //gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
+
+    void PostHieghtUpdateForProfileVisit()
+    {
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width, rectTemp.rect.height);
+
+        gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true);
+    }
+
     public string CalculateTimeDifference(DateTime postTime)
    {
         if (isEnable && gameObject.activeInHierarchy)
@@ -224,15 +238,16 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
-        }else
+        }
+        else
         {
             return "";
         }
-   }
+    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
         yield return new WaitForSecondsRealtime(timeUpdateInterval);
-        Date.text = CalculateTimeDifference(postTime).ToString();
+        Date.text = CalculateTimeDifference(postTime).ToString(); 
     }
     IEnumerator GetProfileImage(string url)
     {
