@@ -61,6 +61,8 @@ public class CameraLook : MonoBehaviour
     [SerializeField] GameObject pointObj;
     GameObject camRender;
     float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius, defaultZoomInLimit, defaultZoomOutLimit;
+    [HideInInspector]
+    public bool isReturn = false;
 
     private void OnEnable()
     {
@@ -135,10 +137,11 @@ public class CameraLook : MonoBehaviour
 
     private void Update()
     {
+        if (isReturn) return;
 
         _allowRotation = true;
 
-        if (IsPointerOverUIObject())
+        if (!Application.isEditor && IsPointerOverUIObject() && !_allowSyncedControl)
         {
             _allowRotation = false;
         }
@@ -157,18 +160,18 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Editor();
                 }
             }
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
-            {
-                zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
-                zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
-                cinemachine.m_Orbits[1].m_Radius = zoomScrollVal;
-            }
-            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
-            {
-                zoomScrollVal -= originalOrbits[1].m_Radius - editorSensitivity;
-                zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
-                cinemachine.m_Orbits[1].m_Radius -= originalOrbits[1].m_Radius - editorSensitivity;
-            }
+            //if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
+            //{
+            //    zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
+            //    zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
+            //    cinemachine.m_Orbits[1].m_Radius = zoomScrollVal;
+            //}
+            //else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
+            //{
+            //    zoomScrollVal -= originalOrbits[1].m_Radius - editorSensitivity;
+            //    zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
+            //    cinemachine.m_Orbits[1].m_Radius -= originalOrbits[1].m_Radius - editorSensitivity;
+            //}
         }
         else if (!Application.isEditor)
         {
@@ -233,7 +236,9 @@ public class CameraLook : MonoBehaviour
             if (!isJoystickPressed)
             {
                 if (Input.touchCount > 0)
+                {
                     OneFingureTouch();
+                }
                 if (Input.touchCount > 1)
                     TwoFingureTouch();
             }

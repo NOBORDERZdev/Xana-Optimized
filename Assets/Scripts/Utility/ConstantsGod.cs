@@ -271,4 +271,8 @@ public class ConstantsGod
     public static string FeedLikeDislikePost = "/item/like-text-post";
     public static string FeedSearch="/item/search-following-text-post";
     #endregion
+
+    #region PMY World Api's
+    public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
 }

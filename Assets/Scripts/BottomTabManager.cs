@@ -711,6 +711,7 @@ public class BottomTabManager : MonoBehaviour
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
                 FeedUIController.Instance.AddFriendPanel.SetActive(false);
+                FeedUIController.Instance.ShowLoader(true);
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {
