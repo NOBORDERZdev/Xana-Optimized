@@ -476,7 +476,15 @@ public class AvatarController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                    if (_CharacterData.myItemObj[0].ItemName == "Boy_Pant_V009" && _CharacterData.myItemObj[1].ItemName == "Boy_Shirt_V009")
+                                    {
+                                        if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
+                                            UnStichItem("Feet");
+                                    }
+                                    else
+                                    {
+                                        WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                    }
                                 }
                             }
                         }
