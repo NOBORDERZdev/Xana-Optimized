@@ -22,6 +22,13 @@ public class BodyCustomizationTrigger : MonoBehaviour
     public float m_BlendTime;
     public AnimationCurve m_AnimCurve;
 
+    CharcterBodyParts charBodyParts;
+    private void Start()
+    {
+        charBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+    }
+
+
     public void CustomizationTriggerTwo()
     {
         //-----------------------------------
@@ -45,53 +52,54 @@ public class BodyCustomizationTrigger : MonoBehaviour
         }
 
     }
-   
+
     // WaqasAhmad
     void ChangeBoneValue()
     {
+        print("###### Name  " + gameObject.name);
         if (boneData.Count > 0)
         {
             if (m_FaceMorphFeature == FaceMorphFeature.Lips)
             {
                 // Mouth Bone
-                CharcterBodyParts.instance.Lips.transform.localPosition = boneData[0].Pos;
-                CharcterBodyParts.instance.Lips.transform.localScale = boneData[0].Scale;
-                CharcterBodyParts.instance.Lips.transform.localRotation = Quaternion.Euler(boneData[0].Rotation);
+                charBodyParts.Lips.transform.localPosition = boneData[0].Pos;
+                charBodyParts.Lips.transform.localScale = boneData[0].Scale;
+                charBodyParts.Lips.transform.localRotation = Quaternion.Euler(boneData[0].Rotation);
 
                 // Lip Righside
-                CharcterBodyParts.instance.BothLips[1].transform.localPosition = boneData[1].Pos;
-                CharcterBodyParts.instance.BothLips[1].transform.localScale = boneData[1].Scale;
-                CharcterBodyParts.instance.BothLips[1].transform.localRotation = Quaternion.Euler(boneData[1].Rotation);
+                charBodyParts.BothLips[1].transform.localPosition = boneData[1].Pos;
+                charBodyParts.BothLips[1].transform.localScale = boneData[1].Scale;
+                charBodyParts.BothLips[1].transform.localRotation = Quaternion.Euler(boneData[1].Rotation);
 
                 // Lip Leftside
-                CharcterBodyParts.instance.BothLips[0].transform.localPosition = boneData[2].Pos;
-                CharcterBodyParts.instance.BothLips[0].transform.localScale = boneData[2].Scale;
-                CharcterBodyParts.instance.BothLips[0].transform.localRotation = Quaternion.Euler(boneData[2].Rotation);
+                charBodyParts.BothLips[0].transform.localPosition = boneData[2].Pos;
+                charBodyParts.BothLips[0].transform.localScale = boneData[2].Scale;
+                charBodyParts.BothLips[0].transform.localRotation = Quaternion.Euler(boneData[2].Rotation);
             }
             if (m_FaceMorphFeature == FaceMorphFeature.Nose)
             {
                 // Nose Bone
-                CharcterBodyParts.instance.Nose.transform.localPosition = boneData[0].Pos;
-                CharcterBodyParts.instance.Nose.transform.localScale = boneData[0].Scale;
+                charBodyParts.Nose.transform.localPosition = boneData[0].Pos;
+                charBodyParts.Nose.transform.localScale = boneData[0].Scale;
             }
             if (m_FaceMorphFeature == FaceMorphFeature.Face)
             {
                 // JBone
-                CharcterBodyParts.instance.JBone.transform.localScale = boneData[0].Scale;
+                charBodyParts.JBone.transform.localScale = boneData[0].Scale;
 
                 // HeadUpper Bone
-                CharcterBodyParts.instance.ForeHead.transform.parent.transform.localScale = boneData[1].Scale;
+                charBodyParts.ForeHead.transform.parent.transform.localScale = boneData[1].Scale;
 
                 ResetBlendShapeForFace();
             }
         }
         if (m_FaceMorphFeature == FaceMorphFeature.Eyes)
         {
-            CharcterBodyParts.instance.ApplyBlendShapeEyesValues(CharcterBodyParts.instance.Head, blendShapeData, eyesPosition, eyes_Rotation_z);
+            charBodyParts.ApplyBlendShapeEyesValues(charBodyParts.head.gameObject, blendShapeData, eyesPosition, eyes_Rotation_z);
         }
         if (m_FaceMorphFeature == FaceMorphFeature.Lips)
         {
-            CharcterBodyParts.instance.ApplyBlendShapeLipsValues(CharcterBodyParts.instance.Head, blendShapeData);
+            charBodyParts.ApplyBlendShapeLipsValues(charBodyParts.head.gameObject, blendShapeData);
         }
     }
 

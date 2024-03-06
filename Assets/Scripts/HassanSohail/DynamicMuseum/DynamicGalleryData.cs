@@ -697,6 +697,8 @@ public class DynamicGalleryData : MonoBehaviour
                     {
                         videoPlayer.Play();
                     }
+                    if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
+                        ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
                 }
                else if (!isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
                 {
@@ -705,7 +707,8 @@ public class DynamicGalleryData : MonoBehaviour
                     ShowNFTDetails.instance.ShowImage(this.GetComponent<DynamicGalleryData>());
                     isVisible = true;
 
-
+                    if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
+                        ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
                     print("Clicked on Image");
                 }
                

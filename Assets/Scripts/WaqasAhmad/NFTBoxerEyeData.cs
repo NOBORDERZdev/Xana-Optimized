@@ -44,7 +44,7 @@ public class NFTBoxerEyeData : MonoBehaviour
         int index =  GetIndex(eyeName);
         //CharcterBodyParts bodyParts = CharcterBodyParts.instance.gameObject.GetComponent<CharcterBodyParts>();
         //AvatarController  avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.Head.GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.head;
 
         // Reset BlendShapes to Default
         //bodyParts.DefaultBlendShapes(bodyParts.gameObject);
@@ -84,7 +84,7 @@ public class NFTBoxerEyeData : MonoBehaviour
     public void NextBone()
     {
         boneIndex++;
-        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.Head.GetComponent<SkinnedMeshRenderer>();
+        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.head;
         CharcterBodyParts.instance.gameObject.GetComponent<AvatarController>().ResetBonesDefault(CharcterBodyParts.instance);
 
         Debug.Log("Shape  : " + items[boneIndex].styleName);

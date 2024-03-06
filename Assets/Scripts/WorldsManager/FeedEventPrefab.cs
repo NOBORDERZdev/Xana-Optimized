@@ -605,10 +605,13 @@ public class FeedEventPrefab : MonoBehaviour
 
         for (int i = 0; i < worldTags.Length; i++)
         {
-            GameObject temp = Instantiate(tagsPrefab, tagsParent);
-            temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
-            temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
-            //temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
+            if (!worldTags[i].IsNullOrEmpty())
+            {
+                GameObject temp = Instantiate(tagsPrefab, tagsParent);
+                temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+                temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
+            }
         }
         tagsInstantiated = true;
     }

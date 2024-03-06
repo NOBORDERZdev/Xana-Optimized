@@ -215,7 +215,7 @@ public class ItemDetail : MonoBehaviour
                     }
                     else
                     {
-                        //Debug.LogError("Download Failed");
+                        ////Debug.LogError("Download Failed");
                     }
                 });
 
@@ -242,7 +242,7 @@ public class ItemDetail : MonoBehaviour
         if (CategoriesEnumVar.Equals(EnumClass.CategoryEnum.HairAvatar) && this.id == XanaConstants.xanaConstants.hair)
         {
             isHairItem = true;
-           // Debug.Log("IsStartItem=true");
+           // //Debug.Log("IsStartItem=true");
         }
         CheckDeemoNft();
     }
@@ -252,7 +252,7 @@ public class ItemDetail : MonoBehaviour
         {
             if (name.Contains("deemotshirt"))
             {
-                Debug.Log("yES dEEMO dEEMO");
+                //Debug.Log("yES dEEMO dEEMO");
                this.gameObject.SetActive(false);
             }
 
@@ -272,8 +272,8 @@ public class ItemDetail : MonoBehaviour
             {
                 case "HairAvatar":
                     {
-                        //Debug.Log(this.id + " xanaConstantsHairs: " + XanaConstants.xanaConstants.hair);
-                        //Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
+                        ////Debug.Log(this.id + " xanaConstantsHairs: " + XanaConstants.xanaConstants.hair);
+                        ////Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
                         if ((isHairItem && this.id == XanaConstants.xanaConstants.hair) ||
                             (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hair))
                         {
@@ -283,14 +283,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.HairAvatar);
-                                Debug.Log("<color=red> Set Default Hair </color>");
+                                //Debug.Log("<color=red> Set Default Hair </color>");
                             }
                         }
                         break;
                     }
                 case "EyeBrowAvatar":
                     {
-                        //Debug.Log(id.ParseToInt() + " EyeBrowValue: " + _CharacterData.EyeBrowValue);
+                        ////Debug.Log(id.ParseToInt() + " EyeBrowValue: " + _CharacterData.EyeBrowValue);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == _CharacterData.EyeBrowValue)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -298,14 +298,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
-                                Debug.Log("<color=red> Set Default EyeBrow </color>");
+                                //Debug.Log("<color=red> Set Default EyeBrow </color>");
                             }
                         }
                         break;
                     }
                 case "SkinToneAvatar":
                     {
-                        //Debug.Log(MyIndex + " SkinValue: " + _CharacterData.SkinId);
+                        ////Debug.Log(MyIndex + " SkinValue: " + _CharacterData.SkinId);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && MyIndex == _CharacterData.SkinId)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -313,14 +313,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.SkinToneAvatar);
-                                Debug.Log("<color=red> Set Default Skin Color </color>");
+                                //Debug.Log("<color=red> Set Default Skin Color </color>");
                             }                          
                         }
                     }
                     break;
                 case "HairAvatarColor":
                     {
-                        //Debug.Log(id + " XanaHairColoPalette: " + XanaConstants.xanaConstants.hairColoPalette);
+                        ////Debug.Log(id + " XanaHairColoPalette: " + XanaConstants.xanaConstants.hairColoPalette);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hairColoPalette)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -328,14 +328,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.HairAvatarColor);
-                                Debug.Log("<color=red> Set Default HairColor:::: </color>");
+                                //Debug.Log("<color=red> Set Default HairColor:::: </color>");
                             }
                         }
                         break;
                     }
                 case "EyeBrowAvatarColor":
                     {
-                        Debug.Log("XanaEyeBrowColorPaletteIndex: " + XanaConstants.xanaConstants.eyeBrowColorPaletteIndex);
+                        //Debug.Log("XanaEyeBrowColorPaletteIndex: " + XanaConstants.xanaConstants.eyeBrowColorPaletteIndex);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeBrowColorPaletteIndex)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -343,14 +343,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyeBrowAvatarColor);
-                                Debug.Log("<color=red> Set Default EyeBrowColorPalette::::" + this.gameObject.name + " </color>");
+                                //Debug.Log("<color=red> Set Default EyeBrowColorPalette::::" + this.gameObject.name + " </color>");
                             }
                         }
                         break;
                     }
                 case "EyesAvatarColor":
                     {
-                        Debug.Log("XanaEyeColorPalette: " + XanaConstants.xanaConstants.eyeColorPalette);
+                        //Debug.Log("XanaEyeColorPalette: " + XanaConstants.xanaConstants.eyeColorPalette);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.eyeColorPalette)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -358,14 +358,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyesAvatarColor);
-                                Debug.Log("<color=red> Set Default EyeColorPalette:::: </color>");
+                                //Debug.Log("<color=red> Set Default EyeColorPalette:::: </color>");
                             }
                         }
                         break;
                     }
                 case "LipsAvatarColor":
                     {
-                        Debug.Log("XanaLipColorPalette: " + XanaConstants.xanaConstants.lipColorPalette);
+                        //Debug.Log("XanaLipColorPalette: " + XanaConstants.xanaConstants.lipColorPalette);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.lipColorPalette)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -373,14 +373,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.LipsAvatarColor);
-                                Debug.Log("<color=red> Set Default LipsColorPalette:::: </color>");
+                                //Debug.Log("<color=red> Set Default LipsColorPalette:::: </color>");
                             }
                         }
                         break;
                     }
                 case "EyeLashesAvatar":
                     {
-                        //Debug.Log(id.ParseToInt() + " EyeLashesValue: " + XanaConstants.xanaConstants.eyeLashesIndex);
+                        ////Debug.Log(id.ParseToInt() + " EyeLashesValue: " + XanaConstants.xanaConstants.eyeLashesIndex);
                         if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeLashesIndex)
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -388,14 +388,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                                Debug.Log("<color=red> Set Default EyeLashes </color>");
+                                //Debug.Log("<color=red> Set Default EyeLashes </color>");
                             }
                         }
                         break;
                     }
                 case "Outer":
                     {
-                        //Debug.Log("Enter In outer: " + XanaConstants.xanaConstants.shirt);
+                        ////Debug.Log("Enter In outer: " + XanaConstants.xanaConstants.shirt);
                         if (id == XanaConstants.xanaConstants.shirt)  // ActivePanelCallStack.obj.IsCallByBtn() && 
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -403,14 +403,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Outer);
-                                Debug.Log("<color=red> Set Default Shirts </color>");
+                                //Debug.Log("<color=red> Set Default Shirts </color>");
                             }
                         }
                         break;
                     }
                 case "Shoes":
                     {
-                        //Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.shoes);
+                        ////Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.shoes);
                         if (id == XanaConstants.xanaConstants.shoes)  // ActivePanelCallStack.obj.IsCallByBtn() && 
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -418,14 +418,14 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Shoes);
-                                Debug.Log("<color=red> Set Default Shoes </color>");
+                                //Debug.Log("<color=red> Set Default Shoes </color>");
                             }
                         }
                         break;
                     }
                 case "Bottom":
                     {
-                        //Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.pants);
+                        ////Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.pants);
                         if (id == XanaConstants.xanaConstants.pants)  // ActivePanelCallStack.obj.IsCallByBtn() && 
                         {
                             if (!AR_UndoRedo.obj.addToList)
@@ -433,7 +433,7 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Bottom);
-                                Debug.Log("<color=red> Set Default Pents </color>");
+                                //Debug.Log("<color=red> Set Default Pents </color>");
                             }
                         }
                         break;
@@ -474,7 +474,7 @@ public class ItemDetail : MonoBehaviour
 
             if (uwr.isNetworkError)
             {
-                //Debug.Log(uwr.error);
+                ////Debug.Log(uwr.error);
             }
             else
             {
@@ -620,15 +620,15 @@ public class ItemDetail : MonoBehaviour
                         XanaConstants.xanaConstants.hair = id;
                         XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
                         saveIndex = 2;
-                        //Debug.Log("XanaConstants Hairs: " + XanaConstants.xanaConstants.hair);
-                        //Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
+                        ////Debug.Log("XanaConstants Hairs: " + XanaConstants.xanaConstants.hair);
+                        ////Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
                         break;
                     }
                 case "HairColor":
                     {
                         //if (!StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                         //{
-                            Debug.Log("<color=blue> Open Hair Color Panel: </color>");
+                            //Debug.Log("<color=blue> Open Hair Color Panel: </color>");
                             StoreManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
                             StoreManager.instance.colorMode = true;
                             StoreManager.instance.PutDataInOurAPPNewAPI();
@@ -646,7 +646,7 @@ public class ItemDetail : MonoBehaviour
                         else
                         {
                             AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.HairAvatar);
-                            Debug.Log("<color=red> Set Hair color btn into list:::: </color>");
+                            //Debug.Log("<color=red> Set Hair color btn into list:::: </color>");
                         }
                         // AR changes end
                         if (this.gameObject.name == "Color Button")
@@ -665,7 +665,7 @@ public class ItemDetail : MonoBehaviour
                         else
                         {
                             AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyesAvatar);
-                            Debug.Log("<color=red> Set eye color btn into list:::: </color>");
+                            //Debug.Log("<color=red> Set eye color btn into list:::: </color>");
                         }
                         if (this.gameObject.name == "Color Button")
                             return;
@@ -683,7 +683,7 @@ public class ItemDetail : MonoBehaviour
                         else
                         {
                             AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.LipsAvatar);
-                            Debug.Log("<color=red> Set lips color btn into list:::: </color>");
+                            //Debug.Log("<color=red> Set lips color btn into list:::: </color>");
                         }
 
                         if (this.gameObject.name == "Color Button")
@@ -702,7 +702,7 @@ public class ItemDetail : MonoBehaviour
                         else
                         {
                             AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
-                            Debug.Log("<color=red> Set eyeBrow color btn into list:::: </color>");
+                            //Debug.Log("<color=red> Set eyeBrow color btn into list:::: </color>");
                         }
                         if (this.gameObject.name == "Color Button")
                             return;
@@ -711,9 +711,9 @@ public class ItemDetail : MonoBehaviour
                 case "Eye Brow":
                     {
                         XanaConstants.xanaConstants.eyeBrowIndex = id.ParseToInt();
-                        Debug.Log("Eye brow eyeBrowIndex: " + XanaConstants.xanaConstants.eyeBrowIndex);
+                        //Debug.Log("Eye brow eyeBrowIndex: " + XanaConstants.xanaConstants.eyeBrowIndex);
                         SavaCharacterProperties.instance.characterController.eyeBrowId = id.ParseToInt();
-                        Debug.Log("Eye brow ID: " + SavaCharacterProperties.instance.characterController.eyeBrowId);
+                        //Debug.Log("Eye brow ID: " + SavaCharacterProperties.instance.characterController.eyeBrowId);
                         //Commented By Ahsan
                         //Transform ParentAvatarofEyeBrows = StoreManager.instance.ParentOfBtnsAvatarEyeBrows;
 
@@ -748,19 +748,19 @@ public class ItemDetail : MonoBehaviour
             }
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
 
-            Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
+            //Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
             if (!AR_UndoRedo.obj.addToList)
                 AR_UndoRedo.obj.addToList = true;
             else
             {
                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, CategoriesEnumVar);
-                Debug.Log("<color=red> Set On Btn clicked " + CurrentString + ":::: </color>");
+                //Debug.Log("<color=red> Set On Btn clicked " + CurrentString + ":::: </color>");
             }
 
             if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn)
                 return;
 
-            //Debug.Log("<color=red>" + XanaConstants.xanaConstants._curretClickedBtn.GetComponent<ItemDetail>().id + "</color>");
+            ////Debug.Log("<color=red>" + XanaConstants.xanaConstants._curretClickedBtn.GetComponent<ItemDetail>().id + "</color>");
             XanaConstants.xanaConstants._curretClickedBtn.GetComponent<Image>().enabled = true;
 
             if (XanaConstants.xanaConstants._lastClickedBtn)
@@ -768,7 +768,7 @@ public class ItemDetail : MonoBehaviour
                 if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>())
                     XanaConstants.xanaConstants._lastClickedBtn.GetComponent<Image>().enabled = false;
             }
-            Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
+            //Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
 
             if (!completedCoroutine)
@@ -787,11 +787,11 @@ public class ItemDetail : MonoBehaviour
                         else if (name.Contains("eyelash"))
                             downloader.StartCoroutine(downloader.DownloadAddressableTexture(name, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
                         else
-                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(),Color.clear, false));
+                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype,"Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(),Color.clear, false));
                     }
                     else
                     {
-                        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_clothetype, GameManager.Instance.mainCharacter);
+                        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_clothetype, GameManager.Instance.mainCharacter, "Male");
                     }
                     //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(this, assetLinkAndroid, assetLinkIos, _clothetype, name.ToLower(), int.Parse(id));
                 }
@@ -934,7 +934,7 @@ public class ItemDetail : MonoBehaviour
             CurrentString = "EyeBrowColor";
         }
 
-        Debug.Log("Current String is: " + CurrentString);
+        //Debug.Log("Current String is: " + CurrentString);
 
         if (!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString))
         {
@@ -971,12 +971,12 @@ public class ItemDetail : MonoBehaviour
             }
             else if (CategoriesEnumVar.ToString() == "HairAvatarColor")
             {
-                //Debug.Log("Assign ID to by default color selection: " + id);
-                // Debug.Log("Before: " + XanaConstants.xanaConstants.hairColoPalette);
+                ////Debug.Log("Assign ID to by default color selection: " + id);
+                // //Debug.Log("Before: " + XanaConstants.xanaConstants.hairColoPalette);
 
                 XanaConstants.xanaConstants.hairColoPalette = id;
                 XanaConstants.xanaConstants.colorSelection[2] = gameObject;
-                //Debug.Log("After: " + XanaConstants.xanaConstants.hairColoPalette);
+                ////Debug.Log("After: " + XanaConstants.xanaConstants.hairColoPalette);
                 //saveIndex = 4;
             }
             else if (CategoriesEnumVar.ToString() == "EyeBrowAvatarColor")
@@ -1001,16 +1001,16 @@ public class ItemDetail : MonoBehaviour
                 //saveIndex = 4;
             }
 
-            Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
+            //Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
             if (!AR_UndoRedo.obj.addToList)
                 AR_UndoRedo.obj.addToList = true;
             else
             {
                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, CategoriesEnumVar);
-                Debug.Log("<color=red> Set On color Btn clicked " + CurrentString + ":::: </color>");
+                //Debug.Log("<color=red> Set On color Btn clicked " + CurrentString + ":::: </color>");
             }
 
-            //Debug.Log("Item Detail Btn Clicked Obj Name: " + this.gameObject);
+            ////Debug.Log("Item Detail Btn Clicked Obj Name: " + this.gameObject);
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
 
             if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn)
@@ -1020,11 +1020,11 @@ public class ItemDetail : MonoBehaviour
 
             if (XanaConstants.xanaConstants._lastClickedBtn)
             {
-                // Debug.Log("_lastClickedBtnId: " + XanaConstants.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>().id);
+                // //Debug.Log("_lastClickedBtnId: " + XanaConstants.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>().id);
                 if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<ItemDetail>())
                 {
                     XanaConstants.xanaConstants._lastClickedBtn.GetComponent<Image>().enabled = false;
-                    //Debug.Log("Disabled Image Here");
+                    ////Debug.Log("Disabled Image Here");
                 }
             }
             StoreManager.instance.ClearBuyItems();
@@ -1096,7 +1096,7 @@ public class ItemDetail : MonoBehaviour
                 StoreManager.instance.GreyRibbonImage.SetActive(true);
                 StoreManager.instance.WhiteRibbonImage.SetActive(false);
             }
-            //Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
+            ////Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
         }
     }
@@ -1109,7 +1109,7 @@ public class ItemDetail : MonoBehaviour
 
             if (uwr.isNetworkError)
             {
-                //Debug.Log(uwr.error);
+                ////Debug.Log(uwr.error);
             }
             else
             {
@@ -1168,7 +1168,7 @@ public class ItemDetail : MonoBehaviour
             case "Skin":
                 // Waqas Ahmad
                 CharcterBodyParts.instance.ChangeSkinColor(MyIndex);
-                Debug.Log("Skin color slider");
+                //Debug.Log("Skin color slider");
                 CharcterBodyParts.instance.ChangeSkinColorSlider(MyIndex);
                 SavaCharacterProperties.instance.characterController.skinId = MyIndex;
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 public class SavaCharacterProperties : MonoBehaviour
 {
@@ -48,6 +49,24 @@ public class SavaCharacterProperties : MonoBehaviour
             SaveItemList.eyeMorphed = _CharacterData.eyeMorphed;
             SaveItemList.noseMorphed = _CharacterData.noseMorphed;
             SaveItemList.lipMorphed = _CharacterData.lipMorphed;
+            SaveItemList.HairColorPaletteValue = _CharacterData.HairColorPaletteValue;
+            SaveItemList.EyeValue = _CharacterData.EyeValue;
+
+            SaveItemList.PresetValue = _CharacterData.PresetValue;
+            SaveItemList.SkinId = _CharacterData.SkinId;
+            SaveItemList.FaceValue = _CharacterData.FaceValue;
+            SaveItemList.EyeBrowValue = _CharacterData.EyeBrowValue;
+            SaveItemList.EyeBrowColorPaletteValue = _CharacterData.EyeBrowColorPaletteValue;
+            SaveItemList.EyeLashesValue = _CharacterData.EyeLashesValue;
+            SaveItemList.EyeValue = _CharacterData.EyeValue;
+            SaveItemList.EyesColorValue = _CharacterData.EyesColorValue;
+            SaveItemList.EyesColorPaletteValue = _CharacterData.EyesColorPaletteValue;
+            SaveItemList.NoseValue = _CharacterData.NoseValue;
+            SaveItemList.LipsValue = _CharacterData.LipsValue;
+            SaveItemList.LipsColorValue = _CharacterData.LipsColorValue;
+            SaveItemList.LipsColorPaletteValue = _CharacterData.LipsColorPaletteValue;
+            SaveItemList.BodyFat = _CharacterData.BodyFat;
+            SaveItemList.MakeupValue = _CharacterData.MakeupValue;
         }
         AssignCustomSlidersData();
     }
@@ -188,13 +207,28 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
+        SaveItemList.gender = characterController.avatarGender.ToString();
+
+        SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
+        SaveItemList.hair_color = StoreManager.instance.itemData.hair_color;
+        SaveItemList.lip_color = StoreManager.instance.itemData.lips_color;
+        SaveItemList.skin_color = StoreManager.instance.itemData.skin_color;
+        SaveItemList.faceItemData = StoreManager.instance.itemData.faceItemData;
+        SaveItemList.lipItemData = StoreManager.instance.itemData.lipItemData;
+        SaveItemList.noseItemData = StoreManager.instance.itemData.noseItemData;
+        SaveItemList.hairItemData = StoreManager.instance.itemData._hairItemData;
+        SaveItemList.eyeItemData = StoreManager.instance.itemData._eyeItemData;
+
+
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _CharacterData.id = SaveItemList.id;
             _CharacterData.name = SaveItemList.name;
+            _CharacterData.gender = SaveItemList.gender;
             _CharacterData.thumbnail = SaveItemList.thumbnail;
+            _CharacterData.avatarType = SaveItemList.avatarType;
             _CharacterData.myItemObj = SaveItemList.myItemObj;
             _CharacterData.PresetValue = SaveItemList.PresetValue;
             _CharacterData.HairColorPaletteValue = SaveItemList.HairColorPaletteValue;
@@ -235,6 +269,17 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
+
+            _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
+            _CharacterData.hair_color = SaveItemList.hair_color;
+            _CharacterData.lip_color = SaveItemList.lip_color;
+            _CharacterData.skin_color = SaveItemList.skin_color;
+            _CharacterData.faceItemData = SaveItemList.faceItemData;
+            _CharacterData.lipItemData = SaveItemList.lipItemData;
+            _CharacterData.noseItemData = SaveItemList.noseItemData;
+            _CharacterData.hairItemData = SaveItemList.hairItemData;
+            _CharacterData.eyeItemData = SaveItemList.eyeItemData;
+
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
         }
@@ -320,7 +365,20 @@ public class SavingCharacterDataClass
     public string id;
     public string name;
     public string thumbnail;
+    public string gender;
+
+    public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
+
+    public Color hair_color;
+    public Color skin_color;
+    public Color lip_color;
+    public int faceItemData;
+    public int lipItemData;
+    public int noseItemData;
+    public string hairItemData;
+    public string eyeItemData;
+    public bool charactertypeAi;
 
     public List<BoneDataContainer> SavedBones;
     public int SkinId;
@@ -369,12 +427,24 @@ public class SavingCharacterDataClass
 
     public float[] FaceBlendsShapes;
 
+    public int stamina;
+    public int speed;
+    public string profile;
+    public int defence;
+    public int special_move;
+    public int punch;
+    public int kick;
+
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);
     }
-}
+    public SavingCharacterDataClass()
+    {
 
+    }
+
+}
 public class BoxerNFTDataClass
 {
     public bool isNFTAquiped = false;
@@ -400,6 +470,13 @@ public class BoxerNFTDataClass
     public string Skin;
     public string Eye_Lense;
     public string Eyelid;
+    public int stamina;
+    public int speed;
+    public string profile;
+    public int defence;
+    public int special_move;
+    public int punch;
+    public int kick;
 
     //public float[] FaceBlendsShapes;
 

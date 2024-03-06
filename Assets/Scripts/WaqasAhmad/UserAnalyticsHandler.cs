@@ -66,11 +66,34 @@ public class UserAnalyticsHandler : MonoBehaviour
     }
     private void OnDisable()
     {
+       
         onGetWorldId -= Call_GetWorldId_Coroutine;
         onUpdateWorldRelatedStats -= Call_UpdateWorldRelatedStats_Courtine;
         onGetSingleWorldStats -= Call_GetSingleWorldStats_Courtine;
         onUserJoinedLeaved -= OnUserJoinedFunction;
         onUpdateWorldStatCustom -= Call_UpdateWorldRelatedStats_Courtine;
+    }
+    private void OnApplicationQuit()
+    {
+        if(Manager!=null){ 
+            StartCoroutine(SetSession(false));
+        }
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            if(Manager!=null){ 
+                StartCoroutine(SetSession(true));
+            }
+        }
+        else
+        {
+            if(Manager!=null){ 
+                StartCoroutine(SetSession(false));
+            }
+        }
     }
 
     #region Api Calls Handling
@@ -289,6 +312,14 @@ public class UserAnalyticsHandler : MonoBehaviour
         {
             worldType = worldType.Split("_").First();
         }
+        else if(worldType == "ENVIRONMENTS")
+        {
+            worldType = "ENVIRONMENT";
+        }
+        else if (worldType == "MUSEUMS")
+        {
+            worldType = "MUSEUM";
+        } 
 
         return worldType;
     }
@@ -333,6 +364,7 @@ public class UserAnalyticsHandler : MonoBehaviour
             //Debug.Log("<color=green> Analatics -- Again Sending Call " + "</color>");
             Call_UpdateWorldRelatedStats_Courtine(true, false);
         }
+        StartCoroutine(SetSession(true));
     }
     void OnError(CustomError args)
     {
@@ -378,6 +410,36 @@ public class UserAnalyticsHandler : MonoBehaviour
         XanaConstants.xanaConstants.playerSocketID = socketId;
     }
 #endregion
+
+    /// <summary>
+    /// User Session 
+    /// </summary>
+    /// <param name="isStart"> true on applicaiton start and false on application kill</param>
+    IEnumerator SetSession( bool isStart){
+        while (XanaConstants.xanaConstants.userId == "") {
+            yield return new WaitForSeconds(2f);
+        }
+        string userId = XanaConstants.xanaConstants.userId;
+        string product ;
+#if !UNITY_EDITOR
+    #if UNITY_ANDROID
+        product = "xanaappandroid";
+
+    #elif UNITY_IOS
+        product ="xanaappios";
+    #endif     
+        var data = new { userId , product};
+        Debug.Log("Data:::" + data);
+        if (isStart)
+        {
+                Manager.Socket.Emit("user_start_date", data);
+        }
+        else
+        {
+                Manager.Socket.Emit("user_end_date", data);
+        }
+#endif
+    }
 }
 
 [Serializable]

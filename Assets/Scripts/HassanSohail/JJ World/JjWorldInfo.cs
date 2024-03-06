@@ -13,18 +13,18 @@ public class JjWorldInfo : MonoBehaviour
     float tempTimer = 0;
     public void Testing()
     {
-        Debug.LogError("Hello");
+        //Debug.LogError("Hello");
     }
 
     private void OnMouseDown()
     {
         tempTimer = Time.time;
-        Debug.LogError("onmouse down");
+        //Debug.LogError("onmouse down");
     }
 
     private void OnMouseUp()
     {
-        Debug.LogError("onmouse up");
+        //Debug.LogError("onmouse up");
         if (CameraLook.IsPointerOverUIObject()) return;
         if ((Time.time - tempTimer) < clickTime)
         {
@@ -58,12 +58,12 @@ public class JjWorldInfo : MonoBehaviour
     {
         // for firebase analytics
         int languageMode = CustomLocalization.forceJapanese ? 1 : 0;
-        Debug.Log("<color=red> LanguageMode: " + languageMode + "</color>");
+        //Debug.Log("<color=red> LanguageMode: " + languageMode + "</color>");
         if (JjInfoManager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
         {
             string sceneName = FindObjectOfType<StayTimeTracker>().worldName;
             //Firebase.Analytics.FirebaseAnalytics.LogEvent(sceneName + "_NFT" + id + "_Click");
-            Debug.Log("<color=red>" + sceneName + "_NFT" + id + "_Click </color>");
+            //Debug.Log("<color=red>" + sceneName + "_NFT" + id + "_Click </color>");
         }
         else
             SendFBLogs(JjInfoManager.Instance.worldInfos[id].Title[languageMode]);
@@ -74,7 +74,7 @@ public class JjWorldInfo : MonoBehaviour
         data = Regex.Replace(data, @"\s", "");
         string trimmedString = data.Substring(0, Mathf.Min(data.Length, 18));
         //Firebase.Analytics.FirebaseAnalytics.LogEvent(trimmedString + "_NFT_Click");
-        Debug.Log("<color=red>" + trimmedString + "_NFT_Click" + "</color>");
+        //Debug.Log("<color=red>" + trimmedString + "_NFT_Click" + "</color>");
     }
 
 }

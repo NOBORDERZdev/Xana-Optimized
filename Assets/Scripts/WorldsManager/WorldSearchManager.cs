@@ -8,6 +8,7 @@ public class WorldSearchManager : MonoBehaviour
     public static Action<string> OpenSearchPanel;
     public static Action<string> SearchWorld;
 
+    public static bool IsSearchBarActive = false;
     private void OnEnable()
     {
         searchWorldInput.OnValueChanged.AddListener(UserInput => UserInputUpdate(UserInput)) ;
@@ -26,6 +27,7 @@ public class WorldSearchManager : MonoBehaviour
     {
         searchWorldInput.Clear();
         WorldManager.instance.AllWorldTabReference.BackToPreviousScreen();
+        FlexibleRect.OnAdjustSize?.Invoke(false);
     }
     public void GetSearchBarStatus()
     {

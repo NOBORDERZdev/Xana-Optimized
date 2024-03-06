@@ -60,15 +60,22 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
+    float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius, defaultZoomInLimit, defaultZoomOutLimit;
+    [HideInInspector]
+    public bool isReturn = false;
+
     private void OnEnable()
     {
         controls.Enable();
         ChangeOrientation_waqas.switchOrientation += SwitchOrientation;
+        BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
         ChangeOrientation_waqas.switchOrientation -= SwitchOrientation;
+        BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
+
     }
     private void Awake()
     {
@@ -84,14 +91,21 @@ public class CameraLook : MonoBehaviour
 
     private void Start()
     {
-        lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
-        lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
+        lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+        lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
         playerController = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;
 
         originalOrbits = new CinemachineFreeLook.Orbit[cinemachine.m_Orbits.Length];
+        midRigHeight = cinemachine.m_Orbits[1].m_Height;
+        topRigHeight = cinemachine.m_Orbits[0].m_Height;
+        midRigRadius = cinemachine.m_Orbits[1].m_Radius;
+        topRigRadius = cinemachine.m_Orbits[0].m_Radius;
+        bottomRigRadius = cinemachine.m_Orbits[2].m_Radius;
+        defaultZoomInLimit = zoomInLimit;
+        defaultZoomOutLimit = zoomOutLimit;
         originalOrbits[1].m_Radius = cinemachine.m_Orbits[1].m_Radius;    // get the radius of middle rig
         if (Application.isEditor)
         {
@@ -123,10 +137,11 @@ public class CameraLook : MonoBehaviour
 
     private void Update()
     {
+        if (isReturn) return;
 
         _allowRotation = true;
 
-        if (IsPointerOverUIObject())
+        if (!Application.isEditor && IsPointerOverUIObject() && !_allowSyncedControl)
         {
             _allowRotation = false;
         }
@@ -145,18 +160,18 @@ public class CameraLook : MonoBehaviour
                     CameraControls_Editor();
                 }
             }
-            if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
-            {
-                zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
-                zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
-                cinemachine.m_Orbits[1].m_Radius = zoomScrollVal;
-            }
-            else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
-            {
-                zoomScrollVal -= originalOrbits[1].m_Radius - editorSensitivity;
-                zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
-                cinemachine.m_Orbits[1].m_Radius -= originalOrbits[1].m_Radius - editorSensitivity;
-            }
+            //if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
+            //{
+            //    zoomScrollVal += originalOrbits[1].m_Radius + editorSensitivity;
+            //    zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
+            //    cinemachine.m_Orbits[1].m_Radius = zoomScrollVal;
+            //}
+            //else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
+            //{
+            //    zoomScrollVal -= originalOrbits[1].m_Radius - editorSensitivity;
+            //    zoomScrollVal = Mathf.Clamp(zoomScrollVal, zoomInLimit, zoomOutLimit);
+            //    cinemachine.m_Orbits[1].m_Radius -= originalOrbits[1].m_Radius - editorSensitivity;
+            //}
         }
         else if (!Application.isEditor)
         {
@@ -167,27 +182,29 @@ public class CameraLook : MonoBehaviour
                 ZoomDetection();
             }
         }
-       CameraPlayerMeshCollosionFind();
+        CameraPlayerMeshCollosionFind();
     }
 
     /// <summary>
     /// To check is camera in player mesh
     /// </summary>
-    void CameraPlayerMeshCollosionFind(){
-        if (charcterBody == null || pointObj  == null )
+    void CameraPlayerMeshCollosionFind()
+    {
+        if (charcterBody == null || pointObj == null)
         {
-            if(ReferrencesForDynamicMuseum.instance.m_34player){ 
+            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            {
                 charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
-               // pointObj = charcterBody.Body.gameObject;
+                // pointObj = charcterBody.Body.gameObject;
             }
             else
             {
                 return;
             }
         }
-        
+
         float dist = Vector3.Distance(camRender.transform.position, pointObj.transform.position);
-        if (dist< 0.01f)
+        if (dist < 0.01f)
         {
             charcterBody.HidePlayer();
         }
@@ -219,7 +236,9 @@ public class CameraLook : MonoBehaviour
             if (!isJoystickPressed)
             {
                 if (Input.touchCount > 0)
+                {
                     OneFingureTouch();
+                }
                 if (Input.touchCount > 1)
                     TwoFingureTouch();
             }
@@ -227,7 +246,7 @@ public class CameraLook : MonoBehaviour
             {
                 Touch t = Input.GetTouch(0);
                 Touch t1 = new Touch();
-                if(Input.touchCount > 1)
+                if (Input.touchCount > 1)
                     t1 = Input.GetTouch(1);
 
                 if (isRotatingScreen)     // screen is already rotation before joystick down
@@ -386,11 +405,48 @@ public class CameraLook : MonoBehaviour
         {
             if (results[i].gameObject.layer == LayerMask.NameToLayer("NFTDisplayPanel") || results[i].gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
             {
-                //Debug.Log("Object is hover===" + results[i].gameObject.name);
+                ////Debug.Log("Object is hover===" + results[i].gameObject.name);
                 return true;
             }
         }
         return false;
+    }
+
+    //Code for the builder world when triggering Assets Changer (Avatar Changer component)
+    void ChangeCameraHeight(bool changeState)
+    {
+        if (changeState)
+        {
+            //Set zoom in-out value for Asset Changer Avatar
+            zoomInLimit = 15;
+            zoomOutLimit = 100;
+
+            SetOrbitRadius(5, 20, 5);
+            SetOrbitHeight(20, 5, cinemachine.m_Orbits[2].m_Height);
+        }
+        else
+        {
+            SetOrbitRadius(topRigRadius, midRigRadius, bottomRigRadius);
+            SetOrbitHeight(topRigHeight, midRigHeight, cinemachine.m_Orbits[2].m_Height);
+
+            //Reset zoom in-out value
+            zoomInLimit = defaultZoomInLimit;
+            zoomOutLimit = defaultZoomOutLimit;
+        }
+    }
+
+    void SetOrbitRadius(float radius1, float radius2, float radius3)
+    {
+        cinemachine.m_Orbits[0].m_Radius = radius1;
+        cinemachine.m_Orbits[1].m_Radius = radius2;
+        cinemachine.m_Orbits[2].m_Radius = radius3;
+    }
+
+    void SetOrbitHeight(float height1, float height2, float height3)
+    {
+        cinemachine.m_Orbits[0].m_Height = height1;
+        cinemachine.m_Orbits[1].m_Height = height2;
+        cinemachine.m_Orbits[2].m_Height = height3;
     }
 
 }

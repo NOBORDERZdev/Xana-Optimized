@@ -22,8 +22,8 @@ public class LoadingSavingAvatar : MonoBehaviour
        // LoadingImg.fillAmount = 0;
         time = 0;
 
-        print("app version====" + Application.version);
-        StartCoroutine(getVersion());
+        //print("app version====" + Application.version);
+        //StartCoroutine(getVersion());
         versionText.text = "Ver." + Application.version;
         if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
         {

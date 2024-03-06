@@ -148,7 +148,7 @@ public class XanaChatSocket : MonoBehaviour
     void OnConnected(ConnectResponse resp)
     {
         socketId = resp.sid;
-        Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
+        //Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
         //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
 
         //socket.Off("event", listener);
@@ -170,16 +170,16 @@ public class XanaChatSocket : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
         //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
     void Onresult(CustomError args)
     {
-        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
     }
     void OnSocketDisconnect(CustomError args)
     {
-        Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
         //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
 
@@ -189,7 +189,7 @@ public class XanaChatSocket : MonoBehaviour
         worldId = int.Parse(_worldId);
         string userId = XanaConstants.xanaConstants.userId;
         var data = new { username = userId, room = _worldId };
-        Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
+        //Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
 
         isJoinRoom = true;
         Manager.Socket.Emit("joinRoom", data);
@@ -198,13 +198,13 @@ public class XanaChatSocket : MonoBehaviour
     {
         if (string.IsNullOrEmpty(msg))
         {
-            Debug.Log("<color=blue> XanaChat -- EmptyMsg </color>");
+            //Debug.Log("<color=blue> XanaChat -- EmptyMsg </color>");
             return;
         }
 
         if (msg.All(c => char.IsWhiteSpace(c)))
         {
-            Debug.Log("<color=blue> XanaChat -- EmptySpacedMsg </color>");
+            //Debug.Log("<color=blue> XanaChat -- EmptySpacedMsg </color>");
             return;
         }
 
@@ -224,15 +224,15 @@ public class XanaChatSocket : MonoBehaviour
         if(callBy.Equals(CallBy.NpcToNpc))
             npcSendMsg.Invoke(msg);
 
-        // Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
+        // //Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
         var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
-        Debug.Log("Data:::" + data);
+        //Debug.Log("Data:::" + data);
         Manager.Socket.Emit("chatMessage", data);
     }
 
     void ReceiveMsgs(ChatUserData msg)
     {
-        Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.username + " : " + msg.message + "</color>");
+        //Debug.Log("<color=blue> XanaChat -- MsgReceive : " + msg.name + " : " + msg.message + "</color>");
 
         if (string.IsNullOrEmpty(msg.message))
             return;
@@ -240,7 +240,7 @@ public class XanaChatSocket : MonoBehaviour
         if (eventId != msg.event_id)
             return;
 
-        string tempUser = msg.username;
+        string tempUser = msg.name;
         receivedMsgForTesting = msg;
 
         if (CheckUserNameIsValid(tempUser))
@@ -266,7 +266,7 @@ public class XanaChatSocket : MonoBehaviour
     //To fetch Old Messages from a server against any world
     public void CallApiForMessages()
     {
-        Debug.Log("Calling API");
+        //Debug.Log("Calling API");
         //StartCoroutine(FetchOldMessages());
 
 
@@ -280,7 +280,7 @@ public class XanaChatSocket : MonoBehaviour
         WWWForm form = new WWWForm();
 
         string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
-        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+        //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
         www = UnityWebRequest.Get(api);
@@ -298,7 +298,7 @@ public class XanaChatSocket : MonoBehaviour
         if (!www.isHttpError && !www.isNetworkError)
         {
             //oldMsgRec.text = www.downloadHandler.text;
-            Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
+            //Debug.Log("<color=green> XanaChat -- OldMessages : " + www.downloadHandler.text + "</color>");
 
             // Locally Save the Response
             oldChatResponse = www.downloadHandler.text;
@@ -369,8 +369,8 @@ public class XanaChatSocket : MonoBehaviour
         string jsonData = JsonUtility.ToJson(requestData);
 
 
-        // Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
-        // Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
+        // //Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
+        // //Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
 
         // Create a UnityWebRequest for the POST request
         using (UnityWebRequest request = new UnityWebRequest(setGuestNameApi, "POST"))
@@ -384,13 +384,13 @@ public class XanaChatSocket : MonoBehaviour
 
             //if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             //{
-            //    Debug.LogError("Error: " + request.error);
+            //    //Debug.LogError("Error: " + request.error);
             //}
             //else
             //{
             //    // Request was successful
-            //    Debug.LogError("Request Successful");
-            //    Debug.LogError("Response: " + request.downloadHandler.text);
+            //    //Debug.LogError("Request Successful");
+            //    //Debug.LogError("Response: " + request.downloadHandler.text);
             //}
         }
     }
@@ -402,6 +402,7 @@ public class ChatUserData
 {
     public string socket_id;
     public string username;
+    public string name;
     public string avatar;
     public string message;
     public string world;

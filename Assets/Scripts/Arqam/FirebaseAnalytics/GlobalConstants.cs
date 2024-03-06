@@ -34,7 +34,18 @@ public class GlobalConstants
         CL_IMG_ZoneX,
         CL_IMG_FiveElements, // Done
         URL_ZoneX, 
-        URL_FiveElements
+        URL_FiveElements,
+        // Added Toyota Items
+        CL_NFT_THA_Stage,
+        CL_NFT_THA_Factory,
+        CL_NFT_THA_Consult,
+        CL_NFT_THA_LandInfo,
+        CL_NFT_THA_Architec,
+        URL_Stage,
+        URL_Factory,
+        URL_Consult,
+        URL_LandInfo,
+        URL_Architec,
     }
 
     public static void SendFirebaseEvent(string eventName)

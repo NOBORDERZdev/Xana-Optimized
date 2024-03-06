@@ -254,7 +254,7 @@ public class JJVideoAndImage : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log("ERror in loading sprite" + www.error);
+                //Debug.Log("ERror in loading sprite" + www.error);
             }
             else
             {

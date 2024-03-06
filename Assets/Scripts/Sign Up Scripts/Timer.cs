@@ -62,7 +62,7 @@ public class Timer : MonoBehaviour
             {
                 Debug.Log("Time has run out!");
                 timeRemaining = 0;
-                this.GetComponent<Text>().text = timeRemaining.ToString();// + "     <color=#1D9CFE>" + sendAgainText + "</color>";
+                this.GetComponent<Text>().text ="00:00";// timeRemaining.ToString();// + "     <color=#1D9CFE>" + sendAgainText + "</color>";
                 timerIsRunning = false;
                 if (sendAgain)
                 {

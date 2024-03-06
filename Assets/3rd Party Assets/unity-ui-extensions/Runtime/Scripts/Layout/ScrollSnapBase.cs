@@ -362,14 +362,15 @@ namespace UnityEngine.UI.Extensions
             if (screenIndex <= _screens - 1 && screenIndex >= 0)
             {
                 if (!_lerp) StartScreenChange();
-                if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-                {
-                    FeedUIController.Instance.OnSetSelectionLine();//vishal
-                }
-                else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-                {
-                    FeedUIController.Instance.ProfileFFSelectionOnValueChange();
-                }
+                //Commented by UMER as horizontal scroll snap component was not working proper beacuse of below code bugs 
+                //if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+                //{
+                //    FeedUIController.Instance.OnSetSelectionLine();//vishal
+                //}
+                //else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+                //{
+                //    FeedUIController.Instance.ProfileFFSelectionOnValueChange();
+                //}
                 _lerp = true;
                 CurrentPage = screenIndex;
                 GetPositionforPage(_currentPage, ref _lerp_target);
@@ -437,14 +438,15 @@ namespace UnityEngine.UI.Extensions
                 _infiniteOffset = _infiniteOffset == 0 ? 0 : _infiniteOffset < 0 ? _infiniteOffset - _childSize * _infiniteWindow : _infiniteOffset + _childSize * _infiniteWindow; 
                 target.x = _childPos + _scrollStartPosition + _infiniteOffset;
             }
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-            {
-                FeedUIController.Instance.OnSetSelectionLine();//vishal
-            }
-            else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-            {
-                FeedUIController.Instance.ProfileFFSelectionOnValueChange();
-            }
+            //Commented by UMER as horizontal scroll snap component was not working proper beacuse of below code bugs
+            //if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            //{
+            //    FeedUIController.Instance.OnSetSelectionLine();//vishal
+            //}
+            //else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            //{
+            //    FeedUIController.Instance.ProfileFFSelectionOnValueChange();
+            //}
         }
 
         /// <summary>
@@ -575,10 +577,11 @@ namespace UnityEngine.UI.Extensions
         internal void ScreenChange()
         {
             OnSelectionPageChangedEvent.Invoke(_currentPage);
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-            {
-                StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 1));//vishal
-            }
+            //Commented by UMER as horizontal scroll snap component was not working proper beacuse of below code bugs
+            //if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            //{
+            //    StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 1));//vishal
+            //}
         }
 
         /// <summary>
@@ -589,8 +592,9 @@ namespace UnityEngine.UI.Extensions
             OnSelectionChangeEndEvent.Invoke(_currentPage);
             _settled = true;
             _moveStarted = false;
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-                StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));//vishal
+            //Commented by UMER as horizontal scroll snap component was not working proper beacuse of below code bugs
+            //if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            //    StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));//vishal
         }
 
         /// <summary>
@@ -622,8 +626,9 @@ namespace UnityEngine.UI.Extensions
             _settled = false;
             StartScreenChange();
             _startPosition = _screensContainer.anchoredPosition;
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-                FeedUIController.Instance.CloseAllFeed(true);//vishal
+            //Commented by UMER as horizontal scroll snap component was not working proper beacuse of below code bugs
+            //if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            //    FeedUIController.Instance.CloseAllFeed(true);//vishal
         }
 
         /// <summary>

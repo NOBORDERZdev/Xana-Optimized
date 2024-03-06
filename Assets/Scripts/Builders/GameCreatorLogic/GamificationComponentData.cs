@@ -9,7 +9,7 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
+public class GamificationComponentData : MonoBehaviourPunCallbacks
 {
     public static GamificationComponentData instance;
 
@@ -17,13 +17,12 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     public BuildingDetect buildingDetect;
     public Volume postProcessVol;
     public RuntimeAnimatorController cameraBlurEffect;
-    public GameObject specialItemParticleEffect;
+    internal GameObject specialItemParticleEffect;
     public Material hologramMaterial;
     public Shader superMarioShader;
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    public GameObject[] FootSteps;
     internal PlayerControllerNew playerControllerNew;
     internal AvatarController avatarController;
     internal CharcterBodyParts charcterBodyParts;
@@ -31,11 +30,8 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     public Vector3 spawnPointPosition;
     public GameObject raycast;
-    public GameObject katanaPrefab;
-    public GameObject shurikenPrefab;
     public GameObject throwAimPrefab;
     public Material lineMaterial;
-    public Ball ThrowBall;
     public GameObject handBall;
 
     public GameObject helpParentReference;
@@ -69,10 +65,13 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     internal List<XanaItem> xanaItems = new List<XanaItem>();
     internal List<XanaItem> multiplayerComponentsxanaItems = new List<XanaItem>();
+    internal List<GameObject> multiplayerComponentsObject = new List<GameObject>();
+    public List<string> multiplayerComponentsName = new List<string>();
 
     //AI Generated Skybox
     public Material aiSkyMaterial;
     public VolumeProfile aiPPVolumeProfile;
+    public LensFlareDataSRP lensFlareDataSRP;
     internal bool isSkyLoaded;
 
     //Gamification components with multipler
@@ -82,18 +81,24 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     //Font
     public TMPro.TMP_FontAsset orbitronFont;
-    public TMPro.TMP_FontAsset hiraginoFont;
-    public TMPro.TMP_FontAsset arialFont;
+    internal TMPro.TMP_FontAsset hiraginoFont;
+    //public TMPro.TMP_FontAsset arialFont;
 
     //Name canvas
     internal Canvas nameCanvas;
+    public PlayerCanvas playerCanvas;
+    internal bool isBuilderWorldPlayerSetup;
+    public RuntimeAnimatorController idleAnimation;
+    internal bool ZoomControl;
 
+    //platformLayers
+    public LayerMask platformLayers;
     private void Awake()
     {
         instance = this;
     }
 
-    private void OnEnable()
+    public new void OnEnable()
     {
         BuilderEventManager.ReSpawnPlayer += PlayerSpawnBlindfoldedDisplay;
         //ChangeOrientation
@@ -104,12 +109,16 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
         OrientationChange(false);
         warpComponentList.Clear();
-
         WarpComponentLocationUpdate += UpdateWarpFunctionData;
+
+        //reset ignore layer collision on scene load
+        Physics.IgnoreLayerCollision(9, 22, false);
+        ZoomControl = true;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         BuilderEventManager.ReSpawnPlayer -= PlayerSpawnBlindfoldedDisplay;
         BuilderEventManager.BuilderSceneOrientationChange -= OrientationChange;
         BuilderEventManager.UIToggle -= UICanvasToggle;
@@ -186,6 +195,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
     }
     #endregion
 
+    #region WarpComponent location update
     void UpdateWarpFunctionData()
     {
         foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
@@ -242,7 +252,9 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         if (portalSystemEndPoint != null)
             portalSystemEndPoint.portalEndLocation = location;
     }
+    #endregion
 
+    #region Components for multiplayer
     //All components for multiplayer
     [PunRPC]
     public void GetObject(string RuntimeItemID, Constants.ItemComponentType componentType)
@@ -250,7 +262,7 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
         if (!withMultiplayer)
             return;
         //store rpc data in roomoption
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && (componentType != Constants.ItemComponentType.AudioComponent))
             SetRoomData(RuntimeItemID, componentType);
 
         GetItemFromList(RuntimeItemID, componentType);
@@ -284,6 +296,8 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
 
     void RestrictionComponents(Constants.ItemComponentType componentType)
     {
+        if (componentType == Constants.ItemComponentType.BlindComponent || componentType == Constants.ItemComponentType.SituationChangerComponent)
+            return;
         BuilderEventManager.onComponentActivated?.Invoke(componentType);
     }
 
@@ -331,53 +345,36 @@ public class GamificationComponentData : MonoBehaviourPun, IInRoomCallbacks
             }
         }
     }
-
+    MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
     internal void SetMultiplayerComponentData(MultiplayerComponentData multiplayerComponentData)
     {
-        //Debug.LogError(JsonUtility.ToJson(multiplayerComponentData));
         var hash = new ExitGames.Client.Photon.Hashtable();
 
-        MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
-
         // Multiplayer component data list
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
+        if (multiplayerComponentdatas.multiplayerComponents.Count == 0 && PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
         {
             multiplayerComponentdatas = JsonUtility.FromJson<MultiplayerComponentDatas>(multiplayerComponentdatasObj.ToString());
         }
 
         multiplayerComponentdatas.multiplayerComponents.Add(multiplayerComponentData);
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
+        //Debug.LogError(json);
         hash.Add("gamificationMultiplayerComponentDatas", json);
         PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
-    #region Photon Events
-    public void OnPlayerEnteredRoom(Player newPlayer)
+    public void MasterClientSwitched(Player newMasterClient)
     {
-        //throw new NotImplementedException();
-    }
+        if (!withMultiplayer)
+            return;
 
-    public void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-        //throw new NotImplementedException();
-    }
-
-    public void OnMasterClientSwitched(Player newMasterClient)
-    {
-        foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        if (PhotonNetwork.LocalPlayer == newMasterClient)
         {
-            if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
-                xanaItem.SetData(xanaItem.itemData);
+            foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+            {
+                if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+                    xanaItem.SetData(xanaItem.itemData);
+            }
         }
     }
     #endregion
@@ -393,4 +390,11 @@ public class GamificationComponentRPC
 public class GamificationComponentRPCs
 {
     public List<GamificationComponentRPC> rpcList = new List<GamificationComponentRPC>();
+}
+
+[Serializable]
+public class UTCTimeCounterValue
+{
+    public string UTCTime = "";
+    public float CounterValue = 0;
 }

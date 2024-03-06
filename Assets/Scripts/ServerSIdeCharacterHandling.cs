@@ -62,7 +62,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         www.SetRequestHeader("Content-Type", "application/json");
         yield return www.SendWebRequest();
-        //Debug.Log(www.downloadHandler.text);
+        //////Debug.Log(www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -112,7 +112,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         //formData.AddField("json", senddata.json);
         //formData.AddField("description", senddata.description);
 
-        Debug.Log(LoadPlayerAvatar.avatarId + "--" + LoadPlayerAvatar.avatarName + "--" + LoadPlayerAvatar.avatarThumbnailUrl + "--" + senddata.json);
+        ////Debug.Log(LoadPlayerAvatar.avatarId + "--" + LoadPlayerAvatar.avatarName + "--" + LoadPlayerAvatar.avatarThumbnailUrl + "--" + senddata.json);
 
         //UnityWebRequest www =UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.UPDATEOCCUPIDEUSER + avatarID,formData);
 
@@ -123,7 +123,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         www.SetRequestHeader("Content-Type", "application/json");
         yield return www.SendWebRequest();
-        Debug.Log(www.downloadHandler.text);
+        ////Debug.Log(www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -173,7 +173,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
 
         if (www.responseCode == 200)
         {
-            Debug.Log("Occupied Asset Delete Successfully");
+            ////Debug.Log("Occupied Asset Delete Successfully");
         }
 
         //string str = www..text;
@@ -204,7 +204,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         {
             yield return null;
         }
-        Debug.Log(www.downloadHandler.text);
+        ////Debug.Log(www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -220,8 +220,10 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 {
                     SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
                     SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-                    string jbody = JsonUtility.ToJson(SubCatString);
+                    string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
+                    //if user does not have data then open preset panel
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     print("!!GetUserData IF");
                 }
@@ -230,7 +232,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     // write latest json data to file
                     //if (File.Exists(GameManager.Instance.GetStringFolderPath()))
                     //{
-                    //    Debug.Log("Load previous player");
+                    //    ////Debug.Log("Load previous player");
                     //    SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
                     //    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                     //    LoadPlayerAvatar.avatarId = _CharacterData.id;
@@ -243,12 +245,12 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                         LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                         LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
                         LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
-
+                        XanaConstants.xanaConstants.userId = getdata.data.rows[0].createdBy.ToString();
                         File.WriteAllText(GetStringFolderPath(), jsonbody);
                         yield return new WaitForSeconds(0.1f);
                     //}
                     loadprevious();
-                    StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
                     GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
 
                     //On merging from Release getting this error
@@ -258,7 +260,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
             }
         }
         else
-            Debug.Log("NetWorkissue");
+            ////Debug.Log("NetWorkissue");
         www.Dispose();
 
         if (loadAllAvatar != null && StoreManager.instance.MultipleSave)
@@ -283,7 +285,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.OCCUPIDEASSETS + "1/50");
         www.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken_Preset"));
         yield return www.SendWebRequest();
-        Debug.Log(www.downloadHandler.text);
+        ////Debug.Log(www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
         getdata = JsonUtility.FromJson<Root>(str);
@@ -334,7 +336,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         if (GameManager.Instance)
         {
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            Debug.Log("~~~ load pervoius call");
+            ////Debug.Log("~~~ load pervoius call");
             //Invoke(nameof(WaitForFile), 10);
             //StartCoroutine(WaitForFile());
             SavaCharacterProperties.instance.LoadMorphsfromFile(); // loading morohs 
@@ -479,7 +481,20 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public string id;
         public string name;
         public string thumbnail;
+        public string gender;
         public List<Item> myItemObj;
+        public string avatarType = "OldAvatar";
+
+        public Color hair_color;
+        public Color skin_color;
+        public Color lip_color;
+        public string face_gender;
+        public int faceItemData;
+        public int lipItemData;
+        public int noseItemData;
+        public string hairItemData;
+        public string eyeItemData;
+        public bool charactertypeAi;
 
         public List<BoneDataContainer> SavedBones;
         public int SkinId;

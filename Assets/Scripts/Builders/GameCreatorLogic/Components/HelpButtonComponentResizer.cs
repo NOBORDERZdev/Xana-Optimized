@@ -25,7 +25,8 @@ public class HelpButtonComponentResizer : MonoBehaviour
 
     internal void Init()
     {
-        //Invoke(nameof(InfoPopupUILinesCount), 0.1f);
+        isInfoTextWritten = true;
+        Invoke(nameof(InfoPopupUILinesCount), 0.01f);
         StartCoroutine(StoryNarration());
     }
 
@@ -56,23 +57,17 @@ public class HelpButtonComponentResizer : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
-        isInfoTextWritten = true;
         while (textCharCount < msg.Length && !isAgainCollided)
         {
             contentText.text += msg[textCharCount];
-            if (GamificationComponentData.instance.arialFont)
-                contentText.font = GamificationComponentData.instance.arialFont;
+            //if (GamificationComponentData.instance.arialFont)
+            //    contentText.font = GamificationComponentData.instance.arialFont;
             textCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForScrollingOption());
+            //StartCoroutine(WaitForScrollingOption());
         }
         isInfoTextWritten = false;
-        InfoPopupUILinesCount();
-    }
-    IEnumerator WaitForScrollingOption()
-    {
-        yield return new WaitForEndOfFrame();
         InfoPopupUILinesCount();
     }
 

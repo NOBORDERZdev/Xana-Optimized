@@ -73,7 +73,7 @@ namespace Photon.Pun.Demo.PunBasics
 		/// <summary>
 		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
 		/// </summary>
-		string gameVersion = "11";
+		string gameVersion = "12";
 		private int count;
 
 
@@ -512,6 +512,12 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+        }
+
+        public override void OnMasterClientSwitched(Player newMasterClient)
+        {
+            if (XanaConstants.xanaConstants.isBuilderScene)
+                GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
         public string lastSceneName, lastLobbyName, lastRoomName;

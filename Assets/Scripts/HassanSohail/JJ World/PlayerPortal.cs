@@ -38,7 +38,7 @@ public class PlayerPortal : MonoBehaviour
 
     void FindScriptAttchedObject()
     {
-        GameObject assetsParent = GameObject.Find("Assets");
+        GameObject assetsParent = GameObject.Find("JJ_AllMuseum_Parent");
         if(assetsParent!=null)
         {
             for(int i = 0;i<assetsParent.transform.childCount;i++)

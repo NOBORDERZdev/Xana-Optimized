@@ -14,11 +14,17 @@ public class XanaConstants : MonoBehaviour
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
+    public bool LoginasGustprofile = false; // for gust profile
+    public string NFTUrl;
+    public string clothJson;
+    public string defaultFightingName;
 
     public int mic;
     public int minimap;
     public int userName;
     public string userId;
+    public bool profileImageModifedByUser = false;
+    public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
     public string userLimit;
@@ -74,7 +80,6 @@ public class XanaConstants : MonoBehaviour
     public bool isBackfromSns = false;
 
     public bool isBackFromWorld = false;
-
     public String MuseumID;
 
     // For Analatics 
@@ -100,6 +105,7 @@ public class XanaConstants : MonoBehaviour
     /// variables for builder scene integration 
     /// </summary>
     /// 
+    public bool isWalletLoadingbool = false;
     public bool isBuilderScene;
     public int builderMapID;
     public bool JjWorldSceneChange = false;
@@ -110,6 +116,9 @@ public class XanaConstants : MonoBehaviour
     // Tutorials
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
+
+    public static bool isDescriptionFullPage = false;
+
     public string r_EmoteStoragePersistentPath
     {
         get

@@ -79,7 +79,8 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Screen Back Button Click.......
     public void OnClickMyAccountBackButton()
     {
-        MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
+        OnClickSettingOpen();
+        //MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
     }
 
     //this method is used to terms and policy.......
@@ -174,13 +175,21 @@ public class SNSSettingController : MonoBehaviour
             {
                 SimultaneousConnectionButton();
             }
+            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
             //SimultaneousConnectionButton();
+            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+            PlayerPrefs.SetInt("shownWelcome", 0);
+            PlayerPrefs.SetString("UserNameAndPassword", "");
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+
         }
+        GlobalVeriableClass.callingScreen = "";
     }
 
     //this method is used to logout success.......
     public void LogoutSuccess()
     {
+        GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
         Debug.Log("logout success calling from SNSSetting");
         if (FeedUIController.Instance != null)
         {
@@ -209,11 +218,16 @@ public class SNSSettingController : MonoBehaviour
 
             myAccountScreen.SetActive(false);
             FeedUIController.Instance.ResetAllFeedScreen(false);
+            FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
+            if (UIManager.Instance!=null)
+            {
+                UIManager.Instance._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+            }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer !=null)
             {

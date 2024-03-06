@@ -55,11 +55,15 @@ public class ScrollActivity : MonoBehaviour
             ScrollController.movementType = ScrollRect.MovementType.Elastic;
             if ((Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)) && lastindex == 0 && ScrollController.verticalNormalizedPosition < 0.99f && ScrollController.verticalNormalizedPosition > 0)
             {
+                XanaConstants.isDescriptionFullPage = false;
+                WorldItemPreviewTab.OndescriptionPanelSizeChange?.Invoke(false);
                 DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear);
                 lastindex = 1;
             }
             else if ((Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)) && lastindex == 1 && ScrollController.verticalNormalizedPosition < 0.99f && ScrollController.verticalNormalizedPosition > 0)
             {
+                XanaConstants.isDescriptionFullPage = true;
+                WorldItemPreviewTab.OndescriptionPanelSizeChange?.Invoke(true);
                 DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear);
                 lastindex = 0;
             }
@@ -67,14 +71,14 @@ public class ScrollActivity : MonoBehaviour
     }
     public void Closer()
     {
-        if (ScrollController.verticalNormalizedPosition < 0.001f)
-        {
-            btnback.SetActive(true);
-        }
-        else
-        {
-            btnback.SetActive(false);
-        }
+        //if (ScrollController.verticalNormalizedPosition < 0.001f)
+        //{
+        //    btnback.SetActive(true);
+        //}
+        //else
+        //{
+        //    btnback.SetActive(false);
+        //}
         normalized = ScrollController.verticalNormalizedPosition;
     }
 
