@@ -902,16 +902,10 @@ public class MyProfileDataManager : MonoBehaviour
                     //allPhotoContainer
                     //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
                     Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
-                    try
-                    {
+
                         if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
                             allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
                         allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
-                    }
-                    catch
-                    {
-                        Debug.Log("Exception here");
-                    }
                     //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
                 else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || 
