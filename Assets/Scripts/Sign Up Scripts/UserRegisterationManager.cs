@@ -1287,7 +1287,7 @@ public class UserRegisterationManager : MonoBehaviour
                 }
             case 8:
                 {
-                    Debug.LogError("Signup here");
+                    Debug.Log("Signup here");
                     PlayerPrefs.SetInt("iSignup", 1);// going for register user
                     SignUpPanal.SetActive(true);
                     EmailFieldNew.Text = "";
