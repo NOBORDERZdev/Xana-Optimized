@@ -476,6 +476,7 @@ public class AvatarController : MonoBehaviour
                                 }
                                 else
                                 {
+                                    //As one preset not have footwear, so unstitch the previous pair
                                     if (_CharacterData.myItemObj[0].ItemName == "Boy_Pant_V009" && _CharacterData.myItemObj[1].ItemName == "Boy_Shirt_V009")
                                     {
                                         if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
