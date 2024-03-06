@@ -1612,19 +1612,19 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    validationMessagePopUP.SetActive(true);
-                    errorTextPassword.SetActive(true);
-                    if (errorTextPassword.GetComponent<TextMeshProUGUI>())
-                    {
-                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                    }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextPassword.SetActive(true);
+                //    if (errorTextPassword.GetComponent<TextMeshProUGUI>())
+                //    {
+                //        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //        // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                //        //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
+                //        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
+                //    }
                   
-                }
+                //}
             }
             else
             {
@@ -1947,18 +1947,18 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (request.isNetworkError)
                 {
-                    if (!ConnectionEstablished_popUp.activeInHierarchy)
-                    {
-                        validationMessagePopUP.SetActive(true);
-                        errorTextPassword.SetActive(true);
-                        if (errorTextPassword.GetComponent<TextMeshProUGUI>()) { 
-                            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                    }
-                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                    }
+                    //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                    //{
+                    //    validationMessagePopUP.SetActive(true);
+                    //    errorTextPassword.SetActive(true);
+                    //    if (errorTextPassword.GetComponent<TextMeshProUGUI>()) { 
+                    //        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    //    //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                    //    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
+                    //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
+                    //}
+                    //    // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                    //}
                 }
                 else
                 {
@@ -2036,16 +2036,16 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    validationMessagePopUP.SetActive(true);
-                    errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextPassword.SetActive(true);
+                //    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                //    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -2140,23 +2140,23 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    if (_loader != null)
-                        _loader.SetActive(false);
-                    errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    if (_loader != null)
+                //        _loader.SetActive(false);
+                //    errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
 
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextForgetAPI.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextForgetAPI.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
-                    StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
-                }
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextForgetAPI.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextForgetAPI.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
+                //    StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
+                //}
              }
             else
             {
@@ -2317,22 +2317,22 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
-                    validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -2700,16 +2700,16 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    validationMessagePopUP.SetActive(true);
-                    errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                    //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextPassword.SetActive(true);
+                //    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                //    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
+                //    //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -2784,34 +2784,34 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    if (_loader != null)
-                    {
-                        if (currentSelectedNxtButton)
-                        {
-                            currentSelectedNxtButton.interactable = true;
-                        }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    if (_loader != null)
+                //    {
+                //        if (currentSelectedNxtButton)
+                //        {
+                //            currentSelectedNxtButton.interactable = true;
+                //        }
 
-                        _loader.SetActive(false);
-                    }
+                //        _loader.SetActive(false);
+                //    }
 
-                    // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
+                //    // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
 
-                    validationMessagePopUP.SetActive(true);
-                    errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     //6: Cannot Connect to Destination Host
-                    //     errorTextNumber.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextNumber.GetComponent<Text>().text = request.error.ToUpper();
-                    // }   
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
-                }
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     //6: Cannot Connect to Destination Host
+                //    //     errorTextNumber.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextNumber.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }   
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+                //}
              }
             else
             {
@@ -3020,32 +3020,32 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    if (_loader != null)
-                    {
-                        if (currentSelectedNxtButton)
-                        {
-                            currentSelectedNxtButton.interactable = true;
-                        }
-                        _loader.SetActive(false);
-                    }
-                    validationMessagePopUP.SetActive(true);
-                    errorTextEmail.SetActive(true);
-                    errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    if (_loader != null)
+                //    {
+                //        if (currentSelectedNxtButton)
+                //        {
+                //            currentSelectedNxtButton.interactable = true;
+                //        }
+                //        _loader.SetActive(false);
+                //    }
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextEmail.SetActive(true);
+                //    errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
 
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextEmail.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextEmail.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
-                    //print("getting text from here");
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-                }
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextEmail.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextEmail.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
+                //    //print("getting text from here");
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -3358,15 +3358,15 @@ public class UserRegisterationManager : MonoBehaviour
             
             if (request.isNetworkError)
              {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    validationMessagePopUP.SetActive(true);
-                    errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                    //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextPassword.SetActive(true);
+                //    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
+                //    //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -3870,22 +3870,22 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-                    validationMessagePopUP.SetActive(true);
-                    errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextPIN.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextPIN.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextPIN.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextPIN.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -4007,24 +4007,24 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
-                    validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません"; 
-                    // }  
-                    // else
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
-                    // }  
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
-                    currentSelectedNxtButton.interactable = true;
-                    UsernamescreenLoader.SetActive(false);
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません"; 
+                //    // }  
+                //    // else
+                //    // {
+                //    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }  
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
+                //    currentSelectedNxtButton.interactable = true;
+                //    UsernamescreenLoader.SetActive(false);
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -4111,16 +4111,16 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
-                    validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
-                    currentSelectedNxtButton.interactable = true;
-                    UsernamescreenLoader.SetActive(false);
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
+                //    currentSelectedNxtButton.interactable = true;
+                //    UsernamescreenLoader.SetActive(false);
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                //}
             }
             else
             {
@@ -4414,24 +4414,24 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.isNetworkError)
             {
-                if (!ConnectionEstablished_popUp.activeInHierarchy)
-                {
-                    // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
-                    validationMessagePopUP.SetActive(true);
-                    errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextLogin.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextLogin.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
-                    if (_loader != null)
-                        _loader.SetActive(false);
-                }
+                //if (!ConnectionEstablished_popUp.activeInHierarchy)
+                //{
+                //    // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
+                //    validationMessagePopUP.SetActive(true);
+                //    errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //    // if (Application.systemLanguage == SystemLanguage.Japanese  )
+                //    // {
+                //    //     errorTextLogin.GetComponent<Text>().text = "接続状態が悪く繋がりません";
+                //    // }
+                //    // else
+                //    // {
+                //    //     errorTextLogin.GetComponent<Text>().text = request.error.ToUpper();
+                //    // }
+                //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
+                //    // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+                //    if (_loader != null)
+                //        _loader.SetActive(false);
+                //}
             }
             else
             {
