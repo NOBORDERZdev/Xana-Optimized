@@ -20,13 +20,15 @@ public class TextLocalization : MonoBehaviour
     bool readonce = true;
     private void OnEnable()
     {
-        _originalText = LocalizeTextTMP.text;
+        
         if (LocalizeText)
         {
+            _originalText = LocalizeText.text;
             currentText = LocalizeText.text;
         }
         else if (LocalizeTextTMP)
         {
+            _originalText = LocalizeTextTMP.text;
             currentText = LocalizeTextTMP.text;
         }
         LocalizeTextText();
