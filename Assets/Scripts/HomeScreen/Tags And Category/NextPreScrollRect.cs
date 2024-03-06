@@ -46,7 +46,7 @@ public class NextPreScrollRect : MonoBehaviour
         else
         {
             nextButton.gameObject.SetActive(false);
-            nextButton.gameObject.SetActive(false);
+            prevButton.gameObject.SetActive(false);
         }
 
         // Update the buttons based on the horizontal normalized position.
