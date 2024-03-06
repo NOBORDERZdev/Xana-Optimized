@@ -118,6 +118,7 @@ public class FollowingItemController : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         print("Follower id :" + followingRawData.following.id);
+        FeedUIController.Instance.ShowLoader(true);
         APIManager.Instance.RequestGetUserLatestAvatarData<FollowingItemController>(followingRawData.following.id.ToString(), this);
         MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
         OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();

@@ -22,7 +22,7 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
    [SerializeField] Button LikeBtn;
-    private bool isFeedScreen =true;
+    //private bool isFeedScreen =true;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
@@ -45,13 +45,16 @@ public class FeedData : MonoBehaviour
             timeUpdateInterval=1;
             if (isEnable)
             {
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
+                gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
             }
+
             if (data.isLikedByUser)
             {
                 isLiked = true;
                 Likes.color = LikedColor;
             }
+            else isLiked = false;
             UpdateHeart();
             if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
             {
@@ -62,10 +65,14 @@ public class FeedData : MonoBehaviour
                 ProfileImage.sprite = defaultProfileImage;
             }
 
-            isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
+            //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
             if (isFeed)
             {
                 Invoke(nameof(HieghtListUpdateWithDelay),0.08f);
+            }
+            else
+            {
+                PostHieghtUpdateForProfileVisit();
             }
         }
     }
@@ -178,8 +185,8 @@ public class FeedData : MonoBehaviour
         }
     }
 
-    void HieghtListUpdateWithDelay(){ 
-       scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+    void HieghtListUpdateWithDelay(){
+        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
         RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         Vector2 temp = new Vector2(rectTemp.rect.width , rectTemp.rect.height );
 
@@ -187,6 +194,15 @@ public class FeedData : MonoBehaviour
        //gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
+
+    void PostHieghtUpdateForProfileVisit()
+    {
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width, rectTemp.rect.height);
+
+        gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true);
+    }
+
     public string CalculateTimeDifference(DateTime postTime)
    {
         if (isEnable && gameObject.activeInHierarchy)
@@ -222,15 +238,16 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
-        }else
+        }
+        else
         {
             return "";
         }
-   }
+    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
         yield return new WaitForSecondsRealtime(timeUpdateInterval);
-        Date.text = CalculateTimeDifference(postTime).ToString();
+        Date.text = CalculateTimeDifference(postTime).ToString(); 
     }
     IEnumerator GetProfileImage(string url)
     {
@@ -298,7 +315,8 @@ public class FeedData : MonoBehaviour
 
     public void LikeUnlikePost()
     {
-       StartCoroutine(LikeUnLike());
+        LikeBtn.interactable = false;
+        StartCoroutine(LikeUnLike());
     }
 
     IEnumerator LikeUnLike()
@@ -307,7 +325,6 @@ public class FeedData : MonoBehaviour
         int feedId = _data.id;
         WWWForm form = new WWWForm();
         form.AddField("textPostId", feedId);
-        LikeBtn.interactable= false;
         using (UnityWebRequest www = UnityWebRequest.Post(url,form))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -326,8 +343,16 @@ public class FeedData : MonoBehaviour
                 LikeResponse likeResponse = JsonUtility.FromJson<LikeResponse>(www.downloadHandler.text);
                 UpdateLikeCount(likeResponse.data.likeCount);
                 //Likes.text =  likeResponse.data.likeCount.ToString();
-                isLiked = !isLiked;
-                if(scrollerController)
+               
+                if(!isProfileScene)
+                    isLiked = !isLiked;
+                else
+                {
+                    _data.isLikedByUser = !_data.isLikedByUser;
+                    isLiked = _data.isLikedByUser;
+                }
+
+                if (scrollerController)
                     scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
                 LikeBtn.interactable= true;
@@ -359,8 +384,11 @@ public class FeedData : MonoBehaviour
         return _data.id;
     }
 
-    public void UpdateLikeCount(int count){ 
-        Likes.text = count.ToString();
+    public void UpdateLikeCount(int count){
+        if (count > -1)
+            Likes.text = count.ToString();
+        else
+            Likes.text = "0";
     }
 
     public void SetFeedUiController(FeedScroller controller){ 

@@ -496,6 +496,14 @@ public class BottomTabManager : MonoBehaviour
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                UIManager.Instance.HomeWorldScreen.SetActive(false);
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             }
             else
             {
@@ -668,7 +676,10 @@ public class BottomTabManager : MonoBehaviour
             //---->>>Sannan OnSelectedClick(4);
             if (GlobalVeriableClass.callingScreen == "Profile")
                 return;
-
+            if (FeedUIController.Instance)
+            {
+                FeedUIController.Instance.feedUiScreen.SetActive(false);
+            }
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
@@ -700,6 +711,7 @@ public class BottomTabManager : MonoBehaviour
                 MyProfileDataManager.Instance.ProfileTabButtonClick();
                 FeedUIController.Instance.ResetAllFeedScreen(false);
                 FeedUIController.Instance.AddFriendPanel.SetActive(false);
+                FeedUIController.Instance.ShowLoader(true);
             }
             if (UIManager.Instance.Canvas.activeSelf)
             {

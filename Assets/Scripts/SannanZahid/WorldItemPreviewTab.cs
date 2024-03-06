@@ -101,6 +101,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
         CreatorNameTxt.text = creatorName;
+        CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creatorName);
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
 
@@ -143,6 +144,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
         {*/
             CreatorNameTxt.text = creator_Name;
+            CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
             CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
             AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
             if (string.IsNullOrEmpty(userAvatarURL))
@@ -224,17 +226,17 @@ public class WorldItemPreviewTab : MonoBehaviour
     }
     public void UpdateWorldPanel()
     {
-        if (!WorldNameTxt.text.Contains("XANA Lobby"))
-        {
-            BannerImgSprite[0].sprite = FadeImg.sprite;
-            LobbyLogoContaionr.gameObject.SetActive(false);
-        }
-        else
-        {
-            LobbyLogoContaionr.gameObject.SetActive(true);
+        //if (!WorldNameTxt.text.Contains("XANA Lobby"))
+        //{
+        //    BannerImgSprite[0].sprite = FadeImg.sprite;
+        // LobbyLogoContaionr.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    LobbyLogoContaionr.gameObject.SetActive(true);
 
-        }
-
+        //}
+        BannerImgSprite[0].sprite = FadeImg.sprite;
         BannerImgSprite[1].sprite = FadeImg.sprite;
         if (BannerImgSprite.Length > 2)
             BannerImgSprite[2].sprite = FadeImg.sprite;
@@ -332,6 +334,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorldHighlight.SetActive(true);
+                followingWorldHighlight.GetComponent<Button>().interactable = true;
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
@@ -358,6 +361,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorld.SetActive(true);
+                followingWorld.GetComponent<Button>().interactable = true;
                 followingWorldHighlight.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)

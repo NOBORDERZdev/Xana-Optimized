@@ -511,7 +511,7 @@ public class APIManager : MonoBehaviour
     }
     public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
     {
-
+        #region Old Picture and video type feed fetching code
         //////////////////////Old Picture and video type feed fetching code
         //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
         //{
@@ -591,17 +591,21 @@ public class APIManager : MonoBehaviour
         //        }
         //    }
         //}
+
+        #endregion
         //////////////////////New text post type feed fetching code
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.GetUserAllTextPosts + userId + "/" + pageNum + "/" + pageSize)))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-            //while (!www.isDone)
-            //{
-            //    yield return null;
-            //}
-
+            // Start the stopwatch
+            //Stopwatch stopwatch = Stopwatch.StartNew();
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            //// stop the stopwatch
+            //stopwatch.stop();
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -621,8 +625,9 @@ public class APIManager : MonoBehaviour
             }
             else
             {
+                //// Print the elapsed time
+                //UnityEngine.Debug.Log("User Posts data Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
                 string data = www.downloadHandler.text;
-                Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 Debug.Log("IERequestGetFeedsByUserId success data" + data);
                 var settings = new JsonSerializerSettings
                 {
@@ -633,6 +638,7 @@ public class APIManager : MonoBehaviour
                 if (callingFrom == "MyProfile")
                 {
                     MyProfileDataManager.Instance.totalPostText.text = test.data.Count.ToString();
+                    allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
@@ -1715,6 +1721,16 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
+                string data = www.downloadHandler.text;
+                //Debug.Log("Feed user profile data:" + data);
+                searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
+                if (searchUserRoot.msg.Contains("yourself"))
+                {
+                    if (FeedUIController.Instance)
+                    {
+                        FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+                    }
+                }
             }
             else
             {
@@ -1764,9 +1780,16 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            // Start the stopwatch
+            //Stopwatch stopwatch = Stopwatch.StartNew();
             www.SendWebRequest();
+
             while (!www.isDone)
                 yield return new WaitForSeconds(Time.deltaTime);
+
+            // Stop the stopwatch
+            //stopwatch.Stop();
+
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 Debug.LogError("Error while receiving Avatar Data" + www.error);
@@ -1775,7 +1798,8 @@ public class APIManager : MonoBehaviour
             else
             {
                 print("Received Avatar Json1: " + www.downloadHandler.text);
-
+                //// Print the elapsed time
+                //Debug.Log("User avatar data Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
                 UserLatestAvatarRoot _userAvatarData = JsonUtility.FromJson<UserLatestAvatarRoot>(www.downloadHandler.text);
                 if (_userAvatarData.data.name != null)
                 {
@@ -2154,11 +2178,17 @@ public class APIManager : MonoBehaviour
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {
+            // Start the stopwatch
+            //Stopwatch stopwatch = Stopwatch.StartNew();
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             www.SendWebRequest();
+
             while (!www.isDone)
                 yield return null;
+
+            // Stop the stopwatch
+            //stopwatch.Stop();
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("IERequestGetUserDetails error:" + www.error);
@@ -2177,6 +2207,8 @@ public class APIManager : MonoBehaviour
             }
             else
             {
+                // Print the elapsed time
+                //Debug.Log("User details Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
                 //Debug.Log("IERequestGetUserDetails Form upload complete!");
                 string data = www.downloadHandler.text;
                 Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data + "      :Calling From:" + callingFrom);

@@ -506,20 +506,20 @@ public class APIController : MonoBehaviour
                         searchUserObj.GetComponent<FindFriendWithNameItem>().SetupDataHotUsers(hotUserRoot.data.rows[j].user, hotUserRoot.data.rows[j].am_i_following, hotUserRoot.data.rows[j].is_following_me, hotUserRoot.data.rows[j].is_close_friend);
                     }
                 }
-                else
-                {
-                    for (int i = 0; i < 4; i++)
-                    {
-                        GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
-                        //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
-                        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupDataHotUsers(hotUserRoot.data.rows[0].user, hotUserRoot.data.rows[0].am_i_following, hotUserRoot.data.rows[0].is_following_me, hotUserRoot.data.rows[0].is_close_friend, true);
-                    }
-                }
+                //else
+                //{
+                //    for (int i = 0; i < 4; i++)
+                //    {
+                //        GameObject searchUserObj = Instantiate(findFriendFeedPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+                //        //searchUserObj.GetComponent<FindFriendWithNameItem>().searchUserRow = APIManager.Instance.searchUserRoot.data.rows[j];
+                //        searchUserObj.GetComponent<FindFriendWithNameItem>().SetupDataHotUsers(hotUserRoot.data.rows[0].user, hotUserRoot.data.rows[0].am_i_following, hotUserRoot.data.rows[0].is_following_me, hotUserRoot.data.rows[0].is_close_friend, true);
+                //    }
+                //}
             }
-            //if (hotUserRoot.data.rows.Count > 10 )
-            //{
-            //    GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.hotFriendContainer.transform);
-            //}
+            if (hotUserRoot.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.hotFriendContainer.transform);
+            }
         }
         GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
     }
@@ -619,7 +619,7 @@ public class APIController : MonoBehaviour
                     {
                         GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
                         followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[i], false);
-                        followingObject.GetComponent<Button>().enabled = false;
+                        //followingObject.GetComponent<Button>().enabled = false;
                         print("~~" + followingObject.GetComponent<Button>() + "~~~~~" + followingObject);
                         //followingObject.GetComponent<Button>().onClick.AddListener(FeedUIController.Instance.CheckFollowingCount);
                         print(followingObject.gameObject.activeInHierarchy + "-------------");
@@ -639,19 +639,19 @@ public class APIController : MonoBehaviour
                         //#endif
                     }
                 }
-                else
-                {
-                    for (int j = 0;j < 4;j++)
-                    {
-                        GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
-                        followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[0], false, true);
-                    }
-                }
+                //else
+                //{
+                //    for (int j = 0; j < 4; j++)
+                //    {
+                //        GameObject followingObject = Instantiate(FeedUIController.Instance.adFriendFollowingPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+                //        followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.adFrndFollowing.data.rows[0], false, true);
+                //    }
+                //}
             }
-            //if (APIManager.Instance.adFrndFollowing.data.rows.Count> 10 )
-            //{
-            //    GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab,FeedUIController.Instance.adFrndFollowingListContainer);
-            //}
+            if (APIManager.Instance.adFrndFollowing.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.adFrndFollowingListContainer);
+            }
         }
         else
         {
@@ -679,19 +679,19 @@ public class APIController : MonoBehaviour
                         followingObject.GetComponent<FindFriendWithNameItem>().IsInFollowingTab = true;
                     }
                 }
-                else
-                {
-                    for (int j = 0;j < 4; j++)
-                    {
-                        GameObject followingObject = Instantiate(FeedUIController.Instance.followingPrefab, FeedUIController.Instance.profileFollowingListContainer);
-                        followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.profileAllFollowingRoot.data.rows[0], false, true);
-                    }
-                }
+                //else
+                //{
+                //    for (int j = 0; j < 4; j++)
+                //    {
+                //        GameObject followingObject = Instantiate(FeedUIController.Instance.followingPrefab, FeedUIController.Instance.profileFollowingListContainer);
+                //        followingObject.GetComponent<FollowingItemController>().SetupData(APIManager.Instance.profileAllFollowingRoot.data.rows[0], false, true);
+                //    }
+                //}
             }
-            //if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 10)
-            //{
-            //    GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.profileFollowerListContainer);
-            //}
+            if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, FeedUIController.Instance.profileFollowingListContainer);
+            }
         }
         else
         {
