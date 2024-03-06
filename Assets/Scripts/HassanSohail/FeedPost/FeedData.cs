@@ -33,7 +33,7 @@ public class FeedData : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             _data = data;
-            if (data.text_post != "null")
+            if (data.text_post != "null" && !(string.IsNullOrEmpty(data.text_post)))
             {
                 DisplayName.text = data.user.name;
                 if (DisplayName.text.Length > 15)
