@@ -1664,16 +1664,21 @@ public class FeedUIController : MonoBehaviour
                         //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
                     }
                 }
-                else
-                {
-                    for (int j = 0;j < 4;j++)
-                    {
-                        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0],true);
-                    }
-                }
+                //else
+                //{
+                //    for (int j = 0; j < 4; j++)
+                //    {
+                //        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                //        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
+                //    }
+                //}
             }
-        }else
+            if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, profileFollowerListContainer);
+            }
+        }
+        else
         {
             noProfileFollowers.SetActive(true);
         }
