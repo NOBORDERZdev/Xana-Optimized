@@ -901,8 +901,13 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     //allPhotoContainer
                     //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
-                    allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    print("Already Loaded Post ID: " + i);
+                    if (allPhotoContainer.transform.childCount > i)
+                    {
+                        if(allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                            allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                        allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    }
                     //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
                 else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
