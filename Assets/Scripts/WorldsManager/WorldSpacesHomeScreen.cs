@@ -429,12 +429,13 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.userProfile.bio))
                     _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
-                _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
+                //_event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
 
                 if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
                 {
                     _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
-                    _event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description;
+                    //_event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description; // due to wrong API response commited this
+                    _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
                     _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
                     _event.UserLimit = "15";
                 }
@@ -448,6 +449,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].creator))
                         _event.Creator_Name = _WorldInfo.data.rows[i].creator;
 
+                    if (!string.IsNullOrEmpty(_WorldInfo.data.rows[i].user.avatar))
+                        _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
