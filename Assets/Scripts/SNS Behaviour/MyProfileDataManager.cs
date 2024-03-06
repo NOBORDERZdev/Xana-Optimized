@@ -1062,6 +1062,15 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
+        if (allPhotoContainer.childCount > currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+        {
+            int _diff = allPhotoContainer.childCount - currentPageAllTextPostWithUserIdRoot.data.rows.Count;
+            for (int i = 0; i < _diff; i++)
+            {
+                Destroy(allPhotoContainer.GetChild(currentPageAllTextPostWithUserIdRoot.data.rows.Count + i).gameObject);
+            }
+        }
+
         Debug.Log("Pagenmub bar");
         if (pageNumb == 1)
         {
