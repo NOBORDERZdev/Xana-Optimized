@@ -33,46 +33,53 @@ public class FeedData : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             _data = data;
-            DisplayName.text = data.user.name;
-            if(DisplayName.text.Length > 15)
+            if (data.text_post != "null")
             {
-                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
-            }
-            PostText.text = data.text_post;
-            isEnable= true;
-            //Likes.text = data.like_count.ToString();
-            UpdateLikeCount(data.like_count);
-            timeUpdateInterval=1;
-            if (isEnable)
-            {
-                gameObject.GetComponent<FeedData>().StopAllCoroutines();
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
-            }
+                DisplayName.text = data.user.name;
+                if (DisplayName.text.Length > 15)
+                {
+                    DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+                }
+                PostText.text = data.text_post;
+                isEnable = true;
+                //Likes.text = data.like_count.ToString();
+                UpdateLikeCount(data.like_count);
+                timeUpdateInterval = 1;
+                if (isEnable)
+                {
+                    gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                    Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
+                }
 
-            if (data.isLikedByUser)
-            {
-                isLiked = true;
-                Likes.color = LikedColor;
-            }
-            else isLiked = false;
-            UpdateHeart();
-            if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
-            {
-                StartCoroutine(GetProfileImage(data.user.avatar));
+                if (data.isLikedByUser)
+                {
+                    isLiked = true;
+                    Likes.color = LikedColor;
+                }
+                else isLiked = false;
+                UpdateHeart();
+                if (!String.IsNullOrEmpty(data.user.avatar) && !data.user.avatar.Equals("null"))
+                {
+                    StartCoroutine(GetProfileImage(data.user.avatar));
+                }
+                else
+                {
+                    ProfileImage.sprite = defaultProfileImage;
+                }
+
+                //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
+                if (isFeed)
+                {
+                    Invoke(nameof(HieghtListUpdateWithDelay), 0.08f);
+                }
+                else
+                {
+                    PostHieghtUpdateForProfileVisit();
+                }
             }
             else
             {
-                ProfileImage.sprite = defaultProfileImage;
-            }
-
-            //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
-            if (isFeed)
-            {
-                Invoke(nameof(HieghtListUpdateWithDelay),0.08f);
-            }
-            else
-            {
-                PostHieghtUpdateForProfileVisit();
+                gameObject.SetActive(false);
             }
         }
     }

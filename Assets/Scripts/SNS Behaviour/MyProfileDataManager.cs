@@ -914,8 +914,9 @@ public class MyProfileDataManager : MonoBehaviour
                     }
                     //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
-                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
-                   && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null"))
+                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || 
+                    (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+                  /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
                 {
 
                     bool isVideo = false;
