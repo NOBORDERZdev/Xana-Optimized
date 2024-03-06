@@ -1405,7 +1405,8 @@ public class AvatarController : MonoBehaviour
         if (bodyparts._scaleBodyParts.Count > 0)
         {
             for (int i = 0; i < bodyparts._scaleBodyParts.Count; i++)
-            {
+            { 
+                if(bodyparts._scaleBodyParts[i])
                 bodyparts._scaleBodyParts[i].transform.localScale = new Vector3(_size3, 1, _size3);
             }
         }
