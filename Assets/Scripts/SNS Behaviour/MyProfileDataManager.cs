@@ -1900,7 +1900,7 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
-                Debug.LogError("New User Name ----> " + username);
+                Debug.Log("New User Name ----> " + username);
                 GameManager.Instance.UpdatePlayerName(username);
             }
         }
