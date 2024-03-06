@@ -334,6 +334,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorldHighlight.SetActive(true);
+                followingWorldHighlight.GetComponent<Button>().interactable = true;
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
@@ -360,6 +361,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorld.SetActive(true);
+                followingWorld.GetComponent<Button>().interactable = true;
                 followingWorldHighlight.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
