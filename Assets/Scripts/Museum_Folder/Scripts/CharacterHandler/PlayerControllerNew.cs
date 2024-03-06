@@ -893,7 +893,7 @@ public class PlayerControllerNew : MonoBehaviour
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
-        if (_IsGrounded && (animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
+        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
@@ -1145,6 +1145,20 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void Jump()
     {
+        _IsGrounded = characterController.isGrounded;
+        if (!_IsGrounded && specialItem && !canDoubleJump)
+        {
+            canDoubleJump = true;
+            animator.SetBool("canDoubleJump", canDoubleJump);
+            Invoke(nameof(StopDoubleJump), 0.2f);
+            gravityVector.y = JumpVelocity * 2;
+        }
+        else if (_IsGrounded)
+            IsJumpButtonPress = true;
+        else
+            return;
+
+
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
@@ -1152,20 +1166,6 @@ public class PlayerControllerNew : MonoBehaviour
         {
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
         }
-
-        if (_IsGrounded)
-        {
-            IsJumpButtonPress = true;
-        }
-        else if (!_IsGrounded && specialItem && !canDoubleJump)
-        {
-            canDoubleJump = true;
-            animator.SetBool("canDoubleJump", canDoubleJump);
-            Invoke(nameof(StopDoubleJump), 0.2f);
-            gravityVector.y = JumpVelocity * 2;
-        }
-
-
     }
 
     public void JumpAllowed()
@@ -1354,10 +1354,14 @@ public class PlayerControllerNew : MonoBehaviour
     }
 
     /// <SpecialItemDoubleJump>
+    [HideInInspector]
     public bool specialItem = false;
     bool canDoubleJump = false;
     void SpecialItemDoubleJump()
     {
+        if (!XanaConstants.xanaConstants.isBuilderScene)
+            return;
+
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
         {
             canDoubleJump = true;
