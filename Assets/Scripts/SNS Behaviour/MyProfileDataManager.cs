@@ -901,7 +901,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     //allPhotoContainer
                     //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    print("Already Loaded Post ID: " + i);
+                    //print("Already Loaded Post ID: " + i);
                     if (allPhotoContainer.transform.childCount > i)
                     {
                         if(allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
