@@ -456,9 +456,43 @@ public class MyProfileDataManager : MonoBehaviour
         }
         isSetTempSpriteAfterUpdateAvatar = false;
 
+        UpdateProfilePic();
+
+        //if (!string.IsNullOrEmpty(myProfileData.avatar))
+        //{
+        //    //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
+        //    bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
+        //    if (isUrlContainsHttpAndHttps)
+        //    {
+        //        AssetCache.Instance.EnqueueOneResAndWait(myProfileData.avatar, myProfileData.avatar, (success) =>
+        //        {
+        //            if (success)
+        //            {
+        //                AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
+        //            }
+        //        });
+        //    }
+        //    else
+        //    {
+        //        GetImageFromAWS(myProfileData.avatar, profileImage);
+        //    }
+        //}
+        //else
+        //{
+        //    profileImage.sprite = defultProfileImage;
+        //}
+
+        mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
+
+        //StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+
+    public void UpdateProfilePic()
+    {
         if (!string.IsNullOrEmpty(myProfileData.avatar))
         {
-            //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
+            Debug.Log("My profile Avatar :-" + myProfileData.avatar);
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
             if (isUrlContainsHttpAndHttps)
             {
@@ -467,23 +501,23 @@ public class MyProfileDataManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
+                        XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
+                XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
-        else
-        {
-            profileImage.sprite = defultProfileImage;
-        }
-
-        mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
-
-        //StartCoroutine(WaitToRefreshProfileScreen());
+        //else
+        //{
+        //    profileImage.sprite = defultProfileImage;
+        //}
     }
+
+
 
     public void UpdateUserTags()
     {
@@ -904,7 +938,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //print("Already Loaded Post ID: " + i);
                     if (allPhotoContainer.transform.childCount > i)
                     {
-                        if(allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                        if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
                             allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
                         allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
                     }
@@ -3065,16 +3099,25 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
-                XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
+                //XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
         }
     }
-
+    bool profileMakedFlag = false;
     public void OnlyLoadDataMyProfile()
     {
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
+        if (string.IsNullOrEmpty(tempMyProfileDataRoot.data.avatar) && !profileMakedFlag)
+        {
+            profileMakedFlag = true;
+            ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
+        }
+        else if(XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        {
+            UpdateProfilePic();
+        }
         //totalPostText.text = myProfileData.feedCount.ToString();
     }
     #endregion
