@@ -900,13 +900,19 @@ public class MyProfileDataManager : MonoBehaviour
                 if (loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
                 {
                     //allPhotoContainer
-                    int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allPhotoContainer.transform.GetChild(index).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
+
+                        if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                            allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                        allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
-                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
-                   && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null"))
+                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || 
+                    (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+                  /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
                 {
-            
+
                     bool isVideo = false;
 
                     Transform parent = allPhotoContainer;
@@ -936,6 +942,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //{
 
                     userTagPostObject = Instantiate(photoPrefab, parent);
+                    userTagPostObject.name = "User Feed Post 2.0 " + i;
                     Debug.Log("userTagPostObject is Instantiate in parent ");
                     //}
                     //else
@@ -1023,6 +1030,7 @@ public class MyProfileDataManager : MonoBehaviour
 
                         //if (!isVideo)//image
                         //{
+                        userTagPostObject.transform.SetSiblingIndex(i);
                         allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         //}
                         //else
@@ -1034,7 +1042,7 @@ public class MyProfileDataManager : MonoBehaviour
                         // }
                     }
 
-                   
+
                 }
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
@@ -1055,6 +1063,15 @@ public class MyProfileDataManager : MonoBehaviour
             if (allPhotoContainer != null)
             {
                 allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
+            }
+        }
+
+        if (allPhotoContainer.childCount > currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+        {
+            int _diff = allPhotoContainer.childCount - currentPageAllTextPostWithUserIdRoot.data.rows.Count;
+            for (int i = 0; i < _diff; i++)
+            {
+                Destroy(allPhotoContainer.GetChild(currentPageAllTextPostWithUserIdRoot.data.rows.Count + i).gameObject);
             }
         }
 
@@ -1422,8 +1439,8 @@ public class MyProfileDataManager : MonoBehaviour
         {
             StartCoroutine(WaitToNFTTabHeight(index));
         }
-    }  
-      
+    }
+
     public void OnClickNFTTabButtonSub(int index)
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
@@ -1607,10 +1624,10 @@ public class MyProfileDataManager : MonoBehaviour
             }
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
-            if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
+            if (myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
                 editProfileUniqueNameAdvanceInputfield.Text = "";
             else
-            editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
+                editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
 
             // Convert Array into List
@@ -1673,10 +1690,10 @@ public class MyProfileDataManager : MonoBehaviour
         availableTagsCount = availableTagsAtServer.Count;
         DisplayTags();
     }
-   
+
     int generatedTagCount = 0; // generated Tag Counter 
     int availableTagsCount = 0;
-    
+
     void DisplayTags()
     {
         // Each row contains 4 tags: Calcluate total rows
@@ -1758,7 +1775,7 @@ public class MyProfileDataManager : MonoBehaviour
                     }
                 }
             }
-        }   
+        }
 
     }
 
@@ -1887,7 +1904,7 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
-                Debug.LogError("New User Name ----> " + username);
+                Debug.Log("New User Name ----> " + username);
                 GameManager.Instance.UpdatePlayerName(username);
             }
         }
@@ -1897,7 +1914,7 @@ public class MyProfileDataManager : MonoBehaviour
             ShowEditProfileNameErrorMessage("Display name can't be empty");
             return;
         }
-        
+
         // User Unique Name
         if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
         {
@@ -2105,7 +2122,7 @@ public class MyProfileDataManager : MonoBehaviour
                 countryName = "";
             }
 
-            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),tempTags);
+            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio), tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))

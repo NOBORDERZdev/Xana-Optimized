@@ -35,7 +35,7 @@ public class ProfilePictureManager : MonoBehaviour
     }
     public void MakeProfilePicture(string userName)
     {
-        Debug.LogError("MakeProfilePicture: " + userName);
+        Debug.Log("MakeProfilePicture: " + userName);
         StartCoroutine(IEMakeProfilePicture(userName));
     }
 

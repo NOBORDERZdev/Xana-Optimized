@@ -12,42 +12,27 @@ public class TextLocalization : MonoBehaviour
 
     private Coroutine _myCoroutine;
 
-    string currentText = "";
-
+    string currentText = "",_originalText;
+    public string GetOriginalText()
+    {
+        return _originalText;
+    }
+    bool readonce = true;
     private void OnEnable()
     {
-
+        
         if (LocalizeText)
         {
+            _originalText = LocalizeText.text;
             currentText = LocalizeText.text;
         }
-
         else if (LocalizeTextTMP)
         {
+            _originalText = LocalizeTextTMP.text;
             currentText = LocalizeTextTMP.text;
         }
-
-        // GameManager.currentLanguage = "ja";
-
         LocalizeTextText();
     }
-
-    //private void Start()
-    //{
-    //    //Debug.Log(LocalizeText.text + " start");
-
-    //    if (LocalizeText)
-    //    {
-    //        currentText = LocalizeText.text;
-    //    }
-
-    //    else if (LocalizeTextTMP)
-    //    {
-    //        currentText = LocalizeTextTMP.text;
-    //    }
-
-    //    LocalizeTextText();
-    //}
 
     public void LocalizeTextText()
     {
@@ -55,7 +40,6 @@ public class TextLocalization : MonoBehaviour
         {
             StopCoroutine(_myCoroutine);
         }
-
         if (gameObject.activeInHierarchy)
         {
             _myCoroutine = StartCoroutine(StartTranslation());
@@ -90,8 +74,6 @@ public class TextLocalization : MonoBehaviour
 
     private void StaticLocalizeTextPro()
     {
-        //if (string.IsNullOrEmpty(key))
-        //    return;
         if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
 
         #region Old Method

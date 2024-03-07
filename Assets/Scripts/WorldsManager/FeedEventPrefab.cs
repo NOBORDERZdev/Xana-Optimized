@@ -563,7 +563,7 @@ public class FeedEventPrefab : MonoBehaviour
 
         // For Analitics & User Count
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount);
+        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount); // Due to Flow change this API in not in use
 
         if (m_EnvironmentName == "ZONE-X")
             SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());
