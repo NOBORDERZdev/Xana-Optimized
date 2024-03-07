@@ -515,16 +515,16 @@ public class WorldManager : MonoBehaviour
                 worldFoundText.text = "";
                 return;
             case APIURL.SearchWorld:
-                worldFoundText.text = "No space found with given search key";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
             case APIURL.SearchWorldByTag:
-                worldFoundText.text = "No space found with given search tag";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search tag");
                 return;
             case APIURL.Temp:
                 worldFoundText.text = "";
                 return;
             default:
-                worldFoundText.text = "No space found with given search key";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
         }
     }
