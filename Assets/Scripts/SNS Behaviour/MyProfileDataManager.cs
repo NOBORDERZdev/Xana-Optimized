@@ -901,8 +901,17 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     //allPhotoContainer
                     //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
-                    allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
+                    try
+                    {
+                        if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                            allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                        allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    }
+                    catch
+                    {
+                        Debug.Log("Exception here");
+                    }
                     //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
                 else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
@@ -1900,7 +1909,7 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
-                Debug.LogError("New User Name ----> " + username);
+                Debug.Log("New User Name ----> " + username);
                 GameManager.Instance.UpdatePlayerName(username);
             }
         }
