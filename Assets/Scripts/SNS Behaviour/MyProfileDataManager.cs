@@ -1081,11 +1081,12 @@ public class MyProfileDataManager : MonoBehaviour
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
             {
-                if (emptyFeedObjRef)
-                {
-                    Destroy(emptyFeedObjRef);
-                }
-                emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                //if (emptyFeedObjRef)
+                //{
+                //    Destroy(emptyFeedObjRef);
+                //}
+                //emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                //emptyFeedObjRef.name = "NewlyCreatedEmptyFeed";
                 //for (int j = 0; j < 4; j++)
                 //{
                 //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
@@ -1146,7 +1147,7 @@ public class MyProfileDataManager : MonoBehaviour
         //}
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-
+        userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(1f);
         FeedUIController.Instance.ShowLoader(false);
         isFeedLoaded = true;

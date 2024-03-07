@@ -633,11 +633,11 @@ public class OtherPlayerProfileData : MonoBehaviour
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
         {
                 StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
-                if (emptyFeedObjRef)
-                {
-                    Destroy(emptyFeedObjRef);
-                }
-                emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
+                //if (emptyFeedObjRef)
+                //{
+                //    Destroy(emptyFeedObjRef);
+                //}
+                //emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
         }
     }
         GlobalVeriableClass.callingScreen = "";
@@ -649,7 +649,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         //userPostMainPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-
+        userPostMainPart.GetComponent<ParentHeightResetScript>().SetParentheight(userPostParent.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(0.5f);
         FeedUIController.Instance.ShowLoader(false);
 
