@@ -970,7 +970,7 @@ public class ConnectingWallet : MonoBehaviour
                         PlayerPrefs.SetString("Useridxanalia", s.Substring(0, 4));  
                         Debug.Log("title is null");  
                     }
-                    print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
+                    //print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
                    //  PlayerPrefs.SetString("UserName", PlayerPrefs.GetString("Useridxanalia"));
                     PlayerPrefs.SetInt("WalletConnect", 1);
                     //SuccessfulPopUp.SetActive(true);

@@ -36,10 +36,10 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject usernamePanal;
     public GameObject LoginPanal;
     public GameObject SignUpPanal;
-    public GameObject SignUpPanalwithPhone;
-    public GameObject ChangePasswordPanal;
-    public GameObject UpdateprofilePanal;
-    public GameObject TestingAPIsPanal;
+    //public GameObject SignUpPanalwithPhone;
+    //public GameObject ChangePasswordPanal;
+    //public GameObject UpdateprofilePanal;
+    //public GameObject TestingAPIsPanal;
     public GameObject RegistrationCompletePanal;
     public GameObject ForgetenterUserNamePanal;
     public GameObject ForgetEnterPasswordPanal;
@@ -49,8 +49,8 @@ public class UserRegisterationManager : MonoBehaviour
     bool passwordBool = false;
     bool emailBool = false;
     //Waheed Changes
-    public GameObject setAvatarGiftPanal;
-    
+    //public GameObject setAvatarGiftPanal;
+
     //hardik changes
     public string nftlist;
     //end
@@ -169,7 +169,7 @@ public class UserRegisterationManager : MonoBehaviour
     public bool SavingBool;
     [HideInInspector]
     private Button currentSelectedNxtButton;
-    public bool LoggedInAsGuest=false;
+    public bool LoggedInAsGuest = false;
     public GameObject Name_Screen_Preset_Panel;
     public bool checkbool_preser_start;
     public string XanaliaUserTokenId = "";
@@ -180,7 +180,8 @@ public class UserRegisterationManager : MonoBehaviour
     /// </Web 3.0 and Web 2.0>
     /// 
     public int btnClickedNo = 0;
-    public void ShowCommingsoonPopup() {
+    public void ShowCommingsoonPopup()
+    {
         SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
     }
 
@@ -198,7 +199,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
     public GameObject EntertheWorld_Panal;
-    public GameObject NewSignUp_Panal, LoginScreenNew,UsernamescreenLoader;
+    public GameObject NewSignUp_Panal, LoginScreenNew, UsernamescreenLoader;
     public GameObject LogoImage, LogoImage2, LogoImage3;
     public RawImage renderImage;
     public TextMeshProUGUI UserNameSetter;
@@ -217,7 +218,6 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 welcomeScreen.SetActive(true);
                 shownWelcome = true;
-                //PlayerPrefs.SetInt("shownWelcome", 1);
             }
         }
     }
@@ -230,20 +230,17 @@ public class UserRegisterationManager : MonoBehaviour
                 welcomeScreen.SetActive(true);
             }
         }
-        
+
     }
     public void ShowWelcomeClosed()
     {
-        ////print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
         if (PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             if (PlayerPrefs.GetInt("iSignup") == 1)
             {
-                //  //print("dklfjghjksdghdjklghdjklfghjdfhjk ");
                 PlayerPrefs.SetInt("presetPanel", 1);
                 ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
                 StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
-                //////Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
             }
         }
         else
@@ -251,54 +248,47 @@ public class UserRegisterationManager : MonoBehaviour
 
             welcomeScreen.SetActive(false);
             shownWelcome = false;
-            //print("park ---" + PlayerPrefs.HasKey("shownWelcome"));
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
-                //PlayerPrefs.SetInt("shownWelcome", 1);
-                
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;        ------ Comment By Abdullah for Avatar Selection on OnBoarding
             }
         }
 
-        //  usernamePanal.SetActive(true);
     }
     // if comming back from character screen 
     public void ShowWellComeCloseRetrack()
     {
         PlayerPrefs.DeleteKey("shownWelcome");
-        //  PlayerPrefs.DeleteKey("iSignup");
         PlayerPrefs.SetInt("iSignup", 0);
         checkbool_preser_start = true;
-        // welcomeScreen.SetActive(true);
         ShowWelcomeScreen();
 
     }
 
-    public void NewWalletSignUp() 
+    public void NewWalletSignUp()
     {
         _IsWalletSignUp = true;
     }
 
-    public void WalletLoginCheck() 
+    public void WalletLoginCheck()
     {
         _IsWalletSignUp = false;
-       
+
         LoginPanal.SetActive(false);
     }
 
-    public void NextScreenAfterWalletConnected() 
+    public void NextScreenAfterWalletConnected()
     {
         if (_IsWalletSignUp)
         {
-                 iwanto_signUp();
-        }   
+            iwanto_signUp();
+        }
     }
 
     public void iwanto_signUp()
     {
         PlayerPrefs.SetInt("iSignup", 1);
-       
+
         if (PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
             PlayerPrefs.SetInt("CloseLoginScreen", 1);
@@ -307,49 +297,13 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("shownWelcome", 1);
         }
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;             ------ Comment By Abdullah for Avatar Selection on OnBoarding
     }
-    public void CoutinueAsAGuest()
-    {
-        //    welcomeScreen.SetActive(false);
-        //   shownWelcome = false;
-        //   StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
 
-    }
-    #endregion
-    IEnumerator waitforOneframe()
-    {
-        yield return new WaitForEndOfFrame();
-        //EmailPanal.SetActive(false);
-        FirstPanal.SetActive(false);
-        OTPPanal.SetActive(false);
-        PasswordPanal.SetActive(false);
-        usernamePanal.SetActive(false);
-        LoginPanal.SetActive(false);
-        SignUpPanal.SetActive(false);
-        SignUpPanalwithPhone.SetActive(false);
-        ForgetenterUserNamePanal.SetActive(false);
-        ForgetEnterPasswordPanal.SetActive(false);
-    }
     private void Awake()
     {
         int x = ReturnNftRole("Free");
-        //print("Alraeady Logged In Awake " + PlayerPrefs.GetInt("IsLoggedIn"));
         checkbool_preser_start = true;
         _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
-        /*
-       EmailPanal.SetActive(true);
-        FirstPanal.SetActive(true);
-       OTPPanal.SetActive(true);
-       PasswordPanal.SetActive(true);
-       usernamePanal.SetActive(true);
-       LoginPanal.SetActive(true);
-        SignUpPanal.SetActive(true);
-       SignUpPanalwithPhone.SetActive(true);
-       ForgetenterUserNamePanal.SetActive(true);
-       ForgetEnterPasswordPanal.SetActive(true);
-       StartCoroutine(waitforOneframe());
-       */
         instance = this;
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
@@ -360,18 +314,15 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("iSignup", 0);
             PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
         }
-
-      //  CloseLoginScreen();
     }
 
 
-   
 
-    public void CloseLoginScreen() 
+
+    public void CloseLoginScreen()
     {
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("CloseLoginScreen") == 0)
         {
-            //if () 
             welcomeScreen.SetActive(true);
             LoginScreenNew.SetActive(false);
 
@@ -382,39 +333,24 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-    public void WalletConnectBtnClicked()
-    {
-        // yield return new WaitForSeconds(.01f);
-        //  SceneManager.UnloadSceneAsync("UserRegistration");
-        ////print("Unload");
-        SceneManager.LoadScene("MoralisScene", LoadSceneMode.Additive);
-        //MoralismainObj.SetActive(true);
-    }
-    public void WalletSceneDisconnected()
-    {
-        SceneManager.UnloadSceneAsync("MoralisScene");
-    }
-
     private void OnDisable()
     {
-        //UserNFTlistClass.AllDataFetchedfromServer -= eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
     }
 
-    public void BacktoAvatarSelectionPanel() 
+    public void BacktoAvatarSelectionPanel()
     {
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        //  StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;          ------ Comment By Abdullah for Avatar Selection on OnBoarding
     }
 
-    public void LoginScreenClicked(int btn) 
+    public void LoginScreenClicked(int btn)
     {
         btnClickedNo = btn;
     }
 
-    public void BackFromLoginScreen() 
+    public void BackFromLoginScreen()
     {
-        if (btnClickedNo == 0) 
+        if (btnClickedNo == 0)
         {
             welcomeScreen.SetActive(false);
             LoginScreenNew.SetActive(true);
@@ -424,7 +360,6 @@ public class UserRegisterationManager : MonoBehaviour
         {
             NewSignUp_Panal.SetActive(true);
         }
-       // MoveButtonBacktoPreviousPos();
         LoginEmailOrPhone.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPassword.gameObject.GetComponent<InputFieldKeyboardClient>().enabled = false;
         LoginPanal.SetActive(false);
@@ -436,136 +371,57 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-    //public void MoveButtonBacktoPreviousPos() 
-    //{
-    //    FindObjectOfType<ButtonAnimationScript>().moveButtonDown();
-    //}
-
     private async void eventcalled(string _userType)
     {
-        //print("Event Called here");
-        //print("User type is " + _userType);
-  
         if (_userType == "Web3")
         {
-            
-           if (CryptouserData.instance.CryptoLogin)
-             {
-                 GetOwnedNFTsFromAPI(); 
+
+            if (CryptouserData.instance.CryptoLogin)
+            {
+                GetOwnedNFTsFromAPI();
                 ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
                 LoginWithMoralisSDK();
-                 //print("Wallet logged in here ");  
-                 /*
-                if (CryptouserData.instance.AlphaPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("alpha-pass");
-                }
-                if (CryptouserData.instance.UltramanPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("premium");
-                }
-                if (CryptouserData.instance.AstroboyPass)
-                {
-                    userRoleObj.userNftRoleSlist.Add("premium");
-                }
-                */
-
-                //if (userRoleObj.userNftRoleSlist.Count == 0)
-                //{
-                 userRoleObj.userNftRoleSlist.Add("free");  
-                // if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
-                //{
-                //     //print("nft's are greater then zero");
-                //    await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-                //    //print("wait nft complete");
-                // }
-                 StartCoroutine(WalletLoggedInAccessGroup());
-             }    
+                userRoleObj.userNftRoleSlist.Add("free");
+                StartCoroutine(WalletLoggedInAccessGroup());
+            }
         }
         else if (_userType == "Web2")
         {
-             // StartCoroutine(waitForWalletNFTFetching());
-             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+            if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
-                //print("call getting list here");
-
                 await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-                 
-                //print("wait nft complete 22");
 
-                // CheckNFTFetched();
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))  
-                {   
-                     //print("Found22 here ID is  " + PlayerPrefs.GetInt("nftID"));
-                     // Currently No Need For Attributes
-                    //int LocalIndex = userRoleObj._NFTIDs.IndexOf(PlayerPrefs.GetInt("nftID"));
-                    ////print("index is " + LocalIndex);
-                    //UserNFTlistClass.Attribute _Attributes = userRoleObj._Attributes[LocalIndex];
-                     if (PlayerPrefs.HasKey("Equiped"))
+                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
+                {
+                    if (PlayerPrefs.HasKey("Equiped"))
                     {
                         XanaConstants.xanaConstants.isNFTEquiped = true;
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    }   
+                    }
                 }
                 else
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstants.xanaConstants.isNFTEquiped = false;
-                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                     LoadingHandler.Instance.nftLoadingScreen.SetActive(false);  
-                 }
+                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                }
             }
-             else
+            else
             {
                 LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-             }
-            // savingLoadingNFTsData.SavetoFile();
+            }
         }
         else
         {
             ////Debug.Log("not Logged in");
-        }  
-         /*
-        if (CryptouserData.instance.AlphaPass || CryptouserData.instance.UltramanPass || CryptouserData.instance.AstroboyPass)
-        {
-            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-           // PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();      
-          
-            switch (VerifySignatureReadObj.data.user.userNftRole)
-            {
-                case "alpha-pass":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-                        break;
-                    }
-                case "premium":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
-                        break;
-                    }
-                case "dj-event":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("djevent");
-                        break;
-                    }
-                case "free":
-                    {
-                        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-
-                        break;
-                    }
-            }
-         //   
-
-            //print("you have access of Premium Feature");
         }
-        */
     }
     public void GetOwnedNFTsFromAPI()
     {
         _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
-     }  
+    }
 
     public void LoginWithMoralisSDK(bool auto = false)
     {
@@ -577,13 +433,10 @@ public class UserRegisterationManager : MonoBehaviour
         if (!auto)
         {
             OpenUIPanal(7);
-            WalletSceneDisconnected();
-            
             ConnectionEstablished_popUp.SetActive(true);
 
             Invoke(nameof(showPresetPanel), 1f);
             DynamicEventManager.deepLink?.Invoke("Moralis side");
-            //  showPresetPanel(); 
 
             if (StoreManager.instance != null)
                 StoreManager.instance.WalletLoggedinCall();
@@ -592,11 +445,9 @@ public class UserRegisterationManager : MonoBehaviour
         {
             StartCoroutine(WaitForDeepLink());
         }
-         // SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
-        //EventList.instance.GetWorldAPISNew();
         if (UIManager.Instance != null)//rik
         {
             UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
@@ -625,36 +476,22 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-
-    //          public Text CongratulationText;
     // Start is called before the first frame update
     void Start()
     {
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        //Caching.ClearCache();
-        //GC.Collect();
-      //  savingLoadingNFTsData = this.gameObject.GetComponent<savingAndLoading>();
         UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
         Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
-        //   StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-        //OpenUIPanal(11);
-        //Adds a listener to the main input field and invokes a method when the value changes.
-        //   mainfield_for_opt.gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+
         mainfieldOTPNew.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
-        //pinNew[1].gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(1); });
-        //pinNew[2].gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(2); });
-        //pinNew[3].gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(3); });
+
         BackBool = false;
         UIManager.Instance.LoginRegisterScreen = FirstPanal;
         UIManager.Instance.SignUpScreen = SignUpPanal;
         CountryCodeText.text = "+81";
         mobile_number = false;
-        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
-            //print("Alraeady Logged In");
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
             LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
             StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
@@ -662,11 +499,10 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            //print("wallet Logged In " + PlayerPrefs.GetInt("WalletLogin"));
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetInt("FristPresetSet", 1);
+            Debug.LogError(PlayerPrefs.GetString("LoginToken"));
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            //ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
             LoggedInAsGuest = false;
             StoreManager.instance.WalletLoggedinCall();
             LoginWithMoralisSDK(true);
@@ -676,36 +512,26 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
 
-           LoggedInAsGuest = true;
-            //if (DefaultEnteriesforManican.instance)
-            //{
-            //    DefaultEnteriesforManican.instance.ResetForPresets();
-            //}
-            //if (GameManager.Instance != null && GameManager.Instance.mainCharacter)
-            //{
-            //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            //}
+            LoggedInAsGuest = true;
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-
-
             SavaCharacterProperties.instance.LoadMorphsfromFile();
             StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
         }
 
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
-        //   StartCoroutine(LoginUserPresetOnly());
         if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
-            welcomeScreen.SetActive(true) ;
+            welcomeScreen.SetActive(true);
     }
 
-    void CheckCameraMan() {
+    void CheckCameraMan()
+    {
         MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
         LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
         if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
         {
             XanaConstants.xanaConstants.isCameraMan = true;
-            
+
         }
         else
         {
@@ -719,8 +545,8 @@ public class UserRegisterationManager : MonoBehaviour
         if (loadData)
         {
             GetOwnedNFTsFromAPI();
-             yield return new WaitForSeconds(.1f);  
-        } 
+            yield return new WaitForSeconds(.1f);
+        }
         yield return new WaitForSeconds(.8f);
         if (userRoleObj.userNftRoleSlist.Count > 0)
         {
@@ -778,9 +604,9 @@ public class UserRegisterationManager : MonoBehaviour
             //print("you have no Premium Access ");
             PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         }
-         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-     }
- 
+        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+    }
+
     #region Sign Up Animations
 
     public void OnSignUpEmailTabPressed()
@@ -793,34 +619,13 @@ public class UserRegisterationManager : MonoBehaviour
         numberScreen.SetActive(false);
         WalletScreen.SetActive(false);
 
-        ////Debug.Log("Fix");
-
-        //lol
         EmailFieldNew.Text = "";
-        //EmailInputTextNew.Text = "";
-        //EmailInputTextNew.gameObject.GetComponent<InputField>().Select();
-        //EmailInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-        //EmailInputTextNew.enabled = false;
-        //StartCoroutine(WaitandActive());
-        //EmailInputTextNew.enabled = true;
-        //EmailInputTextNew.SelectOtherField();
-
-
-       // Color _temp = new Color();
-       // _temp = errorTextNumber.GetComponent<Text>().color;
-       // _temp.a = 0;
-        // float r = 0.2f, g = 0.3f, b = 0.7f, a = 0.6f;
-      //  errorTextNumber.GetComponent<Text>().color = _temp;
-
-
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
-            //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
             StartCoroutine(Animate(EmailSelectedImg.rectTransform));
         }
         else
         {
-            //tabSelectorAnimator.transform.localScale = new Vector3(3f, 1.2f, 1f);
             StartCoroutine(Animate(EmailSelectedImgPos2.rectTransform));
         }
         emailTabText.gameObject.GetComponent<Text>().color = HighlightedColor;
@@ -829,11 +634,6 @@ public class UserRegisterationManager : MonoBehaviour
         emailTabSelected.SetActive(true);
         phoneTabSelected.SetActive(false);
         WalletTabSelected.SetActive(false);
-
-        // emailTabText.fontStyle = FontStyle.Bold;
-        // phoneTabText.fontStyle = FontStyle.Normal;
-
-        // tabSelectorAnimator.Play("Phone");
     }
 
     public void OnSignUpPhoneTabPressed()
@@ -842,29 +642,16 @@ public class UserRegisterationManager : MonoBehaviour
         PhoneFieldNew.Text = "";
         if (numberScreen.activeInHierarchy)
             return;
-        //////Debug.Log("after if");
         emailScreen.SetActive(false);
         numberScreen.SetActive(true);
         WalletScreen.SetActive(false);
-        //PhoneInputTextNew.Text = "";
-        //StartCoroutine(WaitandActive());
-        //PhoneInputTextNew.gameObject.GetComponent<InputField>().Select();
-        //PhoneInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-        //PhoneInputTextNew.SelectOtherField();
         PhoneFieldNew.Text = "";
-       // Color _temp = new Color();
-       // validationMessagePopUP.SetActive(true);
-        // _temp = errorTextEmail.GetComponent<Text>().color;
-        //  _temp.a = 0;
-       // errorTextEmail.GetComponent<Text>().color=new Color(0.44f,0.44f,0.44f,1f);
         if (ConnectingWallet.instance.walletFunctionalitybool)
         {
-            //tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
             StartCoroutine(Animate(PhoneSelectedImg.rectTransform));
         }
         else
         {
-            //tabSelectorAnimator.transform.localScale = new Vector3(3f, 1.2f, 1f);
             StartCoroutine(Animate(PhoneSelectedImgPos2.rectTransform));
         }
         phoneTabText.gameObject.GetComponent<Text>().color = HighlightedColor;
@@ -873,89 +660,43 @@ public class UserRegisterationManager : MonoBehaviour
         emailTabSelected.SetActive(false);
         phoneTabSelected.SetActive(true);
         WalletTabSelected.SetActive(false);
-
-        // tabSelectorAnimator.Play("Email");
     }
     public void OnSignUpWalletTabPressed()
     {
-        //if (WalletScreen.activeInHierarchy)
-        //    return;
         emailScreen.SetActive(false);
         numberScreen.SetActive(false);
-        //WalletScreen.SetActive(true);
-        // tabSelectorAnimator.transform.localScale = new Vector3(1f, 1.2f, 1f);
         StartCoroutine(Animate(WalletSelectedImg.rectTransform));
         WalletTabText.gameObject.GetComponent<Text>().color = HighlightedColor;
         emailTabText.gameObject.GetComponent<Text>().color = NormalColor;
         phoneTabText.gameObject.GetComponent<Text>().color = NormalColor;
         emailTabSelected.SetActive(false);
         phoneTabSelected.SetActive(false);
-        //WalletTabSelected.SetActive(true);
-        //  tabSelectorAnimator.Play("Wallet");   
     }
     private IEnumerator Animate(RectTransform targetPos)
     {
-        //print("Animate here");
-        //tabSelectorAnimator.GetComponent<Image>().rectTransform.position = targetPos.position;  
-
-       // LoggedInAsGuest = true;
         if (GameManager.Instance.mainCharacter)
         {
             GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
         }
-        //if (GameManager.Instance != null && GameManager.Instance.mainCharacter)
-        //{
-        //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-        //}
         SavaCharacterProperties.instance.LoadMorphsfromFile();
-        //    StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
         float t = 0;
         var target = tabSelectorAnimator.GetComponent<Image>().rectTransform.position;
 
         while (t < .5f)
         {
-            //  //print(" t Animate here");
             tabSelectorAnimator.GetComponent<Image>().rectTransform.position = Vector3.Lerp(tabSelectorAnimator.GetComponent<Image>().rectTransform.position, targetPos.position, t * 3);
             t += Time.deltaTime;
             yield return null;
         }
     }
-
-
-
-    //   yield return null;
-
     #endregion
-
-
-    //public void ResetDataAfterLogoutSuccess()//rik        Merging---------------------01-08-2020
-    //{
-    //    shownWelcome = false;
-    //    //for Reset Avatar Selection Screen Previous Account Data.......
-    //    PlayerPrefs.SetInt("PresetValue", -1);
-    //    if (PresetData_Jsons.lastSelectedPreset != null)
-    //    {
-    //        PresetData_Jsons.lastSelectedPreset.gameObject.SetActive(false);
-    //        PresetData_Jsons.lastSelectedPreset = null;
-    //    }
-    //    for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
-    //    {
-    //        StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
-    //    }
-    //    StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
-    //    //end reset
-
-    //}
-
-    public void SignUpMethodSelected(int btn) 
+    public void SignUpMethodSelected(int btn)
     {
         SignUpButtonSelected = btn;
     }
 
-
     public void BackFtn(int Openbackint)
     {
-        //print(SignUpButtonSelected);
         if (ForgetPasswordBool)
         {
             OpenUIPanal(14);
@@ -964,36 +705,9 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
             OpenUIPanal(20);
-            //if (!WalletScreen.activeInHierarchy)
-            //{
-            //    if (SignUpButtonSelected == 1)
-            //    {
-            //        OnSignUpPhoneTabPressed();
-            //        PhoneFieldNew.Text = "";
-            //        //if (Openbackint == 2)
-            //        //{
-            //        //    // PhoneInputTextNew.Text = "";
-            //        //    PhoneFieldNew.Text = "";
-            //        //    OpenUIPanal(Openbackint);
-            //        //    //Openbackint = 9;
-            //        //}
-            //        //if (Openbackint == 8)
-            //        //{
-            //        //    //   PhoneInputTextNew.Text = "";
-            //        //    PhoneFieldNew.Text = "";
-            //        //}
-            //    }
-            //    else if (SignUpButtonSelected == 2)
-            //    {
-            //        OnSignUpEmailTabPressed();
-            //        EmailFieldNew.Text = "";
-            //    }
-            //    SignUpPanal.SetActive(true);
-            }
-            
-            //OpenUIPanal(Openbackint);
-            image_to_Change[0].sprite = OTPbox_highlighter;
-            image_to_Change[3].sprite = oldOTP_Box;
+        }
+        image_to_Change[0].sprite = OTPbox_highlighter;
+        image_to_Change[3].sprite = oldOTP_Box;
     }
 
     public void GoToRegistrationScreen(int R_Integer)
@@ -1021,9 +735,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         image_to_Change[0].sprite = OTPbox_highlighter;
         string[] myOtpTxt = new string[text_to_show.Length];
-        //  char[] charArr = new char[mainfield_for_opt.Text.Length];
         char[] charArr = new char[mainfieldOTPNew.Text.Length];
-        //  charArr = mainfield_for_opt.Text.ToCharArray();
         charArr = mainfieldOTPNew.Text.ToCharArray();
         for (int i = 0; i < myOtpTxt.Length; i++)
         {
@@ -1033,7 +745,6 @@ public class UserRegisterationManager : MonoBehaviour
             }
             if (i < charArr.Length)//1 2 3 4
             {
-                //////Debug.Log("VALUE OF Char" + charArr.Length);
                 myOtpTxt[i] = charArr[i].ToString();
                 text_to_show[i].text = myOtpTxt[i].ToString();
                 if (i < 3)
@@ -1041,16 +752,12 @@ public class UserRegisterationManager : MonoBehaviour
                     image_to_Change[i + 1].sprite = OTPbox_highlighter;
                     image_to_Change[i].sprite = oldOTP_Box;
                 }
-                
+
             }
             else
             {
                 myOtpTxt[i] = "";
-                ////Debug.Log("VALUE OF OTP" + myOtpTxt[i]);
                 text_to_show[i].text = myOtpTxt[i].ToString();
-                //////Debug.Log("VALUE OF I" + i);
-                //////Debug.Log("VALUE OF Char" + charArr.Length);
-                //////Debug.Log("VALUE OF OTP Text" + myOtpTxt.Length);
                 if (charArr.Length < 4) //1 2 3 
                 {
                     if (charArr.Length != 3)
@@ -1061,8 +768,6 @@ public class UserRegisterationManager : MonoBehaviour
 
             }
         }
-
-        
     }
 
     public void BackButtonPressedhere()
@@ -1090,11 +795,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (!checkbool_preser_start && PlayerPrefs.GetInt("WalletLogin") != 1)  // guest
         {
-            //PresetData_Jsons.lastSelectedPreset.transform.GetChild(0).gameObject.SetActive(false);
-            //PresetData_Jsons.lastSelectedPreset = null;
             PresetData_Jsons.clickname = null;
-
-            //EntertheWorld_Panal.SetActive(true);
             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             UserRegisterationManager.instance.usernamePanal.SetActive(false);
 
@@ -1116,36 +817,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
 
         FirstPanal.SetActive(false);
-        //EmailPanal.SetActive(false);
         OTPPanal.SetActive(false);
         PasswordPanal.SetActive(false);
         usernamePanal.SetActive(false);
         LoginPanal.SetActive(false);
         SignUpPanal.SetActive(false);
-        //SignUpPanalwithPhone.SetActive(false);
-        //ChangePasswordPanal.SetActive(false);
-        //UpdateprofilePanal.SetActive(false);
-        //TestingAPIsPanal.SetActive(false);
         RegistrationCompletePanal.SetActive(false);
         ForgetenterUserNamePanal.SetActive(false);
         ForgetEnterPasswordPanal.SetActive(false);
-
-        //if (errorTextEmail.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextEmail.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextPassword.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextPassword.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextNumber.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextNumber.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextName.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextName.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextPIN.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextLogin.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextLogin.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextForgetAPI.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", false);
-        //if (errorTextResetPasswordAPI.GetComponent<Animator>().GetBool("playAnim"))
-        //    errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", false);
 
         switch (ActivePanalCounter)
         {
@@ -1153,7 +832,6 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-
                         if (PlayerPrefs.GetInt("iSignup") == 1)
                         {
                             PlayerPrefs.SetInt("iSignup", 0);
@@ -1163,21 +841,15 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         else
                             ShowWelcomeClosed();
-
-                        //welcomeScreen.SetActive(true);
                     }
                     else
                     {
-                        //FirstPanal.SetActive(true);
                         welcomeScreen.SetActive(true);
-                        //SignUpPanal.SetActive(false);
                     }
                     break;
                 }
             case 2:
                 {
-                    //PlayerPrefs.SetInt("iSignup", 1);
-                    //  EmailPanal.SetActive(true);
                     SignUpPanal.SetActive(true);
                     if (!WalletScreen.activeInHierarchy)
                         OnSignUpPhoneTabPressed();
@@ -1185,84 +857,37 @@ public class UserRegisterationManager : MonoBehaviour
                         OnSignUpWalletTabPressed();
                     EmailFieldNew.Text = "";
                     PhoneFieldNew.Text = "";
-                    //EmailInputTextNew.Text = "";
-                    //EmailInputTextNew.gameObject.GetComponent<InputField>().Select();
-                    //EmailInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    //EmailInputTextNew.enabled = false;
-                    //StartCoroutine(WaitandActive());
-                    //EmailInputTextNew.enabled = true;
-                    //EmailInputTextNew.SelectOtherField();
                     break;
                 }
             case 3:
                 {
                     OTPPanal.SetActive(true);
-                    //SignUpPanal.SetActive(false);
-                    //  mainfield_for_opt.Text = "";
-                    //  mainfield_for_opt.SelectOtherField();
                     mainfieldOTPNew.Text = "";
                     mainfieldOTPNew.Select();
                     for (int i = 0; i < text_to_show.Length; i++)
                     {
                         text_to_show[i].text = "";
                     }
-                    // for (int i = 0; i < pinNew.Count; i++)
-                    //{
-                    //    //   pinNew[i].gameObject.GetComponent<InputField>().text = "";
-                    //    pinNew[i].Text = "";
-                    //}        
-                    //OTPFieldBool = false;
-                    // pinNew[0].SelectOtherField();
-                    // pinNew[0].gameObject.GetComponent<InputField>().Select();
-                    //  pinNew[0].gameObject.GetComponent<InputField>().ActivateInputField();
                     break;
                 }
             case 4:
                 {
                     Invoke("blackscrreefalse", 0.2f);
-                    // this.gameObject.GetComponent<SplashVideoPlay>().RefrenceDownloafVideo();
-                    // this.gameObject.GetComponent<SplashVideoPlay>().SplashvideoObj.SetActive(false);
-
                     this.gameObject.GetComponent<SplashVideoPlay>().OnAvatarSelectionPanal();
-
-                    //PasswordPanal.SetActive(true);
-                    //Password1New.Text = "";
-                    //Password2New.Text = "";
-                    //  Password1InputTextShiftCode.EmptyPassword();
-                    //  Password2ConfirmInputTextShiftCode.EmptyPassword();
                     break;
                 }
             case 5:
                 {
-                    //usernamePanal.SetActive(true);
-                   // setAvatarGiftPanal.SetActive(true);
                     UsernameFieldAdvance.Text = "";
-                    //StartCoroutine(WaitandActive());
-                    //UsernameTextNew.Text = "";
-                    //UsernameTextNew.enabled = false;
-                    //UsernameTextNew.enabled = true;
-                    //UsernameTextNew.gameObject.GetComponent<InputField>().Select();
-                    //UsernameTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    //UsernameTextNew.SelectOtherField();
                     break;
                 }
             case 6:
                 {
 
                     LoginPanal.SetActive(true);
-                    /*
-                    LoginEmailNew.Text = "";
-                    LoginEmailNew.gameObject.GetComponent<InputField>().Select();
-                    LoginEmailNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    LoginEmailNew.enabled = false;
-                    StartCoroutine(WaitandActive());
-                    LoginEmailNew.enabled = true;
-                    LoginEmailNew.SelectOtherField();
-                    */
                     LoginEmailOrPhone.Text = "";
                     LoginEmailOrPhone.Select();
                     savePasswordList.instance.DeleteONStart();
-                    //  LoginPasswordShiftCode.EmptyPassword();
                     LoginPassword.Text = "";
                     chk_forAccountALreadyLogedin = true;
                     break;
@@ -1271,17 +896,12 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (shownWelcome)
                     {
-                        ////Debug.Log("show welcome");
                         PlayerPrefs.SetInt("shownWelcome", 1);
-
-                        //ShowWelcomeClosed();
                         LoggedIn = true;
                     }
                     else
                     {
-                        ////Debug.Log("show welcome else");
                         LoggedIn = true;
-                        //GameManager.Instance.SignInSignUpCompleted();
                     }
                     break;
                 }
@@ -1293,43 +913,6 @@ public class UserRegisterationManager : MonoBehaviour
                     EmailFieldNew.Text = "";
                     Password1New.Text = "";
                     Password2New.Text = "";
-                    //OnSignUpPhoneTabPressed();
-                    //  OnSignUpWalletTabPressed();
-
-                    break;
-                }
-            case 9:
-                {
-                    SignUpPanalwithPhone.SetActive(true);
-                    PhoneFieldNew.Text = "";
-                    //StartCoroutine(WaitandActive());
-                    //PhoneInputTextNew.gameObject.GetComponent<InputField>().Select();
-                    //PhoneInputTextNew.gameObject.GetComponent<InputField>().ActivateInputField();
-                    //PhoneInputTextNew.SelectOtherField();
-                    break;
-                }
-            case 10:
-                {
-                    //  OldPasswordField.Text = "";
-                    //ChangePassword1.Text = "";
-                    //ChangePassword2.Text = "";
-                    ChangePasswordPanal.SetActive(true);
-                    //OldPasswordField.InputField.Select();
-                    //OldPasswordField.InputField.ActivateInputField();
-                    break;
-                }
-            case 11:
-                {
-                    //GenderField.Text = "";
-                    //JobField.Text = "";
-                    // CountryField.Text = "";
-                    //   BioField.Text = "";
-                    UpdateprofilePanal.SetActive(true);
-                    break;
-                }
-            case 12:
-                {
-                    TestingAPIsPanal.SetActive(true);
                     break;
                 }
             case 13:
@@ -1349,10 +932,6 @@ public class UserRegisterationManager : MonoBehaviour
                     ForgetPasswordTokenAfterVerifyling = "";
                     ForgetenterUserNamePanal.SetActive(true);
                     EmailOrPhone_Forget_NewField.Text = "";
-                    //StartCoroutine(WaitandActive());
-                    //EmailOrPhone_ForgetPasswrod.Text = "";
-                    //EmailOrPhone_ForgetPasswrod.SelectOtherField();
-
                     break;
                 }
             case 15:
@@ -1360,14 +939,6 @@ public class UserRegisterationManager : MonoBehaviour
                     ForgetEnterPasswordPanal.SetActive(true);
                     Password1_ForgetNewField.Text = "";
                     Password2_ForgetNewField.Text = "";
-
-                    //StartCoroutine(WaitandActive());
-                    //InputTextShiftCodeChangePass.EmptyPassword();
-                    //InputTextShiftCodeChangePass2.EmptyPassword();
-
-                    //    Password1_ForgetPasswrod.Text="";
-                    //    Password2_ForgetPasswrod.Text="";
-                    // Password1_ForgetPasswrod.SelectOtherField();
                     break;
                 }
             case 16:
@@ -1375,18 +946,16 @@ public class UserRegisterationManager : MonoBehaviour
                     if (PlayerPrefs.GetInt("iSignup") == 1)
                     {
                         LoadingFadeOutScreen();
-                        //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                        //EntertheWorld_Panal.SetActive(true);
-                      }
-                    else {
+                    }
+                    else
+                    {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
-                           // RegistrationCompletePanal.SetActive(true);
                             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         }
                         if (shownWelcome)
                             ShowWelcomeClosed();
-                     }
+                    }
                     break;
                 }
             case 17:
@@ -1403,14 +972,10 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         else
                             ShowWelcomeClosed();
-
-                        //welcomeScreen.SetActive(true);
                     }
                     else
                     {
                         FirstPanal.SetActive(true);
-                       // welcomeScreen.SetActive(true);
-                        //SignUpPanal.SetActive(false);
                     }
                     break;
                 }
@@ -1419,10 +984,6 @@ public class UserRegisterationManager : MonoBehaviour
                 {
 
                     PlayerPrefs.SetInt("iSignup", 1);// going for Wallet register user
-                    //SignUpPanal.SetActive(true);
-                    //OnSignUpPhoneTabPressed();
-                    //  OnSignUpWalletTabPressed();
-
                     break;
                 }
             case 19:
@@ -1432,7 +993,7 @@ public class UserRegisterationManager : MonoBehaviour
                     break;
                 }
 
-            case 20: 
+            case 20:
                 {
                     if (!WalletScreen.activeInHierarchy)
                     {
@@ -1454,9 +1015,9 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     break;
                 }
-                case 21:
+            case 21:
                 {
-                   LoginScreenNew.SetActive(true);
+                    LoginScreenNew.SetActive(true);
                     break;
                 }
         }
@@ -1465,9 +1026,10 @@ public class UserRegisterationManager : MonoBehaviour
     // DifferentAPI,s Call
 
     // Started Device Token 
-    public void blackscrreefalse() { 
-    
-    BlackScreen.SetActive(false); 
+    public void blackscrreefalse()
+    {
+
+        BlackScreen.SetActive(false);
     }
     string uniqueID2()
     {
@@ -1491,8 +1053,6 @@ public class UserRegisterationManager : MonoBehaviour
             if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetInt("iSignup") == 1)
             {
                 PlayerPrefs.SetInt("RegistrationOnce", 1);
-
-                //print(PlayerPrefs.GetInt("Sign Up flow completed and Event called from here"));
                 DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
             }
         }
@@ -1511,51 +1071,42 @@ public class UserRegisterationManager : MonoBehaviour
     }
     IEnumerator HitSetDeviceTokenAPI(string url, string Jsondata, string LocalGetDeviceID)
     {
-        // //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        //print(ConstantsGod.AUTH_TOKEN);
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         request.SendWebRequest();
         while (!request.isDone)
         {
             yield return null;
         }
-        //  //print(request.GetRequestHeader("Authorization"));
-        //  //print(request.isDone);
-        ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
                     PlayerPrefs.SetString("DeviceToken", LocalGetDeviceID);
-                    //    //print("device ID here is " + LocalGetDeviceID);
-                    //  //print("Set Device Token succesfully");  
                 }
             }
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
-               ////Debug.Log("Network error in set device token");
+                ////Debug.Log("Network error in set device token");
             }
             else
             {
                 if (request.error != null)
                 {
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                       ////Debug.Log("Success false in  in set device token");
+                        ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -1587,19 +1138,19 @@ public class UserRegisterationManager : MonoBehaviour
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
     {
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(true);
-        //print("Body of Logout " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
-        ////Debug.Log("<color=red>" +request.downloadHandler.text + "</color>");
-        //  //print(request.GetRequestHeader("Authorization"));
-        //  //print(request.isDone);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
@@ -1610,17 +1161,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     validationMessagePopUP.SetActive(true);
                     errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                    //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -1628,24 +1176,16 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   //print("Hey success false " + myObject1.msg);
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
-                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                     }
                 }
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
-            //yield return new WaitForSeconds(.1f);
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
-            //yield return new WaitForSeconds(.1f);
             LoadingHandler.Instance.HideLoading();
             StoreManager.instance.CheckWhenUserLogin();
         }
@@ -1655,17 +1195,17 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator OnSucessLogout()
     {
         //--> remove for xana avatar2.0
-       // BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        // BoxerNFTEventManager.OnNFTUnequip?.Invoke();
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         }
- 
+
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
-         userRoleObj.userNftRoleSlist.Clear();
+        userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
-        XanaConstants.xanaConstants.userId = null;
+        XanaConstants.userId = null;
         XanaConstants.xanaConstants.LoginasGustprofile = false;
 
         PlayerPrefs.SetString("SaveuserRole", "");
@@ -1693,13 +1233,12 @@ public class UserRegisterationManager : MonoBehaviour
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
-        //PlayerPrefs.SetInt("shownWelcome", 1);
-        PlayerPrefs.SetInt("ShowLiveUserCounter",simultaneousConnectionsValue);
+        PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
 
         //[Waqas] Reset Guest Username After Delete All
-        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME,tempName1);
-        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME,tempName2);
-        PlayerPrefs.SetString("publicID","");
+        PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, tempName1);
+        PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, tempName2);
+        PlayerPrefs.SetString("publicID", "");
 
 
 
@@ -1708,19 +1247,10 @@ public class UserRegisterationManager : MonoBehaviour
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
-        //On merging from Release getting this error
-        //GameManager.Instance.mainCharacter.GetComponent<Equipment>().AfterLogout();
         if (StoreManager.instance.MultipleSave)
             LoadPlayerAvatar.instance_loadplayer.avatarButton.gameObject.SetActive(false);
 
-        //On merging from Release getting this error
-        //DefaultEnteriesforManican.instance.DefaultReset_HAck();
-        //GameManager.Instance.mainCharacter.GetComponent<Equipment>().UpdateStoreList();
-
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
-        //yield return new WaitForSeconds(.1f);
-        //LoadingHandler.Instance.UpdateLoadingSlider(0.90f);
-        //yield return new WaitForSeconds(.1f);
         LoadingHandler.Instance.HideLoading();
         XanaConstants.xanaConstants.isCameraMan = false;
         XanaConstants.xanaConstants.IsDeemoNFT = false;
@@ -1731,13 +1261,6 @@ public class UserRegisterationManager : MonoBehaviour
     public void ResetDataAfterLogoutSuccess()//rik
     {
         shownWelcome = false;
-        //for Reset Avatar Selection Screen Previous Account Data.......
-        //PlayerPrefs.SetInt("PresetValue", -1);
-        //if (PresetData_Jsons.lastSelectedPreset != null)
-        //{
-        //    //PresetData_Jsons.lastSelectedPreset.gameObject.SetActive(false);
-        //    PresetData_Jsons.lastSelectedPreset = null;
-        //}
         PresetData_Jsons.clickname = "";
         if (StoreManager.instance.PresetArrayContent)
         {
@@ -1757,10 +1280,8 @@ public class UserRegisterationManager : MonoBehaviour
     void resetClothstoGuest()
     {
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        SavaCharacterProperties.instance.LoadMorphsfromFile(); // loading morohs 
-                                                               //  DefaultEnteriesforManican.instance.LastSaved_Reset();
-                                                               //     ServerSIdeCharacterHandling.Instance.loadprevious();  //Load last saved values
-    }                                                         // Ending Device Token 
+        SavaCharacterProperties.instance.LoadMorphsfromFile();
+    } 
 
     // Submit Logout
     public string GetDeviceToken()
@@ -1775,15 +1296,12 @@ public class UserRegisterationManager : MonoBehaviour
             MyClassForSettingDeviceToken myObject = new MyClassForSettingDeviceToken();
             string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedDeviceToken(uniqueID()));
             return bodyJson;
-            //StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, bodyJson));
         }
     }
 
     // Submit GetUser Details        
     public void SubmitGetUserDetails()
     {
-        //  //print("Submit GetUser Details");
-        ////Debug.Log("token value user details===" + ConstantsGod.AUTH_TOKEN);
         StartCoroutine(HitGetUserDetails(ConstantsGod.API_BASEURL + ConstantsGod.GetUserDetailsAPI, ""));
     }
 
@@ -1796,8 +1314,11 @@ public class UserRegisterationManager : MonoBehaviour
 
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
-        ////Debug.Log("<color = red>" + request.downloadHandler.text + "</color>");
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         DeleteApiRes myObject1 = new DeleteApiRes();
         myObject1 = JsonUtility.FromJson<DeleteApiRes>(request.downloadHandler.text);
 
@@ -1911,26 +1432,17 @@ public class UserRegisterationManager : MonoBehaviour
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            yield return request.SendWebRequest();
-            // if (request.isNetworkError)
-            //{
-            //    ////Debug.Log("Error: " + request.error);
-            //}
-            //else
-            //{
-            //    ////Debug.Log("Received: " + request.downloadHandler.text);
-            //}
-
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                yield return null;
+            }
             ClassforUserDetails myObject1 = new ClassforUserDetails();
-            if (!request.isHttpError && !request.isNetworkError)
+            if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
             {
                 myObject1 = myObject1.CreateFromJSON(request.downloadHandler.text);
                 if (request.error == null)
                 {
-                    ////Debug.Log(request.downloadHandler.text);
-                    //    //print(myObject1.data.userProfile.country);
-                    //   //print(myObject1.data.email);
-
                     if (myObject1.success == "true")
                     {
                         //   //print("Success of user details");
@@ -1945,11 +1457,8 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
-                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                     }
                 }
                 else
@@ -1960,12 +1469,8 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             validationMessagePopUP.SetActive(true);
                             errorTextPassword.SetActive(true);
-                            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                            //      //print("Hey success false " + myObject1.msg);
-                            //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                            //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                            errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
-                         //   StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                            errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
                         }
                     }
                 }
@@ -1976,7 +1481,6 @@ public class UserRegisterationManager : MonoBehaviour
     //Start Submit UpdateUserAvatar
     public void SubmitUpdateUserAvatar()
     {
-        //  //print("Submit UpdateUserAvatar");
         MyClassForUpdatingUserAvatar myObject = new MyClassForUpdatingUserAvatar();
         string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedUserAvatar("updated avatar")); ;
         StartCoroutine(HitUpdateAvatarAPI(ConstantsGod.API_BASEURL + ConstantsGod.UpdateAvatarAPI, bodyJson));
@@ -1996,25 +1500,23 @@ public class UserRegisterationManager : MonoBehaviour
 
     IEnumerator HitUpdateAvatarAPI(string url, string Jsondata)
     {
-        // //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
-        //  //print(request.GetRequestHeader("Authorization"));
-        ///   //print(request.isDone);
-        //  ////Debug.Log(request.downloadHandler.text);
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                //  ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     //    //print("Avatar Updated Success");
@@ -2023,17 +1525,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     validationMessagePopUP.SetActive(true);
                     errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -2041,17 +1540,12 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
-                        //     //print("Hey success false " + myObject1.msg);
-                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                     }
                 }
             }
@@ -2064,21 +1558,11 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitForgetPassword()
     {
-        //  string ForgetPassword_EmlOrPhone = EmailOrPhone_ForgetPasswrod.Text;
         string ForgetPassword_EmlOrPhone = EmailOrPhone_Forget_NewField.Text;
         if (ForgetPassword_EmlOrPhone == "")
         {
-            //  //print("Email Or Password should not be empty");
             errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
-            //  if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            // errorTextForgetAPI.GetComponent<Text>().text = "全ての欄に入力してください";
-            // }
-            // else
-            // {
-            // errorTextForgetAPI.GetComponent<Text>().text = "Fields Should not be empty";
-            // }
-            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextForgetAPI.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
             return;
         }
@@ -2099,21 +1583,22 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public IEnumerator HitForgetPasswordAPI(string url, string Jsondata, string localEmail_oR_PhoneNumber, GameObject _loader)
     {
-        //  //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
         myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
-                //   ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     if (_loader != null)
@@ -2127,48 +1612,27 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     if (_loader != null)
                         _loader.SetActive(false);
                     errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
-
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextForgetAPI.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextForgetAPI.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextForgetAPI.GetComponent<Text>());
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
                     StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
                 }
-             }
+            }
             else
             {
                 if (_loader != null)
                     _loader.SetActive(false);
                 if (request.error != null)
                 {
-
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
                         errorTextForgetAPI.GetComponent<Animator>().SetBool("playAnim", true);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     //3: Email address is already exists
-                        //     errorTextForgetAPI.GetComponent<Text>().text = "同じメールアドレスが登録されています";
-                        // }
-                        // else
-                        // {
-                        //     errorTextForgetAPI.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-                        //errorHandler.ShowErrorMessage(ErrorType.User_Does_Not_Exist_with_Email.ToString(), errorTextForgetAPI.GetComponent<Text>());
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextForgetAPI.GetComponent<Text>());
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
                         StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
                     }
                 }
@@ -2179,38 +1643,20 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitResetPassword()
     {
-        //print("Submit Reset Password");
-
-        // //print("Submit Password");
-
-        // InputTextShiftCodeChangePass2
-        //     string NewPassword = Password1_ForgetPasswrod.Text.Trim();
-        //  string ReNewPassword = Password2_ForgetPasswrod.Text.Trim();
-
-        // string NewPassword = InputTextShiftCodeChangePass.GetText();
         string NewPassword = Password1_ForgetNewField.Text;
-        //   string ReNewPassword = InputTextShiftCodeChangePass2.GetText();
         string ReNewPassword = Password2_ForgetNewField.Text;
 
         if (NewPassword == "" || ReNewPassword == "")
         {
             errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", true);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextResetPasswordAPI.GetComponent<Text>().text = "全ての欄に入力してください";
-            // }
-            // else
-            // {
-            //     errorTextResetPasswordAPI.GetComponent<Text>().text = "Fields should not be empty";
-            // }
-            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextResetPasswordAPI.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextResetPasswordAPI.GetComponent<TextMeshProUGUI>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextResetPasswordAPI.GetComponent<Animator>()));
             return;
         }
         if (NewPassword.Length < 8 || ReNewPassword.Length < 8)
         {
             errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", true);
-            errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextResetPasswordAPI.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextResetPasswordAPI.GetComponent<TextMeshProUGUI>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextResetPasswordAPI.GetComponent<Animator>()));
             return;
         }
@@ -2228,7 +1674,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (!allCharactersInStringAreDigits)
         {
             errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", true);
-            errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextResetPasswordAPI.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextResetPasswordAPI.GetComponent<TextMeshProUGUI>());
             StartCoroutine(WaitUntilAnimationFinished(errorTextResetPasswordAPI.GetComponent<Animator>()));
             return;
         }
@@ -2236,31 +1682,19 @@ public class UserRegisterationManager : MonoBehaviour
         if (NewPassword != ReNewPassword)
         {
             errorTextResetPasswordAPI.GetComponent<Animator>().SetBool("playAnim", true);
-
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextResetPasswordAPI.GetComponent<Text>().text = "パスワードが一致していません";
-            // }
-            // else
-            // {
-            //     errorTextResetPasswordAPI.GetComponent<Text>().text = "Password not matched";
-            // }
-            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextResetPasswordAPI.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextResetPasswordAPI.GetComponent<TextMeshProUGUI>());
 
             StartCoroutine(WaitUntilAnimationFinished(errorTextResetPasswordAPI.GetComponent<Animator>()));
-            //   //print("Password not matched");
             return;
         }
         MyClassOfPostingReset myObject = new MyClassOfPostingReset();
         string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(NewPassword));
         NewPasswordForgetApi = NewPassword;
         StartCoroutine(HitResetAPI(ConstantsGod.API_BASEURL + ConstantsGod.ForgetPasswordResetAPI, bodyJson));
-        //   //print(bodyJson);
     }
 
     IEnumerator HitResetAPI(string url, string Jsondata)
     {
-        //   //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -2268,22 +1702,16 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ForgetPasswordTokenAfterVerifyling);
         yield return request.SendWebRequest();
-        // //print(request.GetRequestHeader("Authorization"));
-        //  ////Debug.Log(request.downloadHandler.text);
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     if (ForgetPasswordBool)
                     {
-                        //   ForgetPasswordEmlOrPhnContainer
-                        //  NewPasswordForgetApi
                         savePasswordList.instance.saveDataFromForgetPassword(ForgetPasswordEmlOrPhnContainer, NewPasswordForgetApi);
                         OpenUIPanal(6);
                         ForgetPasswordTokenAfterVerifyling = "";
@@ -2291,36 +1719,23 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        //   //print("Registration With Name Completed ");
                         OpenUIPanal(16);
                         GameManager.Instance.SignInSignUpCompleted();
                         usernamePanal.SetActive(false);
                         LoggedIn = true;
                     }
-
-                    //OpenUIPanal(6);
                 }
             }
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                     validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -2328,23 +1743,11 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //  //print("Hey success false " + myObject1.msg);
-                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     errorTextName.GetComponent<Text>().text = "名前が無効です";
-                        // }
-                        // else
-                        // {
-                        //     errorTextName.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<TextMeshProUGUI>());
                     }
                 }
             }
@@ -2398,7 +1801,6 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static ClassWithTokenofResetPassword CreateFromJSON(string jsonString)
         {
-            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<ClassWithTokenofResetPassword>(jsonString);
         }
     }
@@ -2415,43 +1817,12 @@ public class UserRegisterationManager : MonoBehaviour
         }
     }
 
-
-    // END ForgetPassword Section
-
-
-
-
-
-    // Submit Delete Account
-
     public void SubmitDeleteAccount()
     {
         //  //print("Submit Delete Account");
     }
-
-    // DifferentAPI,s END
-
-
-
-    //// UpdateUserProfile
-    ///
     public void SubmitUpdateProfile()
     {
-        //string genderlocal = GenderField.Text.Trim();
-        //string joblocal = JobField.Text.Trim();
-        //string Countrylocal = CountryField.Text.Trim();
-        //string Biolocal = BioField.Text.Trim();
-        //if (genderlocal == "" || joblocal == "" || Countrylocal == "" || Biolocal == "")
-        //{
-        //    //  //print("None fields should be empty");
-        //    return;
-        //}
-        //else
-        //{
-        //    MyClassForUpdatingProfile myObject = new MyClassForUpdatingProfile();
-        //    string bodyJson = JsonUtility.ToJson(myObject.GetUpdateProfiledata(genderlocal, joblocal, Countrylocal, Biolocal)); ;
-        //    StartCoroutine(HitUpdateProfileAPI(ConstantsGod.API_BASEURL + ConstantsGod.UpdateProfileAPI, bodyJson));
-        //}
     }
 
     [Serializable]
@@ -2471,115 +1842,34 @@ public class UserRegisterationManager : MonoBehaviour
             return myObj;
         }
     }
-
-    //Need To Dellete this as its not using 
-    /*
-    IEnumerator HitUpdateProfileAPI(string url, string Jsondata)
-    {
-        //  //print("Body " + Jsondata);
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
-        yield return request.SendWebRequest();
-        //   //print(request.GetRequestHeader("Authorization"));
-        //   //print(request.isDone);
-        ////Debug.Log(request.downloadHandler.text);
-        MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
-        {
-            myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-            if (request.error == null)
-            {
-                //  ////Debug.Log(request.downloadHandler.text);
-                if (myObject1.success)
-                {
-                    //    //print("Update Profile Successfully");
-                }
-            }
-        }
-        else
-        {
-            if (request.isNetworkError)
-            {
-                errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-            }
-            else
-            {
-                if (request.error != null)
-                {
-                    myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
-                    if (!myObject1.success)
-                    {
-                        //   //print("Hey success false " + myObject1.msg);
-                        errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
-                        StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                    }
-                }
-            }
-        }
-    }
-    */
-
-    // End UpdateUserProfile
-
     /// <SignUpWithPhoneNumber>
     public void SubmitPhoneNumber()
     {
-        //print(PhoneFieldNew.Text);
-        // if (PhoneInputTextNew.Text == "")
         if (PhoneFieldNew.Text == "")
         {
-            // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     // 5: Phone Number should not be empty
-            //     errorTextNumber.GetComponent<Text>().text = "携帯番号を入力してください";
-            // }   
-            // else
-            // {
-            //     errorTextNumber.GetComponent<Text>().text = "Phone number should not be empty";
-            // } 
-            //
-            errorHandler.ShowErrorMessage(ErrorType.Phone_number__empty.ToString(), errorTextNumber.GetComponent<Text>());
-
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+            errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Phone_number__empty.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
             return;
         }
-        // if (PhoneInputTextNew.Text.Length > 10)
+        
         if (PhoneFieldNew.Text.Length > 10)
         {
-            //  errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
 
-            errorHandler.ShowErrorMessage(ErrorType.Enter_Valid_Number.ToString(), errorTextNumber.GetComponent<Text>());
+            errorHandler.ShowErrorMessage(ErrorType.Enter_Valid_Number.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
             if (GameManager.currentLanguage == "ja" && CountryCodeText.text == "+81")
             {
                 // 5: Phone Number should not be empty
-                errorTextNumber.GetComponent<Text>().text = "市外局番を抜いて入力ください（例 080→80、090→90）";
+                errorTextNumber.GetComponent<TextMeshProUGUI>().text = "市外局番を抜いて入力ください（例 080→80、090→90）";
             }
-
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
             return;
         }
 
         else
         {
-
-            //   PhoneInputTextNew.Text = PhoneInputTextNew.Text.Trim();
             PhoneFieldNew.Text = PhoneFieldNew.Text.Trim();
-            //    string phonenumberText = CountryCodeText.text + PhoneInputTextNew.Text;
             string phonenumberText = CountryCodeText.text + PhoneFieldNew.Text;
             string url = ConstantsGod.API_BASEURL + ConstantsGod.SendPhoneOTPAPI;
             if (ResendOTPBool)
@@ -2614,7 +1904,6 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     currentSelectedNxtButton.interactable = false;
                 }
-                //    //print(url);
                 MyClassOfPhoneNumber myObject = new MyClassOfPhoneNumber();
                 string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(phonenumberText));
                 StartCoroutine(HitPhoneAPI(url, bodyJson, phonenumberText, NxtButtonObj));
@@ -2631,54 +1920,28 @@ public class UserRegisterationManager : MonoBehaviour
     /// <ChangePassword>
     public void SubmitChangePassword()
     {
-        ////  //print("Submit Password");
-        //string oldPassword = OldPasswordField.Text.Trim();
-        //string NewPassword = ChangePassword1.Text.Trim();
-        //string ReNewPassword = ChangePassword2.Text.Trim();
 
-        //if (oldPassword == "")
-        //{
-        //    //  //print("Old password should not be empty");
-        //    return;
-        //}
-        //else if (NewPassword == "" || ReNewPassword == "")
-        //{
-        //    //    //print("New Password should not be empty");
-        //    return;
-        //}
-
-        //if (NewPassword != ReNewPassword)
-        //{
-        //    //  //print("Password not matched");
-        //    return;
-        //}
-        //MyClassForChangePassword myObject = new MyClassForChangePassword();
-        //string bodyJson = JsonUtility.ToJson(myObject.GetChangePassworddata(oldPassword, NewPassword));
-        //StartCoroutine(HitChangePasswordAPI(ConstantsGod.API_BASEURL + ConstantsGod.ChangePasswordAPI, bodyJson));
-        ////print(bodyJson);
     }
 
     IEnumerator HitChangePasswordAPI(string url, string Jsondata)
     {
-        //  //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
-        yield return request.SendWebRequest();
-        //   //print(request.GetRequestHeader("Authorization"));
-        //  //print(request.isDone);
-        ////Debug.Log(request.downloadHandler.text);
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                //     ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     //print("Change Password Successfully");
@@ -2687,17 +1950,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     validationMessagePopUP.SetActive(true);
                     errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                    //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -2705,18 +1965,12 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
-                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //         //print("Hey success false " + myObject1.msg);
-                        //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        //errorHandler.ShowErrorMessage(ErrorType.Wrong_Password, errorTextPassword.GetComponent<Text>());
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
                     }
                 }
             }
@@ -2727,17 +1981,18 @@ public class UserRegisterationManager : MonoBehaviour
     // Send OTP to Phone Number
     IEnumerator HitPhoneAPI(string url, string Jsondata, string LPhoneNumber, GameObject _loader = null)
     {
-        ////print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-        //print(request.downloadHandler.text);
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         if (request.downloadHandler.text.Contains("Enter Valid Number"))
         {
-            ////Debug.Log("working");
             mobile_number = true;
         }
         else if (request.downloadHandler.text.Contains("User Already Exists With This Number"))
@@ -2747,15 +2002,12 @@ public class UserRegisterationManager : MonoBehaviour
         MyClassNewApi myObject1 = new MyClassNewApi();
         myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
 
-
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
                 if (_loader != null)
                     _loader.SetActive(false);
-                ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     if (currentSelectedNxtButton)
@@ -2771,7 +2023,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
@@ -2784,58 +2036,21 @@ public class UserRegisterationManager : MonoBehaviour
 
                         _loader.SetActive(false);
                     }
-
-                    // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
-
                     validationMessagePopUP.SetActive(true);
-                    errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     //6: Cannot Connect to Destination Host
-                    //     errorTextNumber.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextNumber.GetComponent<Text>().text = request.error.ToUpper();
-                    // }   
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<Text>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+                    errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                      
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
                 }
-             }
+            }
             else
             {
                 if (request.error != null)
                 {
-                    //  //print("Message Return: " + myObject1.data);
-                    //myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   //print("Hey success false " + myObject1.msg);
-
-                        // errorTextNumber.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextNumber.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     //4: Phone number is already exists
-                        //     errorTextNumber.GetComponent<Text>().text = "同じ携帯番号が登録されています";
-                        // }     
-                        // else
-                        // {
-                        //     errorTextNumber.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-                        //if (!mobile_number)
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.User_Already_Exist, errorTextNumber.GetComponent<Text>());
-                        //}
-
-                        //else if (mobile_number)
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.Enter_Valid_Number, errorTextNumber.GetComponent<Text>());
-                        //}
-
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextNumber.GetComponent<Text>());
+                        errorTextNumber.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextNumber.GetComponent<TextMeshProUGUI>());
 
 
                         if (_loader != null)
@@ -2846,9 +2061,6 @@ public class UserRegisterationManager : MonoBehaviour
                             }
                             _loader.SetActive(false);
                         }
-
-
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2882,22 +2094,19 @@ public class UserRegisterationManager : MonoBehaviour
     // SignUpwithEmail
     public void SubmitEmail()
     {
-        //  //print(EmailInputTextNew.Text);
-        //  if (EmailInputTextNew.Text == "")
         if (EmailFieldNew.Text == "")
         {
             validationMessagePopUP.SetActive(true);
             errorTextEmail.SetActive(true);
-            errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-            errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<Text>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+            errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             return;
         }
         else
-        { 
+        {
             EmailFieldNew.Text = EmailFieldNew.Text.Trim();
-            
+
             if (IsValidEmail(EmailFieldNew.Text))
             {
                 string email = EmailFieldNew.Text;
@@ -2933,10 +2142,8 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 validationMessagePopUP.SetActive(true);
                 errorTextEmail.SetActive(true);
-                errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
-                errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<Text>());
-             //   StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
             }
         }
     }
@@ -2968,16 +2175,18 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public IEnumerator HitEmailAPIWithNewTechnique(string url, string Jsondata, string localEmail, GameObject _loader = null)
     {
-        //    //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (!request.isHttpError && !request.isNetworkError )
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (_loader != null)
             {
@@ -2987,8 +2196,6 @@ public class UserRegisterationManager : MonoBehaviour
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null && passwordBool)
             {
-                ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
                     if (currentSelectedNxtButton)
@@ -2997,17 +2204,14 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     emailBool = true;
                     OpenUIPanal(3);
-                    //emailBool = true;
                     Email = localEmail;
                     SignUpWithPhoneBool = false;
                 }
-                
             }
-           
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
@@ -3021,19 +2225,8 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     validationMessagePopUP.SetActive(true);
                     errorTextEmail.SetActive(true);
-                    errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextEmail.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextEmail.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<Text>());
-                    //print("getting text from here");
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                    errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -3041,14 +2234,12 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-
-                    //print(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextEmail.SetActive(true);
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextEmail.GetComponent<Text>());
-                        errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextEmail.GetComponent<TextMeshProUGUI>());
+                        errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         if (_loader != null)
                         {
                             if (currentSelectedNxtButton)
@@ -3057,8 +2248,6 @@ public class UserRegisterationManager : MonoBehaviour
                             }
                             _loader.SetActive(false);
                         }
-                        // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-
                     }
                 }
             }
@@ -3074,37 +2263,19 @@ public class UserRegisterationManager : MonoBehaviour
         string OTP = "";
         NewLoadingScreen.SetActive(true);
         _NewLoadingText.text = "";
-        //  OTP = mainfield_for_opt.Text;
         OTP = mainfieldOTPNew.Text;
-        // for (int i = 0; i < pinNew.Count; i++)
-        // {
-        //     OTP += pinNew[i].Text;  
-        // }  
-        //  //print("OTP entered by user is " + OTP);
         if (OTP == "" || OTP.Length < 4)
         {
-          //  errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextPIN.GetComponent<Text>().text = "認証コードを入力してください";
-            // }
-            // else
-            // {
-            //     errorTextPIN.GetComponent<Text>().text = "OTP fields should not be empty";
-            // }
-            errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextPIN.GetComponent<Text>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+            errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
             return;
         }
         if (ForgetPasswordBool)
         {
             string url = ConstantsGod.API_BASEURL + ConstantsGod.ForgetPasswordOTPAPI;
             MyClassOfPostingForgetPasswordOTP myobjectOfPhone = new MyClassOfPostingForgetPasswordOTP();
-            //   //print("Forget Password OTP Section " + OTP);
             string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(ForgetPasswordEmlOrPhnContainer, OTP));
-            //  //print("Json is  " + bodyJson);
             StartCoroutine(HitOTPAPI(url, bodyJson));
         }
         else
@@ -3113,19 +2284,14 @@ public class UserRegisterationManager : MonoBehaviour
             if (SignUpWithPhoneBool)
             {
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyPhoneOTPAPI;
-                // int numberOTP = int.Parse(OTP);
                 MyClassOfPostingPhoneOTP myobjectOfPhone = new MyClassOfPostingPhoneOTP();
-                //   //print("Phone OTP sending Section an Phone number is  " + LocalPhoneNumber);
-                //   //print("Phone OTP  " + OTP);
                 string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, OTP));
-                //   //print("Json is  " + bodyJson);
                 StartCoroutine(HitOTPAPI(url, bodyJson));
             }
             // Email OTP sending Section
             else
             {
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyEmailOTP;
-                //  int numberOTP = int.Parse(OTP);
                 MyClassOfPostingOTP myObject = new MyClassOfPostingOTP();
                 string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(Email, OTP));
                 StartCoroutine(HitOTPAPI(url, bodyJson));
@@ -3153,7 +2319,6 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static MyClassOfRegisterWithNumber CreateFromJSON(string jsonString)
         {
-            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<MyClassOfRegisterWithNumber>(jsonString);
         }
     }
@@ -3174,7 +2339,6 @@ public class UserRegisterationManager : MonoBehaviour
 
         public static MyClassOfRegisterWithEmail CreateFromJSON(string jsonString)
         {
-            //  //print("Person " + jsonString);
             return JsonUtility.FromJson<MyClassOfRegisterWithEmail>(jsonString);
         }
     }
@@ -3182,24 +2346,17 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void SubmitPassword()
     {
-        //print("submit password here");
-        //  string pass1 = Password1InputTextShiftCode.GetText();
         string pass1 = Password1New.Text;
-        //  string pass2 = Password2ConfirmInputTextShiftCode.GetText();
+
         string pass2 = Password2New.Text;
-        //print(pass1);
-        //print(pass2);
 
         if (pass1 == "" || pass2 == "")
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.SetActive(true);
-            //print("Password Field should not be empty");
-            //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextPassword.GetComponent<Text>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
             return;
         }
 
@@ -3210,10 +2367,8 @@ public class UserRegisterationManager : MonoBehaviour
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.SetActive(true);
-            // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextPassword.GetComponent<Text>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
             return;
         }
 
@@ -3228,62 +2383,53 @@ public class UserRegisterationManager : MonoBehaviour
                 if (pass1.Contains(ch))
                     allCharactersInStringAreDigits = true;
             }
-            
+
         }
         if (!allCharactersInStringAreDigits)
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.SetActive(true);
-            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<Text>());
-            //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
             return;
         }
 
-        if (pass1 == pass2 )
+        if (pass1 == pass2)
         {
-           
             password = pass1;
             passwordBool = true;
-            //  OpenUIPanal(5);
         }
         else
         {
             passwordBool = false;
             validationMessagePopUP.SetActive(true);
             errorTextPassword.SetActive(true);
-            errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            
-            // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<Text>());
-             //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-            //   print("Password not matched");
+            errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
         }
     }
-    public ClassWithToken TokenDataClass=new ClassWithToken();
+    public ClassWithToken TokenDataClass = new ClassWithToken();
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
     {
-        //print(Jsondata);
-         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();     
-         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();       
-         var request = new UnityWebRequest(url, "POST");
+        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+        var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         ClassWithToken myObject = new ClassWithToken();
-        TokenDataClass=myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        //print(myObject.data.token);
-        if (!request.isHttpError && !request.isNetworkError)
+        TokenDataClass = myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
-                //    ////Debug.Log(request.downloadHandler.text);
-                //if (myObject.success == "true")
                 if (myObject.success)
                 {
                     if (registerWithEmail)
@@ -3303,12 +2449,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("UserNameAndPassword", bodyJson);
                     }
 
-
-
-                    //print("Token before " + myObject.data.token);
-                    // PlayerPrefs.SetString("LoginToken", myObject.data.token);
                     ConstantsGod.AUTH_TOKEN = myObject.data.token;
-                    //print("in new Registartion technique" + ConstantsGod.AUTH_TOKEN);
                     var parts = myObject.data.token.Split('.');
                     if (parts.Length > 2)
                     {
@@ -3320,57 +2461,44 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         var bytes = System.Convert.FromBase64String(decode);
                         var userInfo = System.Text.ASCIIEncoding.ASCII.GetString(bytes);
-                        //print(userInfo);
                         LoginClass L_LoginObject = new LoginClass();
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
-                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.ChangecharacterOnCLickFromserver();
                         PlayerPrefs.SetInt("FristPresetSet", 1);
-                        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
-                        //print("Welcome " + PlayerPrefs.GetString("UserName"));
-                        XanaConstants.xanaConstants.userId = L_LoginObject.id;
-                     
+                        XanaConstants.userId = L_LoginObject.id;
+
                     }
                     PlayerPrefs.Save();
-                    //PlayerPrefs.SetInt("IsLoggedIn", 1);
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
                     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                    //   //print("token is " + PlayerPrefs.GetString("LoginToken"));
-                    //     //print("User Registered succesfully from password");
                 }
             }
         }
         else
         {
-            
-            if (request.isNetworkError)
-             {
+
+            if (request.result==UnityWebRequest.Result.ConnectionError)
+            {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     validationMessagePopUP.SetActive(true);
                     errorTextPassword.SetActive(true);
-                    errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<Text>());
-                    //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                    errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
             {
                 if (request.error != null)
                 {
-                    //if (myObject.success == "false")
                     if (!myObject.success)
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextPassword.SetActive(true);
-                        //    //print("Hey success false " + myObject.msg);
-                        errorTextPassword.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //   errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
-                        errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<Text>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
                     }
                 }
             }
@@ -3379,15 +2507,8 @@ public class UserRegisterationManager : MonoBehaviour
 
     // End Register User with password
 
-    public void LoadingFadeOutScreen() 
+    public void LoadingFadeOutScreen()
     {
-        if (CharacSelectScroll.instance.contentParent.childCount > 0)
-        {
-            foreach (Transform child in CharacSelectScroll.instance.contentParent)
-            {
-              //  Destroy(child.gameObject);
-            }
-        }
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
@@ -3408,7 +2529,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(false);
     }
 
-    
+
 
 
     public void EnterUserName()
@@ -3418,58 +2539,28 @@ public class UserRegisterationManager : MonoBehaviour
         {
             currentSelectedNxtButton = NxtButtonObj.GetComponent<Button>();
         }
-        currentSelectedNxtButton.interactable = false; 
+        currentSelectedNxtButton.interactable = false;
         UsernamescreenLoader.SetActive(true);
-        ////print(PlayerPrefs.GetInt("shownWelcome")); // 0
-        ////print(PlayerPrefs.GetInt("iSignup")); // 1
-        ////print(PlayerPrefs.GetInt("IsProcessComplete")); // 0
-        //   string Localusername = UsernameTextNew.Text;
         string Localusername = UsernameFieldAdvance.Text;
-        //if (Username2FieldAdvance.Text != null)
-        //{
-        //    Localusername = Username2FieldAdvance.Text;
-        //}
-       
-            UserNameSetter.text = UsernameFieldAdvance.Text;
-       
-     
-        if (Localusername == "")// || Localusername.Contains(" "))
+        UserNameSetter.text = UsernameFieldAdvance.Text;
+
+
+        if (Localusername == "")
         {
-            //  //print("Username Field should not be empty");
-            //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextName.GetComponent<Text>().text = "名前を入力してください";
-            // }
-            // else
-            // {
-            //     errorTextName.GetComponent<Text>().text = "Name Field should not be empty";
-            //  }
-            errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextName.GetComponent<Text>());
+            errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
-            // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
         else if (Localusername.StartsWith(" "))
         {
-            //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextName.GetComponent<Text>().text = "名前を入力してください";
-            // }
-            // else
-            // {
-            //     errorTextName.GetComponent<Text>().text = "Name Field should not be empty";
-            //  }
-            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextName.GetComponent<Text>());
+            errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
-            //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
             return;
         }
 
@@ -3490,20 +2581,14 @@ public class UserRegisterationManager : MonoBehaviour
             return;
         }
 
-        // if(PlayerPrefs.GetInt("IsProcessComplete")==0)
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
-            //print("--- Return using namepanel" + Localusername);
-
             DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
-            //PlayerPrefs.SetString("GuestName", Localusername);//rik cmt add guste username key
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
             usernamePanal.SetActive(false);
-           // EntertheWorld_Panal.SetActive(true);
             checkbool_preser_start = true;
-            //  StoreManager.instance.OnSaveBtnClicked();
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
             {
@@ -3512,24 +2597,12 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             return;
         }
-        //   //print(PlayerPrefs.GetInt("shownWelcome"));
-        //  //print(PlayerPrefs.GetInt("iSignup"));
-        //  //print(PlayerPrefs.GetInt("IsProcessComplete"));
-        PlayerPrefs.SetInt("IsProcessComplete", 1);  // 
-        //   //print("Test passed");
-        //print("calling after user registration");
-
-
-
+        PlayerPrefs.SetInt("IsProcessComplete", 1);  
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
-        
-        //  //print(bodyJson);
-        // StartCoroutine(HitNameAPIWithNewTechnique(NameAPIURL, bodyJsonOfName, Localusername));
-        ////Debug.Log("IsLoggedIn:" + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-           ////Debug.Log("User Already loged in set name api call.......");
+            ////Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
@@ -3540,10 +2613,7 @@ public class UserRegisterationManager : MonoBehaviour
                 MyClassOfRegisterWithNumber myobjectOfPhone = new MyClassOfRegisterWithNumber();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, false));
-                ////Debug.Log("WORKINGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
-                //StoreManager.instance.OnSaveBtnClicked();
-
             }
             else
             {
@@ -3554,46 +2624,28 @@ public class UserRegisterationManager : MonoBehaviour
                 StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
                 PlayerPrefs.SetInt("CloseLoginScreen", 1);
             }
-            //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        }    
+        }
     }
 
-   
+
 
     public void SubmitLoginCredentials()
     {
         savePasswordList.instance.DisableOnLoginButton();
-        // //print("Someone is calling me");
-        //   string L_LoginEmail = LoginEmailNew.Text;
         string L_LoginEmail = LoginEmailOrPhone.Text;
-        //print("L_LoginEmail " + L_LoginEmail);
-        //   string L_loginPassword = LoginPasswordShiftCode.GetText();
         string L_loginPassword = LoginPassword.Text;
         if (L_LoginEmail == "" || L_loginPassword == "")
         {
-            //  //print("Email Or Password should not be empty");
-            // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-            // {
-            //     errorTextLogin.GetComponent<Text>().text = "全ての欄に入力してください";
-            // }
-            // else
-            // {
-            //     errorTextLogin.GetComponent<Text>().text = "Fields should not be empty";
-            //  }
-            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextLogin.GetComponent<Text>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+            errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
             return;
         }
         else if (L_LoginEmail.Contains(" "))
         {
-            //  errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
             validationMessagePopUP.SetActive(true);
-            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<Text>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+            errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
             return;
         }
         string url = ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL;
@@ -3622,8 +2674,8 @@ public class UserRegisterationManager : MonoBehaviour
         else if (!L_LoginEmail.Contains("+") && L_LoginEmail.Any(char.IsLetter))
         {
             validationMessagePopUP.SetActive(true);
-            errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<Text>());
+            errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
             _loginBtnObject.SetActive(false);
             return;
         }
@@ -3631,8 +2683,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass("", L_LoginEmail, L_loginPassword));
         }
-        ////print("Start Json " + bodyJson);
-        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));    
+        StartCoroutine(LoginUserWithNewT(url, bodyJson, _loginBtnObject));
     }
 
 
@@ -3643,12 +2694,8 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (PlayerPrefs.GetString("AppID2") == "")
         {
-            //print("Give unique key");
-            //  DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            // int currentEpochTime = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
             int z1 = UnityEngine.Random.Range(0, 1000);
             int z2 = UnityEngine.Random.Range(0, 1000);
-            // string uid = currentEpochTime + ":" + z1 + ":" + z2;
             string uid = z1.ToString() + z2.ToString();
             PlayerPrefs.SetString("AppID2", uid);
             PlayerPrefs.Save();
@@ -3668,45 +2715,41 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void LogOutFromOtherDevice()
     {
-        //print("LogoutFromOtherDevice");
         StartCoroutine(HitLogOutFromOtherDevice(ConstantsGod.API_BASEURL + ConstantsGod.LogoutFromotherDeviceAPI, PlayerPrefs.GetString("LogoutFromDeviceJSON")));
     }
-   
+
 
     public IEnumerator HitLogOutFromOtherDevice(string URL, string _json)
     {
-        //print("URL of login is " + URL);
-        //print(_json);
         var request = new UnityWebRequest(URL, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(_json);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-        //print("json data is " + request.downloadHandler.text);
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi obj_LogOut = new MyClassNewApi();
         obj_LogOut = obj_LogOut.Load(request.downloadHandler.text);
-        //print(obj_LogOut.msg + " | success: of Logout from other device " + obj_LogOut.success);
 
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
                 if (obj_LogOut.success)
                 {
-                    ////Debug.Log("Success true in logout from other device  " + obj_LogOut.msg);
                     LogoutfromOtherDevicePanel.SetActive(false);
                     StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("JSONdataforlogin"), null, false));
-                    //  PlayerPrefs.SetString("JSONdataforlogin", Jsondata);
-
                 }
             }
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
-               ////Debug.Log("Network error in logout from other device");
+                ////Debug.Log("Network error in logout from other device");
             }
             else
             {
@@ -3714,16 +2757,11 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (!obj_LogOut.success)
                     {
-                       ////Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
+                        ////Debug.Log("Success false in logout from other device  " + obj_LogOut.msg);
                     }
                 }
             }
         }
-
-
-
-
-
     }
 
     [Serializable]
@@ -3748,11 +2786,6 @@ public class UserRegisterationManager : MonoBehaviour
 
     }
 
-
-
-
-
-
     public IEnumerator HitEmailAPI(string URL, string localEmail, WWWForm form)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
@@ -3760,29 +2793,21 @@ public class UserRegisterationManager : MonoBehaviour
             var operation = www.SendWebRequest();
             while (!operation.isDone)
             {
-                //  ////Debug.Log(www.downloadProgress);
                 yield return null;
             }
-            //print(www.downloadHandler.text);
-            if (www.isHttpError || www.isNetworkError)
+            if (www.result!=UnityWebRequest.Result.ConnectionError)
             {
                 validationMessagePopUP.SetActive(true);
                 errorTextEmail.SetActive(true);
-                // ////Debug.Log("Network Error");
-                errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-                errorTextEmail.GetComponent<Text>().text = www.error.ToUpper();
-                //  ////Debug.Log("WWW Error: " + www.error);  
+                errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                errorTextEmail.GetComponent<TextMeshProUGUI>().text = www.error.ToUpper();
             }
             else
             {
                 if (operation.isDone)
                 {
-                    ////Debug.Log(www.downloadHandler.text);
                     MyClassNewApi myObject = new MyClassNewApi();
                     myObject = CheckResponceJsonNewApi(www.downloadHandler.text);
-
-                    //if (myObject.success == "true")
                     if (myObject.success)
                     {
                         OpenUIPanal(3);
@@ -3792,10 +2817,8 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         validationMessagePopUP.SetActive(true);
                         errorTextEmail.SetActive(true);
-                        errorTextEmail.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
-                        errorTextEmail.GetComponent<Text>().text = myObject.msg.ToUpper();
-                        //    //print("Error Occured " + myObject.msg);
+                        errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorTextEmail.GetComponent<TextMeshProUGUI>().text = myObject.msg.ToUpper();
                     }
                 }
             }
@@ -3805,20 +2828,20 @@ public class UserRegisterationManager : MonoBehaviour
     MyClassNewApi myObjectForOPT;
     IEnumerator HitOTPAPI(string url, string Jsondata)
     {
-        // //print(Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        yield return request.SendWebRequest();
-        // //print("Json returned = " + request.downloadHandler.text);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
         if (ForgetPasswordBool)
         {
             myObjectofOTPForResetPassword = new ClassWithTokenofResetPassword();
             myObjectofOTPForResetPassword = ClassWithTokenofResetPassword.CreateFromJSON(request.downloadHandler.text);
-            //print(myObjectofOTPForResetPassword.data.tempToken);
-
         }
         else
         {
@@ -3826,7 +2849,7 @@ public class UserRegisterationManager : MonoBehaviour
             myObjectForOPT = CheckResponceJsonNewApi(request.downloadHandler.text);
         }
 
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -3837,15 +2860,14 @@ public class UserRegisterationManager : MonoBehaviour
                         ForgetPasswordTokenAfterVerifyling = myObjectofOTPForResetPassword.data.tempToken;
                         OpenUIPanal(15);
 
-                     NewLoadingScreen.SetActive(false);
-                  
+                        NewLoadingScreen.SetActive(false);
+
                     }
                 }
                 else
                 {
-                    //if (myObjectForOPT.success == "true")
                     if (myObjectForOPT.success)
-                    {   
+                    {
                         BlackScreen.SetActive(true);
                         OpenUIPanal(4);
                         NewLoadingScreen.SetActive(false);
@@ -3861,19 +2883,9 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
-                    // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
                     validationMessagePopUP.SetActive(true);
-                    errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextPIN.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextPIN.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPIN.GetComponent<Text>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                    errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
                 }
             }
             else
@@ -3884,104 +2896,64 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (myObjectofOTPForResetPassword.success == "false")
                         {
-                            //  errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
                             validationMessagePopUP.SetActive(true);
-                            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                            // {
-                            //     errorTextPIN.GetComponent<Text>().text = "認証コードが正しくありません";
-                            // }
-                            // else
-                            // {
-                            //          errorTextPIN.GetComponent<Text>().text = myObjectofOTPForResetPassword.msg.ToUpper();
-                            //   }
-                            errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<Text>());
-                          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                            errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                            errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
                         }
                     }
                     else
                     {
-                        //if (myObjectForOPT.success == "false"  )
                         if (!myObjectForOPT.success)
                         {
-                            // errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
                             validationMessagePopUP.SetActive(true);
-                            errorTextPIN.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                            // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                            // {
-                            //     errorTextPIN.GetComponent<Text>().text = "認証コードが正しくありません";
-                            // }
-                            // else
-                            // {
-                            //          errorTextPIN.GetComponent<Text>().text = myObjectForOPT.msg.ToUpper();
-                            //  }
-                            errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<Text>());
-                           // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                            errorTextPIN.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                            errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
+                            // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
                         }
 
                     }
                 }
-                //if (myObjectofOTPForResetPassword.data.tempToken == null)
-                //{
-                //    errorTextPIN.GetComponent<Animator>().SetBool("playAnim", true);
-                //    errorHandler.ShowErrorMessage(ErrorType.Poor_connection_please_try_again.ToString(), errorTextPIN.GetComponent<Text>());
-                //    StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
-                //}
-
             }
-
-
         }
     }
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
     {
-        //print("Body " + Jsondata);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        //request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        yield return request.SendWebRequest();
-        //  //print(request.GetRequestHeader("Authorization"));
-        //  //print(request.isDone);
-        ////Debug.Log(request.downloadHandler.text);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
         if (!request.isHttpError && !request.isNetworkError)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                ////Debug.Log(request.downloadHandler.text);
-                //if (myObject1.success == "true")
                 if (myObject1.success)
                 {
-                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
-                        //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
+                        errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<TextMeshProUGUI>());
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
-                        //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                     else
                     {
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         SubmitSetDeviceToken();
-                        //  //print("Registration With Name Completed ");
                         LoggedInAsGuest = false;
-                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.GetSavedPreset();
-                        //DynamicScrollRect.DynamicScrollRect.instance.presetScript.abcd();
-                        //ServerSIdeCharacterHandling.Instance.GetDataFromServer();
                         PlayerPrefs.SetString("PlayerName", localUsername);
-                        ////Debug.Log("IS LOGGED VALUE CHANGED");
-
+                        
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
                         currentSelectedNxtButton.interactable = true;
@@ -3994,25 +2966,15 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                     validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = "接続状態が悪く繋がりません"; 
-                    // }  
-                    // else
-                    // {
-                    //     errorTextName.GetComponent<Text>().text = request.error.ToUpper();
-                    // }  
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
+                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
                     currentSelectedNxtButton.interactable = true;
                     UsernamescreenLoader.SetActive(false);
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                 }
             }
             else
@@ -4020,26 +2982,13 @@ public class UserRegisterationManager : MonoBehaviour
                 if (request.error != null)
                 {
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        //   //print("Hey success false " + myObject1.msg);
-                        //  errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {
-                        //     errorTextName.GetComponent<Text>().text = "名前が無効です";
-                        // }
-                        // else
-                        // {
-                        //     errorTextName.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-                        //errorHandler.ShowErrorMessage(ErrorType.Invalid_Username , errorTextName.GetComponent<Text>());
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
+                        errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<TextMeshProUGUI>());
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
-                        //  StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -4047,11 +2996,10 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
     public bool isSetXanaliyaUserName = false;
-   
+
 
     IEnumerator HitNameAPIWithXanaliyaUser(string url, string Jsondata, string localUsername)//rik
     {
-        ////Debug.Log("HitNameAPIWithXanaliyaUser Url:" + url + "   :BodyJson:" + Jsondata + "  :userName:" + localUsername);
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -4059,27 +3007,25 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-        yield return request.SendWebRequest();
-
-        ////Debug.Log("Data:" + request.downloadHandler.text);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        
-        if (!request.isHttpError && !request.isNetworkError)
+
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
             {
-                ////Debug.Log("Success Xanaliya Username set:" + request.downloadHandler.text);
                 if (myObject1.success)
                 {
-                   ////Debug.Log(myObject1.msg);
                     if (myObject1.msg == "This name is already taken by other user.")
                     {
-                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<Text>());
-                        // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage("Username already exists", errorTextName.GetComponent<TextMeshProUGUI>());
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
                     }
@@ -4098,17 +3044,15 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
-                    // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                     validationMessagePopUP.SetActive(true);
-                    errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<Text>());
+                    errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextName.GetComponent<TextMeshProUGUI>());
                     currentSelectedNxtButton.interactable = true;
                     UsernamescreenLoader.SetActive(false);
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                 }
             }
             else
@@ -4118,21 +3062,17 @@ public class UserRegisterationManager : MonoBehaviour
                     myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
                     if (!myObject1.success)
                     {
-                        // errorTextName.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextName.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<Text>());
+                        errorTextName.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<TextMeshProUGUI>());
                         currentSelectedNxtButton.interactable = true;
                         UsernamescreenLoader.SetActive(false);
-                        //StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
         }
     }
 
-
-    [System.Obsolete]
     IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
         using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
@@ -4140,10 +3080,8 @@ public class UserRegisterationManager : MonoBehaviour
             var operation = www.SendWebRequest();
             while (!operation.isDone)
             {
-                //  ////Debug.Log(www.downloadProgress);
                 yield return null;
             }
-            //  //print("json data is " + www.downloadHandler.text);
             ClassWithToken myObject1 = new ClassWithToken();
             myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
             if (!www.isHttpError && !www.isNetworkError)
@@ -4157,10 +3095,8 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             DynamicEventManager.deepLink?.Invoke("Guest login");
                         }
-                        ////Debug.Log("GuestToken=====");
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            //print("these are premium users");
                             PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
@@ -4174,35 +3110,16 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("firstTime", 1);
                         PlayerPrefs.Save();
 
-                        XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
-                        //Talha Changes 
-                        //if (!ComesFromLogOut)
-                        //{
-                        //    EventList.instance.GetWorldAPISNew();
-                        //    StoreManager.instance.GetAllMainCategories();
-                        //}
-
-                        //if (EventList.instance.ListContent.transform.childCount == 0)
-                        //{
-                        //    EventList.instance.GetWorldAPISNew();
-                        //}
-                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        //{
-                        //    StoreManager.instance.GetAllMainCategories();
-                        //}
-
+                        XanaConstants.userId = myObject1.data.user.id.ToString();
                     }
                 }
             }
         }
     }
 
-    [System.Obsolete]
     IEnumerator LoginUserWithNewT(string url, string Jsondata, GameObject _loader = null, bool AutoLoginBool = false)
     {
-        ////print("URL of login is " + url);
-        ////print(Jsondata);
-        var request = new UnityWebRequest(url, "POST");
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -4212,46 +3129,33 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-        ////print("json data is " + request.downloadHandler.text);
         ClassWithToken myObject1 = new ClassWithToken();
         myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
 
-        //if (myObject1.success == false)
-        //{
-        //    SubmitLogoutAccount();
-        //}
-        //else
-        //{
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
-                ////Debug.Log(request.downloadHandler.text);
                 if (myObject1.success)
                 {
                     PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                     if (_loader != null)
                         _loader.SetActive(false);
-                    ////print("Token is " + myObject1.data.token);
 
-                    ////print("Xanalia token is " + myObject1.data.xanaliaToken);
                     XanaliaUserTokenId = myObject1.data.xanaliaToken;
                     PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
                     PlayerPrefs.SetInt("shownWelcome", 1);
                     PlayerPrefs.SetInt("firstTime", 1);
 
-                    XanaConstants.xanaConstants.userId = myObject1.data.user.id.ToString();
-                    
+                    XanaConstants.userId = myObject1.data.user.id.ToString();
+
                     if (!AutoLoginBool)
                     {
-                        // savePasswordList.instance.saveData(LoginEmailNew.Text.Trim(), LoginPasswordShiftCode.GetText().Trim());
                         savePasswordList.instance.saveData(LoginEmailOrPhone.Text.Trim(), LoginPassword.Text.Trim());
                     }
 
                     PlayerPrefs.SetInt("WalletLogin", 0);
-                    //PlayerPrefs.SetString("LoginToken", myObject1.data.token);
                     ConstantsGod.AUTH_TOKEN = myObject1.data.token;
-                    //print("My NEw Value in Token is " + ConstantsGod.AUTH_TOKEN);
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                     DynamicEventManager.deepLink?.Invoke("Login user here");
 
@@ -4263,27 +3167,9 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         PremiumUsersDetails.Instance.testing = false;
                     }
-
-
-                    //   { networkType: "mainnet", nftType: "mycollection", status: "my_collection", page: 1, limit: 40,…}
-                    /*
-
-                        limit: 40
-                        loggedIn: "60f0287d436b32d50cece467"
-                        networkType: "mainnet"
-                        nftType: "mycollection"
-                        page: 1
-                        status: "my_collection"
-                     */
-
-                    //  public NFTListMainNet AssignNFTList(int _limit, string _loggedIn, string _networkType, string _nftType, int _page, string _status)
-
-
-
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
                         ConnectServerDataExtraction.NFTListMainNet NFTCreateJsonMain = new ConnectServerDataExtraction.NFTListMainNet();
-                        //NFTCreateJsonMain = NFTCreateJsonMain.AssignNFTList(40, "", "testnet", "mycollection", 1, "my_collection","");
 
                         string xanaliaNetworkType = "mainnet";
                         if (APIBaseUrlChange.instance != null)
@@ -4302,19 +3188,14 @@ public class UserRegisterationManager : MonoBehaviour
                         NFTCreateJsonMain = NFTCreateJsonMain.AssignNFTList(100, xanaliaNetworkType, "mycollection", 1);
 
                         var jsonObj = JsonUtility.ToJson(NFTCreateJsonMain);
-                        //print("Json is  : " + jsonObj);
 
                         StartCoroutine(XanaliaUserToken(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.userMy_Collection_Xanalia, jsonObj));
                         StartCoroutine(XanaliaNonCryptoNFTRole(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.getUserProfile_Xanalia));
-                        //StartCoroutine(XanaliaUserToken("https://api.xanalia.com/user/my-collection", jsonObj));
-                        //StartCoroutine(XanaliaNonCryptoNFTRole("https://api.xanalia.com/user/get-user-profile"));
                     }
                     else
                     {
-                        //print("ID of user is " + myObject1.data.user.id);
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            //print("these are premium users~~~~ " + PlayerPrefs.GetString("PremiumUserType"));
                             PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
@@ -4323,11 +3204,8 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                     }
 
-                    //print("Wallet Address of Web 2.0 user is " + myObject1.data.user.walletAddress);
-
                     if (!string.IsNullOrEmpty(myObject1.data.user.walletAddress) && PlayerPrefs.HasKey("Equiped"))
                         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-                   // _web3APIforWeb2.GetWeb2UserData(myObject1.data.user.walletAddress);
 
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
@@ -4336,6 +3214,7 @@ public class UserRegisterationManager : MonoBehaviour
                     SubmitSetDeviceToken();
                     LoggedInAsGuest = false;
                     getdatafromserver();
+                    Debug.LogError(myObject1.data.token);
                     var parts = myObject1.data.token.Split('.');
                     if (parts.Length > 2)
                     {
@@ -4347,23 +3226,19 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         var bytes = System.Convert.FromBase64String(decode);
                         var userInfo = System.Text.ASCIIEncoding.ASCII.GetString(bytes);
-                        //print(userInfo);
                         LoginClass L_LoginObject = new LoginClass();
+                        Debug.LogError("User Info :- " + userInfo);
                         L_LoginObject = CheckResponceJsonOfLogin(userInfo);
 
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
-                        //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
-                        //PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetString("PlayerName", myObject1.data.user.name);
                         PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
-                        //print("Welcome " + PlayerPrefs.GetString("UserName"));
                         usernamePanal.SetActive(false);
                         usernamePanal.SetActive(false);
                         XanaConstants.xanaConstants.LoginasGustprofile = true;
                         CheckCameraMan();
-                        //    m_EquipUI.BackFromArtbone();
                         PlayerPrefs.Save();
                         StoreManager.instance.CheckWhenUserLogin();
                         if (!AutoLoginBool)
@@ -4379,18 +3254,8 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (UIManager.Instance != null)//rik
                         {
-                           // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                           UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                         }
-                        //if (EventList.instance.ListContent.transform.childCount == 0)
-                        //{
-                        //    EventList.instance.GetWorldAPISNew();
-                        //    StoreManager.instance.GetAllMainCategories();
-                        //}
-                        //if (WorldManager.instance.listParentHotSection.transform.childCount == 0)
-                        //{
-                        //    StoreManager.instance.GetAllMainCategories();
-                        //}
                     }
 
 
@@ -4401,23 +3266,14 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 if (!ConnectionEstablished_popUp.activeInHierarchy)
                 {
                     // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
                     validationMessagePopUP.SetActive(true);
-                    errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    // if (Application.systemLanguage == SystemLanguage.Japanese  )
-                    // {
-                    //     errorTextLogin.GetComponent<Text>().text = "接続状態が悪く繋がりません";
-                    // }
-                    // else
-                    // {
-                    //     errorTextLogin.GetComponent<Text>().text = request.error.ToUpper();
-                    // }
-                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextLogin.GetComponent<Text>());
-                    // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+                    errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
                     if (_loader != null)
                         _loader.SetActive(false);
                 }
@@ -4426,13 +3282,10 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 if (request.error != null)
                 {
-                    //if (myObject1.success == "false")
                     if (!myObject1.success)
                     {
-                        // errorTextLogin.GetComponent<Animator>().SetBool("playAnim", true);
                         validationMessagePopUP.SetActive(true);
-                        errorTextLogin.GetComponent<Text>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        //print("Hey success false " + myObject1.msg);
+                        errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         if (myObject1.msg.Contains("You are already logged in another device"))
                         {
                             if (AutoLoginBool)
@@ -4448,56 +3301,18 @@ public class UserRegisterationManager : MonoBehaviour
                                 myObject = myObject.CreateFromJSON(Jsondata);
                                 MyClassOfLogoutDevice logoutObj = new MyClassOfLogoutDevice();
                                 string bodyJson2 = JsonUtility.ToJson(logoutObj.GetdataFromClass(myObject.email, myObject.phoneNumber, myObject.password));
-                                //print("bodyJson2 " + bodyJson2);
-                                //  string bodyJson1 = JsonUtility.ToJson(myObject.GetdataFromClass("", "", "", uniqueID()));
                                 PlayerPrefs.SetString("LogoutFromDeviceJSON", bodyJson2);
                             }
                         }
 
-                        //if(myObject1.msg.Contains("Password is incorrect"))
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.Wrong_Password, errorTextLogin.GetComponent<Text>());
-                        //}
-
-                        //else if(myObject1.msg.Contains("must be a valid email"))
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email, errorTextLogin.GetComponent<Text>());
-                        //}
-
-                        //else
-                        //{
-                        //    errorHandler.ShowErrorMessage(ErrorType.User_Not_Valid, errorTextLogin.GetComponent<Text>());
-
-                        //}
-
-                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextLogin.GetComponent<Text>());
+                        errorHandler.ShowErrorMessage(myObject1.msg, errorTextLogin.GetComponent<TextMeshProUGUI>());
 
                         if (_loader != null)
                             _loader.SetActive(false);
-
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
-                        //  if (Application.systemLanguage == SystemLanguage.Japanese  )
-                        // {  
-                        //     // 15: User is Not Valid or Registered
-                        //     errorTextLogin.GetComponent<Text>().text = "無効または同じユーザー名が登録されています";
-                        // }     
-                        // else
-                        // {  
-                        //     errorTextLogin.GetComponent<Text>().text = myObject1.msg.ToUpper();
-                        // }
-
                     }
                 }
             }
         }
-        //}
-
-        //   //print(myObject1.msg + " | success: " + myObject1.success);
-        //--> remove for xana avatar2.0
-        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-        //{
-        //    StoreManager.instance.GetComponent<SpeicalPresetManager>().StartCoroutine(StoreManager.instance.GetComponent<SpeicalPresetManager>().SetSpecialPresetButtons());
-        //} 
     }
 
 
@@ -4541,14 +3356,9 @@ public class UserRegisterationManager : MonoBehaviour
         return ((int)NftRolePriority.free);
     }
 
-
-    [System.Obsolete]
     IEnumerator XanaliaUserToken(string url, string Jsondata)
     {
-        //print(Jsondata);
-        //print(url);
-        //print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
-        var request = new UnityWebRequest(url, "POST");
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -4560,24 +3370,14 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-        //print("List of MainNet NFT's is   = " + request.downloadHandler.text);
-
-
         nftlist = request.downloadHandler.text;
         File.WriteAllText((Application.persistentDataPath + "/NftData.txt"), request.downloadHandler.text);
     }
-    [System.Obsolete]
     IEnumerator XanaliaNonCryptoNFTRole(string url)
     {
-        //  //print(Jsondata);
-        //print(url);
-        //print("Token " + PlayerPrefs.GetString("LoginTokenxanalia"));
-        var request = new UnityWebRequest(url, "GET");
-        //   byte[] bodyRaw = Encoding.UTF8.GetBytes("");
-        //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        UnityWebRequest request = new UnityWebRequest(url, "GET");
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-       ////Debug.Log("xanalia token :- " + PlayerPrefs.GetString("LoginTokenxanalia"));
         string _tokenis = "Bearer " + PlayerPrefs.GetString("LoginTokenxanalia");
         request.SetRequestHeader("Authorization", _tokenis);
         request.SendWebRequest();
@@ -4585,27 +3385,20 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-
-       ////Debug.Log("nft response :- " + url + request.downloadHandler.text);
-
         ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
         myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
 
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
-                ////Debug.Log("!!!!!!!" + request.downloadHandler.text);
                 if (myObject.success && myObject.data.userNftRoleArr != null)
                 {
-                    // //print("NFTrole For non Crypto user is " + myObject.data.userNftRole[1]);
-
                     int x = (int)NftRolePriority.guest;
                     string userNftRole = "free";
                     ConstantsGod.UserRoles = myObject.data.userNftRoleArr.ToList();
                     foreach (string s in myObject.data.userNftRoleArr)
                     {
-                       ////Debug.Log("---- " + s + "----" + ReturnNftRole(s));
                         int rolePriority = ReturnNftRole(s);
                         if (rolePriority <= x)
                         {
@@ -4613,8 +3406,6 @@ public class UserRegisterationManager : MonoBehaviour
                             ConstantsGod.UserPriorityRole = s;
                         }
                         userNftRole = s.ToLower();
-                        //myObject.data.userNftRole[0] = myObject.data.userNftRole[0].ToLower();
-
                         switch (userNftRole)
                         {
                             case "alpha-pass":
@@ -4649,24 +3440,22 @@ public class UserRegisterationManager : MonoBehaviour
                                 }
                         }
                     }
-
                 }
             }
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
-                ////Debug.Log("<color = red> Network error in set device token </color>");
+                
             }
             else
             {
                 if (request.error != null)
                 {
-                    //if (myObject1.success == "false")
                     if (!myObject.success)
                     {
-                       ////Debug.Log("Success false in  in set device token");
+                        ////Debug.Log("Success false in  in set device token");
                     }
                 }
             }
@@ -4691,52 +3480,6 @@ public class UserRegisterationManager : MonoBehaviour
     }
     #endregion
 
-    // Get Data for presets Only
-    IEnumerator LoginUserPresetOnly()
-    {
-
-
-        // MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-        // LoginObj.email = "presetallData1@yopmail.com";        //"allpresetdata@yopmail.com";   // get Preset jsons from this account to show 
-        // LoginObj.password = "123";
-
-        // string jsondata = JsonUtility.ToJson(LoginObj);
-
-        // var request = new UnityWebRequest(LoginAPIURL, "POST");
-        // byte[] bodyRaw = Encoding.UTF8.GetBytes(jsondata);
-        // request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        // request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        // request.SetRequestHeader("Content-Type", "application/json");
-        // yield return request.SendWebRequest();
-        //// //print("json data is " + request.downloadHandler.text);
-        // ClassWithToken myObject1 = new ClassWithToken();
-        // myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        // if (!request.isHttpError && !request.isNetworkError)
-        // {
-        //     if (request.error == null)
-        //     {
-        //         ////Debug.Log(request.downloadHandler.text);
-        //         if (myObject1.success)
-        //         {
-
-        //             //print("Token is --- " + myObject1.data.token);
-
-        //            PlayerPrefs.SetString("LoginToken_Preset", myObject1.data.token);
-        //            ServerSIdeCharacterHandling.Instance.getPresetDataFromServer();
-        //         }
-        //     }
-        // }
-        // else
-        // {
-        //    ////Debug.Log("NetWOrkerror DO Somethin");
-        ////     //print(myObject1.msg + " | success: " + myObject1.success);
-        // }
-        yield return null;
-
-
-    }
-    //End
-
 
 
     void getdatafromserver()
@@ -4745,10 +3488,8 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void LoginWithWallet()
     {
-                print("~*~*~*~*~*~*~* WALLET CONNECT SUCESSFULLY ~*~*~*~*~*~*~* ");
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
-       // OpenUIPanal(7);
         SubmitSetDeviceToken();
         LoggedInAsGuest = false;
         getdatafromserver();
@@ -4781,7 +3522,6 @@ public class UserRegisterationManager : MonoBehaviour
     [Serializable]
     public class LoginClass : JsonObjectBase
     {
-        //public LoginClass LoginObject;
         public string id;
         public string iat;
         public int exp;
@@ -4803,37 +3543,11 @@ public class UserRegisterationManager : MonoBehaviour
         public MyClassNewApi Load(string savedData)
         {
             myObject = new MyClassNewApi();
-            //print("savedData " + savedData);
-
             myObject = JsonUtility.FromJson<MyClassNewApi>(savedData);
             return myObject;
         }
     }
 
-    //[Serializable]
-    //public class OtpPhoneData
-    //{
-    //    public OtpPhoneData myObject;
-    //    public bool success;
-    //    public string msg;
-    //    public OtpData data;
-    //    public OtpPhoneData Load(string savedData)
-    //    {
-    //        myObject = new OtpPhoneData();
-    //        //print("savedData " + savedData);
-    //        myObject.data = new OtpData();
-    //        myObject = JsonUtility.FromJson<OtpPhoneData>(savedData);
-    //        return myObject;
-    //    }
-    //}
-
-    //[Serializable]
-    //public class OtpData
-    //{
-    //    public int status = 0;
-    //    public int code = 0;
-    //    public string moreInfo = "";
-    //}
 
     [Serializable]
     public class MyClassNewApiForStatusCode
@@ -4843,10 +3557,7 @@ public class UserRegisterationManager : MonoBehaviour
         public string message;
         public MyClassNewApiForStatusCode Load(string jsonString)
         {
-            //print("savedData " + jsonString);
             return JsonUtility.FromJson<MyClassNewApiForStatusCode>(jsonString);
-            //myObject = JsonUtility.FromJson<MyClassNewApi>(savedData);
-            //return myObject;
         }
     }
 
@@ -5019,43 +3730,12 @@ public class UserRegisterationManager : MonoBehaviour
         return myObject;
     }
 
-    //OtpPhoneData CheckResponceJsonOtpPhoneApi(string Localdata)
-    //{
-    //    OtpPhoneData myObject = new OtpPhoneData();
-    //    myObject = myObject.Load(Localdata);
-    //    //print("myObject " + myObject.data.status);
-    //    return myObject;
-    //}
-
     IEnumerator WaitUntilAnimationFinished(Animator MyAnim)
     {
 
         yield return new WaitForSeconds(3f);
         MyAnim.SetBool("playAnim", false);
     }
-
-
-    //public void Dispose()
-    //{
-    //    // Dispose of unmanaged resources.
-    //    Dispose(true);
-    //    // Suppress finalization.
-    //    GC.SuppressFinalize(this);
-    //}
-    //protected virtual void Dispose(bool disposing)
-    //{
-    //    if (!_disposedValue)
-    //    {
-    //        if (disposing)
-    //        {
-    //            // TODO: dispose managed state (managed objects)
-    //        }
-
-    //        // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-    //        // TODO: set large fields to null
-    //        _disposedValue = true;
-    //  }
-    // }
 }
 
 enum NftRolePriority
@@ -5069,3 +3749,4 @@ enum NftRolePriority
     Astroboy
 }
 
+#endregion

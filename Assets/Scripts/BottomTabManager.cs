@@ -63,6 +63,17 @@ public class BottomTabManager : MonoBehaviour
         }
     }
 
+
+    private void OnEnable()
+    {
+        XanaConstants.OnSucessFullLogin += CheckLoginOrNotForFooterButton;
+    }
+
+    private void OnDisable()
+    {
+        XanaConstants.OnSucessFullLogin -= CheckLoginOrNotForFooterButton;
+    }
+
     public void OnSelectedClick(int index)
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -106,45 +117,17 @@ public class BottomTabManager : MonoBehaviour
     }
     public void CheckLoginOrNotForFooterButton()
     {
-        ////---->>>Sannan   if (UIManager.Instance != null)
-        //{
-        //    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-        //}
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            /// Disabling old Screens
-            //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
-            //allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
-            //allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
-            //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
-            /// Disabling
-            /// 
-            //if (postingBtn != null)
-            //{
-            //    postingBtn.transform.GetComponent<Button>().interactable = false;
-            //    postingBtn.transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
-
-            //}
             allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
-           
-
-            //PostButton.transform.GetComponent<Button>().interactable = false;
-
-
-            //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
         }
         else
         {
-            /// Disabling old Screens
-            //allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = true;
-            //allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = true;
-            /// Disabling
-            ///
             if (postingBtn != null)
             {
                 postingBtn.transform.GetComponent<Button>().interactable = true;
@@ -157,15 +140,6 @@ public class BottomTabManager : MonoBehaviour
             allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
-           
-            // PostButton.transform.GetComponent<Button>().interactable = true;
-
-            /// Disabling old Screens
-            //allButtonIcon[2].transform.GetComponent<Image>().color = ActiveButtonColor;
-            //allButtonIcon[3].transform.GetComponent<Image>().color = ActiveButtonColor;
-            /// Disabling
-            /// 
-            // allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.black;
         }
         if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
         {

@@ -264,6 +264,17 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+
+    private void OnEnable()
+    {
+        XanaConstants.OnSucessFullLogin += CheckWhenUserLogin;    
+    }
+    private void OnDisable()
+    {
+        XanaConstants.OnSucessFullLogin -= CheckWhenUserLogin;
+    }
+
+
     public void skipAvatarSelection()
     {
         UserRegisterationManager.instance.usernamePanal.SetActive(true);

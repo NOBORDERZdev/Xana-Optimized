@@ -16,10 +16,19 @@ public class FriendHomeManager : MonoBehaviour
 
     public GameObject menuLightObj;
     public GameObject profileLightingObj;
+    private void OnEnable()
+    {
+        StartCoroutine(BuildMoodDialog());
+        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
+
+        XanaConstants.OnSucessFullLogin += SpawnFriends;
+    }
     private void OnDisable()
     {
         if (SocketController.instance != null)
             SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
+
+        XanaConstants.OnSucessFullLogin -= SpawnFriends;
     }
 
     public void SpawnFriends()
@@ -31,14 +40,9 @@ public class FriendHomeManager : MonoBehaviour
             StartCoroutine(BuildMoodDialog());
         }
     }
-    void Start()
-    {
-        StartCoroutine(BuildMoodDialog());
-        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
-    }
     string PrepareApiURL()
     {
-        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
+        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.userId;
     }
    IEnumerator BuildMoodDialog()
     {

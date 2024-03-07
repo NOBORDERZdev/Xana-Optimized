@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace Sign_Up_Scripts
         private TextAsset _csvAsset;
         private List<ErrorMessage> _errorMessageList;
 
-        public Text ActiveErrorText;
+        public TextMeshProUGUI ActiveErrorText;
         public bool CapitalizeMessage;
         [SerializeField]
         private ErrorMessage _defaultMessage;
@@ -79,7 +80,7 @@ namespace Sign_Up_Scripts
             StartCoroutine(GetErrorSheet());
         }
 
-        public void ShowErrorMessage(string errorCode, Text textToBeSet)
+        public void ShowErrorMessage(string errorCode, TextMeshProUGUI textToBeSet)
         {
             ActiveErrorText = textToBeSet;
             ErrorMessage errorMessage = default;

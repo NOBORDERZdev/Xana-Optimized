@@ -97,7 +97,7 @@ public class SocketController : MonoBehaviour
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
         WWWForm form = new WWWForm();
-        form.AddField("userId", int.Parse(XanaConstants.xanaConstants.userId));
+        form.AddField("userId", int.Parse(XanaConstants.userId));
         form.AddField("socketId", socketId);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {
