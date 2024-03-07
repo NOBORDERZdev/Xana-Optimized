@@ -192,6 +192,7 @@ public class SNSSettingController : MonoBehaviour
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
         Debug.Log("logout success calling from SNSSetting");
+        XanaConstants.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();

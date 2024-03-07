@@ -214,7 +214,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         {
             if (getdata.success)
             {
-
+                print("!!GetUserData ");
                 // its a new user so create file 
                 if (getdata.data.count == 0)
                 {
@@ -225,7 +225,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     //if user does not have data then open preset panel
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-                    print("!!GetUserData IF");
+                  
                 }
                 else
                 {
@@ -260,7 +260,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
             }
         }
         else
-            ////Debug.Log("NetWorkissue");
+           Debug.Log("NetWorkissue");
+
         www.Dispose();
 
         if (loadAllAvatar != null && StoreManager.instance.MultipleSave)
