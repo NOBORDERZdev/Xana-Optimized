@@ -165,7 +165,7 @@ public class BuilderMapDownload : MonoBehaviour
             bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == levelData.skyProperties.skyId);
             if (!skyBoxExist)
             {
-                aiSkyboxItem=levelData.skyProperties.aISkyboxItem;
+                aiSkyboxItem = levelData.skyProperties.aISkyboxItem;
                 StartCoroutine(AISkyTextureDownload());
             }
         }
@@ -431,6 +431,8 @@ public class BuilderMapDownload : MonoBehaviour
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
+                realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = terrainPlane.GetComponent<MeshFilter>().mesh.vertices;
+                realisticPlanRenderer.GetComponent<MD_MeshColliderRefresher>().MeshCollider_UpdateMeshCollider();
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }
