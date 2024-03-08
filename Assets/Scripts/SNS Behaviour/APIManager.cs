@@ -2162,7 +2162,7 @@ public class APIManager : MonoBehaviour
                 {
                     if (string.IsNullOrEmpty(XanaConstants.xanaConstants.userProfileLink) || XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("userProfile"))
                     {
-                        if (!XanaConstants.xanaConstants.profileImageModifedByUser)
+                        // Profile is not Modified by User
                             ProfilePictureManager.instance.MakeProfilePicture(setName_name);
                     }
                 }
@@ -2234,6 +2234,14 @@ public class APIManager : MonoBehaviour
                 }
 
                 PlayerPrefs.SetString("PlayerName", myProfileDataRoot.data.name);
+
+                if (string.IsNullOrEmpty(myProfileDataRoot.data.avatar))
+                {
+                    if (ProfilePictureManager.instance)
+                    {
+                        ProfilePictureManager.instance.MakeProfilePicture(myProfileDataRoot.data.name);
+                    }
+                }
             }
             www.Dispose();
         }
