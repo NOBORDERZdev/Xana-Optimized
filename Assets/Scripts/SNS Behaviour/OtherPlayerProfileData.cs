@@ -742,9 +742,9 @@ public class OtherPlayerProfileData : MonoBehaviour
         if (isFollow)
         {
             //followText.text = "Following";
-            followText.text = TextLocalization.GetLocaliseTextByKey("Following");
-            followButtonImage.sprite = followingSprite;
-            followText.color = FollowingTextColor;
+            followText.text = TextLocalization.GetLocaliseTextByKey("UnFollow");
+            //followButtonImage.sprite = followingSprite;
+            //followText.color = FollowingTextColor;
             if (!isOtherPlayerProfileNew)
             {
                 tagTabPrivateObject.SetActive(false);
@@ -755,8 +755,8 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //followText.text = "Follow";
             followText.text = TextLocalization.GetLocaliseTextByKey("Follow");
-            followButtonImage.sprite = followSprite;
-            followText.color = followtextColor;
+            //followButtonImage.sprite = followSprite;
+            //followText.color = followtextColor;
             if (!isOtherPlayerProfileNew)
             {
                 tagTabPrivateObject.SetActive(true);
