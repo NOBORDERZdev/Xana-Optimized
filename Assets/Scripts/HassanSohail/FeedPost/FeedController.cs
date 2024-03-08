@@ -36,6 +36,8 @@ public class FeedController : MonoBehaviour
     [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
 
+    public bool noResultinFeedSearch = true;
+
     private void OnEnable()
     {
         SerachPanel.SetActive(false);
@@ -300,6 +302,12 @@ public class FeedController : MonoBehaviour
     public void OnClickSerachBtn(){
         if (SerchBarObj.activeInHierarchy) // serach is active 
         {
+            if (noResultinFeedSearch)
+            {
+                noFeedSerach.gameObject.SetActive(false);
+                noResultinFeedSearch = false;
+            }
+            feedContentParent.gameObject.SetActive(true);
             SerchBarObj.SetActive(false);
             SerachPanel.SetActive(false);
             SearchContentPanel.SetActive(false);
@@ -387,6 +395,7 @@ public class FeedController : MonoBehaviour
                                         
                 }
                 noFeedSerach. gameObject.SetActive(true);
+                noResultinFeedSearch = true;
             }
              FeedLoader.SetActive(false);
         }
