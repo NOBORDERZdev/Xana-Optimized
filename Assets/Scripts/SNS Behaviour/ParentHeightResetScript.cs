@@ -135,5 +135,11 @@ public class ParentHeightResetScript : MonoBehaviour
         HeightReset(allScreenTab[index]);
     }
 
+    public void SetParentheight(Vector2 _postTabHeight)
+    {
+        //Debug.Log("Setting parent height here: " + _postTabHeight.y);
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, _postTabHeight.y);
+    }
+
 
 }

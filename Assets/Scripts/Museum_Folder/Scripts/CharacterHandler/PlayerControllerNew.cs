@@ -1154,9 +1154,10 @@ public class PlayerControllerNew : MonoBehaviour
             gravityVector.y = JumpVelocity * 2;
         }
         else if (_IsGrounded)
-            IsJumpButtonPress = true;
-        else
-            return;
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpMove") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") && !animator.GetCurrentAnimatorStateInfo(0).IsName("LandSoft"))
+                IsJumpButtonPress = true;
+        }
 
 
         if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
