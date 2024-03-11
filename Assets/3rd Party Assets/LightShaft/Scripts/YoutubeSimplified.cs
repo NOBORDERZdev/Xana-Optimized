@@ -62,7 +62,8 @@ public class YoutubeSimplified : MonoBehaviour
         if (autoPlay)
             player.Play(url);
 
-            videoPlayer.gameObject.GetComponent<Button>().enabled = isEnableBtn;
+        if (videoPlayer.gameObject.GetComponent<Button>() is null) return;
+        videoPlayer.gameObject.GetComponent<Button>().enabled = isEnableBtn;
     }
     public void OnInternetDisconnect()
     {
