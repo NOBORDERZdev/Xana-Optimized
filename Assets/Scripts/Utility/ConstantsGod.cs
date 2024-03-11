@@ -222,7 +222,7 @@ public class ConstantsGod
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
     public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
-    public static string SearchWorldAPI = "/item/search-worlds/";
+    public static string SearchWorldAPI = "/item/v2/search-worlds/";
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     #endregion
 
