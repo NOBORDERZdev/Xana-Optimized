@@ -135,7 +135,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                     {
                                         if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
                                         {
-                                            if (GetComponent<AvatarController>().wornHair)
+                                            if (otherPlayer.GetComponent<AvatarController>().wornHair)
                                                 UnStichItem("Hair");
                                         }
                                         else
@@ -516,7 +516,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
             if (_CharacterData.hairItemData.Equals("No hair"))
             {
-                if (GetComponent<AvatarController>().wornHair)
+                if (applyon.GetComponent<AvatarController>().wornHair)
                     UnStichItem("Hair");
             }
             else
