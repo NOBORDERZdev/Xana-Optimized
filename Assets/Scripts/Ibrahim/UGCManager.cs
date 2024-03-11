@@ -167,8 +167,8 @@ public class UGCManager : MonoBehaviour
             Debug.Log("Request timed out.");
             // Handle timeout (e.g., show a message, stop further processing)
             www.Abort(); // Stop the request
-            warningPanel.SetActive(true);
             warningText.text = "The process has timed out. Please try again.";
+            warningPanel.SetActive(true);
             StoreManager.instance.loaderPanel.SetActive(false);
             yield break; // Exit the coroutine
         }
@@ -181,8 +181,8 @@ public class UGCManager : MonoBehaviour
                 Debug.Log("Failed to send image to the server : " + www.error);
                 if (www.isHttpError)
                 {
-                    warningPanel.SetActive(true);
                     warningText.text = "An error occurred during processing. Please try again.";
+                    warningPanel.SetActive(true);
                 }
                 //else
                 //{
@@ -199,9 +199,9 @@ public class UGCManager : MonoBehaviour
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
                     Debug.Log(response.description_Eng);
-                    warningPanel.SetActive(true);
                     if (GameManager.currentLanguage.Contains("en") || !CustomLocalization.forceJapanese) { warningText.text = response.description_Eng; }
                     else { warningText.text = response.description_Jap; }
+                    warningPanel.SetActive(true);
                     StoreManager.instance.loaderPanel.SetActive(false);
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
