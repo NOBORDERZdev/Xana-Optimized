@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.InputManagerEntry;
 
 public class HyperlinkPanelResizer : MonoBehaviour
 {
@@ -41,7 +38,6 @@ public class HyperlinkPanelResizer : MonoBehaviour
                 break;
         }
         StopCoroutine(CheckJapaneseRoutine());
-
     }
 
     private bool IsJapanese(string text) //Detect Japanese characters
@@ -72,7 +68,6 @@ public class HyperlinkPanelResizer : MonoBehaviour
         target = null;
         transform.localScale = Vector3.one;
     }
-
 
     void Update()
     {
