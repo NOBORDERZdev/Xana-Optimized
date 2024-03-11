@@ -66,12 +66,12 @@ public class BottomTabManager : MonoBehaviour
 
     private void OnEnable()
     {
-        XanaConstants.OnSucessFullLogin += CheckLoginOrNotForFooterButton;
+        MainSceneEventHandler.OnSucessFullLogin += CheckLoginOrNotForFooterButton;
     }
 
     private void OnDisable()
     {
-        XanaConstants.OnSucessFullLogin -= CheckLoginOrNotForFooterButton;
+        MainSceneEventHandler.OnSucessFullLogin -= CheckLoginOrNotForFooterButton;
     }
 
     public void OnSelectedClick(int index)

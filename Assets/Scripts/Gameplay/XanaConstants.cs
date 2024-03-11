@@ -10,9 +10,6 @@ public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
 
-    //Events 
-    public static Action OnSucessFullLogin;
-
     //Login Info
     public static bool isAdmin;
     public static bool isGuestLogin;

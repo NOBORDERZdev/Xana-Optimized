@@ -21,14 +21,14 @@ public class FriendHomeManager : MonoBehaviour
         StartCoroutine(BuildMoodDialog());
         SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
 
-        XanaConstants.OnSucessFullLogin += SpawnFriends;
+        MainSceneEventHandler.OnSucessFullLogin += SpawnFriends;
     }
     private void OnDisable()
     {
         if (SocketController.instance != null)
             SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
 
-        XanaConstants.OnSucessFullLogin -= SpawnFriends;
+        MainSceneEventHandler.OnSucessFullLogin -= SpawnFriends;
     }
 
     public void SpawnFriends()

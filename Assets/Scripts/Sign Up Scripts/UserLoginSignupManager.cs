@@ -9,6 +9,7 @@ using System;
 using System.Text.RegularExpressions;
 using UnityEngine.Networking;
 using System.Text;
+using UnityEngine.UI;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -16,32 +17,41 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject termsConditionPanel;
 
     [Header("User Signup Section")]
-    public GameObject signupOrLoginPanel;
+    public GameObject signUpOrloginSelectionPanel;
     public GameObject signUpPanel;
 
-    [Space(100)]
+    [Header("User Login Section")]
+    public GameObject emailOrWalletLoginPanel;
+    public GameObject emailLoginPanel;
+    public GameObject walletLoginPanel;
+
+    [Space(10)]
     public GameObject signUpWithEmailPanel;
     public AdvancedInputField emailField;
     public AdvancedInputField passwordField;
     public AdvancedInputField repeatPasswordField;
     public GameObject signupLoader;
+    private string emailForSignup;
+    private string passwordForSignup;
 
-    [Space(100)]
+    [Space(10)]
     public GameObject verficationCodePanel;
-    public GameObject verficationPlaceHolder;
+    public AdvancedInputField verficationPlaceHolder;
     public GameObject nextButton;
+    public GameObject otpLoader;
     public GameObject sendAgainTimer;
     public GameObject sendAgainButton;
+    public Text[] otpTexts;
 
-    [Space(100)]
+    [Space(10)]
     public GameObject avatarSelectionPanel;
     public GameObject presetsScrollview;
     public GameObject aiMagicSelfieButton;
     public GameObject avatarSelectionNextButton;
 
-    [Space(100)]
+    [Space(10)]
     public GameObject enterNamePanel;
-    public GameObject enterNameField;
+    public AdvancedInputField userNameField;
     public GameObject nameScreenNextButton;
 
     [Header("Validation Popup Panel")]
@@ -49,32 +59,148 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject validationPopupPanel;
     public TextMeshProUGUI errorTextMsg;
 
+    [Header("Login Fields")]
+    public AdvancedInputField emailFieldLogin;
+    public AdvancedInputField passwordFieldLogin;
 
     //Scripts References 
     [Header("Scripts References")]
     public Web3APIforWeb2 _web3APIforWeb2;
+    public ConnectingWallet connectingWalletRef;
+
+    //loading Screen 
+    public GameObject NewLoadingScreen;
+
+    private void OnEnable()
+    {
+        verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
+    }
+
+    private void OnDisable()
+    {
+        verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
+    }
+
 
     #region SignUp Functions 
 
-    public void OnClickSignUp()
+    public void OnClickSignUpSelection()
     {
-        signupOrLoginPanel.SetActive(false);
+        signUpOrloginSelectionPanel.SetActive(false);
+        emailOrWalletLoginPanel.SetActive(false);
+        emailLoginPanel.SetActive(false);
         signUpPanel.SetActive(true);
     }
 
-    public void SignUpWithEmail()
+    public void BackFromSignUpSelection()
+    {
+        signUpOrloginSelectionPanel.SetActive(true);
+        signUpPanel.SetActive(false);
+    }
+
+    public void OnClickSignUpWithEmail()
     {
         signUpPanel.SetActive(false);
         signUpWithEmailPanel.SetActive(true);
     }
 
+    public void BackFromSignUpEmail()
+    {
+        signUpPanel.SetActive(true);
+        signUpWithEmailPanel.SetActive(false);
+    }
 
-    public bool CheckForValidations(string emailText, string passwordText)
+    public void OnClickLoginSelection()
+    {
+        emailOrWalletLoginPanel.SetActive(true);
+        signUpOrloginSelectionPanel.SetActive(false);
+        signUpPanel.SetActive(false);
+        signUpWithEmailPanel.SetActive(false);
+    }
+
+    public void BackFromLoginSelection()
+    {
+        emailOrWalletLoginPanel.SetActive(false);
+        signUpOrloginSelectionPanel.SetActive(true);
+    }
+
+    public void OnClickLoginWithEmail()
+    {
+        emailOrWalletLoginPanel.SetActive(false);
+        emailLoginPanel.SetActive(true);
+    }
+
+    public void BackFromLoginWithEmail()
+    {
+        emailOrWalletLoginPanel.SetActive(true);
+        emailLoginPanel.SetActive(false);
+    }
+
+    public void ClickOnWalletSign()
+    {
+        emailOrWalletLoginPanel.SetActive(false);
+        signUpPanel.SetActive(false);
+    }
+
+    //wallet login functions 
+    //void NewWalletSignUp()
+    //{
+    //    _IsWalletSignUp = true;
+    //}
+
+    //public void WalletLoginCheck()
+    //{
+    //    _IsWalletSignUp = false;
+
+    //    LoginPanal.SetActive(false);
+    //}
+
+    public void LoginWithWallet()
+    {
+        PlayerPrefs.SetInt("IsLoggedIn", 1);
+        PlayerPrefs.SetInt("FristPresetSet", 1);
+        SubmitSetDeviceToken();
+        GetUserClothData();
+        GetOwnedNFTsFromAPI();
+        PlayerPrefs.Save();
+        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (UIManager.Instance != null)//rik
+        {
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+        }
+    }
+
+
+
+
+    public void CheckForValidationAndSignUp(bool resendOtp = false)
+    {
+        string _email = emailField.Text;
+        _email = _email.Trim();
+        _email = _email.ToLower();
+
+        bool ValidEmail = EmailValidation(_email);
+        bool validPassword = PasswordValidation(passwordField.Text, repeatPasswordField.Text);
+        if (ValidEmail && validPassword)
+        {
+            emailForSignup = _email;
+            passwordForSignup = passwordField.Text;
+            string url;
+            if (resendOtp)
+                url = ConstantsGod.API_BASEURL + ConstantsGod.ResendOTPAPI;
+            else
+                url = ConstantsGod.API_BASEURL + ConstantsGod.SendEmailOTP;
+            MyClassOfPostingEmail myobjectOfEmail = new MyClassOfPostingEmail();
+            string bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetEmaildata(_email));
+            StartCoroutine(VerficationOTPViaAPI(url, bodyJson, _email, signupLoader));
+        }
+    }
+
+    bool EmailValidation(string emailText)
     {
         string L_LoginEmail = emailText;
-        string L_loginPassword = passwordText;
-
-        if (L_LoginEmail == "" || L_loginPassword == "")
+        if (L_LoginEmail == "")
         {
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -101,6 +227,63 @@ public class UserLoginSignupManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    bool PasswordValidation(string password1, string password2)
+    {
+        string pass1 = password1;
+        string pass2 = password2;
+        if (pass1 == "" || pass2 == "")
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.gameObject.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextMsg);
+            return false;
+        }
+
+        if (pass1.Length < 8 || pass2.Length < 8)
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.gameObject.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextMsg);
+            return false;
+        }
+
+        bool allCharactersInStringAreDigits = false;
+        string specialCh = @"%!@#$%^&*()?/>.<,:;'\|}]{[_~`+=-" + "\"";
+        char[] specialChArray = specialCh.ToCharArray();
+        if (pass1.Any(char.IsDigit) && pass1.Any(char.IsLower) && pass1.Any(char.IsUpper) && !pass1.Any(char.IsWhiteSpace))
+        {
+            foreach (char ch in specialChArray)
+            {
+                if (pass1.Contains(ch))
+                    allCharactersInStringAreDigits = true;
+            }
+
+        }
+        if (!allCharactersInStringAreDigits)
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.gameObject.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Password_must_Contain_Number.ToString(), errorTextMsg);
+            return false;
+        }
+
+        if (pass1 == pass2)
+        {
+            return true;
+        }
+        else
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.gameObject.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextMsg);
+            return false;
+        }
     }
 
 
@@ -143,18 +326,315 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
-
-
-    void SubmitCredentialsForSignUp()
+    public IEnumerator VerficationOTPViaAPI(string url, string Jsondata, string localEmail, GameObject _loader = null)
     {
-        string _LoginEmail = emailField.Text;
-        string _loginPassword = passwordField.Text;
+        if (_loader)
+            _loader.SetActive(true);
+        var request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        MyClassNewApi myObject1 = new MyClassNewApi();
+        Debug.LogError(request.downloadHandler.text);
+        myObject1 = myObject1.Load(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
+        {
+            if (myObject1.success)
+            {
+                OpenUIPanel(3);
+            }
+        }
+        else
+        {
+            if (!myObject1.success)
+            {
+                validationPopupPanel.SetActive(true);
+                errorTextMsg.gameObject.SetActive(true);
+                errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
+                errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+
+
+            }
+        }
+        if (_loader != null)
+            _loader.SetActive(false);
+
+        request.Dispose();
+    }
+
+    //Validation Screen code
+    public void ValueChangeCheck()
+    {
+        string[] myOtpTxt = new string[otpTexts.Length];
+        char[] charArr = new char[verficationPlaceHolder.Text.Length];
+        charArr = verficationPlaceHolder.Text.ToCharArray();
+        for (int i = 0; i < myOtpTxt.Length; i++)
+        {
+            if (i < charArr.Length)//1 2 3 4
+            {
+                myOtpTxt[i] = charArr[i].ToString();
+                otpTexts[i].text = myOtpTxt[i].ToString();
+            }
+            else
+            {
+                myOtpTxt[i] = "";
+                otpTexts[i].text = myOtpTxt[i].ToString();
+            }
+        }
+    }
+
+
+    public void SubmitOTP()
+    {
+        otpLoader.SetActive(true);
+        string OTP = "";
+        OTP = verficationPlaceHolder.Text;
+        if (OTP == "" || OTP.Length < 4)
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextMsg);
+            return;
+        }
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyEmailOTP;
+        MyClassOfPostingOTP myObject = new MyClassOfPostingOTP();
+        string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(emailForSignup, OTP));
+        StartCoroutine(HitOTPAPI(url, bodyJson, () =>
+         {
+             otpLoader.SetActive(false);
+         }));
+
+        //for now only via email user can signup
+        //if (ForgetPasswordBool)
+        //{
+        //    string url = ConstantsGod.API_BASEURL + ConstantsGod.ForgetPasswordOTPAPI;
+        //    MyClassOfPostingForgetPasswordOTP myobjectOfPhone = new MyClassOfPostingForgetPasswordOTP();
+        //    string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(ForgetPasswordEmlOrPhnContainer, OTP));
+        //    StartCoroutine(HitOTPAPI(url, bodyJson));
+        //}
+        //else
+        //{
+        //// Phone OTP sending Section
+        //if (SignUpWithPhoneBool)
+        //{
+        //    string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyPhoneOTPAPI;
+        //    MyClassOfPostingPhoneOTP myobjectOfPhone = new MyClassOfPostingPhoneOTP();
+        //    string bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, OTP));
+        //    StartCoroutine(HitOTPAPI(url, bodyJson));
+        //}
+        //// Email OTP sending Section
+        //else
+        //{
+        //string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyEmailOTP;
+        //MyClassOfPostingOTP myObject = new MyClassOfPostingOTP();
+        //string bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(Email, OTP));
+        //StartCoroutine(HitOTPAPI(url, bodyJson));
+        //}
+        //}
+    }
+    IEnumerator HitOTPAPI(string url, string Jsondata, Action callback)
+    {
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        MyClassNewApi myObjectForOPT = new MyClassNewApi();
+        myObjectForOPT = myObjectForOPT.Load(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
+        {
+            if (myObjectForOPT.success)
+            {
+                OpenUIPanel(4);
+            }
+        }
+        else
+        {
+            if (!myObjectForOPT.success)
+            {
+                validationPopupPanel.SetActive(true);
+                errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextMsg);
+            }
+        }
+        callback();
+        request.Dispose();
+    }
+
+    public void ResendOTP()
+    {
+        CheckForValidationAndSignUp(true);
+    }
+
+
+    //Enter User Name Section 
+    public void EnterUserName()
+    {
+        string Localusername = userNameField.Text;
+
+        if (Localusername == "")
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextMsg);
+            return;
+        }
+        else if (Localusername.StartsWith(" "))
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextMsg);
+            return;
+        }
+
+        if (Localusername.EndsWith(" "))
+        {
+            Localusername = Localusername.TrimEnd(' ');
+        }
+        PlayerPrefs.SetInt("IsProcessComplete", 1);
+        MyClassOfPostingName myObject = new MyClassOfPostingName();
+        string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
+
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
+        MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
+        string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
+        StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, true));
+
+        //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
+    }
+    IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, bool registerWithEmail = true)
+    {
+        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+        var request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        ClassWithToken myObject = new ClassWithToken();
+        myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
+        {
+            if (myObject.success)
+            {
+                MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
+                myobjectOfEmail = MyClassOfRegisterWithEmail.CreateFromJSON(Jsondata);
+                MyClassOfLoginJson myObject1 = new MyClassOfLoginJson();
+                string bodyJson = JsonUtility.ToJson(myObject1.GetdataFromClass(myobjectOfEmail.email, "", myobjectOfEmail.password, uniqueID()));
+
+                ConstantsGod.AUTH_TOKEN = myObject.data.token;
+                XanaConstants.xanaToken = myObject.data.token;
+                XanaConstants.userId = myObject.data.user.id;
+
+
+                PlayerPrefs.SetString("UserNameAndPassword", bodyJson);
+                PlayerPrefs.SetString("UserName", myObject.data.user.id);
+                PlayerPrefs.SetInt("IsLoggedIn", 1);
+                PlayerPrefs.SetInt("FristPresetSet", 1);
+                PlayerPrefs.Save();
+
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
+                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            }
+        }
+        else
+        {
+            if (!myObject.success)
+            {
+                validationPopupPanel.SetActive(true);
+                errorTextMsg.gameObject.SetActive(true);
+                errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                errorHandler.ShowErrorMessage(myObject.msg, errorTextMsg);
+
+            }
+        }
+        request.Dispose();
+    }
+    IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
+    {
+        var request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        MyClassNewApi myObject1 = new MyClassNewApi();
+        Debug.LogError(request.downloadHandler.text);
+        myObject1 = myObject1.Load(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
+        {
+
+            if (myObject1.success)
+            {
+                if (myObject1.msg == "This name is already taken by other user.")
+                {
+                    validationPopupPanel.SetActive(true);
+                    errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage("Username already exists", errorTextMsg);
+                }
+                else
+                {
+                    PlayerPrefs.SetInt("IsLoggedIn", 1);
+                    PlayerPrefs.SetInt("FristPresetSet", 1);
+                    PlayerPrefs.SetString("PlayerName", localUsername);
+                    XanaConstants.userName = localUsername;
+                    OpenUIPanel(16);
+                }
+                GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(localUsername);
+            }
+        }
+        else
+        {
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+            }
+            else
+            {
+                if (!myObject1.success)
+                {
+                    validationPopupPanel.SetActive(true);
+                    errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                    errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
+                }
+            }
+        }
+
+        request.Dispose();
+    }
+
+
+
+    public void SubmitCredentialsForSignIn()
+    {
+        string _LoginEmail = emailFieldLogin.Text;
+        string _loginPassword = passwordFieldLogin.Text;
 
         _LoginEmail = _LoginEmail.Trim();
         _loginPassword = _loginPassword.Trim();
         _LoginEmail = _LoginEmail.ToLower();
 
-        if (CheckForValidations(_LoginEmail, _loginPassword))
+        if (EmailValidation(_LoginEmail) && PasswordValidation(_loginPassword, _loginPassword))
         {
             string bodyJson;
             MyClassOfLoginJson myObject = new MyClassOfLoginJson();
@@ -226,7 +706,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 CheckCameraMan(myObject1.data.user.email);
 
                 DynamicEventManager.deepLink?.Invoke("Login user here");
-                XanaConstants.OnSucessFullLogin?.Invoke();
+                MainSceneEventHandler.OnSucessFullLogin?.Invoke();
             }
         }
         else
@@ -256,13 +736,13 @@ public class UserLoginSignupManager : MonoBehaviour
                             }
                             else
                             {
-                               /* PlayerPrefs.SetString("JSONdataforlogin", Jsondata);
-                                LogoutfromOtherDevicePanel.SetActive(true);
-                                MyClassOfLoginJson myObject = new MyClassOfLoginJson();
-                                myObject = myObject.CreateFromJSON(Jsondata);
-                                MyClassOfLogoutDevice logoutObj = new MyClassOfLogoutDevice();
-                                string bodyJson2 = JsonUtility.ToJson(logoutObj.GetdataFromClass(myObject.email, myObject.phoneNumber, myObject.password));
-                                PlayerPrefs.SetString("LogoutFromDeviceJSON", bodyJson2);*/
+                                /* PlayerPrefs.SetString("JSONdataforlogin", Jsondata);
+                                 LogoutfromOtherDevicePanel.SetActive(true);
+                                 MyClassOfLoginJson myObject = new MyClassOfLoginJson();
+                                 myObject = myObject.CreateFromJSON(Jsondata);
+                                 MyClassOfLogoutDevice logoutObj = new MyClassOfLogoutDevice();
+                                 string bodyJson2 = JsonUtility.ToJson(logoutObj.GetdataFromClass(myObject.email, myObject.phoneNumber, myObject.password));
+                                 PlayerPrefs.SetString("LogoutFromDeviceJSON", bodyJson2);*/
                             }
                         }
 
@@ -330,6 +810,203 @@ public class UserLoginSignupManager : MonoBehaviour
         ServerSIdeCharacterHandling.Instance.GetDataFromServer();
     }
 
+
+
+
+    //Control UI From Here
+    public void OpenUIPanel(int ActivePanalCounter)
+    {
+        switch (ActivePanalCounter)
+        {
+            case 1:
+                {
+                    //if (shownWelcome)
+                    //{
+                    //    if (PlayerPrefs.GetInt("iSignup") == 1)
+                    //    {
+                    //        PlayerPrefs.SetInt("iSignup", 0);
+
+                    //        welcomeScreen.SetActive(true);
+                    //        shownWelcome = true;
+                    //    }
+                    //    else
+                    //        ShowWelcomeClosed();
+                    //}
+                    //else
+                    //{
+                    //    welcomeScreen.SetActive(true);
+                    //}
+                    break;
+                }
+            case 2:
+                {
+                    //SignUpPanal.SetActive(true);
+                    //if (!WalletScreen.activeInHierarchy)
+                    //    OnSignUpPhoneTabPressed();
+                    //else
+                    //    OnSignUpWalletTabPressed();
+                    //EmailFieldNew.Text = "";
+                    //PhoneFieldNew.Text = "";
+                    break;
+                }
+            case 3:
+                {
+                    signUpWithEmailPanel.SetActive(false);
+                    verficationCodePanel.SetActive(true);
+                    verficationPlaceHolder.Text = "";
+                    verficationPlaceHolder.Select();
+                    for (int i = 0; i < otpTexts.Length; i++)
+                    {
+                        otpTexts[i].text = "";
+                    }
+                    break;
+                }
+            case 4:
+                {
+                    verficationCodePanel.SetActive(false);
+                    verficationPlaceHolder.Clear();
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
+                    break;
+                }
+            case 5:
+                {
+                    //UsernameFieldAdvance.Text = "";
+                    break;
+                }
+            case 6:
+                {
+
+                    //LoginPanal.SetActive(true);
+                    //LoginEmailOrPhone.Text = "";
+                    //LoginEmailOrPhone.Select();
+                    //savePasswordList.instance.DeleteONStart();
+                    //LoginPassword.Text = "";
+                    //chk_forAccountALreadyLogedin = true;
+                    break;
+                }
+            case 7:
+                {
+                    //if (shownWelcome)
+                    //{
+                    //    PlayerPrefs.SetInt("shownWelcome", 1);
+                    //    LoggedIn = true;
+                    //}
+                    //else
+                    //{
+                    //    LoggedIn = true;
+                    //}
+                    break;
+                }
+            case 8:
+                {
+                    //Debug.Log("Signup here");
+                    //PlayerPrefs.SetInt("iSignup", 1);// going for register user
+                    //SignUpPanal.SetActive(true);
+                    //EmailFieldNew.Text = "";
+                    //Password1New.Text = "";
+                    //Password2New.Text = "";
+                    break;
+                }
+            case 13:
+                {
+
+                    //if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                    //{
+                    //    RegistrationCompletePanal.SetActive(true);
+                    //    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                    //}
+                    //if (shownWelcome)
+                    //    ShowWelcomeClosed();
+                    break;
+                }
+            case 14:
+                {
+                    //ForgetPasswordTokenAfterVerifyling = "";
+                    //ForgetenterUserNamePanal.SetActive(true);
+                    //EmailOrPhone_Forget_NewField.Text = "";
+                    break;
+                }
+            case 15:
+                {
+                    //ForgetEnterPasswordPanal.SetActive(true);
+                    //Password1_ForgetNewField.Text = "";
+                    //Password2_ForgetNewField.Text = "";
+                    break;
+                }
+            case 16:
+                {
+                    enterNamePanel.SetActive(false);
+                    userNameField.Clear();
+                    TutorialsManager.instance.ShowTutorials();
+                    ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+                    break;
+                }
+            case 17:
+                {
+                    //if (shownWelcome)
+                    //{
+
+                    //    if (PlayerPrefs.GetInt("iSignup") == 1)
+                    //    {
+                    //        PlayerPrefs.SetInt("iSignup", 0);
+
+                    //        welcomeScreen.SetActive(true);
+                    //        shownWelcome = true;
+                    //    }
+                    //    else
+                    //        ShowWelcomeClosed();
+                    //}
+                    //else
+                    //{
+                    //    FirstPanal.SetActive(true);
+                    //}
+                    break;
+                }
+
+            case 18:
+                {
+
+                    //PlayerPrefs.SetInt("iSignup", 1);// going for Wallet register user
+                    break;
+                }
+            case 19:
+                {
+                    //PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
+                    //XanaConstants.xanaConstants.LoginasGustprofile = true;
+                    break;
+                }
+
+            case 20:
+                {
+                    //if (!WalletScreen.activeInHierarchy)
+                    //{
+                    //    if (SignUpButtonSelected == 1)
+                    //    {
+                    //        OnSignUpPhoneTabPressed();
+                    //        PhoneFieldNew.Text = "";
+                    //        Password1New.Text = "";
+                    //        Password2New.Text = "";
+                    //    }
+                    //    else if (SignUpButtonSelected == 2)
+                    //    {
+                    //        OnSignUpEmailTabPressed();
+                    //        EmailFieldNew.Text = "";
+                    //        Password1New.Text = "";
+                    //        Password2New.Text = "";
+                    //    }
+                    //    SignUpPanal.SetActive(true);
+                    //}
+                    break;
+                }
+            case 21:
+                {
+                    //LoginScreenNew.SetActive(true);
+                    break;
+                }
+        }
+    }
+
+
     #endregion
 
 
@@ -362,7 +1039,7 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
 
-    [System.Serializable]
+    [Serializable]
     public class ClassWithToken
     {
         public static ClassWithToken _UserData;
@@ -375,7 +1052,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class JustToken
     {
         public string token;
@@ -390,7 +1067,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class UserData
     {
         public string id;
@@ -428,5 +1105,67 @@ public class UserLoginSignupManager : MonoBehaviour
             return myObject;
         }
     }
+
+    [Serializable]
+    public class MyClassOfPostingEmail
+    {
+        public string email;
+        public MyClassOfPostingEmail GetEmaildata(string eml)
+        {
+            MyClassOfPostingEmail myObj = new MyClassOfPostingEmail();
+            myObj.email = eml;
+            return myObj;
+        }
+    }
+
+
+    [Serializable]
+    public class MyClassOfPostingOTP
+    {
+        public string email;
+        public string otp;
+        public MyClassOfPostingOTP GetdataFromClass(string email, string otp)
+        {
+            MyClassOfPostingOTP myObj = new MyClassOfPostingOTP();
+            myObj.email = email;
+            myObj.otp = otp;
+            return myObj;
+        }
+    }
+
+    [Serializable]
+    public class MyClassOfPostingName
+    {
+        public string name;
+        public MyClassOfPostingName GetNamedata(string name)
+        {
+            MyClassOfPostingName myObj = new MyClassOfPostingName();
+            myObj.name = name;
+            return myObj;
+        }
+    }
+
+
+    [Serializable]
+    public class MyClassOfRegisterWithEmail 
+    {
+        public string email;
+        public string password;
+        public MyClassOfRegisterWithEmail GetdataFromClass(string L_eml, string passwrd)
+        {
+            MyClassOfRegisterWithEmail myObj = new MyClassOfRegisterWithEmail();
+            myObj.email = L_eml;
+            myObj.password = passwrd;
+            return myObj;
+        }
+
+        public static MyClassOfRegisterWithEmail CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<MyClassOfRegisterWithEmail>(jsonString);
+        }
+    }
+
+
     #endregion
 }
+

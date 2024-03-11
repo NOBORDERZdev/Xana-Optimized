@@ -279,6 +279,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void NextScreenAfterWalletConnected()
     {
+        Debug.LogError("here comes");
         if (_IsWalletSignUp)
         {
             iwanto_signUp();
@@ -2774,6 +2775,7 @@ public class UserRegisterationManager : MonoBehaviour
         GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(Localusername);
         if (isSetXanaliyaUserName)//rik
         {
+            Debug.LogError("Xanalia User Name");
             MyClassOfPostingName tempMyObject = new MyClassOfPostingName();
             string bodyJsonOfName1 = JsonUtility.ToJson(tempMyObject.GetNamedata(Localusername));
             StartCoroutine(HitNameAPIWithXanaliyaUser(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName1, Localusername));
@@ -2784,6 +2786,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
+            Debug.LogError("Set Name for Guest User");
             DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
@@ -2803,13 +2806,16 @@ public class UserRegisterationManager : MonoBehaviour
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
+            Debug.LogError("Set Name for logged in user");
             ////Debug.Log("User Already loged in set name api call.......");
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername));
         }
         else
         {
+            Debug.LogError("Set Name when not logged in");
             if (SignUpWithPhoneBool)
             {
+                Debug.LogError("register with phone number");
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterPhoneAPI;
                 MyClassOfRegisterWithNumber myobjectOfPhone = new MyClassOfRegisterWithNumber();
                 string _bodyJson = JsonUtility.ToJson(myobjectOfPhone.GetdataFromClass(LocalPhoneNumber, password));
@@ -2818,6 +2824,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
             else
             {
+                Debug.LogError("register with Email");
                 string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
                 MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
                 ProfilePictureManager.instance.MakeProfilePicture(Localusername);
@@ -3779,6 +3786,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
     public void LoginWithWallet()
     {
+        Debug.LogError("login with wallet userregistration");
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         SubmitSetDeviceToken();

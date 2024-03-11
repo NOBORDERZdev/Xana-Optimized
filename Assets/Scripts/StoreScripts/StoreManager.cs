@@ -267,11 +267,11 @@ public class StoreManager : MonoBehaviour
 
     private void OnEnable()
     {
-        XanaConstants.OnSucessFullLogin += CheckWhenUserLogin;    
+        MainSceneEventHandler.OnSucessFullLogin += CheckWhenUserLogin;    
     }
     private void OnDisable()
     {
-        XanaConstants.OnSucessFullLogin -= CheckWhenUserLogin;
+        MainSceneEventHandler.OnSucessFullLogin -= CheckWhenUserLogin;
     }
 
 
