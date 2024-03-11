@@ -1,5 +1,4 @@
-using AIFLogger;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -147,7 +146,7 @@ public class UGCManager : MonoBehaviour
 
     public IEnumerator IERequest(byte[] imageBytes)
     {
-        float requestTimeout = 120f; // Timeout value in seconds (5 minutes)
+        float requestTimeout = 180f; // Timeout value in seconds (3 minutes)
         float timer = 0f;
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
@@ -169,7 +168,7 @@ public class UGCManager : MonoBehaviour
             // Handle timeout (e.g., show a message, stop further processing)
             www.Abort(); // Stop the request
             warningPanel.SetActive(true);
-            warningText.text = "Taking too long to respond. Please upload again.";
+            warningText.text = "The process has timed out. Please try again.";
             StoreManager.instance.loaderPanel.SetActive(false);
             yield break; // Exit the coroutine
         }
@@ -180,8 +179,16 @@ public class UGCManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("Failed to send image to the server : " + www.error);
-                warningPanel.SetActive(true);
-                warningText.text = www.error;
+                if (www.isHttpError)
+                {
+                    warningPanel.SetActive(true);
+                    warningText.text = "An error occurred during processing. Please try again.";
+                }
+                //else
+                //{
+                //    warningPanel.SetActive(true);
+                //    warningText.text = www.error;
+                //}
                 StoreManager.instance.loaderPanel.SetActive(false);
                 GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             }
@@ -191,9 +198,10 @@ public class UGCManager : MonoBehaviour
                 if (response.status == "reject")
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
-                    Debug.Log(response.description);
+                    Debug.Log(response.description_Eng);
                     warningPanel.SetActive(true);
-                    warningText.text = response.description;
+                    if (GameManager.currentLanguage.Contains("en") || !CustomLocalization.forceJapanese) { warningText.text = response.description_Eng; }
+                    else { warningText.text = response.description_Jap; }
                     StoreManager.instance.loaderPanel.SetActive(false);
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
@@ -247,6 +255,10 @@ public class UGCManager : MonoBehaviour
         if (_itemHair != null)
         {
             StoreManager.instance.itemData._hairItemData = _itemHair.keyValue;
+        }
+        else 
+        {
+            StoreManager.instance.itemData._hairItemData = "No hair";
         }
         if (_itemEye != null)
         {
@@ -335,7 +347,8 @@ public class UGCManager : MonoBehaviour
 public class UGCItemsClass
 {
     public string status;
-    public string description;
+    public string description_Eng;
+    public string description_Jap;
     public string face_type;
     public string lip_shape;
     public string nose_shape;
