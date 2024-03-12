@@ -38,7 +38,8 @@ public class AvProDirectionalSound : MonoBehaviour
         if (flag)
         {
             audioSource.Stop();
-            StopCoroutine(volumeCoroutine);
+            if (volumeCoroutine != null)
+                StopCoroutine(volumeCoroutine);
             activePlayer.AudioVolume = 0f;
         }
         else
