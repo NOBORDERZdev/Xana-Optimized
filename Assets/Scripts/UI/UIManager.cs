@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         ShowFooter(!_state);
+        WorldManager.instance.EventPrefabLobby.GetComponent<WorldItemView>().LoadRFMDirectly();
     }
    
   
