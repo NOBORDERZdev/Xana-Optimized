@@ -305,7 +305,13 @@ public class FriendAvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        {
+                                            if (wornHair)
+                                                UnStichItem("Hair");
+                                        }
+                                        else
+                                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                     }
                                     else
                                     {
@@ -1591,7 +1597,13 @@ public class FriendAvatarController : MonoBehaviour
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
+            if (_CharacterData.hairItemData.Equals("No hair"))
+            {
+                if (wornHair)
+                    UnStichItem("Hair");
+            }
+            else
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
         }
     }
     void ApplyDefaultData(SavingCharacterDataClass _CharacterData)

@@ -244,10 +244,10 @@ public class EmoteFilterManager : MonoBehaviour
 
                         //animObject.GetComponent<Image>().color= emoteBGs[(UnityEngine.Random.Range(0, emoteBGs.Length))];
 
-                        animObject.transform.GetChild(2).gameObject.SetActive(false);
+                        animObject.transform.GetChild(1).gameObject.SetActive(false);
                 int i1 = i;
               
-                Image ima = animObject.transform.GetChild(1).gameObject.GetComponent<Image>();
+                Image ima = animObject.transform.GetChild(0).gameObject.GetComponent<Image>();
                 AssetCache.Instance.EnqueueOneResAndWait(EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), (success) =>
                 {
                  
@@ -347,9 +347,9 @@ public class EmoteFilterManager : MonoBehaviour
         {
             foreach (Transform child in ContentPanel.transform)
             {
-                if (child.transform.GetChild(2).gameObject.activeInHierarchy)
+                if (child.transform.GetChild(1).gameObject.activeInHierarchy)
                 {
-                    child.transform.GetChild(2).gameObject.SetActive(false);
+                    child.transform.GetChild(1).gameObject.SetActive(false);
                 }
                
                
