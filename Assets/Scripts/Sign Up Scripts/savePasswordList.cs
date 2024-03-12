@@ -44,10 +44,10 @@ public class savePasswordList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerPrefs.GetInt("firstTime") != 1)
+        if(PlayerPrefs.GetInt("FirstTime") != 1)
         {
             PlayerPrefs.DeleteAll();
-            PlayerPrefs.SetInt("firstTime", 1);
+            PlayerPrefs.SetInt("FirstTime", 1);
             PlayerPrefs.Save();
         }   
           //  print(mySaveUserObj.userName.Count);

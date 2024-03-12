@@ -825,7 +825,7 @@ public class StoreManager : MonoBehaviour
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        if (UserRegisterationManager.instance.LoggedIn)
+        if (XanaConstants.loggedIn)
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }

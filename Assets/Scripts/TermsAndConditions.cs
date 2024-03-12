@@ -90,7 +90,6 @@ public class TermsAndConditions : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
-        UserRegisterationManager.instance.welcomeScreen.SetActive(true);
          if(UIManager.Instance){ 
                 UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
                 UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;

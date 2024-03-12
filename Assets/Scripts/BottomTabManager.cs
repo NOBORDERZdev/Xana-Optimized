@@ -538,9 +538,10 @@ public class BottomTabManager : MonoBehaviour
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         GameManager.Instance.HomeCameraInputHandler(false);
 
-        if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1) // Show login page for not sign in
+        if (!XanaConstants.loggedIn) // Show login page for not sign in
         {
-            UserRegisterationManager.instance.OpenUIPanal(17);
+            //show popup here to login for adding friends
+            //UserRegisterationManager.instance.OpenUIPanal(17);
             return;
         }
         GameManager.Instance.ActorManager._cinemaCam.SetActive(false);

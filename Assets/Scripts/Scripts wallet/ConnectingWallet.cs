@@ -118,107 +118,104 @@ public class ConnectingWallet : MonoBehaviour
         return uid;
     }
 
-    public void OpenMenu(string menuName)
-    {
-        switch (menuName)
-        {
+    //public void OpenMenu(string menuName)
+    //{
+    //    switch (menuName)
+    //    {
 
-            case "GenerateQR":
-                {
-                    print("Implement QR generate");
-                    //   OpenXanaliaApp();
-                    if (LoginXanaliaBool)
-                    {
-                        //  OpenXanaliaAppWithURL();
-                        OpenXanaliaApp();
-                    }
-                    else
-                    {
-                        UserRegisterationManager.instance.OnSignUpWalletTabPressed();
-                        GenerateQRCode();
-                    }
-                    break;
-                }
+    //        case "GenerateQR":
+    //            {
+    //                print("Implement QR generate");
+    //                //   OpenXanaliaApp();
+    //                if (LoginXanaliaBool)
+    //                {
+    //                    //  OpenXanaliaAppWithURL();
+    //                    OpenXanaliaApp();
+    //                }
+    //                else
+    //                {
+    //                    UserRegisterationManager.instance.OnSignUpWalletTabPressed();
+    //                    GenerateQRCode();
+    //                }
+    //                break;
+    //            }
 
-            case "connected":
-                {
-                    break;
-                }
-            case "MessageForwardToWallet":
-                {
-                    break;
-                }
+    //        case "connected":
+    //            {
+    //                break;
+    //            }
+    //        case "MessageForwardToWallet":
+    //            {
+    //                break;
+    //            }
 
-            case "disconnected":
-                {
-                    if (WalletLoginLoader != null)
-                        WalletLoginLoader.SetActive(false);
-                    LoaderBool = false;
-                    break;
-                }
-            case "Rejected":
-                {
-                    LoaderBool = false;
+    //        case "disconnected":
+    //            {
+    //                if (WalletLoginLoader != null)
+    //                    WalletLoginLoader.SetActive(false);
+    //                LoaderBool = false;
+    //                break;
+    //            }
+    //        case "Rejected":
+    //            {
+    //                LoaderBool = false;
 
-                    print("I am in rejected Case");
-                    if (WalletLoginLoader != null)
-                        WalletLoginLoader.SetActive(false);
-                    break;
-                }
+    //                print("I am in rejected Case");
+    //                if (WalletLoginLoader != null)
+    //                    WalletLoginLoader.SetActive(false);
+    //                break;
+    //            }
 
-            case "VerifySignature":
-                {
-                    break;
-                }
+    //        case "VerifySignature":
+    //            {
+    //                break;
+    //            }
 
-            case "Removed":
-                {
-                    if (PlayerPrefs.GetInt("WalletConnect") == 1)
-                    {
-                        PlayerPrefs.SetInt("IsLoggedIn", 0);
-                        PlayerPrefs.SetInt("WalletConnect", 0);
+    //        case "Removed":
+    //            {
+    //                if (PlayerPrefs.GetInt("WalletConnect") == 1)
+    //                {
+    //                    PlayerPrefs.SetInt("IsLoggedIn", 0);
+    //                    PlayerPrefs.SetInt("WalletConnect", 0);
 
-                        if (UserRegisterationManager.instance != null)
-                        {
-                            UserRegisterationManager.instance.LoggedIn = false;
-                        }
-                        LoginXanaliaBool = false;
-                        PlayerPrefs.Save();
-                        print("removed here 22");
-                        if (SNSSettingController.Instance != null)
-                        {
-                            SNSSettingController.Instance.LogoutSuccess();
-                        }
-                        LoaderBool = false;
-                    }
-                    break;
-                }
+    //                    if (UserRegisterationManager.instance != null)
+    //                    {
+    //                        UserRegisterationManager.instance.LoggedIn = false;
+    //                    }
+    //                    LoginXanaliaBool = false;
+    //                    PlayerPrefs.Save();
+    //                    print("removed here 22");
+    //                    if (SNSSettingController.Instance != null)
+    //                    {
+    //                        SNSSettingController.Instance.LogoutSuccess();
+    //                    }
+    //                    LoaderBool = false;
+    //                }
+    //                break;
+    //            }
 
-            case "OpenJWTPage":
-                {
-                    print("Congrats JWT received ");
-                    if (WalletLoginLoader != null)
-                        WalletLoginLoader.SetActive(false);
-                    LoaderBool = false;
+    //        case "OpenJWTPage":
+    //            {
+    //                print("Congrats JWT received ");
+    //                if (WalletLoginLoader != null)
+    //                    WalletLoginLoader.SetActive(false);
+    //                LoaderBool = false;
 
-                    PlayerPrefs.SetInt("WalletConnect", 1);
-                    //SuccessfulPopUp.SetActive(true);
-                    UserRegisterationManager.instance.LoginWithWallet();
-                    PlayerPrefs.Save();
-                    SetNameInServer();
-
-
-                    PlayerPrefs.Save();
-                    //  GetXanaliaNounce();
-
-                    //  UserRegisterationManager.instance.LoginWithWallet();
-                    break;
-                }
-        }
-    }
+    //                PlayerPrefs.SetInt("WalletConnect", 1);
+    //                //SuccessfulPopUp.SetActive(true);
+    //                UserRegisterationManager.instance.LoginWithWallet();
+    //                PlayerPrefs.Save();
+    //                SetNameInServer();
 
 
+    //                PlayerPrefs.Save();
+    //                //  GetXanaliaNounce();
 
+    //                //  UserRegisterationManager.instance.LoginWithWallet();
+    //                break;
+    //            }
+    //    }
+    //}
     public void ExampleMainThreadCall(string getText)
     {
         UnityMainThreadDispatcher.Instance().Enqueue(ThisWillBeExecutedOnTheMainThread(getText));
@@ -231,119 +228,119 @@ public class ConnectingWallet : MonoBehaviour
         //End
         yield return null;
     }
-    void GetText(string txt)
-    {
-        print(txt);
-        ConnectServerDataExtraction.GeneralClassFields GeneralFields = JsonUtility.FromJson<ConnectServerDataExtraction.GeneralClassFields>(txt);
-        if (GeneralFields.status == "error")
-        {
-            ConnectServerDataExtraction.ErrorClass objerror = new ConnectServerDataExtraction.ErrorClass();
-            Debug.Log("Error in Response");
-            Debug.Log(objerror.data);
-            Debug.Log(objerror.type);
-            if (WalletLoginLoader != null)
-                WalletLoginLoader.SetActive(false);
-            LoaderBool = false;
-        }
-        else if (GeneralFields.status == "success")
-        {
-            switch (GeneralFields.type)
-            {
-                case "app connect":
-                    ConnectServerDataExtraction.AppConnectClass objConnectServer = new ConnectServerDataExtraction.AppConnectClass();
-                    objConnectServer = JsonUtility.FromJson<ConnectServerDataExtraction.AppConnectClass>(txt);
-                    OpenMenu("GenerateQR");
-                    break;
-                case "connection approved":
-                    ConnectServerDataExtraction.ConnectedClass objConnected = new ConnectServerDataExtraction.ConnectedClass();
-                    objConnected = JsonUtility.FromJson<ConnectServerDataExtraction.ConnectedClass>(txt);
-                    OpenMenu("connected");
-                    print("Implement COnnnected");
-                    print("Wallet address is " + objConnected.data.address);
-                    print("Wallet id is " + objConnected.data.walletId);
-                    print("Wallet msg is " + objConnected.data.msg);
-                    // string walletPublicID = objConnected.data.address;
-                    //ConnectServerDataExtraction.NounceClass NounceObj = new ConnectServerDataExtraction.NounceClass();
-                    //NounceObj = NounceObj.NounceClassFtn(walletPublicID);
-                    //var jsonObj = JsonUtility.ToJson(NounceObj);
-                    //print("Nouce JSON is  " + jsonObj);  
-                    //     StartCoroutine(HitGetNounceFromServerAPI(GetUserNounceURL, jsonObj));
-                    break;
-                case "disconnect":
-                    print("Disconnected");
-                    OpenMenu("disconnected");
-                    break;
-                case "connection reject":
-                    print("rejected here");
-                    ConnectServerDataExtraction.AppRejectedClass objRejected = new ConnectServerDataExtraction.AppRejectedClass();
-                    objRejected = JsonUtility.FromJson<ConnectServerDataExtraction.AppRejectedClass>(txt);
+    //void GetText(string txt)
+    //{
+    //    print(txt);
+    //    ConnectServerDataExtraction.GeneralClassFields GeneralFields = JsonUtility.FromJson<ConnectServerDataExtraction.GeneralClassFields>(txt);
+    //    if (GeneralFields.status == "error")
+    //    {
+    //        ConnectServerDataExtraction.ErrorClass objerror = new ConnectServerDataExtraction.ErrorClass();
+    //        Debug.Log("Error in Response");
+    //        Debug.Log(objerror.data);
+    //        Debug.Log(objerror.type);
+    //        if (WalletLoginLoader != null)
+    //            WalletLoginLoader.SetActive(false);
+    //        LoaderBool = false;
+    //    }
+    //    else if (GeneralFields.status == "success")
+    //    {
+    //        switch (GeneralFields.type)
+    //        {
+    //            case "app connect":
+    //                ConnectServerDataExtraction.AppConnectClass objConnectServer = new ConnectServerDataExtraction.AppConnectClass();
+    //                objConnectServer = JsonUtility.FromJson<ConnectServerDataExtraction.AppConnectClass>(txt);
+    //                OpenMenu("GenerateQR");
+    //                break;
+    //            case "connection approved":
+    //                ConnectServerDataExtraction.ConnectedClass objConnected = new ConnectServerDataExtraction.ConnectedClass();
+    //                objConnected = JsonUtility.FromJson<ConnectServerDataExtraction.ConnectedClass>(txt);
+    //                OpenMenu("connected");
+    //                print("Implement COnnnected");
+    //                print("Wallet address is " + objConnected.data.address);
+    //                print("Wallet id is " + objConnected.data.walletId);
+    //                print("Wallet msg is " + objConnected.data.msg);
+    //                // string walletPublicID = objConnected.data.address;
+    //                //ConnectServerDataExtraction.NounceClass NounceObj = new ConnectServerDataExtraction.NounceClass();
+    //                //NounceObj = NounceObj.NounceClassFtn(walletPublicID);
+    //                //var jsonObj = JsonUtility.ToJson(NounceObj);
+    //                //print("Nouce JSON is  " + jsonObj);  
+    //                //     StartCoroutine(HitGetNounceFromServerAPI(GetUserNounceURL, jsonObj));
+    //                break;
+    //            case "disconnect":
+    //                print("Disconnected");
+    //                OpenMenu("disconnected");
+    //                break;
+    //            case "connection reject":
+    //                print("rejected here");
+    //                ConnectServerDataExtraction.AppRejectedClass objRejected = new ConnectServerDataExtraction.AppRejectedClass();
+    //                objRejected = JsonUtility.FromJson<ConnectServerDataExtraction.AppRejectedClass>(txt);
 
-                    print(objRejected.data.msg + "  " + objRejected.data.walletId);
-                    OpenMenu("Rejected");
-                    XanaliaSignedMsg = false;
-                    break;
-                case "verifysig":
-                    print("type verifysig");
-                    print(txt);
-                    ConnectServerDataExtraction.VerifySignatureClass objVerify = new ConnectServerDataExtraction.VerifySignatureClass();
-                    objVerify = JsonUtility.FromJson<ConnectServerDataExtraction.VerifySignatureClass>(txt);
-                    print("public key is " + objVerify.data.pubKey);
-                    PlayerPrefs.SetString("publicKey", objVerify.data.pubKey);
-                    print("signature key is " + objVerify.data.sig);
-                    print("Nounce is " + objVerify.data.nonce);
-                    PlayerPrefs.SetString("publicKey", objVerify.data.pubKey);
-                    ServerNounce = objVerify.data.nonce;
+    //                print(objRejected.data.msg + "  " + objRejected.data.walletId);
+    //                OpenMenu("Rejected");
+    //                XanaliaSignedMsg = false;
+    //                break;
+    //            case "verifysig":
+    //                print("type verifysig");
+    //                print(txt);
+    //                ConnectServerDataExtraction.VerifySignatureClass objVerify = new ConnectServerDataExtraction.VerifySignatureClass();
+    //                objVerify = JsonUtility.FromJson<ConnectServerDataExtraction.VerifySignatureClass>(txt);
+    //                print("public key is " + objVerify.data.pubKey);
+    //                PlayerPrefs.SetString("publicKey", objVerify.data.pubKey);
+    //                print("signature key is " + objVerify.data.sig);
+    //                print("Nounce is " + objVerify.data.nonce);
+    //                PlayerPrefs.SetString("publicKey", objVerify.data.pubKey);
+    //                ServerNounce = objVerify.data.nonce;
 
-                    ServerNounceXanalia = objVerify.data.nonceXanalia;
-                    SignedSigXanalia = objVerify.data.sigXanalia;
-                    OpenMenu("VerifySignature");
-                    string SignedSignature = objVerify.data.sig;
-                    if (!XanaliaSignedMsg)
-                    {
-                        ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
-                        VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounce, objVerify.data.sig);
-                        var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
-                        print("Verify Signed msg Json is  " + jsonObj2);
-                        ///Wallet Commect  
-                        ///StartCoroutine(HitVerifySignatureAPI(ConstantsGod.API_BASEURL+ConstantsGod.VerifySignedURL, jsonObj2));
-                        ///End
-                    }
-                    else
-                    {
-                        //ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
-                        // VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounceXanalia, objVerify.data.sigXanalia);
-                        //var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);  
-                        //print("Xanalia Verify Signed msg Json is  " + jsonObj2);  
-                        // StartCoroutine(HitVerifySignatureXanaliaAPI(VerifySignedXanaliaURL, jsonObj2));  
-                    }
-
-
-                    //    https://testapi.xanalia.com/auth/verify-signature
-                    //     post(verifySigUrl, {
-                    //      nonce: nonce,
-                    //         signature: signature,
-                    //     });
+    //                ServerNounceXanalia = objVerify.data.nonceXanalia;
+    //                SignedSigXanalia = objVerify.data.sigXanalia;
+    //                OpenMenu("VerifySignature");
+    //                string SignedSignature = objVerify.data.sig;
+    //                if (!XanaliaSignedMsg)
+    //                {
+    //                    ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
+    //                    VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounce, objVerify.data.sig);
+    //                    var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
+    //                    print("Verify Signed msg Json is  " + jsonObj2);
+    //                    ///Wallet Commect  
+    //                    ///StartCoroutine(HitVerifySignatureAPI(ConstantsGod.API_BASEURL+ConstantsGod.VerifySignedURL, jsonObj2));
+    //                    ///End
+    //                }
+    //                else
+    //                {
+    //                    //ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
+    //                    // VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(ServerNounceXanalia, objVerify.data.sigXanalia);
+    //                    //var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);  
+    //                    //print("Xanalia Verify Signed msg Json is  " + jsonObj2);  
+    //                    // StartCoroutine(HitVerifySignatureXanaliaAPI(VerifySignedXanaliaURL, jsonObj2));  
+    //                }
 
 
-                    break;
-                //   { "status": "success", "type": "remove", "data":{ "msg":"walletId removed","walletId":"0xfaE360CBaf3f31E8F5511e7b06e4A50C956B438a"} }
-                case "remove":
-                    print("removed here");
-                    ConnectServerDataExtraction.AppRejectedClass objRemoved = new ConnectServerDataExtraction.AppRejectedClass();
-                    objRemoved = JsonUtility.FromJson<ConnectServerDataExtraction.AppRejectedClass>(txt);
-                    print(objRemoved.data.msg + "  " + objRemoved.data.walletId);
-                    OpenMenu("Removed");
-                    XanaliaSignedMsg = false;
+    //                //    https://testapi.xanalia.com/auth/verify-signature
+    //                //     post(verifySigUrl, {
+    //                //      nonce: nonce,
+    //                //         signature: signature,
+    //                //     });
 
-                    if (SNSSettingController.Instance != null)
-                    {
-                        SNSSettingController.Instance.LogoutSuccess();
-                    }
-                    break;
-            }
-        }
 
-    }
+    //                break;
+    //            //   { "status": "success", "type": "remove", "data":{ "msg":"walletId removed","walletId":"0xfaE360CBaf3f31E8F5511e7b06e4A50C956B438a"} }
+    //            case "remove":
+    //                print("removed here");
+    //                ConnectServerDataExtraction.AppRejectedClass objRemoved = new ConnectServerDataExtraction.AppRejectedClass();
+    //                objRemoved = JsonUtility.FromJson<ConnectServerDataExtraction.AppRejectedClass>(txt);
+    //                print(objRemoved.data.msg + "  " + objRemoved.data.walletId);
+    //                OpenMenu("Removed");
+    //                XanaliaSignedMsg = false;
+
+    //                if (SNSSettingController.Instance != null)
+    //                {
+    //                    SNSSettingController.Instance.LogoutSuccess();
+    //                }
+    //                break;
+    //        }
+    //    }
+
+    //}
 
 
     public void GenerateMsg(bool XanaliaBool = false)
@@ -776,8 +773,8 @@ public class ConnectingWallet : MonoBehaviour
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
-                OpenMenu("OpenJWTPage");
-
+                //OpenMenu("OpenJWTPage");
+                
 
                 ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
                 VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
@@ -901,24 +898,6 @@ public class ConnectingWallet : MonoBehaviour
                                 break;
                             }
                     }
-
-                    /*
-                    if (VerifySignatureReadObj.data.user.userNftRole =="")
-                    {  
-                      if (VerifySignatureReadObj.data.user.userNftRole.Contains("access"))
-                          {
-                             PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
-                          }     
-                        else  
-                        {
-                              PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");  
-                         }      
-                      }    
-                    else  
-                    {
-                         PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
-                    }           
-                    */
                     PlayerPrefs.SetString("LoginTokenxanalia", VerifySignatureReadObj.data.token);
                     if (VerifySignatureReadObj.data.user.title != null)
                     {
@@ -926,21 +905,17 @@ public class ConnectingWallet : MonoBehaviour
                     }
                     else
                     {
-
-                        print(VerifySignatureReadObj.data.user.username);
                         String s = VerifySignatureReadObj.data.user.username.ToString();
-                        print("The first four character of the string is: " + s.Substring(0, 4));
                         PlayerPrefs.SetString("Useridxanalia", s.Substring(0, 4));
-                        Debug.Log("title is null");
                     }
-                    //print("JWT token of xanalia is   " + PlayerPrefs.GetString("LoginTokenxanalia"));
-                    //  PlayerPrefs.SetString("UserName", PlayerPrefs.GetString("Useridxanalia"));
+                    if (WalletLoginLoader != null)
+                        WalletLoginLoader.SetActive(false);
+                    LoaderBool = false;
                     PlayerPrefs.SetInt("WalletConnect", 1);
-                    //SuccessfulPopUp.SetActive(true);
                     UserRegisterationManager.instance.LoginWithWallet();
+                    UserLoginSignupManager.instance.LoginWithWallet();
                     PlayerPrefs.Save();
                     SetNameInServer();
-                    print("ID of UserName is  :  " + PlayerPrefs.GetString("Useridxanalia"));
                     GetNFTList();
                 }
             }

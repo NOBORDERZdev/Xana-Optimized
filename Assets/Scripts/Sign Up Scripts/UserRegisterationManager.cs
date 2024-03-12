@@ -1237,7 +1237,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
-
+        XanaConstants.loggedIn = false;
         // [Waqas] Store Guest Username Locally
         string tempName1 = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         string tempName2 = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
@@ -3379,7 +3379,7 @@ public class UserRegisterationManager : MonoBehaviour
                             }
                         }
                         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
-                        PlayerPrefs.SetInt("firstTime", 1);
+                        PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
 
                         XanaConstants.userId = myObject1.data.user.id.ToString();
@@ -3417,7 +3417,7 @@ public class UserRegisterationManager : MonoBehaviour
                     XanaliaUserTokenId = myObject1.data.xanaliaToken;
                     PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
                     PlayerPrefs.SetInt("shownWelcome", 1);
-                    PlayerPrefs.SetInt("firstTime", 1);
+                    PlayerPrefs.SetInt("FirstTime", 1);
 
                     XanaConstants.userId = myObject1.data.user.id.ToString();
 
