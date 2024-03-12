@@ -44,7 +44,7 @@ public class UGCUIManager : MonoBehaviour
     void Start()
     {
         DisableLoadingPanel();
-        BGMat = new Material(BG.material);
+       // BGMat = new Material(BG.material);
     }
 
     public void DisableLoadingPanel()
