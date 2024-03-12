@@ -67,7 +67,8 @@ public class AvProDirectionalSound : MonoBehaviour
         {
             if (!activePlayer.gameObject.activeSelf)
             {
-                StopCoroutine(volumeCoroutine);
+                if (volumeCoroutine != null)
+                    StopCoroutine(volumeCoroutine);
                 yield break;
             }
             // Calculate the distance between player/camera and video source
