@@ -224,6 +224,7 @@ public class UserRegisterationManager : MonoBehaviour
                 StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
                 //Debug.Log("WORKINGGGGGGGGGGGGGGG Ho raha haaaaaaaaaaaaaa");
             }
+            welcomeScreen.SetActive(false);
         }
         else
         {
@@ -395,7 +396,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     public void BackFromLoginScreen() 
     {
-        if (btnClickedNo == 0) 
+        if (btnClickedNo == 0)
         {
             welcomeScreen.SetActive(true);
         }

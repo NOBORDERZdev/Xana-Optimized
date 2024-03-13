@@ -108,6 +108,8 @@ public class WorldItemView : MonoBehaviour
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         UpdateUserCount();
         LoadImagesFromRemote();
+
+
     }
     void LoadImagesFromRemote()
     {
@@ -298,8 +300,9 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
- 
-        if(m_EnvironmentName.Contains("XANA Lobby"))
+        if (string.IsNullOrEmpty(ThumbnailDownloadURLHigh))
+            ThumbnailDownloadURLHigh = m_ThumbnailDownloadURL;
+        if (m_EnvironmentName.Contains("XANA Lobby"))
         {
             worldItemPreview.Init(XanaWorldBanner,
            m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
@@ -353,5 +356,42 @@ public class WorldItemView : MonoBehaviour
             isBannerLoaded = true;
         }
         www.Dispose();
+    }
+
+
+    public void LoadRFMDirectly()
+    {
+        //if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM
+        //   && APIBaseUrlChange.instance.IsXanaLive)
+        //{
+        //Debug.LogError("1st if, justOnetime:" + justOnetime);
+        //if (justOnetime) return;
+        //justOnetime = true;
+        creatorName = "Muneeb";
+        Index = 2;
+        //GridIndex = gridPos;
+        idOfObject = "1445";
+        m_EnvironmentName = "RFM";
+        m_WorldDescription = "Run for Money Game";
+        m_ThumbnailDownloadURL = "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1705413144901_512.png?width=640&height=360";
+        creatorName = "Muneeb";
+        createdAt = "2024-01-16T13:52:27.398Z";
+        userLimit = "12";
+        userAvatarURL = "https://cdn.xana.net/apitestxana/Defaults/1705563951862_1677755635138_6fab7c67-7562-4abc-8ea1-5dd1473a3601_thumbnail.jpg";
+        updatedAt = "2024-01-16T13:52:27.398Z";
+        entityType = "ENVIRONMENT";
+        //m_BannerLink = detail.BannerLink;
+        //m_PressedIndex = detail.PressedIndex;
+        //ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        //worldTags = detail.WorldTags;
+        //Creator_Name = detail.Creator_Name;
+        //CreatorAvatarURL = detail.CreatorAvatarURL;
+        //CreatorDescription = detail.CreatorDescription;
+        //WorldManager.instance.PlayWorld();
+        Init();
+        OnClickPrefab();
+        worldItemPreview.m_WorldPlayPanel.GetComponent<ScrollActivity>().enabled = false;
+
+        // }
     }
 }

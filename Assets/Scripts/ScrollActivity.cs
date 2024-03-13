@@ -112,7 +112,7 @@ public class ScrollActivity : MonoBehaviour
 
     void BounceBack(){ 
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.OutSine).OnComplete(()=> { 
-        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+        //ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
         } ); 
     }
 
