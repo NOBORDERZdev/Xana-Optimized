@@ -133,7 +133,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                     string type = _CharacterData.myItemObj[i].ItemType;
                                     if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
                                     {
-                                        WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        {
+                                            if (otherPlayer.GetComponent<AvatarController>().wornHair)
+                                                UnStichItem("Hair");
+                                        }
+                                        else
+                                            WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                     }
                                 }
                                 else
@@ -508,7 +514,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
+            if (_CharacterData.hairItemData.Equals("No hair"))
+            {
+                if (applyon.GetComponent<AvatarController>().wornHair)
+                    UnStichItem("Hair");
+            }
+            else
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)

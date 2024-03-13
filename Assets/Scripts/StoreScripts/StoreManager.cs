@@ -4889,6 +4889,7 @@ public class StoreManager : MonoBehaviour
             _charcterBodyParts.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
+            if(!itemData._hairItemData.Contains("No Hair"))
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
         }
         if (itemData._eyeItemData != null)
