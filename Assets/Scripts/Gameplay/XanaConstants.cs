@@ -8,6 +8,12 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class XanaConstants : MonoBehaviour
 {
+    public enum MetaverseType
+    {
+        Xana,
+        RFM
+    };
+
     public static XanaConstants xanaConstants;
 
     public static bool isAddressableCatalogDownload;
@@ -74,6 +80,9 @@ public class XanaConstants : MonoBehaviour
     public bool isCameraManInRoom = false;
     public bool isBackfromSns = false;
 
+    public MetaverseType metaverseType = MetaverseType.RFM;
+    public bool isBackFromRFM = false;
+
     public bool isBackFromWorld = false;
 
     public String MuseumID;
@@ -109,7 +118,7 @@ public class XanaConstants : MonoBehaviour
     [HideInInspector]
     public bool needToClearMemory = true;
     // Tutorials
-    public bool isTutorialLoaded=false;
+    public bool isTutorialLoaded = false;
     public bool isLobbyTutorialLoaded = false;
     public string r_EmoteStoragePersistentPath
     {

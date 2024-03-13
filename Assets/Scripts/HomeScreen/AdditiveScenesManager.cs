@@ -12,10 +12,11 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     public GameObject SNSMessage;
     public BottomTabManager homeBottomTab;
-    
+    public static System.Action OnAllSceneLoaded;
+
     private void Start()
     {
-        if(!XanaConstants.xanaConstants.JjWorldSceneChange)
+        if (!XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;
             StartCoroutine(AddDelayStore(sceneDelay / 3));
@@ -27,8 +28,8 @@ public class AdditiveScenesManager : MonoBehaviour
     IEnumerator AddDelayStore(float delay)
     {
         yield return new WaitForSeconds(delay);
-         AsyncOperation async = SceneManager.LoadSceneAsync(sceneTest2, LoadSceneMode.Additive);
-        while(!async.isDone)
+        AsyncOperation async = SceneManager.LoadSceneAsync(sceneTest2, LoadSceneMode.Additive);
+        while (!async.isDone)
         {
             yield return null;
         }
@@ -47,7 +48,7 @@ public class AdditiveScenesManager : MonoBehaviour
     }
     IEnumerator AddDelaySNSMessageModule(float delay)
     {
-       
+
         yield return new WaitForSeconds(delay);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneTest4, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
@@ -58,9 +59,10 @@ public class AdditiveScenesManager : MonoBehaviour
         if (XanaConstants.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();
-            XanaConstants.xanaConstants.isBackfromSns=false;
+            XanaConstants.xanaConstants.isBackfromSns = false;
         }
         LoadingHandler.Instance.HideLoading();
-       // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+        OnAllSceneLoaded?.Invoke();
+        // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
     }
 }

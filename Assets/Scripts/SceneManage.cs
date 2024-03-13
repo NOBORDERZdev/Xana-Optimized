@@ -58,6 +58,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void LoadMain(bool changeOritentationChange)
     {
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM)
+        {
+            XanaConstants.xanaConstants.isBackFromRFM = true;
+        }
+
         disableSoundXanalobby();
         XanaConstants.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
@@ -121,7 +126,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+
+            //if(XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.RFM) { }
             UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            Debug.LogError("Login panel enbled 0");
         }
         else
         {
@@ -180,6 +188,13 @@ public class SceneManage : MonoBehaviourPunCallbacks
         Resources.UnloadUnusedAssets();
         print("mian scne " + mainScene);
         XanaConstants.xanaConstants.isBackFromWorld = true;
+
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM && PlayerPrefs.GetInt("iSignup") == 0)
+        {
+            PlayerPrefs.SetInt("shownWelcome", 0);
+            PlayerPrefs.SetInt("IsProcessComplete", 0);
+        }
+
         if (XanaConstants.xanaConstants.JjWorldSceneChange)
         {
             float _rand;

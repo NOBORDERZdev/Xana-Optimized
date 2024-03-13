@@ -410,7 +410,7 @@ public class WorldManager : MonoBehaviour
     }
 
     public void ShowTutorial(){ 
-        TutorialsManager.instance.ShowTutorials();
+        //TutorialsManager.instance.ShowTutorials();
     }
 
     public void WorldPageStateHandler(bool _checkCheck)
@@ -454,20 +454,26 @@ public class WorldManager : MonoBehaviour
             }
         }
         _callSingleTime = true;
-        if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.Xana)
         {
-            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
             {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
-            }
-            else
-            {
-                if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
                 {
-                    Debug.Log("YOU DONT HAVE DEEMO NFT");
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
+                    UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+                    //if(XanaConstants.xanaConstants.metaverseType != XanaConstants.MetaverseType.RFM) { }
+                    UIManager.Instance.LoginRegisterScreen.SetActive(true);
+
+                    Debug.LogError("Login panel enbled 1");
+                }
+                else
+                {
+                    if (!XanaConstants.xanaConstants.IsDeemoNFT)
+                    {
+                        Debug.Log("YOU DONT HAVE DEEMO NFT");
+                        GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                        return;
+                    }
                 }
             }
         }
@@ -535,6 +541,8 @@ public class WorldManager : MonoBehaviour
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
                 UIManager.Instance.LoginRegisterScreen.SetActive(true);
+
+                Debug.LogError("Login panel enbled 2");
             }
             else
             {
@@ -611,6 +619,7 @@ public class WorldManager : MonoBehaviour
     bool _callSingleTime = false;
     public void PlayWorld()
     {
+        Debug.LogError("Play World");
         // For Analitics & User Count
         if (!_callSingleTime)
         {

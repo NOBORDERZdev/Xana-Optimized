@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,11 +7,13 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
+using static System.Net.WebRequestMethods;
 
 public class WorldItemView : MonoBehaviour
 {
     [SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;
     public int Index;
+    private static bool justOnetime = false;
     public Vector2 GridIndex { get; protected set; }
     public RectTransform RectTransform => transform as RectTransform;
     public void Activated()
@@ -22,27 +24,94 @@ public class WorldItemView : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    public void LoadRFMDirectly()
+    {
+        //if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM
+        //   && APIBaseUrlChange.instance.IsXanaLive)
+        //{
+        Debug.LogError("1st if, justOnetime:" + justOnetime);
+        if (justOnetime) return;
+        justOnetime = true;
+        creatorName = "Muneeb";
+        Index = 2;
+        //GridIndex = gridPos;
+        idOfObject = "1445";
+        m_EnvironmentName = "RFM";
+        m_WorldDescription = "Run for Money Game";
+        m_ThumbnailDownloadURL = "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1705413144901_512.png?width=640&height=360";
+        creatorName = "Muneeb";
+        createdAt = "2024-01-16T13:52:27.398Z";
+        userLimit = "12";
+        userAvatarURL = "https://cdn.xana.net/apitestxana/Defaults/1705563951862_1677755635138_6fab7c67-7562-4abc-8ea1-5dd1473a3601_thumbnail.jpg";
+        updatedAt = "2024-01-16T13:52:27.398Z";
+        entityType = "ENVIRONMENT";
+        //m_BannerLink = detail.BannerLink;
+        //m_PressedIndex = detail.PressedIndex;
+        //ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+        //worldTags = detail.WorldTags;
+        //Creator_Name = detail.Creator_Name;
+        //CreatorAvatarURL = detail.CreatorAvatarURL;
+        //CreatorDescription = detail.CreatorDescription;
+        //WorldManager.instance.PlayWorld();
+        Init();
+
+        // }
+    }
+
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail)
     {
-        if(PreviewLogo)
-            PreviewLogo.gameObject.SetActive(true);
-       Index = index;
-       GridIndex = gridPos;
-       idOfObject =  detail.IdOfWorld;
-       m_EnvironmentName = detail.EnvironmentName;
-       m_WorldDescription = detail.WorldDescription;
-       m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
-       creatorName = detail.CreatorName;
-       createdAt = detail.CreatedAt;
-       userLimit = detail.UserLimit;
-       userAvatarURL = detail.UserAvatarURL;
-       updatedAt = detail.UpdatedAt;
-       entityType = detail.EntityType;
-       m_BannerLink = detail.BannerLink;
-       m_PressedIndex = detail.PressedIndex;
-       ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
-        worldTags = detail.WorldTags;
-       Init();
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM && APIBaseUrlChange.instance.IsXanaLive ||
+            XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM && APIBaseUrlChange.instance.IsXanaLive == false)
+        {
+            //Debug.LogError("2nd if, justOnetime:" + justOnetime);
+            //if (justOnetime) return;
+            //justOnetime = true;
+            //creatorName = "Muneeb";
+            //Index = 2;
+            ////GridIndex = gridPos;
+            //idOfObject = "1445";
+            //m_EnvironmentName = "RFM";
+            //m_WorldDescription = "Run for Money Game";
+            //m_ThumbnailDownloadURL = "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults/1705413144901_512.png?width=640&height=360";
+            //creatorName = "Muneeb";
+            //createdAt = "2024-01-16T13:52:27.398Z";
+            //userLimit = "12";
+            //userAvatarURL = "https://cdn.xana.net/apitestxana/Defaults/1705563951862_1677755635138_6fab7c67-7562-4abc-8ea1-5dd1473a3601_thumbnail.jpg";
+            //updatedAt = "2024-01-16T13:52:27.398Z";
+            //entityType = "ENVIRONMENT";
+            ////m_BannerLink = detail.BannerLink;
+            ////m_PressedIndex = detail.PressedIndex;
+            ////ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+            ////worldTags = detail.WorldTags;
+            ////Creator_Name = detail.Creator_Name;
+            ////CreatorAvatarURL = detail.CreatorAvatarURL;
+            ////CreatorDescription = detail.CreatorDescription;
+            ////WorldManager.instance.PlayWorld();
+            //Init();
+        }
+        else
+        {
+            //if (PreviewLogo)
+            //    PreviewLogo.gameObject.SetActive(true);
+            //Index = index;
+            //GridIndex = gridPos;
+            //idOfObject = detail.IdOfWorld;
+            //m_EnvironmentName = detail.EnvironmentName;
+            //m_WorldDescription = detail.WorldDescription;
+            //m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
+            //creatorName = detail.CreatorName;
+            //createdAt = detail.CreatedAt;
+            //userLimit = detail.UserLimit;
+            //userAvatarURL = detail.UserAvatarURL;
+            //updatedAt = detail.UpdatedAt;
+            //entityType = detail.EntityType;
+            //m_BannerLink = detail.BannerLink;
+            //m_PressedIndex = detail.PressedIndex;
+            //ThumbnailDownloadURLHigh = detail.ThumbnailDownloadURLHigh;
+            //worldTags = detail.WorldTags;
+            //Init();
+        }
     }
 
     public static string m_EnvName;
@@ -83,7 +152,7 @@ public class WorldItemView : MonoBehaviour
     private void OnEnable()
     {
         UpdateUserCount();
-        if(m_ThumbnailDownloadURL != "")
+        if (m_ThumbnailDownloadURL != "")
         {
             LoadImagesFromRemote();
         }
@@ -98,9 +167,18 @@ public class WorldItemView : MonoBehaviour
             worldIcon.sprite = default;
         }
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
+        justOnetime = false;
     }
     public void Init()
     {
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.RFM)
+        {
+            if (m_EnvironmentName == "RFM")
+            {
+                OnClickPrefab();
+            }
+        }
+
         GetEventType(entityType);
         StartCoroutine(DownloadPrefabSprite());
         if (!m_EnvironmentName.Contains("XANA Lobby"))
@@ -142,7 +220,7 @@ public class WorldItemView : MonoBehaviour
             {
                 modifyEnityType = "USER";
             }
-            if(PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
+            if (PlayerPrefs.GetInt("ShowLiveUserCounter").Equals(1))
                 joinedUserCount.transform.parent.gameObject.SetActive(true);
             else
                 joinedUserCount.transform.parent.gameObject.SetActive(false);
@@ -160,7 +238,7 @@ public class WorldItemView : MonoBehaviour
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
                     if (m_EnvironmentName.Contains("XANA Lobby") && allWorldData.player_count[i].count > 0)
                         joinedUserCount.transform.parent.gameObject.SetActive(true);
-                        break;
+                    break;
                 }
                 if (CheckServerForID().ToString() == idOfObject)
                     joinedUserCount.text = "5";
@@ -223,7 +301,7 @@ public class WorldItemView : MonoBehaviour
     public IEnumerator DownloadAndLoadFeed()
     {
         yield return null;
-       if(AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
+        if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
             if (PreviewLogo)
@@ -298,18 +376,18 @@ public class WorldItemView : MonoBehaviour
         XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
         XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
- 
-        if(m_EnvironmentName.Contains("XANA Lobby"))
+
+        if (m_EnvironmentName.Contains("XANA Lobby"))
         {
             worldItemPreview.Init(XanaWorldBanner,
-           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,"",worldTags);
+           m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, "", worldTags);
         }
         else
         {
             worldItemPreview.Init(worldIcon.sprite,
-        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL,ThumbnailDownloadURLHigh,worldTags);
+        m_EnvironmentName, m_WorldDescription, creatorName, createdAt, updatedAt, isBuilderScene, userAvatarURL, ThumbnailDownloadURLHigh, worldTags);
         }
-       
+
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
