@@ -26,6 +26,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
+    public Button FollowUnfollowBtnRef;
     public bool IsInFollowingTab;
 
     public SavingCharacterDataClass _userAvatarData;
@@ -207,6 +208,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         Debug.Log("Search User id:" + searchUserRow.id);
+        FeedUIController.Instance.ShowLoader(true);
         APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
@@ -249,8 +251,6 @@ public class FindFriendWithNameItem : MonoBehaviour
         feedRawData.FollowerCount = searchUserRow.followerCount;
         feedRawData.FollowingCount = searchUserRow.followingCount;
         feedRawData.feedCount = searchUserRow.feedCount;
-
-        //FeedUIController.Instance.ShowLoader(true);
 
         OtherPlayerProfileData.Instance.currentFindFriendWithNameItemScript = this;
 
@@ -335,14 +335,16 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (searchUserRow.am_i_following)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                FollowUnfollowBtnRef.interactable = false;
+                //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //unfollow
                 RequestUnFollowAUser(searchUserRow.id.ToString());
             }
             else
             {
                Debug.Log("Follow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                gameObject.GetComponent<Button>().interactable = false;
+                //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
             }
@@ -373,10 +375,11 @@ public class FindFriendWithNameItem : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
+                FollowUnfollowBtnRef.interactable = true;
                 Debug.Log("Error on Requesting follow a user" + www.error);
             }
             else
@@ -391,14 +394,16 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = true;
                 searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                FollowUnfollowBtnRef.interactable = true;
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
                 //refresh Feed API.......
                 APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
 
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
+                //Debug.Log("Now following user: " + user_Id + " : " + searchUserRow.am_i_following);
             }
         }
     }
@@ -423,10 +428,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
+                FollowUnfollowBtnRef.interactable = true;
             }
             else
             {
@@ -436,10 +442,10 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.am_i_following = false;
                 searchUserRow.is_close_friend = false;
                 //FollowFollowingSetUp(false);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
                 if (IsInFollowingTab)
                 {
@@ -453,6 +459,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                     UpdateBfBtn(searchUserRow.am_i_following,true, searchUserRow.is_close_friend);
                     FollowFollowingSetUp(false);
                 }
+                FollowUnfollowBtnRef.interactable = true;
             }
         }
     }
@@ -486,7 +493,8 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (GetComponent<FollowingItemController>())
         {
-            FeedUIController.Instance.ShowLoader(true);
+            FollowUnfollowBtnRef.interactable = false;
+            //FeedUIController.Instance.ShowLoader(true);
             RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
             //FeedUIController.Instance.OnClickAddFriendFollowing();
         }

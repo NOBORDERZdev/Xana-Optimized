@@ -97,7 +97,7 @@ public class XanaChatSystem : MonoBehaviour
 
     public void Start()
     {
-        CheckIfDeviceHasNotch();
+        //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
 
         if (!string.IsNullOrEmpty(CurrentChannelText.text.ToString()))

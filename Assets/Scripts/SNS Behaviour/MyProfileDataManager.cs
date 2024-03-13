@@ -278,7 +278,7 @@ public class MyProfileDataManager : MonoBehaviour
         //Debug.Log(callingFrom);
         if (callingFrom == "EditProfileAvatar")
         {
-            FeedUIController.Instance.ShowLoader(false);
+            //FeedUIController.Instance.ShowLoader(false);
             EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
             if (!isEditProfileNameAlreadyExists)
             {
@@ -456,9 +456,43 @@ public class MyProfileDataManager : MonoBehaviour
         }
         isSetTempSpriteAfterUpdateAvatar = false;
 
+        UpdateProfilePic();
+
+        //if (!string.IsNullOrEmpty(myProfileData.avatar))
+        //{
+        //    //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
+        //    bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
+        //    if (isUrlContainsHttpAndHttps)
+        //    {
+        //        AssetCache.Instance.EnqueueOneResAndWait(myProfileData.avatar, myProfileData.avatar, (success) =>
+        //        {
+        //            if (success)
+        //            {
+        //                AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
+        //            }
+        //        });
+        //    }
+        //    else
+        //    {
+        //        GetImageFromAWS(myProfileData.avatar, profileImage);
+        //    }
+        //}
+        //else
+        //{
+        //    profileImage.sprite = defultProfileImage;
+        //}
+
+        mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
+
+        //StartCoroutine(WaitToRefreshProfileScreen());
+    }
+
+
+    public void UpdateProfilePic()
+    {
         if (!string.IsNullOrEmpty(myProfileData.avatar))
         {
-            //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
+            Debug.Log("My profile Avatar :-" + myProfileData.avatar);
             bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
             if (isUrlContainsHttpAndHttps)
             {
@@ -467,23 +501,23 @@ public class MyProfileDataManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
+                        XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
+                XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
-        else
-        {
-            profileImage.sprite = defultProfileImage;
-        }
-
-        mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
-
-        //StartCoroutine(WaitToRefreshProfileScreen());
+        //else
+        //{
+        //    profileImage.sprite = defultProfileImage;
+        //}
     }
+
+
 
     public void UpdateUserTags()
     {
@@ -890,7 +924,7 @@ public class MyProfileDataManager : MonoBehaviour
         currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
         bool IsMyProfileFeed = false;
         //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.ShowLoader(true);
+        //FeedUIController.Instance.ShowLoader(true);
 
         for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
         {
@@ -900,13 +934,19 @@ public class MyProfileDataManager : MonoBehaviour
                 if (loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
                 {
                     //allPhotoContainer
-                    int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    allPhotoContainer.transform.GetChild(index).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
+
+                        if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                            allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                        allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
-                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
-                   && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null"))
+                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || 
+                    (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+                  /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
                 {
-            
+
                     bool isVideo = false;
 
                     Transform parent = allPhotoContainer;
@@ -936,6 +976,7 @@ public class MyProfileDataManager : MonoBehaviour
                     //{
 
                     userTagPostObject = Instantiate(photoPrefab, parent);
+                    userTagPostObject.name = "User Feed Post 2.0 " + i;
                     Debug.Log("userTagPostObject is Instantiate in parent ");
                     //}
                     //else
@@ -1023,6 +1064,7 @@ public class MyProfileDataManager : MonoBehaviour
 
                         //if (!isVideo)//image
                         //{
+                        userTagPostObject.transform.SetSiblingIndex(i);
                         allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
                         //}
                         //else
@@ -1034,16 +1076,17 @@ public class MyProfileDataManager : MonoBehaviour
                         // }
                     }
 
-                   
+
                 }
             }
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
             {
-                if (emptyFeedObjRef)
-                {
-                    Destroy(emptyFeedObjRef);
-                }
-                emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                //if (emptyFeedObjRef)
+                //{
+                //    Destroy(emptyFeedObjRef);
+                //}
+                //emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+                //emptyFeedObjRef.name = "NewlyCreatedEmptyFeed";
                 //for (int j = 0; j < 4; j++)
                 //{
                 //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
@@ -1055,6 +1098,15 @@ public class MyProfileDataManager : MonoBehaviour
             if (allPhotoContainer != null)
             {
                 allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
+            }
+        }
+
+        if (allPhotoContainer.childCount > currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+        {
+            int _diff = allPhotoContainer.childCount - currentPageAllTextPostWithUserIdRoot.data.rows.Count;
+            for (int i = 0; i < _diff; i++)
+            {
+                Destroy(allPhotoContainer.GetChild(currentPageAllTextPostWithUserIdRoot.data.rows.Count + i).gameObject);
             }
         }
 
@@ -1079,7 +1131,7 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
-        FeedUIController.Instance.ShowLoader(false);
+        //FeedUIController.Instance.ShowLoader(false);
     }
 
     public void RefreshHieght()
@@ -1095,8 +1147,9 @@ public class MyProfileDataManager : MonoBehaviour
         //}
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-
+        userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(1f);
+        FeedUIController.Instance.ShowLoader(false);
         isFeedLoaded = true;
         if (pageNum > 1 && currentPageAllTextPostWithUserIdRoot.data.rows.Count > 0)
         {
@@ -1421,8 +1474,8 @@ public class MyProfileDataManager : MonoBehaviour
         {
             StartCoroutine(WaitToNFTTabHeight(index));
         }
-    }  
-      
+    }
+
     public void OnClickNFTTabButtonSub(int index)
     {
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
@@ -1606,10 +1659,10 @@ public class MyProfileDataManager : MonoBehaviour
             }
             editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
-            if(myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
+            if (myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
                 editProfileUniqueNameAdvanceInputfield.Text = "";
             else
-            editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
+                editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
 
             // Convert Array into List
@@ -1672,10 +1725,10 @@ public class MyProfileDataManager : MonoBehaviour
         availableTagsCount = availableTagsAtServer.Count;
         DisplayTags();
     }
-   
+
     int generatedTagCount = 0; // generated Tag Counter 
     int availableTagsCount = 0;
-    
+
     void DisplayTags()
     {
         // Each row contains 4 tags: Calcluate total rows
@@ -1757,7 +1810,7 @@ public class MyProfileDataManager : MonoBehaviour
                     }
                 }
             }
-        }   
+        }
 
     }
 
@@ -1886,7 +1939,7 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("temp Name Str:" + tempStr);
                 username = tempStr;
                 checkEditNameUpdated = 1;
-                Debug.LogError("New User Name ----> " + username);
+                Debug.Log("New User Name ----> " + username);
                 GameManager.Instance.UpdatePlayerName(username);
             }
         }
@@ -1896,7 +1949,7 @@ public class MyProfileDataManager : MonoBehaviour
             ShowEditProfileNameErrorMessage("Display name can't be empty");
             return;
         }
-        
+
         // User Unique Name
         if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
         {
@@ -2104,7 +2157,7 @@ public class MyProfileDataManager : MonoBehaviour
                 countryName = "";
             }
 
-            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio),tempTags);
+            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio), tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
@@ -2195,7 +2248,7 @@ public class MyProfileDataManager : MonoBehaviour
                     isUrl = true;
                 }
 
-                FeedUIController.Instance.ShowLoader(true);
+                //FeedUIController.Instance.ShowLoader(true);
                 RequestForWebSiteValidation(webUrl);
                 return true;
             }
@@ -2233,7 +2286,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);
+            //FeedUIController.Instance.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -3046,16 +3099,25 @@ public class MyProfileDataManager : MonoBehaviour
                 Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
-                XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
+                //XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
         }
     }
-
+    bool profileMakedFlag = false;
     public void OnlyLoadDataMyProfile()
     {
         totalFollowerText.text = myProfileData.followerCount.ToString();
         totalFollowingText.text = myProfileData.followingCount.ToString();
+        if (string.IsNullOrEmpty(tempMyProfileDataRoot.data.avatar) && !profileMakedFlag)
+        {
+            profileMakedFlag = true;
+            ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
+        }
+        else if(XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        {
+            UpdateProfilePic();
+        }
         //totalPostText.text = myProfileData.feedCount.ToString();
     }
     #endregion

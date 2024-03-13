@@ -33,41 +33,53 @@ public class FeedData : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             _data = data;
-            DisplayName.text = data.user.name;
-            if(DisplayName.text.Length > 15)
+            if (data.text_post != "null" && !(string.IsNullOrEmpty(data.text_post)))
             {
-                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
-            }
-            PostText.text = data.text_post;
-            isEnable= true;
-            //Likes.text = data.like_count.ToString();
-            UpdateLikeCount(data.like_count);
-            timeUpdateInterval=1;
-            if (isEnable)
-            {
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
-            }
+                DisplayName.text = data.user.name;
+                if (DisplayName.text.Length > 15)
+                {
+                    DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+                }
+                PostText.text = data.text_post;
+                isEnable = true;
+                //Likes.text = data.like_count.ToString();
+                UpdateLikeCount(data.like_count);
+                timeUpdateInterval = 1;
+                if (isEnable)
+                {
+                    gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                    Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
+                }
 
-            if (data.isLikedByUser)
-            {
-                isLiked = true;
-                Likes.color = LikedColor;
-            }
-            else isLiked = false;
-            UpdateHeart();
-            if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
-            {
-                StartCoroutine(GetProfileImage(data.user.avatar));
+                if (data.isLikedByUser)
+                {
+                    isLiked = true;
+                    Likes.color = LikedColor;
+                }
+                else isLiked = false;
+                UpdateHeart();
+                if (!String.IsNullOrEmpty(data.user.avatar) && !data.user.avatar.Equals("null"))
+                {
+                    StartCoroutine(GetProfileImage(data.user.avatar));
+                }
+                else
+                {
+                    ProfileImage.sprite = defaultProfileImage;
+                }
+
+                //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
+                if (isFeed)
+                {
+                    Invoke(nameof(HieghtListUpdateWithDelay), 0.08f);
+                }
+                else
+                {
+                    PostHieghtUpdateForProfileVisit();
+                }
             }
             else
             {
-                ProfileImage.sprite = defaultProfileImage;
-            }
-
-            //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
-            if (isFeed)
-            {
-                Invoke(nameof(HieghtListUpdateWithDelay),0.08f);
+                gameObject.SetActive(false);
             }
         }
     }
@@ -180,8 +192,8 @@ public class FeedData : MonoBehaviour
         }
     }
 
-    void HieghtListUpdateWithDelay(){ 
-       scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+    void HieghtListUpdateWithDelay(){
+        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
         RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
         Vector2 temp = new Vector2(rectTemp.rect.width , rectTemp.rect.height );
 
@@ -189,6 +201,15 @@ public class FeedData : MonoBehaviour
        //gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
+
+    void PostHieghtUpdateForProfileVisit()
+    {
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width, rectTemp.rect.height);
+
+        gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true);
+    }
+
     public string CalculateTimeDifference(DateTime postTime)
    {
         if (isEnable && gameObject.activeInHierarchy)
@@ -224,15 +245,16 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
-        }else
+        }
+        else
         {
             return "";
         }
-   }
+    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
         yield return new WaitForSecondsRealtime(timeUpdateInterval);
-        Date.text = CalculateTimeDifference(postTime).ToString();
+        Date.text = CalculateTimeDifference(postTime).ToString(); 
     }
     IEnumerator GetProfileImage(string url)
     {
