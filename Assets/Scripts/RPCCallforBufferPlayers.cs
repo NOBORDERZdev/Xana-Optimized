@@ -450,7 +450,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 }
                 else if (itemtype.Contains("Feet"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornShose)
+                    if (applyOn.GetComponent<AvatarController>().wornShoes)
                     {
                         UnStichItem("Feet");
                         applyOn.GetComponent<CharcterBodyParts>().TextureForShoes(null);
@@ -459,7 +459,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 }
                 else if (itemtype.Contains("EyeWearable"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornEyewearable)
+                    if (applyOn.GetComponent<AvatarController>().wornEyeWearable)
                         UnStichItem("EyeWearable");
                 }
                 else if (itemtype.Contains("Glove"))
@@ -537,10 +537,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 Destroy(GetComponent<AvatarController>().wornHair);
                 break;
             case "Feet":
-                Destroy(GetComponent<AvatarController>().wornShose);
+                Destroy(GetComponent<AvatarController>().wornShoes);
                 break;
             case "EyeWearable":
-                Destroy(GetComponent<AvatarController>().wornEyewearable);
+                Destroy(GetComponent<AvatarController>().wornEyeWearable);
                 break;
             case "Chain":
                 Destroy(GetComponent<AvatarController>().wornChain);

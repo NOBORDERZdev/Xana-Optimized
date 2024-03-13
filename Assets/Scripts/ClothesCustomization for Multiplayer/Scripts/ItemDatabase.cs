@@ -124,7 +124,7 @@ public class ItemDatabase : MonoBehaviour
     public IEnumerator WaitAndDownloadFromRevert(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SavaCharacterProperties.instance.characterController.IntializeAvatar();
+        SavaCharacterProperties.instance.characterController.InitializeAvatar();
 
         #region Commented Section
         //SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();

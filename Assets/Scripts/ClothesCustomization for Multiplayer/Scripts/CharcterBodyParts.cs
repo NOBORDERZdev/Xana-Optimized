@@ -1674,10 +1674,10 @@ public class CharcterBodyParts : MonoBehaviour
             avatarController.wornPant.SetActive(false);
         if (avatarController.wornShirt)
             avatarController.wornShirt.SetActive(false);
-        if (avatarController.wornShose)
-            avatarController.wornShose.SetActive(false);
-        if (avatarController.wornEyewearable)
-            avatarController.wornEyewearable.SetActive(false);
+        if (avatarController.wornShoes)
+            avatarController.wornShoes.SetActive(false);
+        if (avatarController.wornEyeWearable)
+            avatarController.wornEyeWearable.SetActive(false);
         if (avatarController.wornGloves)
             avatarController.wornGloves.SetActive(false);
         if (avatarController.wornChain)
@@ -1704,10 +1704,10 @@ public class CharcterBodyParts : MonoBehaviour
             avatarController.wornPant.SetActive(true);
         if (avatarController.wornShirt)
             avatarController.wornShirt.SetActive(true);
-        if (avatarController.wornShose)
-            avatarController.wornShose.SetActive(true);
-        if (avatarController.wornEyewearable)
-            avatarController.wornEyewearable.SetActive(true);
+        if (avatarController.wornShoes)
+            avatarController.wornShoes.SetActive(true);
+        if (avatarController.wornEyeWearable)
+            avatarController.wornEyeWearable.SetActive(true);
         if (avatarController.wornGloves)
             avatarController.wornGloves.SetActive(true);
         if (avatarController.wornChain)

@@ -685,7 +685,7 @@ public class UserRegisterationManager : MonoBehaviour
             //{
             //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
             //}
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
 
 
             SavaCharacterProperties.instance.LoadMorphsfromFile();
@@ -1762,7 +1762,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     void resetClothstoGuest()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
         SavaCharacterProperties.instance.LoadMorphsfromFile(); // loading morohs 
                                                                //  DefaultEnteriesforManican.instance.LastSaved_Reset();
                                                                //     ServerSIdeCharacterHandling.Instance.loadprevious();  //Load last saved values

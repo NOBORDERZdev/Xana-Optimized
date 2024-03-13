@@ -222,7 +222,7 @@ public class PresetData_Jsons : MonoBehaviour
 
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
-            if (avatarController.wornEyewearable != null)
+            if (avatarController.wornEyeWearable != null)
             {
                 avatarController.UnStichItem("EyeWearable");
             }
@@ -301,7 +301,7 @@ public class PresetData_Jsons : MonoBehaviour
         UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
-        avatarController.IntializeAvatar();
+        avatarController.InitializeAvatar();
     }
 
     void SavePresetOnServer(SavingCharacterDataClass savingCharacterDataClass)

@@ -214,7 +214,7 @@ public class SNSSettingController : MonoBehaviour
             if (File.Exists(Application.persistentDataPath + "/loginAsGuestClass") || File.Exists(Application.persistentDataPath + "/logIn"))
             {
                 if (GameManager.Instance)
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
                 ClearStorePlayerPrefers();
             }
 

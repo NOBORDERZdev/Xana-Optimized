@@ -251,7 +251,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                     //}
                     loadprevious();
                     //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
 
                     //On merging from Release getting this error
                     //DefaultEnteriesforManican.instance.DefaultReset_HAck();

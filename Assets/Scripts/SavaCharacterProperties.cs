@@ -168,10 +168,10 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
-        SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShose.name, "Feet"));
-        if (characterController.wornEyewearable != null)
+        SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
+        if (characterController.wornEyeWearable != null)
         {
-            SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyewearable.name, "EyeWearable"));
+            SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyeWearable.name, "EyeWearable"));
         }
         SaveItemList.HairColorPaletteValue = characterController.hairColorPaletteId;
         SaveItemList.myItemObj.Add(new Item(0, "", "Glove"));

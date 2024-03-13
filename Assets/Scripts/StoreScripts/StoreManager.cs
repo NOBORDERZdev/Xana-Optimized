@@ -439,7 +439,7 @@ public class StoreManager : MonoBehaviour
         ClearingLists(7);
         if (clearData)
             ResetSaveFile();
-        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornEyewearable != null)
+        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornEyeWearable != null)
         {
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().UnStichItem("EyeWearable");
         }
@@ -452,7 +452,7 @@ public class StoreManager : MonoBehaviour
         }
 
         GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
 
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().SaveDefaultValues();
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().UpdateStoreList();
@@ -481,7 +481,7 @@ public class StoreManager : MonoBehaviour
         // DefaultEnteriesforManican.instance.ResetForPresets();
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
         GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
 
         //On merging from Release getting this error
         //GameManager.Instance.mainCharacter.GetComponent<DefaultEnteriesforManican>().DefaultReset_HAck();
@@ -1281,7 +1281,7 @@ public class StoreManager : MonoBehaviour
         GreyRibbonImage.SetActive(true);
         WhiteRibbonImage.SetActive(false);
         SaveStoreBtn.GetComponent<Image>().color = Color.white;
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
         saveButtonPressed = true;
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         GameManager.Instance.ShadowPlane.GetComponent<Renderer>().material.SetColor("_Color", new Color(1f, 1f, 1f, 0.7843f));
@@ -4404,7 +4404,7 @@ public class StoreManager : MonoBehaviour
                 {
                     if (XanaConstants.xanaConstants.shoes != "")
                     {
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShose.name == "MDshoes")
+                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
                         {
                             for (int i = 0; i < ParentOfBtnsForShoes.transform.childCount; i++)
                             {
