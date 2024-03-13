@@ -499,10 +499,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         //applyon.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
         //applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         //applyon.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
-        if (_CharacterData.skin_color != null)
-        {
-            StartCoroutine(applyon.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
-        }
+        //if (_CharacterData.skin_color != null)
+        //{
+        //    StartCoroutine(applyon.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
+        //}
         if (_CharacterData.lip_color != null)
         {
             StartCoroutine(applyon.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
@@ -511,6 +511,19 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
 
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
+        {
+            if (_CharacterData.ai_gender == "Male")
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
+            else
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
         }
         if (_CharacterData.hairItemData != null)
         {

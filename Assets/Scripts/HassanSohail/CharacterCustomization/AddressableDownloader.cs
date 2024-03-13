@@ -369,7 +369,40 @@ public class AddressableDownloader : MonoBehaviour
             }
         }
     }
+    public IEnumerator DownloadAddressableTextureByName(string groupName, string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
+    {
+        if (groupName != "" && Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            string address = $"{groupName}/{key}.png"; // Combine group name and key to form the address
+            AsyncOperationHandle<Texture> loadOp;
+            loadOp = Addressables.LoadAssetAsync<Texture>(address);
 
+            while (!loadOp.IsDone)
+            {
+                yield return null;
+            }
+
+            if (loadOp.Status == AsyncOperationStatus.Failed)
+            {
+                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(nFTOjectType, applyOn);
+                yield break;
+            }
+            else if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            {
+                switch (nFTOjectType)
+                {
+                    case CurrentTextureType.Skin:
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(loadOp.Result, applyOn);
+                        break;
+                    case CurrentTextureType.Face:
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(loadOp.Result, applyOn);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
     void SavePresetFristTime()
     {
         if (PlayerPrefs.GetInt("presetPanel") == 1 && PlayerPrefs.GetInt("FristPresetSet") == 0)
@@ -396,6 +429,7 @@ public enum CurrentTextureType
     EyeLashes,
     EyeBrows,
     Skin,
+    Face,
     Lip,
     Makeup
 }

@@ -237,7 +237,7 @@ public class UGCManager : MonoBehaviour
     {
         StoreManager.instance.itemData.gender = ugcItems.gender;
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
-        StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
+        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
         StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
         StoreManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)
