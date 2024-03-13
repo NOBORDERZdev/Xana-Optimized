@@ -4,6 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 public class CanvasButtonsHandler : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public GameObject JJPortalPopup;
     public GameObject currentPortalObject;
-    public Text JJPortalPopupText;
+    public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
     private void Start()
     {
