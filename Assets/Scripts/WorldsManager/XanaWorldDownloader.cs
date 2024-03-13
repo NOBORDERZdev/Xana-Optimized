@@ -406,7 +406,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
-                    Debug.LogError("Downloaded Done");
+         
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }

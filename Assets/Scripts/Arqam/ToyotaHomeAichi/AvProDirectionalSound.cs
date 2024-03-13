@@ -52,17 +52,15 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void GetActivePlayer()
     {
-
         if (activePlayer.gameObject.activeSelf)
-        {
-            playerCam = ReferrencesForDynamicMuseum.instance.m_34player.transform;
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
-        }
     }
 
 
     IEnumerator AdjustScreenVolume()
     {
+        playerCam = ReferrencesForDynamicMuseum.instance.m_34player.transform;
+
         while (true)
         {
             if (!activePlayer.gameObject.activeSelf)
