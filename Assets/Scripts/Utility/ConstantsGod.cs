@@ -261,11 +261,8 @@ public class ConstantsGod
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
-    //public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net"; // for main
-    //public static string UGCAiApi = "/analyze-image/";   // for main
-    public static string API_BASEURL_UGC = "https://"; // for local call;
-    public static string UGCAiApi = "182.70.242.10:8040/analyze-image/"; // for local call;
-
+    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net"; // for main
+    public static string UGCAiApi = "/analyze-image/";   // for main  
     #endregion
 
     #region Feed Api's
