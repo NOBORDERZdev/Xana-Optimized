@@ -284,6 +284,7 @@ public class PresetData_Jsons : MonoBehaviour
     }
     void SaveUGCDataOnJson(SavingCharacterDataClass _CharacterData)
     {
+        _CharacterData.ai_gender = StoreManager.instance.itemData.gender;
         _CharacterData.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
         _CharacterData.hair_color = StoreManager.instance.itemData.hair_color;
         _CharacterData.skin_color = StoreManager.instance.itemData.skin_color;

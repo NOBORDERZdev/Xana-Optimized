@@ -24,6 +24,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ValidKeywords:
   - _EMISSION
+  - _NORMALMAP
   - _OCCLUSIONMAP
   - _PARALLAXMAP
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
@@ -59,7 +60,7 @@ Material:
         m_Scale: {x: 2.31, y: 3}
         m_Offset: {x: 0.55, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -212,7 +213,7 @@ Material:
     - _Hegiht_Intensity: 0.004
     - _HeightIntensity: 0.0001
     - _MetalicshiftGreen: 0
-    - _Metallic: 0.3
+    - _Metallic: 0.2
     - _Metallicshift: 1
     - _MetallicshiftBlack: 0
     - _MetallicshiftRed: 0
@@ -222,10 +223,10 @@ Material:
     - _NormalintensityGreen: 1
     - _NormalintensityRed: 1
     - _OcclusionIntensity: 1
-    - _OcclusionStrength: 0
+    - _OcclusionStrength: 0.4
     - _Occlusionshift: 1
     - _Paintedsmoothnesshift: 0
-    - _Parallax: 0.0112
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _RainIntensity: 3
     - _RainTiling: 4.03
@@ -238,7 +239,7 @@ Material:
     - _Ripplesintensity: 0
     - _Ripplestiling: 13.3
     - _Rotation: 0
-    - _Smoothness: 0.95
+    - _Smoothness: 0.884
     - _SmoothnessBlack: 1
     - _SmoothnessGreen: 1
     - _SmoothnessRed: 1
