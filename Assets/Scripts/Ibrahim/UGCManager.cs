@@ -151,8 +151,8 @@ public class UGCManager : MonoBehaviour
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-        //UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
-        UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
+        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
+        //UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
         www.SetRequestHeader("Accept", "application/json");
         // Start the request
         AsyncOperation operation = www.SendWebRequest();
