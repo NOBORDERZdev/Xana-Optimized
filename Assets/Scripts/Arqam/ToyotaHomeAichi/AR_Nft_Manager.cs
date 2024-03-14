@@ -11,7 +11,7 @@ using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
 using Paroxe.PdfRenderer;
-using Models;
+using UnityEngine.Events;
 
 namespace Toyota
 {
@@ -82,6 +82,8 @@ namespace Toyota
         public List<GameObject> NftPlaceholder;
         [HideInInspector]
         public string roomName;
+        [Space(5)]
+        public UnityEvent allDataLoaded;
 
         //private void Awake()
         //{
@@ -295,6 +297,7 @@ namespace Toyota
                     NftPlaceholderList[i].GetComponent<AR_VideoAndImage>().TurnOffAllImageAndVideo();
                 }
             }
+            allDataLoaded.Invoke();
         }
 
         public void LoadPrerecordedIfNoLongerLive(GameObject obj, string precorderUrl)
@@ -306,7 +309,7 @@ namespace Toyota
 
         public void LoadLiveIfFirstTimeNotLoaded(GameObject obj, string url)
         {
-            Debug.LogError("Reload Link");
+            //Debug.LogError("Reload Link");
             worldInfos[obj.GetComponent<AR_VideoAndImage>().id].VideoLink = url;
             worldInfos[obj.GetComponent<AR_VideoAndImage>().id].videoType = PMY_VideoTypeRes.islive;
             obj.GetComponent<AR_VideoAndImage>().InitData(null, url, worldInfos[obj.GetComponent<AR_VideoAndImage>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
