@@ -1,5 +1,5 @@
-﻿using RenderHeads.Media.AVProVideo;
-using System;
+﻿using System;
+using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,13 +26,14 @@ namespace LightShaft.Scripts
         {
             Debug.Log("Video is started ....");
 
-            if(thumbnailObject!=null)
+            if (thumbnailObject != null)
                 thumbnailObject.material.color = Color.white;
-            if(videoPlayer!=null && videoPlayer.targetMaterialRenderer)
+            if (videoPlayer != null && videoPlayer.targetMaterialRenderer)
                 videoPlayer.targetMaterialRenderer.material.color = Color.white;
             if (mPlayer != null)
                 mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = Color.white;
         }
+
         ///<summary>This function is callback only, only will be called when the on url are ready to use.</summary>
         private void UrlReadyToUse(string urlToUse)
         {
@@ -133,7 +134,6 @@ namespace LightShaft.Scripts
         ///<summary>Play the loaded video.</summary>
         public override void Play()
         {
-
             base.Play();
             _events.OnVideoStarted.Invoke();
             DisableThumbnailObject();
@@ -145,18 +145,15 @@ namespace LightShaft.Scripts
             else
             {
                 videoPlayer.Play();
-
-                audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
-
-                //if (_controller.volumeSlider != null)
-                //    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
-                //else
-                //    audioPlayer.GetTargetAudioSource(0).volume = 1;
+                if (_controller.volumeSlider != null)
+                    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;
+                else
+                    audioPlayer.GetTargetAudioSource(0).volume = 1;
 
                 if (!noAudioAtacched)
                 {
-                    audioPlayer.Play(); //TODO check other unity versions
-                    //StartCoroutine(DelayPlay());
+                    //audioPlayer.Play(); //TODO check other unity versions
+                    StartCoroutine(DelayPlay());
                 }
             }
         }
@@ -197,11 +194,11 @@ namespace LightShaft.Scripts
 
             if (!fullscreenModeEnabled)
             {
-                /*videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+                videoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
                 if (videoPlayer.targetCamera == null)
                 {
                     videoPlayer.targetCamera = mainCamera;
-                }*/
+                }
             }
             else
             {
@@ -225,16 +222,13 @@ namespace LightShaft.Scripts
                             Debug.Log("Finished");
                         if (videoPlayer.isLooping)
                         {
-                            //Riken
-                            /*videoPlayer.time = 0;
+                            videoPlayer.time = 0;
                             videoPlayer.frame = 0;
                             audioPlayer.time = 0;
                             audioPlayer.frame = 0;
                             videoPlayer.Play();
                             if (!noAudioAtacched)
-                                audioPlayer.Play();*/
-                            gameObject.SetActive(false);
-                            gameObject.SetActive(true);
+                                audioPlayer.Play();
                         }
                         CancelInvoke("CheckIfIsSync");
                         _events.OnVideoFinished.Invoke();

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using RenderHeads.Media.AVProVideo;
 using System;
 using System.Collections;
+using RenderHeads.Media.AVProVideo;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -11,21 +11,18 @@ using YoutubeLight;
 //AVPRO
 //using RenderHeads.Media.AVProVideo;
 
-public class YoutubePlayerLivestream : MonoBehaviour
-{
+public class YoutubePlayerLivestream : MonoBehaviour {
 
     public string _livestreamUrl;
 
     //AVPRO
     public MediaPlayer mPlayer;
-
     public bool rotateScreen = true;
-
     public Vector3 rotateScreenValue;
-
     public GameObject videoPlayerParent;
-    void Start()
-    {
+
+    void Start () {
+
         if (!rotateScreen)
             return;
         //GetLivestreamUrl(_livestreamUrl);
@@ -36,8 +33,6 @@ public class YoutubePlayerLivestream : MonoBehaviour
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
     }
-
-
     private void OnApplicationFocus(bool focus)
     {
         if (gameObject.activeInHierarchy && focus)
@@ -101,8 +96,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
         request.SetRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)");
         yield return request.SendWebRequest();
         downloadYoutubeUrlResponse.httpCode = request.responseCode;
-        if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-        else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+        if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+        else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
         else if (request.responseCode == 200)
         {
 
@@ -134,7 +129,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
         //jsonforHtml
         var player_response = string.Empty;
         bool tempfix = false;
-
+        
         if (Regex.IsMatch(pageSource, @"[""\']status[""\']\s*:\s*[""\']LOGIN_REQUIRED") || tempfix)
         {
             var url = "https://www.docs.google.com/get_video_info?video_id=" + videoId + "&eurl=https://youtube.googleapis.com/v/" + videoId + "&html5=1&c=TVHTML5&cver=6.20180913";
@@ -142,8 +137,8 @@ public class YoutubePlayerLivestream : MonoBehaviour
             UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("User-Agent", pageSource);
             yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-            else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+            if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+            else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
             else if (request.responseCode == 200)
             {
                 //ok;
@@ -167,21 +162,21 @@ public class YoutubePlayerLivestream : MonoBehaviour
                     //player_response = JObject.Parse(extractedJson)["args"]["player_response"].ToString();
                 }
             }
-
+    
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|</script|\n)", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
             {
                 player_response = dataMatch.Result("$1");
             }
-
+    
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|</script|\n)", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
             {
                 player_response = dataMatch.Result("$1");
             }
-
+    
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
@@ -190,44 +185,26 @@ public class YoutubePlayerLivestream : MonoBehaviour
             }
         }
 
-        if(string.IsNullOrEmpty(player_response))
+        JObject json = JObject.Parse(player_response);
+        //string playerResponseRaw = json["args"]["player_response"].ToString();
+        //JObject playerResponseJson = JObject.Parse(playerResponseRaw);
+        bool isLive = json["videoDetails"]["isLive"].Value<bool>();
+
+        if (isLive)
         {
-            Debug.Log("<color=red> Player Json is Null .</color>");
-            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            //WriteLog("kelvin", player_response);
+            string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
+            Debug.Log(liveUrl);
+            callback.Invoke(liveUrl);
         }
         else
         {
-            JObject json = JObject.Parse(player_response);
-            //string playerResponseRaw = json["args"]["player_response"].ToString();
-            //JObject playerResponseJson = JObject.Parse(playerResponseRaw);
-            bool isLive = json["videoDetails"]["isLiveContent"].Value<bool>();
-
-            if (isLive)
-            {
-
-                if (!json.ContainsKey("streamingData"))
-                {
-                    Debug.Log("<color=red> Key Not Found .</color>");
-                }
-                else if (json["streamingData"]["hlsManifestUrl"] == null)
-                {
-                    Debug.Log("<color=red> Key Not Found .</color>");
-                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
-                }
-                else
-                {
-                    //WriteLog("kelvin", player_response);
-                    string liveUrl = json["streamingData"]["hlsManifestUrl"].ToString();
-                    Debug.Log(liveUrl);
-                    callback.Invoke(liveUrl);
-                }
-            }
-            else
-            {
-                Debug.Log("NO");
-                Debug.Log("This is not a livestream url");
-            }
+            Debug.Log("NO");
+            Debug.Log("This is not a livestream url");
         }
+
+
+        
     }
 
     public static void WriteLog(string filename, string c)
