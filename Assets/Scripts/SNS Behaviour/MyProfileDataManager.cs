@@ -168,6 +168,9 @@ public class MyProfileDataManager : MonoBehaviour
     public UserRolesView userRolesView;
     private bool NFTShowingOnneBool;
 
+    [Header("NFT Data Holder Scriptable Object")]
+    public static OwnedNFTContainer _OwnedNFTDataObj;
+
     private void Awake()
     {
         if (Instance == null)
@@ -251,7 +254,7 @@ public class MyProfileDataManager : MonoBehaviour
         ClearDummyData();
         tempLogout = true;
         MyProfileSceenShow(false);
-        UserRegisterationManager.instance.userRoleObj.userNftRoleSlist.Clear();
+        UserLoginSignupManager.instance.userRoleScriptScriptableObj.userNftRoleSlist.Clear();
     }
 
     //this method is used to Profile Tab Button Click.......
@@ -937,12 +940,12 @@ public class MyProfileDataManager : MonoBehaviour
                     //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
                     Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
 
-                        if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
-                            allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
-                        allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+                    if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+                        allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
                     //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
                 }
-                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) || 
+                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) ||
                     (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
                   /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
                 {
@@ -1428,18 +1431,8 @@ public class MyProfileDataManager : MonoBehaviour
     }
     //this method is used to NFT Tab button click.......
     public void OnClickNFTTabButtonMain(int index)
-    {
-        //  print("NFTShowingOnneBool bool " + NFTShowingOnneBool);
-        //if(NFTShowingOnneBool)
-        //{
-        //    return;
-        //}       
-
-        //if(!NFTShowingOnneBool)
-        //{
-        //    NFTShowingOnneBool = true;
-        // }  
-        UserRegisterationManager.instance.GetOwnedNFTsFromAPI();
+    { 
+        UserLoginSignupManager.instance.GetOwnedNFTsFromAPI();
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
@@ -1458,7 +1451,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             NftDataScript.Instance.NftLoadingPenal.SetActive(false);
         }
-        NftDataScript.Instance.currentSelection();
+        //NftDataScript.Instance.currentSelection();
         parentHeightResetScript.OnHeightReset(index);
         selectionItemScript1.OnSelectedClick(index);
         //if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
@@ -1518,35 +1511,28 @@ public class MyProfileDataManager : MonoBehaviour
         //if (UserRegisterationManager.instance.userRoleObj.NFTsURL.Count < NftDataScript.Instance.ContentPanel.transform.childCount)
         //{
         //  print("come to 2222");
-        if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count > 0)
+        if (_OwnedNFTDataObj.NFTlistdata.list.Count > 0)
         {
-            print("come to async showing NFT in if " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
             NftDataScript.Instance.NftLoadingPenal.SetActive(false);
             NftDataScript.Instance.NoNftyet.SetActive(false);
             NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
             NftDataScript.Instance.nftloading.SetActive(false);
-            print("userRoleObj.NFTsURL: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL.Count);
-            print("userRoleObj.NFTsURLList: " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count);
-            for (int i = 0; i < UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count; i++)
+            for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
             {
-                if (/*UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[i].name.ToLower().Contains("deemo")*/ true)
+                GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
+                Debug.Log("L_ItemBtnObj");
+                if (_OwnedNFTDataObj.NFTstype.Count > i && _OwnedNFTDataObj.NFTstype[i] == 4)
                 {
-                    GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
-                    Debug.Log("L_ItemBtnObj");
-                    if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype.Count > i && UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTstype[i] == 4)
-                    {
-                        L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
-                    }
-                    int locali = i;
-                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
-                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
-                    L_ItemBtnObj.gameObject.name = "image_NFT " + UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
+                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
                 }
+                int locali = i;
+                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
+                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
+                L_ItemBtnObj.gameObject.name = "image_NFT " + _OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
             }
         }
         else
         {
-            print("No NFT Found");
             Debug.Log("call hua else data");
             NftDataScript.Instance.NftLoadingPenal.SetActive(true);
             NftDataScript.Instance.NoNftyet.SetActive(true);
@@ -3114,7 +3100,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileMakedFlag = true;
             ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
         }
-        else if(XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        else if (XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
         {
             UpdateProfilePic();
         }

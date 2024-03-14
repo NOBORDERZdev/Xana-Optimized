@@ -46,7 +46,7 @@ public class ConnectingWallet : MonoBehaviour
     private static extern void UnityOnStart(int num);
 #endif
 
-
+    public UserLoginSignupManager UserLoginSignupManagerInstance;
 
     // Start is called before the first frame update
     void Start()
@@ -502,7 +502,7 @@ public class ConnectingWallet : MonoBehaviour
         {
             //UserRegisterationManager.instance.OpenUIPanal(5);
         }
-        SuccessfulPopUp.SetActive(true);
+        //SuccessfulPopUp.SetActive(true);
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         // print(new JsonObject(JsonUtility.ToJson(dataObj)).ToString());
         ///Wallet Connect 
@@ -748,63 +748,7 @@ public class ConnectingWallet : MonoBehaviour
         request.Dispose();
     }
 
-    IEnumerator HitChainSafeVerifySignatureAPI(string sign, string walletAddress, string nonce)
-    {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifySignedURL;
-        UnityWebRequest request;
-        WWWForm form = new WWWForm();
-        form.AddField("signature", sign);
-        form.AddField("nonce", nonce);
-        request = UnityWebRequest.Post(url, form);
-        request.SendWebRequest();
-        Debug.LogError("request has sent already");
-        while (!request.isDone)
-        {
-            yield return null;
-        }
-        ConnectServerDataExtraction.ClassWithToken VerifySignatureReadObj = new ConnectServerDataExtraction.ClassWithToken();
-        VerifySignatureReadObj = ConnectServerDataExtraction.ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        Debug.LogError(request.downloadHandler.text);
-        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
-        {
-            if (VerifySignatureReadObj.success)
-            {
-                PlayerPrefs.SetInt("WalletLogin", 1);
-                PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
-                ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
-                PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
-                //OpenMenu("OpenJWTPage");
-                
-
-                ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
-                VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
-                var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
-
-                StartCoroutine(HitChainSafeVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.VerifySignedXanaliaURL, sign, ServerNounceXanalia));
-            }
-        }
-        else
-        {
-            if (request.result == UnityWebRequest.Result.ConnectionError)
-            {
-                DisconnectRequestToServer();
-                Debug.Log("Network error in Verify signature");
-            }
-            else
-            {
-                if (request.error != null)
-                {
-                    if (!VerifySignatureReadObj.success)
-                    {
-                        DisconnectRequestToServer();
-                        Debug.Log("Success false in  verify sig");
-                    }
-                }
-            }
-        }
-
-        request.Dispose();
-    }
+    
     public void GetXanaliaNounce(string sign, string walletAddress, string nonce)
     {
         ConnectServerDataExtraction.NounceClassForXanalia NounceObj = new ConnectServerDataExtraction.NounceClassForXanalia();
@@ -849,6 +793,65 @@ public class ConnectingWallet : MonoBehaviour
         request.Dispose();
     }
 
+
+    IEnumerator HitChainSafeVerifySignatureAPI(string sign, string walletAddress, string nonce)
+    {
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifySignedURL;
+        UnityWebRequest request;
+        WWWForm form = new WWWForm();
+        form.AddField("signature", sign);
+        form.AddField("nonce", nonce);
+        request = UnityWebRequest.Post(url, form);
+        request.SendWebRequest();
+        Debug.LogError("request has sent already");
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+        ConnectServerDataExtraction.ClassWithToken VerifySignatureReadObj = new ConnectServerDataExtraction.ClassWithToken();
+        VerifySignatureReadObj = ConnectServerDataExtraction.ClassWithToken.CreateFromJSON(request.downloadHandler.text);
+        Debug.LogError(request.downloadHandler.text);
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
+        {
+            if (VerifySignatureReadObj.success)
+            {
+                //PlayerPrefs.SetInt("WalletLogin", 1);
+                PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+                ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
+                XanaConstants.xanaToken = VerifySignatureReadObj.data.token;
+                PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
+
+
+                ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
+                VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
+                var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
+                Debug.LogError(sign + "--" + ServerNounceXanalia);
+                StartCoroutine(HitChainSafeVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.VerifySignedXanaliaURL, sign, ServerNounceXanalia));
+            }
+        }
+        else
+        {
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                DisconnectRequestToServer();
+                Debug.Log("Network error in Verify signature");
+            }
+            else
+            {
+                if (request.error != null)
+                {
+                    if (!VerifySignatureReadObj.success)
+                    {
+                        DisconnectRequestToServer();
+                        Debug.Log("Success false in  verify sig");
+                    }
+                }
+            }
+        }
+
+        request.Dispose();
+    }
+
     IEnumerator HitChainSafeVerifySignatureXanaliaAPI(string url, string sign, string nonce)
     {
         UnityWebRequest request;
@@ -864,6 +867,7 @@ public class ConnectingWallet : MonoBehaviour
         }
         ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia VerifySignatureReadObj = new ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia();
         VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia>(request.downloadHandler.text);
+        Debug.LogError("---"+request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
@@ -873,7 +877,7 @@ public class ConnectingWallet : MonoBehaviour
                     print(" userNftRole " + VerifySignatureReadObj.data.user.userNftRole);
                     // free // premium // alpha-pass
                     VerifySignatureReadObj.data.user.userNftRole = VerifySignatureReadObj.data.user.userNftRole.ToLower();
-
+                   
                     switch (VerifySignatureReadObj.data.user.userNftRole)
                     {
                         case "alpha-pass":
@@ -912,7 +916,6 @@ public class ConnectingWallet : MonoBehaviour
                         WalletLoginLoader.SetActive(false);
                     LoaderBool = false;
                     PlayerPrefs.SetInt("WalletConnect", 1);
-                    UserRegisterationManager.instance.LoginWithWallet();
                     UserLoginSignupManager.instance.LoginWithWallet();
                     PlayerPrefs.Save();
                     SetNameInServer();
@@ -924,6 +927,8 @@ public class ConnectingWallet : MonoBehaviour
         {
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
+                UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
+                UserLoginSignupManager.instance.ShowWelcomeScreen();
                 DisconnectRequestToServer();
                 Debug.Log("Network error in Verify signature of xanalia");
             }
@@ -933,6 +938,8 @@ public class ConnectingWallet : MonoBehaviour
                 {
                     if (!VerifySignatureReadObj.success)
                     {
+                        UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
+                        UserLoginSignupManager.instance.ShowWelcomeScreen();
                         DisconnectRequestToServer();
                         Debug.Log("Success false in  verify sig  of xanalia");
                     }

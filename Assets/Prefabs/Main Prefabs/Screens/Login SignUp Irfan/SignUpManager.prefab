@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 721177378}
   - component: {fileID: 2125479937}
   - component: {fileID: 495568709}
-  - component: {fileID: 495568708}
-  - component: {fileID: 1324223408758653062}
   - component: {fileID: 495568710}
   m_Layer: 0
   m_Name: SignUpManager
@@ -56,17 +54,12 @@ MonoBehaviour:
   usernamePanal: {fileID: 0}
   LoginPanal: {fileID: 0}
   SignUpPanal: {fileID: 0}
-  SignUpPanalwithPhone: {fileID: 0}
-  ChangePasswordPanal: {fileID: 0}
-  UpdateprofilePanal: {fileID: 0}
-  TestingAPIsPanal: {fileID: 0}
   RegistrationCompletePanal: {fileID: 0}
   ForgetenterUserNamePanal: {fileID: 0}
   ForgetEnterPasswordPanal: {fileID: 0}
   LogoutfromOtherDevicePanel: {fileID: 0}
   BlackScreen: {fileID: 0}
   validationMessagePopUP: {fileID: 0}
-  setAvatarGiftPanal: {fileID: 0}
   nftlist: 
   NormalColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   HighlightedColor: {r: 0.22352941, g: 0.58431375, b: 1, a: 1}
@@ -145,14 +138,31 @@ MonoBehaviour:
   EntertheWorld_Panal: {fileID: 0}
   NewSignUp_Panal: {fileID: 0}
   LoginScreenNew: {fileID: 0}
+  UsernamescreenLoader: {fileID: 0}
   LogoImage: {fileID: 0}
   LogoImage2: {fileID: 0}
   LogoImage3: {fileID: 0}
+  renderImage: {fileID: 0}
   UserNameSetter: {fileID: 0}
   NewLoadingScreen: {fileID: 0}
   _NewLoadingText: {fileID: 0}
   _IsWalletSignUp: 0
   SignUpButtonSelected: 0
+  TokenDataClass:
+    success: 0
+    data:
+      token: 
+      encryptedId: 
+      xanaliaToken: 
+      user:
+        id: 
+        name: 
+        email: 
+        phoneNumber: 
+        coins: 
+        walletAddress: 
+      isAdmin: 0
+    msg: 
   isSetXanaliyaUserName: 0
 --- !u!114 &721177378
 MonoBehaviour:
@@ -399,38 +409,6 @@ MonoBehaviour:
     - deemo
     - collaboration
   useXanaliaMainnetApiOnTestnet: 1
---- !u!114 &495568708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686378168569390519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d8a6130086727445b31e4716beaf574, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  video_download_link: 
-  player: {fileID: 0}
-  button: {fileID: 0}
-  Image: {fileID: 0}
-  SplashvideoObj: {fileID: 0}
---- !u!114 &1324223408758653062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686378168569390519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 901b99d94f1752e418b1ab1943f54210, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  url: 
-  playbackDir: 
-  saveDir: 
 --- !u!114 &495568710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,5 +421,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52913904a0404486cbc6143d85432c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rememberMe: {fileID: 0}
   connectingWallet: {fileID: 0}

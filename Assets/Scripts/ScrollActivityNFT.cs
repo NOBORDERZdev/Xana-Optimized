@@ -90,7 +90,7 @@ public class ScrollActivityNFT : MonoBehaviour
         if (subButtonTextToCheck == "Equip")
         {
             EquipUIText.text= "Equiping...";
-            Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
+            Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
             bool _IsInOwnerShip = await task;
             if (!_IsInOwnerShip)
             {

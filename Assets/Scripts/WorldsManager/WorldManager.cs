@@ -623,7 +623,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {
@@ -636,9 +636,7 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
-                    print("NFT is in your OwnerShip Enjoy " + PlayerPrefs.GetInt("Equiped"));
-                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
-                    Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
+                    List<List> fighterNFTlist = UserLoginSignupManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
                     List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
                     if (list != null)
                     {
@@ -702,7 +700,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {

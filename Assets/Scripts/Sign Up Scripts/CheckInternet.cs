@@ -51,18 +51,6 @@ public class CheckInternet : MonoBehaviour
     {
         if (Application.internetReachability == NetworkReachability.NotReachable && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
         {
-            Debug.Log(once + "Error.Not going on");
-
-            if (once == true) { 
-                {
-                    if (PlayerPrefs.HasKey("TermsConditionAgreement") && PlayerPrefs.GetInt("shownWelcome") == 0)
-                        UserRegisterationManager.instance.OpenUIPanal(1);
-                    UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
-                }
-                once=false;
-            }
-            //UserRegisterationManager.instance.OpenUIPanal(1);
-            //UserRegisterationManager.instance.FirstPanal.GetComponent<OnEnableDisable>().ClosePopUp();
             showPage();
             _hasInvokedConnection = false;
         }

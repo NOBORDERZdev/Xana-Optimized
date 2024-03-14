@@ -300,22 +300,22 @@ public class UserRegisterationManager : MonoBehaviour
         StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
-    private void Awake()
-    {
-        int x = ReturnNftRole("Free");
-        checkbool_preser_start = true;
-        _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
-        instance = this;
-        if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
-        {
-            SavaCharacterProperties.instance.CreateFileFortheFirstTime();
-        }
-        if (!PlayerPrefs.HasKey("iSignup"))
-        {
-            PlayerPrefs.SetInt("iSignup", 0);
-            PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
-        }
-    }
+    //private void Awake()
+    //{
+    //    int x = ReturnNftRole("Free");
+    //    checkbool_preser_start = true;
+    //    _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
+    //    instance = this;
+    //    if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
+    //    {
+    //        SavaCharacterProperties.instance.CreateFileFortheFirstTime();
+    //    }
+    //    if (!PlayerPrefs.HasKey("iSignup"))
+    //    {
+    //        PlayerPrefs.SetInt("iSignup", 0);
+    //        PlayerPrefs.SetInt("IsProcessComplete", 0); // check if guest or signup process is complete or not 
+    //    }
+    //}
 
 
 
@@ -478,52 +478,52 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
-        Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
+    //void Start()
+    //{
+    //    UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
+    //    Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
 
-        mainfieldOTPNew.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
+    //    mainfieldOTPNew.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
-        BackBool = false;
-        UIManager.Instance.LoginRegisterScreen = FirstPanal;
-        UIManager.Instance.SignUpScreen = SignUpPanal;
-        CountryCodeText.text = "+81";
-        mobile_number = false;
+    //    BackBool = false;
+    //    UIManager.Instance.LoginRegisterScreen = FirstPanal;
+    //    UIManager.Instance.SignUpScreen = SignUpPanal;
+    //    CountryCodeText.text = "+81";
+    //    mobile_number = false;
 
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        {
-            MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
-            LoggedInAsGuest = false;
-        }
-        else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        {
-            PlayerPrefs.SetInt("IsLoggedIn", 1);
-            PlayerPrefs.SetInt("FristPresetSet", 1);
-            Debug.LogError(PlayerPrefs.GetString("LoginToken"));
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            LoggedInAsGuest = false;
-            StoreManager.instance.WalletLoggedinCall();
-            LoginWithMoralisSDK(true);
-            StartCoroutine(WalletLoggedInAccessGroup(true));
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
-        }
-        else
-        {
+    //    if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+    //    {
+    //        MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+    //        LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+    //        StartCoroutine(LoginUserWithNewT(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), null, true));
+    //        LoggedInAsGuest = false;
+    //    }
+    //    else if (PlayerPrefs.GetInt("WalletLogin") == 1)
+    //    {
+    //        PlayerPrefs.SetInt("IsLoggedIn", 1);
+    //        PlayerPrefs.SetInt("FristPresetSet", 1);
+    //        Debug.LogError(PlayerPrefs.GetString("LoginToken"));
+    //        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+    //        LoggedInAsGuest = false;
+    //        StoreManager.instance.WalletLoggedinCall();
+    //        LoginWithMoralisSDK(true);
+    //        StartCoroutine(WalletLoggedInAccessGroup(true));
+    //        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+    //    }
+    //    else
+    //    {
 
-            LoggedInAsGuest = true;
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-            SavaCharacterProperties.instance.LoadMorphsfromFile();
-            StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
-        }
+    //        LoggedInAsGuest = true;
+    //        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+    //        SavaCharacterProperties.instance.LoadMorphsfromFile();
+    //        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
+    //    }
 
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
-        if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
-            welcomeScreen.SetActive(true);
-    }
+    //    EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+    //    StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+    //    if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+    //        welcomeScreen.SetActive(true);
+    //}
 
     void CheckCameraMan()
     {
@@ -798,7 +798,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             PresetData_Jsons.clickname = null;
             StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-            UserRegisterationManager.instance.usernamePanal.SetActive(false);
+            usernamePanal.SetActive(false);
 
             if (GameManager.Instance.isStoreAssetDownloading)
             {

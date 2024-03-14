@@ -168,22 +168,20 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to logout button click.......
     public void OnClickLogoutButton()
     {
-        if (UserRegisterationManager.instance != null)
-        {
-            UserRegisterationManager.instance.LogoutAccount();
-            //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
-            if (PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
-            {
-                SimultaneousConnectionButton();
-            }
-            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
-            //SimultaneousConnectionButton();
-            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
-            PlayerPrefs.SetInt("shownWelcome", 0);
-            PlayerPrefs.SetString("UserNameAndPassword", "");
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
 
+        UserLoginSignupManager.instance.LogoutAccount();
+        UserLoginSignupManager.instance.ShowWelcomeScreen();
+        //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
+        if (PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
+        {
+            SimultaneousConnectionButton();
         }
+        //SimultaneousConnectionButton();
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+        PlayerPrefs.SetInt("shownWelcome", 0);
+        PlayerPrefs.SetString("UserNameAndPassword", "");
+        GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+
         GlobalVeriableClass.callingScreen = "";
     }
 
@@ -196,12 +194,6 @@ public class SNSSettingController : MonoBehaviour
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-
-            if (UserRegisterationManager.instance != null)
-            {
-                UserRegisterationManager.instance.ResetDataAfterLogoutSuccess();
-                UserRegisterationManager.instance.nftlist = string.Empty;
-            }
             NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {

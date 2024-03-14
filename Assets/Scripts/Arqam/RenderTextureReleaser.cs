@@ -21,7 +21,7 @@ public class RenderTextureReleaser : MonoBehaviour
             renderTexture.filterMode = FilterMode.Trilinear;
 
             this.GetComponent<Camera>().targetTexture = renderTexture;   // my changes
-            UserRegisterationManager.instance.renderImage.texture = renderTexture;
+            //UserRegisterationManager.instance.renderImage.texture = renderTexture;
         }
     }
 

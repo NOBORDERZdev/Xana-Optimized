@@ -176,9 +176,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            UserRegisterationManager.instance.checkbool_preser_start = true;
-             PlayerPrefs.SetInt("IsChanged", 0);  
-            UserRegisterationManager.instance.OpenUIPanal(17);
+            //UserRegisterationManager.instance.checkbool_preser_start = true;
+            //PlayerPrefs.SetInt("IsChanged", 0);  
+            //UserRegisterationManager.instance.OpenUIPanal(17);
+
+            UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);
@@ -197,8 +199,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("IsChanged", 0);
-            UserRegisterationManager.instance.OpenUIPanal(1);
+            //PlayerPrefs.SetInt("IsChanged", 0);
+            //UserRegisterationManager.instance.OpenUIPanal(1);
+
+            UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
         StoreManager.instance.AvatarSaved.SetActive(false);
         StoreManager.instance.AvatarSavedGuest.SetActive(false);

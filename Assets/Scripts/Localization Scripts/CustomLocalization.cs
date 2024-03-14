@@ -79,12 +79,14 @@ public class CustomLocalization : MonoBehaviour
     {
      //   yield return new WaitForSeconds(2);   
         
-        print("Getting data");
        var www = UnityWebRequest.Get(LocalizeURL);
-       yield return www.SendWebRequest();
-       if (www.isHttpError || www.isNetworkError)
+       www.SendWebRequest();
+        while(!www.isDone)
+        {
+            yield return null;
+        }
+       if (www.result==UnityWebRequest.Result.ConnectionError || www.result!=UnityWebRequest.Result.Success)
        {
-           Debug.Log(www.error);
            IsReady = false;
            
            Coroutine current = StartCoroutine(GetLocalizationDataFromSheet());
