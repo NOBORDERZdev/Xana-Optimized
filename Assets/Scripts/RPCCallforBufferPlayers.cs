@@ -505,7 +505,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         //}
         if (_CharacterData.lip_color != null)
         {
-            StartCoroutine(applyon.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+            applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
@@ -514,7 +514,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         }
         if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
         {
-            if (_CharacterData.ai_gender == "Male")
+            if (_CharacterData.ai_gender == "male")
             {
                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));

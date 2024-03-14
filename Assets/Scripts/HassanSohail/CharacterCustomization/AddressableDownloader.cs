@@ -374,8 +374,12 @@ public class AddressableDownloader : MonoBehaviour
         if (groupName != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
             string address = $"{groupName}/{key}.png"; // Combine group name and key to form the address
-            AsyncOperationHandle<Texture> loadOp;
-            loadOp = Addressables.LoadAssetAsync<Texture>(address);
+            AsyncOperationHandle loadOp;
+
+            bool flag = false;
+            loadOp = MemoryManager.GetReferenceIfExist(address, ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<Texture>(address);
 
             while (!loadOp.IsDone)
             {
@@ -389,13 +393,14 @@ public class AddressableDownloader : MonoBehaviour
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
+                MemoryManager.AddToReferenceList(loadOp, address);
                 switch (nFTOjectType)
                 {
                     case CurrentTextureType.Skin:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.Face:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(loadOp.Result, applyOn);
+                        applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(loadOp.Result as Texture, applyOn);
                         break;
                     default:
                         break;

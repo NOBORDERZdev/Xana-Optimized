@@ -4887,7 +4887,7 @@ public class StoreManager : MonoBehaviour
         }
         if (itemData.skin_color != null)
         {
-            if (itemData.gender == "Male")
+            if (itemData.gender == "male")
             {
                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));

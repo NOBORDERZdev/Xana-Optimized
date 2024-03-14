@@ -236,7 +236,7 @@ public class UGCManager : MonoBehaviour
 
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        StoreManager.instance.itemData.gender = ugcItems.gender;
+        StoreManager.instance.itemData.gender = ugcItems.gender.ToLower();
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
         StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
         StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
