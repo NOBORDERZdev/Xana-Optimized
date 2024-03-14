@@ -209,6 +209,7 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
         SaveItemList.gender = characterController.avatarGender.ToString();
 
+        SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
         SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
         SaveItemList.hair_color = StoreManager.instance.itemData.hair_color;
         SaveItemList.lip_color = StoreManager.instance.itemData.lips_color;
@@ -269,7 +270,8 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
-
+            
+            _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
             _CharacterData.hair_color = SaveItemList.hair_color;
             _CharacterData.lip_color = SaveItemList.lip_color;
@@ -370,8 +372,9 @@ public class SavingCharacterDataClass
     public string avatarType = "OldAvatar";
     public List<Item> myItemObj;
 
+    public string ai_gender;
     public Color hair_color;
-    public Color skin_color;
+    public string skin_color;
     public Color lip_color;
     public int faceItemData;
     public int lipItemData;
