@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using RenderHeads.Media.AVProVideo;
 using System;
 using System.Collections;
-using RenderHeads.Media.AVProVideo;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -11,8 +10,8 @@ using YoutubeLight;
 //AVPRO
 //using RenderHeads.Media.AVProVideo;
 
-public class YoutubePlayerLivestream : MonoBehaviour {
-
+public class YoutubePlayerLivestream : MonoBehaviour
+{
     public string _livestreamUrl;
 
     //AVPRO
@@ -21,7 +20,8 @@ public class YoutubePlayerLivestream : MonoBehaviour {
     public Vector3 rotateScreenValue;
     public GameObject videoPlayerParent;
 
-    void Start () {
+    void Start()
+    {
 
         if (!rotateScreen)
             return;
@@ -33,6 +33,7 @@ public class YoutubePlayerLivestream : MonoBehaviour {
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
     }
+
     private void OnApplicationFocus(bool focus)
     {
         if (gameObject.activeInHierarchy && focus)
@@ -40,6 +41,7 @@ public class YoutubePlayerLivestream : MonoBehaviour {
             mPlayer.Play();
         }
     }
+
     public void GetLivestreamUrl(string url)
     {
         _livestreamUrl = url;
@@ -96,11 +98,10 @@ public class YoutubePlayerLivestream : MonoBehaviour {
         request.SetRequestHeader("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0 (Chrome)");
         yield return request.SendWebRequest();
         downloadYoutubeUrlResponse.httpCode = request.responseCode;
-        if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-        else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+        if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+        else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
         else if (request.responseCode == 200)
         {
-
             //Debug.Log("Youtube UnityWebRequest responseCode 200: OK!");
             if (request.downloadHandler != null && request.downloadHandler.text != null)
             {
@@ -129,7 +130,7 @@ public class YoutubePlayerLivestream : MonoBehaviour {
         //jsonforHtml
         var player_response = string.Empty;
         bool tempfix = false;
-        
+
         if (Regex.IsMatch(pageSource, @"[""\']status[""\']\s*:\s*[""\']LOGIN_REQUIRED") || tempfix)
         {
             var url = "https://www.docs.google.com/get_video_info?video_id=" + videoId + "&eurl=https://youtube.googleapis.com/v/" + videoId + "&html5=1&c=TVHTML5&cver=6.20180913";
@@ -137,8 +138,8 @@ public class YoutubePlayerLivestream : MonoBehaviour {
             UnityWebRequest request = UnityWebRequest.Get(url);
             request.SetRequestHeader("User-Agent", pageSource);
             yield return request.SendWebRequest();
-            if (request.isNetworkError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
-            else if (request.isHttpError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
+            if (request.result == UnityWebRequest.Result.ConnectionError) { Debug.Log("Youtube UnityWebRequest isNetworkError!"); }
+            else if (request.result == UnityWebRequest.Result.ProtocolError) { Debug.Log("Youtube UnityWebRequest isHttpError!"); }
             else if (request.responseCode == 200)
             {
                 //ok;
@@ -162,21 +163,21 @@ public class YoutubePlayerLivestream : MonoBehaviour {
                     //player_response = JObject.Parse(extractedJson)["args"]["player_response"].ToString();
                 }
             }
-    
+
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|</script|\n)", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
             {
                 player_response = dataMatch.Result("$1");
             }
-    
+
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;\s*(?:var\s+meta|</script|\n)", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
             {
                 player_response = dataMatch.Result("$1");
             }
-    
+
             dataRegexOption = new Regex(@"ytInitialPlayerResponse\s*=\s*({.+?})\s*;", RegexOptions.Multiline);
             dataMatch = dataRegexOption.Match(pageSource);
             if (dataMatch.Success)
@@ -202,9 +203,6 @@ public class YoutubePlayerLivestream : MonoBehaviour {
             Debug.Log("NO");
             Debug.Log("This is not a livestream url");
         }
-
-
-        
     }
 
     public static void WriteLog(string filename, string c)
@@ -214,8 +212,6 @@ public class YoutubePlayerLivestream : MonoBehaviour {
         //Debug.Log("DownloadUrl content saved to " + filePath);
         File.WriteAllText(filePath, c);
     }
-
-
 
     private class DownloadUrlResponse
     {
