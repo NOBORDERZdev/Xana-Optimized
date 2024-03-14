@@ -38258,7 +38258,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -38490,7 +38489,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -42288,8 +42286,9 @@ GameObject:
   - component: {fileID: 5026257660853740472}
   - component: {fileID: 1421784742835720370}
   - component: {fileID: 4192378118116164945}
+  - component: {fileID: 5228478994173219951}
   m_Layer: 23
-  m_Name: Video Parent
+  m_Name: Video_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42342,6 +42341,23 @@ MonoBehaviour:
   status: 0
   livePlayer: {fileID: 2507505394166159395}
   preRecoredPlayer: {fileID: 5026257661121069021}
+--- !u!114 &5228478994173219951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026257660853740473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 20
+  minDistance: 1
+  updateInterval: 0.5
+  activePlayer: {fileID: 2507505394166159395}
+  audioSource: {fileID: 5026257661121069021}
 --- !u!1 &5026257660911968859
 GameObject:
   m_ObjectHideFlags: 0
@@ -43058,7 +43074,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -43737,7 +43752,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -44660,7 +44674,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -45307,7 +45320,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -47482,6 +47494,9 @@ MonoBehaviour:
   - {fileID: 7958286260188039843}
   - {fileID: 6038536658810525824}
   roomName: 
+  allDataLoaded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6988723540947776638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53453,7 +53468,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
@@ -53652,7 +53666,6 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  isCreateFrame: 0
   roomType: 0
   nftStartAction:
     m_PersistentCalls:
