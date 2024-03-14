@@ -36,8 +36,9 @@ public class SNSSettingController : MonoBehaviour
 
     [Space]
     [Header("Simultaneous Connections Items")]
-    public Image btnImage;
-    public Sprite offBtn, onBtn;
+    public Image btnImageOn;
+    public Image btnImageOff;
+    //public Sprite offBtn, onBtn;
 
     private void Awake()
     {
@@ -191,6 +192,7 @@ public class SNSSettingController : MonoBehaviour
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
         Debug.Log("logout success calling from SNSSetting");
+        XanaConstants.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
@@ -270,23 +272,35 @@ public class SNSSettingController : MonoBehaviour
         if (status == 0)
         {
             // Currently Btn is OFF, enable Btn Here
-            btnImage.sprite = onBtn;
+            // btnImageOn = onBtn;
+            btnImageOn.gameObject.SetActive(true);
+            btnImageOff.gameObject.SetActive(false);
             status = 1;
         }
         else
         {
             // Currently Btn is ON, disable Btn Here
             status = 0;
-            btnImage.sprite = offBtn;
+            //btnImage.sprite = offBtn;
+            btnImageOn.gameObject.SetActive(false);
+            btnImageOff.gameObject.SetActive(true);
         }
         PlayerPrefs.SetInt("ShowLiveUserCounter", status);
     }
     void CheckBtnStatus(int status)
     {
         if (status == 0)
-            btnImage.sprite = offBtn;
+        {
+            //btnImage.sprite = offBtn;
+            btnImageOn.gameObject.SetActive(false);
+            btnImageOff.gameObject.SetActive(true);
+        }
         else
-            btnImage.sprite = onBtn;
+        {
+            //btnImage.sprite = onBtn;
+            btnImageOn.gameObject.SetActive(true);
+            btnImageOff.gameObject.SetActive(false);
+        }
     }
     private void OnEnable()
     {

@@ -35,7 +35,7 @@ public class ProfilePictureManager : MonoBehaviour
     }
     public void MakeProfilePicture(string userName)
     {
-        Debug.LogError("MakeProfilePicture: " + userName);
+        Debug.Log("MakeProfilePicture: " + userName);
         StartCoroutine(IEMakeProfilePicture(userName));
     }
 
@@ -97,7 +97,7 @@ public class ProfilePictureManager : MonoBehaviour
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData, "DefaultUserProfile", UploadProfile);
+            AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
             
             Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
@@ -139,10 +139,18 @@ public class ProfilePictureManager : MonoBehaviour
             {
                 Debug.Log("Uploading complete!");
                 string data = www.downloadHandler.text;
+                ChangeProfileAfterUploading();
                 //Debug.Log("UpdateUserAvatar data:" + data);
             }
         }
 
+    }
+
+
+    void ChangeProfileAfterUploading()
+    {
+        //MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;    
+        MyProfileDataManager.Instance.UpdateProfilePic();
     }
     Sprite CreateSpriteFromTexture(Texture2D texture)
     {

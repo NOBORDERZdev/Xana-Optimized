@@ -97,13 +97,13 @@ public class PresetData_Jsons : MonoBehaviour
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
-            Debug.LogError("Please Upgrade to Premium account");
+            Debug.Log("Please Upgrade to Premium account");
             // print("Please Upgrade to Premium account");
             return;
         }
         else
         {
-            Debug.LogError("Horayyy you have Access");
+            Debug.Log("Horayyy you have Access");
             //print("Horayyy you have Access");
             XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = this.gameObject;
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
@@ -119,7 +119,7 @@ public class PresetData_Jsons : MonoBehaviour
             if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn
                 && !IsStartUp_Canvas)
             {
-                Debug.LogError("Same Button Clicked");
+                Debug.Log("Same Button Clicked");
                 return;
             }
 

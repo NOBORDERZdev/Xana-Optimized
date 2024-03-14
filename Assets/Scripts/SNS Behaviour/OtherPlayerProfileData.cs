@@ -633,11 +633,11 @@ public class OtherPlayerProfileData : MonoBehaviour
             else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
         {
                 StartCoroutine(WaitToFeedLoadedUpdate(pageNumb));
-                if (emptyFeedObjRef)
-                {
-                    Destroy(emptyFeedObjRef);
-                }
-                emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
+                //if (emptyFeedObjRef)
+                //{
+                //    Destroy(emptyFeedObjRef);
+                //}
+                //emptyFeedObjRef = Instantiate(MyProfileDataManager.Instance.EmptyFeedPrefab, userPostParent);
         }
     }
         GlobalVeriableClass.callingScreen = "";
@@ -649,7 +649,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         //userPostMainPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-
+        userPostMainPart.GetComponent<ParentHeightResetScript>().SetParentheight(userPostParent.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(0.5f);
         FeedUIController.Instance.ShowLoader(false);
 
@@ -742,9 +742,9 @@ public class OtherPlayerProfileData : MonoBehaviour
         if (isFollow)
         {
             //followText.text = "Following";
-            followText.text = TextLocalization.GetLocaliseTextByKey("Following");
-            followButtonImage.sprite = followingSprite;
-            followText.color = FollowingTextColor;
+            followText.text = TextLocalization.GetLocaliseTextByKey("UnFollow");
+            //followButtonImage.sprite = followingSprite;
+            //followText.color = FollowingTextColor;
             if (!isOtherPlayerProfileNew)
             {
                 tagTabPrivateObject.SetActive(false);
@@ -755,8 +755,8 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //followText.text = "Follow";
             followText.text = TextLocalization.GetLocaliseTextByKey("Follow");
-            followButtonImage.sprite = followSprite;
-            followText.color = followtextColor;
+            //followButtonImage.sprite = followSprite;
+            //followText.color = followtextColor;
             if (!isOtherPlayerProfileNew)
             {
                 tagTabPrivateObject.SetActive(true);
