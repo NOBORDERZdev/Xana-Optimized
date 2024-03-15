@@ -178,7 +178,10 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
-        if (BuilderData.mapData.data.json.otherItems.Count == 0)
+        //Remove spw count from Item count
+        int objCount = BuilderData.mapData.data.json.otherItems.Count - BuilderData.preLoadspawnPoint.Count;
+
+        if (objCount == 0)
         {
             assetDownloadingText.enabled = false;
             assetDownloadingTextPotrait.enabled = false;
@@ -259,7 +262,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             {
                 Debug.LogError("Download Failed......");
             }
-            yield return new WaitForEndOfFrame();   
+            yield return new WaitForEndOfFrame();
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadFailed.RemoveAt(0);
@@ -404,7 +407,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         //Add game object into XanaItems List for Hirarchy
         //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
-            GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }

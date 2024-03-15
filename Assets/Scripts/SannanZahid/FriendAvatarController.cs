@@ -305,7 +305,13 @@ public class FriendAvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        {
+                                            if (wornHair)
+                                                UnStichItem("Hair");
+                                        }
+                                        else
+                                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
                                     }
                                     else
                                     {
@@ -414,7 +420,7 @@ public class FriendAvatarController : MonoBehaviour
                     }
                     if (_CharacterData.charactertypeAi == true)
                     {
-                        ApplyAIData(_CharacterData);
+                        ApplyAIDataFriend(_CharacterData);
                     }
                     else 
                     {
@@ -1568,7 +1574,7 @@ public class FriendAvatarController : MonoBehaviour
     {
         isVisibleOnCam = true;
     }
-    void ApplyAIData(SavingCharacterDataClass _CharacterData)
+    void ApplyAIDataFriend(SavingCharacterDataClass _CharacterData)
     {
         bodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         bodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
@@ -1576,38 +1582,56 @@ public class FriendAvatarController : MonoBehaviour
         //CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
         //CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         //CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
-        if (_CharacterData.skin_color != null)
-        {
-            StartCoroutine(bodyParts.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
-        }
+        //if (_CharacterData.skin_color != null)
+        //{
+        //    StartCoroutine(bodyParts.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
+        //}
         if (_CharacterData.lip_color != null)
         {
-            StartCoroutine(bodyParts.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+            bodyParts.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
-
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
+        {
+            if (_CharacterData.ai_gender == "male")
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
+            else
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
         }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
+            if (_CharacterData.hairItemData.Equals("No hair"))
+            {
+                if (wornHair)
+                    UnStichItem("Hair");
+            }
+            else
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
         }
     }
     void ApplyDefaultData(SavingCharacterDataClass _CharacterData)
     {
         if (_CharacterData.gender == AvatarGender.Male.ToString())
         {
-            bodyParts.head.materials[2].SetColor("_BaseColor", new Color(1,1,1,1));
+            bodyParts.head.materials[2].SetTexture("_Base_Texture", bodyParts.maleAvatarMeshes.Face_Texture);
             bodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
-            bodyParts.body.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 1));
+            bodyParts.body.materials[0].SetTexture("_Base_Texture", bodyParts.maleAvatarMeshes.Skin_Texture);
             bodyParts.ApplyEyeLenTexture(bodyParts.maleAvatarMeshes.Eye_texture, bodyParts.gameObject);
         }
         else
         {
-            bodyParts.head.materials[2].SetColor("_BaseColor", new Color(1, 1, 1, 1));
+            bodyParts.head.materials[2].SetTexture("_Base_Texture", bodyParts.femaleAvatarMeshes.Face_Texture);
             bodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
-            bodyParts.body.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 1));
+            bodyParts.body.materials[0].SetTexture("_Base_Texture", bodyParts.femaleAvatarMeshes.Face_Texture);
             bodyParts.ApplyEyeLenTexture(bodyParts.femaleAvatarMeshes.Eye_texture, bodyParts.gameObject);
         }
         for (int i = 0; i < bodyParts.head.sharedMesh.blendShapeCount - 1; i++)

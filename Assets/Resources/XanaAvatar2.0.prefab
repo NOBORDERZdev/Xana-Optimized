@@ -9588,7 +9588,9 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
     Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 0}
+    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: f2ff702bbc9a048448e3946b295bb063, type: 3}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 7312622536844020264}
     avatar_body: {fileID: 3012711319047648032}
@@ -9596,7 +9598,9 @@ MonoBehaviour:
     Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
     Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
     Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 0}
+    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: c859e0833b251544883fc068cecec0d8, type: 3}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}
@@ -10144,6 +10148,7 @@ MonoBehaviour:
   isVisibleOnCam: 0
   characterBodyParts: {fileID: 4834376472678329915}
   isWearOrNot: 0
+  isClothLoaded: 0
   _PCharacterData:
     id: 
     name: 
@@ -10151,8 +10156,9 @@ MonoBehaviour:
     gender: 
     avatarType: 0
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
@@ -18011,6 +18017,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: c696ecf611cfa4b4684deabab122a2af, type: 2}
+    - target: {fileID: 8358487956882838381, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: edffa92a9daa50744b5f0b0d70a453f1, type: 2}
     - target: {fileID: 8882082352912030767, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_Layer
       value: 22

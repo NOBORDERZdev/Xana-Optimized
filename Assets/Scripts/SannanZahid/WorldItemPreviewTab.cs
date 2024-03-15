@@ -178,7 +178,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     public void CallAnalytics(string idOfObject, string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt);
+        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt); // Due to Flow change this API in not in use
     }
     public void SetPanelToBottom()
     {
@@ -334,6 +334,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorldHighlight.SetActive(true);
+                followingWorldHighlight.GetComponent<Button>().interactable = true;
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
@@ -360,6 +361,7 @@ public class WorldItemPreviewTab : MonoBehaviour
             if (isSucess)
             {
                 followingWorld.SetActive(true);
+                followingWorld.GetComponent<Button>().interactable = true;
                 followingWorldHighlight.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)

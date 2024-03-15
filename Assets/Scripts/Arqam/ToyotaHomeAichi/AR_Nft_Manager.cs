@@ -309,7 +309,7 @@ namespace Toyota
 
         public void LoadLiveIfFirstTimeNotLoaded(GameObject obj, string url)
         {
-            Debug.LogError("Reload Link");
+            //Debug.LogError("Reload Link");
             worldInfos[obj.GetComponent<AR_VideoAndImage>().id].VideoLink = url;
             worldInfos[obj.GetComponent<AR_VideoAndImage>().id].videoType = PMY_VideoTypeRes.islive;
             obj.GetComponent<AR_VideoAndImage>().InitData(null, url, worldInfos[obj.GetComponent<AR_VideoAndImage>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);

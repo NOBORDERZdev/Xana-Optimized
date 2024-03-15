@@ -36,6 +36,10 @@ public class FeedController : MonoBehaviour
     [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
 
+    public FeedResponse feedResponseData;
+
+    public bool noResultinFeedSearch = true;
+
     private void OnEnable()
     {
         SerachPanel.SetActive(false);
@@ -84,6 +88,7 @@ public class FeedController : MonoBehaviour
             {
                 Debug.Log(response.error);
                 FeedLoader.SetActive(false);
+                noFeedText.text = "";
                 noFeedsScreen.gameObject.SetActive(true);
             }
             else
@@ -91,7 +96,7 @@ public class FeedController : MonoBehaviour
                
                 print("~~~~~ "+ response.downloadHandler.text);
                 noFeedsScreen.gameObject.SetActive(false);
-                FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
+                feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 // FeedAPIData.Add(feedResponseData);
                 if (feedResponseData.data.rows.Count>0)
                 {
@@ -112,7 +117,7 @@ public class FeedController : MonoBehaviour
                 }
                 else
                 {
-                    noFeedsScreen.gameObject.SetActive(true);
+                    FeedDataFromAPICountCheck();
                     FeedLoader.SetActive(false);
                     feedContentParent.gameObject.SetActive(false);
                 }
@@ -128,6 +133,14 @@ public class FeedController : MonoBehaviour
         response.Dispose();
     }
 
+    public void FeedDataFromAPICountCheck()
+    {
+        if (feedResponseData.data.rows.Count <= 0)
+        {
+            noFeedText.text = "";
+            noFeedsScreen.gameObject.SetActive(true);
+        }
+    }
 
     public void PullNewPlayerPost(){ 
         FeedLoader.SetActive(true);
@@ -300,6 +313,13 @@ public class FeedController : MonoBehaviour
     public void OnClickSerachBtn(){
         if (SerchBarObj.activeInHierarchy) // serach is active 
         {
+            if (noResultinFeedSearch)
+            {
+                noFeedSerach.gameObject.SetActive(false);
+                noResultinFeedSearch = false;
+                FeedDataFromAPICountCheck();
+            }
+            feedContentParent.gameObject.SetActive(true);
             SerchBarObj.SetActive(false);
             SerachPanel.SetActive(false);
             SearchContentPanel.SetActive(false);
@@ -387,6 +407,7 @@ public class FeedController : MonoBehaviour
                                         
                 }
                 noFeedSerach. gameObject.SetActive(true);
+                noResultinFeedSearch = true;
             }
              FeedLoader.SetActive(false);
         }

@@ -1,5 +1,4 @@
-using AIFLogger;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -147,12 +146,13 @@ public class UGCManager : MonoBehaviour
 
     public IEnumerator IERequest(byte[] imageBytes)
     {
-        float requestTimeout = 120f; // Timeout value in seconds (5 minutes)
+        float requestTimeout = 180f; // Timeout value in seconds (3 minutes)
         float timer = 0f;
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form);
+        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
+        //UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
         www.SetRequestHeader("Accept", "application/json");
         // Start the request
         AsyncOperation operation = www.SendWebRequest();
@@ -168,8 +168,8 @@ public class UGCManager : MonoBehaviour
             Debug.Log("Request timed out.");
             // Handle timeout (e.g., show a message, stop further processing)
             www.Abort(); // Stop the request
+            warningText.text = "The process has timed out. Please try again.";
             warningPanel.SetActive(true);
-            warningText.text = "Taking too long to respond. Please upload again.";
             StoreManager.instance.loaderPanel.SetActive(false);
             yield break; // Exit the coroutine
         }
@@ -180,8 +180,16 @@ public class UGCManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("Failed to send image to the server : " + www.error);
-                warningPanel.SetActive(true);
-                warningText.text = www.error;
+                if (www.isHttpError)
+                {
+                    warningText.text = "An error occurred during processing. Please try again.";
+                    warningPanel.SetActive(true);
+                }
+                //else
+                //{
+                //    warningPanel.SetActive(true);
+                //    warningText.text = www.error;
+                //}
                 StoreManager.instance.loaderPanel.SetActive(false);
                 GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             }
@@ -191,9 +199,10 @@ public class UGCManager : MonoBehaviour
                 if (response.status == "reject")
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
-                    Debug.Log(response.description);
+                    Debug.Log(response.description_Eng);
+                    if (GameManager.currentLanguage.Contains("en") || !CustomLocalization.forceJapanese) { warningText.text = response.description_Eng; }
+                    else { warningText.text = response.description_Jap; }
                     warningPanel.SetActive(true);
-                    warningText.text = response.description;
                     StoreManager.instance.loaderPanel.SetActive(false);
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
@@ -227,9 +236,9 @@ public class UGCManager : MonoBehaviour
 
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        StoreManager.instance.itemData.gender = ugcItems.gender;
+        StoreManager.instance.itemData.gender = ugcItems.gender.ToLower();
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
-        StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
+        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
         StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
         StoreManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)
@@ -247,6 +256,10 @@ public class UGCManager : MonoBehaviour
         if (_itemHair != null)
         {
             StoreManager.instance.itemData._hairItemData = _itemHair.keyValue;
+        }
+        else 
+        {
+            StoreManager.instance.itemData._hairItemData = "No hair";
         }
         if (_itemEye != null)
         {
@@ -335,7 +348,8 @@ public class UGCManager : MonoBehaviour
 public class UGCItemsClass
 {
     public string status;
-    public string description;
+    public string description_Eng;
+    public string description_Jap;
     public string face_type;
     public string lip_shape;
     public string nose_shape;

@@ -400,7 +400,8 @@ public class WorldManager : MonoBehaviour
             _event.PressedIndex = int.Parse(_WorldInfo.data.rows[i].id);
             _event.UpdatedAt = _WorldInfo.data.rows[i].updatedAt;
             _event.CreatedAt = _WorldInfo.data.rows[i].createdAt;
-            _event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits;
+            //_event.WorldVisitCount = _WorldInfo.data.rows[i].totalVisits; // TotalVisit Variable Used for Web
+            _event.WorldVisitCount = _WorldInfo.data.rows[i].xanaAppVisitCount;
             _event.isFavourite = _WorldInfo.data.rows[i].isFavourite;
             if (_WorldInfo.data.rows[i].tags != null)
                 _event.WorldTags = _WorldInfo.data.rows[i].tags;
@@ -514,16 +515,16 @@ public class WorldManager : MonoBehaviour
                 worldFoundText.text = "";
                 return;
             case APIURL.SearchWorld:
-                worldFoundText.text = "No world found with given search key";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
             case APIURL.SearchWorldByTag:
-                worldFoundText.text = "No world found with given search tag";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search tag");
                 return;
             case APIURL.Temp:
                 worldFoundText.text = "";
                 return;
             default:
-                worldFoundText.text = "No world found with given search key";
+                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
         }
     }
@@ -900,6 +901,8 @@ public class RowList
     public string createdBy;
     public string[] tags;
     public string totalVisits;
+    public string xanaAppVisitCount;
+
     public bool isFavourite;
     public UserInfo user;
     public WorldCreatorDetail creatorDetails;

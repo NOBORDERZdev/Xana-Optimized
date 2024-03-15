@@ -216,6 +216,8 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFreindContainer;
     [SerializeField] public GameObject ExtraPrefab;
     public string SearchFriendInput = "";
+    public string FollowFollowingSearchFriendInput = "";
+
     [Header("Feed 2.0")]
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
@@ -1120,11 +1122,14 @@ public class FeedUIController : MonoBehaviour
         //if (!string.IsNullOrEmpty(findFriendInputField.text))
         if (!string.IsNullOrEmpty(profileFinfFriendAdvancedInputField.Text))
         {
-            //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
-            APIManager.Instance.RequestGetSearchUserForProfile(profileFinfFriendAdvancedInputField.Text);
-            if (!profileFinfFriendScreen.gameObject.activeInHierarchy)
+            if (!FollowFollowingSearchFriendInput.Equals(profileFinfFriendAdvancedInputField.Text))
             {
-                profileFinfFriendScreen.gameObject.SetActive(true);
+                //APIManager.Instance.RequestGetSearchUser(findFriendInputField.text);
+                APIManager.Instance.RequestGetSearchUserForProfile(profileFinfFriendAdvancedInputField.Text);
+                if (!profileFinfFriendScreen.gameObject.activeInHierarchy)
+                {
+                    profileFinfFriendScreen.gameObject.SetActive(true);
+                }
             }
         }
         else
@@ -1140,6 +1145,7 @@ public class FeedUIController : MonoBehaviour
                 Destroy(item.gameObject);
             }
         }
+        FollowFollowingSearchFriendInput = profileFinfFriendAdvancedInputField.Text;
     }
     //this method is used to back button click find friend screen.......
     public void OnClickBackFindFriendButton()
@@ -1664,16 +1670,21 @@ public class FeedUIController : MonoBehaviour
                         //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
                     }
                 }
-                else
-                {
-                    for (int j = 0;j < 4;j++)
-                    {
-                        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0],true);
-                    }
-                }
+                //else
+                //{
+                //    for (int j = 0; j < 4; j++)
+                //    {
+                //        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+                //        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
+                //    }
+                //}
             }
-        }else
+            if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 10)
+            {
+                GameObject extra = Instantiate(FeedUIController.Instance.ExtraPrefab, profileFollowerListContainer);
+            }
+        }
+        else
         {
             noProfileFollowers.SetActive(true);
         }
@@ -3129,27 +3140,27 @@ public class FeedUIController : MonoBehaviour
         StartCoroutine(IEnumCheckFollowingCount());
     }
     IEnumerator IEnumCheckFollowingCount(){
-        print("~~~~~~~~CheckFollowingCount");
-        if (FeedUIController.Instance != null)
-        {
-            FeedUIController.Instance.ShowLoader(true);
-        }
+        //print("~~~~~~~~CheckFollowingCount");
+        //if (FeedUIController.Instance != null)
+        //{
+        //    FeedUIController.Instance.ShowLoader(true);
+        //}
         yield return new WaitForSeconds(1);
         foreach(Transform child in AddFrndFollowingContainer.transform)
         {
             if(child.gameObject.activeInHierarchy)
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
               yield break;
             }
         }
-        if (FeedUIController.Instance != null)
-        {
-            FeedUIController.Instance.ShowLoader(false);
-        }
+        //if (FeedUIController.Instance != null)
+        //{
+        //    FeedUIController.Instance.ShowLoader(false);
+        //}
         AddFrndNoFollowing.SetActive(true);
     }
 }

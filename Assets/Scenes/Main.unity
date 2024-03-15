@@ -815,8 +815,9 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
@@ -4369,7 +4370,6 @@ MonoBehaviour:
   minimap: 0
   userName: 0
   userId: 
-  profileImageModifedByUser: 0
   userProfileLink: 
   CurrentSceneName: 
   EnviornmentName: 
@@ -14815,6 +14815,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: c696ecf611cfa4b4684deabab122a2af, type: 2}
+    - target: {fileID: 8358487956882838381, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: edffa92a9daa50744b5f0b0d70a453f1, type: 2}
     - target: {fileID: 8882082352912030767, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -15622,6 +15626,8 @@ MonoBehaviour:
     Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: f2ff702bbc9a048448e3946b295bb063, type: 3}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 1512555886}
     avatar_body: {fileID: 1512555885}
@@ -15630,6 +15636,8 @@ MonoBehaviour:
     Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: c859e0833b251544883fc068cecec0d8, type: 3}
   boxerBody: {fileID: 4457784110141273236}
   boxerHead: {fileID: 5741598902726533055}
   body: {fileID: 0}
@@ -15909,8 +15917,9 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
@@ -27305,6 +27314,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1953041457}
     - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: maleAvatarMeshes.Face_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: maleAvatarMeshes.Skin_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: f2ff702bbc9a048448e3946b295bb063, type: 3}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: _scaleBodyParts.Array.data[10]
       value: 
       objectReference: {fileID: 1076186636}
@@ -27328,6 +27345,14 @@ PrefabInstance:
       propertyPath: femaleAvatarMeshes.Eye_texture
       value: 
       objectReference: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: femaleAvatarMeshes.Face_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
+    - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
+      propertyPath: femaleAvatarMeshes.Skin_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: c859e0833b251544883fc068cecec0d8, type: 3}
     - target: {fileID: 1671144894, guid: 97a591efb50d1b64e9c8b0d8f8fc1382, type: 3}
       propertyPath: randomPresetData.Array.data[0].Name
       value: Preset 1
@@ -28698,8 +28723,9 @@ MonoBehaviour:
     gender: 
     avatarType: 
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
@@ -29381,6 +29407,8 @@ MonoBehaviour:
     Pent_Texture: {fileID: 0}
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 0}
+    Face_Texture: {fileID: 0}
+    Skin_Texture: {fileID: 0}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 0}
     avatar_body: {fileID: 0}
@@ -29389,6 +29417,8 @@ MonoBehaviour:
     Pent_Texture: {fileID: 0}
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 0}
+    Face_Texture: {fileID: 0}
+    Skin_Texture: {fileID: 0}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}
