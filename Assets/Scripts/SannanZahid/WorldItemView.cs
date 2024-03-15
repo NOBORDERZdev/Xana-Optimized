@@ -7,8 +7,9 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
+using EnhancedUI.EnhancedScroller;
 
-public class WorldItemView : MonoBehaviour
+public class WorldItemView : EnhancedScrollerCellView
 {
     /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
     /*public int Index;

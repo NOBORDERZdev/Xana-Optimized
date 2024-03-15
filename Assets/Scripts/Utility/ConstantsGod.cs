@@ -239,6 +239,7 @@ public class ConstantsGod
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     public static string USERTAGS = "/users/get-user-tags";
 
+    public static string FEATUREDSPACES = "/world/get-featured-spaces/";//pageNumber/pageSize
     public static string HOTSPACES = "/world/get-most-visited-hot-spaces/";//pageNumber/pageSize
     public static string HOTGAMES = "/world/get-most-visited-hot-games/";//pageNumber/pageSize
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize

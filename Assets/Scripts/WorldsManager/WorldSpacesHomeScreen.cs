@@ -30,6 +30,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public WorldManager worldManager;
     public ResponseHolder apiResponseHolder;
     public static List<string> mostVisitedTagList = new List<string>();
+
+    public SpaceScrollInitializer spaceCategoryScroller;
     private void OnEnable()
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
@@ -47,26 +49,45 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void StartLoading()
     {
         WorldManager.instance.changeFollowState = false;
+        FeatureSpaceLoading();
         HotSpaceLoading();
         HotGamesLoading();
         FollowingSpaceLoading();
         MySpaceLoading();
-        GetAllTags();
-        GetUsersMostVisitedTags(() =>
-        {
-            //Reset page number because of getting null data 
-            WorldManager.instance.SearchTagPageNumb = 1;
-            for (int i = 0; i < mostVisitedTagList.Count; i++)
-            {
-                CategoryLoading(i);
-            }
-            //Category1Loading();
-            //Category2Loading();
-            //Category3Loading();
-            //Category4Loading();
-        });
+        //GetAllTags();
+        //GetUsersMostVisitedTags(() =>
+        //{
+        //    //Reset page number because of getting null data 
+        //    WorldManager.instance.SearchTagPageNumb = 1;
+        //    for (int i = 0; i < mostVisitedTagList.Count; i++)
+        //    {
+        //        CategoryLoading(i);
+        //    }
+        //    //Category1Loading();
+        //    //Category2Loading();
+        //    //Category3Loading();
+        //    //Category4Loading();
+        //});
     }
 
+    public void FeatureSpaceLoading()
+    {
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FeaturedSpaces, 10);
+        StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
+        {
+            if (isSucess)
+            {
+                WorldsInfo worldInfo = JsonUtility.FromJson<WorldsInfo>(response);
+                if (worldInfo.data.rows.Count == 0)
+                {
+                    hotSpacesParent.SetActive(false);
+                    FlexibleRect.OnAdjustSize?.Invoke(false);
+                }
+                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo));
+            }
+
+        }));
+    }
 
     void HotSpaceLoading()
     {
@@ -366,6 +387,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
+        spaceCategoryScroller.initializeCategoryRow = true;
 
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
@@ -454,6 +476,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
+
+            spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count);
             spaceContent.transform.GetChild(i).gameObject.SetActive(true);
             spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
         }

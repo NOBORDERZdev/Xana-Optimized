@@ -226,6 +226,8 @@ public class WorldManager : MonoBehaviour
     {
         switch (aPIURL)
         {
+            case APIURL.FeaturedSpaces:
+                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotSpacePN + "/" + recordPerPage;
             case APIURL.HotSpaces:
                 return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
             case APIURL.HotGames:
@@ -967,7 +969,7 @@ public class WorldItemDetail
 
 public enum APIURL
 {
-    HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag, Temp
+    FeaturedSpaces, HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag, Temp
 }
 
 public enum WorldType
