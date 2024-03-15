@@ -35,8 +35,8 @@ public class UGCUIManager : MonoBehaviour
     public Image recordButton;
     public Image photoButton;
 
-    public Renderer BG;
-    public Texture texture;
+    //public Renderer BG;
+    //public Texture texture;
 
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
@@ -44,7 +44,7 @@ public class UGCUIManager : MonoBehaviour
     void Start()
     {
         DisableLoadingPanel();
-        BGMat = new Material(BG.material);
+       // BGMat = new Material(BG.material);
     }
 
     public void DisableLoadingPanel()
@@ -267,8 +267,8 @@ public class UGCUIManager : MonoBehaviour
     Material BGMat;
     public  void ChangeBG()
     {
-        BGMat.mainTexture = texture;
-        BG.material = BGMat;
+        //BGMat.mainTexture = texture;
+        //BG.material = BGMat;
     }
     public void OnTapSaveButton()
     {

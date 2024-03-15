@@ -1631,7 +1631,7 @@ public class FriendAvatarController : MonoBehaviour
         {
             bodyParts.head.materials[2].SetTexture("_Base_Texture", bodyParts.femaleAvatarMeshes.Face_Texture);
             bodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
-            bodyParts.body.materials[0].SetTexture("_Base_Texture", bodyParts.femaleAvatarMeshes.Face_Texture);
+            bodyParts.body.materials[0].SetTexture("_Base_Texture", bodyParts.femaleAvatarMeshes.Skin_Texture);
             bodyParts.ApplyEyeLenTexture(bodyParts.femaleAvatarMeshes.Eye_texture, bodyParts.gameObject);
         }
         for (int i = 0; i < bodyParts.head.sharedMesh.blendShapeCount - 1; i++)
