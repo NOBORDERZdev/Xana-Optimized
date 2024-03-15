@@ -86,6 +86,8 @@ public class FeedData : MonoBehaviour
    
     public void onclickFeedUserProfileButton()
     {
+        if (isProfileScene)
+            return;
         //print("Getting Click here" + _data.user_id);
         APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
     }
