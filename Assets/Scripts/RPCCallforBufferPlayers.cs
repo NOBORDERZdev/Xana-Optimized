@@ -133,7 +133,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                                     string type = _CharacterData.myItemObj[i].ItemType;
                                     if (type.Contains("Legs") || type.Contains("Chest") || type.Contains("Feet") || type.Contains("Hair") || type.Contains("EyeWearable") || type.Contains("Chain") || type.Contains("Glove"))
                                     {
-                                        WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        {
+                                            if (otherPlayer.GetComponent<AvatarController>().wornHair)
+                                                UnStichItem("Hair");
+                                        }
+                                        else
+                                            WearAddreesable(_CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName, otherPlayer.gameObject, _CharacterData.HairColor, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                                     }
                                 }
                                 else
@@ -493,22 +499,41 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         //applyon.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
         //applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         //applyon.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
-        if (_CharacterData.skin_color != null)
-        {
-            StartCoroutine(applyon.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
-        }
+        //if (_CharacterData.skin_color != null)
+        //{
+        //    StartCoroutine(applyon.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
+        //}
         if (_CharacterData.lip_color != null)
         {
-            StartCoroutine(applyon.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+            applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
 
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
         }
+        if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
+        {
+            if (_CharacterData.ai_gender == "male")
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
+            else
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
+        }
         if (_CharacterData.hairItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
+            if (_CharacterData.hairItemData.Equals("No hair"))
+            {
+                if (applyon.GetComponent<AvatarController>().wornHair)
+                    UnStichItem("Hair");
+            }
+            else
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)

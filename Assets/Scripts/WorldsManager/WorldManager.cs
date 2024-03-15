@@ -595,7 +595,7 @@ public class WorldManager : MonoBehaviour
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
-        if (WorldItemView.m_EnvName == "D + Infinity Labo") 
+        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
         {
             WorldItemView.m_EnvName = "D_Infinity_Labo";
             Launcher.sceneName = WorldItemView.m_EnvName;

@@ -371,6 +371,10 @@ public class FeedController : MonoBehaviour
             noFeedsScreen.gameObject.SetActive(false);
             SearchContentPanel.SetActive(true);
             SerachPanel.SetActive(true);
+
+            // Clear Old Data
+            EmptySearchPanel();
+
             feedContentParent.gameObject.SetActive(false);
             print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
             FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
